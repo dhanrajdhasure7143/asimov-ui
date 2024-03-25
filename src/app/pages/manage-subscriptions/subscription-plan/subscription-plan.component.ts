@@ -26,7 +26,7 @@ export class SubscriptionPlanComponent implements OnInit {
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly";
+  planType="Yearly";
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
@@ -36,7 +36,15 @@ export class SubscriptionPlanComponent implements OnInit {
   log_data:any={}
   isRegistered : boolean = false;
   totalAmount : number = 0;
-  selectedPlan: string = '';
+  selectedPlan: string = 'Yearly';
+  showDescriptionFlag: boolean = false;
+  booleanString: boolean = false;
+  booleanValue: boolean = true;
+  visibleBotInfo:boolean = false;
+  selectedBot: any={};
+  selectedInterval: boolean = true;
+  predefinedRawBots: any[] = [];
+
   constructor( private spinner : LoaderService,
     private router: Router,
     private rest: RestApiService,
@@ -55,45 +63,137 @@ export class SubscriptionPlanComponent implements OnInit {
       autoBilling: ['']
     });
 
+    this.getPredefinedRawBots();
     this.loadPredefinedBots();
   }
 
-  loadPredefinedBots(){
-    this.rest.loadPredefinedBots().subscribe((response : any) =>{
-      this.spinner.hide()
-      console.log(response)
-      if(response){
-        response.forEach(element => {
-          let obj=element.product
-          obj["priceCollection"] = element.priceCollection
-          let data = element.product.metadata?.product_features?element.product.metadata.product_features:[];
-          if(data.length>0)
-          obj["features"] =JSON.parse(data);
-          this.botPlans.push(obj)
-        });
-        console.log(this.botPlans)
-      // this.botPlans = response;
-      // this.botPlans.forEach(item=>{
-      //   item["isSelected"] = false;
-      //   item["selectedTerm"] = "Monthly"
-      // })
+  getPredefinedRawBots(){
+    this.rest.getPredifinedRawBots().subscribe((response: any) =>{
+      if(response && response.data){
+        this.predefinedRawBots = response.data;
       }
     },err=>{
-      this.spinner.hide();
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to load',
-        icon: 'error',
-        showCancelButton: false,
-        allowOutsideClick: true
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['/signup']);
-      }
+      console.log(err,"error for the raw bots");
     });
-    })
   }
 
+  // loadPredefinedBots(){
+  //   this.rest.loadPredefinedBots().subscribe((response : any) =>{
+  //     this.spinner.hide()
+  //     console.log(response)
+  //     if(response){
+  //       response.forEach(element => {
+  //         let obj=element.product
+  //         obj["priceCollection"] = element.priceCollection
+  //         let data = element.product.metadata?.product_features?element.product.metadata.product_features:[];
+  //         if(data.length>0)
+  //         obj["features"] =JSON.parse(data);
+  //         this.botPlans.push(obj)
+  //       });
+  //       console.log(this.botPlans)
+  //     // this.botPlans = response;
+  //     // this.botPlans.forEach(item=>{
+  //     //   item["isSelected"] = false;
+  //     //   item["selectedTerm"] = "Monthly"
+  //     // })
+  //     }
+  //   },err=>{
+  //     this.spinner.hide();
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Failed to load',
+  //       icon: 'error',
+  //       showCancelButton: false,
+  //       allowOutsideClick: true
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       this.router.navigate(['/signup']);
+  //     }
+  //   });
+  //   })
+  // }
+
+  loadPredefinedBots() {
+    this.rest.loadPredefinedBots().subscribe((response: any) => {
+        this.spinner.hide();
+        console.log(response);
+        if (response) {
+            response.forEach(element => {
+                let obj = element.product;
+                let isSubscribed=false;
+                let isYearlySubscribed=false;
+                let isMonthlySubscribed=false;
+                obj["priceCollection"] = element.priceCollection;
+                let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
+                if (data.length > 0)
+                    obj["features"] = JSON.parse(data);
+
+                obj.priceCollection.forEach(price => {
+                    try {
+                      if (Array.isArray(this.predefinedRawBots)) {
+                        price.isPlanSubscribed = this.predefinedRawBots.some(bot => {
+                            return bot.products.some(product => {
+                                if (Array.isArray(product.price_id)) {
+                                    return product.price_id.some(priceId => {
+                                      if (priceId === price.id && bot.term === price.tiersMode) {
+                                        isSubscribed = true;
+                                        if (price.tiersMode === 'year') {
+                                          isYearlySubscribed = true;
+                                        } 
+                                        
+                                        if (price.tiersMode === 'month'){
+                                          isMonthlySubscribed = true; 
+                                        }
+                                      }
+                                        return priceId === price.id && bot.term === price.tiersMode;  
+                                    });
+                                } else {
+                                  if (product.price_id === price.id && bot.term === price.tiersMode) {
+                                    isSubscribed = true;
+                                    if (price.tiersMode === 'year') {
+                                      isYearlySubscribed = true;
+                                    } 
+                                    
+                                    if (price.tiersMode === 'month'){
+                                      isMonthlySubscribed = true; 
+                                    }
+                                  }
+                                  return product.price_id === price.id && bot.term === price.tiersMode;
+                                }
+                            });
+                        });
+                    } 
+                    else {
+                          price.isPlanSubscribed = false;
+                      }
+                    } catch (error) {
+                        price.isPlanSubscribed = false;
+                    }
+                });
+
+                obj["isYearlySubscribed"] = isYearlySubscribed;
+                obj["isMonthlySubscribed"] = isMonthlySubscribed;
+                obj["doPlanDisabled"] = isSubscribed;
+                this.botPlans.push(obj);
+            });
+            console.log(this.botPlans);
+        }
+    }, err => {
+        this.spinner.hide();
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed to load',
+            icon: 'error',
+            showCancelButton: false,
+            allowOutsideClick: true
+        }).then((result) => {
+            if (result.value) {
+                this.router.navigate(['/signup']);
+            }
+        });
+    });
+}
+  
   ngAfterViewInit(){
     this.userEmail = localStorage.getItem('ProfileuserId');
   }
@@ -180,6 +280,7 @@ sendEmailEnterPrisePlan(){
 }
 
 onSelectPredefinedBot(plan, index) {
+  this.showDescriptionFlag = true;
   this.selectedPlans = [];
   this.botPlans[index].isSelected = !this.botPlans[index].isSelected;
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
@@ -188,7 +289,7 @@ onSelectPredefinedBot(plan, index) {
       this.selectedPlans.push(item);
     }
   });
-  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "";
+  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
   this.isDisabled = this.selectedPlans.length === 0;
   this.planSelection(this.selectedPlan);
 }
@@ -233,5 +334,25 @@ readValue(value){
     });
     console.log(this.totalAmount);
   }
-  
+
+  showDialog() {
+    this.visibleBotInfo = true;
+  }
+
+  openDetailsDialog(plan: any) {
+    this.selectedBot = plan;
+    this.visibleBotInfo = true;
+  }
+
+  closeDialog() {
+      this.visibleBotInfo = false;
+  }
+   
+  toggleChanged() {
+    if (this.selectedInterval) {
+      this.planSelection('Yearly');
+    } else {
+      this.planSelection('Monthly');
+    }
+  }
 }
