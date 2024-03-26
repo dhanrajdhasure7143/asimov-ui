@@ -45,6 +45,7 @@ import { MyaccountComponent } from './myaccount/myaccount.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CompareValidatorDirective } from '../shared/directives/compare-validator.directive';
 import { toastMessages } from '../shared/model/toast_messages';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 //  import { ChartModule } from 'primeng/chart';
 
 
@@ -67,6 +68,9 @@ export function jwtTokenGetter() {
     MyaccountComponent,
     ChangePasswordComponent,
     CompareValidatorDirective,
+    SuccessPaymentComponent
+   
+    
   ],
   imports: [
     CommonModule,

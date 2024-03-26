@@ -167,12 +167,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   isCopilot:boolean = false;
   isNavigateCopilot:boolean = false;
   recordandplay:boolean = false;
-  // isExpand:boolean = true;
   showGroup_Overlay: boolean = false;
   groupName: string = '';
-  // groupDescription: any;
   groupForm: FormGroup;
-  path: string = "/assets/images-n/MicroBot_New.jpg";
+  path: string = "/assets/images-n/Micro-bot.png";
   showPublishButton: boolean = false;
   isMicroBot: boolean = false;
   microBotNodes_list:any[]=[];
@@ -350,7 +348,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (item: any) => item.id == connection.targetId
         );
         if (connectionNodeForTarget.selectedNodeTask == "If condition") {
-          // this.messageService.add({severity:'warn',summary:'Alert',detail:'Start Node Should not connect directly to if condition!'})
           this.toastService.showWarn('Start Node Should not connect directly to if condition!')
           setTimeout(() => {
             this.changesDecorator.detectChanges();
@@ -447,17 +444,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         source_length < 3 &&
         this.loadflag
       ) {
-        // Swal.fire({
-        //   title: "Select True/False case",
-        //   icon: "warning",
-        //   showCancelButton: true,
-        //   customClass: {
-        //     confirmButton: 'btn bluebg-button',
-        //     cancelButton: 'btn new-cancelbtn',
-        //     },
-        //   cancelButtonText: "False",
-        //   confirmButtonText: "True",
-        // }).then(
         this.confirmationService.confirm({
           message: "Select True/False case.",
           header: "Confirmation",
@@ -542,7 +528,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (connectionNodeForSource != undefined) {
           if (connectionNodeForSource.selectedNodeTask == "If condition") {
        
-            // this.messageService.add({severity:'warn',summary:'Warning',detail:'Please configure before adding connections for the if condition.'})
             this.toastService.showWarn('Please configure before adding connections for the if condition!')
             setTimeout(() => {
               this.changesDecorator.detectChanges();
@@ -635,7 +620,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           name: "START",
           selectedNodeTask: "",
           selectedNodeId: "",
-          path: "/assets/images/RPA/Stop.png",
+          path: "/assets/images/RPA/Start.png",
           x:"",
           y:""
         };
@@ -808,17 +793,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     list.splice(list.indexOf(item), 1);
   }
 
-  microBotData:any
+  microBotData:any;
 
   onDrop(event: DndDropEvent, e: any) {
-    console.log(event)
-
     this.dragelement = document.querySelector("#" + this.dragareaid);
     this.dagvalue =
       this.dragelement.getBoundingClientRect().width /
       this.dragelement.offsetWidth;
     e.event.toElement.oncontextmenu = new Function("return false;");
-
     this.stud = [];
     this.optionsVisible = true;
     const obs = fromEvent(document.body, "  ").subscribe((e) => {});
@@ -833,13 +815,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // this.dragData.tasks.forEach((element:any,i) => {
       //   var mousePos = this.getMousePos(event);
       this.spinner.show();
-      console.log(event)
       const id = event.data.id;
       this.rest.fetchMicroBot(id).subscribe((microbotData: any) => {
           // console.log("Microbot fetched:",microbotData);
           this.isMicroBot = microbotData.isMicroBot;
           this.microBotData  = microbotData
-
           let idMap:any={}
            microbotData.groups[0].nodeIds.forEach(element => {
             idMap[element]= this.idGenerator()
@@ -861,7 +841,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   x: (i*80)+mousePos.x + "px",
                   y: mousePos.y + "px",
               };
-  
               const node: any = {};
               let nodename = item.nodeId.split("__")[0];
               node.id = item.nodeId.split("__")[1];
@@ -896,7 +875,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           setTimeout(() => {
               this.addconnections(this.microBotData.sequences);
           }, 500);
-          this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData.botName);
+          this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData);
           // });
         }, 1000);
 
@@ -1137,6 +1116,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 group.remove(node.id);
             }
         });
+        this.re_ArrangeNodes();
 
         // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
         //   if (group.contains(nodeId)) { // Check if the group contains the node
@@ -1888,7 +1868,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       };
       connections.push(nodeconn);
     });
-    this.collapseAllgroups(false);
+    this.collapseAllgroups(true);
     return connections;
   }
 
@@ -2283,12 +2263,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: item.width,
         edit: false,
         color: item.color,
-        isExpand : item.isMicroBot? false: true,
+        collapsed : item.isMicroBot? true: false,
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
+        // anchor:"TopLeft",
+        orphan: true,
         endpoint:[ "Dot", { radius:4 } ],
         droppable: item.isMicroBot? false: true,
-        dropOverride:false
+        dropOverride:false,
+        microBotId: item.microBotId? item.microBotId: null,
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -2301,20 +2284,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         });
         if (check == "load")
           this.jsPlumbInstance.addGroup(_selectedGroup);
-        this.jsPlumbInstance.draggable(groupIds, {containment: true,});
+        this.jsPlumbInstance.draggable(groupIds, {containment: true});
         i++;
         if (check == "update") {
           this.jsPlumbInstance.addGroup( _selectedGroup);
-          this.jsPlumbInstance.draggable(groupIds, {containment: true,});
+          this.jsPlumbInstance.draggable(groupIds, {containment: true});
           this.savedGroupsData.find((savedGrp) => savedGrp.groupId == GroupData.id).nodeIds.forEach((sampleItem) => {
               let nodeElement: any = document.getElementById(sampleItem);
               this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement);
             });
         }
-        setTimeout(() => {
           this.minimizeGroup(this.savedGroupsData.find((group: any) => group.groupId == GroupData.id))
-          // this.jsPlumbInstance.repaintEverything();
-        }, 500);
       }, 50);
     });
   }
@@ -2523,6 +2503,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   get_coordinates() {
+    // this.toggleAllgroups()
     let container = document.getElementById('dnd_'+this.dragareaid); // Replace 'container' with the ID of your scrollable container
       this.nodes.forEach((data,index) => {
         let p: any = $("#" + data.id).first();
@@ -2926,7 +2907,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 //       description: this.groupForm.get('groupDescription').value,
 //       edit: false,
 //       color: "#4AB0F5",
-//       isExpand:true,
+//       collapsed:true,
 //       // cssClass: "custom-group-class",
 //       // endpoint:{ type:"Dot", options:{ radius:3 } }
 //     };
@@ -3004,9 +2985,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       width: "250px",
       edit: false,
       color: "#4AB0F5",
-      isExpand:true,
+      collapsed:false,
       endpoint:[ "Dot", { radius:4 } ],
       droppable: true,
+      orphan: true,
       dropOverride:false
     };
     this.groupsData.push(GroupData);
@@ -3029,7 +3011,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   removeGroup(group) {
-    console.log(group)
     if(group.isMicroBot){
         this.confirmationService.confirm({
           header:'Are you sure?',
@@ -3079,8 +3060,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       })
     }else{
-      console.log(group)
-      console.log(this.groupsData)
       this.jsPlumbInstance.removeGroup(group.id);
       let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
       if (groupIndex !== -1) {
@@ -3090,7 +3069,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   removeGroupObject(group){
-    console.log("group",group)
         this.jsPlumbInstance.remove(group.id);
         let groupdata = this.groupsData.find((item: any) => item.id==group.id);
         this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
@@ -3475,55 +3453,40 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   minimizeGroup(groupData){
-    // console.log(this.groupsData.find((group: any) => group.id == groupData.id))
-    // this.groupsData[0]['height'] = "100px";
-    // this.groupsData[0]['width'] = "90px";
-  if(groupData.isMicroBot){
-    groupData.nodeIds.forEach(id=>{
-      this.nodes.forEach(element => {
-        if(id == element.id)
-        element.isHide = true
-      });
-    })
-    groupData.isExpand = false;
-    this.jsPlumbInstance.collapseGroup(groupData.groupId);
+    console.log(groupData)
     setTimeout(() => {
-      groupData.nodeIds.forEach(element => {
+    if(groupData.isMicroBot){
+        groupData.nodeIds.forEach(element => {
+          // If the group is collapsed, hide the node
+          document.getElementById(element).style.display = 'none';
+      });
+      this.jsPlumbInstance.collapseGroup(groupData.id);
+      this.re_ArrangeNodes();
+    }
+  }, 100);
+  }
+
+  onExpandGroup(group,index){
+    let nodesIds = this.collectGroupIds(group.id)
+      nodesIds.forEach(element => {
+        document.getElementById(element).style.display = 'block'; // or 'inline' or any other appropriate value
+    });
+      this.groupsData[index].collapsed = false;
+    this.jsPlumbInstance.expandGroup(group.id);
+    this.re_ArrangeNodes()
+    group.collapsed = false;
+  }
+
+  onCollapseGroup(group,index){
+    let nodesIds = this.collectGroupIds(group.id)
+      nodesIds.forEach(element => {
         // If the group is collapsed, hide the node
         document.getElementById(element).style.display = 'none';
     });
+    group.collapsed = true;
+    this.groupsData[index].collapsed = true;
+    this.jsPlumbInstance.collapseGroup(group.id);
     this.re_ArrangeNodes();
-    }, 500);
-  }
-  }
-
-  
-  onExpandCollapseGroup(group){
-    console.log("seletedGroup",group)
-    group.isExpand = !group.isExpand;
-    // let connectedNodes = this.jsPlumbInstance.getGroup(group.id).getMembers();
-    let nodesIds = this.collectGroupIds(group.id)
-    nodesIds.forEach(each=>{
-    this.nodes.forEach(node=>{
-      if(each == node.id){
-        console.log("testing",each)
-        node.isHide = !node.isHide
-      }
-    })
-  });
-  // group["endpoint"]={ type:"Dot", options:{ radius:3 } }
-  nodesIds.forEach(element => {
-  if (group && !group.isExpand) {
-    // If the group is collapsed, hide the node
-    document.getElementById(element).style.display = 'none';
-} else {
-    // If the group is expanded, show the node
-    document.getElementById(element).style.display = 'block'; // or 'inline' or any other appropriate value
-}
-});
-
-  this.jsPlumbInstance.toggleGroup(group.id);
-  this.re_ArrangeNodes();
   }
 
   calculateAdjustedPosition(averagePosition, dimensions) {
@@ -3583,18 +3546,25 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }, 50);
   }
 
-  publishGroup(group:any) {
-    // this.generatePayload("","",group);
-    if(this.collectGroupIds(group.id).length == 0){
+  publishGroup(group:any,index) {
+
+    let groupNodes = [] = this.collectGroupIds(group.id);
+
+    if(groupNodes.length == 0){
       this.toastService.showError('Please add tasks to the group!');
       return;
     }
-    console.log("publish Bot Payload",group)
-    // console.log(`Publishing group with ID: ${group.id}`);
+    if(groupNodes.includes('START_'+this.finalbot.botName)){
+      this.toastService.showError('Please remove start task from group');
+      return;
+    }
+    if(groupNodes.includes('STOP_'+this.finalbot.botName)){
+      this.toastService.showError('Please remove stop task from group');
+      return;
+    }
     this.spinner.show();
     let payload = this.generateMicroBotPayload(group);
   console.log(payload,this.groupsData)
-  console.log("micro bot payload---",JSON.stringify(payload));
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
       let parsedResponce = JSON.parse(response)
@@ -3605,25 +3575,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
       if (parsedResponce.code == 4200) {
         this.toastService.showSuccess('Microbot published successfully!', 'response');
-        console.log(this.groupsData)
         this.groupsData.map((item: any) =>{ 
           if(item.id == group.id) {
           item.isMicroBot = true
-          item.isExpand = false
-          item.droppable = false
+          item.collapsed = true
+          item.droppable= false
+          item["microBotId"]= parsedResponce.microBotId? parsedResponce.microBotId: null
           }
         })
-        this.collectGroupIds(group.id).forEach(element => {
-          if (group && !group.isExpand) {
-            document.getElementById(element).style.display = 'none';
-        } else {
-            document.getElementById(element).style.display = 'block'; // or 'inline' or any other appropriate value
-        }
-        });
-        setTimeout(() => {
-          this.jsPlumbInstance.collapseGroup(group.id)
-          this.re_ArrangeNodes();          
-        }, 500);
+        this.onCollapseGroup(group,index)
         this.refreshMicroBotsList();
           this.isMicroBot = true;
       } else{
@@ -3691,25 +3651,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         // botId: group.id,
         description: group.description,
         department: this.finalbot.department,
-        // tasks: microBot_TasksList,
         tasks: final_tasks,
         groups: this.getMicroBotGroupsInfo(group),
         sequences: this.getMicroBotGroupSequences(group),
         isMicroBot: true,
-        // versionType: "",
-        // comments: "",
-        // version: ,
-        // botType: this.finalbot.botType,
-        // botMainSchedulerEntity: null,
-        // envIds: env,
-        // isPredefined: this.finalbot.predefinedBot,
-        // createdBy: "admin",
-        // lastSubmittedBy: "admin",
-        // scheduler: null,
-        // svg: "",
-        // isBotCompiled: this.isBotCompiled,
-        // executionMode: this.executionMode?"v1":"v2",
-        // startStopCoordinate:this.startStopCoordinates,
       };
         console.log("_microBot_payload8888888",_microBot_payload)
         return _microBot_payload;
@@ -3717,17 +3662,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   getMicroBotGroupSequences(group) {
     let groupNodesId=this.collectGroupIds(group.id);
-      // var connectionsInCollapsedGroup = this.jsPlumbInstance.getAllConnections().filter(function(connection) {
-      //   var sourceId = connection.sourceId;
-      //   var targetId = connection.targetId;
-      //   return nodesIds.some(function(node) {
-      //       return node.id === sourceId || node.id === targetId;
-      //   });
-      // })
-
     let connections: any = [];
-    // this.jsPlumbInstance.collapseGroup(group.id);
-    
     this.jsPlumbInstance.getAllConnections().forEach((data) => {
       groupNodesId.forEach(element => {
         if ((element == data.sourceId && element != data.targetId) || (element != data.sourceId && element == data.targetId)) {
@@ -3747,13 +3682,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (!groupNodesId.includes(sequence.sourceTaskId)) {
           sequence.sourceTaskId = null;
       }
-      
       // Check if targetTaskId exists in nodeIds
       if (!groupNodesId.includes(sequence.targetTaskId)) {
           sequence.targetTaskId = null;
       }
   });
-  console.log(finalValue)
     return finalValue
   }
 
@@ -3767,21 +3700,25 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     );
   }
 
-  addGroupOnLoad(item,dropCoordinates,nodes,botName){
+  addGroupOnLoad(item,dropCoordinates,nodes,botData){
     let GroupData: any = {
       id: this.idGenerator(),
       el: undefined,
-      groupName: botName,
+      groupName: botData.botName,
       x: dropCoordinates.x,
       y: dropCoordinates.y,
       height: item.height,
       width: item.width,
       edit: false,
       color: "#4AB0F5",
-      isExpand: true,
+      collapsed: false,
       isMicroBot: true,
-      description: item.description
-      // endpoint:{ type:"Dot", options:{ radius:3 } }
+      description: item.description,
+      microBotId: botData.id,
+      endpoint:[ "Dot", { radius:4 } ],
+      droppable: false,
+      orphan:true,
+      dropOverride:false
     };
     this.groupsData.push(GroupData);
     console.log(this.groupsData)
@@ -3835,11 +3772,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.groupsData.forEach(group => {group.id
       if(group.isMicroBot){
         this.jsPlumbInstance.collapseGroup(group.id);
-        group.isExpand = false;
+        group.collapsed = true;
         if(value){
           this.collectGroupIds(group.id).forEach(element => {
               // If the group is collapsed, hide the node
-              document.getElementById(element).style.display = 'none';
+              let node = document.getElementById(element);
+              if (node !== null) {
+                  node.style.display = "none";
+              }
           });
         }
         this.re_ArrangeNodes();
@@ -3851,7 +3791,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.groupsData.forEach(group => {group.id
       if(group.isMicroBot){
           this.jsPlumbInstance.toggleGroup(group.id)
-          group.isExpand = !group.isExpand
+          group.collapsed = !group.collapsed
+          if(!group.collapsed)
+          this.collectGroupIds(group.id).forEach(element => {
+        let node = document.getElementById(element);
+        if (node !== null) {
+            node.style.display = 'block';
+        }
+          });
       }
       });
   }
@@ -3905,10 +3852,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       });
     });
-    // for (let i = 0; i < this.finaldataobjects.length; i++) {
-    //   tasksList[i].inSeqId = 0;
-    //   tasksList[i].outSeqId = 0;
-    // }
     this.jsPlumbInstance.getAllConnections().forEach((dataobject) => {
       let source = dataobject.sourceId;
       let target = dataobject.targetId;

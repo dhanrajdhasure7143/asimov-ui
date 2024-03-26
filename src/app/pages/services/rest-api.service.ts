@@ -1912,4 +1912,16 @@ sendEmailEntrepricePlan(userId:string){
 getBillingInfo(){
   return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
 }
+
+getPredifinedRawBots(){
+  return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
+}
+
+getPaymentCards(){
+  return this.http.get("/subscriptionservice/v1/paymentmethods/payments-cards")
+}
+
+  updateSubscriptionDetails(body,sessionId){
+    return this.http.post("/subscriptionservice/v1/subscriptions/update-session-subscriptions?sessionId="+sessionId,body)
+  }
 }

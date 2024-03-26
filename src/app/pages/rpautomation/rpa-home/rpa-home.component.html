@@ -602,15 +602,15 @@
             <div class="row" *ngIf="!(import_BotData)" >
                 <div class="form-fields col-md-12 p-0">
                     <label>Browse File</label>
-                    <input type="file"  pInputText [style]="{'width':'100%'}"    name="file" (change)="onFileChange($event)" id="file"   />
-                    <span class="required">{{file_error}}</span>
+                    <input type="file" pInputText [style]="{'width':'100%'}" name="file" (change)="onFileChange($event)" id="file" accept=".txt" />
+                    <span class="required" *ngIf="error_message">Please use valid file</span>
                 </div>
             </div>
         </div>
     </div>
         <ng-template pTemplate="footer">
         <button (click)="onCancelImport()" class="btn new-cancelbtn"> Cancel</button>
-        <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importEncryptedBotData()">Import</button>
+        <button class="btn bluebg-button btn-update" [disabled]="importBotForm.invalid || checkbotname "  (click)="importbotData()">Import</button>
         </ng-template>
 </p-dialog>
 
@@ -709,10 +709,10 @@
                         <p-radioButton name="configurations" value="withoutConfig" (onClick)="onchangeCustomConfig()" [(ngModel)]="exportType" inputId="configurations2"></p-radioButton>
                         <label class="export-type-label" for="configurations2">Without Configurations</label>
                     </div>
-                    <div class="p-field-radiobutton form-group col">
+                    <!-- <div class="p-field-radiobutton form-group col">
                         <p-radioButton name="configurations" value="customConfig" (onClick)="onchangeCustomConfig()" [(ngModel)]="exportType" inputId="configurations3"></p-radioButton>
                         <label class="export-type-label" for="configurations3">Custom Configurations</label>
-                    </div>
+                    </div> -->
                 </div>
                     <div class="form-group col pr-0" style="margin-left: 20px;" *ngIf="exportType == 'customConfig'">
                         <label class="label-control">Tasks List<span class="star">*</span></label>
