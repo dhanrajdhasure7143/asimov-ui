@@ -220,6 +220,7 @@ hideDescription() {
 
 paymentPlan() {
   this.spinner.show();
+  this.payment_methods_overlay = false;
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
@@ -241,9 +242,10 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL
+    "cancelUrl": environment.paymentFailuerURL,
+    "paymentMethodId": this.selectedCard,
   };
-  console.log("PLAN_ID's", req_body);
+  console.log("PLAN_ID's", this.selectedCard);
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
