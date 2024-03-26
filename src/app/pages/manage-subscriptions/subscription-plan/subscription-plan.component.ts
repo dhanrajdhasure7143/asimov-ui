@@ -367,8 +367,10 @@ readValue(value){
 getPaymentMethods(){
   this.spinner.show();
   this.rest.getPaymentCards().subscribe((res : any)=>{
-    if (Array.isArray(res)) {
-      this.paymentCards = res;
+  
+    if (res.code == 5075) {
+      this.paymentCards = res.data
+      console.log(this.paymentCards,"payment cards")
       this.spinner.hide();
       if(this.paymentCards.length>0){
         // this.payment_methods_overlay = true;
@@ -388,10 +390,12 @@ getPaymentMethods(){
 }
 
 getPaymentCards(){
+  console.log(this.paymentCards,"payment cards")
+
   if(this.paymentCards.length>1){
     this.payment_methods_overlay = true
   }else{
-    this.paymentPlan();
+    // this.paymentPlan();
   }
 }
 
