@@ -24,6 +24,7 @@ export class ManageSubscriptionsComponent implements OnInit {
   index: number;
   activeIndex :number=0
   check_tab=0
+  isbillingInfoEnable:boolean = true;
   constructor(public obj: PagesComponent, private rest_service: RestApiService,
     private spinner: LoaderService,private route: ActivatedRoute,private router:Router) {
        this.route.queryParams.subscribe((data) => {
@@ -35,80 +36,23 @@ export class ManageSubscriptionsComponent implements OnInit {
     });}
 
   ngOnInit(): void {
-
-    let active_module = localStorage.getItem('selectedModule')
-    if (active_module) {
-      let selected_module = active_module.split('&')
-      $('.link').removeClass('active');
-      $('#' + selected_module[0]).addClass("active");
-      if (selected_module[1]) {
-        $('#' + selected_module[1]).addClass("active");
-      }
-    } else {
-      localStorage.setItem('selectedModule', 'eiap-home&' + null);
-      $('#eiap-home').addClass("active");
-    }
-
+    this.getBillingIfStatus();
     this.userRoles = localStorage.getItem("userRole")
-
   }
-
-
-  // hightlight(element, name) {
-  //   this.spinner.show();
-  //   localStorage.setItem('selectedModule', element + '&' + name)
-  //   $('.link').removeClass('active');
-  //   $('#' + element).addClass("active");
-  //   if (name) {
-  //     $('#' + name).addClass("active");
-  //   }
-  //   this.obj.sideBarOpen = false;
-  //   this.obj.sidebar.showSubmenu = false;
-  //   this.obj.sidebar.showadminSubmenu = false;
-  //   this.obj.contentMargin = 60;
-
-  //   if (element == "currentplan") {
-  //     this.billingaddresssection = false
-  //     this.currentplansection = true
-  //     this.paymentmethodssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (element == "paymentmethods") {
-  //     this.paymentmethodssection = true
-  //     this.currentplansection = false
-  //     this.billingaddresssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (element == "billing") {
-  //     this.billingaddresssection = true
-  //     this.currentplansection = false
-  //     this.paymentmethodssection = false
-  //     this.paymenthistorysection = false
-  //     this.orderdetailssection = false
-  //   } if (element == "paymenthistory") {
-  //     this.paymenthistorysection = true
-  //     this.billingaddresssection = false
-  //     this.currentplansection = false
-  //     this.paymentmethodssection = false
-  //     this.orderdetailssection = false
-  //   }
-  //   if (element == "order") {
-  //     this.orderdetailssection = true
-  //     this.paymenthistorysection = false
-  //     this.billingaddresssection = false
-  //     this.currentplansection = false
-  //     this.paymentmethodssection = false
-  //   }
-  //   this.spinner.hide();
-  // }
 
   handleChange(event,tabView) {
     const tab = tabView.tabs[event.index].header;
     this.activeIndex = event.index;
     this.check_tab = event.index;
     this.router.navigate([],{ relativeTo:this.route, queryParams:{index:event.index} })
+  }
+
+  getBillingIfStatus() {
+    this.rest_service.getBillingInfoStatus().subscribe((data:any) => {
+      console.log(data,"billingInfoStatus")
+      if(data)
+        this.isbillingInfoEnable = data.status;
+    })
   }
   
 }

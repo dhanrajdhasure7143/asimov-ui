@@ -1928,4 +1928,8 @@ getPaymentCards(){
   getTasksAttributesForSeletedTasks(){
     return this.http.get("/rpa-service/fetch-attributes-by-task-names")
   }
+
+  getBillingInfoStatus(){
+    return this.http.get("/subscriptionservice/v1/billingContact/customer-cards-check")
+  }
 }

@@ -85,36 +85,23 @@ export class PaymentMethodsComponent implements OnInit {
 
   getAllPaymentmodes() {
     this.spinner.show();
-    this.api.listofPaymentModes().subscribe(response => {
-     
-       this.paymentMode = response 
-       if(this.paymentMode.message=='Billing account not found'){
-         this.error="Billing account not found."
-      //   Swal.fire({
-      //     title: 'Error',
-      //     text: "Billing account not found.",
-      //     position: 'center',
-      //     icon: 'error',
-      //     showCancelButton: false,
-      //     confirmButtonColor: '#007bff',
-      //     cancelButtonColor: '#d33',
-      //     heightAuto: false,
-      //     confirmButtonText: 'Ok'
-      // })
+    // this.api.listofPaymentModes().subscribe(response => {
+    this.api.getPaymentCards().subscribe((response:any) => {
+        if(response.data.length > 0){
+          this.paymentMode = response.data 
+            // let result = this.paymentMode.filter(obj => {
+            // return obj.defaultSource === true
+            // })
+            this.paymentMode.sort((a, b) => {
+              if (a.defaultSource) return -1;
+              if (b.defaultSource) return 1;
+              return 0;
+            });
       }
-      else{
-        let result = this.paymentMode.filter(obj => {
-         return obj.defaultSource === true
-        })
-
-      }
-      //   localStorage.setItem('cardId',result[0].id)
-      //  localStorage.setItem('cardExpMonth',result[0].cardExpMonth)
-      //  localStorage.setItem('cardExpYear',result[0].cardExpYear)
-      //   localStorage.setItem('cardholdername',result[0].name)
-      //  localStorage.setItem('cardLast4',result[0].cardLast4)
       this.spinner.hide();
-        });
+    },err=>{  
+      this.spinner.hide();
+    });
   }
 
   
