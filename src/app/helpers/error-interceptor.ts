@@ -26,12 +26,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     checkErrorCodes(err, reqUrl?){
         var _self = this;
         if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
-            if(err.error.errorMessage){
+            // if(err.error.errorMessage){
                 this.authenticationService.logout();
                 //  _self.router.navigate(['/timeout']);
                 location.reload();
                  window.location.href=this.config.platform_home_url+'timeout'
-            } 
+            // }
        } else if (err.status === 502 || err.status === 503 || err.status === 504)  {
             this.authenticationService.logout();
             location.reload();

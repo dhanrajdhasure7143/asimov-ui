@@ -133,8 +133,9 @@ export class RpaHomeComponent implements OnInit {
   importBot_overlay:boolean = false;
   filteredEnvironments:any=[];
   taskAttributes:any[]=[];
-  tasksList_ForAttribute:any[]=["For","Assign","List","Multi Assign","List To HTML Table","Json To List","Read Columns","Dictionary","If","Clone Excel","Add Column Header","File Search","Get Folders","Get site ID","Creat Folder","Get Driver ID","Copy File","Create Raw folder","Get Text","Clone Excel"];
+  task_list:any[]=[];
   error_message:boolean = false;
+  tasksList_ForAttribute:any[]=[]
 
   constructor(
     private rest: RestApiService,
@@ -1110,48 +1111,38 @@ importBot(){
       this.file_error = "";
       this.importcat = "";  
       this.error_message = false;
+      this.getTasksAttributes();
+  }
+
+  getTasksAttributes(){
+    this.taskAttributes=[];
+    this.tasksList_ForAttribute =[];
+    this.rest.getTasksAttributesForSeletedTasks().subscribe((response:any)=>{
+      if(response){
+        this.taskAttributes = response.data;
+        this.tasksList_ForAttribute = response.taskList
+      }
+    });
+    this.getTasksList();
+  }
+
+  getTasksList(){
+    this.task_list=[];
+    this.rest.toolSet().subscribe(async (response:any)=>{
+      response.General.forEach((element) => {
+        this.task_list.push(element);
+      });
+      response.Advanced.forEach(element => {
+        this.task_list.push(element);
+      });
+    },err=>{
+      this.toastService.showError("Failed to fetch tasks");
+    })
   }
 
  async getRplacedTaskIds(botData){
-  console.log(botData)
-    let task_list=[];
-    this.taskAttributes=[];
-    this.rest.toolSet().subscribe(async (response:any)=>{
-
-      // response.Advanced.forEach(element => {
-      //   element.taskList.forEach(item => {
-      //   task_list.push(item)
-      //   });
-      // });
-      await response.General.forEach((element) => {
-        task_list.push(element)
-        // if(element.name == "Developer "){
-          // botData.tasks.forEach(item_task => {
-            element.taskList.forEach(item => {
-              // if(item_task.taskName == item.name){
-                this.tasksList_ForAttribute.forEach(async (each, i) => {
-                  if (item.name === each) {
-                    await this.rest.attribute(Number(item.taskId), null).subscribe((res: any) => {
-                      let obj = { "taskName": item.name, "attributes": res };
-                      this.taskAttributes.push(obj);
-                    });
-                  }
-                });
-              // }
-          });
-        // }
-        // })
-      });
-
-      response.Advanced.forEach(element => {
-        task_list.push(element)
-      });
-      // response.General.forEach(element => {
-          // task_list.push(element)
-      // });
-      //  return
        setTimeout(async () => {
-        let generatedPyload :any= await this.generateImportPayload(task_list,botData);
+        let generatedPyload :any= await this.generateImportPayload(this.task_list,botData);
         console.log("generatedPyload",generatedPyload)
 
           // console.log("generatedPyload",JSON.stringify(generatedPyload));
@@ -1168,7 +1159,6 @@ importBot(){
         this.toastService.showError(this.toastMessages.botConfigError);
       })
        }, 1000);
-    })
   }
 
   generateImportPayload(task_list,botData){
@@ -1182,23 +1172,24 @@ importBot(){
     if(this.hasData(filteredTasks)){
     tasks = filteredTasks.taskList.find(item =>{return item.name == element.taskName });
         if(this.hasData(tasks)){
-          if(element.taskName == "Database Connection"){
-            element["taskName"] = depractedTask.name;
-            element["tMetaId"] = Number(depractedTask.taskId);
-            element["attributes"] = [];
-            element["nodeId"] = "Developer __"+splitValue[1]
-            element["taskConfiguration"] = "null"
-            element["isConnectionManagerTask"] = false
-            element["actionUUID"] = "null"
-          }else if(element.taskName == "Login Mail"){
-            element["taskName"] = depractedTask.name;
-            element["tMetaId"] = Number(depractedTask.taskId);
-            element["attributes"] = [];
-            element["nodeId"] = "Developer __"+splitValue[1]
-            element["taskConfiguration"] = "null"
-            element["isConnectionManagerTask"] = false
-            element["actionUUID"] = "null"
-          } else if(element.isConnectionManagerTask && tasks.name != element.taskName){
+        //   if(element.taskName == "Database Connection"){
+        //     element["taskName"] = depractedTask.name;
+        //     element["tMetaId"] = Number(depractedTask.taskId);
+        //     element["attributes"] = [];
+        //     element["nodeId"] = "Developer __"+splitValue[1]
+        //     element["taskConfiguration"] = "null"
+        //     element["isConnectionManagerTask"] = false
+        //     element["actionUUID"] = "null"
+        //   }else if(element.taskName == "Login Mail"){
+        //     element["taskName"] = depractedTask.name;
+        //     element["tMetaId"] = Number(depractedTask.taskId);
+        //     element["attributes"] = [];
+        //     element["nodeId"] = "Developer __"+splitValue[1]
+        //     element["taskConfiguration"] = "null"
+        //     element["isConnectionManagerTask"] = false
+        //     element["actionUUID"] = "null"
+          // } else if(element.isConnectionManagerTask && tasks.name != element.taskName){
+          if(element.isConnectionManagerTask){
               element["taskName"] = depractedTask.name;
               element["tMetaId"] = Number(depractedTask.taskId);
               element["attributes"] = [];

@@ -1924,4 +1924,8 @@ getPaymentCards(){
   updateSubscriptionDetails(body,sessionId){
     return this.http.post("/subscriptionservice/v1/subscriptions/update-session-subscriptions?sessionId="+sessionId,body)
   }
+
+  getTasksAttributesForSeletedTasks(){
+    return this.http.get("/rpa-service/fetch-attributes-by-task-names")
+  }
 }
