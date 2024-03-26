@@ -1917,4 +1917,7 @@ getPredifinedRawBots(){
   return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
 }
 
+getPaymentCards(){
+  return this.http.get("/subscriptionservice/v1/paymentmethods/payments-cards")
+}
 }

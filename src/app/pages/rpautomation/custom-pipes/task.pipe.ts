@@ -16,7 +16,8 @@ export class TaskPipe implements PipeTransform {
           selectedNodeId:task.taskId,
           action_uid:task.action_uid,
           tasks:nodedata.tasks,
-          isConnectionManagerTask:task.isConnectionManagerTask
+          isConnectionManagerTask:task.isConnectionManagerTask,
+          visibulity:task.visibulity?task.visibulity:"true"
         };
         if(task.taskIcon!="null" && task.taskIcon !="")
           updatedTaskObj["path"]='data:image/png;base64,'+task.taskIcon;
