@@ -1914,4 +1914,9 @@ sendEmailEntrepricePlan(userId:string){
 getBillingInfo(){
   return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
 }
+
+getPredifinedRawBots(){
+  return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
+}
+
 }
