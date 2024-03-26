@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PagesComponent } from './pages.component';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,9 @@ const routes: Routes = [
     {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
     {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
     {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
-    {path:'**', redirectTo:'/home', pathMatch:"full"}
+    {path:'success',component:SuccessPaymentComponent},
+    {path:'**', redirectTo:'/home', pathMatch:"full"},
+
   ]}
 ];
 
