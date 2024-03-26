@@ -1095,28 +1095,49 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         acceptIcon: 'null',
         key: "designerWorkspace",
       accept:() => {
-        this.nodes.splice(this.nodes.indexOf(node), 1);
-        this.jsPlumbInstance.remove(node.id);
-        let nodeId = node.name + "__" + node.id;
-        let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
-        if (task != undefined) {
-          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
-        }
+        // this.nodes.splice(this.nodes.indexOf(node), 1);
+        // this.jsPlumbInstance.remove(node.id);
+        // let nodeId = node.name + "__" + node.id;
+        // let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
+        // if (task != undefined) {
+        //   this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
+        // }
         var groups:any[]=[]
         groups = this.jsPlumbInstance.getGroups();
         // Iterate over each group
         console.log("groups",groups)
-        groups.forEach((group)=> {
-            // Check if the group contains the node
-            let connectedNodes = this.collectGroupIds(group.id);
-            if (connectedNodes.includes(node.id)) {
-              // Remove the node from the group
-              console.log("accepted", group.id, node.id)
-              // this.jsPlumbInstance.removeFromGroup(node.id, group.id);
-                group.remove(node.id);
-            }
-        });
-        this.re_ArrangeNodes();
+        if(groups.length == 0){
+          this.nodes.splice(this.nodes.indexOf(node), 1);
+          this.jsPlumbInstance.remove(node.id);
+          let nodeId = node.name + "__" + node.id;
+          let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
+          if (task != undefined) {
+            this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
+          }
+        }else{
+          groups.forEach((group)=> {
+              // Check if the group contains the node
+              let connectedNodes = this.collectGroupIds(group.id);
+              if (connectedNodes.includes(node.id)) {
+                // Remove the node from the group
+                console.log("accepted", node.id, group.id)
+                  try {
+                    let element: any = document.getElementById(node.id)
+                      this.jsPlumbInstance.removeFromGroup(group.id, element);
+                      this.nodes.splice(this.nodes.indexOf(node), 1);
+                      this.jsPlumbInstance.remove(node.id);
+                      let nodeId = node.name + "__" + node.id;
+                      let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
+                      if (task != undefined) {
+                        this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
+                      }
+                      this.re_ArrangeNodes();
+                  } catch (error) {
+                      console.error("Error removing element from group:", error);
+                  }
+              }
+          });
+        }
 
         // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
         //   if (group.contains(nodeId)) { // Check if the group contains the node
@@ -2047,6 +2068,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateFinalBot(version_type:any, comments:any){
+    let isGroupEmpty: boolean = false;
+   let groups = [] = this.jsPlumbInstance.getGroups();
+    groups.forEach((group)=> {
+      let connectedNodes =[] = this.collectGroupIds(group.id);
+      if(connectedNodes.length == 0 || connectedNodes == undefined|| connectedNodes.length == 1){
+        isGroupEmpty = true;
+      }
+    })
+    if(isGroupEmpty){
+      this.toastService.showInfo(this.toastMessages.groupEmptyError);
+      return;
+    }
     let env = [...this.filteredEnvironments.filter((item: any) => item.check == true).map((item2: any) => {
           return item2.environmentId;
         }),];
@@ -2139,7 +2172,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       } else {
           console.log("saveBotdata",this.saveBotdata);          
         let previousBotDetails: any = { ...{}, ...this.finalbot };
-        this.assignTaskConfiguration();
+        // this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
           (response: any) => {
             this.spinner.hide();
@@ -3043,28 +3076,43 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   }
                   if(index == groupNodes.length-1){
                     this.removeGroupObject(group)
-                    console.log("group_If",group)
+                  // Remove microbot from payload
+                  let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+                  if (savedGroupsData !== -1) {
+                    this.savedGroupsData.splice(savedGroupsData, 1);
+                  }
                   }
                 }else{
                   if(index == groupNodes.length-1){
                     this.jsPlumbInstance.remove(group.id);
                     let groupdata = this.groupsData.find((item: any) => item.id==group.id);
                     this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
-                    console.log("group_else",group)
+                    let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+                    if (savedGroupsData !== -1) {
+                      this.savedGroupsData.splice(savedGroupsData, 1);
+                    }
                   }
                 }
             });
           } else{
-            this.removeGroupObject(group)                  
+            this.removeGroupObject(group)
+            // Remove microbot from payload
+            let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+            if (savedGroupsData !== -1) {
+              this.savedGroupsData.splice(savedGroupsData, 1);
+            }
           }
         }
       })
     }else{
+      console.log("group_else",group)
       this.jsPlumbInstance.removeGroup(group.id);
+      setTimeout(() => {
       let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
-      if (groupIndex !== -1) {
-        this.groupsData.splice(groupIndex, 1);
-      }
+        if (groupIndex !== -1) {
+          this.groupsData.splice(groupIndex, 1);
+        }  
+      }, 2000);
     }
   }
 
@@ -3550,8 +3598,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let groupNodes = [] = this.collectGroupIds(group.id);
 
-    if(groupNodes.length == 0){
-      this.toastService.showError('Please add tasks to the group!');
+    if (groupNodes.length === 0) {
+      this.toastService.showInfo('Please add tasks to the group!');
+      return;
+    }
+    if (groupNodes.length === 1) {
+      this.toastService.showInfo(this.toastMessages.groupEmptyError);
       return;
     }
     if(groupNodes.includes('START_'+this.finalbot.botName)){
@@ -3564,7 +3616,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     this.spinner.show();
     let payload = this.generateMicroBotPayload(group);
-  console.log(payload,this.groupsData)
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
       let parsedResponce = JSON.parse(response)
@@ -3581,6 +3632,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           item.collapsed = true
           item.droppable= false
           item["microBotId"]= parsedResponce.microBotId? parsedResponce.microBotId: null
+          setTimeout(() => {
+            this.jsPlumbInstance.repaintEverything();
+          }, 500);
           }
         })
         this.onCollapseGroup(group,index)
