@@ -1892,10 +1892,12 @@ getCustomTasksbyId(id : any){
   return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
 }
 
-deleteMicroBot(microBotId: string) {
-  return this.http.get('https://dummyjson.com/products/1');
+deleteMicroBot(microBotId: any) {
+  return this.http.get(`/rpa-service/fetch-used-botnames-in-microbot/${microBotId}`);
 }
-
+deleteMicrobotFromList(microBotId: any) {
+  return this.http.post(`/rpa-service/delete-microbot/${microBotId}`,"");
+}
 loadPredefinedBots(): Observable<any>{
   return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
 }
