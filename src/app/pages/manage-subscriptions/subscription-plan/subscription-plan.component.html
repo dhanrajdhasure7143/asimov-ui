@@ -126,8 +126,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="details-right text-right" style="margin: 10px 0 0 0;">
-                        <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
+                    <div class=" text-right" style="margin: 10px 0 0 0;">
+                        <button type="button" class="btn bluebg-button" (click)="getPaymentCards()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
                     </div>
                 </div>
             </div> 
@@ -136,8 +136,40 @@
     </div>
 </div>
 
+<div *ngIf="payment_methods_overlay">
+<p-dialog [(visible)]="payment_methods_overlay" [modal]="true" [responsive]="true" [style]="{width: '40vw'}">
+    <ng-template pTemplate="header">
+        <h4>Select Payment Card</h4>
+    </ng-template>
+    <div *ngFor="let card of paymentCards">
+        <div>
+        <h6> Card Holder Name : {{ card.name }} <span class="required" *ngIf="card.defaultSource">Default</span></h6>
+            <!-- <label for="">Cards List</label> -->
+            <!-- <div *ngFor="let card of each.paymentCards" class="cards-list"> -->
+                <p-radioButton name="cardSelection" [(ngModel)]="selectedCard" [value]="card.id"></p-radioButton> &nbsp;
+                    <label class="label-control ">
+                        <strong>{{ card.cardBrand|titlecase }} card ending with {{ card.cardLast4 }}</strong>
+                        <span> Expires: {{ card.cardExpMonth }}/{{ card.cardExpYear }}</span>
+                    </label>
+            <!-- </div> -->
+            <!-- <div *ngIf="card.id == selectedCard" class="col-3">
+                    <label class="label-control">CVV</label>
+                    <input type="text" [(ngModel)]="cvv" name="card_cvv" pInputText placeholder="Enter CVV" minlength="3" maxlength="4" class="form-control data">
+            </div> -->
+        </div>
+    </div>
+    <!-- <div>
+        <br>
+        <p-radioButton name="cardSelection" [(ngModel)]="selectedCard" value="add"></p-radioButton> &nbsp;
+        <label class="label-control add-card">Add New Card</label>
 
-
+    </div> -->
+    <ng-template pTemplate="footer">
+        <button class="btn new-cancelbtn" (click)="cancelPayment()">Cancel</button>
+        <button class="btn bluebg-button" (click)="paymentPlan()">Make Payment</button>
+    </ng-template>
+</p-dialog>
+</div>
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
   </ngx-spinner>
