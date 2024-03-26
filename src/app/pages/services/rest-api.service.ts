@@ -1305,8 +1305,8 @@ getProgrmaDetailsById(programid){
     // return this.http.get<any>('/subscriptionservice/v1/subscriptions');
       return this.http.get<any>('/subscriptionservice/v1/subscriptions/get-all-subscription-details');
   }
-  cancelSubscription(data): Observable<any> {
-    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  cancelSubscription(subscriptionId): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + subscriptionId + '/cancel?isImmediateCancel=' + false, { responseType: 'json' });
   }
   invoicedownload(invoiceId): Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })

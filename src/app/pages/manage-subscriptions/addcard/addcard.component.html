@@ -1,41 +1,20 @@
-<form class="checkout-form" [formGroup]="paymentForm">
 
-  <input type="text" formControlName="name" placeholder="Name"/>
-  <!-- <input type="text" formControlName="email" placeholder="Email"> -->
-  <!-- <input type="number" formControlName="amount" placeholder="Amount"/> -->
 
-  <h2>Create Token Example</h2>
-    <ngx-stripe-card
-    [options]="cardOptions"
-    [elementsOptions]="elementsOptions"
-    ></ngx-stripe-card>
-    <button type="submit" (click)="createToken()">
-    CREATE TOKEN
-    </button>
-
-  <!-- <div class="stripe-card" ngxStripeCardGroup [elementsOptions]="elementsOptions">
-    <h4>Enter payment details</h4>
-
-    <div class="stripe-element">
-      <ngx-stripe-card-number
-        [options]="cardOptions"
-        [elementsOptions]="elementsOptions"
-      ></ngx-stripe-card-number>
-    </div>
-
-    <div fxLayout="row" fxLayoutGap="10px">
-      <div class="w-full stripe-element">
-        <ngx-stripe-card-expiry
-          [options]="cardOptions"
-        ></ngx-stripe-card-expiry>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" [formGroup]="paymentForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" formControlName="name">
       </div>
-      <div class="w-full stripe-element">
-        <ngx-stripe-card-cvc
+      <div class="form-group">
+        <ngx-stripe-card
           [options]="cardOptions"
-        ></ngx-stripe-card-cvc>
+          (on)="onChange($event)"
+          [elementsOptions]="elementsOptions"
+        ></ngx-stripe-card>
       </div>
+      <button class="btn btn-success"(click)="buy()">CLICK</button>
     </div>
-  </div> -->
-
-  <!-- <button type="submit" (click)="pay(payment_method)">Submit Payment</button> -->
-</form>
+  </div>
+</div>

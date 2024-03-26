@@ -6,16 +6,17 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
-import { StripeCardNumberComponent, StripeService } from 'ngx-stripe';
+import { StripeCardNumberComponent, StripeService, StripeCardComponent } from 'ngx-stripe';
 import {
   StripeCardElementOptions,
   StripeElementsOptions,
-} from '@stripe/stripe-js';
+  PaymentIntent,
+} from '@stripe/stripe-js'
 
 @Component({
   selector: 'app-addcard',
   templateUrl: './addcard.component.html',
-  styleUrls: ['./addcard.component.css']
+  styleUrls: ['./addcard.component.css'],
 })
 export class AddcardComponent implements OnInit {
 
@@ -29,16 +30,16 @@ export class AddcardComponent implements OnInit {
   @Output() onBack = new EventEmitter<any>();
   @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
 
-  public cardOptions: StripeCardElementOptions = {
+  cardOptions: StripeCardElementOptions = {
     style: {
       base: {
-        fontWeight: 400,
-        fontFamily: 'Circular',
-        fontSize: '14px',
         iconColor: '#666EE8',
-        color: '#002333',
+        color: '#31325F',
+        fontWeight: '300',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: '18px',
         '::placeholder': {
-          color: '#919191',
+          color: '#CFD7E0',
         },
       },
     },
@@ -125,4 +126,29 @@ console.log(p)
 
   }
   
+  stripeCardValid: boolean = false;
+  @ViewChild(StripeCardComponent) card1: StripeCardComponent;
+
+
+  get validForm() {
+    return this.paymentForm.valid && this.stripeCardValid;
+  }
+
+  onChange({ type, event }) {
+    if (type === 'change') {
+      this.stripeCardValid = event.complete;
+    }
+  }
+
+  buy() {
+    this.stripeService
+      .createToken(this.card1.getCard(), { name: this.paymentForm.value.name })
+      .subscribe(result => {
+        if (result.token) {
+          console.log(result.token);
+        } else if (result.error) {
+          console.log(result.error.message);
+        }
+      });
+  }
 }

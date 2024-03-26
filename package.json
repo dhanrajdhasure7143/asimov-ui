@@ -2,7 +2,7 @@
   "name": "asimov",
   "version": "3.2.5",
   "scripts": {
-    "start": "ng serve",
+    "start": "set NODE_OPTIONS=--max_old_space_size=8192 & ng serve",
     "build": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration=dev --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
@@ -33,7 +33,7 @@
     "@ng-select/ng-select": "^7.4.0",
     "@stomp/ng2-stompjs": "^8.0.0",
     "@stomp/stompjs": "^6.1.2",
-    "@stripe/stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^3.1.0",
     "@swimlane/ngx-charts": "^19.0.0",
     "@types/ckeditor": "^4.9.10",
     "angular-disable-browser-back-button": "^1.0.1",

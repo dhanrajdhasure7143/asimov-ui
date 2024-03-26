@@ -220,6 +220,7 @@ hideDescription() {
 
 paymentPlan() {
   this.spinner.show();
+  this.payment_methods_overlay = false;
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
