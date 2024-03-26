@@ -241,9 +241,10 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL
+    "cancelUrl": environment.paymentFailuerURL,
+    "paymentMethodId": this.selectedCard,
   };
-  console.log("PLAN_ID's", req_body);
+  console.log("PLAN_ID's", this.selectedCard);
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
