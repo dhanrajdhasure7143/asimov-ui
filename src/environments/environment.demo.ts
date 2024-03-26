@@ -48,7 +48,7 @@ export const environment = {
   isCustomerBots : false,
   environmentName: "DEMO",
 
-  paymentSuccessURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
-  paymentFailuerURL: "https://ezflow.dev.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  paymentSuccessURL: "https://eziap.demo.epsoftinc.com/#/pages/success",
+  paymentFailuerURL: "https://eziap.demo.epsoftinc.com/#/pages/subscriptions?index=4",
   stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 };
