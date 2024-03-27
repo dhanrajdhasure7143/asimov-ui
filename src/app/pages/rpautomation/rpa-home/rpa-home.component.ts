@@ -1118,9 +1118,10 @@ importBot(){
     this.taskAttributes=[];
     this.tasksList_ForAttribute =[];
     this.rest.getTasksAttributesForSeletedTasks().subscribe((response:any)=>{
+      console.log("response",response)
       if(response){
         this.taskAttributes = response.data;
-        this.tasksList_ForAttribute = response.taskList
+        this.tasksList_ForAttribute = response.tasksList_ForAttribute
       }
     });
     this.getTasksList();
@@ -1150,7 +1151,16 @@ importBot(){
 
       this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
         this.spinner.hide();
-        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        // this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        this.confirmationService.confirm({
+          header:'Success',
+          message:'Bot imported successfully!, Please check all action items and configurations before executing the bot.',
+          acceptLabel:'Ok',
+          rejectVisible:false,
+          acceptButtonStyleClass:'btn bluebg-button',
+          defaultFocus:'none',
+         accept:()=>{}})
+
         this.resetImportBotForm();
         this.getallbots();
       },err=>{
