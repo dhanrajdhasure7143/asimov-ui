@@ -243,7 +243,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$')])],
+      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z0-9 ]*$')])],
       groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
     });
   }
@@ -2069,17 +2069,38 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   async updateFinalBot(version_type:any, comments:any){
     let isGroupEmpty: boolean = false;
+    let hasStartTask: boolean = false;
+    let hasStoptTask: boolean = false;
    let groups = [] = this.jsPlumbInstance.getGroups();
+   console.log("groups", groups)
     groups.forEach((group)=> {
       let connectedNodes =[] = this.collectGroupIds(group.id);
       if(connectedNodes.length == 0 || connectedNodes == undefined|| connectedNodes.length == 1){
         isGroupEmpty = true;
       }
+      if(connectedNodes.includes('START_' + this.finalbot.botName)){
+        hasStartTask = true;
+      }
+      if(connectedNodes.includes('STOP_' + this.finalbot.botName)){
+        hasStoptTask = true;
+      }
     })
-    if(isGroupEmpty){
-      this.toastService.showInfo(this.toastMessages.groupEmptyError);
-      return;
-    }
+      if(isGroupEmpty){
+        this.toastService.showInfo(this.toastMessages.groupEmptyError);
+        return;
+      }
+      if (hasStartTask && hasStoptTask) {
+        this.toastService.showInfo('Please remove start & stop task from group');
+        return;
+      }
+      if (hasStartTask) {
+        this.toastService.showInfo('Please remove start task from group');
+        return;
+      }
+      if (hasStoptTask) {
+        this.toastService.showInfo('Please remove stop task from group');
+        return;
+      }
     let env = [...this.filteredEnvironments.filter((item: any) => item.check == true).map((item2: any) => {
           return item2.environmentId;
         }),];
@@ -2296,7 +2317,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: item.width,
         edit: false,
         color: item.color,
-        collapsed : item.isMicroBot? true: false,
+        // collapsed : item.isMicroBot? true: false,
+        collapsed : true,
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
         // anchor:"TopLeft",
@@ -3038,9 +3060,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.draggable(groupIds, {
         containment: true,
       });
-          this.showGroup_Overlay = false;
-           this.groupForm.reset();
     }, 500);
+      this.showGroup_Overlay = false;
+      this.groupForm.reset();
   }
 
   removeGroup(group) {
@@ -3503,14 +3525,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   minimizeGroup(groupData){
     console.log(groupData)
     setTimeout(() => {
-    if(groupData.isMicroBot){
+    // if(groupData.isMicroBot){
         groupData.nodeIds.forEach(element => {
           // If the group is collapsed, hide the node
           document.getElementById(element).style.display = 'none';
       });
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
-    }
+    // }
   }, 100);
   }
 
@@ -3824,7 +3846,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
   collapseAllgroups(value:boolean){
     this.groupsData.forEach(group => {group.id
-      if(group.isMicroBot){
+      // if(group.isMicroBot){
         this.jsPlumbInstance.collapseGroup(group.id);
         group.collapsed = true;
         if(value){
@@ -3837,7 +3859,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
         this.re_ArrangeNodes();
-      }
+      // }
     });
   }
 
@@ -4073,6 +4095,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
 
+  Space(event:any){
+    if(event.target.selectionStart === 0 && event.code === "Space"){
+      event.preventDefault();
+    }
+  }
 }
 
 @Pipe({ name: "Checkoutputbox" })
