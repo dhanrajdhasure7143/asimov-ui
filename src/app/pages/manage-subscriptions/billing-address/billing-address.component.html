@@ -75,9 +75,10 @@
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
                         [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="name"></p-dropdown>
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
-                        class="required">Country  Required</span>
+                        class="required">Country Required</span>
                     <span class="required">{{errorMessage}}</span>
             </div>
+
             <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
                 <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionValue="name" optionLabel="name"
@@ -102,7 +103,7 @@
 
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
-                <input pInputText type="text" maxlength="10" [style]="{'width':'100%'}" formControlName="postalcode"
+                <input pInputText type="text" maxlength="6" [style]="{'width':'100%'}" formControlName="postalcode"
                     placeholder="Enter Postal Code" (keypress)="numbersOnly($event)" required>
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Postal Code Required 
@@ -110,9 +111,9 @@
                 <span *ngIf="billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Maximum of 10 characters
                 </span>
-                <span *ngIf="billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
+                <!-- <span *ngIf="billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Double Spaces are not allowed.
-                </span>
+                </span> -->
             </div>
             <!-- <div *ngIf="!isInput" class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="approvers">Phone Number<span class="star">*</span></label>
@@ -152,6 +153,7 @@
         </div> -->
     </form>
     <div class="row justify-content-end">
-        <button  [disabled]="!(billingForm.valid && (billingForm.touched ||  billingForm.dirty))" (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button>
+        <!-- <button (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button> -->
+        <button (click)="saveBillingInfo()" class="btn bluebg-button">update</button>
     </div>
 </div>

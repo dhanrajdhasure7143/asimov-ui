@@ -61,35 +61,80 @@ export class BillingAddressComponent implements OnInit {
     this.countryInfo = Country.getAllCountries();
   }
 
+  // onChangeCountry(countryValue) {
+  //   this.isInput = !this.isInput;
+  //   this.stateInfo = State.getAllStates();
+  //   this.cityInfo = [];
+  //   const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+  //   if (!matchingCountry) {
+  //     this.countryName = countryValue;
+  //     this.countryInfo.push({ name: countryValue, countryCode: this.phnCountryCode, isoCode: '' });
+  //   }
+
+  //   if (matchingCountry) {
+  //     this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
+  //     this.countryName = matchingCountry.name;
+  //     this.phnCountryCode = matchingCountry.isoCode;
+  //     this.errorMessage = '';
+  //   }
+  // }
+
+  // onChangeState(stateValue) {
+  //   this.cityInfo = City.getAllCities();
+  //   const matchingState = this.stateInfo.find((state: any) => state.name === stateValue);
+    
+  //   if (!matchingState) {
+  //     this.stateName = stateValue;
+  //     this.stateInfo.push({ name: stateValue, countryCode: this.phnCountryCode, isoCode: '' }); // Add the state to the stateInfo array
+  //   } 
+    
+  //   if (matchingState) {
+  //     this.stateName = matchingState.name;
+  //     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+  //     this.errorMessage1='';
+  //   }
+  // }
+
   onChangeCountry(countryValue) {
+    console.log("countryValue", countryValue);
     this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
     this.cityInfo = [];
-    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+    const matchingCountryDetails = this.countryInfo.find((item: any) => item.name == countryValue || item.isoCode == countryValue);
+    console.log("matchingCountryDetails", matchingCountryDetails);
+    const matchingCountry = matchingCountryDetails.isoCode;
+    console.log("matchingCountry", matchingCountry);
     if (!matchingCountry) {
       this.countryName = countryValue;
-      this.countryInfo.push({ name: countryValue, countryCode: this.phnCountryCode, isoCode: '' });
+      this.countryInfo.push({ name: countryValue, countryCode: this.countryName, isoCode: '' });
     }
 
-    if (matchingCountry) {
-      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
-      this.phnCountryCode = matchingCountry.isoCode;
+    else {
+      this.countryName = matchingCountryDetails.name;
+      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry);
+      console.log("stateInfo:", this.stateInfo);
       this.errorMessage = '';
     }
   }
 
   onChangeState(stateValue) {
+    console.log("stateValue", stateValue);
     this.cityInfo = City.getAllCities();
-    const matchingState = this.stateInfo.find((state: any) => state.name === stateValue);
-    
+    const matchingStateDetails = this.stateInfo.find((state: any) => state.name === stateValue);
+    const matchingState = matchingStateDetails.name;
+    console.log("matchingState", matchingState);
+
     if (!matchingState) {
       this.stateName = stateValue;
-      this.stateInfo.push({ name: stateValue, countryCode: this.phnCountryCode, isoCode: '' }); // Add the state to the stateInfo array
+      this.stateInfo.push({ name: stateValue, countryCode: this.countryName, isoCode: '' }); // Add the state to the stateInfo array
+      console.log("statename:", this.stateName);
     } 
     
-    if (matchingState) {
-      this.stateName = matchingState.name;
+    else {
+      this.stateName = matchingState;
+      console.log("cityInfo:", this.cityInfo);
       this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+      console.log("cityInfo:", this.cityInfo);
       this.errorMessage1='';
     }
   }
@@ -109,32 +154,26 @@ export class BillingAddressComponent implements OnInit {
  
   saveBillingInfo() {
     this.spinner.show();
-    let payload = this.billingForm.value;
-    payload.country = this.billingForm.get('country').value;
-    payload.state =  this.billingForm.get('state').value;
-    payload.city = this.billingForm.get('city').value;
-   if(!this.editButton) { 
-    this.api.saveBillingInfo(payload).subscribe((data) => {
-    if (data) {
-      this.billingInfo = data;
-      this.editButton = true;
-      this.spinner.hide();
-      this.id = this.billingInfo.id;
-      this.toastService.showSuccess("Saved successfully!",'response');
-      this.billingForm.reset();
-      this.getBillingInfo();
-      this.spinner.hide();
-    }
-  },(err) => {
-    this.toastService.showError("Please save again!");
-   this.spinner.hide();
-  })}
-    else {
-      this.editButton = true;
-      this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
+    let payload = {
+        name: this.billingForm.get('name').value,
+        email: this.billingForm.get('email').value,
+        address: {
+          country: this.billingForm.get('country').value,
+          "state": this.billingForm.get('state').value,
+          "city": this.billingForm.get('city').value,
+          line1: this.billingForm.get('addressLine1').value,
+          line2: this.billingForm.get('addressLine2').value,
+          postalCode: this.billingForm.get('postalcode').value,
+        }
+      };
+      
+      console.log("billing form:", this.billingForm.value);
+      this.api.updateBillingInfo(payload).subscribe((data) => {
+        console.log("updated payload data:", payload);
+        console.log("data:", data);
         if (data) {
           this.toastService.showSuccess("Updated successfully!",'response');
-          this.billingForm.reset();
+          // this.billingForm.reset();
           this.getBillingInfo();
           this.spinner.hide();
         }
@@ -142,16 +181,18 @@ export class BillingAddressComponent implements OnInit {
           this.toastService.showError("Please update again!");
          this.spinner.hide();
         };
-    }
 }
+
+
 
   getBillingInfo() {
     this.spinner.show();
     this.api.getBillingInfo().subscribe((data:any) => {
+      console.log("gettingdata:",data);
       this.spinner.hide();
       if(data){
-        this.billingData = data.customerDefaultPaymentMethod.billingDetails;
-        this.billingAddress = data.customerDefaultPaymentMethod.billingDetails.address;
+        this.billingData = data.message;       
+        this.billingAddress = data.message.address;
         setTimeout(()=>{
           this.billingForm.get("country").setValue(this.countryName);
           this.billingForm.get("state").setValue(this.stateName);
@@ -167,7 +208,6 @@ export class BillingAddressComponent implements OnInit {
         this.onChangeState(this.billingAddress.state);
         this.onChangeCity(this.billingAddress.city);
         this.editButton=true;
-        this.id=data.id;
       }
       },
       (err) => {
@@ -176,6 +216,7 @@ export class BillingAddressComponent implements OnInit {
       }
     );
   }
+
   OnFlagChange(event){
     if(event.name !=this.optionValue){
       this.errorMessage="Select appropriate country";

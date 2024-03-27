@@ -1851,9 +1851,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         });
       }
     })   
-         
-
-    
   }
 
   getsequences() {
