@@ -1151,14 +1151,16 @@ importBot(){
 
       this.rest.importBotwithEncryptedData(generatedPyload).subscribe((response:any)=>{
         this.spinner.hide();
-        // this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
+        this.toastService.showSuccess(this.importBotForm.get("botName").value+" "+this.toastMessages.botImport,'response');
         this.confirmationService.confirm({
-          header:'Success',
+          header:'Info',
           message:'Bot imported successfully!, Please check all action items and configurations before executing the bot.',
           acceptLabel:'Ok',
           rejectVisible:false,
           acceptButtonStyleClass:'btn bluebg-button',
-          defaultFocus:'none',
+          defaultFocus: 'none',
+          rejectIcon: 'null',
+          acceptIcon: 'null',
          accept:()=>{}})
 
         this.resetImportBotForm();
@@ -1200,13 +1202,14 @@ importBot(){
         //     element["actionUUID"] = "null"
           // } else if(element.isConnectionManagerTask && tasks.name != element.taskName){
           if(element.isConnectionManagerTask){
-              element["taskName"] = depractedTask.name;
-              element["tMetaId"] = Number(depractedTask.taskId);
-              element["attributes"] = [];
-              element["nodeId"] = "Developer __"+splitValue[1]
-              element["taskConfiguration"] = "null"
-              element["isConnectionManagerTask"] = false
-              element["actionUUID"] = "null"
+              // element["taskName"] = depractedTask.name + "__"+ this.getTaskName(element);
+              // element["tMetaId"] = Number(depractedTask.taskId);
+              // element["attributes"] = [];
+              // element["nodeId"] = "Developer __"+splitValue[1]
+              // element["taskConfiguration"] = "null"
+              // element["isConnectionManagerTask"] = false
+              // element["actionUUID"] = "null"
+              this.createTask(element, depractedTask, splitValue);
           } else{ 
               if(element.taskName == tasks.name){
                 this.tasksList_ForAttribute.forEach(each => {
@@ -1227,22 +1230,24 @@ importBot(){
               }
           }
         }else{
-              element["taskName"] = depractedTask.name;
-              element["tMetaId"] = Number(depractedTask.taskId);
-              element["attributes"] = [];
-              element["nodeId"] = "Developer __"+splitValue[1]
-              element["taskConfiguration"] = "null"
-              element["isConnectionManagerTask"] = false
-              element["actionUUID"] = "null"
+              // element["taskName"] = depractedTask.name +"__"+this.getTaskName(element);
+              // element["tMetaId"] = Number(depractedTask.taskId);
+              // element["attributes"] = [];
+              // element["nodeId"] = "Developer __"+splitValue[1]
+              // element["taskConfiguration"] = "null"
+              // element["isConnectionManagerTask"] = false
+              // element["actionUUID"] = "null"
+              this.createTask(element, depractedTask, splitValue);
         }
       }else{
-        element["taskName"] = depractedTask.name;
-        element["tMetaId"] = Number(depractedTask.taskId);
-        element["attributes"] = [];
-        element["nodeId"] = "Developer __"+splitValue[1]
-        element["taskConfiguration"] = "null"
-        element["isConnectionManagerTask"] = false
-        element["actionUUID"] = "null"
+        this.createTask(element, depractedTask, splitValue);
+        // element["taskName"] = depractedTask.name+"__"+this.getTaskName(element);
+        // element["tMetaId"] = Number(depractedTask.taskId);
+        // element["attributes"] = [];
+        // element["nodeId"] = "Developer __"+splitValue[1]
+        // element["taskConfiguration"] = "null"
+        // element["isConnectionManagerTask"] = false
+        // element["actionUUID"] = "null"
       }
     });
     return botData
@@ -1251,6 +1256,26 @@ importBot(){
   hasData(task): boolean {
     if(task != undefined) return Object.keys(task).length > 0;
     else return false
+}
+
+getTaskName(element: any): string {
+  let taskName: string = "";
+  if (element.taskName.includes("Corrupted__")) {
+    taskName = element.taskName.split("__")[1];
+  } else {
+    taskName = element.taskName;
+  }
+  return taskName;
+}
+
+createTask(element: any, depractedTask: any, splitValue: any) {
+  element["taskName"] = depractedTask.name + "__" + this.getTaskName(element);
+  element["tMetaId"] = Number(depractedTask.taskId);
+  element["attributes"] = [];
+  element["nodeId"] = "Developer __" + splitValue[1];
+  element["taskConfiguration"] = "null";
+  element["isConnectionManagerTask"] = false;
+  element["actionUUID"] = "null";
 }
 
 }
