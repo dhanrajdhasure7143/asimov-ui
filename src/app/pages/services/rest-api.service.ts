@@ -1305,8 +1305,8 @@ getProgrmaDetailsById(programid){
     // return this.http.get<any>('/subscriptionservice/v1/subscriptions');
       return this.http.get<any>('/subscriptionservice/v1/subscriptions/get-all-subscription-details');
   }
-  cancelSubscription(data): Observable<any> {
-    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  cancelSubscription(subscriptionId): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + subscriptionId + '/cancel?isImmediateCancel=' + false, { responseType: 'json' });
   }
   invoicedownload(invoiceId): Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })
@@ -1919,4 +1919,19 @@ getPredifinedRawBots(){
   return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
 }
 
+getPaymentCards(){
+  return this.http.get("/subscriptionservice/v1/paymentmethods/payments-cards")
+}
+
+  updateSubscriptionDetails(body,sessionId){
+    return this.http.post("/subscriptionservice/v1/subscriptions/update-session-subscriptions?sessionId="+sessionId,body)
+  }
+
+  getTasksAttributesForSeletedTasks(){
+    return this.http.get("/rpa-service/fetch-attributes-by-task-names")
+  }
+
+  getBillingInfoStatus(){
+    return this.http.get("/subscriptionservice/v1/billingContact/customer-cards-check")
+  }
 }

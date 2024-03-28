@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { StripeService } from 'ngx-stripe';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-subscription-plan',
@@ -44,12 +45,18 @@ export class SubscriptionPlanComponent implements OnInit {
   selectedBot: any={};
   selectedInterval: boolean = true;
   predefinedRawBots: any[] = [];
+  payment_methods_overlay: boolean = false;
+  selectedCard: any;
+  paymentCards:any []=[];
+  cvv:any;
 
   constructor( private spinner : LoaderService,
     private router: Router,
     private rest: RestApiService,
     private formBuilder: FormBuilder,
-    private stripeService: StripeService) { }
+    private stripeService: StripeService,
+    private toastService: ToasterService,
+    ) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -117,6 +124,7 @@ export class SubscriptionPlanComponent implements OnInit {
     this.rest.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
         console.log(response);
+        this.getPaymentMethods();
         if (response) {
             response.forEach(element => {
                 let obj = element.product;
@@ -212,6 +220,7 @@ hideDescription() {
 
 paymentPlan() {
   this.spinner.show();
+  this.payment_methods_overlay = false;
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
@@ -233,9 +242,10 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL
+    "cancelUrl": environment.paymentFailuerURL,
+    "paymentMethodId": this.selectedCard,
   };
-  console.log("PLAN_ID's", req_body);
+  console.log("PLAN_ID's", this.selectedCard);
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
@@ -355,4 +365,44 @@ readValue(value){
       this.planSelection('Monthly');
     }
   }
+
+getPaymentMethods(){
+  this.spinner.show();
+  this.rest.getPaymentCards().subscribe((res : any)=>{
+  
+    if (res.code == 5075) {
+      this.paymentCards = res.data
+      console.log(this.paymentCards,"payment cards")
+      this.spinner.hide();
+      if(this.paymentCards.length>0){
+        // this.payment_methods_overlay = true;
+        this.paymentCards.sort((a, b) => {
+          if (a.defaultSource) return -1;
+          if (b.defaultSource) return 1;
+          return 0;
+        });
+        this.selectedCard = this.paymentCards.find(card => card.defaultSource).id;
+      }
+    }
+  this.spinner.hide();
+  },err=>{
+    this.spinner.hide();
+    this.toastService.showError("Failed to load payment methods");
+  });
+}
+
+getPaymentCards(){
+  console.log(this.paymentCards,"payment cards")
+
+  if(this.paymentCards.length>1){
+    this.payment_methods_overlay = true
+  }else{
+    // this.paymentPlan();
+  }
+}
+
+cancelPayment(){
+  this.payment_methods_overlay = false;
+}
+
 }
