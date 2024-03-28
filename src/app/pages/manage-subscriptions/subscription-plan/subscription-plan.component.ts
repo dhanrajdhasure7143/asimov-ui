@@ -262,6 +262,7 @@ paymentPlan() {
         this.spinner.hide();
       },error => {
         this.spinner.hide();
+        this.toastService.showError("Failed to redirect to payment gateway");
         console.error('Error during payment:', error);
       }
     );
@@ -402,7 +403,7 @@ getPaymentCards(){
   if(this.paymentCards.length>1){
     this.payment_methods_overlay = true
   }else{
-    // this.paymentPlan();
+    this.paymentPlan();
   }
 }
 
