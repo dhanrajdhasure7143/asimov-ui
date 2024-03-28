@@ -49,6 +49,8 @@ export class SubscriptionPlanComponent implements OnInit {
   selectedCard: any;
   paymentCards:any []=[];
   cvv:any;
+  isSpaceOnLeft: boolean = false;
+  showBotInfoFlag: boolean = false;
 
   constructor( private spinner : LoaderService,
     private router: Router,
@@ -131,6 +133,7 @@ export class SubscriptionPlanComponent implements OnInit {
                 let isSubscribed=false;
                 let isYearlySubscribed=false;
                 let isMonthlySubscribed=false;
+                let image=element.image;
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
                 if (data.length > 0)
@@ -178,7 +181,9 @@ export class SubscriptionPlanComponent implements OnInit {
                         price.isPlanSubscribed = false;
                     }
                 });
-
+                const decodedImage = this.decodeBase64Image(image);
+                obj["image"] = decodedImage;
+                console.log("image",image)
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
@@ -404,5 +409,24 @@ getPaymentCards(){
 cancelPayment(){
   this.payment_methods_overlay = false;
 }
+  showBotInfo(event: MouseEvent): void {
+    const squareElement = event.currentTarget as HTMLElement;
+    const squarePosition = squareElement.getBoundingClientRect();
+    const squareWidth = squareElement.offsetWidth;
+    const windowWidth = window.innerWidth;
+
+    const botInfoWidth = 450;
+
+    this.isSpaceOnLeft = windowWidth - squarePosition.left >= squareWidth + botInfoWidth;
+    this.showBotInfoFlag = true;
+  }
+
+  hideBotInfo(): void {
+    this.showBotInfoFlag = false;
+  }
+
+  decodeBase64Image(base64Data: string): string {
+    return 'data:image/jpeg;base64,' + base64Data;
+  }
 
 }
