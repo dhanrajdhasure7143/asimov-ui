@@ -1083,75 +1083,58 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deletenode(node) {
-      this.confirmationService.confirm({
-        header:'Are you sure?',
-        message:"Do you want to delete this node? This can't be undo.",
-        acceptLabel:'Yes',
-        rejectLabel:'No',
-        rejectButtonStyleClass: ' btn reset-btn',
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        rejectIcon: 'null',
-        acceptIcon: 'null',
-        key: "designerWorkspace",
-      accept:() => {
-        // this.nodes.splice(this.nodes.indexOf(node), 1);
-        // this.jsPlumbInstance.remove(node.id);
-        // let nodeId = node.name + "__" + node.id;
-        // let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
-        // if (task != undefined) {
-        //   this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
-        // }
-        var groups:any[]=[]
-        groups = this.jsPlumbInstance.getGroups();
-        // Iterate over each group
-        console.log("groups",groups)
-        if(groups.length == 0){
-          this.nodes.splice(this.nodes.indexOf(node), 1);
-          this.jsPlumbInstance.remove(node.id);
-          let nodeId = node.name + "__" + node.id;
-          let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
-          if (task != undefined) {
-            this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
-          }
-        }else{
-          groups.forEach((group)=> {
-              // Check if the group contains the node
-              let connectedNodes = this.collectGroupIds(group.id);
-              if (connectedNodes.includes(node.id)) {
-                // Remove the node from the group
-                console.log("accepted", node.id, group.id)
-                  try {
-                    let element: any = document.getElementById(node.id)
-                      this.jsPlumbInstance.removeFromGroup(group.id, element);
-                      this.nodes.splice(this.nodes.indexOf(node), 1);
-                      this.jsPlumbInstance.remove(node.id);
-                      let nodeId = node.name + "__" + node.id;
-                      let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
-                      if (task != undefined) {
-                        this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
-                      }
-                      this.re_ArrangeNodes();
-                  } catch (error) {
-                      console.error("Error removing element from group:", error);
-                  }
-              }
-          });
-        }
+    this.confirmationService.confirm({
+      header:'Are you sure?',
+      message:"Do you want to delete this node? This can't be undo.",
+      acceptLabel:'Yes',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      key: "designerWorkspace",
+    accept: async() => {
 
-        // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
-        //   if (group.contains(nodeId)) { // Check if the group contains the node
-        //     this.jsPlumbInstance.removeFromGroup(nodeId, group.id);
-        //     const index = this.groupsData.findIndex((g) => g.groupId === group.id);
-        //     if (index !== -1) {
-        //       this.groupsData.splice(index, 1);
-        //     }
-        //   }
-        // });
-      }
-  })
-    this.validateBotNodes();
-  }
+      var groups = [] = this.jsPlumbInstance.getGroups();
+     
+       await groups.forEach((group)=> {
+            // Check if the group contains the node
+            let connectedNodes= [] = this.collectGroupIds(group.id);
+                if (connectedNodes.includes(node.id)) {
+                    try {
+                      let element: any = document.getElementById(node.id)
+                        this.jsPlumbInstance.removeFromGroup(group.id, element);
+                        // this.jsPlumbInstance.remove(node.id);
+                        this.re_ArrangeNodes();
+                    } catch (error) {
+                        console.error("Error removing element from group:", error);
+                    }
+                }
+        });
+
+        this.nodes.splice(this.nodes.indexOf(node), 1);
+        this.jsPlumbInstance.remove(node.id);
+        let nodeId = node.name + "__" + node.id;
+        let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
+        if (task != undefined) {
+          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
+        }
+     
+
+      // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
+      //   if (group.contains(nodeId)) { // Check if the group contains the node
+      //     this.jsPlumbInstance.removeFromGroup(nodeId, group.id);
+      //     const index = this.groupsData.findIndex((g) => g.groupId === group.id);
+      //     if (index !== -1) {
+      //       this.groupsData.splice(index, 1);
+      //     }
+      //   }
+      // });
+    }
+})
+  this.validateBotNodes();
+}
 
   onRightClick(n: any, e: { target: { id: string } }, i: string | number) {
     this.selectedNode = n;
