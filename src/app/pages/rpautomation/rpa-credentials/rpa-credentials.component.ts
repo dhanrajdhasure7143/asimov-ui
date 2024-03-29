@@ -1,5 +1,4 @@
 import { Component,  OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {Rpa_Hints} from "../model/RPA-Hints";
@@ -86,9 +85,9 @@ export class RpaCredentialsComponent implements OnInit {
 
   getallCredentials(){
     this.Credupdateflag = false;
-    this.credentials= [];
     let role=localStorage.getItem('userRole')
     this.api.get_All_Credentials(role).subscribe((data1:any) => {
+      this.credentials= [];
         this.credentials = data1;
         this.isLoading=false;
         if(this.credentials.length>0){ 
@@ -243,7 +242,6 @@ deleteCredentials(){
         acceptIcon: 'null',
         key:"positionDialog",
       accept: (result) => {
-      // if (result.value) {
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
@@ -261,7 +259,6 @@ deleteCredentials(){
           this.toastService.showError(this.toastMessages.deleteError);
 
         });
-      // }
     }
     });
   }
