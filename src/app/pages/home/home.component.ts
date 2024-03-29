@@ -107,7 +107,8 @@ export class HomeComponent implements OnInit {
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
       // }  
-      this.highestExpireIn = data.expiresIn === 0;
+      // this.highestExpireIn = data.expiresIn === 0;
+      this.highestExpireIn = data.expiresIn === 0 || data.expiresIn <= 0;
       if (this.highestExpireIn) {
         if (this.userRole.includes('System Admin')) {
             this.showWarningPopup = true;
