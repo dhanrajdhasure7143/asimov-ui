@@ -14,6 +14,8 @@ import {
   PaymentIntent,
 } from '@stripe/stripe-js'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-payment-methods',
@@ -52,7 +54,7 @@ public elementsOptions: StripeElementsOptions = {
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
   constructor(
-    private api:RestApiService,
+    private rest_api:RestApiService,
     private spinner:LoaderService,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -66,8 +68,26 @@ public elementsOptions: StripeElementsOptions = {
     this.getAllPaymentmodes();
   }
 
-  addNew(){
-    this.showcarddetails=!this.showcarddetails;
+  addNewCard(){
+    let request_body = {
+      "successUrl":environment.paymentFailuerURL+"?index=3",
+      "cancelUrl":environment.paymentFailuerURL+"?index=3"
+    }
+    this.spinner.show(); 
+    this.rest_api.addNewCardURLGenerate(request_body).pipe(
+      switchMap((session: any) => {
+        this.spinner.hide();
+        return this.stripeService.redirectToCheckout({ sessionId: session.id });
+      })
+    )
+    .subscribe((res) => {
+      console.log( res)
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toastService.showError(this.toastMessages.plzTryAgain);
+    })
+    // this.showcarddetails=!this.showcarddetails;
    
   }
   onBack(){
@@ -87,7 +107,7 @@ public elementsOptions: StripeElementsOptions = {
       acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
-        this.api.deletePaymentMode(index.id).subscribe((res) => {
+        this.rest_api.deletePaymentMode(index.id).subscribe((res) => {
             this.spinner.hide();
             this.toastService.showSuccess(this.toastMessages.cardDelete,'response');
             this.getAllPaymentmodes();
@@ -115,7 +135,7 @@ public elementsOptions: StripeElementsOptions = {
         acceptIcon: 'null',
         accept: () => {
           this.spinner.show();
-          this.api.setasDefaultCard(cardId).subscribe((res) => {
+          this.rest_api.setasDefaultCard(cardId).subscribe((res) => {
               this.spinner.hide();
               this.toastService.showSuccess(this.toastMessages.defualtCard,'response');
               this.getAllPaymentmodes();
@@ -132,7 +152,7 @@ public elementsOptions: StripeElementsOptions = {
   getAllPaymentmodes() {
     this.spinner.show();
     // this.api.listofPaymentModes().subscribe(response => {
-    this.api.getPaymentCards().subscribe((response:any) => {
+    this.rest_api.getPaymentCards().subscribe((response:any) => {
         if(response.data.length > 0){
           this.paymentMode = response.data 
             // let result = this.paymentMode.filter(obj => {
@@ -171,7 +191,7 @@ public elementsOptions: StripeElementsOptions = {
       .subscribe(result => {
         console.log(result.token);
         if (result.token) {
-          this.api.addNewCard(result.token.id, this.paymentForm.value.isdefault).subscribe((res) => {
+          this.rest_api.addNewCard(result.token.id, this.paymentForm.value.isdefault).subscribe((res) => {
             this.getAllPaymentmodes();
             this.showcarddetails=false;
             this.paymentForm.reset();

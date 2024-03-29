@@ -1934,4 +1934,8 @@ getPaymentCards(){
   getBillingInfoStatus(){
     return this.http.get("/subscriptionservice/v1/billingContact/customer-cards-check")
   }
+
+  addNewCardURLGenerate(payload){
+    return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
+  }
 }
