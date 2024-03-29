@@ -1176,7 +1176,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
-    if(node.selectedNodeTask == 'Corrupted') {
+    if(node.selectedNodeTask.includes('Corrupted')) {
       this.confirmationService.confirm({
         header:'Task not found!',
         message:'This task is corrupted, Please add right one.',
@@ -1184,7 +1184,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         rejectVisible:false,
         acceptButtonStyleClass:'btn bluebg-button',
         defaultFocus:'none',
-        key: "designerWorkspace"
+        key: "designerWorkspace",
+        rejectIcon: 'null',
+        acceptIcon: 'null',
        })
       return;
     }
