@@ -46,11 +46,11 @@ export class BillingAddressComponent implements OnInit {
       name: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)])],
       country: ["", Validators.compose([Validators.required])],
       city: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      // state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       postalcode: ["", Validators.compose([Validators.required, Validators.maxLength(6), Validators.pattern('^[0-9]+$')])],
       addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
       addressLine2: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
-      phoneNumber: ["", Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])],
+      // phoneNumber: ["", Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])],
       email: ["", Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"), Validators.maxLength(50)])],
     });
     this.getCountries();
@@ -61,34 +61,70 @@ export class BillingAddressComponent implements OnInit {
     this.countryInfo = Country.getAllCountries();
   }
 
+  // onChangeCountry(countryValue) {
+  //   this.isInput = !this.isInput;
+  //   this.stateInfo = State.getAllStates();
+  //   this.cityInfo = [];
+  //   const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+  //   if (!matchingCountry) {
+  //     this.countryName = countryValue;
+  //     this.countryInfo.push({ name: countryValue, countryCode: this.phnCountryCode, isoCode: '' });
+  //   }
+
+  //   if (matchingCountry) {
+  //     this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
+  //     this.countryName = matchingCountry.name;
+  //     this.phnCountryCode = matchingCountry.isoCode;
+  //     this.errorMessage = '';
+  //   }
+  // }
+
+  // onChangeState(stateValue) {
+  //   this.cityInfo = City.getAllCities();
+  //   const matchingState = this.stateInfo.find((state: any) => state.name === stateValue);
+    
+  //   if (!matchingState) {
+  //     this.stateName = stateValue;
+  //     this.stateInfo.push({ name: stateValue, countryCode: this.phnCountryCode, isoCode: '' }); // Add the state to the stateInfo array
+  //   } 
+    
+  //   if (matchingState) {
+  //     this.stateName = matchingState.name;
+  //     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+  //     this.errorMessage1='';
+  //   }
+  // }
+
   onChangeCountry(countryValue) {
     this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
     this.cityInfo = [];
-    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+    const matchingCountryDetails = this.countryInfo.find((item: any) => item.name == countryValue || item.isoCode == countryValue);
+    const matchingCountry = matchingCountryDetails.isoCode;
     if (!matchingCountry) {
       this.countryName = countryValue;
-      this.countryInfo.push({ name: countryValue, countryCode: this.phnCountryCode, isoCode: '' });
+      this.countryInfo.push({ name: countryValue, countryCode: this.countryName, isoCode: '' });
     }
 
-    if (matchingCountry) {
-      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode);
-      this.phnCountryCode = matchingCountry.isoCode;
+    else {
+      this.countryName = matchingCountryDetails.name;
+      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry);
       this.errorMessage = '';
     }
   }
 
   onChangeState(stateValue) {
     this.cityInfo = City.getAllCities();
-    const matchingState = this.stateInfo.find((state: any) => state.name === stateValue);
-    
+    const matchingStateDetails = this.stateInfo.find((state: any) => state.name === stateValue);
+    const matchingState = matchingStateDetails.name;
+
     if (!matchingState) {
       this.stateName = stateValue;
-      this.stateInfo.push({ name: stateValue, countryCode: this.phnCountryCode, isoCode: '' }); // Add the state to the stateInfo array
+      this.stateInfo.push({ name: stateValue, countryCode: this.countryName, isoCode: '' }); // Add the state to the stateInfo array
     } 
     
-    if (matchingState) {
-      this.stateName = matchingState.name;
+    else {
+      this.stateName = matchingState;
       this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
       this.errorMessage1='';
     }
@@ -109,32 +145,22 @@ export class BillingAddressComponent implements OnInit {
  
   saveBillingInfo() {
     this.spinner.show();
-    let payload = this.billingForm.value;
-    payload.country = this.billingForm.get('country').value;
-    payload.state =  this.billingForm.get('state').value;
-    payload.city = this.billingForm.get('city').value;
-   if(!this.editButton) { 
-    this.api.saveBillingInfo(payload).subscribe((data) => {
-    if (data) {
-      this.billingInfo = data;
-      this.editButton = true;
-      this.spinner.hide();
-      this.id = this.billingInfo.id;
-      this.toastService.showSuccess("Saved successfully!",'response');
-      this.billingForm.reset();
-      this.getBillingInfo();
-      this.spinner.hide();
-    }
-  },(err) => {
-    this.toastService.showError("Please save again!");
-   this.spinner.hide();
-  })}
-    else {
-      this.editButton = true;
-      this.api.updateBillingInfo(this.id, payload).subscribe((data) => {
-        if (data) {
+    let payload = {
+        name: this.billingForm.get('name').value,
+        email: this.billingForm.get('email').value,
+        address: {
+          country: this.billingForm.get('country').value,
+          // "state": this.billingForm.get('state').value,
+          "city": this.billingForm.get('city').value,
+          line1: this.billingForm.get('addressLine1').value,
+          line2: this.billingForm.get('addressLine2').value,
+          postalCode: this.billingForm.get('postalcode').value,
+        }
+      };
+      
+      this.api.updateBillingInfo(payload).subscribe((data:any) => {
+        if (data.code == 4200) {
           this.toastService.showSuccess("Updated successfully!",'response');
-          this.billingForm.reset();
           this.getBillingInfo();
           this.spinner.hide();
         }
@@ -142,32 +168,35 @@ export class BillingAddressComponent implements OnInit {
           this.toastService.showError("Please update again!");
          this.spinner.hide();
         };
-    }
 }
+
+
 
   getBillingInfo() {
     this.spinner.show();
     this.api.getBillingInfo().subscribe((data:any) => {
       this.spinner.hide();
       if(data){
-        this.billingData = data.customerDefaultPaymentMethod.billingDetails;
-        this.billingAddress = data.customerDefaultPaymentMethod.billingDetails.address;
-        setTimeout(()=>{
-          this.billingForm.get("country").setValue(this.countryName);
-          this.billingForm.get("state").setValue(this.stateName);
-          this.billingForm.get("city").setValue(this.cityName);
-        },300);
+        this.billingData = data.message;       
+        this.billingAddress = data.message.address;
+        // setTimeout(()=>{
+        //   this.billingForm.get("country").setValue(this.countryName);
+        //   this.billingForm.get("state").setValue(this.stateName);
+        //   this.billingForm.get("city").setValue(this.cityName);
+        // },300);
         this.billingForm.get("name").setValue(this.billingData["name"]);
         this.billingForm.get("email").setValue(this.billingData["email"]);
         this.billingForm.get("postalcode").setValue(this.billingAddress["postalCode"]);
         this.billingForm.get("addressLine1").setValue(this.billingAddress["line1"]);
         this.billingForm.get("addressLine2").setValue(this.billingAddress["line2"]);
+        this.billingForm.get("city").setValue(this.billingAddress["city"]);
+        this.billingForm.get("country").setValue(this.billingAddress["country"]);
+
         // this.billingForm.get("phoneNumber").setValue(this.billingAddress.["phone"]);
-        this.onChangeCountry(this.billingAddress.country);
-        this.onChangeState(this.billingAddress.state);
-        this.onChangeCity(this.billingAddress.city);
+        // this.onChangeCountry(this.billingAddress.country);
+        // this.onChangeState(this.billingAddress.state);
+        // this.onChangeCity(this.billingAddress.city);
         this.editButton=true;
-        this.id=data.id;
       }
       },
       (err) => {
@@ -176,6 +205,7 @@ export class BillingAddressComponent implements OnInit {
       }
     );
   }
+
   OnFlagChange(event){
     if(event.name !=this.optionValue){
       this.errorMessage="Select appropriate country";
