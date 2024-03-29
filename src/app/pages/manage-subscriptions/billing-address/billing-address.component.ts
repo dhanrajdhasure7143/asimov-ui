@@ -59,6 +59,7 @@ export class BillingAddressComponent implements OnInit {
   
   getCountries() {
     this.countryInfo = Country.getAllCountries();
+    console.log()
   }
 
   // onChangeCountry(countryValue) {
@@ -96,7 +97,6 @@ export class BillingAddressComponent implements OnInit {
   // }
 
   onChangeCountry(countryValue) {
-    console.log("countryValue", countryValue);
     this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
     this.cityInfo = [];

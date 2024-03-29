@@ -31,7 +31,7 @@
             </div> -->
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control" for="approvers">Email<span class="star">*</span></label>
-                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email">
+                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email" [attr.disabled]="true">
                 <span
                     *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
                     class="required">Email Required</span>
@@ -69,17 +69,17 @@
                     </span>
             </div>
 
-            <div class="form-group col-md-3 pl-0">
+            <div class="form-group col-md-6 pl-0">
                     <label  class="label-control" for="taskCategory">Country<span class="star">*</span></label>
                     <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
-                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="name"></p-dropdown>
+                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="isoCode"></p-dropdown>
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
                         class="required">Country Required</span>
                     <span class="required">{{errorMessage}}</span>
             </div>
 
-            <div class="form-group col-md-3 pl-0">
+            <!-- <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
                 <p-dropdown [options]="stateInfo" [style]="{'width':'100%'}" [appendTo]="'body'" optionValue="name" optionLabel="name"
                     [autoDisplayFirst]="false" placeholder="Select State/Region" formControlName="state"
@@ -88,8 +88,8 @@
                 <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
                     class="required">State Required</span>
                 <span class="required">{{errorMessage1}}</span>
-            </div>
-            <div class="form-group col-md-3 pr-0">
+            </div> -->
+            <!-- <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="priority">City <span class="star">*</span></label>
                 <span>
                     <p-dropdown [options]="cityInfo" [style]="{'width':'100%'}"
@@ -99,6 +99,21 @@
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched"
                 class="required">City Required</span>
                 <span class="required">{{errorMessage2}}</span>
+            </div> -->
+
+            <div class="form-group col-md-3 pr-0">
+                <label  class="label-control">City<span class="star">*</span></label>
+                <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="city"
+                    placeholder="Enter City" required>
+                <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched && !billingForm.get('city').hasError('pattern') && !billingForm.controls['city'].hasError('maxlength')" class="required"> 
+                    City Required 
+                </span>
+                <span *ngIf="billingForm.controls['city'].hasError('maxlength')" class="required">
+                    Maximum of 50 characters
+                </span>
+                <span *ngIf="billingForm.get('city').hasError('pattern') && !billingForm.controls['city'].hasError('maxlength')" class="required">Only space
+                    between words are allowed & Numbers are not allowed.
+                </span>
             </div>
 
             <div class="form-group col-md-3 pr-0">
