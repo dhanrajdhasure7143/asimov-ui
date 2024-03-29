@@ -344,6 +344,9 @@
     background-color: #f0f0f0;
     overflow: hidden;
     border: 1px solid darkgray;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 4px;
   }
 
 
@@ -397,7 +400,7 @@
     left: 220px;
     top: 0;
     width: 450px;
-    border-radius:5px;
+    border-radius:4px;
     min-height: 200px;
     justify-content: center;
     align-items: center;
@@ -466,4 +469,14 @@
 .description-box ul{
     font-size: 14px;
     font-weight: 600;
+}
+
+.col {
+    flex-basis: 0;
+    flex-grow: 0;
+    max-width: 100%;
+}
+
+.selected-square {
+    border: 3px solid #2c20ce;
 }

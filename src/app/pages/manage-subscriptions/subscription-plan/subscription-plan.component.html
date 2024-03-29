@@ -44,9 +44,9 @@
                         <div class="bot-details" [ngClass]="{'gray-background': (selectedPlan=== 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan=== 'Yearly' && plan.isYearlySubscribed) }" style="width: 390px;" (mouseenter)="showDescription(i)" (mouseleave)="hideDescription()">
                             
                             <div class="container">
-                                <div class="row">
+                                <div class="row" style="justify-content: center; align-items: center;">
                                   <div class="col">
-                                    <div class="square" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
+                                    <div class="square"  [ngClass]="{'selected-square': plan.isSelected}" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
                                       <div class="image-top">
                                         <img [src]="plan.image" class="img-fluid" alt="Bot Image">
                                       </div>
@@ -151,8 +151,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class=" text-right" style="margin: 10px 0 0 0;">
-                        <button type="button" class="btn bluebg-button" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
+                    <div class="text-right" style="margin: 10px 0 0 0;">
+                        <button type="button" class="btn btn-primary btn-plan" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
                     </div>
                 </div>
             </div> 
