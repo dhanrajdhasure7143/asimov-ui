@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -16,6 +16,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
   styleUrls: ['./subscription-plan.component.css']
 })
 export class SubscriptionPlanComponent implements OnInit {
+  @Input() isbillingInfoDisble: boolean = false;
   subscriptionForm: FormGroup;
   botPlans : any[] = [];
   countries : any[] = [];
@@ -242,10 +243,17 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL,
+    // "cancelUrl": environment.paymentFailuerURL,
     "paymentMethodId": this.selectedCard,
   };
+  if(this.isbillingInfoDisble){
+    req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=4"
+  }else{
+    req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=2"
+  }
   console.log("PLAN_ID's", this.selectedCard);
+  console.log("REQ_BODY", req_body);
+  return
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {

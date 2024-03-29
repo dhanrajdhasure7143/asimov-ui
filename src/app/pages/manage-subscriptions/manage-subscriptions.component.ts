@@ -24,20 +24,20 @@ export class ManageSubscriptionsComponent implements OnInit {
   index: number;
   activeIndex :number=0
   check_tab=0
-  isbillingInfoEnable:boolean = true;
+  isbillingInfoDisble:boolean = false;
   params:any={};
   constructor(public obj: PagesComponent, private rest_service: RestApiService,
     private spinner: LoaderService,private route: ActivatedRoute,private router:Router) {
        this.route.queryParams.subscribe((data) => {
         console.log(data,"data")
         this.params = data;
-      if(data.index){
-      this.activeIndex = data.index
-      this.check_tab = data.index;
-    } else {
-        this.activeIndex=0;
-        this.check_tab = 0;
-      }
+    //   if(data.index){
+    //   this.activeIndex = data.index
+    //   this.check_tab = data.index;
+    // } else {
+    //     this.activeIndex=0;
+    //     this.check_tab = 0;
+    //   }
     });}
 
   ngOnInit(): void {
@@ -56,11 +56,19 @@ export class ManageSubscriptionsComponent implements OnInit {
     this.rest_service.getBillingInfoStatus().subscribe((data:any) => {
       console.log(data,"billingInfoStatus")
       if(data){
-        this.isbillingInfoEnable = data.status;
+        this.isbillingInfoDisble = data.status;
+        this.params = data;
+          if(data.index){
+            this.activeIndex = data.index
+            this.check_tab = data.index;
+          } else {
+            this.activeIndex=0;
+            this.check_tab = 0;
+          }
       }
-      if(this.isbillingInfoEnable){
-
-      }
+    },err=>{
+        this.activeIndex=0;
+        this.check_tab = 0;
     })
   }
   
