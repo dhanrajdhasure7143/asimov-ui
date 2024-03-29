@@ -1,27 +1,10 @@
 <div class="main-content-body bps-approvalgrid">
-  <!-- <div class="row grid-header">
-    <div class="col-md-9 p-0">
-      <span class="module-sub-header-title">Approved List</span>
-    </div>
-    <div class="col-md-3 p-0 aprwkfl_search">
-        <div class="searchinputar">
-            <input class="form-control toolbar-search" type="text" placeholder="Search Workspace" [(ngModel)]="searchTerm">
-            <mat-icon matSuffix style="font-size: 1.2em"><img src="../../../../assets/images/search.svg" alt=""></mat-icon>
-        </div>
-    </div>
-    </div> -->
   <p-table #dt1 [columns]="selectedColumns" [value]="griddata" dataKey="bpmnApprovalId"
     [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" [reorderableColumns]="true"
     [scrollable]="true">
     <ng-template pTemplate="caption">
       <div class="table-header">
-        <!-- <h4 class="box-heading">Approved List</h4> -->
         <div class="p-d-flex">
-          <!-- <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="header"
-              selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
-                  placeholder="Choose Columns">
-          </p-multiSelect> -->
-
           <span class="p-input-icon-right gridsearch">
             <i class="pi pi-search"></i>
             <input type="text" pInputText placeholder="Search" [(ngModel)]="searchValue" class="p-inputtext-lg"
@@ -112,7 +95,7 @@
                         </div>
                           <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template>
                     </td>
-                    <td [matTooltip]="each_past_process.reviewComments"><input type="text"
+                    <td [pTooltip]="each_past_process.reviewComments" tooltipPosition="top"><input type="text"
                         [value]="each_past_process.reviewComments" name="reviewComments{{j}}"
                         [(ngModel)]="each_past_process.reviewComments"
                         [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled"
@@ -129,8 +112,8 @@
                           <img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1"
                             pTooltip="Reject" tooltipPosition="top">
                         </button><!-- approval_msg.length==0 || -->
-                        <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1"
-                          (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="top">
+                        <!-- <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1"
+                          (click)="expandPanel(i, each_past_process,expanded)" pTooltip="View" tooltipPosition="top"> -->
                       </div>
                     </td>
                   </tr>
@@ -173,95 +156,5 @@
       </tr>
     </ng-template>
   </p-table>
-
-
-
-
-  <!-- <div class="row col-md-12 text-bold aprwkfl_bpmn_list_header" matSort>
-    <div class="expan-icon"></div>
-    <div class="list_header" mat-sort-header="processIntelligenceId">Process ID</div>
-    <div class="list_header" mat-sort-header="bpmnProcessName">Process Name</div>
-    <div class="list_header" mat-sort-header="convertedModifiedTime">Modified Time</div>
-    <div class="list_header" mat-sort-header="userName">Resource</div>
-    <div class="list_header" mat-sort-header="role">Role</div>
-    <div class="list_header" mat-sort-header="approvalStatus">Status</div>
-  </div> -->
-  <!-- <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
-    <mat-accordion class="w-100">
-    <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of displayedRows$ | async | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
-    [(expanded)]="each_diag.xpandStatus"
-    (click)="clicked(i)"
-    [class.activePanel]="i==selectedrow"
-    (opened)="collapseExpansion()"
-    (afterExpand)="expandPanel(i, each_diag.bpmnProcessInfo[0],expanded)" hideToggle>
-  <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="row col-md-12" id="bpmn_list_row">
-            <div class="expan-icon">
-              <i class="material-icons expand-open">chevron_right</i>
-              <i class="material-icons expand-close">expand_less</i>
-            </div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.processIntelligenceId : '-' }}</div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessName : '-'}}</div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].convertedModifiedTime}}</div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? formatApproverName(each_diag.bpmnProcessInfo[0].userName) : '-'}}</div>
-            <div class="text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
-            <div class="text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.bpmnProcessInfo[0].bpmnProcessStatus)}"><div *ngIf="each_diag.bpmnProcessInfo[0].bpmnProcessStatus=='PENDING';else status"><span class="pending_value_properties">{{pendingStatus}}</span></div> <ng-template #status>{{each_diag.bpmnProcessInfo[0].bpmnProcessStatus}}</ng-template></div>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="row col-md-12">
-        <div class="col-md-7 aprwkfl_table">
-          <h4 class="child_list_header">{{each_diag.bpmnProcessInfo[0].bpmnProcessName}}</h4>
-          <table class="full_width account_pay_details_table">
-            <thead>
-              <tr>
-                <th class="child_list_header"> Modified Time </th>
-                <th class="child_list_header"> Resource </th>
-                <th class="child_list_header"> Version </th>
-                <th class="child_list_header"> Status </th>
-                <th class="child_list_header"> Message </th>
-                <th class="child_list_header"> Actions </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let each_past_process of each_diag.bpmnProcessInfo | orderBy: 'modifiedTimestamp': true; let j=index;">
-                <td>{{each_past_process.convertedModifiedTime*1000 | date:'medium'}}</td>
-                <td>{{formatApproverName(each_past_process.userName)}}</td>
-                <td>{{"V 1."+each_past_process.version}}</td>
-                <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span>{{pendingStatus}}</span></div> <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
-              <td [matTooltip]="each_past_process.reviewComments"><input type="text"  [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td>
-                <td class="aprwkfl_actions">
-                  <div class="aprwkfl_actions_icons">
-                    <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1"></button>
-                    <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1"></button>
-                    <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process)">
-                  </div>  
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-5 bps_overlay">
-          <span class="info">
-            {{selected_processInfo && selected_processInfo['bpmnProcessStatus'] == 'PENDING'?'Cannot be edited till it is reviewed':'Click to open'}}</span>
-            <span><button title="Fit to the view port" class="right header_btn fit_button approver_fit_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>
-          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram()"></div>
-          <div class="row">
-            <div class="col-md-6">
-                <div class="btn-download">
-                    <button class="down-btn" (click)="downloadBpmn()"><img  src="..\assets\images\PI\download_icon.svg"></button>
-                    <h6 class="download-label">Download</h6>
-                  </div>
-            </div>
-          </div>
-
-        </div>
-        
-      </div>
-    </mat-expansion-panel>
-    </mat-accordion>
-  </div> -->
-
 </div>
 

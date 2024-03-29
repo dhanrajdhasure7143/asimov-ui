@@ -1305,8 +1305,8 @@ getProgrmaDetailsById(programid){
     // return this.http.get<any>('/subscriptionservice/v1/subscriptions');
       return this.http.get<any>('/subscriptionservice/v1/subscriptions/get-all-subscription-details');
   }
-  cancelSubscription(data): Observable<any> {
-    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  cancelSubscription(subscriptionId): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + subscriptionId + '/cancel?isImmediateCancel=' + false, { responseType: 'json' });
   }
   invoicedownload(invoiceId): Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })
@@ -1892,10 +1892,12 @@ getCustomTasksbyId(id : any){
   return this.http.get('/rpa-service/sdk-custom/get-sdk-task/'+id)
 }
 
-deleteMicroBot(microBotId: string) {
-  return this.http.get('https://dummyjson.com/products/1');
+deleteMicroBot(microBotId: any) {
+  return this.http.get(`/rpa-service/fetch-used-botnames-in-microbot/${microBotId}`);
 }
-
+deleteMicrobotFromList(microBotId: any) {
+  return this.http.post(`/rpa-service/delete-microbot/${microBotId}`,"");
+}
 loadPredefinedBots(): Observable<any>{
   return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
 }
@@ -1920,4 +1922,27 @@ updateBillingInfo(data){
   return this.http.post(`/subscriptionservice/v1/billingContact/updateCustomerBillingAddress`, data);
 }
 
+getPredifinedRawBots(){
+  return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
+}
+
+getPaymentCards(){
+  return this.http.get("/subscriptionservice/v1/paymentmethods/payments-cards")
+}
+
+  updateSubscriptionDetails(body,sessionId){
+    return this.http.post("/subscriptionservice/v1/subscriptions/update-session-subscriptions?sessionId="+sessionId,body)
+  }
+
+  getTasksAttributesForSeletedTasks(){
+    return this.http.get("/rpa-service/fetch-attributes-by-task-names")
+  }
+
+  getBillingInfoStatus(){
+    return this.http.get("/subscriptionservice/v1/billingContact/customer-cards-check")
+  }
+
+  addNewCardURLGenerate(payload){
+    return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
+  }
 }

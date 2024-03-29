@@ -1,9 +1,9 @@
-<div *ngIf="selectedtask!=undefined" class="edit-task-form">
+<!-- <div *ngIf="selectedtask!=undefined" class="edit-task-form">
     <div class="module-heading title ">
         <div class="Edittask-Title">
-            <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+           // <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
               <i class="fa fa-angle-left" aria-hidden="true"></i>
-            </span> -->
+            </span>//
             <span class="module-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id:project_id}">
               <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </span>
@@ -15,15 +15,15 @@
         </div>
         <div class="Edittask-btns ml-auto">
             <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails" [queryParams]="{id:project_id}" class="btn new-cancelbtn">Cancel</button>
-            <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
+            //<button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button>//
             <button [disabled]="updatetaskForm.invalid || taskSummaryFlag || taskDescriptionFlag" (click)="updatetask()" class="btn bluebg-button">Update</button>
         </div>
 
-        <!-- <span class="pull-right" style="font-size:20px;">
+        //<span class="pull-right" style="font-size:20px;">
             <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
             <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
             <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
-          </span> -->
+          </span>//
           
     </div>
   
@@ -34,11 +34,11 @@
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
 
             <div class="bg-task row">
-                <!-- {{selectedtask.id}} /
-                 -->
+                // {{selectedtask.id}} / //
+                
                 <div class="col-md-12 p-0">
                     <div class="d-flex">
-                        <!-- <div class="task-name">{{taskcategory}} / </div> -->
+                        //<div class="task-name">{{taskcategory}} / </div>//
                         <div class=" col-md-6 pl-0">
                         <label class="label-control" id="taskcategory" for="taskcategory">Task Category</label>
                         <select class="form-control rpa-control" formControlName="taskCategory"  [(ngModel)]="optionValue" (change)="OnChangeTaskCategory($event)">
@@ -67,17 +67,17 @@
                         
                     </div>
                 </div>
-                <!-- <div class="pull-right">
+               // <div class="pull-right">
                     <label class="label-control" id="startdate" for="startDate">Start Date</label>
                     <span class="labelcont">{{startDate  | date}}</span>
-                </div> -->
+                </div> //
         
             </div>
         <div class="row">
             <div class="col-md-5">
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" id="assignee" for="assignee">Assignee</label>
-                        <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
+                       // <span class="labelcont">{{taskresource| userPipe : users_list}}</span>//
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
                     <option value="" disabled hidden>Select Assignee</option>
                     <option value="null" disabled >Select Assignee</option>
@@ -139,7 +139,7 @@
 
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control" id="percentage" for="percentage">Percentage Completed</label>
-                        <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
+                        //<ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider>//
                         <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                     </div>
 
@@ -170,8 +170,8 @@
                     <mat-tab label="Comment">
                         <div class="t-comments-box">
                             <div class="add-comment">
-                                <!-- <div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
-                      <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div> -->
+                                //<div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
+                      <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div>//
                                 <div class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
                                 <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
                                 <div>
@@ -184,15 +184,15 @@
                                             <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
                                         </a>
 
-                                        <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
+                                        //<i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i>//
                                     </div>
                                 </div>
                             </div>
                             <div class="comment comment-level-1" *ngIf="taskcomments.length!=0">
-                                <!-- <div  class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div> 
+                                //<div  class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div> 
                       <div  *ngIf="(userdata.image!='' && userdata.image!=null)">
                         <img class="res-circle " [src]="'data:image/jpeg;base64,'+userdata.image" >
-                      </div> -->
+                      </div>//
 
                                 <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
                                     <div class="comment-content-subdiv">
@@ -211,7 +211,6 @@
                                                 </div>
                                                 <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
                                                     <button type="button" (click)="editComments(c.comments,i)">
-                                                        <!-- Edit -->
                                                         <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img" />
                                                         <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img" />
                                                     </button>
@@ -236,18 +235,18 @@
                                                 <button id="updatesavecomment" type="button" class="btn bluebg-button" (click)="updatecomment(c.id)">
                                 Save
                               </button>
-                                                <!-- <div class="col-md-6" >
+                                               // <div class="col-md-6" >
                                           <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                        </div> -->
+                                        </div>//
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="comment-action" *ngIf="i!=commentnumber">
+                                    //<div class="comment-action" *ngIf="i!=commentnumber">
                                         <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
                                             style="color:red;cursor:pointer" >
                                             Edit
                                         </button>
-                                    </div> -->
+                                    </div>//
                                 </div>
 
                             </div>
@@ -272,7 +271,7 @@
                                     </div>
                                 </div>
 
-                                <!-- <div> 
+                                //<div> 
                                       <div class="usertaskimage" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
                                         <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
                                         <div  *ngIf="result.length>3">
@@ -283,7 +282,7 @@
                                   <br>
                                   <div>
                                   {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
-                                </div> -->
+                                </div>//
 
                             </li>
                         </ul>
@@ -406,4 +405,7 @@
         </div>
     </form>
     </div>
-</div>
+</div> -->
+
+
+<!-- Note: some of the span & div tags marked with "//" those are previously commented code please comment them if un-comment this component. -->

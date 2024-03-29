@@ -4034,6 +4034,9 @@ padding: 0px 30px;}
 .new-box.copilot-pi-flowchart div#exportSVGtoPDF  svg#render:first-child {
   display: none;
 }
+.pi-xes .p-datatable-wrapper {
+  height: calc(100vh - 230px);
+}
 .chatpopmenu .p-menu-overlay {
   position: absolute;
   right: 0px !important;
@@ -4091,4 +4094,9 @@ padding: 0px 30px;}
 
 .overview-items .p-overlaypanel-content {
   padding: 5px 0px !important;
+}
+.stripe-card{
+  border: 1px solid #979797 !important;
+  padding: 8px !important;
+  border-radius: 5px;
 }

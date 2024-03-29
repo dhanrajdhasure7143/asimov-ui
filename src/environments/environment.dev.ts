@@ -48,8 +48,8 @@ export const environment = {
     isCustomerBots : true,
     environmentName: "DEV",
     isMicroBot:true,
-    paymentSuccessURL: "https://eziap.dev.epsoftinc.com/#/pages/home",
-    paymentFailuerURL: "https://eziap.dev.epsoftinc.com/#/pages/home",
+    paymentSuccessURL: "https://eziap.dev.epsoftinc.com/#/pages/success",
+    paymentFailuerURL: "https://eziap.dev.epsoftinc.com/#/pages/subscriptions",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
   };
   

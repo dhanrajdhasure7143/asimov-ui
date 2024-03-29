@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { CryptoService } from 'src/app/services/crypto.service';
@@ -77,16 +76,11 @@ export class RpaCredentialFormComponent implements OnInit {
       this.credentialForm.get("categoryId").setValue(this.credupdatedata["categoryId"]);
       setTimeout(()=>{
         this.credentialForm.get("serverName").setValue(this.credupdatedata["serverName"]);
-        if(this.credentialForm.get("serverName").value=="Office365")
-        {        
-          if(this.credupdatedata["password"]!="" && this.credupdatedata["password"] != null)
-          {
+        if(this.credentialForm.get("serverName").value=="Office365"){        
+          if(this.credupdatedata["password"]!="" && this.credupdatedata["password"] != null){
             this.credentialForm.get("authType").setValue("password");
             this.onChangeAuthType("password");
-
-          }
-          else
-          {
+          } else {
             this.credentialForm.get("authType").setValue("secretKey");
             this.onChangeAuthType("secretKey");
           }
@@ -120,8 +114,6 @@ export class RpaCredentialFormComponent implements OnInit {
         outboundAddressPort: [""],
     })
     }
-
-
   }
 
 

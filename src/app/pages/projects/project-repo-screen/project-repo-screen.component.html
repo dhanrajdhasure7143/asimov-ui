@@ -1,6 +1,6 @@
-<div class="h-100">
-  <!-- <mat-card id="projects_details_screen" *ngIf="projects_toggle==false"> -->
-      <!-- <div class="projects-header maincreat">
+<!-- <div class="h-100">
+  //<mat-card id="projects_details_screen" *ngIf="projects_toggle==false">//
+      //<div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id: projectid}">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span>
@@ -22,7 +22,7 @@
          
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span>
-      </div> -->
+      </div>//
 
     <div class="module-heading title">
         <div>
@@ -46,7 +46,7 @@
 
             <span class="deleteSpan">
               <span *ngIf="!filecheckflag" (click)="onDeleteSelectedItems($event)" class="delete-icon"   matTooltip="Delete">
-                      <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
+                      //<img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  >//
                       <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
                       <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </span>
@@ -55,21 +55,21 @@
               </span>
       </span>
 
-            <!-- <span class="deleteSpan">
+           // <span class="deleteSpan">
               
               <button [disabled]="filecheckflag" class="delete-icon delete-icon-disabled"     matTooltip="Delete" >
                 <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
               <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </button>
-            </span>  -->
+            </span> //
             
             <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems()"   matTooltip="Download" >
               <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
               <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
             </span> 
-             <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
-             <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
-             <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span>    -->
+             //<span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span>
+             <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span>
+             <span class="projects-menu-item"><i class="fa fa-download"></i></span>// 
             <span class="projects-menu-item" matTooltip="More">
               <img src="../../../../assets/images/Projects/more.svg" class="testplus1">
             </span>            
@@ -113,9 +113,9 @@
                   <td mat-cell *matCellDef="let element">
                       <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
                       <span *ngIf="element.uploadedDate==null">---</span>
-                      <!-- <div class="addresource-btn">
+                     // <div class="addresource-btn">
                         <span mat-mini-fab color="primary" matTooltip="Add Resources" (click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i></span>
-                    </div> -->
+                    </div>//
                   </td>
                 </ng-container>
         
@@ -132,7 +132,7 @@
                   <td mat-cell *matCellDef="let element" >
                     
                     <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
-                      <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
+                     // <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar>//
                   </span>
                   </td>
                 </ng-container>
@@ -153,14 +153,14 @@
                       <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                     </span> 
 
-                    <!-- <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span> -->
+                   // <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span>//
 
                     <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
                       <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
                       <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
                     </span> 
-                    <!-- <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span> -->
-                    <!-- <div class="newinntalx">
+                    //<span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span>//
+                    //<div class="newinntalx">
                       <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
                         <i class="fas fa-file-upload"></i>
                       </a>|
@@ -178,7 +178,7 @@
                       <a class="disable-bg text-dark" *ngIf="element.category =='Analysis'|| element.category =='Task Mining'" >
                         <img src="../../../../../assets/images/Projects/eye-hide.svg" />
                       </a>
-                  </div> -->
+                  </div>//
                   </td>
                 </ng-container>
         
@@ -424,22 +424,21 @@
       </ng-template>
 
       <ng-template class="modal-up" #uploadFilemodal>
-        <!-- <div class="modal-header">
+        //<div class="modal-header">
         <h4 class="modal-title pull-left">Upload File</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
-        </div> -->
+        </div>//
         <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
           <div #draggableHandle class="modal-header modelprhead">
-        <!-- <div class="modal-header modelprhead"> -->
           <h4 class="modal-title pull-left">Upload File</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
           </button>
-          <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+          //<button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
             <span aria-hidden="true">&times;</span>
-          </button> -->
+          </button>//
         </div>
         </div>
 
@@ -484,7 +483,7 @@
                       </div>
 
                     
-                      <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
+                      //<input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true">//
                       <div class="upload-filesdiv">
                         <div class="row">
                           <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i = index"> 
@@ -493,7 +492,6 @@
                                 <span class="pull-right clickable" matTooltip="Remove"
                                 (click)="removeSelectedFile(i)">
                                     <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
-                                    <!-- <i class="fa fa-trash"></i> -->
                                 </span>
                              <span class="card-placeholder">
                                   File Name : {{selected.name}}
@@ -510,11 +508,11 @@
 
                       
 
-                        <!-- {{selected}}
+                        //{{selected}}
                         <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
                           <span aria-hidden="true">&times;</span>
-                      </button> -->
-                        <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+                      </button>//
+                        //<button mat-icon-button (click)="removeSelectedFile(index)">delete</button>//
                       </div>
 
                       <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
@@ -533,4 +531,6 @@
       </ng-template>
 
     </div> 
-</div>
+</div> -->
+
+<!-- Note: some of the span & div tags marked with "//" those are previously commented code please comment them if un-comment this component. -->

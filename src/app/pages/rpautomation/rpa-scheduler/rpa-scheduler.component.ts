@@ -1,4 +1,4 @@
-import {Input, Component, OnInit ,Pipe, PipeTransform, EventEmitter,Output } from '@angular/core';
+import {Input, Component, OnInit, EventEmitter,Output } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import cronstrue from 'cronstrue';
@@ -725,26 +725,4 @@ gettime(){
     return (startDate > endDate)?true:false;
   }
 
-}
-
-
-
-@Pipe({name: 'Envname'})
-export class EnvnameRpa implements PipeTransform {
-  transform(value: any,arg:any)
-  {
-    let environments:any=[];
-    environments=arg;
-    return environments.find(item=>item.environmentId==value).environmentName;
-  }
-}
-
-@Pipe({name: 'Reverse'})
-export class ReverseRpa implements PipeTransform {
-  transform(value: any)
-  {
-    let arr:any=[];
-    arr=value
-    return arr.reverse();
-  }
 }

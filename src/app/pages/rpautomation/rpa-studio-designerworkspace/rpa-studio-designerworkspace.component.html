@@ -8,7 +8,7 @@
         }">
           <!--Nodes inside designer-->
           <ng-container *ngFor="let node of nodes; let i = index">
-            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) || (node.selectedNodeTask == 'Corrupted') )?'hide-node':''):(node.isModified || node.selectedNodeTask == 'Corrupted')?'hide-node':'' " [pTooltip]="node.isModified ? ('This task is deprecated!') : (node.selectedNodeTask == 'Corrupted'? 'This task is corrupted, Please add right one.':'')" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) || (node.selectedNodeTask.includes('Corrupted')) )?'hide-node':''):(node.isModified || node.selectedNodeTask.includes('Corrupted'))?'hide-node':'' " [pTooltip]="node.isModified ? ('This task is deprecated!') : (node.selectedNodeTask == 'Corrupted'? 'This task is corrupted, Please add right one.':'')" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
               (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
                 left: node.x,
                 top: node.y,
@@ -63,7 +63,7 @@
                 'border-color': !group.collapsed ? group.color : 'black',
                 'border-style': !group.collapsed?'dotted':'',
                 'border-radius': group.collapsed?'0.2em':'',
-                'background-image': group.collapsed ? 'url(' + path + ')' : ''
+                'background-image': group.collapsed ? 'url(' + (group.isMicroBot ? '/assets/images-n/Micro-bot.png' : '/assets/images/RPA/dragarea.png') + ')' : ''
               }" class="groupElement" (mouseenter)="group.showPublishButton = group.collapsed" (mouseleave)="group.showPublishButton = false" 
               [pTooltip]="group.collapsed ? group.description:''">
               <!-- <div class="resize-handle-top" mwlResizeHandle [resizeEdges]="{ top: true }"></div>
@@ -107,7 +107,7 @@
                 <span class=" groupTitle clickable" *ngIf="group.edit == false">
                   <i class="pi pi-info-circle" style="font-size: 0.9rem" [pTooltip]="group.description"></i>
                 </span>
-                <span *ngIf="group.isMicroBot && group.edit == false" class="groupTitle clickable" (click)="onCollapseGroup(group,i)">
+                <span *ngIf="group.edit == false" class="groupTitle clickable" (click)="onCollapseGroup(group,i)">
                   <i class="pi pi-angle-up" style="font-size: 1.3rem"></i>
                   <!-- <i class="pi pi-angle-down"></i> -->
                 </span>
@@ -396,7 +396,7 @@
     <form [formGroup]="groupForm" (ngSubmit)="isEditing ? updateGroup() : addGroup()">
       <div class="p-field">
         <label for="groupName">Group Name <span class="star">*</span></label>
-        <input id="groupName" type="text" maxlength="51" formControlName="groupName" class="form-control" autocomplete="off">
+        <input id="groupName" type="text" maxlength="51" formControlName="groupName" class="form-control" autocomplete="off" (keydown)="Space($event)">
         <span *ngIf="groupForm.get('groupName').hasError('required') && groupForm.get('groupName').touched" class="required">
           Group Name is required.
         </span>
@@ -405,13 +405,13 @@
         </span>
         <span *ngIf="groupForm.get('groupName').hasError('pattern') && !groupForm.controls['groupName'].hasError('maxlength')"
           class="required">
-          Only alphabets & space between words are allowed.
+          Only alphabets & numbers are allowed.
         </span>
       </div>
       <br>
       <div class="p-field">
         <label for="groupDescription">Group Description <span class="star">*</span></label>
-        <textarea id="groupDescription" pInputTextarea [autoResize]="true" maxlength="251" formControlName="groupDescription" class="form-control"></textarea>
+        <textarea id="groupDescription" pInputTextarea [autoResize]="true" maxlength="251" formControlName="groupDescription" class="form-control" (keydown)="Space($event)"></textarea>
         <span *ngIf="groupForm.get('groupDescription').hasError('required') && groupForm.get('groupDescription').touched" class="required">
           Group Description is required.
         </span>

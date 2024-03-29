@@ -128,6 +128,7 @@ export class toastMessages{
   public downloadErr = "Failed to download!";
   public exportError = "Failed to export bot!";
   public exportSuccess = "Exported successfully!"
+  public groupEmptyError = "Please add minimum two tasks to the group!"
   
   
 }

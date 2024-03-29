@@ -108,25 +108,41 @@ export class OverviewComponent implements OnInit {
     this.table_columns= this.columns.subscrption_overview
     this.api.listofsubscriptions().subscribe((response) => {
       console.log(response)
-      this.table_searchFields=["planname","plan","amount","term","nextBilling","customerMailId","status"]
+      this.table_searchFields=["planname","plan","amount","term","nextBilling","customerMailId","status"];
       let data  = response.data;
-      console.log(data)
-      data.forEach(item => {
-        item.subscriptionRespsonse.forEach(element => {
-          this.tableData.push(element);
+        console.log(data)
+        data.forEach(item => {
+          item.subscriptionRespsonse.forEach(element => {
+            this.tableData.push(element);
+          });
         });
-      });
-
-      this.tableData.forEach(element => {
-        element["currentPeriodStart"] = new Date(element.currentPeriodStart).toDateString()
-        element["nextBilling"] = new Date(element.nextBilling).toDateString();
-        element["amount"] = "$ "+element.total_amount;
-        element["status"] = element.status[0].toUpperCase() + element.status.slice(1);
-        // element["nextBillingDate"] = moment(element.nextBillingDate).format("MMMM DD [,] yy")
-      });
-      this.result = this.tableData.filter((obj) => {
-        return obj.status == "Active";
-      });
+      if(response.isEnterprise){
+        this.table_columns = this.columns.subscrption_overview.slice(0, -1);
+        this.tableData.forEach(element => {
+          element["planname"] = "Enterprise Plan";
+          element["currentPeriodStart"] = new Date(element.currentPeriodStart).toDateString()
+          element["nextBilling"] = new Date(element.nextBilling).toDateString();
+          element["amount"] = null;
+          element["term"] = null;
+          element["status"] = element.status[0].toUpperCase() + element.status.slice(1);
+          // element["nextBillingDate"] = moment(element.nextBillingDate).format("MMMM DD [,] yy")
+        });
+      }else{
+        
+        this.tableData.forEach(element => {
+          element["planname"] = "Predefined Bots";
+          element["currentPeriodStart"] = new Date(element.currentPeriodStart).toDateString()
+          element["nextBilling"] = new Date(element.nextBilling).toDateString();
+          element["amount"] = "$ "+element.total_amount;
+          element["term"] = element.term[0].toUpperCase() + element.term.slice(1);
+          element["status"] = element.status[0].toUpperCase() + element.status.slice(1);
+          // element["nextBillingDate"] = moment(element.nextBillingDate).format("MMMM DD [,] yy")
+        });
+      }
+      
+      // this.result = this.tableData.filter((obj) => {
+      //   return obj.status == "Active";
+      // });
       // this.due_timestamp = moment(this.result.createdAt).add(1, "years").format("MMMM DD [,] yy")
       // this.due_timestamp1 = moment(this.result.createdAt).add(1, "months").format("MMMM DD [,] yy")
       this.spinner.hide();
@@ -134,13 +150,21 @@ export class OverviewComponent implements OnInit {
   }
 
   subscriptionCancel(item) {
+    console.log(item)
     this.confirmationService.confirm({
       message: "Do you really want to cancel your subscription?",
       header: "Are you sure?",
+      acceptLabel:'Yes',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       key: "positionDialog",
       accept: (result) => {
         this.spinner.show();
-        this.api.cancelSubscription(item).subscribe((res) => {
+        this.api.cancelSubscription(item.subscriptionId).subscribe((res) => {
           this.spinner.hide();
           if (res == null) {
             this.toastService.showSuccess(this.toastMessages.cancelSubscription,'response');

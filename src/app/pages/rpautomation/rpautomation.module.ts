@@ -7,52 +7,35 @@ import { DynamicFormBuilderModule } from './dynamic-form-builder/dynamic-form-bu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RpaenvironmentsComponent } from './rpa-environments/rpa-environments.component';
-import { Ng5SliderModule } from 'ng5-slider';
 import { HttpClientModule } from '@angular/common/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RpaHomeComponent } from './rpa-home/rpa-home.component';
-import {MatTableModule} from '@angular/material/table';
-import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSliderModule} from '@angular/material/slider';
 import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurations.component';
 import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-database-connections.component';
 import { RpaToolsetComponent } from './rpa-toolset/rpa-toolset.component';
 import { RpaStudioDesignerComponent} from './rpa-studio-designer/rpa-studio-designer.component';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
+import{ipcustompipecreation} from '../../pipes/IPAddressCustompipe';
 import { RpaStudioDesignerworkspaceComponent, Checkoutputbox } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa-scheduler.component';
-
+import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {Rpa_Hints} from './model/RPA-Hints';
 import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { TaskPipe } from './custom-pipes/task.pipe';
-import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
+import { TaskPipe } from './../../pipes/task.pipe';
+import { TasksearchPipe } from './../../pipes/tasksearch.pipe';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
-import { AngularSplitModule } from 'angular-split';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -61,16 +44,14 @@ import { RpaBotFormComponent } from './forms/rpa-bot-form/rpa-bot-form.component
 import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database-form.component';
 import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
-import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
-import { CardModule } from 'primeng/card';
 import { RpaActionItemsComponent } from './rpa-action-items/rpa-action-items.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { RpaApprovalsComponent } from './rpa-approvals/rpa-approvals.component';
 import { ClipboardModule } from 'ngx-clipboard';
-
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { Rpa_Hints } from './model/RPA-Hints';
 import { RpaSdkComponent } from './rpa-sdk/rpa-sdk.component';
 import { RpaSdkFormComponent } from './forms/rpa-sdk-form/rpa-sdk-form.component';
 import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerworkspace/rpa-microbot-designerworkspace.component';
@@ -89,8 +70,6 @@ import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerwo
     RpaStudioDesignerworkspaceComponent,
     RpaSchedulerComponent,
     Checkoutputbox,
-    ReverseRpa,
-    EnvnameRpa,
     RpaCredentialsComponent,
     TaskPipe,
     TasksearchPipe,
@@ -100,7 +79,6 @@ import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerwo
     RpaDatabaseFormComponent,
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
-    SearchRpaPipe,
     RpaConnectionManagerFormComponent,
     RpaConnectionManagerComponent,
     RpaActionItemsComponent,
@@ -117,7 +95,6 @@ import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerwo
     NgxPaginationModule,
     RpautomationRoutingModule,
     DndModule,
-    MatTableModule,
     MatTabsModule,
     FilterPipeModule,
     NgbModule,MatExpansionModule,
@@ -128,32 +105,23 @@ import { RpaMicrobotDesignerworkspaceComponent } from './rpa-microbot-designerwo
     HttpClientModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
     SharedModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatNativeDateModule,MatTooltipModule,MatSliderModule,MatDatepickerModule,MatSidenavModule,
+    MatFormFieldModule,
+    MatSidenavModule,
     MatSelectModule,
     NgxSpinnerModule,
-    MatSlideToggleModule,
-    Ng5SliderModule,
-    AngularSplitModule.forRoot(),
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
-    CardModule,
     PrimengCustomModule,
     ClipboardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent, RpaStudioDesignerComponent],
-  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,DatePipe,
-    {
-           provide: MatPaginatorIntl, 
-           useClass: CustomMatPaginatorIntl
-    },
+  providers: [MatDatepickerModule,
+    Rpa_Hints, 
+    BsModalRef, 
+    BsModalService,
+    DatePipe,
     toastMessages
   ]
 })

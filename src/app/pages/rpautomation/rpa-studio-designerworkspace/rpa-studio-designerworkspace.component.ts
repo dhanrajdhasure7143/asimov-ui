@@ -243,7 +243,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$')])],
+      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z0-9 ]*$')])],
       groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
     });
   }
@@ -1083,18 +1083,36 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   deletenode(node) {
-      this.confirmationService.confirm({
-        header:'Are you sure?',
-        message:"Do you want to delete this node? This can't be undo.",
-        acceptLabel:'Yes',
-        rejectLabel:'No',
-        rejectButtonStyleClass: ' btn reset-btn',
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        rejectIcon: 'null',
-        acceptIcon: 'null',
-        key: "designerWorkspace",
-      accept:() => {
+    this.confirmationService.confirm({
+      header:'Are you sure?',
+      message:"Do you want to delete this node? This can't be undo.",
+      acceptLabel:'Yes',
+      rejectLabel:'No',
+      rejectButtonStyleClass: ' btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      key: "designerWorkspace",
+    accept: async() => {
+
+      var groups = [] = this.jsPlumbInstance.getGroups();
+     
+       await groups.forEach((group)=> {
+            // Check if the group contains the node
+            let connectedNodes= [] = this.collectGroupIds(group.id);
+                if (connectedNodes.includes(node.id)) {
+                    try {
+                      let element: any = document.getElementById(node.id)
+                        this.jsPlumbInstance.removeFromGroup(group.id, element);
+                        // this.jsPlumbInstance.remove(node.id);
+                        this.re_ArrangeNodes();
+                    } catch (error) {
+                        console.error("Error removing element from group:", error);
+                    }
+                }
+        });
+
         this.nodes.splice(this.nodes.indexOf(node), 1);
         this.jsPlumbInstance.remove(node.id);
         let nodeId = node.name + "__" + node.id;
@@ -1102,35 +1120,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (task != undefined) {
           this.finaldataobjects.splice(this.finaldataobjects.indexOf(task), 1);
         }
-        var groups:any[]=[]
-        groups = this.jsPlumbInstance.getGroups();
-        // Iterate over each group
-        console.log("groups",groups)
-        groups.forEach((group)=> {
-            // Check if the group contains the node
-            let connectedNodes = this.collectGroupIds(group.id);
-            if (connectedNodes.includes(node.id)) {
-              // Remove the node from the group
-              console.log("accepted", group.id, node.id)
-              // this.jsPlumbInstance.removeFromGroup(node.id, group.id);
-                group.remove(node.id);
-            }
-        });
-        this.re_ArrangeNodes();
+     
 
-        // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
-        //   if (group.contains(nodeId)) { // Check if the group contains the node
-        //     this.jsPlumbInstance.removeFromGroup(nodeId, group.id);
-        //     const index = this.groupsData.findIndex((g) => g.groupId === group.id);
-        //     if (index !== -1) {
-        //       this.groupsData.splice(index, 1);
-        //     }
-        //   }
-        // });
-      }
-  })
-    this.validateBotNodes();
-  }
+      // this.jsPlumbInstance.getGroupMap().forEach(function(group) {
+      //   if (group.contains(nodeId)) { // Check if the group contains the node
+      //     this.jsPlumbInstance.removeFromGroup(nodeId, group.id);
+      //     const index = this.groupsData.findIndex((g) => g.groupId === group.id);
+      //     if (index !== -1) {
+      //       this.groupsData.splice(index, 1);
+      //     }
+      //   }
+      // });
+    }
+})
+  this.validateBotNodes();
+}
 
   onRightClick(n: any, e: { target: { id: string } }, i: string | number) {
     this.selectedNode = n;
@@ -1172,7 +1176,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //   alert("Its a deprecated task please update accordingly!")
     //   return;
     // }
-    if(node.selectedNodeTask == 'Corrupted') {
+    if(node.selectedNodeTask.includes('Corrupted')) {
       this.confirmationService.confirm({
         header:'Task not found!',
         message:'This task is corrupted, Please add right one.',
@@ -1180,7 +1184,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         rejectVisible:false,
         acceptButtonStyleClass:'btn bluebg-button',
         defaultFocus:'none',
-        key: "designerWorkspace"
+        key: "designerWorkspace",
+        rejectIcon: 'null',
+        acceptIcon: 'null',
        })
       return;
     }
@@ -2044,6 +2050,39 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateFinalBot(version_type:any, comments:any){
+    let isGroupEmpty: boolean = false;
+    let hasStartTask: boolean = false;
+    let hasStoptTask: boolean = false;
+   let groups = [] = this.jsPlumbInstance.getGroups();
+   console.log("groups", groups)
+    groups.forEach((group)=> {
+      let connectedNodes =[] = this.collectGroupIds(group.id);
+      if(connectedNodes.length == 0 || connectedNodes == undefined|| connectedNodes.length == 1){
+        isGroupEmpty = true;
+      }
+      if(connectedNodes.includes('START_' + this.finalbot.botName)){
+        hasStartTask = true;
+      }
+      if(connectedNodes.includes('STOP_' + this.finalbot.botName)){
+        hasStoptTask = true;
+      }
+    })
+      if(isGroupEmpty){
+        this.toastService.showInfo(this.toastMessages.groupEmptyError);
+        return;
+      }
+      if (hasStartTask && hasStoptTask) {
+        this.toastService.showInfo('Please remove start & stop task from group');
+        return;
+      }
+      if (hasStartTask) {
+        this.toastService.showInfo('Please remove start task from group');
+        return;
+      }
+      if (hasStoptTask) {
+        this.toastService.showInfo('Please remove stop task from group');
+        return;
+      }
     let env = [...this.filteredEnvironments.filter((item: any) => item.check == true).map((item2: any) => {
           return item2.environmentId;
         }),];
@@ -2136,7 +2175,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       } else {
           console.log("saveBotdata",this.saveBotdata);          
         let previousBotDetails: any = { ...{}, ...this.finalbot };
-        this.assignTaskConfiguration();
+        // this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
           (response: any) => {
             this.spinner.hide();
@@ -2260,7 +2299,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: item.width,
         edit: false,
         color: item.color,
-        collapsed : item.isMicroBot? true: false,
+        // collapsed : item.isMicroBot? true: false,
+        collapsed : true,
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
         // anchor:"TopLeft",
@@ -3002,9 +3042,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.draggable(groupIds, {
         containment: true,
       });
-          this.showGroup_Overlay = false;
-           this.groupForm.reset();
     }, 500);
+      this.showGroup_Overlay = false;
+      this.groupForm.reset();
   }
 
   removeGroup(group) {
@@ -3040,28 +3080,43 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                   }
                   if(index == groupNodes.length-1){
                     this.removeGroupObject(group)
-                    console.log("group_If",group)
+                  // Remove microbot from payload
+                  let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+                  if (savedGroupsData !== -1) {
+                    this.savedGroupsData.splice(savedGroupsData, 1);
+                  }
                   }
                 }else{
                   if(index == groupNodes.length-1){
                     this.jsPlumbInstance.remove(group.id);
                     let groupdata = this.groupsData.find((item: any) => item.id==group.id);
                     this.groupsData.splice(this.groupsData.indexOf(groupdata), 1);
-                    console.log("group_else",group)
+                    let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+                    if (savedGroupsData !== -1) {
+                      this.savedGroupsData.splice(savedGroupsData, 1);
+                    }
                   }
                 }
             });
           } else{
-            this.removeGroupObject(group)                  
+            this.removeGroupObject(group)
+            // Remove microbot from payload
+            let savedGroupsData = this.savedGroupsData.findIndex((item: any) => item.id == group.id);
+            if (savedGroupsData !== -1) {
+              this.savedGroupsData.splice(savedGroupsData, 1);
+            }
           }
         }
       })
     }else{
+      console.log("group_else",group)
       this.jsPlumbInstance.removeGroup(group.id);
+      setTimeout(() => {
       let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
-      if (groupIndex !== -1) {
-        this.groupsData.splice(groupIndex, 1);
-      }
+        if (groupIndex !== -1) {
+          this.groupsData.splice(groupIndex, 1);
+        }  
+      }, 2000);
     }
   }
 
@@ -3452,14 +3507,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   minimizeGroup(groupData){
     console.log(groupData)
     setTimeout(() => {
-    if(groupData.isMicroBot){
+    // if(groupData.isMicroBot){
         groupData.nodeIds.forEach(element => {
           // If the group is collapsed, hide the node
           document.getElementById(element).style.display = 'none';
       });
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
-    }
+    // }
   }, 100);
   }
 
@@ -3547,8 +3602,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let groupNodes = [] = this.collectGroupIds(group.id);
 
-    if(groupNodes.length == 0){
-      this.toastService.showError('Please add tasks to the group!');
+    if (groupNodes.length === 0) {
+      this.toastService.showInfo('Please add tasks to the group!');
+      return;
+    }
+    if (groupNodes.length === 1) {
+      this.toastService.showInfo(this.toastMessages.groupEmptyError);
       return;
     }
     if(groupNodes.includes('START_'+this.finalbot.botName)){
@@ -3561,7 +3620,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     this.spinner.show();
     let payload = this.generateMicroBotPayload(group);
-  console.log(payload,this.groupsData)
 
     this.rest.saveMicroBot(payload).subscribe((response: any) => {
       let parsedResponce = JSON.parse(response)
@@ -3578,6 +3636,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           item.collapsed = true
           item.droppable= false
           item["microBotId"]= parsedResponce.microBotId? parsedResponce.microBotId: null
+          setTimeout(() => {
+            this.jsPlumbInstance.repaintEverything();
+          }, 500);
           }
         })
         this.onCollapseGroup(group,index)
@@ -3767,7 +3828,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
   collapseAllgroups(value:boolean){
     this.groupsData.forEach(group => {group.id
-      if(group.isMicroBot){
+      // if(group.isMicroBot){
         this.jsPlumbInstance.collapseGroup(group.id);
         group.collapsed = true;
         if(value){
@@ -3780,7 +3841,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
         this.re_ArrangeNodes();
-      }
+      // }
     });
   }
 
@@ -4016,6 +4077,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
 
+  Space(event:any){
+    if(event.target.selectionStart === 0 && event.code === "Space"){
+      event.preventDefault();
+    }
+  }
 }
 
 @Pipe({ name: "Checkoutputbox" })

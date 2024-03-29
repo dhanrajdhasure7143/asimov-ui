@@ -3,6 +3,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Injectable()
 @Component({
   selector: 'app-rpa-toolset',
@@ -17,6 +18,7 @@ export class RpaToolsetComponent implements OnInit {
       public dt:DataTransferService,
       private confirmationService: ConfirmationService,
       private messageService: MessageService,
+      private spinner: LoaderService
       ) { }
 
     public userFilter:any={name:""};
@@ -76,17 +78,17 @@ export class RpaToolsetComponent implements OnInit {
   }
 
   deleteMicroBot(microBot: any) {
-    this.microBotToDelete = microBot;
+    this.microBotToDelete = microBot.id;
     console.log("Deleting micro bot:", microBot);
-     this.rest.deleteMicroBot(microBot.id).subscribe(
-      (data: any) => {
-        if (data.usedInOtherBots) {
-          this.messageService.add({severity:'error', summary:'Warning', detail:`This Micro Bot is used in the following bots: ${data.usedInOtherBots.join(', ')}`});      
-           }
-      else{
+     this.rest.deleteMicroBot(microBot.id).subscribe((data: any) => {
+      let response = data;
+      let message = (response && response.length > 0) ? 
+      `This micro bot is already being used in running Bot's,
+      <span class="bold">(${response.join(', ')})</span>
+      Do you want to delete?` : 'Do you want to delete this micro bot? This can\'t be undo!';
       this.confirmationService.confirm({   
         header: 'Are you sure?',
-        message: "Are you sure you want to delete this Micro Bot?",
+        message: message,
         rejectLabel: "No",
         acceptLabel: "Yes",
         rejectButtonStyleClass: 'btn reset-btn',
@@ -100,14 +102,23 @@ export class RpaToolsetComponent implements OnInit {
           this.deleteMicroBotFromList();
         }
       })
-    }
       })   
     }
+
     deleteMicroBotFromList() {
-      const index = this.filteredMicroBotsList.indexOf(this.microBotToDelete);
-      if (index !== -1) {
-        this.filteredMicroBotsList.splice(index, 1);
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Micro Bot deleted successfully' });
-      }
+      this.spinner.show();
+      this.rest.deleteMicrobotFromList(this.microBotToDelete).subscribe((data: any) => {
+        let response = data;
+        if (response.code === 4200) {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Micro Bot deleted successfully' });
+          this.getMicroBots();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete Micro Bot' });
+        }
+      }, error => {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occurred while deleting micro bot' });
+      });
     }
 }
