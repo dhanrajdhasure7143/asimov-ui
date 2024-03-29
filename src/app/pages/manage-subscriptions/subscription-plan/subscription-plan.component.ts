@@ -253,7 +253,6 @@ paymentPlan() {
   }
   console.log("PLAN_ID's", this.selectedCard);
   console.log("REQ_BODY", req_body);
-  return
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
