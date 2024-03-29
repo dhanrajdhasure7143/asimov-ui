@@ -1023,6 +1023,7 @@ importBot(){
         this.error_message= true
         this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
         this.error_message= false;
+        console.log("file changes",this.import_BotData)
         // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
       }
@@ -1121,6 +1122,7 @@ importBot(){
       console.log("response",response)
       if(response){
         this.taskAttributes = response.data;
+        console.log(this.taskAttributes)
         this.tasksList_ForAttribute = response.tasksList_ForAttribute
       }
     });
@@ -1145,7 +1147,6 @@ importBot(){
        setTimeout(async () => {
         let generatedPyload :any= await this.generateImportPayload(this.task_list,botData);
         console.log("generatedPyload",generatedPyload)
-
           // console.log("generatedPyload",JSON.stringify(generatedPyload));
       //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
 
@@ -1174,6 +1175,7 @@ importBot(){
   }
 
   generateImportPayload(task_list,botData){
+    console.log("this.taskAttributes",this.taskAttributes)
     let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
     let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
   botData.tasks.map(element => {
@@ -1214,12 +1216,13 @@ importBot(){
               if(element.taskName == tasks.name){
                 this.tasksList_ForAttribute.forEach(each => {
                   if(element.taskName == each){
+                    console.log("element",element)
                     element.attributes.forEach(item1 => {
                       this.taskAttributes.forEach(item2 => {
                         if(item2.taskName == element.taskName){
                           item2.attributes.forEach(item3 => {
-                            if(item1.metaAttrValue == item3.name)
-                              item1.metaAttrId = item3.id
+                            if(item1.metaAttrValue == item3.attributeName)
+                              item1.metaAttrId = item3.attributeId
                           });
                         }
                       })
