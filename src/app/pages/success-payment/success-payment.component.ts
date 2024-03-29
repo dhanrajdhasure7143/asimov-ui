@@ -10,7 +10,7 @@ import { RestApiService } from '../services/rest-api.service';
   styleUrls: ['./success-payment.component.css']
 })
 export class SuccessPaymentComponent implements OnInit {
-  public countdown: number = 30;
+  public countdown: number = 10;
   public session_id: string;
   constructor(
     private router: Router,
@@ -44,7 +44,7 @@ export class SuccessPaymentComponent implements OnInit {
     ).subscribe(() => {
       this.countdown--;
       if (this.countdown === 0) {
-        this.router.navigate(['/pages/subscriptions?index=1']);
+        this.router.navigate(['/pages/subscriptions']);
       }
     });
   }
