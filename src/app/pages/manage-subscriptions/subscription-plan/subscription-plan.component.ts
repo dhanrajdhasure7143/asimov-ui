@@ -134,7 +134,7 @@ export class SubscriptionPlanComponent implements OnInit {
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
                 if (data.length > 0)
-                    obj["features"] = JSON.parse(data);
+                    obj["features"] =data?JSON.parse(data):[];
 
                 obj.priceCollection.forEach(price => {
                     try {
@@ -220,6 +220,7 @@ hideDescription() {
 
 paymentPlan() {
   this.spinner.show();
+  this.payment_methods_overlay = false;
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
@@ -241,9 +242,10 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL
+    "cancelUrl": environment.paymentFailuerURL,
+    "paymentMethodId": this.selectedCard,
   };
-  console.log("PLAN_ID's", req_body);
+  console.log("PLAN_ID's", this.selectedCard);
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
@@ -255,6 +257,7 @@ paymentPlan() {
         this.spinner.hide();
       },error => {
         this.spinner.hide();
+        this.toastService.showError("Failed to redirect to payment gateway");
         console.error('Error during payment:', error);
       }
     );
@@ -395,7 +398,7 @@ getPaymentCards(){
   if(this.paymentCards.length>1){
     this.payment_methods_overlay = true
   }else{
-    // this.paymentPlan();
+    this.paymentPlan();
   }
 }
 

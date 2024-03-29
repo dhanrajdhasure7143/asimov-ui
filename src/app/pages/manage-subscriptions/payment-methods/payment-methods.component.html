@@ -1,20 +1,14 @@
-<div class="paymentcontent_div" *ngIf="!showcarddetails">
-        <!-- <div class="col-md-12">
-                <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
-                <h4 id="ctr">Choose the right one for your valuable business</h4>
-        </div> -->
-        <div class="col-md-12 p-0 errordiv" *ngIf='error'>
-            <h2>{{error}}</h2>
-        </div>
+<div class="paymentcontent_div">
         <div *ngIf='!error' class="col-md-12 pr-0 row">
             <div class="col-3 form-group pl-0" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
                 <div class="cardsBox">
                     <img src="../../../assets/images/subscription/card.svg" alt="">
                     <div class="cardbox_cont">
                         <p id="">
-                            <b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
+                            <b> XXXX-XXXX-XXXX-{{cardData.cardLast4}}</b>
                             <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
                         </p>
+                        <div><span>Card Type: </span> <span> <strong>  {{cardData.cardBrand|titlecase}}</strong></span></div>
                         <div>
                             <label class="label-control">Card Holder's Name :</label>
                             <p class="cardholderName">
@@ -50,8 +44,40 @@
             </div>
         </div>
 </div>
-<div class="" *ngIf="showcarddetails">
+<!-- <div class="" *ngIf="showcarddetails">
     <app-addcard (onBack)="onBack()"></app-addcard>
-</div>
+</div> -->
+
+<p-dialog [(visible)]="showcarddetails" [modal]="true" [responsive]="true" [style]="{width: '40vw'}">
+    <ng-template pTemplate="header">
+        <h4>Add Card</h4>
+    </ng-template>
+    <div class="col-md-12" [formGroup]="paymentForm">
+        <div class="form-group">
+            <label class="label-control">Card Holder Name<span class="star">*</span></label>
+            <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="name" placeholder="Enter Card Holder Name">
+          <!-- <label class="">Name</label>
+          <input class="form-control" type="text" formControlName="name"> -->
+        </div>
+        <div class="form-group">
+          <ngx-stripe-card containerClass="stripe-card"
+            [options]="cardOptions"
+            (on)="onChange($event)"
+            [elementsOptions]="elementsOptions"
+          ></ngx-stripe-card>
+        </div>
+        <div class="p-field-checkbox">
+            <p-checkbox formControlName="isdefault" binary="true" inputId="binary"></p-checkbox>
+            <span for="binary"> Default</span>
+        </div>
+      </div>
+    <ng-template pTemplate="footer">
+        <button class="btn new-cancelbtn" (click)="cancel()">Cancel</button>
+        <button class="btn bluebg-button" (click)="createToken()" >Create</button>
+    </ng-template>
+</p-dialog>
+
+
+
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
