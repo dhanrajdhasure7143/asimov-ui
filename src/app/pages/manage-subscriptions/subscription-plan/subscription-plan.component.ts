@@ -134,7 +134,7 @@ export class SubscriptionPlanComponent implements OnInit {
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
                 if (data.length > 0)
-                    obj["features"] = JSON.parse(data);
+                    obj["features"] =data?JSON.parse(data):[];
 
                 obj.priceCollection.forEach(price => {
                     try {
