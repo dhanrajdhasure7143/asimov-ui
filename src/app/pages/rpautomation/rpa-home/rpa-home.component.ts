@@ -1023,7 +1023,6 @@ importBot(){
         this.error_message= true
         this.import_BotData  = JSON.parse(this.crypto.decrypt(reader.result.toString()));
         this.error_message= false;
-        console.log("file changes",this.import_BotData)
         // this.importBotForm.get("botName").setValue(this.import_BotData.botName);
         this.validateBotName();
       }
@@ -1119,10 +1118,8 @@ importBot(){
     this.taskAttributes=[];
     this.tasksList_ForAttribute =[];
     this.rest.getTasksAttributesForSeletedTasks().subscribe((response:any)=>{
-      console.log("response",response)
       if(response){
         this.taskAttributes = response.data;
-        console.log(this.taskAttributes)
         this.tasksList_ForAttribute = response.tasksList_ForAttribute
       }
     });
@@ -1175,7 +1172,6 @@ importBot(){
   }
 
   generateImportPayload(task_list,botData){
-    console.log("this.taskAttributes",this.taskAttributes)
     let depractedTaskList = task_list.find(item =>{return item.name == "Developer " });
     let depractedTask = depractedTaskList.taskList.find(item =>{return item.name == "Corrupted" });
   botData.tasks.map(element => {
@@ -1216,7 +1212,6 @@ importBot(){
               if(element.taskName == tasks.name){
                 this.tasksList_ForAttribute.forEach(each => {
                   if(element.taskName == each){
-                    console.log("element",element)
                     element.attributes.forEach(item1 => {
                       this.taskAttributes.forEach(item2 => {
                         if(item2.taskName == element.taskName){
