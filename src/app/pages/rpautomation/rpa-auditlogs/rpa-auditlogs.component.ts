@@ -1,7 +1,6 @@
 import { Component, OnInit,  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../services/rest-api.service';
-import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';

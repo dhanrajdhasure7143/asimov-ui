@@ -1,6 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { FormGroup} from '@angular/forms';
-import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Hints } from "../model/RPA-Hints";

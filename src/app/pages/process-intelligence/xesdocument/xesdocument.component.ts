@@ -30,6 +30,7 @@ export class XesdocumentComponent implements OnInit {
   totalRows$: Observable<number>;
   overlay_data:any={};
   hiddenPopUp1:boolean = false;
+  filteredData:any[]=[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -44,9 +45,12 @@ export class XesdocumentComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/xesdocument", "title": "XES Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
-    this.dt.current_piData.subscribe(res => { this.xesData = res })
+    this.dt.current_piData.subscribe(res => { 
+      this.xesData = res
+      this.filteredData = this.xesData
+       })
     setTimeout(() => {
-      this.assignPagenation(this.xesData)
+      // this.assignPagenation(this.xesData)
     }, 500);
   }
 
@@ -117,5 +121,13 @@ export class XesdocumentComponent implements OnInit {
 
   closeOverlay(event){
     this.hiddenPopUp1 = event;
+  }
+
+  applyGlobalFilter() {
+    const globalFilterValue = this.searchTerm.toLowerCase();
+
+    this.filteredData = this.xesData.filter(item =>
+      Object.values(item).some((val:any) => val.toLowerCase().includes(globalFilterValue))
+    );
   }
 }

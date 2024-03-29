@@ -18,25 +18,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 import { ProcessinsightsComponent } from './processinsights/processinsights.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
@@ -77,7 +69,6 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     NgMultiSelectDropDownModule.forRoot(),
     Ng2SearchPipeModule,
     NgxSpinnerModule,
-    MatOptionModule,MatSelectModule,
     NgxPaginationModule,
     BackButtonDisableModule.forRoot({
       preserveScrollPosition: true
@@ -85,8 +76,6 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,
-    MatTooltipModule,MatDialogModule,
     NgbModule,
     NgxMaterialTimepickerModule,
     MatTabsModule,

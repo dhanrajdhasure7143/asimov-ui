@@ -10,58 +10,7 @@
         </label>
         <span class="title_text">Configurations</span>
       </h3>
-          <!-- <span class="module-back-button" routerLink="/pages/rpautomation/home">
-              <i class="fas fa-arrow-left" aria-hidden="true"></i>
-          </span> -->
     </div>
-
-      <!-- <mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
-          <mat-tab label="Environments">
-
-              <ng-template mat-tab-label>
-                <mat-icon  class="text-primary">desktop_windows</mat-icon>
-                  &nbsp;&nbsp;
-                  Environments
-              </ng-template>
-              <div *ngIf="check_tab==0">
-          <app-environments></app-environments>
-              </div>
-      </mat-tab>
-      <mat-tab label="Database Connections">
-
-          <ng-template mat-tab-label>
-            <mat-icon  class="text-primary">dns</mat-icon>
-              &nbsp;&nbsp;
-              Database Connections
-          </ng-template>
-          <div *ngIf="check_tab==1">
-          <app-rpa-database-connections></app-rpa-database-connections>
-        </div>
-      </mat-tab>
-      <mat-tab label="Connection Manager">
-
-        <ng-template mat-tab-label>
-          <mat-icon  class="text-primary">link</mat-icon>
-            &nbsp;&nbsp;
-            Connection Manager
-        </ng-template>
-        <div *ngIf="check_tab==2">
-        <app-rpa-connection-manager></app-rpa-connection-manager>
-      </div>
-    </mat-tab>
-
-      <mat-tab label="Email">
-      
-        <ng-template mat-tab-label>
-          <mat-icon  class="text-primary">mail_outline</mat-icon>
-            &nbsp;&nbsp;
-            Email
-        </ng-template>
-        <div *ngIf="check_tab==3">
-        <app-rpa-credentials></app-rpa-credentials>
-      </div>
-      </mat-tab>
-    </mat-tab-group> -->
     <div class="main-content-body tablist-cont">
       <div id="" class="tabs_screen config_tabs h-100">
         <p-tabView #tabView styleClass="tabview-custom" (onChange)="onTabChanged($event, tabView)" [(activeIndex)]="selected_tab_index">
@@ -76,7 +25,7 @@
           </p-tabPanel>
           <p-tabPanel header="Database Connections">
             <ng-template pTemplate = "header">
-              <i class="pi pi-database text-primary tab_icons"></i>
+              <i class="pi pi-database icon-color tab_icons"></i>
               <span class="tab_title">Database Connections</span>
             </ng-template>
             <span *ngIf="check_tab == 1">
@@ -129,7 +78,6 @@
             </span>
           </p-tabPanel> -->
         </p-tabView>
-        
       </div>
     </div>
   </div>  

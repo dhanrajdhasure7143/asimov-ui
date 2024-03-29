@@ -84,3 +84,19 @@ span.testtooltip:after {
 .tktlist-fields{
   float: right !important;
 }
+
+tr.pList.edit-mode {
+  height: 100px;
+}
+
+/* .table-body-scrollable {
+  height: 300px; 
+  overflow-y: auto;
+ } */
+
+ .sticky-table-header th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+ }
