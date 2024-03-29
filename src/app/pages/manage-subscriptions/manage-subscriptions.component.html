@@ -36,12 +36,12 @@
               <app-billing-address></app-billing-address>
             </span>
           </p-tabPanel>
-          <p-tabPanel header="Payment Methods" >
+          <p-tabPanel header="Payment Methods"  *ngIf="isbillingInfoEnable">
             <ng-template pTemplate = "header">
               <i class="pi pi-credit-card icon-color tab_icons"></i>
               <span class="tab_title">Payment Methods</span>
             </ng-template>
-            <span *ngIf="isbillingInfoEnable?check_tab == 3:check_tab == 2">
+            <span *ngIf="check_tab == 3">
               <app-payment-methods></app-payment-methods>
             </span>
           </p-tabPanel>
@@ -50,7 +50,7 @@
               <i class="pi pi-money-bill icon-color tab_icons"></i>
               <span class="tab_title">Package Options</span>
             </ng-template>
-            <span *ngIf="isbillingInfoEnable?check_tab == 4:check_tab == 3" >
+            <span *ngIf="isbillingInfoEnable?check_tab == 4:check_tab == 2" >
               <!-- <app-currentplan></app-currentplan> -->
               <app-subscription-plan></app-subscription-plan>
             </span>
