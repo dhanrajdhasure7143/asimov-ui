@@ -3049,10 +3049,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   removeGroup(group) {
-    if(group.isMicroBot){
+    let confirmationMessage = group.isMicroBot ? "Do you want to remove this micro bot from designer? This can't be undone." : "Do you want to remove this group from designer? This can't be undone.";
         this.confirmationService.confirm({
           header:'Are you sure?',
-          message:"Do you want to remove this micro bot from designer? This can't be undo.",
+          message: confirmationMessage,
           acceptLabel:'Yes',
           rejectLabel:'No',
           rejectButtonStyleClass: ' btn reset-btn',
@@ -3063,6 +3063,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           key: "designerWorkspace",
       accept:() => {
         console.log("accept")
+    if(group.isMicroBot){
         let groupNodes:any[]=[]
         groupNodes = this.collectGroupIds(group.id);
         if(groupNodes.length>0){
@@ -3107,18 +3108,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.savedGroupsData.splice(savedGroupsData, 1);
             }
           }
+        }else{
+          console.log("group_else",group)
+          this.jsPlumbInstance.removeGroup(group.id);
+          this.jsPlumbInstance.repaintEverything();
+          setTimeout(() => {
+          let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
+            if (groupIndex !== -1) {
+              this.groupsData.splice(groupIndex, 1);
+            }  
+          }, 2000);
+        }
         }
       })
-    }else{
-      console.log("group_else",group)
-      this.jsPlumbInstance.removeGroup(group.id);
-      setTimeout(() => {
-      let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
-        if (groupIndex !== -1) {
-          this.groupsData.splice(groupIndex, 1);
-        }  
-      }, 2000);
-    }
   }
 
   removeGroupObject(group){
