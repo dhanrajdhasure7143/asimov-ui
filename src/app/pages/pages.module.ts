@@ -14,11 +14,10 @@ import { PagesHints } from './model/pages.model';
 import { LoaderService } from '../services/loader/loader.service';
 import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
 import { MyLoaderComponent } from './my-loader/my-loader.component';
-import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header-dropdown-overlay.component';
-import {Ng2TelInputModule} from 'ng2-tel-input';
+import { Ng2TelInputModule} from 'ng2-tel-input';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxPaginationModule } from 'ngx-pagination';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule} from '@angular/material/expansion';
 import { NewSoDashboardComponent } from './service-orchestration/orchestration/new-so-dashboard/new-so-dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {MatListModule} from '@angular/material/list';
@@ -36,11 +35,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProcessAnalystComponent } from './dashboards/process-analyst/process-analyst.component';
 import { MatTableModule } from '@angular/material/table';  
-import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule} from '@angular/material/sort';
+import { MatPaginatorModule} from '@angular/material/paginator';
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
+import { CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -61,7 +60,6 @@ export function jwtTokenGetter() {
     HeaderComponent,
     FooterComponent,
     MyLoaderComponent,
-    HeaderDropdownOverlayComponent,
     SidebarComponent,
     NewSoDashboardComponent,
     ProcessArchitectComponent,
@@ -75,7 +73,6 @@ export function jwtTokenGetter() {
     
   ],
   imports: [
-  
     CommonModule,
     HttpClientModule,
     FormsModule,
@@ -83,12 +80,10 @@ export function jwtTokenGetter() {
     PagesRoutingModule,
     Ng2TelInputModule,
     SharedModule,
-    MatTabsModule,
     NgxSpinnerModule,
     NgxPaginationModule,
     MatExpansionModule,
-  
-    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
+    MatListModule,MatMenuModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
      JwtModule.forRoot({
       config: {
         tokenGetter: jwtTokenGetter

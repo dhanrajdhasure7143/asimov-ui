@@ -1,46 +1,17 @@
 <div class="maincontent">
   <div class="h-100">
     <div class="row main-content-head">
-        <!-- <span  class="module-back-button" routerLink="/pages/home">
-          <i aria-hidden="true" class="fas fa-arrow-left"></i>
-        </span> -->
         <h3>
           <span class="title_text">User Management</span>
         </h3>
     </div>
     <div class="main-content-body tablist-cont">
-        <!-- <mat-tab-group class="h-100 so-subtab-header" [selectedIndex]="selectedTab" id="usermanagement-tabs" (selectedTabChange)="onTabChanged($event)">
-        
-          <mat-tab label="Users">
-      
-            <ng-template mat-tab-label>
-              <mat-icon >people</mat-icon>
-                &nbsp;&nbsp;
-                Users
-              </ng-template>
-            <div *ngIf="check_tab==0">
-              <app-users></app-users>
-            </div>
-          </mat-tab>
-          <mat-tab label="Departments">
-      
-            <ng-template mat-tab-label>
-              <mat-icon  >category</mat-icon>
-                &nbsp;&nbsp;
-                Departments
-              </ng-template>
-            <div class="h-100" *ngIf="check_tab==1">
-              <app-departments></app-departments>
-            </div>
-          </mat-tab>
-      
-        </mat-tab-group> -->
       <div class="tabs_screen h-100">    
         <p-tabView #tabView styleClass="tabview-custom" (onChange)="onTabChanged($event, tabView)"
           [(activeIndex)]="selected_tab_index">
           <p-tabPanel header="Users">
             <ng-template pTemplate="header">
-              <mat-icon>people</mat-icon>
+              <i class="pi pi-users icon-color tab_icons" style="font-size: 2rem"></i>
               <span class="titlelabel">Users</span>
             </ng-template>
             <div *ngIf="check_tab == 0">
@@ -49,7 +20,7 @@
           </p-tabPanel>
           <p-tabPanel header="Departments">
             <ng-template pTemplate="header">
-              <mat-icon>category</mat-icon>
+              <img src="./../../../../assets/images/Admin/Departments_new.svg" alt="Departments" class="">
               <span class="titlelabel">Departments</span>
             </ng-template>
             <div *ngIf="check_tab == 1">

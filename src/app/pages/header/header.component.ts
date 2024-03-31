@@ -422,7 +422,8 @@ chatClick(){
 getexpiryInfo(){
   if(environment.isSubscrptionEnabled)
   this.rest_api.expiryInfo().subscribe(data => {
-    this.tenantSwitchDropdown = data.expiresIn === 0;
+    // this.tenantSwitchDropdown = data.expiresIn === 0;
+    this.tenantSwitchDropdown = data.expiresIn === 0 || data.expiresIn <= 0;
   })
 }
 }
