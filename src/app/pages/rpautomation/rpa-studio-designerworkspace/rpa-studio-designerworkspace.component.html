@@ -85,7 +85,8 @@
                     <button *ngIf="!group.collapsed" class="publishButton" (click)="publishGroup(group)">Publish</button>
                   </span> -->
                 </div>
-                <div class="groupName" style="word-wrap: break-word;">{{ group.groupName }}</div>
+                <div class="groupName">{{ group.groupName }}</div>
+                <!-- <div class="groupName" style="word-wrap: break-word;">{{ group.groupName }}</div> -->
               </div>
               
               <div *ngIf="!group.collapsed" class="groupHeader">
