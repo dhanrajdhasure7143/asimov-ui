@@ -194,7 +194,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
-    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
+    // this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
   }
 
   botdelete(bot) {

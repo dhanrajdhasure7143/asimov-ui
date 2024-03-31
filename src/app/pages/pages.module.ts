@@ -84,6 +84,7 @@ export function jwtTokenGetter() {
     NgxPaginationModule,
     MatExpansionModule,
     MatListModule,MatMenuModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
+    MatButtonModule,
      JwtModule.forRoot({
       config: {
         tokenGetter: jwtTokenGetter
