@@ -51,6 +51,7 @@ export class SubscriptionPlanComponent implements OnInit {
   cvv:any;
   isSpaceOnLeft: boolean = false;
   showBotInfoFlag: boolean = false;
+  enterPrise_plan:any;
 
   constructor( private spinner : LoaderService,
     private router: Router,
@@ -189,6 +190,11 @@ export class SubscriptionPlanComponent implements OnInit {
                 obj["doPlanDisabled"] = isSubscribed;
                 this.botPlans.push(obj);
             });
+
+            this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
+            console.log(this.enterPrise_plan);
+
+            this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
             console.log(this.botPlans);
         }
     }, err => {

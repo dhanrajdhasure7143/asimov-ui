@@ -7,7 +7,7 @@
         </div> -->
         <div class="col-md-3 custom-bg-gray" *ngIf="!isReview_order">
             <div class="enterprise-plan-wrapper">
-                <div class="text-center enterprise-plan" style="background-color:#098DE6; color:white">
+                <div class="text-center enterprise-plan" style="background-color:#098de6; color:white">
                     <h4>Enterprise Plan</h4>
                 </div>
             </div>
@@ -16,11 +16,8 @@
                     <h4 style="color: rgba(236, 89, 89, 0.932); text-align: center; font-weight: 600;">Exclusive Pricing</h4>
                 </div>
                 <div class="features">
-                    <ul>
-                        <li>Advanced Process Automation</li>
-                        <li>ROA Process Automation: Automatically generate business cases with tools</li>
-                        <li>Process Intelligence and Analytics</li>
-                        <li>Data Analysis through EZFlow Automation</li>
+                    <ul *ngFor="let plan of enterPrise_plan.features">
+                        <li>{{plan}}</li>
                     </ul>                    
                 </div>
                 <button class="btn btn-primary contact" id="sales-btn" (click)="sendEmailEnterPrisePlan()">CONTACT SALES</button>
@@ -46,7 +43,7 @@
                             <div class="container">
                                 <div class="row" style="justify-content: center; align-items: center;">
                                   <div class="col">
-                                    <div class="square"  [ngClass]="{'selected-square': plan.isSelected}" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
+                                    <div class="square" (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)"  [ngClass]="{'selected-square': plan.isSelected}" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
                                       <div class="image-top">
                                         <img [src]="plan.image" class="img-fluid" alt="Bot Image">
                                       </div>
@@ -82,7 +79,7 @@
 
                                       <div class="bot-info" [ngClass]="{'left': isSpaceOnLeft, 'right': !isSpaceOnLeft}" *ngIf="showBotInfoFlag">
                                         <div class="container-one">
-                                            <div class="left-side">
+                                            <!-- <div class="left-side">
                                                 <div class="plan-details">
                                                     <div class="circle text-center" (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" 
                                                         [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}">
@@ -106,7 +103,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="right-side">
                                                 <div>
                                                     <div class="description-box">
@@ -141,7 +138,7 @@
                 <!-- <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button> -->
             <!-- </div> -->
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6">
                     <div class="text-center" style="margin: 10px 0 0 0;">
                         <h5 class="price-line">Your estimated 
@@ -155,7 +152,24 @@
                         <button type="button" class="btn btn-primary btn-plan" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
                     </div>
                 </div>
-            </div> 
+            </div>  -->
+
+            <div class="row">
+                <div class="col-md-8 d-flex align-items-center justify-content-center" style="margin: 10px 0 0 50px;">
+                    <div class="text-center" >
+                        <h5 class="price-line">Your estimated 
+                            <span *ngIf="selectedPlan === 'Monthly'">Monthly</span>
+                            <span *ngIf="selectedPlan === 'Yearly'">Annual</span>
+                            price <span class="price-amt"> $ {{totalAmount}}</span>.00 <sup style="font-size: small;">excl taxes</sup> 
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center justify-content-end">
+                    <div class="text-right" style="margin: 10px 0px 5px 0;">
+                        <button type="button" class="btn btn-primary btn-plan" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
+                    </div>
+                </div>
+            </div>
         </div>
         </div>
     </div>

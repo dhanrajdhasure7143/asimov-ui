@@ -123,16 +123,17 @@
 
 .bot-headers{
     display: flex;
-    background-color: #007bff;
+    background-color: #098de6;
     height: 40px;
     width: 103%;
     margin-left: -15px;
 }
 
 .BotHeading{
-    font-weight: 800;
+    font-weight: 600;
     color: white;
     max-width: 100%;
+    font-size: 23px;
     padding-left: 20px;
     padding-top: 5px;
 }
@@ -300,7 +301,9 @@
 }
 
 .enterprise-plan h4 {
-    font-weight: 800;
+    padding-top: 5px;
+    font-size: 23px;
+    font-weight: 600;
 }
 
 .enterprise-content {
@@ -311,7 +314,7 @@
 
 #sales-btn {
     position: absolute;
-    bottom: 30px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     width: 150px;
@@ -320,12 +323,17 @@
 }
 
 .features ul {
-    padding:20px 20px 0 30px;
+    padding: 0px 0 0 20px;
 }
 
 .features ul li {
     font-weight: 700;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
+}
+
+.features {
+    max-height: calc(250px - 20px) !important;
+    overflow-y: auto;
 }
 
 .bot-img-details{
@@ -397,13 +405,15 @@
   .bot-info {
     display: none;
     position: absolute;
-    left: 220px;
+    left: 217px;
     top: 0;
     width: 450px;
     border-radius:4px;
     min-height: 200px;
-    justify-content: center;
-    align-items: center;
+    max-height: 250px;
+    overflow-y: auto;
+    justify-content: left;
+    align-items: left;
     padding: 10px;
     background-color: white;
     border: 1px solid #007bff;
@@ -446,7 +456,7 @@
 
 .features {
     padding: 10px;
-    max-width: 300px;
+    /* max-width: 300px; */
 }
 
 .description-box {
@@ -479,4 +489,28 @@
 
 .selected-square {
     border: 3px solid #2c20ce;
+}
+
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background: green;
+  }
+
+::ng-deep .p-inputswitch.p-inputswitch-checked:hover .p-inputswitch-slider {
+    background: green;
+}
+
+.btn-plan{
+    margin-left: 100px;
+    background-color: #63add1;
+    border-radius: 0%;
+    font-weight: 600;
+ }
+
+ .price-line {
+    padding: 0px 0;
+    background-color: white;
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 400px;
+    white-space: nowrap;
 }
