@@ -39,12 +39,15 @@ export class RpaSdkComponent implements OnInit {
     this.spinner.show();
     this.rest.getCustomTasks().subscribe((res : any) =>{
       this.customTasks = res
+      this.customTasks.map(item=>{
+        item.createdAt = new Date(item.createdAt)
+      })
       this.spinner.hide();
     },err=>{
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields=["customTaskName","languageType","inputReference","outputReference"]
+    this.table_searchFields=["customTaskName","languageType","createdAt"]
 
   }
 

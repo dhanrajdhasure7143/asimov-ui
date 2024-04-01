@@ -271,7 +271,8 @@ export class columnList{
 
       public custom_tasks = [
         {ColumnName: "customTaskName",DisplayName: "Custom Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java','Python','JavaScript'],sort: true,},
+        {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java'],sort: true,},
+        {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,filterType:"date",ShowGrid: true,sort: true,},
         //temporarly commenting the input and output reference columns as it is not in use for now.
         // {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
         // {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
