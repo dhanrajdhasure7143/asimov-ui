@@ -756,6 +756,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               source: labelOverlay.component.sourceId,
               target: labelOverlay.component.targetId,
             });
+            if(conn.length==0){
+              self.toastService.showError("You can't remove connection for collapsed items!");
+              return
+            }
             delconn = true;
             conn[0].removeOverlay("label" + conn[0].id);
             setTimeout(() => {
@@ -780,7 +784,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       connection.bind("mouseout", function (conn) {
         setTimeout(() => {
           if (!delconn) {
-            console.log("conn", conn);
             if(conn){
               conn?.getOverlay("label" + conn.id)?.setVisible(false)??console.log("no connections");
             }
@@ -817,7 +820,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.spinner.show();
       const id = event.data.id;
       this.rest.fetchMicroBot(id).subscribe((microbotData: any) => {
-          // console.log("Microbot fetched:",microbotData);
           this.isMicroBot = microbotData.isMicroBot;
           this.microBotData  = microbotData
           let idMap:any={}
@@ -834,7 +836,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
           this.replaceUUIDs(this.microBotData, idMap);
           setTimeout(() => {
-          console.log(this.microBotData)
           let microBotTasks=[];
           this.microBotData.tasks.forEach((item, i) => {
               const dropCoordinates1 = {
@@ -861,7 +862,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               // let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
               // if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
               //   node.path=this.toolset.find((data) => data.name == nodename).path
-              // console.log(nodeWithCoordinates);
               if (this.nodes.length == 1) {
                 this.addStartStopNodes()
               }
@@ -1642,7 +1642,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   //Normal Task Form Submit
   async onFormSubmit(event: any, notifierflag: boolean) {
-    console.log("testing....form",event)
     this.fieldValues = event;
     this.isBotUpdated = true;
     if (this.fieldValues["file1"]) {
@@ -1760,26 +1759,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let index = this.finaldataobjects.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
     );
-    console.log(index,cutedata.nodeId,this.finaldataobjects,"...............791272779238")
     let savedTaskIndex = this.actualTaskValue.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
     );
-    // console.log(index ,savedTaskIndex ,"3333333333333333")
     if (
       index != undefined &&
       index >= 0 &&
       savedTaskIndex != undefined &&
       savedTaskIndex >= 0
     ) {
-      console.log("test................")
       cutedata["botTId"] = this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else if (index != undefined && index >= 0 && savedTaskIndex < 0) {
       this.finaldataobjects[index] = cutedata;
-      console.log("test................00000000",this.finaldataobjects)
     } else {
       this.finaldataobjects.push(cutedata);
-      console.log("test................000000000999999999999999",this.finaldataobjects)
 
     }
     if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
@@ -2054,7 +2048,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let hasStartTask: boolean = false;
     let hasStoptTask: boolean = false;
    let groups = [] = this.jsPlumbInstance.getGroups();
-   console.log("groups", groups)
     groups.forEach((group)=> {
       let connectedNodes =[] = this.collectGroupIds(group.id);
       if(connectedNodes.length == 0 || connectedNodes == undefined|| connectedNodes.length == 1){
@@ -2094,7 +2087,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.arrange_task_order(this.startNodeId);
     } else {
       this.final_tasks=this.finaldataobjects;
-      console.log("this.final_tasks",this.final_tasks)
     }
     await this.getsvg()
     await this.get_coordinates();
@@ -2172,8 +2164,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         // this.messageService.add({ severity:'error',summary:'Error',detail:'Please check the connections!'})
         this.toastService.showError(this.toastMessages.connectionCheckError);
 
-      } else {
-          console.log("saveBotdata",this.saveBotdata);          
+      } else {          
         let previousBotDetails: any = { ...{}, ...this.finalbot };
         // this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
@@ -2309,6 +2300,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         droppable: item.isMicroBot? false: true,
         dropOverride:false,
         microBotId: item.microBotId? item.microBotId: null,
+        anchor: ["Right", "Left"],
       };
       this.groupsData.push(GroupData);
       setTimeout(() => {
@@ -2504,7 +2496,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     this.toggleAllgroups();
     this.jsPlumbInstance.getAllConnections().forEach((dataobject) => {
-      // console.log(dataobject)
       let source = dataobject.sourceId;
       let target = dataobject.targetId;
       this.finaldataobjects.forEach((tasknode) => {
@@ -2526,7 +2517,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             (checkdata) => checkdata.nodeId == tasknode.nodeId
           ).inSeqId = inseq.targetId;
         } else {
-          console.log(target)
           if (tasknode.nodeId.split("__")[1] == target) {
             this.finaldataobjects.find((data) => data.nodeId == tasknode.nodeId).inSeqId = String(source);
           }
@@ -2935,7 +2925,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 //       }
 //     })
-//     console.log(this.nodes)
 //     // var selectedNodeIds = ["0580cb00-94df-f38a-eaef-5ce2fa01e4f8", "840ddcbc-b0e6-3d36-6922-c880c0379088"];
 //     let GroupData: any = {
 //       id: this.idGenerator(),
@@ -2953,7 +2942,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 //     setTimeout(() => {
 //       let element: any = document.getElementById(GroupData.id);
-//       console.log(element)
 
 //       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
 //       this.jsPlumbInstance.addGroup(this.groupsData.find((item: any) => item.id == GroupData.id));
@@ -2962,7 +2950,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 //       // groupIds = this.groupsData.map((item: any) => {
 //       //   return item.id;
 //       // });
-//       // console.log(this.groupsData)
 //       // this.jsPlumbInstance.draggable(groupIds, {
 //       //   containment: true,
 //       // });
@@ -2999,7 +2986,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 //         var position = this.calculateRelativePosition(nodeElement, averagePosition);
 //         setTimeout(() => {
 //           this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement,position);  
-//           console.log("testing")   
                
 //         }, 1500);
 //       });
@@ -3026,7 +3012,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       endpoint:[ "Dot", { radius:4 } ],
       droppable: true,
       orphan: true,
-      dropOverride:false
+      dropOverride:false,
+      anchor: ["Right", "Left"],
     };
     this.groupsData.push(GroupData);
     setTimeout(() => {
@@ -3048,10 +3035,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   removeGroup(group) {
-    if(group.isMicroBot){
+    let confirmationMessage = group.isMicroBot ? "Do you want to remove this micro bot from designer? This can't be undone." : "Do you want to remove this group from designer? This can't be undone.";
         this.confirmationService.confirm({
           header:'Are you sure?',
-          message:"Do you want to remove this micro bot from designer? This can't be undo.",
+          message: confirmationMessage,
           acceptLabel:'Yes',
           rejectLabel:'No',
           rejectButtonStyleClass: ' btn reset-btn',
@@ -3061,17 +3048,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           acceptIcon: 'null',
           key: "designerWorkspace",
       accept:() => {
-        console.log("accept")
+    if(group.isMicroBot){
         let groupNodes:any[]=[]
         groupNodes = this.collectGroupIds(group.id);
         if(groupNodes.length>0){
-          console.log(groupNodes,"groupNodes")
-          console.log(this.groupsData,"this.groupsData")
             groupNodes.forEach((element,index) => {
               let node = this.nodes.find((item: any) => item.id==element);
                 if(node != undefined){
                   this.nodes.splice(this.nodes.indexOf(node), 1);
-                  console.log(this.nodes,"this.nodes")
                   // this.nodes.splice(this.nodes.indexOf(node), 1);
                   let nodeId = node.name + "__" + node.id;
                   let task = this.finaldataobjects.find((task) => task.nodeId == nodeId);
@@ -3106,18 +3090,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.savedGroupsData.splice(savedGroupsData, 1);
             }
           }
+        }else{
+          let groupNodes:any[]=[]
+            groupNodes = this.collectGroupIds(group.id);
+            groupNodes.forEach(element => {
+            document.getElementById(element).style.display = 'block';
+        });
+          setTimeout(() => {
+            this.jsPlumbInstance.removeGroup(group.id);
+            this.jsPlumbInstance.repaintEverything();
+            setTimeout(() => {
+            let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
+              if (groupIndex !== -1) {
+                this.groupsData.splice(groupIndex, 1);
+              }  
+            }, 1000);
+          }, 1000);
+        
+        }
         }
       })
-    }else{
-      console.log("group_else",group)
-      this.jsPlumbInstance.removeGroup(group.id);
-      setTimeout(() => {
-      let groupIndex = this.groupsData.findIndex((item: any) => item.id == group.id);
-        if (groupIndex !== -1) {
-          this.groupsData.splice(groupIndex, 1);
-        }  
-      }, 2000);
-    }
   }
 
   removeGroupObject(group){
@@ -3139,7 +3131,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   getGroupsInfo() {
-    console.log("this.groupsData",this.groupsData)
     return [...this.groupsData.map((item: any) => {
         let tempGroupData = { ...{}, ...item };
         let connectedNodes = this.jsPlumbInstance.getGroup(item.id).getMembers();
@@ -3385,7 +3376,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   autoSaveTaskConfig(nodeData: any) {
-    console.log(nodeData)
     if (nodeData.selectedNodeTask != "") {
       this.selectedTask = {
         name: nodeData.selectedNodeTask,
@@ -3505,7 +3495,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   minimizeGroup(groupData){
-    console.log(groupData)
     setTimeout(() => {
     // if(groupData.isMicroBot){
         groupData.nodeIds.forEach(element => {
@@ -3661,7 +3650,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // this.arrange_task_order(this.startNodeId);
     } else {
       final_tasks=this.addSquencesMicroBot(group);
-      console.log("this.final_tasks",this.final_tasks)
     }
     // this.get_coordinates();
 
@@ -3714,7 +3702,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         sequences: this.getMicroBotGroupSequences(group),
         isMicroBot: true,
       };
-        console.log("_microBot_payload8888888",_microBot_payload)
         return _microBot_payload;
   }
 
@@ -3779,7 +3766,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       dropOverride:false
     };
     this.groupsData.push(GroupData);
-    console.log(this.groupsData)
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
@@ -3796,7 +3782,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }, 500);
     setTimeout(() => {
       this.addTasksToGroups1(GroupData.id,nodes);
-      console.log(this.nodes)
     }, 250);
   }
 
@@ -3814,7 +3799,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         //   let nodeElement: any = document.getElementById("840ddcbc-b0e6-3d36-6922-c880c0379088");
         //   this.jsPlumbInstance.addToGroup(gId, nodeElement);
         //   setTimeout(() => {
-        //     console.log(this.groupsData)
         //     this.re_ArrangeNodes();
         //   }, 1000);
         // });
@@ -3847,7 +3831,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   toggleAllgroups(){
     this.groupsData.forEach(group => {group.id
-      if(group.isMicroBot){
+      // if(group.isMicroBot){
           this.jsPlumbInstance.toggleGroup(group.id)
           group.collapsed = !group.collapsed
           if(!group.collapsed)
@@ -3857,7 +3841,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             node.style.display = 'block';
         }
           });
-      }
+      // }
       });
   }
 
@@ -3871,7 +3855,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   getMicroBotGroupsInfo(selectedgroup) {
     let _selectedGroup = this.groupsData.filter((item: any) =>{ return item.id == selectedgroup.id}) 
-    console.log("_selectedGroup",_selectedGroup);
     
     return [..._selectedGroup.map((item: any) => {
         let tempGroupData = { ...{}, ...item };
@@ -4063,16 +4046,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     };
     let index = this.finaldataobjects.findIndex((sweetdata) => sweetdata.nodeId == cutedata.nodeId);
     let savedTaskIndex = this.actualTaskValue.findIndex((sweetdata) => sweetdata.nodeId == cutedata.nodeId);
-    // console.log(index ,savedTaskIndex ,"3333333333333333")
     if (index != undefined &&index >= 0 &&savedTaskIndex != undefined &&savedTaskIndex >= 0) {
       cutedata["botTId"] = this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else if (index != undefined && index >= 0 && savedTaskIndex < 0) {
       this.finaldataobjects[index] = cutedata;
-      console.log("this.finaldataobjects",this.finaldataobjects)
     } else {
       this.finaldataobjects.push(cutedata);
-      console.log("this.finaldataobjects",this.finaldataobjects)
     }
     if (notifierflag) this.notifier.notify("info", "Data saved successfully!");
   }
