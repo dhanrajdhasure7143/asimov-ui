@@ -118,7 +118,7 @@ export class RpaSdkFormComponent implements OnInit {
   saveCustomTasks(){
     this.spinner.show();
     let reqBody = {
-      "code": this.customTaskForm.value.code,
+      "code": "",
       "customTaskName": this.customTaskForm.value.customTaskName,
       "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
@@ -138,7 +138,7 @@ export class RpaSdkFormComponent implements OnInit {
   updateCustomTasks(){
     this.spinner.show();
     let reqBody = {
-      "code": this.customTaskForm.value.code,
+      "code": "",
       "customTaskName": this.customTaskForm.value.customTaskName,
       "executablePath": this.customTaskForm.value.executablePath,
       "inputReference": this.customTaskForm.value.inputReference,
