@@ -41,7 +41,7 @@ export class RpaSdkFormComponent implements OnInit {
 
       this.customTaskForm=this.formBuilder.group({
         customTaskName:["",Validators.compose([Validators.required])],
-        languageType:["",Validators.compose([Validators.required])],
+        languageType:["Java",Validators.compose([Validators.required])],
         executablePath:["",Validators.compose([Validators.required])],
         //temporarly commenting the selectedCategory as it is not in use for now.
         // selectedCategory:["",Validators.compose([Validators.required])],
@@ -59,7 +59,11 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnInit(): void {
   // this.spinner.show();
-   this.languages = [{language:"Java"},{language:"Python"},{language:"Javascript"}];
+   this.languages = [
+    {language:"Java"},
+  //  {language:"Python"},
+  //  {language:"Javascript"}
+  ];
    this.categories
   }
 
