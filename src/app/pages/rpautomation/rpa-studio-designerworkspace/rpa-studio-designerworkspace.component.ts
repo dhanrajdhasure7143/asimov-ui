@@ -243,7 +243,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
 
     this.groupForm = this.formBuilder.group({
-      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z0-9 ]*$')])],
+      groupName: ['', Validators.compose([ Validators.required, Validators.maxLength(50),Validators.pattern('^[a-zA-Z0-9\-_ ]*$')])],
       groupDescription: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
     });
   }
