@@ -1709,9 +1709,9 @@ saveBillingInfo(data,){
   return this.http.post('/subscriptionservice/v1/billingContact/saveBillingContactData',data)
 }
 
-updateBillingInfo(id,data){
-  return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
-}
+// updateBillingInfo(id,data){
+//   return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
+// }
 
 // getBillingInfo(){
 //   return this.http.get(`/subscriptionservice/v1/billingContact/getByuser`);
@@ -1912,7 +1912,14 @@ sendEmailEntrepricePlan(userId:string){
 }
 
 getBillingInfo(){
-  return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
+  // return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
+  return this.http.get<any>(`/subscriptionservice/v1/billingContact/getCustomerBillingAddress`);
+  
+}
+
+updateBillingInfo(data){
+  // return this.http.put(`/subscriptionservice/v1/billingContact/updateBillingContact/${id}`, data);
+  return this.http.post(`/subscriptionservice/v1/billingContact/updateCustomerBillingAddress`, data);
 }
 
 getPredifinedRawBots(){
@@ -1933,5 +1940,9 @@ getPaymentCards(){
 
   getBillingInfoStatus(){
     return this.http.get("/subscriptionservice/v1/billingContact/customer-cards-check")
+  }
+
+  addNewCardURLGenerate(payload){
+    return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
   }
 }

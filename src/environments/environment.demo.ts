@@ -43,12 +43,11 @@ export const environment = {
   isChatEnable : true,
   isProcessLogsEnable: true,
   isCopilotEnable : true,
-  isRPAConfigurationsImportEnabled : false,
-  isSubscrptionEnabled : false,
+  isSubscrptionEnabled : true,
+  isSubscriptionModuleEnable:false, // this boolen to enable subscription module in side bar
   isCustomerBots : false,
   environmentName: "DEMO",
-
   paymentSuccessURL: "https://eziap.demo.epsoftinc.com/#/pages/success",
   paymentFailuerURL: "https://eziap.demo.epsoftinc.com/#/pages/subscriptions",
-  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
+  stripeKey:"pk_test_51P0drWCJ3cQHk3CPJR9AeA28nQfYeKOIThMG6OGneyWSbbyQ0r61OHtZqkI2mssJrSRbgXDP1urCMu0GPSLewiZu00Usd94Uob"
 };

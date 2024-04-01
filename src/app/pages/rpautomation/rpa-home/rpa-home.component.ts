@@ -194,7 +194,7 @@ export class RpaHomeComponent implements OnInit {
         this.clearTableFilters(this.table);
       }
     })
-    this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
+    // this.isConfigurationEnable = environment.isRPAConfigurationsImportEnabled;
   }
 
   botdelete(bot) {
@@ -1118,7 +1118,6 @@ importBot(){
     this.taskAttributes=[];
     this.tasksList_ForAttribute =[];
     this.rest.getTasksAttributesForSeletedTasks().subscribe((response:any)=>{
-      console.log("response",response)
       if(response){
         this.taskAttributes = response.data;
         this.tasksList_ForAttribute = response.tasksList_ForAttribute
@@ -1145,7 +1144,6 @@ importBot(){
        setTimeout(async () => {
         let generatedPyload :any= await this.generateImportPayload(this.task_list,botData);
         console.log("generatedPyload",generatedPyload)
-
           // console.log("generatedPyload",JSON.stringify(generatedPyload));
       //  this.rest.importBotwithEncryptedData(this.crypto.encrypt(JSON.stringify(generatedPyload))).subscribe((response:any)=>{
 
@@ -1218,8 +1216,8 @@ importBot(){
                       this.taskAttributes.forEach(item2 => {
                         if(item2.taskName == element.taskName){
                           item2.attributes.forEach(item3 => {
-                            if(item1.metaAttrValue == item3.name)
-                              item1.metaAttrId = item3.id
+                            if(item1.metaAttrValue == item3.attributeName)
+                              item1.metaAttrId = item3.attributeId
                           });
                         }
                       })
