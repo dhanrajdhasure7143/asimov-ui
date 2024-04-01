@@ -405,7 +405,7 @@
         </span>
         <span *ngIf="groupForm.get('groupName').hasError('pattern') && !groupForm.controls['groupName'].hasError('maxlength')"
           class="required">
-          Only alphabets & numbers are allowed.
+          Alphabets & numbers are allowed, Special characters not allowed excluding (_&-).
         </span>
       </div>
       <br>
