@@ -44,9 +44,11 @@ export const environment = {
   isChatEnable : false,
   isProcessLogsEnable: false,
   isCopilotEnable : false,
-  isRPAConfigurationsImportEnabled : false,
-  isSubscrptionEnabled : false,
+  isSubscrptionEnabled : true,
+  isSubscriptionModuleEnable:false, // this boolen to enable subscription module in side bar
   isCustomerBots : false,
-  environmentName: "UAT"
-
+  environmentName: "staging",
+  paymentSuccessURL: "https://eziap.staging.epsoftinc.com/#/pages/success",
+  paymentFailuerURL: "https://eziap.staging.epsoftinc.com/#/pages/subscriptions",
+  stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK"
 };
