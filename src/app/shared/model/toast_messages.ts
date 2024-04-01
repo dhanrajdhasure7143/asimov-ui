@@ -128,7 +128,10 @@ export class toastMessages{
   public downloadErr = "Failed to download!";
   public exportError = "Failed to export bot!";
   public exportSuccess = "Exported successfully!"
-  public groupEmptyError = "Please add minimum two tasks to the group!"
+  public groupEmptyError = "Please add minimum two tasks to the group!";
+  public sdk_delete_usageError="Please Verify and remove this SDK custom task from all active bot's before deletion.";
+  public delete_waring="Do you want to delete this? This can't be undone.";
+  public import_waring="Please ensure that you are importing it into the appropriate tenant?"
   
   
 }

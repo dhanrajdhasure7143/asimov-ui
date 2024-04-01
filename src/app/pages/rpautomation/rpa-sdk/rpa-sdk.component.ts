@@ -40,6 +40,8 @@ export class RpaSdkComponent implements OnInit {
     this.rest.getCustomTasks().subscribe((res : any) =>{
       this.customTasks = res
       this.spinner.hide();
+    },err=>{
+      this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
     this.table_searchFields=["customTaskName","languageType","inputReference","outputReference"]
@@ -58,7 +60,7 @@ export class RpaSdkComponent implements OnInit {
     const selectedCustomTasks=[]
     selectedCustomTasks.push(row.customTaskId);
       this.confirmationService.confirm({
-        message: "You won't be able to revert this!",
+        message: this.toastMessages.delete_waring,
         header: 'Are you sure?',
         acceptLabel:'Yes',
         rejectLabel:'No',
@@ -71,11 +73,34 @@ export class RpaSdkComponent implements OnInit {
         accept: () => {
         this.spinner.show();
         this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
-          this.getTaskDetails();
-          let status:any = res;
-          this.spinner.hide();
-          this.toastService.showSuccess(row.customTaskName,'delete');
+          if(res.data.length>0){
+            let used_sdk_list = []
+            res.data.forEach(element => {
+              used_sdk_list.push(element.botName)
+            });
+            this.spinner.hide();
+            let message =  `${this.toastMessages.sdk_delete_usageError}
+            <br>
+            <div><span class="bold">(${used_sdk_list.join(', ')})</span></div>`;
+            this.confirmationService.confirm({   
+              header: 'Warning',
+              message: message,
+              acceptLabel: "Ok",
+              rejectVisible:false,
+              acceptButtonStyleClass: 'btn bluebg-button',
+              defaultFocus: 'none',
+              acceptIcon: 'null',
+              key: 'positionDialog',
+              accept: () => {
+              }
+            })
 
+          }else{
+            this.getTaskDetails();
+            let status:any = res;
+            this.spinner.hide();
+            this.toastService.showSuccess(row.customTaskName,'delete');
+          }
         },err=>{
           this.spinner.hide();
           this.toastService.showError(this.toastMessages.deleteError);

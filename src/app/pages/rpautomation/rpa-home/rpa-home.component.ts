@@ -1032,7 +1032,7 @@ importBot(){
   importbotData(){
     this.confirmationService.confirm({
       header: "Are you sure?",
-      message: 'Please ensure that you are importing it into the appropriate tenant?',
+      message: this.toastMessages.import_waring,
       acceptLabel: "Yes",
       rejectLabel: "No",
       rejectButtonStyleClass: 'btn reset-btn',
