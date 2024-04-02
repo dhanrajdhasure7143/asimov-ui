@@ -72,7 +72,7 @@ export class RpaSdkComponent implements OnInit {
         defaultFocus: 'none',
         rejectIcon: 'null',
         acceptIcon: 'null',
-        key:"positionDialog",
+        key:"positionDialog_sdk_delete",
         accept: () => {
         this.spinner.show();
         this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
