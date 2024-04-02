@@ -178,6 +178,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   dialogHeader:any;
   submitButtonText:any;
   editGroupData: any;
+  microBotsList:any[]=[]
 
   constructor(
     private rest: RestApiService,
@@ -323,6 +324,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.dt.microBotList.subscribe(res=>{
+      this.microBotsList=res?res:[];
+    })
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -2082,6 +2086,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.spinner.show();
     this.checkorderflag = true;
     this.collapseAllgroups(false);
+    this.validateMicrobotExist();
     this.addsquences();
     if(this.executionMode){
       this.arrange_task_order(this.startNodeId);
@@ -3499,7 +3504,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     // if(groupData.isMicroBot){
         groupData.nodeIds.forEach(element => {
           // If the group is collapsed, hide the node
-          document.getElementById(element).style.display = 'none';
+         let div_element = document.getElementById(element) 
+         if(div_element)
+         div_element.style.display = 'none';
       });
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
@@ -3806,6 +3813,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   refreshMicroBotsList() {
     this.rest.getMicroBots().subscribe((data: any[]) => {
+      console.log(data)
+      this.dt.mico_botList(data)
       this.dt.updateMicroBotsList(data);
     });
   }
@@ -4061,6 +4070,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if(event.target.selectionStart === 0 && event.code === "Space"){
       event.preventDefault();
     }
+  }
+
+  validateMicrobotExist(){
+    console.log("this.microBotsList",this.microBotsList)
+    this.groupsData.forEach(element => {
+     if(this.microBotsList.find(el=> el.id == element.microBotId) == undefined){
+      element["isMicroBot"]=false
+      element ["microBotId"]=null
+     } 
+    });
   }
 }
 
