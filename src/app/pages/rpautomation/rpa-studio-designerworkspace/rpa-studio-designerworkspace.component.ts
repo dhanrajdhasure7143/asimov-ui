@@ -2166,7 +2166,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       } else {          
         let previousBotDetails: any = { ...{}, ...this.finalbot };
-        // this.assignTaskConfiguration();
+        this.assignTaskConfiguration();
         (await this.rest.updateBot(this.saveBotdata)).subscribe(
           (response: any) => {
             this.spinner.hide();
