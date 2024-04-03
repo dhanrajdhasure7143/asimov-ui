@@ -66,6 +66,7 @@ export class RpaToolsetComponent implements OnInit {
   getMicroBots(){
     this.rest.getMicroBots().subscribe((data: any[]) => {
       this.microBotsList = data;
+      this.dt.mico_botList(this.microBotsList)
     });
   }   
 

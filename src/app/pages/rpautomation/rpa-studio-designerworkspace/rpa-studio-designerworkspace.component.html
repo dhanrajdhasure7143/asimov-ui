@@ -54,7 +54,7 @@
           </ng-container>
           <!--Added Grouping Task in RPA Designer-->
           <ng-container *ngFor="let group of groupsData; let i = index">
-            <div [id]="group.id" mwlResizable [enableGhostResize]="true" [ngClass]="group.collapsed?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
+            <div [id]="group.id" mwlResizable [enableGhostResize]="false" [ngClass]="group.collapsed?'dndDropzone':''" (resizeEnd)="onResizeEnd($event, group.id)"
               [resizeEdges]="{ bottom: false, right: false, top: false, left: false }" [ngStyle]="{
                 left: group.x,
                 top: group.y,
