@@ -70,7 +70,6 @@
                                             <div  
                                             class="circle text-center" 
                                             style="display: flex; justify-content: center; align-items: center;  cursor: pointer; height: 50px; width: 50px; line-height: 10px; margin: 0;" 
-                                            (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" 
                                             [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}"
                                             >
                                             <img src="./../../../../assets/Micro_bot_new.png" alt="" width="30px" height="40px">

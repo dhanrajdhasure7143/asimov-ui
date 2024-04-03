@@ -409,7 +409,7 @@
     width: 450px;
     border-radius:4px;
     min-height: 200px;
-    max-height: 250px;
+    height: 200px;
     overflow-y: auto;
     justify-content: left;
     align-items: left;
