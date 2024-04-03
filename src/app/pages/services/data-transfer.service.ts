@@ -173,4 +173,11 @@ setScreenList(module:any){
   updateMicroBotsList(newList: any[]) {
     this._microBotsList.next(newList);
   }
+
+  private microBotData:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  public microBotList=this.microBotData.asObservable();
+
+  mico_botList(value:any){
+    this.microBotData.next(value);
+  }
 }
