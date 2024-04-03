@@ -690,7 +690,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           target: element.targetTaskId,
 
           anchors: ["Right", "Left"],
-          detachable: true,
+          detachable: false,
 
           paintStyle: { stroke: "#404040", strokeWidth: 2 },
           // connectorStyle: {
