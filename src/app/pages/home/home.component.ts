@@ -133,6 +133,7 @@ export class HomeComponent implements OnInit {
   })
 
     this.rest_api.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
+      this.isLoading=false;
       this.plansList = data
       if(this.plansList.length > 1){
      this.plansList.forEach(element => {
