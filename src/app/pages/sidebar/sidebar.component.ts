@@ -35,11 +35,14 @@ export class SidebarComponent implements OnInit {
   isCustomerBots:boolean = false;
   isSideMenuDisabled: boolean = false;
   highestExpireIn:any;
+  isSubscriptionModuleEnable:boolean = false;
+
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
 
   ngOnInit() {
     //this.disable();
+    this.isSubscriptionModuleEnable = environment.isSubscriptionModuleEnable;
     document.cookie = "card_enabled="+environment.isSubscrptionEnabled;
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
