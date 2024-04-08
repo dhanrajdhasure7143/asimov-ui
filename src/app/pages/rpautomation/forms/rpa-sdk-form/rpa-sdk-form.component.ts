@@ -5,6 +5,8 @@ import { CryptoService } from 'src/app/services/crypto.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-rpa-sdk-form',
@@ -35,7 +37,8 @@ export class RpaSdkFormComponent implements OnInit {
     private chanref:ChangeDetectorRef,
     private spinner: LoaderService,
     private toastService : ToasterService,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private http:HttpClient,
 
     ) {
 
@@ -71,7 +74,8 @@ export class RpaSdkFormComponent implements OnInit {
     if (this.isupdateform) {
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
-      this.customTaskForm.get("executablePath").setValue("Path");
+      this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath);
+      this.customTaskForm.get("id").setValue(this.updatetaskDetails.id)
       // temporarly commenting the if and else condition as it is not in use for now.
       // if(this.updatetaskDetails.executablePath){
       //   this.customTaskForm.get("selectedCategory").setValue("Path");
@@ -81,7 +85,7 @@ export class RpaSdkFormComponent implements OnInit {
       //   this.customTaskForm.get("selectedCategory").setValue("Code");
       //   this.radioChange("Code")
       // }
-      this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath)
+      // this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath)
       this.customTaskForm.get("code").setValue(this.updatetaskDetails.code)
 
       // temporarly commenting the input and output reference fields as it is not in use for now.
@@ -119,17 +123,23 @@ export class RpaSdkFormComponent implements OnInit {
     this.customTaskForm.reset();
   }
 
-  saveCustomTasks(){
+  saveCustomTasks(data:boolean){
     this.spinner.show();
     let reqBody = {
       "code": "",
       "customTaskName": this.customTaskForm.value.customTaskName,
       "executablePath": this.customTaskForm.value.executablePath,
-      "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
-      "outputReference": this.customTaskForm.value.outputReference,
+      "version":1,
+     
+      "approvalStatus": data?"Pending":"draft",
     }
-    this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
+    debugger
+    console.log(data);
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${localStorage.accessToken}`)
+    .set("Refresh-Token", localStorage.refreshToken)
+    .set("Timezone", "Asia/Calcutta");
+      this.http.post("http://localhost:8080/rpa-service/sdk-custom/create-sdk-task",reqBody,{headers}).subscribe((data:any)=>{
       this.closeOverlay.emit(true);
       this.spinner.hide();
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
@@ -139,19 +149,28 @@ export class RpaSdkFormComponent implements OnInit {
     });
   }
 
-  updateCustomTasks(){
+  updateCustomTasks(staus:boolean){
     this.spinner.show();
+    console.log(status)
+    debugger
     let reqBody = {
+      "id": this.updatetaskDetails.approvalStatus== "Approved"? "":this.updatetaskDetails.id,
       "code": "",
       "customTaskName": this.customTaskForm.value.customTaskName,
       "executablePath": this.customTaskForm.value.executablePath,
-      "inputReference": this.customTaskForm.value.inputReference,
       "languageType": this.customTaskForm.value.languageType,
-      "outputReference": this.customTaskForm.value.outputReference,
-      "taskId": this.updatetaskDetails.customTaskId,
+      "approvalStatus": staus?"Pending":"draft",
+      "customTaskId": this.updatetaskDetails.customTaskId,
+      "createdBy":this.updatetaskDetails.createdBy
+      // "version":1,
     }
-    this.api.updateSdkCustomTasks(this.updatetaskDetails.customTaskId,reqBody).subscribe((data : any) =>{
-      this.spinner.hide();
+    console.log(this.updatetaskDetails.id);
+    // this.api.updateSdkCustomTasks(this.updatetaskDetails.customTaskId,reqBody).subscribe((data : any) =>{
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${localStorage.accessToken}`)
+    .set("Refresh-Token", localStorage.refreshToken)
+    .set("Timezone", "Asia/Calcutta");
+      this.http.put("http://localhost:8080/rpa-service/sdk-custom/update-sdk-task/"+this.updatetaskDetails.id,reqBody,{headers}).subscribe((data:any)=>{   
+   this.spinner.hide();
       this.closeOverlay.emit(true);
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
     },err=>{

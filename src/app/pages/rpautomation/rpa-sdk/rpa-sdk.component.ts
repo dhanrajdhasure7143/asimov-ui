@@ -6,6 +6,8 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { CryptoService } from '../../services/crypto.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-rpa-sdk',
@@ -28,7 +30,8 @@ export class RpaSdkComponent implements OnInit {
     private spinner: LoaderService,
     private confirmationService:ConfirmationService,
     private toastService: ToasterService,
-    private toastMessages: toastMessages) { }
+    private toastMessages: toastMessages,
+    private http:HttpClient) { }
 
   ngOnInit(){
     this.columns_list = this.columnList.custom_tasks
@@ -37,7 +40,13 @@ export class RpaSdkComponent implements OnInit {
 
   getTaskDetails(){
     this.spinner.show();
-    this.rest.getCustomTasks().subscribe((res : any) =>{
+    // this.rest.getCustomTasks().subscribe((res : any) =>{
+      const headers = new HttpHeaders().set("Authorization",`Bearer ${localStorage.accessToken}`)
+    .set("Refresh-Token", localStorage.refreshToken)
+    .set("Timezone", "Asia/Calcutta");
+    // this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
+      this.http.get("http://localhost:8080/rpa-service/sdk-custom/get-sdk-tasks",{headers}).subscribe((res:any)=>{
+      
       this.customTasks = res
       this.customTasks.map(item=>{
         item.createdAt = new Date(item.createdAt)

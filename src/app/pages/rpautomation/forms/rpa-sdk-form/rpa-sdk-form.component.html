@@ -81,8 +81,13 @@
         <div class="createform-footer">
             <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
             <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks()"> Save</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks()"> Update</button>
+            <!-- <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="saveCustomTasks()">Draft</button> -->
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks(true)"> Save/Approval</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks(false)"> Draft</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(true)"> Update</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button>
+
+
         </div>
     </div>
 </div>

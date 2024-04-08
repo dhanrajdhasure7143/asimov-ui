@@ -100,6 +100,7 @@
 button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
+  margin-right: 10px;
 }
 .credential-btntool img {
   width: 16px;
