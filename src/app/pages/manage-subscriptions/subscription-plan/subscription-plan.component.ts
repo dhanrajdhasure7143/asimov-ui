@@ -50,6 +50,9 @@ export class SubscriptionPlanComponent implements OnInit {
   selectedCard: any;
   paymentCards:any []=[];
   cvv:any;
+  isSpaceOnLeft: boolean = false;
+  showBotInfoFlag: boolean = false;
+  enterPrise_plan:any;
 
   constructor( private spinner : LoaderService,
     private router: Router,
@@ -132,6 +135,7 @@ export class SubscriptionPlanComponent implements OnInit {
                 let isSubscribed=false;
                 let isYearlySubscribed=false;
                 let isMonthlySubscribed=false;
+                let image=element.image;
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
                 if (data.length > 0)
@@ -179,12 +183,19 @@ export class SubscriptionPlanComponent implements OnInit {
                         price.isPlanSubscribed = false;
                     }
                 });
-
+                const decodedImage = this.decodeBase64Image(image);
+                obj["image"] = decodedImage;
+                console.log("image",image)
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
                 this.botPlans.push(obj);
             });
+
+            this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
+            console.log(this.enterPrise_plan);
+
+            this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
             console.log(this.botPlans);
         }
     }, err => {
@@ -412,5 +423,24 @@ getPaymentCards(){
 cancelPayment(){
   this.payment_methods_overlay = false;
 }
+  showBotInfo(event: MouseEvent): void {
+    const squareElement = event.currentTarget as HTMLElement;
+    const squarePosition = squareElement.getBoundingClientRect();
+    const squareWidth = squareElement.offsetWidth;
+    const windowWidth = window.innerWidth;
+
+    const botInfoWidth = 450;
+
+    this.isSpaceOnLeft = windowWidth - squarePosition.left >= squareWidth + botInfoWidth;
+    this.showBotInfoFlag = true;
+  }
+
+  hideBotInfo(): void {
+    this.showBotInfoFlag = false;
+  }
+
+  decodeBase64Image(base64Data: string): string {
+    return 'data:image/jpeg;base64,' + base64Data;
+  }
 
 }
