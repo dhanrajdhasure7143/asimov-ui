@@ -151,8 +151,6 @@ export class RpaSdkFormComponent implements OnInit {
 
   updateCustomTasks(staus:boolean){
     this.spinner.show();
-    console.log(status)
-    debugger
     let reqBody = {
       "id": this.updatetaskDetails.approvalStatus== "Approved"? "":this.updatetaskDetails.id,
       "code": "",

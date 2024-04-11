@@ -274,8 +274,8 @@ export class columnList{
         {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java'],sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,filterType:"date",ShowGrid: true,sort: true,},
         //temporarly commenting the input and output reference columns as it is not in use for now.
-        // {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        // {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "approvalStatus",DisplayName: "Approved Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
+        {ColumnName: "version",DisplayName: "Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 
