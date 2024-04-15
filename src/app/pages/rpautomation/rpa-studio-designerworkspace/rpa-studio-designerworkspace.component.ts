@@ -843,8 +843,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let microBotTasks=[];
           this.microBotData.tasks.forEach((item, i) => {
               const dropCoordinates1 = {
-                  x: (i*80)+mousePos.x + "px",
-                  y: mousePos.y + "px",
+                x: (Number(item.horizontal.replace("px", "")))+mousePos.x+"px",
+                y: (Number(item.vertical.replace("px", "")))+ mousePos.y+"px",
               };
               const node: any = {};
               let nodename = item.nodeId.split("__")[0];
@@ -3659,6 +3659,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       final_tasks=this.addSquencesMicroBot(group);
     }
     // this.get_coordinates();
+    for (let i = 0; i < final_tasks.length; i++) {
+      let nodeid = final_tasks[i].nodeId.split("__");
+        let element = document.getElementById(nodeid[1]);
+        final_tasks[i].x =(element.offsetLeft)+"px";
+        final_tasks[i].y =(element.offsetTop)+"px";
+    }
 
     if(this.executionMode){
       let finalTasksData=[...final_tasks];
