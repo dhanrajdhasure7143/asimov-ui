@@ -45,7 +45,7 @@ export const environment = {
   isProcessLogsEnable: false,
   isCopilotEnable : false,
   isSubscrptionEnabled : true,
-  isSubscriptionModuleEnable:false, // this boolen to enable subscription module in side bar
+  isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
   isCustomerBots : false,
   environmentName: "staging",
   paymentSuccessURL: "https://eziap.staging.epsoftinc.com/#/pages/success",

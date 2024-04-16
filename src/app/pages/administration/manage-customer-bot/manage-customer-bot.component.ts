@@ -175,8 +175,8 @@ export class ManageCustomerBotComponent implements OnInit {
 
   saveCustomerSupportBot() {
     this.loader.show();
-    const includeSites = this.manageBotForm.value.includeSites.join(';');
-    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    const includeSites = this.manageBotForm.value.includeSites ? this.manageBotForm.value.includeSites.join(';'):null;
+    const excludeSites = this.manageBotForm.value.excludeSites ? this.manageBotForm.value.excludeSites.join(';'):null;
     let req_body={
         "createdDate": "",
         "customerSupportBotId": "",
@@ -217,8 +217,8 @@ export class ManageCustomerBotComponent implements OnInit {
     
   updateCustomerSupportBot() {
     this.loader.show();
-    const includeSites = this.manageBotForm.value.includeSites.join(';');
-    const excludeSites = this.manageBotForm.value.excludeSites.join(';');
+    const includeSites = this.manageBotForm.value.includeSites ? this.manageBotForm.value.includeSites.join(';'):null;
+    const excludeSites = this.manageBotForm.value.excludeSites ? this.manageBotForm.value.excludeSites.join(';'):null;
     let cutomerBotId = this.updateOverlayData.customerSupportBotId
     let req_body={
         "customerSupportBotId": cutomerBotId,
