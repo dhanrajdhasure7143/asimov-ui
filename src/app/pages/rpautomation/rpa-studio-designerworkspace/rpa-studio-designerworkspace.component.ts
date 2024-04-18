@@ -862,6 +862,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               node.path = taskWithIcon ? `data:image/png;base64,${taskWithIcon.taskIcon}` : toolsetData.path;
               node.selectedNodeId = item.tMetaId
               node.isConnectionManagerTask = item.isConnectionManagerTask
+              if(item.taskName =="If"){
+                node["attributes"]=item.attributes
+              }
               const nodeWithCoordinates = Object.assign({}, node, dropCoordinates1);
               // let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
               // if(selectedTask.taskIcon=="null" || selectedTask.taskIcon=='')
@@ -877,7 +880,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               }, 500);
           });
           setTimeout(() => {
-              this.addconnections(this.microBotData.sequences);
+              this.addconnections_MicroBot(this.microBotData.sequences);
           }, 500);
           this.addGroupOnLoad(this.microBotData.groups[0], dropCoordinates, microBotTasks, this.microBotData);
           // });
@@ -4041,7 +4044,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           }
         } else {
-          objAttr["attrValue"] = this.fieldValues[ele.name + "_" + ele.id];
+
+          if(selectedNode.selectedNodeTask =="If"){
+            objAttr["attrValue"] = selectedNode.attributes.find(attr_item=> attr_item.metaAttrValue == ele.name).attrValue
+          }else{
+            objAttr["attrValue"] = this.fieldValues[ele.name + "_" + ele.id];
+          }
         }
         obj.push(objAttr);
       }
@@ -4086,6 +4094,69 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       element ["microBotId"]=null
      } 
     });
+  }
+
+  public addconnections_MicroBot(sequences) {
+    setTimeout(() => {
+      this.loadflag = false;
+      sequences.forEach((element) => {
+        let connection=this.jsPlumbInstance.connect({
+          endpoint: [
+            "Dot",
+            {
+              radius: 3,
+              cssClass: "myEndpoint",
+              width: 8,
+              height: 8,
+            },
+          ],
+
+          source: element.sourceTaskId,
+          target: element.targetTaskId,
+
+          anchors: ["Right", "Left"],
+          detachable: false,
+
+          paintStyle: { stroke: "#404040", strokeWidth: 2 },
+          overlays: [["Arrow", { width: 12, length: 12, location: 1 }]],
+        });
+               
+        //Added label for condition connections for v2 if
+      
+        if((this.finaldataobjects.find((item:any)=>element.sourceTaskId == item.nodeId.split("__")[1])?.taskName??"")=="If"){
+          let taskItem=this.finaldataobjects.find((item:any)=>element.sourceTaskId==item.nodeId.split("__")[1]);
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true"))
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="true").attrValue==element.targetTaskId){
+            if(connection)
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-success'>True<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
+              },
+            ]);
+          }
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false"))
+          if(taskItem.attributes.find((item:any)=>item.metaAttrValue=="false").attrValue==element.targetTaskId)
+          {
+            if(connection)
+            connection.addOverlay([
+              "Label",
+              {
+                label: "<span class='bg-white text-danger'>False<span>",
+                location: 0.8,
+                cssClass: "aLabel",
+                id: "iflabel" + connection.id,
+              },
+            ]);
+          }
+        }
+      });
+      this.loadflag = true;
+      this.addTasksToGroups();
+    },1000);
   }
 }
 
