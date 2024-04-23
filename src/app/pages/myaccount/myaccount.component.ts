@@ -163,4 +163,10 @@ export class MyaccountComponent implements OnInit {
       this.errorMessage =""
     }
 }
+
+Space(event: any) {
+  if (event.target.selectionStart === 0 && event.code === "Space") {
+    event.preventDefault();
+  }
+}
 }
