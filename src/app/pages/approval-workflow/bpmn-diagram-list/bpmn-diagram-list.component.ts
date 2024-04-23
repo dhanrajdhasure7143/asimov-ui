@@ -264,12 +264,15 @@ this.selectedrow =i;
       "bpmnModelModifiedBy":data.bpmnModelModifiedBy,
       "bpmnModelModifiedByMailId":data.bpmnModelModifiedByMailId
     };
+    this.loader.show();
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
+        this.loader.hide();
         this.bpmnlist();
         this.toastService.showSuccess(bpmnProcessName+' approved successfully!','response');
       },
       err=>{
+      this.loader.hide();
       this.toastService.showError(this.toastMessages.bpsApproveError);
     });
     this.bpmnlist();
@@ -341,12 +344,15 @@ this.selectedrow =i;
       "role": parentInfo.role,
       "remarks":data.reviewComments
     }
+    this.loader.show();
     this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
+      this.loader.hide();
         this.bpmnlist();
         this.toastService.showSuccess(bpmnProcessName+" has been rejected!",'response');
       },
       err=>{
+      this.loader.hide();
         this.toastService.showError(this.toastMessages.bpsRejectError);
       });
    }
