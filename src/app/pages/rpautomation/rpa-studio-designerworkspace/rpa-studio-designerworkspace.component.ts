@@ -338,7 +338,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         ["Label", { label: "FOO" }],
       ],
     });
-
+    
     this.jsPlumbInstance.bind("connection", (info) => {
       // alert(info.sourceId);
       var connection = info.connection;
@@ -679,7 +679,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           endpoint: [
             "Dot",
             {
-              radius: 3,
+              radius: 1,
               cssClass: "myEndpoint",
               width: 8,
               height: 8,
@@ -740,7 +740,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       });
       this.loadflag = true;
       this.addTasksToGroups();
-    });
+    },500);
   }
 
   delconn: Boolean = false;
@@ -3027,9 +3027,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
-      this.jsPlumbInstance.addGroup(
-        this.groupsData.find((item: any) => item.id == GroupData.id)
-      );
+        this.jsPlumbInstance.addGroup(
+          this.groupsData.find((item: any) => item.id == GroupData.id)
+          );        
       let groupIds: any = [];
       groupIds = this.groupsData.map((item: any) => {
         return item.id;
@@ -4104,7 +4104,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           endpoint: [
             "Dot",
             {
-              radius: 3,
+              radius: 1,
               cssClass: "myEndpoint",
               width: 8,
               height: 8,
