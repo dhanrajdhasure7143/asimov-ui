@@ -4104,7 +4104,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           endpoint: [
             "Dot",
             {
-              radius: 3,
+              radius: 1,
               cssClass: "myEndpoint",
               width: 8,
               height: 8,
