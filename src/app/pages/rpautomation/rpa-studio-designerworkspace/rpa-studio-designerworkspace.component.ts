@@ -549,7 +549,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.detach(info);
     });
     if (this.finalbot.botId != undefined) {
-        this.addconnections(this.finalbot.sequences);
+      setTimeout(async () => {
+        this.addconnections(this.finalbot.sequences)
+        await this.savedGroupsData.forEach(element => {
+          this.minimizeGroup(element)
+        });
+      }, 1000);
 
       //this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector("#" + this.dragareaid);
@@ -679,7 +684,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           endpoint: [
             "Dot",
             {
-              radius: 1,
+              radius: 2,
               cssClass: "myEndpoint",
               width: 8,
               height: 8,
@@ -740,7 +745,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       });
       this.loadflag = true;
       this.addTasksToGroups();
-    },500);
+      setTimeout(() => {
+      this.re_ArrangeNodes();
+      },300);
+    });
   }
 
   delconn: Boolean = false;
@@ -2331,7 +2339,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement);
             });
         }
-          this.minimizeGroup(this.savedGroupsData.find((group: any) => group.groupId == GroupData.id))
+          // this.minimizeGroup(this.savedGroupsData.find((group: any) => group.groupId == GroupData.id))
       }, 50);
     });
   }
@@ -3027,9 +3035,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
-        this.jsPlumbInstance.addGroup(
-          this.groupsData.find((item: any) => item.id == GroupData.id)
-          );        
+      this.jsPlumbInstance.addGroup(
+        this.groupsData.find((item: any) => item.id == GroupData.id)
+      );
       let groupIds: any = [];
       groupIds = this.groupsData.map((item: any) => {
         return item.id;
