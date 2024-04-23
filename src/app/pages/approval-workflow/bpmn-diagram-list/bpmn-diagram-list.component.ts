@@ -309,6 +309,8 @@ this.selectedrow =i;
     let bpmnProcessName =data.bpmnProcessName
      let reqObj = {
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
+      "approverEmail": data.approverEmail,
+      "active":true,
       "bpmnProcessInfo": {
        // "createdTimestamp": data.createdTimestamp,
        // "modifiedTimestamp": new Date(),
@@ -329,8 +331,9 @@ this.selectedrow =i;
         // "bpmnJsonNotation":data.bpmnJsonNotation,
         "processIntelligenceId": data.processIntelligenceId,
         // "category": data.category,
-        "categoryId": data.categoryId
-
+        "categoryId": data.categoryId,
+        "processOwner": data.processOwner,
+        "active": true
       },
       "approvalStatus": "REJECTED",
       "rejectedBy": data.approverName,
