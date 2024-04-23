@@ -3196,6 +3196,8 @@ textarea.p-inputtextarea {
   position: absolute !important;
   top: 45px !important;
   left: 14px !important;
+  max-height: 250px;
+  overflow: auto;
 }
 .taskdescription p-inplace.p-element {
   height: calc(100% - 40px);
