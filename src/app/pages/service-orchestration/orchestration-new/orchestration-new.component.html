@@ -1,0 +1,115 @@
+<div id="" class="schedule-table-container" *ngIf="!showBotForm">
+
+    <div class="row mb-3" style="margin-top:50px">
+        <div class="col-md-6">
+            <h4>Predefined Bots</h4>
+        </div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-primary" (click)="navigateForm()">Create New</button>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-md-12">
+            <app-dynamic-table
+                [table_data]="scheduledbots" 
+                [columns_list]="columns_list"
+                [show_search_field]="true"
+                [show_column_filter]="true"
+                [show_clear_filter]="true"
+                (viewItem)="viewDetails($event)"
+                (deleteItem)="deleteById($event)" 
+                [search_fields]="table_searchFields"
+                [show_view_btn]="true"
+
+                >
+            </app-dynamic-table>
+        </div>
+    </div>
+
+    <!-- <div class="onb-usroverlay" *ngIf="showOverlay" style="display: block">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+            <div class="h-100">
+                <div class="create-header">
+                    <h3>Process Info</h3>
+                </div>
+                
+            </div>
+        </app-split-overlay>
+    </div>  -->
+    <div class="onb-usroverlay" *ngIf="showOverlay" style="display: block">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+            <div class="container-fluid h-100">
+                <div class="create-header">
+                    <h3>Automate Create</h3>
+                </div>
+                <div class="flex-grow-1 overflow-auto">
+                <form [formGroup]="form">
+                    <!-- Name input -->
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter name">
+                    </div>
+    
+                    <!-- Type dropdown -->
+                    <div class="form-group">
+                        <label for="type">Type:</label>
+                        <select class="form-control" id="type" formControlName="type">
+                            <option value="">Select Type</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+    
+                    <!-- Category dropdown -->
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select class="form-control" id="category" formControlName="category">
+                            <option value="">Select Category</option>
+                            <option value="category1">Category 1</option>
+                            <option value="category2">Category 2</option>
+                            <option value="category3">Category 3</option>
+                        </select>
+                    </div>
+    
+                    <!-- Environment multi-select dropdown -->
+                    <div class="form-group">
+                        <label for="environment">Environment:</label>
+                        <select class="form-control" id="environment" formControlName="environment">
+                            <option value="">Select Environment</option>
+                            <option value="development">Development</option>
+                            <option value="test">Test</option>
+                            <option value="production">Production</option>
+                        </select>
+                    </div>
+    
+                    <!-- Description text area -->
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
+                    </div>
+    
+                    <!-- Buttons -->
+                    <div class="mt-auto p-3">
+                        <div class="form-group d-flex justify-content-end">
+                            <button type="button" class="btn mr-2" (click)="closeOverlay($event)">Cancel</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="navigateForm()">Next</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </app-split-overlay>
+    </div>
+    
+    
+
+    
+</div>
+
+<div *ngIf="showBotForm">
+    <app-predefined-bots-form></app-predefined-bots-form>
+ </div>
+
+ 

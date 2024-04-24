@@ -66,6 +66,8 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { SoIncidentManagementComponent } from './orchestration/so-incident-management/so-incident-management.component';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { OrchestrationNewComponent } from './orchestration-new/orchestration-new.component';
+import { PredefinedBotsFormComponent } from './predefined-bots-form/predefined-bots-form.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -89,7 +91,9 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
     ScheduledBotsComponent,
     CheckResourcePipe,
     SoIncidentManagementComponent,
-    Reverse
+    Reverse,
+    OrchestrationNewComponent,
+    PredefinedBotsFormComponent
   ],
   imports: [
     CommonModule,
