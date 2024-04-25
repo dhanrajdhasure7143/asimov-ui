@@ -33,9 +33,12 @@
                             <b> Would you like to schedule the bot?</b>
                         </label>
                     </div>
-                    <div class="col-md-8">
+                    <!-- <div class="col-md-8">
                         <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
-                    </div>
+                    </div> -->
+                    <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!form.get('scheduleBot').value">
+                        Schedule
+                    </button>    
                 </div>
             </div>
         </div>
