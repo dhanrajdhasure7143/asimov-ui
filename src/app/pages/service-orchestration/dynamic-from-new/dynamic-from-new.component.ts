@@ -18,7 +18,7 @@ export class DynamicFromNewComponent implements OnInit {
   pages: number[] = [];
   nodes: number[] = [];
   isShowForm:boolean=false;
-  items: MenuItem[];
+  items: MenuItem[]=[];
   activeIndex: number = 0;
   params:any={};
   private subscription: Subscription;
@@ -42,23 +42,23 @@ export class DynamicFromNewComponent implements OnInit {
     this.fetchAllFields();
     this.calculateNodes();
 
-this.items = [{
-                label: 'Personal',
-                routerLink: 'personal'
-            },
-            {
-                label: 'Seat',
-                routerLink: 'seat'
-            },
-            {
-                label: 'Payment',
-                routerLink: 'payment'
-            },
-            {
-                label: 'Confirmation',
-                routerLink: 'confirmation'
-            }
-        ];
+// this.items = [{
+//                 label: 'Personal',
+//                 routerLink: 'personal'
+//             },
+//             {
+//                 label: 'Seat',
+//                 routerLink: 'seat'
+//             },
+//             {
+//                 label: 'Payment',
+//                 routerLink: 'payment'
+//             },
+//             {
+//                 label: 'Confirmation',
+//                 routerLink: 'confirmation'
+//             }
+//         ];
   }
 
   ngOnDestroy(): void {
@@ -144,8 +144,15 @@ this.form.setControl('fields', this.fb.group(fieldsGroup));
 }
 
 
+
+
     const totalPages = Math.ceil(this.allFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    console.log(this.pages)
+    this.pages.forEach(element => {
+      let obj ={label:" ",command: () => { this.goToPage(element)}}
+        this.items.push(obj)
+    });
 
     this.subscription = this.form.get('scheduleBot').valueChanges.subscribe(checked => {
           this.form.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
@@ -176,6 +183,7 @@ this.form.setControl('fields', this.fb.group(fieldsGroup));
   }
   
   previousPage() {
+    console.log(this.currentPage)
     if (this.currentPage > 1) {
       this.currentPage--;
       this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
@@ -192,8 +200,10 @@ this.form.setControl('fields', this.fb.group(fieldsGroup));
   }
 
   goBack() {
+    console.log(this.currentPage)
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.activeIndex = this.currentPage - 1;
     }
   }
 
