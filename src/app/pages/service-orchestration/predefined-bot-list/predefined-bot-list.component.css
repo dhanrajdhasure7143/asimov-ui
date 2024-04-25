@@ -1,31 +1,44 @@
-.card-container {
-    padding: 0.5rem; /* maintain padding around the card */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-.bot-card {
-    height: 250px;
-    width: 250px;
+.grid-item {
+    height: 240px;
+    background: #fff;
+    box-shadow: 0 14px 8px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-overflow: ellipsis;
-    white-space: nowrap; /* prevent wrapping of text */
+    cursor: pointer;
+    transition: transform 0.3s;
+    border: 1px solid skyblue;
+    border-radius: 0.5rem;
 }
 
-.p-grid {
-    margin: 0;
-    padding: 0; /* remove default grid margin and padding */
+.grid-item:hover {
+    transform: scale(1.02);
 }
 
-/* Ensures the columns start from the left */
-.p-col-12, .p-md-6, .p-lg-3 {
-    display: flex;
-    justify-content: flex-start; /* aligns content to the left */
-    align-items: flex-start; /* aligns items to the top */
+.content {
+    text-align: center;
 }
 
-.p-card .p-card-body {
-    padding: 1rem;
-    height: 200px;
-    width: 200px;
+.grid-wrapper {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+}
+
+@media (min-width: 601px) and (max-width: 800px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    }
 }

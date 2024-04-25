@@ -108,8 +108,8 @@
   }
   
   .progress-node.active {
-    background-color: #00bfff; /* Sky blue */
-    border-color: #007bff; /* Darker blue */
+    background-color: #00bfff;
+    border-color: #007bff;
   }
 
   .progress-container {
@@ -177,3 +177,29 @@
 }
 
   
+.form-container {
+    max-height: 60vh;
+    overflow-x: hidden;
+    padding: 0 15px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.fixed-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    padding-right: 20px; 
+    background-color: white; 
+    z-index: 1020;
+    width: auto;
+}
+
+.mr-3 {
+    margin-right: 3rem;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}

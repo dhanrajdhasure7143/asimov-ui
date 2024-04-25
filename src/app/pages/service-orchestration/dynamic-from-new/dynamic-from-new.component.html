@@ -1,153 +1,52 @@
 <div class="container mt-3">
-    <!-- <div class="progress" style="margin-bottom: 50px;">
-      <div class="progress-bar" role="progressbar" [style.width]="progress + '%'" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100">{{ progress }}%</div>
-    </div> -->
-
-    <!-- <div class="create-flow" *ngIf="!isShowForm">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Automate Create</h3>
-                        </div>
-                        <div class="card-body">
-                            <form [formGroup]="form">
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label">Bot Name<span class="star">*</span></label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="type" class="col-md-4 col-form-label">Type:</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" id="type" formControlName="type">
-                                            <option value="" disabled selected>Select Type</option>
-                                            <option value="option1">Automation</option>
-                                            <option value="option2">HR</option>
-                                            <option value="option3">Generative AI 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="category" class="col-md-4 col-form-label">Category:</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" id="category" formControlName="category">
-                                            <option value="" disabled selected>Select Category</option>
-                                            <option value="category1">Engineering</option>
-                                            <option value="category2">QA</option>
-                                            <option value="category3">DEV</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="environment" class="col-md-4 col-form-label">Environment:</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" id="environment" formControlName="environment">
-                                            <option value="" disabled selected>Select Environment</option>
-                                            <option value="development">Development</option>
-                                            <option value="test">Test</option>
-                                            <option value="production">Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="description" class="col-md-4 col-form-label">Bot Description:</label>
-                                    <div class="col-md-8">
-                                        <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row justify-content-center">
-                                    <button type="button" class="btn btn-secondary mr-2">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" (click)="navigateForm()">Next</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div class="form-flow">
         <div class="p-name">
             <h4>{{ processName }}</h4>
         </div>
 
-        <!-- <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps> -->
-
-        <div class="progress-container" style="position: relative; margin-bottom: 50px; height: 20px;">
-            <div class="progress-bar" role="progressbar" [style.width]="progress + '%'" aria-valuemin="0" aria-valuemax="100"></div>
-            <div class="progress-node" *ngFor="let node of nodes" [class.active]="progress >= node" [style.left]="node + '%'"></div>
-        </div>
-
-        <!-- <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-        <div class="content-section implementation">
-            <p>Current step content: {{ items[activeIndex]?.label }}</p>
-        </div> -->
-
-        <!-- <p-steps [model]="items"></p-steps> -->
-              
-        <form [formGroup]="form">
-
-            <!-- <div class="form-group row" *ngIf="params.type =='edit'">
-                <label for="botName" class="col-md-4 col-form-label"><b>Bot Name</b></label>
-                <div class="col-md-8">
-                    <input type="text" id="botName" class="form-control" formControlName="botName" readonly>
-                    <h3>Marketing Bot</h3>
-                </div>
-            </div> -->
-
-            <!-- here add the filed as Bot Name and Add a static name  -->
-            <div [formGroup]="form">
-                <div formGroupName="fields">
-                  <div *ngFor="let field of currentPageFields" class="form-group row">
-                    <!-- Label for the input -->
-                    <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.label }}</b></label>
-                    <div class="col-md-6">
-                      <!-- Conditionally display a dropdown if the type is 'dropdown' -->
-                      <!-- <select *ngIf="field.type === 'dropdown'" class="form-control" [id]="field.name" [formControlName]="field.name">
-                        <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
-                      </select> -->
-                      <p-dropdown *ngIf="field.type === 'dropdown'" [style]="{'width':'75%'}" [formControlName]="field.name" [options]="field.options" [placeholder]="field.placeholder"></p-dropdown>
-
-                      <!-- For other types of input fields -->
-                      <input pInputText *ngIf="field.type !== 'dropdown'" [style]="{'width':'50%'}" [type]="field.type" class="form-control" [placeholder]="field.placeholder" [id]="field.name" [formControlName]="field.name">
-                    </div>
-                  </div>
-                </div>
+        <p-steps [model]="pages" [(activeIndex)]="activeIndex" [readonly]="false">
+            <ng-template let-item pTemplate="item">
+              <div (click)="goToPage(item)">
+                Step {{ item }}
               </div>
-    
-            <div *ngIf="isLastPage">
-                <div class="form-group row">
-                  <div class="col-md-4 col-form-label">
-                    <input class="form-check-input" type="checkbox" id="scheduleBot" formControlName="scheduleBot">
-                    <label class="form-check-label" for="scheduleBot">
-                        <b> Would you like to schedule the bot?</b>
-                    </label>
-                  </div>
-                  <div class="col-md-8">
-                    <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
-                  </div>
+            </ng-template>
+          </p-steps>          
+
+        <div class="form-container" [formGroup]="form">
+            <div formGroupName="fields">
+                <div *ngFor="let field of currentPageFields" class="form-group row">
+                    <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.label }}</b></label>
+                    <div class="col-md-8">
+                        <select *ngIf="field.type === 'dropdown'" class="form-control" [id]="field.name" [formControlName]="field.name">
+                            <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+                        </select>
+                        <input *ngIf="field.type !== 'dropdown'" [type]="field.type" class="form-control" [id]="field.name" [formControlName]="field.name">
+                    </div>
                 </div>
             </div>
-        </form>
-        <div class="pagination">
-          <a class="page-link" *ngFor="let num of pages" (click)="goToPage(num)">{{ num }}</a>
+
+            <div *ngIf="isLastPage">
+                <div class="form-group row">
+                    <div class="col-md-4 col-form-label">
+                        <input class="form-check-input" type="checkbox" id="scheduleBot" formControlName="scheduleBot">
+                        <label class="form-check-label" for="scheduleBot">
+                            <b> Would you like to schedule the bot?</b>
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-buttons mt-3 text-right">
-            <button type="button" class="btn btn-secondary" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
-            <button type="button" class="btn btn-secondary" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
-            <button type="button" class="btn btn-primary" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
-            <button type="button" class="btn btn-primary" (click)="goBackList()" *ngIf="isLastPage">
-               <span *ngIf="params.type=='create'"> Create Bot</span> 
-               <span *ngIf="params.type=='edit'"> Update Bot</span> 
+
+        <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
+            <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
+            <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
+            <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
+            <button type="button" class="btn bluebg-button" (click)="goBackList()" *ngIf="isLastPage">
+                <span *ngIf="params.type=='create'">Create Bot</span>
+                <span *ngIf="params.type=='edit'">Update Bot</span>
             </button>
         </div>
     </div>
