@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PredefinedbotsComponent } from './predefinedbots.component';
+import { PredefinedBotsComponent } from './predefined-bots.component';
 
-describe('PredefinedbotsComponent', () => {
-  let component: PredefinedbotsComponent;
-  let fixture: ComponentFixture<PredefinedbotsComponent>;
+describe('PredefinedBotsComponent', () => {
+  let component: PredefinedBotsComponent;
+  let fixture: ComponentFixture<PredefinedBotsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PredefinedbotsComponent ]
+      declarations: [ PredefinedBotsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PredefinedbotsComponent);
+    fixture = TestBed.createComponent(PredefinedBotsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
