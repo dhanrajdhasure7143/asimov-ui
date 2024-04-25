@@ -21,6 +21,8 @@ export class DynamicFromNewComponent implements OnInit {
   items: MenuItem[];
   activeIndex: number = 0;
   params:any={};
+  scheduleOverlayFlag: Boolean = false;
+  schedulerComponentInput: any;
   private subscription: Subscription;
 
 
@@ -214,5 +216,17 @@ this.form.setControl('fields', this.fb.group(fieldsGroup));
     } else {
       this.activeIndex = 0; // Reset or stop as needed
     }
+  }
+
+  openScheduler() {
+    this.schedulerComponentInput = {
+      // botid: this.finalbot.botId,
+      // version: this.finalbot.version,
+      // botName: this.finalbot.botName,
+    };
+    this.scheduleOverlayFlag = true;
+  }
+  closeOverlay(event) {
+    this.scheduleOverlayFlag = event;
   }
 }

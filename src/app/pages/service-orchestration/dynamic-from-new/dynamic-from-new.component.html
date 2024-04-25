@@ -132,9 +132,12 @@
                         <b> Would you like to schedule the bot?</b>
                     </label>
                   </div>
-                  <div class="col-md-8">
-                    <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
-                  </div>
+                  <!-- <div class="col-md-8">
+                    <input (click)="openScheduler()" type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
+                  </div> -->
+                  <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!form.get('scheduleBot').value">
+                    Schedule
+                </button>
                 </div>
             </div>
         </form>
@@ -142,13 +145,33 @@
           <a class="page-link" *ngFor="let num of pages" (click)="goToPage(num)">{{ num }}</a>
         </div>
         <div class="form-buttons mt-3 text-right">
-            <button type="button" class="btn btn-secondary" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
+            <button type="button" class="btn btn-secondary bluebg-button" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
             <button type="button" class="btn btn-secondary" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
-            <button type="button" class="btn btn-primary" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
-            <button type="button" class="btn btn-primary" (click)="goBackList()" *ngIf="isLastPage">
+            <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
+            <button type="button" class="btn bluebg-button" (click)="goBackList()" *ngIf="isLastPage">
                <span *ngIf="params.type=='create'"> Create Bot</span> 
                <span *ngIf="params.type=='edit'"> Update Bot</span> 
             </button>
         </div>
     </div>
+    
+    <p-dialog header="Scheduler" [(visible)]="scheduleOverlayFlag" [style]="{width: '50vw'}">
+        <div class="h-100">
+            <div class="h-100">
+              <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler>
+            </div>
+          </div>
+    </p-dialog>
+    <!-- <div *ngIf="scheduleOverlayFlag">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+          <div class="h-100">
+            <div class="create-header">
+              <h3>Scheduler</h3>
+            </div>
+            <div class="h-100">
+              <app-rpa-scheduler  (closeOverlay)="closeOverlay($event)"></app-rpa-scheduler>
+            </div>
+          </div>
+        </app-split-overlay>
+      </div> -->
 </div>
