@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { StepsModule } from 'primeng/steps';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-predefined-bots-form',
@@ -10,9 +11,9 @@ import { StepsModule } from 'primeng/steps';
   styleUrls: ['./predefined-bots-form.component.css']
 })
 export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
-  processName = "Automate your recruitment process";
+  processName = "Automate your Recruitment Process";
   currentPage = 1;
-  fieldsPerPage = 4;
+  fieldsPerPage = 5;
   allFields = [];
   form: FormGroup;
   pages: number[] = [];
@@ -20,10 +21,17 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
   isShowForm:boolean=false;
   items: MenuItem[];
   activeIndex: number = 0;
+  params:any={}
   private subscription: Subscription;
 
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute) {
+      this.route.queryParams.subscribe(parms=>{
+        this.params=parms
+      })
+     }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -49,25 +57,45 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
   }
 
   fetchAllFields() {
-    // Dummy data
     this.allFields = [
-      { label: "What is your name?", name: "name", type: "text" },
-      { label: "How old are you?", name: "age", type: "number" },
-      { label: "What is your email address?", name: "email", type: "email" },
-      { label: "What country do you live in?", name: "country", type: "text" },
-      { label: "What is your job title?", name: "jobTitle", type: "text" },
-      { label: "How did you hear about us?", name: "referralSource", type: "text" },
-      { label: "What country do you live in?", name: "country", type: "text" },
-      { label: "What is your job title?", name: "jobTitle", type: "text" },
-      { label: "How did you hear about us?", name: "referralSource", type: "text" },
-      { label: "Would you recommend us to a friend?", name: "recommendation", type: "text" }
-    ];
+      { label: "Bot Name", name: "botname", type: "text" },
+      { label: "SharePoint URL", name: "sharePointUrl", type: "text" },
+      { label: "Tenant ID", name: "tenantId", type: "number" },
+      { label: "Client ID", name: "clientId", type: "email" },
+      { label: "Client Secret", name: "clientSecret", type: "text" },
+      { label: "SharePoint Login Reference", name: "sharePointLoginReference", type: "text" },
+      { label: "Download Type", name: "downloadType", type: "dropdown", options: ['File', 'Folder'] },
+      { label: "File/Folder Check", name: "fileFolderCheck", type: "text" },
+      { label: "Library Name", name: "libraryName", type: "text" },
+      { label: "Email/Organization Name", name: "emailOrgName", type: "dropdown", options: ['EPSoft', 'Microsoft'] }
+  ];
+
 
     const fieldsGroup = {};
     this.allFields.forEach(field => {
       fieldsGroup[field.name] = ['', Validators.required];
     });
     this.form.setControl('fields', this.fb.group(fieldsGroup));
+    if(this.params.type =='edit'){
+      const existingBotData = {
+        botname: "Recruitment Bot",
+        sharePointUrl: "https://mycompany.sharepoint.com",
+        tenantId: 123456789,
+        clientId: "abcdef-12345-xyz-kljvij",
+        clientSecret: "s3cr3t-jhfuhe74t-kwhfuhf7-khefuhf",
+        sharePointLoginReference: "Ref12345",
+        downloadType: "File",
+        fileFolderCheck: "Check passed",
+        libraryName: "Main Library",
+        emailOrgName: "EPSoft"
+    };
+
+    this.allFields.forEach(field => {
+      fieldsGroup[field.name] = [existingBotData[field.name] || '', Validators.required];
+    });
+    this.form.setControl('fields', this.fb.group(fieldsGroup));
+
+    }
 
     const totalPages = Math.ceil(this.allFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -121,8 +149,12 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
     return (this.currentPage / this.pages.length) * 100;
   }
 
-  goBackToOrchestration(){
-    this.isShowForm=!this.isShowForm;
+  goBackToList(){
+    if(this.params.type == "create"){
+      this.router.navigate(["/pages/serviceOrchestration/predefinedBots"]);
+    }else{
+      this.router.navigate(["/pages/serviceOrchestration/home"]);
+    }
   }
 
   navigateForm(){

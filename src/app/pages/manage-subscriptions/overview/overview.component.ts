@@ -9,6 +9,14 @@ import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
 import { columnList } from "src/app/shared/model/table_columns";
 
+interface Product {
+  product: string;
+  price: number;
+  billingCycle: string;
+  nextBillingDate: string;
+  recipientMail: string;
+}
+
 @Component({
   selector: "app-overview",
   templateUrl: "./overview.component.html",
@@ -21,6 +29,22 @@ export class OverviewComponent implements OnInit {
   paymentMode: any = [];
   error: string;
   tableData: any = [];
+  products: Product[] = [
+    {
+      product: "Recruitment Bot",
+      price: 100,
+      billingCycle: "Monthly",
+      nextBillingDate: "2024-05-01",
+      recipientMail: "recuritmentdemo@epsoft.com"
+    },
+    {
+      product: "Marketing Bot",
+      price: 200,
+      billingCycle: "Monthly",
+      nextBillingDate: "2024-12-01",
+      recipientMail: "marketingdemo@epsoft.com"
+    }
+  ];
   result: any;
   error1: string;
   email: any;
@@ -182,5 +206,9 @@ export class OverviewComponent implements OnInit {
   this.api.getBillingInfo().subscribe(data=>{
     this.email = data['email']
   })
+  }
+
+  onAction(product: Product) {
+    console.log('Action clicked for:', product);
   }
 }

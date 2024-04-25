@@ -36,6 +36,7 @@ export class SidebarComponent implements OnInit {
   isSideMenuDisabled: boolean = false;
   highestExpireIn:any;
   isSubscriptionModuleEnable:boolean = false;
+  isPredefinedBots:boolean = true;
 
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }

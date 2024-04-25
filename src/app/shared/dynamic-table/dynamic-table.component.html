@@ -252,6 +252,17 @@
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </a>
                         </span>
+
+                        <span *ngIf="show_run_btn">
+                            <a (click)="onRunRow(rowData)" pTooltip="Run" tooltipPosition="top">
+                                <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
+                            </a>
+                        </span>
+                        <span *ngIf="show_stop_btn">
+                            <a (click)="onStopRow(rowData)" pTooltip="Stop" tooltipPosition="top">
+                                <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
+                            </a>
+                        </span>
                     </span>
                     <span>
                             <span *ngIf="screenTable=='users_screen'">

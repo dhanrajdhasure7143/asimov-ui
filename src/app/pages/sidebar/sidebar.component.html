@@ -2,7 +2,7 @@
   <div class="nav-main subcriptionExpiry" [class.disabled]="isSideMenuDisabled">
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
-        <span *ngIf="isCopilotEnable" >
+        <span *ngIf="isCopilotEnable && !isPredefinedBots" >
           <a mat-list-item class="link" [ngClass]="_selectedModule=='eiap-home' && isCopilotEnable ?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
             routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Copilot' : ''"
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -20,7 +20,7 @@
             <span class="side-menu-font">Copilot</span>
           </a>
         </span>
-        <a mat-list-item *ngIf="!freetrail" class="link" [ngClass]="_selectedModule=='eiap-home' && (!(isCopilotEnable)) ?'active':'' " [id]="(!(isCopilotEnable))?'eiap-home':'dashboard'" (click)="hightlight(((!(isCopilotEnable))?'eiap-home':'dashboard'),null)"
+        <a mat-list-item *ngIf="!isPredefinedBots" class="link" [ngClass]="_selectedModule=='eiap-home' && (!(isCopilotEnable)) ?'active':'' " [id]="(!(isCopilotEnable))?'eiap-home':'dashboard'" (click)="hightlight(((!(isCopilotEnable))?'eiap-home':'dashboard'),null)"
           [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
           matTooltipPosition="right">
           <span class="side-icon">
@@ -55,7 +55,7 @@
         <span class="side-menu-font" (click)="hightlight('dynamicdashboard','null')">Dashboard</span>
       </a> -->
  
-        <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
+        <a *ngIf="!isPredefinedBots" mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
           routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -99,8 +99,25 @@
             <span class="side-menu-font">Value Chain Mapping</span>
           </a>
         </div> -->
-      
-        <a mat-list-item class="link orchimg" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)"
+
+        <a *ngIf="isPredefinedBots" mat-list-item class="link" id="automate" (click)="hightlight('automate',null)"
+        routerLink="/pages/serviceOrchestration/predefinedBots" [matTooltip]=" !obj.sideBarOpen ? 'Automate' : ''"
+        matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+        <span class="side-icon">
+          <span class="active-img" id="eiap-home-icon-active">
+            <img src="../../../assets/images/Sidebar/Projects-Active.svg" alt="">
+          </span>
+          <span class="hover-img" id="eiap-home-icon-white">
+            <img src="../../../assets/images/Sidebar/Projects-Hover.svg" alt="">
+          </span>
+          <span class="default-img" id="eiap-home-icon-gray">
+            <img src="../../../assets/images/Sidebar/Projects-Normal.svg" alt="">
+          </span>
+        </span>
+        <span class="side-menu-font" (click)="hightlight('automate','null')">Automate</span>
+      </a>
+
+        <a mat-list-item class="link orchimg" id='so' *ngIf="isPredefinedBots" (click)="hightlight('so',null)"
           routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -116,7 +133,24 @@
           </span>
           <span class="side-menu-font">Orchestration</span>
         </a>
-        <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
+      
+        <a mat-list-item class="link orchimg" id='so' *ngIf="!isPredefinedBots" (click)="hightlight('so',null)"
+          routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
+          matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+          <span class="side-icon">
+            <span class="active-img" id="eiap-home-icon-active">
+              <img src="../../../assets/images/Sidebar/Orchestration-Active.svg" alt="">
+            </span>
+            <span class="hover-img" id="eiap-home-icon-white">
+              <img src="../../../assets/images/Sidebar/Orchestration-Hover.svg" alt="">
+            </span>
+            <span class="default-img" id="eiap-home-icon-gray">
+              <img src="../../../assets/images/Sidebar/Orchestration-Normal.svg" alt="">
+            </span>
+          </span>
+          <span class="side-menu-font">Orchestration</span>
+        </a>
+        <mat-list-item *ngIf="!isPredefinedBots" (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
           id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -206,13 +240,13 @@
                     <span class="side-menu-font">Support</span>
                 </a> -->
                 <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
-          *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/admin-screen-list">
+          *ngIf="this.userRoles.includes('System Admin') && !isPredefinedBots" routerLink="/pages/admin/admin-screen-list">
           <span class="side-icon">
             <!-- <mat-icon>settings</mat-icon> -->
           </span>
           <span class="side-menu-font">Screen Generation</span>
         </a>
-        <div class="CS_botHeader" *ngIf="isCustomerBots">
+        <div class="CS_botHeader" *ngIf="isCustomerBots && !isPredefinedBots">
           <mat-list-item (click)="showCustomerSupportBotsSubmenu = !showCustomerSupportBotsSubmenu;"
             [ngClass]="{'activeMenu' : showCustomerSupportBotsSubmenu}" class="link">
             <span class="side-menu-font">Customer Support Bots</span>

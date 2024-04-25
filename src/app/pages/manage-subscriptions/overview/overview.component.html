@@ -63,8 +63,8 @@
 <div class="row">
     <div class="col-md-12 con-envr p-0">
         <div class="credential-tablegrid">
-    <app-dynamic-table
-        [table_data]="tableData" 
+    <!-- <app-dynamic-table
+        [table_data]="tableData1" 
         [columns_list]="table_columns"
         [show_column_filter]="true"
         [show_clear_filter]="true" 
@@ -75,7 +75,43 @@
         (updateItem)="onResubscribe($event)"
         (rejectItem)="subscriptionCancel($event)"
         >
-    </app-dynamic-table>
+    </app-dynamic-table> -->
+
+    <p-table [value]="products">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Billing Cycle</th>
+            <th>Next Billing Date</th>
+            <th>Recipient Mail</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>{{ product.product }}</td>
+            <!-- <td><a [routerLink]="/pages/serviceOrchestration/prdefinedForm">{{ product.product }}</a></td> -->
+            <!-- <td><a routerLink="/pages/serviceOrchestration/prdefinedForm">{{ product.product }}</a></td> -->
+            <td>{{ product.price }}</td>
+            <td>{{ product.billingCycle }}</td>
+            <td>{{ product.nextBillingDate }}</td>
+            <td>{{ product.recipientMail }}</td>
+            <td>
+                <button (click)="onAction(product)">
+                    <a *ngIf="product.product === 'Marketing Bot'" [routerLink]="'/pages/serviceOrchestration/dynamicForm'">
+                      <img src="../../../assets/images-n/gridicons/view-hover.svg" alt="View" class="testplus hover-icon">
+                    </a>
+                    <a *ngIf="product.product !== 'Marketing Bot'" routerLink="/pages/serviceOrchestration/prdefinedForm">
+                      <img src="../../../assets/images-n/gridicons/view-hover.svg" alt="View" class="testplus hover-icon">
+                    </a>
+                  </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      
+
     </div> 
 </div>
 </div>

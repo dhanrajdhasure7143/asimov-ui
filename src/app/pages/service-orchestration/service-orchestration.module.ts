@@ -68,6 +68,8 @@ import { SoIncidentManagementComponent } from './orchestration/so-incident-manag
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { OrchestrationNewComponent } from './orchestration-new/orchestration-new.component';
 import { PredefinedBotsFormComponent } from './predefined-bots-form/predefined-bots-form.component';
+import { DynamicFromNewComponent } from './dynamic-from-new/dynamic-from-new.component';
+import { PredefinedBotListComponent } from './predefined-bot-list/predefined-bot-list.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -93,7 +95,9 @@ import { PredefinedBotsFormComponent } from './predefined-bots-form/predefined-b
     SoIncidentManagementComponent,
     Reverse,
     OrchestrationNewComponent,
-    PredefinedBotsFormComponent
+    PredefinedBotsFormComponent,
+    DynamicFromNewComponent,
+    PredefinedBotListComponent
   ],
   imports: [
     CommonModule,

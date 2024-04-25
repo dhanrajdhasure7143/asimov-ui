@@ -1,0 +1,33 @@
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div *ngFor="let each of predefined_botsList" class="col-12">
+            <div class="col-3" (click)="onclickBot(each)">
+                <p-card [header]="each.botname" [style]="{'width': '15rem', 'margin-bottom': '2em'}"></p-card>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="p-grid">
+    <div class="p-col-12 p-md-6 p-lg-3" *ngFor="let each of predefined_botsList">
+        <div (click)="onclickBot(each)">
+      <p-card [header]="each.botname">
+        
+      </p-card>
+    </div>
+    </div>
+  </div> -->
+
+  <div class="p-grid">
+    <div *ngFor="let each of predefined_botsList">
+        <div (click)="onclickBot(each)" class="card-container" style="width: 250px; height:250px; float: left;">
+            <p-card [header]="each.botname" class="bot-card">
+                <p>{{ each.details }}</p> <!-- Additional details can go here -->
+            </p-card>
+        </div>
+    </div>
+</div>
+
+
+
+  

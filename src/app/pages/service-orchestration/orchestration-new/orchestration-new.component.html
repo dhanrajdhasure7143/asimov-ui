@@ -4,9 +4,9 @@
         <div class="col-md-6">
             <h4>Predefined Bots</h4>
         </div>
-        <div class="col-md-6 text-right">
+        <!-- <div class="col-md-6 text-right">
             <button class="btn btn-primary" (click)="navigateForm()">Create New</button>
-        </div>
+        </div> -->
     </div>
 
     <div class="row ">
@@ -17,13 +17,19 @@
                 [show_search_field]="true"
                 [show_column_filter]="true"
                 [show_clear_filter]="true"
-                (viewItem)="viewDetails($event)"
-                (deleteItem)="deleteById($event)" 
+                [screenTable]="'common'"
                 [search_fields]="table_searchFields"
-                [show_view_btn]="true"
-
-                >
+                [show_run_btn]="true"
+                [show_stop_btn]="true"
+                show_edit_btn="true"
+                show_delete_btn="true"
+                (onRowDoubleClick)="viewDetails($event)"
+                (updateItem)="editById($event)" 
+                (deleteItem)="deleteById($event)"
+                (runItem)="runById($event)"
+                (stopItem)="stopById($event)">
             </app-dynamic-table>
+         
         </div>
     </div>
 
