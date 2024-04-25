@@ -54,7 +54,7 @@
         </div>
     </div>
     
-    <p-dialog header="Scheduler" [(visible)]="scheduleOverlayFlag" [style]="{width: '50vw'}">
+    <p-dialog header="Scheduler" [modal]="true" [(visible)]="scheduleOverlayFlag" [style]="{width: '50vw'}">
         <div class="h-100">
             <div class="h-100">
               <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler>
