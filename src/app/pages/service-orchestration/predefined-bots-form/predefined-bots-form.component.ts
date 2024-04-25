@@ -20,7 +20,7 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
   nodes: number[] = [];
   isShowForm:boolean=false;
   items: MenuItem[];
-  activeIndex: number = 0;
+  activeIndex = 0;
   params:any={}
   private subscription: Subscription;
 
@@ -58,17 +58,18 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
 
   fetchAllFields() {
     this.allFields = [
-      { label: "Bot Name", name: "botname", type: "text" },
-      { label: "SharePoint URL", name: "sharePointUrl", type: "text" },
-      { label: "Tenant ID", name: "tenantId", type: "number" },
-      { label: "Client ID", name: "clientId", type: "email" },
-      { label: "Client Secret", name: "clientSecret", type: "text" },
-      { label: "SharePoint Login Reference", name: "sharePointLoginReference", type: "text" },
-      { label: "Download Type", name: "downloadType", type: "dropdown", options: ['File', 'Folder'] },
-      { label: "File/Folder Check", name: "fileFolderCheck", type: "text" },
-      { label: "Library Name", name: "libraryName", type: "text" },
-      { label: "Email/Organization Name", name: "emailOrgName", type: "dropdown", options: ['EPSoft', 'Microsoft'] }
-  ];
+      { label: "Bot Name", name: "botname", type: "text", placeholder: "Enter bot name" },
+      { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
+      { label: "Tenant ID", name: "tenantId", type: "number", placeholder: "Enter tenant ID" },
+      { label: "Client ID", name: "clientId", type: "email", placeholder: "Enter client ID" },
+      { label: "Client Secret", name: "clientSecret", type: "text", placeholder: "Enter client secret" },
+      { label: "SharePoint Login Reference", name: "sharePointLoginReference", type: "text", placeholder: "Enter login reference" },
+      { label: "Download Type", name: "downloadType", type: "dropdown", options: ['File', 'Folder'], placeholder: "Select download type" },
+      { label: "File/Folder Check", name: "fileFolderCheck", type: "text", placeholder: "Enter file/folder check" },
+      { label: "Library Name", name: "libraryName", type: "text", placeholder: "Enter library name" },
+      { label: "Email/Organization Name", name: "emailOrgName", type: "dropdown", options: ['EPSoft', 'Microsoft'], placeholder: "Select organization" }
+  ]; 
+
 
 
     const fieldsGroup = {};
@@ -103,7 +104,24 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
     this.subscription = this.form.get('scheduleBot').valueChanges.subscribe(checked => {
           this.form.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
         });
+
+        this.calculatePages();
+        // this.initForm();
   }
+
+  calculatePages() {
+    const numberOfPages = Math.ceil(this.allFields.length / this.fieldsPerPage);
+    this.pages = Array.from({ length: numberOfPages }, (_, i) => i + 1);
+  }
+
+  initForm() {
+    const controls = this.allFields.reduce((acc, field, index) => {
+      acc[field] = new FormControl('', Validators.required);
+      return acc;
+    }, {});
+    this.form = this.fb.group(controls);
+  }
+
 
   calculateNodes(): void {
     const totalPages = Math.ceil(this.allFields.length / this.fieldsPerPage);
@@ -118,6 +136,7 @@ export class PredefinedBotsFormComponent implements OnInit, OnDestroy {
 
   goToPage(num: number) {
     this.currentPage = num;
+    this.activeIndex = num - 1;
   }
 
   createBot() {

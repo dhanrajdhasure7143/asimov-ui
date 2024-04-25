@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -159,14 +159,29 @@ this.form.setControl('fields', this.fb.group(fieldsGroup));
     // this.nodes = Array.from({ length: totalPages }, (_, index) => index * 100 / (totalPages - 1));
   }
 
-  nextPage() {
-    if (this.currentPage < this.pages.length) {
-      this.currentPage++;
-    }
+
+  calculatePages(): void {
+    const totalPages = Math.ceil(this.allFields.length / this.fieldsPerPage);
+    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
   goToPage(num: number) {
     this.currentPage = num;
+    this.activeIndex = num - 1;
+  }
+
+  nextPage() {
+    if (this.currentPage < this.pages.length) {
+      this.currentPage++;
+      this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
+    }
+  }
+  
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
+    }
   }
 
   createBot() {

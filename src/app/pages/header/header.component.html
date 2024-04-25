@@ -83,7 +83,7 @@
   </mat-menu> -->
   
   <div class="ml-auto d-flex align-items-center">
-    <div class="space d-flex subcriptionExpiry" [class.disabled]="tenantSwitchDropdown">
+    <div class="space d-flex subcriptionExpiry" [class.disabled]="tenantSwitchDropdown" *ngIf="!isPredefinedBots">
       <button #btn type="button" pButton (click)="menu.toggle($event)">
         <img src="./../../../../assets/images-n/common/headerimg/Demo.svg" alt="Actions">{{navigationTenantName}}
         <span class="d-flex ml-3"><i class="pi pi-angle-down"></i></span></button>
@@ -101,7 +101,7 @@
         <p-dropdown  [options]="tenantsList" (onChange)="onChangeTenant($event)" [(ngModel)]="navigationTenantName" placeholder="Select an Environment" optionLabel="tenant_name" optionValue="tenant_name"></p-dropdown>
       </div>
     </div> -->
-    <span class="txt-wh header-seperator">|</span>
+    <span class="txt-wh header-seperator" *ngIf="!isPredefinedBots">|</span>
     <span>
       <div *ngIf="profilePicture==true && user_fName!='null'">
         <img class="res-circle-img" [src]="retrievedImage" alt="">
