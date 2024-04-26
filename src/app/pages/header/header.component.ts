@@ -426,7 +426,7 @@ getexpiryInfo(){
   this.rest_api.expiryInfo().subscribe(data => {
     // this.tenantSwitchDropdown = data.expiresIn === 0;
     this.tenantSwitchDropdown = data.expiresIn === 0 || data.expiresIn <= 0;
-    this.isPredefinedBots = data.isPredefinedBots?data.isPredefinedBots: true;
+    this.isPredefinedBots = data.isPredefinedBots;
     console.log(this.isPredefinedBots)
   })
 }

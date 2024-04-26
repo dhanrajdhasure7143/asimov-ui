@@ -17,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 
 
@@ -42,6 +43,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NgbTimepickerModule,
     MatDatepickerModule,
     SharedModule
-  ]
+  ],
+  providers: [toastMessages]
 })
 export class PredefinedBotsModule { }

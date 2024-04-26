@@ -14,9 +14,8 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
   styleUrls: ['./predefined-scheduler.component.css']
 })
 export class PredefinedSchedulerComponent implements OnInit {
+  @Output() schedulerData = new EventEmitter<any>();
 
-  @Input('data') public data: any;
-  @Output() closeFormOverlay = new EventEmitter<any>();
   botid:any;
   processid:any;
   beforetime:boolean=false;
@@ -107,22 +106,12 @@ export class PredefinedSchedulerComponent implements OnInit {
     var minDate= year + '-' + this.month + '-' + day;
     $('#txtDate').attr('min', minDate);
     $('#enddatepicker').attr('min', minDate);
-    if(this.data.botid!=undefined)
-    {
+    // this.get_schedule()
 
-      this.botid=this.data.botid;
-  
-      this.get_schedule()
-      this.getenvironments();
-
-    }
     
     this.startdate =  moment(new Date()).format("YYYY-MM-DD");
     this.enddate = moment(new Date()).format("YYYY-MM-DD");
    this.gettime();
-
-    
-
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
   }  
@@ -147,41 +136,33 @@ gettime(){
    }
    this.todaytime=firstchar1+ ":" +firstchar2
 }
-  get_schedule()
-  {
-    if(this.data!=undefined)
-    {
-      this.loader.show()
-      this.rest.getbotSchedules(this.data).subscribe((response:any)=>{
-        this.loader.hide()
-        if(response.errorMessage==undefined)
-        {
-          this.schedule_list=[...response.map(item=>{
-            item["checked"]=false;
-            return item;
-          })];
-          this.checkScheduler=false;
-          this.flags={
-            startflag:false,
-            stopflag:false,
-            pauseflag:false,
-            resumeflag:false,
-            deleteflag:false,
-          }
-        }
-        else
-         this.toastService.showError(response.errorMessage+'!');
-        },err=>{
-        this.loader.hide()
-        this.toastService.showError(this.toastMessages.schLoadFail);
-      })
-    }
-  }
+  // get_schedule(){
+  //     this.loader.show()
+  //     this.rest.getbotSchedules().subscribe((response:any)=>{
+  //       this.loader.hide()
+  //       if(response.errorMessage==undefined)
+  //       {
+  //         this.schedule_list=[...response.map(item=>{
+  //           item["checked"]=false;
+  //           return item;
+  //         })];
+  //         this.checkScheduler=false;
+  //         this.flags={
+  //           startflag:false,
+  //           stopflag:false,
+  //           pauseflag:false,
+  //           resumeflag:false,
+  //           deleteflag:false,
+  //         }
+  //       }
+  //       else
+  //        this.toastService.showError(response.errorMessage+'!');
+  //       },err=>{
+  //       this.loader.hide()
+  //       this.toastService.showError(this.toastMessages.schLoadFail);
+  //     })
 
-  close(){
-    document.getElementById("sch").style.display="none";
-    this.closeFormOverlay.emit(true)
-  }
+  // }
 
 
   onTimeZoneChange(timezone){
@@ -189,7 +170,6 @@ gettime(){
     // this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
     this.startdate =  moment(d).format("YYYY-MM-DD");
     this.enddate = moment(d).format("YYYY-MM-DD");
-    // this.enddate=this.startdate;
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
 
@@ -345,7 +325,7 @@ gettime(){
       return false;
     }
   }
-  add_sch(){
+  add_scheduler(){
     // Scheduler
     if(this.isDateToday(this.selecteddate)){
       this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
@@ -367,8 +347,7 @@ gettime(){
   }
 
   addscheduler(){
-    if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
-    {
+    if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined){
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
        let endtime=this.endtime.split(":")
@@ -376,9 +355,6 @@ gettime(){
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
          let data:any;
-      if(this.data.botid!=undefined )
-      {
-
         data={
           scheduledIntervalid:27,
           scheduleInterval:this.cronExpression,
@@ -386,21 +362,19 @@ gettime(){
           endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
           timeZone:this.timezone,
           botSource:"EPSoft",
-          botName:this.data.botName,
-          botId:this.data.botid,
-          botVersion:this.data.version,
           botActionStatus:"New",
           modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
        // let scheduleArr=[...this.schedule_list];
         //scheduleArr.push(data);
+        this.schedulerData.emit(data)
+        console.log(data)
+        return
         this.loader.show()
         this.rest.addbotSchedules([data]).subscribe((response:any)=>{
           this.loader.hide();
-          if(response.errorMessage == undefined)
-          {
+          if(response.errorMessage == undefined){
             this.toastService.showSuccess(this.toastMessages.saveSchedule, 'response');   
-            this.get_schedule();
           }  
           else
          this.toastService.showError(response.errorMessage+'!');
@@ -408,7 +382,6 @@ gettime(){
           this.loader.hide();
           this.toastService.showError(this.toastMessages.saveError)
         })
-      }
     }
     else
     {
@@ -449,14 +422,12 @@ gettime(){
     return cronstrue.toString(cronexp);
   }
 
-  start_schedule()
-  {
+  start_schedule(){
     let checked_schedule=this.schedule_list.find(data=>data.checked==true)
     if(this.botid!=undefined && this.botid != "")
     {
       let schedule={
         botId:this.botid,
-        "botVersion": this.data.version,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
@@ -464,7 +435,6 @@ gettime(){
         if(resp.errorMessage==undefined)
         {
           this.toastService.showSuccess(this.toastMessages.scheduleStart,'response');   
-          this.get_schedule();
         }
         else
           this.toastService.showError(resp.errorMessage+'!');
@@ -472,70 +442,70 @@ gettime(){
     }
   }
 
-  pause_schedule()
-  {
-    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
-      let schedule={
-        botId:this.data.botid,
-        "botVersion": this.data.version,
-        "scheduleInterval":checked_schedule.scheduleInterval,
-        "intervalId":checked_schedule.intervalId,
-      }
-      this.rest.pause_schedule(schedule).subscribe(data=>{
-        let resp:any=data
-        if(resp.errorMessage==undefined){
-          this.toastService.showSuccess(this.toastMessages.schedulePause,'response');
-          this.get_schedule();
-        } else{
-         this.toastService.showError(resp.errorMessage+'!');
-        }
-      })
-  }
+  // pause_schedule()
+  // {
+  //   let checked_schedule=this.schedule_list.find(data=>data.checked==true)
+  //     let schedule={
+  //       botId:this.data.botid,
+  //       "botVersion": this.data.version,
+  //       "scheduleInterval":checked_schedule.scheduleInterval,
+  //       "intervalId":checked_schedule.intervalId,
+  //     }
+  //     this.rest.pause_schedule(schedule).subscribe(data=>{
+  //       let resp:any=data
+  //       if(resp.errorMessage==undefined){
+  //         this.toastService.showSuccess(this.toastMessages.schedulePause,'response');
+  //         this.get_schedule();
+  //       } else{
+  //        this.toastService.showError(resp.errorMessage+'!');
+  //       }
+  //     })
+  // }
 
-  resume_schedule()
-  {
-    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
-    let schedule={
-      botId:this.data.botid,
-      "botVersion": this.data.version,
-      "scheduleInterval":checked_schedule.scheduleInterval,
-      "intervalId":checked_schedule.intervalId,
-    }
-    this.rest.resume_schedule(schedule).subscribe(data=>{
-      let resp:any=data
-      if(resp.errorMessage==undefined){
-        this.toastService.showSuccess(this.toastMessages.scheduleResume,'response');   
-        this.get_schedule();
-      }else
-        this.toastService.showError(resp.errorMessage+'!');
-    })
+  // resume_schedule()
+  // {
+  //   let checked_schedule=this.schedule_list.find(data=>data.checked==true)
+  //   let schedule={
+  //     botId:this.data.botid,
+  //     "botVersion": this.data.version,
+  //     "scheduleInterval":checked_schedule.scheduleInterval,
+  //     "intervalId":checked_schedule.intervalId,
+  //   }
+  //   this.rest.resume_schedule(schedule).subscribe(data=>{
+  //     let resp:any=data
+  //     if(resp.errorMessage==undefined){
+  //       this.toastService.showSuccess(this.toastMessages.scheduleResume,'response');   
+  //       this.get_schedule();
+  //     }else
+  //       this.toastService.showError(resp.errorMessage+'!');
+  //   })
 
-  }
+  // }
 
 
-  delete_schedule()
-  {
-    this.loader.show()
-    if(this.botid!="" && this.botid!=undefined)
-    {
-      let list=this.schedule_list.filter(data=>data.checked==true);
-      this.rest.stop_schedule(list).subscribe((response:any)=>{
-        this.loader.hide();
-        if(response.errorMessage==undefined){
-        this.toastService.showSuccess(this.toastMessages.scheduleDelete, 'response')
-          this.get_schedule();
-        } else{
-          this.toastService.showError(response.errorMessage+'!');
-        }
-      },err=>{
-        this.loader.hide()
-        this.toastService.showError(this.toastMessages.deleteError);
+  // delete_schedule()
+  // {
+  //   this.loader.show()
+  //   if(this.botid!="" && this.botid!=undefined)
+  //   {
+  //     let list=this.schedule_list.filter(data=>data.checked==true);
+  //     this.rest.stop_schedule(list).subscribe((response:any)=>{
+  //       this.loader.hide();
+  //       if(response.errorMessage==undefined){
+  //       this.toastService.showSuccess(this.toastMessages.scheduleDelete, 'response')
+  //         this.get_schedule();
+  //       } else{
+  //         this.toastService.showError(response.errorMessage+'!');
+  //       }
+  //     },err=>{
+  //       this.loader.hide()
+  //       this.toastService.showError(this.toastMessages.deleteError);
 
         
-      })
-      // this.updateflags();
-    }
-  }
+  //     })
+  //     // this.updateflags();
+  //   }
+  // }
 
 
 

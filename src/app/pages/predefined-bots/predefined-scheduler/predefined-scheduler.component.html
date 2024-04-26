@@ -3,13 +3,20 @@
         <div class="col-sm-11 p-0 form-group">
             <span>
                 <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput="ngModel" required>
-                  <option value="" disabled>Select Timezone</option>
+                  <option value="" disabled hidden>Select Timezone</option>
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
                 </select>
+
+                <!-- <p-dropdown [style]="{'width':'70%'}" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput 
+                    [options]="timesZones" 
+                    optionLabel="timezoneName" optionValue="timezoneName" placeholder="Select Timezone" required>
+                </p-dropdown> -->
+
                 <span *ngIf="timezoneInput.invalid && timezoneInput.touched" class="errspan required">
-                    Timezone required</span>
+                    Timezone required
+                </span>
             </span>
-            <span *ngIf="processid!='' && processid !=undefined">
+            <!-- <span *ngIf="processid!='' && processid !=undefined">
                 <mat-form-field>
                     <mat-label>Select Environemt</mat-label>
                     <mat-select [(ngModel)]="selectedEnvironment">
@@ -18,13 +25,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </span>
+            </span> -->
         </div>
-        <div class="col-sm-1 pr-0 form-group scheduletimer-loadicon">
+        <!-- <div class="col-sm-1 pr-0 form-group scheduletimer-loadicon">
             <span>
                 <button (click)="reset()" tooltip="Reset"><img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" alt="" class="testplus"></button>
             </span>
-        </div>
+        </div> -->
     </div>
     <div class="row scheduler-tabsrow">
         <div class="col p-0 form-group">
@@ -48,33 +55,23 @@
         </div>
     </div>
 
-    <div class="col p-0 form-group">
-        <!-- <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button> -->
-        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_sch()">Add</button>
-
+    <div class="col-12 p-0 form-group">
+        <button class="btn bluebg-button pull-right" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_scheduler()">Add</button>
     </div>
-    <div class="row justify-content-end scheduletimer-actionbtns">
+    <!-- <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
             <i class="ri-play-line testplus"></i>
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
         </button>
         <button [disabled]="!(flags.pauseflag)" tooltip="Pause" mat-mini-fab color="basic" (click)="pause_schedule()">
             <i class="ri-pause-line testplus"></i>
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
         </button>
         <button [disabled]="!(flags.resumeflag)" tooltip="Resume" mat-mini-fab color="basic" (click)="resume_schedule()">
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
             <i class="ri-skip-forward-line testplus"></i>
         </button>
         <button [disabled]="!(flags.deleteflag)" tooltip="Delete" mat-mini-fab color="basic" (click)="delete_schedule()">
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"> -->
             <i class="ri-delete-bin-line testplus"></i>
         </button>
-        <button mat-mini-fab color="basic" tooltip="Refresh" (click)="get_schedule()">
-            <i class="ri-refresh-line testplus"></i>
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
-        </button>
-    </div>
+    </div> -->
     <div class="RPA-scheduletable">
         <div class="maintabdiv">
             <!--For Bot Schedule-->

@@ -1,4 +1,6 @@
 export class toastMessages{
+  public apierror = " Error occured, Please try again."
+
   public botExcecution_fail = "Failed to execute the bot!";
   public botExcecution_success = "Bot executed successfully";
   public updateError = "Failed to update!";

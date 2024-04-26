@@ -1,7 +1,7 @@
 <div class="container mt-3">
     <div class="form-flow predefined-bots">
         <div class="p-name">
-            <h4>{{ processName }}</h4>
+            <h4 *ngIf="processName">{{ processName }}</h4>
         </div>
 
         <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false">
@@ -13,18 +13,65 @@
             </ng-template> -->
           </p-steps>          
 
-        <div class="form-container" [formGroup]="form">
+          <div class="form-container" [formGroup]="predefinedBotsForm">
             <div formGroupName="fields">
+              <div *ngFor="let field of currentPageFields" class="form-group row">
+                  <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }}</b></label>
+                  <div class="col-md-6" style="padding-bottom: 15px;">
+
+                      <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder"></p-dropdown>
+
+                      <input pInputText *ngIf="field.preAttributeType !== 'dropdown' && field.preAttributeType !== 'textarea' && field.preAttributeType !== 'date' && field.preAttributeType !== 'email'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
+                      [id]="field.preAttributeName" 
+                      [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+
+                      <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="3"
+                          [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired"></textarea>
+
+                      <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
+
+                      <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                          [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+
+                      <div *ngIf="field.preAttributeType === 'radio'" class="form-check">
+                          <label *ngFor="let option of field.options" class="form-check-label">
+                              <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
+                          </label>
+                      </div>
+
+                      <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
+                          <label *ngFor="let option of field.options" class="form-check-label">
+                              <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
+                          </label>
+                      </div>
+
+                      <div class="required" *ngIf="predefinedBotsForm.get(field.preAttributeName) && predefinedBotsForm.get(field.preAttributeName).invalid && (predefinedBotsForm.get(field.preAttributeName).dirty || predefinedBotsForm.get(field.preAttributeName).touched)">
+                          <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.required">Field is required.</div>
+                          <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.email">Invalid email format.</div>
+                          <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.minlength">Minimum length is {{field.minNumber}} characters.</div>
+                          <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.maxlength">Maximum length is {{field.maxNumber}} characters.</div>
+                          <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.pattern">Invalid format.</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+              
+        
+        
+            <!-- <div formGroupName="fields">
                 <div *ngFor="let field of currentPageFields" class="form-group row">
                     <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.label }}</b></label>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <select *ngIf="field.type === 'dropdown'" class="form-control" [id]="field.name" [formControlName]="field.name">
                             <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
                         </select>
                         <input *ngIf="field.type !== 'dropdown'" [type]="field.type" class="form-control" [id]="field.name" [formControlName]="field.name" [placeholder]="field.placeholder">
+
+                        <p-dropdown *ngIf="field.type === 'dropdown'" [style]="{'width':'75%'}" [formControlName]="field.name" [options]="field.options" [placeholder]="field.placeholder"></p-dropdown>
+                        <input pInputText *ngIf="field.type !== 'dropdown'" [style]="{'width':'50%'}" [type]="field.type" class="form-control" [placeholder]="field.placeholder" [id]="field.name" [formControlName]="field.name">
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div *ngIf="isLastPage">
                 <div class="form-group row">
@@ -37,21 +84,16 @@
                     <!-- <div class="col-md-8">
                         <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
                     </div> -->
-                    <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!form.get('scheduleBot').value">
-                        Schedule
-                    </button>    
+                    <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!predefinedBotsForm.get('scheduleBot').value">Schedule</button>    
                 </div>
             </div>
-        </div>
-
-        <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
-            <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
-            <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
-            <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
-            <button type="button" class="btn bluebg-button" (click)="goBackList()" *ngIf="isLastPage">
-                <span *ngIf="params.type=='create'">Create Bot</span>
-                <span *ngIf="params.type=='edit'">Update Bot</span>
-            </button>
+            <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
+              <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
+              <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
+              <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
+              <button *ngIf="params.type=='create' && isLastPage" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid">Create Bot</button>
+              <button *ngIf="params.type=='edit' && isLastPage" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid">Update Bot</button>
+          </div>
         </div>
     </div>
     
@@ -59,7 +101,7 @@
         <div class="h-100">
             <div class="h-100">
               <!-- <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler> -->
-              <app-predefined-scheduler> </app-predefined-scheduler>
+              <app-predefined-scheduler (schedulerData)="readEmitValue($event)"> </app-predefined-scheduler>
             </div>
           </div>
     </p-dialog>

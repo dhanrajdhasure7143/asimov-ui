@@ -164,6 +164,7 @@ getexpiryInfo(){
       this.expiry = data.Expiresin;
       // this.isSideMenuDisabled = data.expiresIn === 0;
       this.isSideMenuDisabled = data.expiresIn === 0 || data.expiresIn <= 0;
+      this.isPredefinedBots = data.isPredefinedBots;
     });
 }
 
