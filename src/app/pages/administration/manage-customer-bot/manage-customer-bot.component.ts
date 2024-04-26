@@ -322,12 +322,14 @@ onUpload() {
     formData.append('file', this.selectedFile);
     formData.append('tenantName',localStorage.getItem("tenantName"));
     formData.append('botKey', this.manageBotForm.get('botKey').value);
-    this.http.post('/upload', formData)
+    this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
       .subscribe(
         (response) => {
+          this.toastService.showSuccess('file','upload');
           console.log('Upload successful:', response);
         },
         (error) => {
+          this.toastService.showError();
           console.error('Upload error:', error);
         }
       );
