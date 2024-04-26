@@ -56,6 +56,8 @@ export class PaymentHistoryComponent implements OnInit {
         "status_converted"
       ];
       this.spinner.hide();
+     },err=>{
+      this.spinner.hide();
      });
 }
 // getinvoiceDate(createDate){

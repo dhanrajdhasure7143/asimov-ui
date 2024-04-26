@@ -21,6 +21,7 @@ const routes: Routes = [
     {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
     {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
     {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
+    {path:'predefinedbot', loadChildren: () => import('./predefined-bots/predefined-bots.module').then(m => m.PredefinedBotsModule)},
     {path:'success',component:SuccessPaymentComponent},
     {path:'**', redirectTo:'/home', pathMatch:"full"},
 
