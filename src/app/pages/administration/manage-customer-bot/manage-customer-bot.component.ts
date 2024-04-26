@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { CopilotService } from '../../services/copilot.service';
+import { HttpClient } from '@angular/common/http';
 
 enum BotContentType {
   Web = 'WEB',
@@ -36,7 +37,8 @@ export class ManageCustomerBotComponent implements OnInit {
     // { label: 'Web and Document', value: 'WEB_DOC' },
     { label: 'Public', value: 'PUB' },
   ];
-
+  selectedFile: File | null = null;
+  
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -46,6 +48,7 @@ export class ManageCustomerBotComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private rest_api: CopilotService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -148,7 +151,9 @@ export class ManageCustomerBotComponent implements OnInit {
       this.manageBotForm.get('excludeSites').enable();
       includeSitesControl.setValidators([Validators.required]);
       excludeSitesControl.setValidators([Validators.required]);
-    } else {
+    }
+   
+    else {
       this.manageBotForm.get('includeSites').disable();
       this.manageBotForm.get('excludeSites').disable();
       includeSitesControl.clearValidators();
@@ -293,6 +298,7 @@ export class ManageCustomerBotComponent implements OnInit {
   openEzAsk_Chat(rowData: any) {
     // const embedUrl = rowData.customerSupportBotEmbedUrl;
     const embedUrl = rowData.botKey;
+   
     const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
     window.open(fullUrl);
   }
@@ -305,4 +311,31 @@ semicolumn(event: KeyboardEvent) {
     element.focus();
   }
 }
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
+
+onUpload() {
+  if (this.selectedFile) {
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('tenantName',localStorage.getItem("tenantName"));
+    formData.append('botKey', this.manageBotForm.get('botKey').value);
+    this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
+      .subscribe(
+        (response) => {
+          this.toastService.showSuccess('file','upload');
+          console.log('Upload successful:', response);
+        },
+        (error) => {
+          this.toastService.showError();
+          console.error('Upload error:', error);
+        }
+      );
+  } else {
+    console.log('No file selected');
+  }
+}
+
 }
