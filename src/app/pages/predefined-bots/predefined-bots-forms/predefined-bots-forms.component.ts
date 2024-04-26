@@ -24,7 +24,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   nodes: number[] = [];
   isShowForm:boolean=false;
   items: MenuItem[]=[];
-  activeIndex: number = 0;
+  activeIndex: number = undefined;
   params:any={};
   scheduleOverlayFlag: Boolean = false;
   schedulerComponentInput: any;
@@ -125,7 +125,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
     //   { label: "CC Recipient", name: "ccRecipient", type: "text", placeholder: "Enter CC recipient's email" },
     //   { label: "BCC Recipient", name: "bccRecipient", type: "text", placeholder: "Enter BCC recipient's email" }
     // ];
-      this.generateDynamicForm();
+      this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -141,11 +141,15 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    this.pages.forEach(element => {
-      let obj ={label:" ",command: () => { this.goToPage(element)}}
-        this.items.push(obj)
-    });
+      this.pages.forEach(element => {
+        let obj ={label:" ",command: () => { this.goToPage(element)}}
+          this.items.push(obj)
+      }); 
+    setTimeout(() => {
 
+      this.activeIndex = 0 
+      // this.activeIndex = 0 
+    }, 200);
     this.subscription = this.predefinedBotsForm.get('scheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
         });

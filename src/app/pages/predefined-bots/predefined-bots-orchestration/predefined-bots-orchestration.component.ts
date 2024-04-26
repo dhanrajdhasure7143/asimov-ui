@@ -12,9 +12,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 export class PredefinedBotsOrchestrationComponent implements OnInit {
 
-  public log: any = [];
-  public tabledata: boolean = true;
-  search: any;
   columns_list: any[] = [
     { ColumnName: "AutomationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
     { ColumnName: "type", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
@@ -23,34 +20,33 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   ];
   scheduledbots = [
     {
-      AutomationName: "Microsoft",
+      AutomationName: "Cipal Recruitment",
       Schedule: "2024-05-01",
       id:'pre-6473824',
-      type:"Recuritment bot"
+      type:"Recruitment bot"
     },
     {
       AutomationName: "Epsot",
       Schedule: "2024-05-01",
       id:'rec-6473824',
-      type:"Recuritment bot"
+      type:"Recuritment Bot"
     },
     {
       AutomationName: "ABC",
       Schedule: "2024-05-01",
       id:'mar_74797584',
-      type:"marketing Bot"
+      type:"Marketing Bot"
     },
     {
       AutomationName: "XYZ MA",
       Schedule: "2024-05-01",
       id:'mar_74797584',
-      type:"marketing Bot"
+      type:"Marketing Bot"
     }
   ]
   table_searchFields: any = [];
   showOverlay: boolean = false;
   showBotForm: boolean = false;
-  form: FormGroup;
 
   constructor(
     private rest: RestApiService,
@@ -59,14 +55,6 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.spinner.show();
-    this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required),
-      category: new FormControl('', Validators.required),
-      environment: new FormControl([], Validators.required),
-      description: new FormControl('', Validators.required)
-    });
   }
 
   ngOnChanges() {
@@ -76,41 +64,18 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   }
 
-
-  clear(table: Table) {
-    table.clear();
-  }
-
-  showForm() {
-    this.showOverlay = true;
-    // this.showBotForm=true;
-    console.log("Button is clicked")
-  }
-
-  closeOverlay(event) {
-    console.log(event)
-    // this.processInfo = event;
-    this.showOverlay = false;
-  }
-
-  navigateForm() {
-    this.showBotForm = true;
-  }
   deleteById($event: any) {
   }
+
   viewDetails($event: any) {
 
   }
 
   editById(item: any) {
     console.log("testing",item)
-    if(item.id =='marketing'){
-      this.router.navigate(["/pages/serviceOrchestration/dynamicForm"],{queryParams:{type:"edit",id:item.id}});
-    }
-    if(item.id =='recruitment'){
-      this.router.navigate(["/pages/serviceOrchestration/prdefinedForm"],{queryParams:{type:"edit",id:item.id}});
-    }
+    this.router.navigate(["/pages/predefinedbot/predefinedforms"],{queryParams:{type:"edit",id:item.productId}});
   }
+
   runById($event: any) {
 
   }
