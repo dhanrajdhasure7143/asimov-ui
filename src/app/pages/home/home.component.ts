@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   _params:any={};
   highestExpireIn:boolean = false;
   showWarningPopup:boolean;
+  isPredefinedBots: boolean;
   constructor(private router: Router, 
     private dt:DataTransferService, 
     private rest_api: RestApiService, 
@@ -103,6 +104,7 @@ export class HomeComponent implements OnInit {
   if(environment.isSubscrptionEnabled){
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data;
+      this.isPredefinedBots = data.isPredefinedBots;
       console.log("left over days ----",this.expiry)
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
@@ -116,6 +118,10 @@ export class HomeComponent implements OnInit {
             this.showWarningPopup = true;
         }
      } else {
+      if(this.isPredefinedBots){
+        this.router.navigate(["/pages/predefinedbot/home"], {queryParams:this._params});
+        return
+      }
       if(environment.isCopilotEnable)
       this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
         if(!environment.isCopilotEnable)

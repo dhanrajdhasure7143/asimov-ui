@@ -60,31 +60,32 @@
     
 </div> -->
 <div class="rpa-content-div">
-<div class="row">
-    <div class="col-md-12 con-envr p-0">
-        <div class="credential-tablegrid">
-    <app-dynamic-table
-        [table_data]="tableData" 
-        [columns_list]="table_columns"
-        [show_column_filter]="true"
-        [show_clear_filter]="true" 
-        [show_search_field]="true"
-        [search_fields]="table_searchFields"
-        [dataKeyId]="'id'"
-        [screenTable]="'subscrption_overview'" 
-        (updateItem)="onResubscribe($event)"
-        (rejectItem)="subscriptionCancel($event)"
-        >
-    </app-dynamic-table>
-    </div> 
-</div>
-</div>
-</div>
-
-<p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
-rejectButtonStyleClass="btn bluebg-button" [closable]="false">
-<ng-template pTemplate="footer">
-    <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
-    <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
-</ng-template>
-</p-confirmDialog>
+    <div class="row">
+        <div class="col-md-12 con-envr p-0">
+            <div class="credential-tablegrid">
+        <app-dynamic-table
+            [table_data]="tableData" 
+            [columns_list]="table_columns"
+            [show_column_filter]="true"
+            [show_clear_filter]="true" 
+            [show_search_field]="true"
+            [search_fields]="table_searchFields"
+            [dataKeyId]="'id'"
+            [screenTable]="'subscrption_overview'" 
+            (updateItem)="onResubscribe($event)"
+            (rejectItem)="subscriptionCancel($event)"
+            >
+        </app-dynamic-table>
+        </div> 
+    </div>
+    </div>
+    </div>
+    
+    <p-confirmDialog #cd [style]="{width: '30vw'}" key="positionDialog" position="center" [baseZIndex]="10000"
+    rejectButtonStyleClass="btn bluebg-button" [closable]="false">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="btn reset-btn" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton class="btn bluebg-button" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+    </p-confirmDialog>
+    

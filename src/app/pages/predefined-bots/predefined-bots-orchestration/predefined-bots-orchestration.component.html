@@ -1,0 +1,36 @@
+
+<div class="maincontent">
+<div class="h-100">
+    <div class="row main-content-head">
+        <h3>
+          <span class="title_text">Predefined Bots</span>
+        </h3>
+    </div>
+
+    <div class="main-content-body">
+        <div class="col-md-12 p-0">
+            <app-dynamic-table
+                [table_data]="scheduledbots" 
+                [columns_list]="columns_list"
+                [show_search_field]="true"
+                [show_column_filter]="true"
+                [show_clear_filter]="true"
+                [screenTable]="'common'"
+                [search_fields]="table_searchFields"
+                [show_run_btn]="true"
+                [show_stop_btn]="true"
+                show_edit_btn="true"
+                show_delete_btn="true"
+                (onRowDoubleClick)="viewDetails($event)"
+                (updateItem)="editById($event)" 
+                (deleteItem)="deleteById($event)"
+                (runItem)="runById($event)"
+                (stopItem)="stopById($event)">
+            </app-dynamic-table>
+         
+        </div>
+    </div>
+</div>
+</div>
+
+ 

@@ -52,7 +52,7 @@ export class SubscriptionPlanComponent implements OnInit {
   cvv:any;
   isSpaceOnLeft: boolean = false;
   showBotInfoFlag: boolean = false;
-  enterPrise_plan:any;
+  enterPrise_plan:any ={};
 
   constructor( private spinner : LoaderService,
     private router: Router,
@@ -127,7 +127,6 @@ export class SubscriptionPlanComponent implements OnInit {
   loadPredefinedBots() {
     this.rest.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
-        console.log(response);
         this.getPaymentMethods();
         if (response) {
             response.forEach(element => {
@@ -185,7 +184,6 @@ export class SubscriptionPlanComponent implements OnInit {
                 });
                 const decodedImage = this.decodeBase64Image(image);
                 obj["image"] = decodedImage;
-                console.log("image",image)
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
@@ -193,10 +191,8 @@ export class SubscriptionPlanComponent implements OnInit {
             });
 
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
-            console.log(this.enterPrise_plan);
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
-            console.log(this.botPlans);
         }
     }, err => {
         this.spinner.hide();
@@ -262,8 +258,6 @@ paymentPlan() {
   }else{
     req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=2"
   }
-  console.log("PLAN_ID's", this.selectedCard);
-  console.log("REQ_BODY", req_body);
   
   this.rest.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
@@ -318,7 +312,7 @@ onSelectPredefinedBot(plan, index) {
       this.selectedPlans.push(item);
     }
   });
-  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
+  // this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
   this.isDisabled = this.selectedPlans.length === 0;
   this.planSelection(this.selectedPlan);
 }
@@ -356,12 +350,10 @@ readValue(value){
         }
       });
     });
-    console.log(plansData, "plansData");
     this.totalAmount = 0;
     plansData.forEach((amount) => {
       this.totalAmount += amount;
     });
-    console.log(this.totalAmount);
   }
 
   showDialog() {

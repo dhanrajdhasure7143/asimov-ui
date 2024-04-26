@@ -75,6 +75,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isChatEnable:boolean= false;
   highestExpireIn:any;
   tenantSwitchDropdown:boolean = false;
+  isPredefinedBots:boolean = true;
+
   constructor(
     private router: Router,
     public page_obj: PagesComponent,
@@ -424,6 +426,8 @@ getexpiryInfo(){
   this.rest_api.expiryInfo().subscribe(data => {
     // this.tenantSwitchDropdown = data.expiresIn === 0;
     this.tenantSwitchDropdown = data.expiresIn === 0 || data.expiresIn <= 0;
+    this.isPredefinedBots = data.isPredefinedBots;
+    console.log(this.isPredefinedBots)
   })
 }
 }

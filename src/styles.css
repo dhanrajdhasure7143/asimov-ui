@@ -4102,3 +4102,9 @@ padding: 0px 30px;}
   padding: 8px !important;
   border-radius: 5px;
 }
+.predefined-bots .p-steps-item.p-steps-current .p-menuitem-link, .p-steps .p-steps-item .p-menuitem-link {
+  margin-top: -20px !important;
+}
+.predefined-bots .p-steps-item{
+  background: #fff !important;
+}
