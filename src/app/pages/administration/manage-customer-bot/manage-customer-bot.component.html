@@ -173,12 +173,13 @@
               </div>
               </div>
         <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'DOC'" class="form-group col-md-12 p-0">
-          <input type="file" (change)="onFileSelected($event)" multiple>
+          <input type="file" class="inputFile" (change)="onFileSelected($event)" multiple>
           <!-- <button (click)="onUpload()" [disabled]="true" >Upload</button> -->
           <!-- <input type="file" class="form-control inputFile" id="inputGroupFile04" (change)="onFileSelected($event)" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
           <button class="btn bluebg-button uploadFile" type="button" id="inputGroupFileAddon04" (click)="onUpload()">Upload</button> -->
-
+        </div>
         </form>
+        
         <div class="createform-footer">
           <button (click)="resetBotForm()" class="btn new-cancelbtn">Reset</button>
           <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="saveCustomerSupportBot()"
