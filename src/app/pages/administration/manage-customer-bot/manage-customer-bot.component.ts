@@ -37,8 +37,10 @@ export class ManageCustomerBotComponent implements OnInit {
     // { label: 'Web and Document', value: 'WEB_DOC' },
     { label: 'Public', value: 'PUB' },
   ];
-  selectedFile: File | null = null;
-  
+  selectedFiles: any[] = [];
+  botKey: any;
+  tenantName: any;
+
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -207,6 +209,9 @@ export class ManageCustomerBotComponent implements OnInit {
         let bot_Name = req_body.customerSupportBotName;
         this.loader.hide();
         if (response.errorMessage == undefined) {
+          this.botKey = res.botKey,
+          this.tenantName = res.tenantId
+          this.onUpload(); 
           this.toastService.showSuccess(bot_Name, 'save');
           this.manageBotForm.reset();
           this.hiddenPopUp = false;
@@ -313,29 +318,27 @@ semicolumn(event: KeyboardEvent) {
 }
 
 onFileSelected(event: any) {
-  this.selectedFile = event.target.files[0];
+  this.selectedFiles = event.target.files;
 }
 
 onUpload() {
-  if (this.selectedFile) {
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    formData.append('tenantName',localStorage.getItem("tenantName"));
-    formData.append('botKey', this.manageBotForm.get('botKey').value);
-    this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
-      .subscribe(
-        (response) => {
-          this.toastService.showSuccess('file','upload');
-          console.log('Upload successful:', response);
-        },
-        (error) => {
-          this.toastService.showError();
-          console.error('Upload error:', error);
-        }
-      );
-  } else {
-    console.log('No file selected');
-  }
+  const formData = new FormData();
+  // for (const file of this.selectedFiles) {
+  //   formData.append('files[]', file);
+  // }
+  formData.append('file', this.selectedFiles[0]);
+  formData.append('botKey', this.botKey);
+  formData.append('tenantName',this.tenantName);
+  formData.append('tenantName',localStorage.getItem("tenantName"));
+  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
+    .subscribe(
+      (response) => {
+        console.log('Upload successful', response);
+      },
+      (error) => {
+        console.error('Upload error', error);
+      }
+    );
+}
 }
 
-}
