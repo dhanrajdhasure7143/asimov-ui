@@ -81,10 +81,10 @@
                             <b> Would you like to schedule the bot?</b>
                         </label>
                     </div>
-                    <!-- <div class="col-md-8">
-                        <input type="datetime-local" class="form-control" id="scheduleTime" formControlName="scheduleTime">
-                    </div> -->
-                    <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!predefinedBotsForm.get('isScheduleBot').value">Schedule</button>    
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="schedule_Time" formControlName="scheduleTime" disabled="true">
+                        <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!predefinedBotsForm.get('isScheduleBot').value">Schedule</button>
+                    </div>
                 </div>
             </div>
             <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
