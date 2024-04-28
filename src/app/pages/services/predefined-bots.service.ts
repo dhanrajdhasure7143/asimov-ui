@@ -26,15 +26,15 @@ export class PredefinedBotsService {
   }
 
   startPredefinedBot(id){
-    return this.http.get(`/rpa-service/predefined/start-predefined-bot/${id}`)
+    return this.http.post(`/rpa-service/predefined/start-predefined-bot/${id}`,{})
   }
 
   stopPredefinedBot(id){
-    return this.http.get(`/rpa-service/predefined/stop-predefined-bot/${id}`)
+    return this.http.post(`/rpa-service/predefined/stop-predefined-bot/${id}`,{})
   }
 
   deletePredefinedBot(id){
-    return this.http.get(`/rpa-service/predefined/delete-predefined-bot/${id}`)
+    return this.http.post(`/rpa-service/predefined/delete-predefined-bot/${id}`,{})
   }
   
   // getPredefinedBotAttributesListToUpdate(id){
