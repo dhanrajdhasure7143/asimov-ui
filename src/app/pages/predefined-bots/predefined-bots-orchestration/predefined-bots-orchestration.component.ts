@@ -5,6 +5,8 @@ import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-predefined-bots-orchestration',
@@ -54,7 +56,9 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
     private rest: RestApiService,
     private spinner: LoaderService,
     private router: Router,
-    private rest_api: PredefinedBotsService
+    private rest_api: PredefinedBotsService,
+    private toaster : ToasterService,
+    private toastMessage: toastMessages
   ) { }
 
   ngOnInit(): void {
@@ -113,7 +117,15 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   }
 
-  deleteById($event: any) {
+  deleteById(event: any) {
+    this.spinner.show();
+    this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
+      this.toaster.toastSuccess(this.toastMessage.deleteScss);
+      this.getListOfItems();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror)
+    });
   }
 
   viewDetails($event: any) {
@@ -122,11 +134,19 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   editById(item: any) {
     console.log("testing",item)
-    this.router.navigate(["/pages/predefinedbot/predefinedforms"],{queryParams:{type:"edit",id:item.productId}});
+    this.router.navigate(["/pages/predefinedbot/predefinedforms"],{queryParams:{type:"edit",id:item.predefinedOrchestrationBotId}});
   }
 
-  runById($event: any) {
-
+  runById(event: any) {
+    console.log(event)
+    this.spinner.show();
+    this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
+      this.toaster.toastSuccess(this.toastMessage.botExcecution_success);
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.botExcecution_fail)
+    })
   }
 
   stopById($event: any) {
