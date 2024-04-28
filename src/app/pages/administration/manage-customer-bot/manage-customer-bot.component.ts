@@ -7,6 +7,7 @@ import { columnList } from 'src/app/shared/model/table_columns';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { CopilotService } from '../../services/copilot.service';
+import { HttpClient } from '@angular/common/http';
 
 enum BotContentType {
   Web = 'WEB',
@@ -36,6 +37,9 @@ export class ManageCustomerBotComponent implements OnInit {
     // { label: 'Web and Document', value: 'WEB_DOC' },
     { label: 'Public', value: 'PUB' },
   ];
+  selectedFiles: any[] = [];
+  botKey: any;
+  tenantName: any;
 
   constructor(
     private columns: columnList,
@@ -46,6 +50,7 @@ export class ManageCustomerBotComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private rest_api: CopilotService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -202,6 +207,9 @@ export class ManageCustomerBotComponent implements OnInit {
         let bot_Name = req_body.customerSupportBotName;
         this.loader.hide();
         if (response.errorMessage == undefined) {
+          this.botKey = res.botKey,
+          this.tenantName = res.tenantId
+          this.onUpload(); 
           this.toastService.showSuccess(bot_Name, 'save');
           this.manageBotForm.reset();
           this.hiddenPopUp = false;
@@ -305,4 +313,29 @@ semicolumn(event: KeyboardEvent) {
     element.focus();
   }
 }
+
+onFileSelected(event: any) {
+  this.selectedFiles = event.target.files;
 }
+
+onUpload() {
+  const formData = new FormData();
+  // for (const file of this.selectedFiles) {
+  //   formData.append('files[]', file);
+  // }
+  formData.append('file', this.selectedFiles[0]);
+  formData.append('botKey', this.botKey);
+  formData.append('tenantName',this.tenantName);
+  formData.append('tenantName',localStorage.getItem("tenantName"));
+  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
+    .subscribe(
+      (response) => {
+        console.log('Upload successful', response);
+      },
+      (error) => {
+        console.error('Upload error', error);
+      }
+    );
+}
+}
+
