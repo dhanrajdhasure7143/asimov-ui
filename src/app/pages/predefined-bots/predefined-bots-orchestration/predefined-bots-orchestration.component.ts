@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { PredefinedBotsService } from '../../services/predefined-bots.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-predefined-bots-orchestration',
@@ -12,107 +15,138 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 export class PredefinedBotsOrchestrationComponent implements OnInit {
 
-  public log: any = [];
-  public tabledata: boolean = true;
-  search: any;
   columns_list: any[] = [
-    { ColumnName: "AutomationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
-    { ColumnName: "type", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
-    { ColumnName: "Schedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
+    { ColumnName: "automationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true },
+    { ColumnName: "predefinedBotType", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
+    { ColumnName: "convertedSchedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,width:"flex: 0 0 20rem", showTooltip:true },
     { ColumnName: "action", DisplayName: "Action", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: false, multi: false, }
   ];
-  scheduledbots = [
-    {
-      AutomationName: "Microsoft",
-      Schedule: "2024-05-01",
-      id:'pre-6473824',
-      type:"Recuritment bot"
-    },
-    {
-      AutomationName: "Epsot",
-      Schedule: "2024-05-01",
-      id:'rec-6473824',
-      type:"Recuritment bot"
-    },
-    {
-      AutomationName: "ABC",
-      Schedule: "2024-05-01",
-      id:'mar_74797584',
-      type:"marketing Bot"
-    },
-    {
-      AutomationName: "XYZ MA",
-      Schedule: "2024-05-01",
-      id:'mar_74797584',
-      type:"marketing Bot"
-    }
-  ]
+  scheduledbots:any[]=[];
+  // scheduledbots = [
+  //   {
+  //     AutomationName: "Cipal Recruitment",
+  //     Schedule: "2024-05-01",
+  //     id:'pre-6473824',
+  //     type:"Recruitment bot"
+  //   },
+  //   {
+  //     AutomationName: "Epsot",
+  //     Schedule: "2024-05-01",
+  //     id:'rec-6473824',
+  //     type:"Recuritment Bot"
+  //   },
+  //   {
+  //     AutomationName: "ABC",
+  //     Schedule: "2024-05-01",
+  //     id:'mar_74797584',
+  //     type:"Marketing Bot"
+  //   },
+  //   {
+  //     AutomationName: "XYZ MA",
+  //     Schedule: "2024-05-01",
+  //     id:'mar_74797584',
+  //     type:"Marketing Bot"
+  //   }
+  // ]
   table_searchFields: any = [];
   showOverlay: boolean = false;
   showBotForm: boolean = false;
-  form: FormGroup;
 
   constructor(
     private rest: RestApiService,
     private spinner: LoaderService,
-    private router: Router
+    private router: Router,
+    private rest_api: PredefinedBotsService,
+    private toaster : ToasterService,
+    private toastMessage: toastMessages
   ) { }
 
   ngOnInit(): void {
-    // this.spinner.show();
-    this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required),
-      category: new FormControl('', Validators.required),
-      environment: new FormControl([], Validators.required),
-      description: new FormControl('', Validators.required)
-    });
+    this.spinner.show();
+    this.getListOfItems();
   }
 
+  getListOfItems(){
+    this.rest_api.getOrchestrationPredefinedBotsList().subscribe((res:any)=>{
+      console.log("res",res);
+      this.scheduledbots = res.data
+      this.scheduledbots.map(item=>{
+        item["convertedSchedule"] = this.convertSchedule(item.schedule)
+      })
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+    })
+  }
+
+    convertSchedule(schedule) {
+      try {
+        // Try parsing schedule as JSON
+        const scheduleData = JSON.parse(schedule);
+        // If successful, assume it's a schedule object
+        const startDateArray = scheduleData.startDate.split(',').map(Number);
+        const endDateArray = scheduleData.endDate.split(',').map(Number);
+        const interval = scheduleData.scheduleInterval;
+
+        // Formatting start date
+        const startDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startDateArray[3], startDateArray[4]);
+        const formattedStartDate = startDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
+        // Formatting end date
+        const endDate = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endDateArray[3], endDateArray[4]);
+        const formattedEndDate = endDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
+        // Converting interval to human-readable format
+        const intervalParts = interval.split(' ');
+        const frequency = intervalParts[1];
+
+        // Creating a string for the desired format
+        return `${formattedStartDate} - ${formattedEndDate}`;
+      } catch (error) {
+
+          // If parsing as JSON fails, assume it's just a date
+          return schedule;
+      }
+    }
+
   ngOnChanges() {
+
   }
 
   ngAfterViewInit() {
 
   }
 
-
-  clear(table: Table) {
-    table.clear();
+  deleteById(event: any) {
+    this.spinner.show();
+    this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
+      this.toaster.toastSuccess(this.toastMessage.deleteScss);
+      this.getListOfItems();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror)
+    });
   }
 
-  showForm() {
-    this.showOverlay = true;
-    // this.showBotForm=true;
-    console.log("Button is clicked")
-  }
-
-  closeOverlay(event) {
-    console.log(event)
-    // this.processInfo = event;
-    this.showOverlay = false;
-  }
-
-  navigateForm() {
-    this.showBotForm = true;
-  }
-  deleteById($event: any) {
-  }
   viewDetails($event: any) {
 
   }
 
   editById(item: any) {
     console.log("testing",item)
-    if(item.id =='marketing'){
-      this.router.navigate(["/pages/serviceOrchestration/dynamicForm"],{queryParams:{type:"edit",id:item.id}});
-    }
-    if(item.id =='recruitment'){
-      this.router.navigate(["/pages/serviceOrchestration/prdefinedForm"],{queryParams:{type:"edit",id:item.id}});
-    }
+    this.router.navigate(["/pages/predefinedbot/predefinedforms"],{queryParams:{type:"edit",id:item.predefinedOrchestrationBotId}});
   }
-  runById($event: any) {
 
+  runById(event: any) {
+    console.log(event)
+    this.spinner.show();
+    this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
+      this.toaster.toastSuccess(this.toastMessage.botExcecution_success);
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.botExcecution_fail)
+    })
   }
 
   stopById($event: any) {

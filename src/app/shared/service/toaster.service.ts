@@ -42,7 +42,7 @@ export class ToasterService {
     if(action=='response'){
       this.messageService.add({ severity: 'success', summary: 'Success', detail: message});
     }else{
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: message + ' ' + type + ' successfully!' });
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: message + ' ' + type + ' successfully' });
     }
 
 }

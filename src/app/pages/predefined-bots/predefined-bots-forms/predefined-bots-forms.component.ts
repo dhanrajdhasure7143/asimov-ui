@@ -24,7 +24,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   nodes: number[] = [];
   isShowForm:boolean=false;
   items: MenuItem[]=[];
-  activeIndex: number = 0;
+  activeIndex: number = undefined;
   params:any={};
   scheduleOverlayFlag: Boolean = false;
   schedulerComponentInput: any;
@@ -51,8 +51,9 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.spinner.show();
     this.predefinedBotsForm = this.fb.group({
       fields: this.fb.group({}),
-      scheduleBot: [false],
-      scheduleTime: [{value: '', disabled: true}]
+      isScheduleBot: [false],
+      schedule: [{value: '', disabled: true}],
+      scheduleTime:[{value: '', disabled: true}]
     });
     if(this.params.type == "create"){
       this.fetchAllFields();
@@ -125,7 +126,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
     //   { label: "CC Recipient", name: "ccRecipient", type: "text", placeholder: "Enter CC recipient's email" },
     //   { label: "BCC Recipient", name: "bccRecipient", type: "text", placeholder: "Enter BCC recipient's email" }
     // ];
-      this.generateDynamicForm();
+      this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -141,24 +142,28 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    this.pages.forEach(element => {
-      let obj ={label:" ",command: () => { this.goToPage(element)}}
-        this.items.push(obj)
-    });
+      this.pages.forEach(element => {
+        let obj ={label:" ",command: () => { this.goToPage(element)}}
+          this.items.push(obj)
+      }); 
+    setTimeout(() => {
 
-    this.subscription = this.predefinedBotsForm.get('scheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
+      this.activeIndex = 0 
+      // this.activeIndex = 0 
+    }, 200);
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
   fetchAllFieldsToUpdateData() {
     this.spinner.show();
-    this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
-      this.spinner.hide();
-    },err=>{
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessages.apierror)
-    })
+    // this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
+    //   this.spinner.hide();
+    // },err=>{
+    //   this.spinner.hide();
+    //   this.toaster.showError(this.toastMessages.apierror)
+    // })
     this.formFields = [
       { label: "Bot Name", name: "botName", type: "text", placeholder: "Enter bot name" },
       { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
@@ -236,8 +241,8 @@ if(this.params.type =='edit'){
         this.items.push(obj)
     });
 
-    this.subscription = this.predefinedBotsForm.get('scheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
@@ -326,11 +331,19 @@ if(this.params.type =='edit'){
     if (this.predefinedBotsForm.valid) {
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
-      req_body["productName"] = this.predefinedBot_name
+      req_body["predefinedBotType"] = this.predefinedBot_name
       req_body["productId"] = this.predefinedBot_id
-      req_body["botSchedule_Time"] = JSON.stringify(this.scheduler_data)
+      req_body["schedule"] = JSON.stringify(this.scheduler_data)
       delete req_body.fields.botName
       console.log('req_body---:', req_body);
+      this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+        this.spinner.hide();
+        this.router.navigate(["/pages/predefinedbot/list"]);
+        this.toaster.showSuccess(this.predefinedBotsForm.value.fields.botName,"create")
+      },err=>{
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessages.apierror)
+      })
     } else {
       this.toaster.showInfo("Fill All fields")
     }
@@ -347,6 +360,28 @@ if(this.params.type =='edit'){
   readEmitValue(data){
     this.scheduler_data = data;
     this.scheduleOverlayFlag = false;
+    this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(data))
   }
+
+  convertSchedule(scheduleData) {
+      const startDateArray = scheduleData.startDate.split(',').map(Number);
+      const endDateArray = scheduleData.endDate.split(',').map(Number);
+      const interval = scheduleData.scheduleInterval;
+
+      // Formatting start date
+      const startDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startDateArray[3], startDateArray[4]);
+      const formattedStartDate = startDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
+      // Formatting end date
+      const endDate = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endDateArray[3], endDateArray[4]);
+      const formattedEndDate = endDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
+      // Converting interval to human-readable format
+      const intervalParts = interval.split(' ');
+      const frequency = intervalParts[1];
+
+      // Creating a string for the desired format
+      return `${formattedStartDate} - ${formattedEndDate}`;
+  } 
 
 }

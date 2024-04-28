@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
@@ -153,7 +153,9 @@ export class ManageCustomerBotComponent implements OnInit {
       this.manageBotForm.get('excludeSites').enable();
       includeSitesControl.setValidators([Validators.required]);
       excludeSitesControl.setValidators([Validators.required]);
-    } else {
+    }
+   
+    else {
       this.manageBotForm.get('includeSites').disable();
       this.manageBotForm.get('excludeSites').disable();
       includeSitesControl.clearValidators();
@@ -301,6 +303,7 @@ export class ManageCustomerBotComponent implements OnInit {
   openEzAsk_Chat(rowData: any) {
     // const embedUrl = rowData.customerSupportBotEmbedUrl;
     const embedUrl = rowData.botKey;
+   
     const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
     window.open(fullUrl);
   }

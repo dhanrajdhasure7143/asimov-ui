@@ -16,12 +16,30 @@ export class PredefinedBotsService {
   getPredefinedBotsList(){
     return this.http.get(`/rpa-service/predefined/get-predefined-bots`)
   }
-  
-  getPredefinedBotAttributesListToUpdate(id){
-    return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}`)
+
+  getOrchestrationPredefinedBotsList(){
+    return this.http.get(`/rpa-service/predefined/get-orchestration-predefined-bots`)
   }
 
   savePredefinedAttributesData(body){
-    return this.http.post(`/rpa-service/predefined/get-predefined-bots`,body)
+    return this.http.post(`/rpa-service/predefined/save-predefined-bot`,body)
   }
+
+  startPredefinedBot(id){
+    return this.http.post(`/rpa-service/predefined/start-predefined-bot/${id}`,{})
+  }
+
+  stopPredefinedBot(id){
+    return this.http.post(`/rpa-service/predefined/stop-predefined-bot/${id}`,{})
+  }
+
+  deletePredefinedBot(id){
+    return this.http.post(`/rpa-service/predefined/delete-predefined-bot/${id}`,{})
+  }
+  
+  // getPredefinedBotAttributesListToUpdate(id){
+  //   return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}`)
+  // }
+
+
 }
