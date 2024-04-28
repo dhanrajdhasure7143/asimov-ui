@@ -51,8 +51,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.spinner.show();
     this.predefinedBotsForm = this.fb.group({
       fields: this.fb.group({}),
-      scheduleBot: [false],
-      scheduleTime: [{value: '', disabled: true}]
+      isScheduleBot: [false],
+      schedule: [{value: '', disabled: true}]
     });
     if(this.params.type == "create"){
       this.fetchAllFields();
@@ -150,19 +150,19 @@ export class PredefinedBotsFormsComponent implements OnInit {
       this.activeIndex = 0 
       // this.activeIndex = 0 
     }, 200);
-    this.subscription = this.predefinedBotsForm.get('scheduleBot').valueChanges.subscribe(checked => {
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
   fetchAllFieldsToUpdateData() {
     this.spinner.show();
-    this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
-      this.spinner.hide();
-    },err=>{
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessages.apierror)
-    })
+    // this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
+    //   this.spinner.hide();
+    // },err=>{
+    //   this.spinner.hide();
+    //   this.toaster.showError(this.toastMessages.apierror)
+    // })
     this.formFields = [
       { label: "Bot Name", name: "botName", type: "text", placeholder: "Enter bot name" },
       { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
@@ -240,7 +240,7 @@ if(this.params.type =='edit'){
         this.items.push(obj)
     });
 
-    this.subscription = this.predefinedBotsForm.get('scheduleBot').valueChanges.subscribe(checked => {
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
         });
   }
@@ -330,11 +330,19 @@ if(this.params.type =='edit'){
     if (this.predefinedBotsForm.valid) {
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
-      req_body["productName"] = this.predefinedBot_name
+      req_body["predefinedBotType"] = this.predefinedBot_name
       req_body["productId"] = this.predefinedBot_id
-      req_body["botSchedule_Time"] = JSON.stringify(this.scheduler_data)
+      req_body["schedule"] = JSON.stringify(this.scheduler_data)
       delete req_body.fields.botName
       console.log('req_body---:', req_body);
+      this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+        this.spinner.hide();
+        this.router.navigate(["/pages/predefinedbot/list"]);
+        this.toaster.showSuccess(this.predefinedBotsForm.value.fields.botName,"create")
+      },err=>{
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessages.apierror)
+      })
     } else {
       this.toaster.showInfo("Fill All fields")
     }
