@@ -37,6 +37,7 @@ export class SidebarComponent implements OnInit {
   highestExpireIn:any;
   isSubscriptionModuleEnable:boolean = false;
   isPredefinedBots:boolean = true;
+  workspaceEnabled:boolean = false
 
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
@@ -48,6 +49,15 @@ export class SidebarComponent implements OnInit {
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
+
+    if(this.getCookie("workspacedsiabled")!="false"){
+      document.cookie = "workspacedsiabled=true";
+      console.log("testing..........")
+      this.workspaceEnabled = true;
+    }else{
+      this.workspaceEnabled = false;
+    }
+
     this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
