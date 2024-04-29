@@ -121,6 +121,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   }
 
   deleteById(event: any) {
+    let botName = event.automationName
     this.confirmationService.confirm({
       message: "Do you want to delete this bot? This can't be undo.",
       header: "Are you sure?",
@@ -134,7 +135,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res => {
-          this.toaster.toastSuccess(this.toastMessage.deleteScss);
+          this.toaster.showSuccess(botName,"delete")
           this.getListOfItems();
         }, err => {
           this.spinner.hide();
