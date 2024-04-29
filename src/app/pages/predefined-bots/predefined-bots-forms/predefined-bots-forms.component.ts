@@ -152,7 +152,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       // this.activeIndex = 0 
     }, 200);
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
+          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
@@ -330,6 +330,7 @@ if(this.params.type =='edit'){
   createBot() {
     this.spinner.show();
     if (this.predefinedBotsForm.valid) {
+      let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
       req_body["predefinedBotType"] = this.predefinedBot_name
@@ -340,7 +341,7 @@ if(this.params.type =='edit'){
       this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
         this.spinner.hide();
         this.router.navigate(["/pages/predefinedbot/list"]);
-        this.toaster.showSuccess(this.predefinedBotsForm.value.fields.botName,"create")
+        this.toaster.showSuccess(botName,"create")
       },err=>{
         this.spinner.hide();
         this.toaster.showError(this.toastMessages.apierror)
