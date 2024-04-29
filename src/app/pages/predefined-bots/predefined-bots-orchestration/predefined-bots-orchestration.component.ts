@@ -7,6 +7,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-predefined-bots-orchestration',
@@ -58,7 +59,9 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
     private router: Router,
     private rest_api: PredefinedBotsService,
     private toaster : ToasterService,
-    private toastMessage: toastMessages
+    private toastMessage: toastMessages,
+    private confirmationService: ConfirmationService,
+
   ) { }
 
   ngOnInit(): void {
@@ -118,13 +121,27 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   }
 
   deleteById(event: any) {
-    this.spinner.show();
-    this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
-      this.toaster.toastSuccess(this.toastMessage.deleteScss);
-      this.getListOfItems();
-    },err=>{
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror)
+    this.confirmationService.confirm({
+      message: "Do you want to delete this bot? This can't be undo.",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res => {
+          this.toaster.toastSuccess(this.toastMessage.deleteScss);
+          this.getListOfItems();
+        }, err => {
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessage.apierror)
+        });
+      },
+      reject: (type) => { }
     });
   }
 
@@ -139,13 +156,26 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   runById(event: any) {
     console.log(event)
-    this.spinner.show();
-    this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId).subscribe(res=>{
-      this.toaster.toastSuccess(this.toastMessage.botExcecution_success);
-      this.spinner.hide();
-    },err=>{
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.botExcecution_fail)
+    this.confirmationService.confirm({
+      message: "Do you want to execute bot?",
+      header: "Confirmation",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId).subscribe(res => {
+          this.toaster.toastSuccess(this.toastMessage.botExcecution_success);
+          this.spinner.hide();
+        }, err => {
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessage.botExcecution_fail)
+        })
+      }
     })
   }
 
