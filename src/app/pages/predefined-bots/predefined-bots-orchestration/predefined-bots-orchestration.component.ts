@@ -19,37 +19,11 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   columns_list: any[] = [
     { ColumnName: "automationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true },
     { ColumnName: "predefinedBotType", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
-    { ColumnName: "convertedSchedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,width:"flex: 0 0 20rem", showTooltip:true },
+    { ColumnName: "convertedSchedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: true, multi: false,width:"flex: 0 0 20rem", showTooltip:true },
     { ColumnName: "action", DisplayName: "Action", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: false, multi: false, }
   ];
   scheduledbots:any[]=[];
-  // scheduledbots = [
-  //   {
-  //     AutomationName: "Cipal Recruitment",
-  //     Schedule: "2024-05-01",
-  //     id:'pre-6473824',
-  //     type:"Recruitment bot"
-  //   },
-  //   {
-  //     AutomationName: "Epsot",
-  //     Schedule: "2024-05-01",
-  //     id:'rec-6473824',
-  //     type:"Recuritment Bot"
-  //   },
-  //   {
-  //     AutomationName: "ABC",
-  //     Schedule: "2024-05-01",
-  //     id:'mar_74797584',
-  //     type:"Marketing Bot"
-  //   },
-  //   {
-  //     AutomationName: "XYZ MA",
-  //     Schedule: "2024-05-01",
-  //     id:'mar_74797584',
-  //     type:"Marketing Bot"
-  //   }
-  // ]
-  table_searchFields: any = [];
+  table_searchFields: any = ["automationName","predefinedBotType","convertedSchedule"];
   showOverlay: boolean = false;
   showBotForm: boolean = false;
 
