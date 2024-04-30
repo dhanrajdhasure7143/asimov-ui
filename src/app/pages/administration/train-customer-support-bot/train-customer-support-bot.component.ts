@@ -5,7 +5,14 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { HttpClient } from '@angular/common/http';
+import { RestApiService } from '../../services/rest-api.service';
+import { CopilotService } from '../../services/copilot.service';
 
+enum TrainBotOptions {
+  TrainModel = 'TRAIN-MODEL',
+  Document = 'DOC',
+}
 @Component({
   selector: 'app-train-customer-support-bot',
   templateUrl: './train-customer-support-bot.component.html',
@@ -21,11 +28,30 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   updateOverlayData: any;
   nextRecordId: number = 1;
   trainBotList: any = [
-    { id: "1", trainBotName: "Customer Support Bot", trainData: "Document" },
-    { id: "2", trainBotName: "Agent Support Bot", trainData: "Web" },
-    { id: "3", trainBotName: "Employee Support Bot", trainData: "Document and Web" },
-    { id: "4", trainBotName: "Sample Record", trainData: "Sample Data" },
+    // { id: "1", trainBotName: "Customer Support Bot", trainData: "Document" },
+    // { id: "2", trainBotName: "Agent Support Bot", trainData: "Web" },
+    // { id: "3", trainBotName: "Employee Support Bot", trainData: "Document and Web" },
+    // { id: "4", trainBotName: "Sample Record", trainData: "Sample Data" },
   ];
+
+
+   
+  trainBotOptions = [
+    { label: 'TrainModel', value: 'TRAIN-MODEL' },
+    { label: 'Document', value: 'DOC' },
+  ];
+
+  // trainModelOptions = [
+    //   { label: "Invoice Finetune Model", value: "Invoice" },
+    //   { label: "RPA Finetune Model", value: "RPA" },
+    //   { label: "Story Finetune Model", value: "Story" },
+    // ];
+    
+  selectedFiles: any[] = [];  
+  trainModelOptions: { label: string; value: any }[] = []; 
+  botKey: any;
+  tenantName: any;
+
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -33,17 +59,46 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     private toastService: ToasterService,
     private toastMessages: toastMessages,
     private confirmationService: ConfirmationService,
+    private rest_service: RestApiService,
+    private http: HttpClient,
+    private rest_api: CopilotService,
   ) { }
+
 
   ngOnInit(): void {
     this.loader.show();
     this.columns_list = this.columns.train_cutomer_support_bot_coloumns;
     this.trainBotForm = this.formBuilder.group({
       trainBotName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      trainData: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      trainModelFile: ['', Validators.required], 
+      // trainModel: [''], 
+      trainFile: [''] 
     });
     this.getTableData(this.trainBotList);
-    this.table_searchFields=["trainBotName","trainData"]
+    this.table_searchFields=["trainBotName","trainData"];
+    this.fetchPredefinedModels()
+  }
+
+  fetchPredefinedModels() {
+    this.rest_api.getPredefinedModels().subscribe(
+      (modelsList) => {
+        console.log(modelsList, "modelsList");
+  
+     
+        this.trainBotList = modelsList.map((model) => ({
+         
+            id: model.id, trainBotName:model.modelName, trainData: model.fileName
+          
+        }));
+      },
+      (error) => {
+        console.error('Error loading models:', error);
+      }
+    );
+  }
+
+  onModelChange(value:any){
+    localStorage.setItem("TrainedModel",JSON.stringify(value))
   }
 
   getTableData(userdata) {
@@ -95,26 +150,107 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     this.isCreate = false;
     this.updateOverlayData = event
     this.trainBotForm.get("trainBotName").setValue(this.updateOverlayData["trainBotName"]);
-    this.trainBotForm.get("trainData").setValue(this.updateOverlayData["trainData"]);
+    this.trainBotForm.get("trainModelFile").setValue(this.updateOverlayData["trainModelFile"]);
+    this.trainBotForm.get("trainModelName").setValue(this.updateOverlayData["trainModelName"]);
+    this.trainBotForm.get("trainFile").setValue(this.updateOverlayData["trainFile"]);
   }
 
-  formSubmit() {
-    this.loader.show();
-    const recordId = Date.now();
-    this.sampleObj = {
-      "id": recordId,
-      "trainBotName": this.trainBotForm.value.trainBotName,
-      "trainData": this.trainBotForm.value.trainData,
-    }
-    this.trainBotList.push(this.sampleObj)
-    this.toastService.showSuccess("Saved Successfully","response")
-    setTimeout(() => {
-      this.loader.hide();
-    }, 1000);
-    this.nextRecordId++;
-    this.hiddenPopUp = false;
-    this.trainBotForm.reset();
+  openEzAsk_Chat(rowData: any) {
+    // const embedUrl = rowData.customerSupportBotEmbedUrl;
+    const embedUrl = rowData.botKey;
+   
+    const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
+    window.open(fullUrl);
   }
+
+  saveDetails() {
+    this.loader.show();
+    const filePath = this.trainBotForm.get('trainFile').value;
+    const fileNameWithExtension = filePath.split('\\').pop();
+    let req_body={
+      "modelName": this.trainBotForm.value.trainBotName,
+    
+      "fileName":fileNameWithExtension,
+      "tenantName":localStorage.getItem("tenantName"),
+      "modelPath":"dd",
+      "botKey":"dd"
+    }
+    
+
+    this.rest_api.saveTrinedModel(req_body).subscribe(
+      (res: any) => {
+        let response = res;
+        console.log('Response:', response);
+        this.loader.hide();
+        this.toastService.showSuccess(response.modelName, 'save');
+        this.trainBotForm.reset();
+        this.hiddenPopUp = false;
+        this.trainBotList.push({
+          id: response.id, trainBotName:response.modelName, trainData: response.fileName
+        })
+      
+      }, (error) => {
+        console.error('Error saving trained model:', error);
+        // Hide loader on error
+        this.loader.hide();
+      }
+    );
+    this.trainTheModel()
+
+
+
+    // this.loader.show();
+    //   const recordId = Date.now();
+    //   const TrainedModel= localStorage.getItem("TrainedModel")
+    //   this.sampleObj = {
+    //     "id": recordId,
+    //     "trainBotName": this.trainBotForm.value.trainBotName,
+    //     "trainModelFile": this.trainBotForm.value.trainModelFile,
+    //     "trainModelName": this.trainBotForm.value.trainModelName,
+    //     "trainFile": this.trainBotForm.value.trainFile,
+        
+      
+
+    //   }
+      // this.trainBotList.push(this.sampleObj)
+      // localStorage.setItem('model', JSON.stringify(this.sampleObj))
+      // this.toastService.showSuccess("Saved Successfully","response")
+      // setTimeout(() => {
+      //   this.loader.hide();
+      // }, 1000);
+      // this.nextRecordId++;
+      // this.hiddenPopUp = false;
+      // this.trainBotForm.reset();
+
+  //   this.loader.show();
+  //   let req_body={
+  //     "trainBotName": this.trainBotForm.value.trainBotName,
+  //     "trainModelFile": this.trainBotForm.value.trainModelFile,
+  //     "trainModel": this.trainBotForm.value.trainModel,
+  //     "trainFile": this.trainBotForm.value.trainFile,
+  //   }
+  //   this.rest_api.saveDetails(req_body).subscribe((res: any) => {
+  //     let response = res;
+  //     let bot_Name = req_body.trainBotName;
+  //     this.loader.hide();
+  //     if (response.errorMessage == undefined) {
+  //       this.botKey = res.botKey,
+  //       this.tenantName = res.tenantId
+  //       this.onUpload(); 
+  //       this.toastService.showSuccess(bot_Name, 'save');
+  //       this.trainBotForm.reset();
+  //       this.hiddenPopUp = false;
+  //       this.getTableData(bot_Name);
+  //     } else {
+  //       this.toastService.showError(response.errorMessage);
+  //     }        
+  //   },(err: any) => {
+  //       this.loader.hide();
+  //       this.toastService.showError(this.toastMessages.saveError);
+  //     })
+  //   this.toastService.showSuccess("Saved Successfully","response")
+   }
+    
 
   updateDatails() {
     this.loader.show();
@@ -141,5 +277,28 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   closeOverlay(event: any) {
     this.hiddenPopUp = event;
     this.trainBotForm.reset();
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFiles = event.target.files;
+  }
+  
+  trainTheModel() {
+    const formData = new FormData();
+    // for (const file of this.selectedFiles) {
+    //   formData.append('files[]', file);
+    // }
+    formData.append('file', this.selectedFiles[0]);
+    formData.append('modelName',this.trainBotForm.value.trainBotName);
+    // formData.append('tenantName',localStorage.getItem("tenantName"));
+    this.http.post('https://ezflowllm.dev.epsoftinc.com/train', formData)
+      .subscribe(
+        (response) => {
+          console.log('Upload successful', response);
+        },
+        (error) => {
+          console.error('Upload error', error);
+        }
+      );
   }
 }

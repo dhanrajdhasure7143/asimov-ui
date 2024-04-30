@@ -78,6 +78,15 @@ saveCustomerBot(body:any){
   return this.http.post(environment.asquare+"/a-square/admin/v1/customer-support-bot", body, {headers:this.headers})
 }
 
+getPredefinedModels(){
+  // http://localhost:8080/v1/external/conversation/models
+  return this.http.get(environment.asquare+"/a-square/v1/external/conversation/models", {headers:this.headers})
+}
+
+saveTrinedModel(body:any){
+  // http://localhost:8080/v1/external/conversation/models
+  return this.http.post(environment.asquare+"/a-square/v1/external/conversation/models",body, {headers:this.headers})
+}
 deleteCustomerBot(botId:any){
   const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
   return this.http.delete(url, { headers: this.headers });
