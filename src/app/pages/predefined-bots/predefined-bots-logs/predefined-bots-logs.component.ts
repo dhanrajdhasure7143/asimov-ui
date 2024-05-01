@@ -72,7 +72,10 @@ export class PredefinedBotsLogsComponent implements OnInit {
         this.logsLoading = false;
         this.columnList = this.columns_list.predefined_orchestration_process_runs_columns;
         this.logsDisplayFlag = "RUNS";
-        // this.logsData = response.data;
+        response.data.forEach((item: any) => {
+          item.startTS = this.formatDate(item.startTS);
+          item.endTS = this.formatDate(item.endTS);
+        });
         this.logsData = response.data.sort((a, b) => b.predefinedRunId - a.predefinedRunId);
       } else {
         this.logsLoading = false;
