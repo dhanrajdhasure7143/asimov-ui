@@ -26,9 +26,11 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   table_searchFields: any = ["automationName","predefinedBotType","convertedSchedule"];
   showOverlay: boolean = false;
   showBotForm: boolean = false;
+  viewLogsFlag: boolean = false;
+  logsData: any;
 
   constructor(
-    private rest: RestApiService,
+    private rest: PredefinedBotsService,
     private spinner: LoaderService,
     private router: Router,
     private rest_api: PredefinedBotsService,
@@ -120,9 +122,22 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
     });
   }
 
-  viewDetails($event: any) {
-
+  viewLogsById(event: any) {
+    this.spinner.show();
+    this.viewLogsFlag = true;
+    console.log("event", event);
+    this.rest.getPredefinedBotLogs(event.predefinedOrchestrationBotId).subscribe((data: any) => {
+        console.log("RESPONSE", data);
+        this.logsData = data.data;
+        console.log("THIS.LOGSDATA", this.logsData);
+        this.spinner.hide()
+      },
+      error => {
+        console.error('Error fetching logs:', error);
+      }
+    );
   }
+  
 
   editById(item: any) {
     console.log("testing",item)

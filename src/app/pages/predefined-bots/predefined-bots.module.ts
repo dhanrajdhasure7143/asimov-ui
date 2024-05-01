@@ -18,6 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { PredefinedBotsLogsComponent } from './predefined-bots-logs/predefined-bots-logs.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { columnList } from 'src/app/shared/model/table_columns';
 
 
 
@@ -27,7 +30,8 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     PredefinedBotsFormsComponent,
     PredefinedBotsListComponent,
     PredefinedBotsOrchestrationComponent,
-    PredefinedSchedulerComponent
+    PredefinedSchedulerComponent,
+    PredefinedBotsLogsComponent
   ],
   imports: [
     CommonModule,
@@ -44,6 +48,6 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
     MatDatepickerModule,
     SharedModule
   ],
-  providers: [toastMessages]
-})
+  providers: [toastMessages, BsModalRef, BsModalService, columnList]
+}) 
 export class PredefinedBotsModule { }

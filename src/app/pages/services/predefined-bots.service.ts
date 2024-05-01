@@ -41,5 +41,8 @@ export class PredefinedBotsService {
   //   return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}`)
   // }
 
+  getPredefinedBotLogs(id){
+    return this.http.get("/rpa-service/predefined/predefinedbotLogs/"+id)
+  }
 
 }
