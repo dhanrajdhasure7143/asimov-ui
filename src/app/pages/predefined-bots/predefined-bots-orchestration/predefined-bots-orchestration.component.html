@@ -40,5 +40,5 @@
 [closable]="false"></p-confirmDialog>
 
 <div *ngIf="viewLogsFlag">
-    <app-predefined-bots-logs [logsData]="logsData"></app-predefined-bots-logs>
+    <app-predefined-bots-logs [predefinedOrchestrationBotId]="logsData" (closeEvent)="closeLogsOverlay()"></app-predefined-bots-logs>
 </div>

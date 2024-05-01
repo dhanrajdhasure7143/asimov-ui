@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
@@ -15,7 +15,7 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./predefined-bots-orchestration.component.css']
 })
 export class PredefinedBotsOrchestrationComponent implements OnInit {
-
+  @Output() predefinedOrchestrationBotId = new EventEmitter<number>();
   columns_list: any[] = [
     { ColumnName: "automationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true },
     { ColumnName: "predefinedBotType", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
@@ -123,19 +123,9 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   }
 
   viewLogsById(event: any) {
-    this.spinner.show();
     this.viewLogsFlag = true;
-    console.log("event", event);
-    this.rest.getPredefinedBotLogs(event.predefinedOrchestrationBotId).subscribe((data: any) => {
-        console.log("RESPONSE", data);
-        this.logsData = data.data;
-        console.log("THIS.LOGSDATA", this.logsData);
-        this.spinner.hide()
-      },
-      error => {
-        console.error('Error fetching logs:', error);
-      }
-    );
+    this.logsData = event.predefinedOrchestrationBotId;
+    this.predefinedOrchestrationBotId.emit(this.logsData);
   }
   
 
@@ -173,5 +163,8 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   }
 
+  closeLogsOverlay(){
+    this.viewLogsFlag=false;
+  }
 
 }
