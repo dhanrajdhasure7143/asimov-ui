@@ -21,7 +21,7 @@
          &nbsp;
  
            <span *ngIf="selectedRun!=undefined && selectedRun != '' && (logsDisplayFlag=='LOGS' || logsDisplayFlag=='CHILD-LOGS' || logsDisplayFlag=='BOT-LOGS')">
-             - Run ID - {{selectedRun.predefinedRunId}}
+             - Run ID - {{selectedRun.processRunId}}
            </span>
          
            &nbsp;
@@ -92,7 +92,7 @@
                  <ng-template pTemplate="body" let-logs>
                      <tr class="action-desc">
                          <td *ngFor="let col of columnList" [style]="col.width">     
-                           <span *ngIf="col.ColumnName=='predefinedRunId'">
+                           <span *ngIf="col.ColumnName=='processRunId'">
                              <a class="clickable" (click)="getBotLogsByRunId(logs)">{{logs[col.ColumnName]}}</a>
                            </span>
                            <span  *ngIf="col.ColumnName=='bot_name'">
@@ -138,7 +138,7 @@
                                <span class="btn btn-xs btn-primary clickable1" *ngIf="col.ColumnName=='runStatus' && logs[col.ColumnName]=='Running'" (click)="killRun(logs)" >Kill</span> 
                              </span>
                            </span>
-                           <span *ngIf="col.ColumnName!='predefinedRunId' && col.ColumnName != 'bot_name' && col.ColumnName!='runStatus' && col.ColumnName!='bot_status' && col.ColumnName!='status' && col.ColumnName!='error_info' && col.ColumnName!='log_statement' && col.ColumnName != 'task_name'">
+                           <span *ngIf="col.ColumnName!='processRunId' && col.ColumnName != 'bot_name' && col.ColumnName!='runStatus' && col.ColumnName!='bot_status' && col.ColumnName!='status' && col.ColumnName!='error_info' && col.ColumnName!='log_statement' && col.ColumnName != 'task_name'">
                                {{logs[col.ColumnName]}}
                            </span>
                            <span *ngIf="logs[col.ColumnName] == undefined || logs[col.ColumnName] == null || logs[col.ColumnName]==''">-</span>

@@ -9,7 +9,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-predefined-bots-logs',
   templateUrl: './predefined-bots-logs.component.html',
@@ -32,7 +32,7 @@ export class PredefinedBotsLogsComponent implements OnInit {
   // logsData:any=[]
   statusColors = {
     New: '#3CA4F3',
-    Failure: '#FE665D',
+    Failed: '#FE665D',
     Success: '#4BD963',
     Killed: "#B91C1C",
     Stopped: '#FE665D',
@@ -46,6 +46,7 @@ export class PredefinedBotsLogsComponent implements OnInit {
   selectedTask: any;
   selectedAutomationTask: any;
   selectedIterationTask: any;
+  formattedLogsData: any[];
   @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
   isCopied: boolean = false;
   copyTimer = null;
@@ -56,7 +57,8 @@ export class PredefinedBotsLogsComponent implements OnInit {
     private columns_list: columnList,
     private clipboardService: ClipboardService,
     private toastService: ToasterService,
-    private toastMessages: toastMessages
+    private toastMessages: toastMessages,
+    private datePipe: DatePipe
   ) { }
   ngOnInit() {
     this.getProcessRuns();
@@ -70,7 +72,8 @@ export class PredefinedBotsLogsComponent implements OnInit {
         this.logsLoading = false;
         this.columnList = this.columns_list.predefined_orchestration_process_runs_columns;
         this.logsDisplayFlag = "RUNS";
-        this.logsData = response.data;
+        // this.logsData = response.data;
+        this.logsData = response.data.sort((a, b) => b.predefinedRunId - a.predefinedRunId);
       } else {
         this.logsLoading = false;
         this.toastService.showError(response.errorMessage)
@@ -81,6 +84,11 @@ export class PredefinedBotsLogsComponent implements OnInit {
     }
     );
   }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return this.datePipe.transform(date, 'MMM d, y, HH:mm:ss');
+}
 
   getBotLogsByRunId(runData: any) {
     // this.logsLoading=true;
