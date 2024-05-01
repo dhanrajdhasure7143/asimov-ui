@@ -85,7 +85,7 @@
               </div> -->
               <!-- <div *ngIf="trainBotForm.get('trainModelFile').value == 'DOC'"> -->
               <div class="form-group col-md-12 p-0">
-                <label class="label-control">Upload your File<span class="star">*</span></label>
+                <label class="label-control">Upload File<span class="star">*</span></label>
                 <input type="file" formControlName="trainFile" pInputText
                   placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple>
                 <span *ngIf="trainBotForm.get('trainFile').invalid && trainBotForm.get('trainFile').touched"

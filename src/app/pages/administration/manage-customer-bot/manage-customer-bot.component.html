@@ -153,7 +153,7 @@
                   <!-- <p-chips formControlName="includeSites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
                 </div>
                 <span *ngIf="manageBotForm.get('includeSites').invalid && manageBotForm.get('includeSites').touched"
-                class="required">Includes Sites Required</span>
+                class="required">Include Sites Required</span>
               </div>
               
               <div class="form-group p-0">
@@ -172,7 +172,7 @@
               </div>
             <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'DOC'"  class="uploadOption">
             <div class="form-group col-md-12 p-0">
-            <label class="label-control">Upload your File<span class="star">*</span></label>
+            <label class="label-control">Upload File<span class="star">*</span></label>
             <input type="file" formControlName="uploadFile" pInputText
               placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple />
 <!--               
@@ -200,9 +200,9 @@
                 <label class="label-control">Select your Model<span class="star">*</span></label>
               </div> -->
           <div class="form-group col-md-12 p-0">
-            <label class="label-control">Trained Models<span class="star">*</span></label>
+            <label class="label-control">Trained Model<span class="star">*</span></label>
             <div class="dropdown-container">
-              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select your trained model"
+              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select Trained Model"
               (onChange)="onModelChange($event.value)"></p-dropdown>
               </div>
               <!-- <span *ngIf="trainBotForm.get('trainModel').invalid && trainBotForm.get('trainModel').touched"
@@ -212,9 +212,9 @@
         
         <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'MODEL'" >
           <div class="form-group col-md-12 p-0">
-            <label class="label-control">Select your Trained Models<span class="star">*</span></label>
+            <label class="label-control">Select Trained Model<span class="star">*</span></label>
             <div class="dropdown-container">
-              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select your trained model"
+              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select Trained Model"
               (onChange)="onModelChange($event.value)"></p-dropdown>
               </div>
             </div>

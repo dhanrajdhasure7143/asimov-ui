@@ -163,42 +163,12 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     window.open(fullUrl);
   }
 
-  saveDetails() {
-    this.loader.show();
-    const filePath = this.trainBotForm.get('trainFile').value;
-    const fileNameWithExtension = filePath.split('\\').pop();
-    let req_body={
-      "modelName": this.trainBotForm.value.trainBotName,
-    
-      "fileName":fileNameWithExtension,
-      "tenantName":localStorage.getItem("tenantName"),
-      "modelPath":"dd",
-      "botKey":"dd"
-    }
-    
-
-    this.rest_api.saveTrinedModel(req_body).subscribe(
-      (res: any) => {
-        let response = res;
-        console.log('Response:', response);
-        this.loader.hide();
-        this.toastService.showSuccess(response.modelName, 'save');
-        this.trainBotForm.reset();
-        this.hiddenPopUp = false;
-        this.trainBotList.push({
-          id: response.id, trainBotName:response.modelName, trainData: response.fileName
-        })
-      
-      }, (error) => {
-        console.error('Error saving trained model:', error);
-        // Hide loader on error
-        this.loader.hide();
-      }
-    );
-    this.trainTheModel()
 
 
 
+  // saveDetails() {
+
+  //   this.trainTheModel()
     // this.loader.show();
     //   const recordId = Date.now();
     //   const TrainedModel= localStorage.getItem("TrainedModel")
@@ -249,9 +219,45 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   //       this.toastService.showError(this.toastMessages.saveError);
   //     })
   //   this.toastService.showSuccess("Saved Successfully","response")
-   }
-    
+  //  }
 
+  saveTrainedModelInfoIntoDataBase(){
+    this.loader.show();
+    const filePath = this.trainBotForm.get('trainFile').value;
+    const fileNameWithExtension = filePath.split('\\').pop();
+    let req_body={
+      "modelName": this.trainBotForm.value.trainBotName,
+      "fileName":fileNameWithExtension,
+      "tenantName":localStorage.getItem("tenantName"),
+      "modelPath":"dummy",
+      "botKey":"dummy"
+    }
+    
+    this.rest_api.saveTrinedModel(req_body).subscribe(
+      (res: any) => {
+        let response = res;
+       if(response.status === 'success'){
+        this.loader.hide();
+        this.trainBotForm.reset();
+        this.toastService.showSuccess(response.data.modelName, 'save');
+        this.trainBotList.push({
+          id:response.data.id, trainBotName:response.data.modelName, trainData: response.data.fileName
+        })
+        this.hiddenPopUp = false;
+       }
+      },(error:any) => {
+        console.error('Error saving trained model in data base:', error);
+        this.loader.hide();
+      }
+    );
+  }
+  saveDetails() {
+    //call this method in this.trainTheModel() method after getting the response
+    
+    this.trainTheModel()
+    
+  }
+    
   updateDatails() {
     this.loader.show();
     const updatedRecordId = this.updateOverlayData.id;
@@ -290,11 +296,12 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     // }
     formData.append('file', this.selectedFiles[0]);
     formData.append('modelName',this.trainBotForm.value.trainBotName);
-    // formData.append('tenantName',localStorage.getItem("tenantName"));
+    formData.append('tenantName',localStorage.getItem("tenantName"));
     this.http.post('https://ezflowllm.dev.epsoftinc.com/train', formData)
       .subscribe(
         (response) => {
-          console.log('Upload successful', response);
+          console.log('Response from train molde ', response);
+          this.saveTrainedModelInfoIntoDataBase()
         },
         (error) => {
           console.error('Upload error', error);

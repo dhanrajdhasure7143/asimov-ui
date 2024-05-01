@@ -228,8 +228,9 @@ fetchPredefinedModels() {
         "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
         "greetingMessage": this.manageBotForm.value.greetingMessage,
         "primaryPrompt": this.manageBotForm.value.primaryPrompt,
-        "respPrefix": this.manageBotForm.value.respPrefix,
-        "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource==="HYBRID"||this.manageBotForm.value.customerSupportBotSource === "MODEL"? "DOC":this.manageBotForm.value.customerSupportBotSource,
+        // "respPrefix": this.manageBotForm.value.respPrefix,
+        "respPrefix": this.trainedModel,
+        "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
         "customerSupportBotEmbedUrl": "",
         "botKey": "",
         "customerSupportBotCollection": "",
@@ -243,26 +244,33 @@ fetchPredefinedModels() {
       this.rest_api.saveCustomerBot(req_body).subscribe((res: any) => {
         let response = res;
         let bot_Name = req_body.customerSupportBotName;
-        this.loader.hide();
+      
         if (response.errorMessage == undefined) {
           this.botKey = res.botKey,
-          this.tenantName = res.tenantId
+          this.tenantName = res.tenantId,
+          this.trainedModel=res.respPrefix
           //here based on the condition call file uploade api or model and file uploade
 
           //1.if is only file
-          if(res.customerSupportBotSource=="DOC"){
-            this.onUpload();
+          if(req_body.customerSupportBotSource=="DOC"){
+            this.onUploadDoc();
           }
        
-          // python api to store the file and train the model
-
         //2.pytho api m ==> model name and file
-        if(req_body.customerSupportBotSource=="HYBRID")
+        if(req_body.customerSupportBotSource=="HYBRID"){
           this.onUploadeModelAndFile(bot_Name)
           this.getAllCustomerBots();
-        } else {
-          this.toastService.showError(response.errorMessage);
-        }        
+        }
+        if(req_body.customerSupportBotSource=="MODEL"){
+          this.onUploadeMode(bot_Name)
+        }else {
+          this.loader.hide();
+          this.manageBotForm.reset();
+          this.hiddenPopUp = false;
+          } 
+         
+        } 
+               
       },(err: any) => {
           this.loader.hide();
           this.toastService.showError(this.toastMessages.saveError);
@@ -369,7 +377,7 @@ onModelChange(value:any){
   this.trainedModel=value
 }
 
-onUpload() {
+onUploadDoc() {
   const formData = new FormData();
   // for (const file of this.selectedFiles) {
   //   formData.append('files[]', file);
@@ -377,11 +385,15 @@ onUpload() {
   formData.append('file', this.selectedFiles[0]);
   formData.append('botKey', this.botKey);
   formData.append('tenantName',this.tenantName);
+  formData.append('type',"DOC");
   // formData.append('tenantName',localStorage.getItem("tenantName"));
+  // this.http.post('https://llm-python:5006/uploads', formData)
   this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
     .subscribe(
       (response) => {
-        console.log('Upload successful', response);
+        this.loader.hide();
+        this.manageBotForm.reset();
+        this.hiddenPopUp = false;
 
       },
       (error) => {
@@ -399,7 +411,9 @@ onUploadeModelAndFile(botName:any) {
   modelAndFormData.append('file', this.selectedFiles[0]);
   modelAndFormData.append('botKey', this.botKey);
   modelAndFormData.append('tenantName',this.tenantName);
+  modelAndFormData.append('model',this.trainedModel);
   this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelAndFormData)
+  // this.http.post('http://llm-python:5006/uploads', modelAndFormData)
     .subscribe(
       (response) => {
         console.log('model and file uploaded successfully successful', response);
@@ -412,5 +426,29 @@ onUploadeModelAndFile(botName:any) {
       }
     );
 }
-}
 
+
+
+
+onUploadeMode(botName:any) {
+  const modelData = {
+    botKey: this.botKey,
+    tenantName: this.tenantName,
+    model: this.trainedModel
+
+};
+  // this.http.post('http://llm-python:5006/uploads/uploads', modelData)
+  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelData)
+    .subscribe(
+      (response) => {
+        console.log('model uploaded successfully', response);
+        this.toastService.showSuccess(botName, 'save');
+        this.loader.hide();
+        this.manageBotForm.reset();
+        this.hiddenPopUp = false;
+      },
+      (error) => {
+        console.error('Failed to uploade  model mand file', error);
+      }
+    );
+}}
