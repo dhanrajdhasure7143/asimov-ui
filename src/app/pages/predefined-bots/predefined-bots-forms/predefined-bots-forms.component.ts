@@ -32,6 +32,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   private predefinedBot_id:any;
   private predefinedBot_name:any;
   public scheduler_data :any;
+  duplicateAttributes:any=[]
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -74,7 +75,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Bot Name", preAttributeLable: "Automation Bot Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
-      this.formFields.push(...res.data);
+      this.formFields.push(...res.data.filter(item=>  item.visibility))
+      this.duplicateAttributes.push(...res.data.filter(item=>  !item.visibility))
       // res.data.forEach(element => {
       //   this.formFields.push(element)
       // });
@@ -152,7 +154,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       // this.activeIndex = 0 
     }, 200);
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
+          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
@@ -328,19 +330,31 @@ if(this.params.type =='edit'){
   }
 
   createBot() {
-    this.spinner.show();
     if (this.predefinedBotsForm.valid) {
+    this.spinner.show();
+      let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
       req_body["predefinedBotType"] = this.predefinedBot_name
       req_body["productId"] = this.predefinedBot_id
       req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
       delete req_body.fields.botName
+      if(this.duplicateAttributes.length >0){
+        this.duplicateAttributes.forEach(element => {
+          let v_key = element.preAttributeName.split("_")
+          for (const key in req_body.fields) {
+          const parts = key.split('_');
+          if(parts[1]+"_"+parts[2] == v_key[1]+"_"+v_key[2]){
+              req_body.fields[element.preAttributeName] = req_body.fields[key]
+          }
+          }
+        });
+      }
       console.log('req_body---:', req_body);
       this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
         this.spinner.hide();
         this.router.navigate(["/pages/predefinedbot/list"]);
-        this.toaster.showSuccess(this.predefinedBotsForm.value.fields.botName,"create")
+        this.toaster.showSuccess(botName,"create")
       },err=>{
         this.spinner.hide();
         this.toaster.showError(this.toastMessages.apierror)

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
@@ -15,46 +15,22 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./predefined-bots-orchestration.component.css']
 })
 export class PredefinedBotsOrchestrationComponent implements OnInit {
-
+  @Output() predefinedOrchestrationBotId = new EventEmitter<number>();
   columns_list: any[] = [
     { ColumnName: "automationName", DisplayName: "Automation Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,showTooltip:true },
     { ColumnName: "predefinedBotType", DisplayName: "Type", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, },
-    { ColumnName: "convertedSchedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false,width:"flex: 0 0 20rem", showTooltip:true },
+    { ColumnName: "convertedSchedule", DisplayName: "Schedule", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: true, multi: false,width:"flex: 0 0 20rem", showTooltip:true },
     { ColumnName: "action", DisplayName: "Action", ShowGrid: true, ShowFilter: false, filterWidget: "normal", filterType: "text", sort: false, multi: false, }
   ];
   scheduledbots:any[]=[];
-  // scheduledbots = [
-  //   {
-  //     AutomationName: "Cipal Recruitment",
-  //     Schedule: "2024-05-01",
-  //     id:'pre-6473824',
-  //     type:"Recruitment bot"
-  //   },
-  //   {
-  //     AutomationName: "Epsot",
-  //     Schedule: "2024-05-01",
-  //     id:'rec-6473824',
-  //     type:"Recuritment Bot"
-  //   },
-  //   {
-  //     AutomationName: "ABC",
-  //     Schedule: "2024-05-01",
-  //     id:'mar_74797584',
-  //     type:"Marketing Bot"
-  //   },
-  //   {
-  //     AutomationName: "XYZ MA",
-  //     Schedule: "2024-05-01",
-  //     id:'mar_74797584',
-  //     type:"Marketing Bot"
-  //   }
-  // ]
-  table_searchFields: any = [];
+  table_searchFields: any = ["automationName","predefinedBotType","convertedSchedule"];
   showOverlay: boolean = false;
   showBotForm: boolean = false;
+  viewLogsFlag: boolean = false;
+  logsData: any;
 
   constructor(
-    private rest: RestApiService,
+    private rest: PredefinedBotsService,
     private spinner: LoaderService,
     private router: Router,
     private rest_api: PredefinedBotsService,
@@ -121,6 +97,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   }
 
   deleteById(event: any) {
+    let botName = event.automationName
     this.confirmationService.confirm({
       message: "Do you want to delete this bot? This can't be undo.",
       header: "Are you sure?",
@@ -134,7 +111,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.rest_api.deletePredefinedBot(event.predefinedOrchestrationBotId).subscribe(res => {
-          this.toaster.toastSuccess(this.toastMessage.deleteScss);
+          this.toaster.showSuccess(botName,"delete")
           this.getListOfItems();
         }, err => {
           this.spinner.hide();
@@ -145,9 +122,12 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
     });
   }
 
-  viewDetails($event: any) {
-
+  viewLogsById(event: any) {
+    this.viewLogsFlag = true;
+    this.logsData = event.predefinedOrchestrationBotId;
+    this.predefinedOrchestrationBotId.emit(this.logsData);
   }
+  
 
   editById(item: any) {
     console.log("testing",item)
@@ -183,5 +163,8 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   }
 
+  closeLogsOverlay(){
+    this.viewLogsFlag=false;
+  }
 
 }

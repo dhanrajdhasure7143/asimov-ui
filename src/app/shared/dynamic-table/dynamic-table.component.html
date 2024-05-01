@@ -255,12 +255,20 @@
 
                         <span *ngIf="show_run_btn">
                             <a (click)="onRunRow(rowData)" pTooltip="Run" tooltipPosition="top">
-                                <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
+                                <img src="../../../../assets/images-n/gridicons/startbot-default.svg" class="testplus default-icon" alt="Start">
+                                <img src="../../../../assets/images-n/gridicons/startbot-hover.svg" class="testplus  hover-icon" alt="Start">
                             </a>
                         </span>
                         <span *ngIf="show_stop_btn">
                             <a (click)="onStopRow(rowData)" pTooltip="Stop" tooltipPosition="top">
-                                <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
+                                <img src="../../../assets/images-n/gridicons/stopbot-default.svg" class="testplus default-icon" alt="Stop">
+                                <img src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="Stop">
+                            </a>
+                        </span>
+                        <span *ngIf="show_view_logs">
+                            <a (click)="onViewLogs(rowData)" pTooltip="View logs" tooltipPosition="top">
+                                <img src="../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus" alt="View logs">
+                                <!-- <img style="color: #098de6;" src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="View logs"> -->
                             </a>
                         </span>
                     </span>
