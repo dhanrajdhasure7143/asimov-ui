@@ -16,12 +16,12 @@
           <div class="form-container" [formGroup]="predefinedBotsForm">
             <div formGroupName="fields">
               <div *ngFor="let field of currentPageFields" class="form-group row">
-                  <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }}</b></label>
+                  <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required">*</span></b></label>
                   <div class="col-md-6" style="padding-bottom: 15px;">
 
                       <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder"></p-dropdown>
 
-                      <input pInputText *ngIf="field.preAttributeType !== 'dropdown' && field.preAttributeType !== 'textarea' && field.preAttributeType !== 'date' && field.preAttributeType !== 'email'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
+                      <input pInputText autocomplete="off" *ngIf="field.preAttributeType !== 'dropdown' && field.preAttributeType !== 'textarea' && field.preAttributeType !== 'date' && field.preAttributeType !== 'email'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
                       [id]="field.preAttributeName" 
                       [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
 
@@ -44,14 +44,21 @@
                               <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
                           </label>
                       </div>
-
-                      <div class="required" *ngIf="predefinedBotsForm.get(field.preAttributeName) && predefinedBotsForm.get(field.preAttributeName).invalid && (predefinedBotsForm.get(field.preAttributeName).dirty || predefinedBotsForm.get(field.preAttributeName).touched)">
+                      <!-- Update error messages to display preAttributeLable -->
+                      <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
+                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
+                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
+                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters long.</div>
+                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.maxlength">{{ field.preAttributeLable }} can't be longer than {{ field.maxNumber }} characters.</div>
+                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.pattern">{{ field.preAttributeLable }} has an invalid format.</div>
+                    </div>
+                      <!-- <div class="required" *ngIf="predefinedBotsForm.get(field.preAttributeName) && predefinedBotsForm.get(field.preAttributeName).invalid && (predefinedBotsForm.get(field.preAttributeName).dirty || predefinedBotsForm.get(field.preAttributeName).touched)">
                           <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.required">Field is required.</div>
                           <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.email">Invalid email format.</div>
                           <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.minlength">Minimum length is {{field.minNumber}} characters.</div>
                           <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.maxlength">Maximum length is {{field.maxNumber}} characters.</div>
                           <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.pattern">Invalid format.</div>
-                      </div>
+                      </div> -->
                   </div>
               </div>
           </div>
@@ -76,14 +83,20 @@
             <div *ngIf="isLastPage">
                 <div class="form-group row">
                     <div class="col-md-4 col-form-label">
-                        <input class="form-check-input" type="checkbox" id="scheduleBot" formControlName="isScheduleBot">
+                        <input class="form-check-input" type="checkbox" id="scheduleBot" formControlName="isScheduleBot" (change)="clearScheduleTime()">
                         <label class="form-check-label" for="scheduleBot">
                             <b> Would you like to schedule the bot?</b>
                         </label>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <input type="text" class="form-control" id="schedule_Time" formControlName="scheduleTime" disabled="true">
-                        <button class="btn bluebg-button" (click)="openScheduler()" [disabled]="!predefinedBotsForm.get('isScheduleBot').value">Schedule</button>
+                        <button(click)="openScheduler()" [disabled]="!predefinedBotsForm.get('isScheduleBot').value" icon="pi pi-clock"></button>
+                    </div> -->
+                    <div class="col-md-4 input-container">
+                        <input type="text" class="form-control" id="schedule_Time" formControlName="scheduleTime" disabled="true">
+                        <button (click)="openScheduler()" [disabled]="!predefinedBotsForm.get('isScheduleBot').value" class="btn-clock">
+                            <i style="color: white; font-size: 20px;" class="pi pi-clock"></i>
+                        </button>
                     </div>
                 </div>
             </div>

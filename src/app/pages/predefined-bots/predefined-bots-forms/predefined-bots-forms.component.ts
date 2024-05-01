@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -152,7 +152,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       // this.activeIndex = 0 
     }, 200);
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+          this.predefinedBotsForm.get('scheduleTime').enable({onlySelf: checked, emitEvent: false});
         });
   }
 
@@ -328,12 +328,13 @@ if(this.params.type =='edit'){
   }
 
   createBot() {
+    this.spinner.show();
     if (this.predefinedBotsForm.valid) {
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
       req_body["predefinedBotType"] = this.predefinedBot_name
       req_body["productId"] = this.predefinedBot_id
-      req_body["schedule"] = JSON.stringify(this.scheduler_data)
+      req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
       delete req_body.fields.botName
       console.log('req_body---:', req_body);
       this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
@@ -383,5 +384,11 @@ if(this.params.type =='edit'){
       // Creating a string for the desired format
       return `${formattedStartDate} - ${formattedEndDate}`;
   } 
+
+  clearScheduleTime() {
+    if (!this.predefinedBotsForm.get('isScheduleBot').value) {
+        this.predefinedBotsForm.get('scheduleTime').setValue('');
+    }
+}
 
 }
