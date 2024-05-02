@@ -76,7 +76,7 @@ export class PredefinedBotsLogsComponent implements OnInit {
           item.startTS = this.formatDate(item.startTS);
           item.endTS = this.formatDate(item.endTS);
         });
-        this.logsData = response.data.sort((a, b) => b.predefinedRunId - a.predefinedRunId);
+        this.logsData = response.data;
       } else {
         this.logsLoading = false;
         this.toastService.showError(response.errorMessage)
@@ -89,6 +89,9 @@ export class PredefinedBotsLogsComponent implements OnInit {
   }
 
   formatDate(dateString: string): string {
+    if(dateString == null){
+      return "";
+    }
     const date = new Date(dateString);
     return this.datePipe.transform(date, 'MMM d, y, HH:mm:ss');
 }

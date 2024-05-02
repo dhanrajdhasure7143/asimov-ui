@@ -42,7 +42,7 @@ export class PredefinedBotsService {
   // }
 
   getPredefinedBotLogs(id){
-    return this.http.get("/rpa-service/predefined/predefinedbotLogs/"+id)
+    return this.http.get("/rpa-service/predefined/predefinedbot-logs/"+id)
   }
 
 }
