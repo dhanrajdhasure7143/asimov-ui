@@ -254,15 +254,17 @@ fetchPredefinedModels() {
           //1.if is only file
           if(req_body.customerSupportBotSource=="DOC"){
             this.onUploadDoc();
+            this.getAllCustomerBots();
           }
        
         //2.pytho api m ==> model name and file
         if(req_body.customerSupportBotSource=="HYBRID"){
           this.onUploadeModelAndFile(bot_Name)
-          this.getAllCustomerBots();
+        
         }
         if(req_body.customerSupportBotSource=="MODEL"){
           this.onUploadeMode(bot_Name)
+         
         }else {
           this.loader.hide();
           this.manageBotForm.reset();
@@ -270,6 +272,7 @@ fetchPredefinedModels() {
           } 
          
         } 
+        this.getAllCustomerBots();
                
       },(err: any) => {
           this.loader.hide();
@@ -307,6 +310,11 @@ fetchPredefinedModels() {
         let bot_Name = req_body.customerSupportBotName;
         this.loader.hide();
         if (response.errorMessage == undefined) {
+          if(req_body.customerSupportBotSource=="DOC"){
+            this.botKey = res.botKey,
+            this.tenantName = res.tenantId,
+            this.onUploadDoc();
+          }
           this.toastService.showSuccess(bot_Name, 'update');
           this.manageBotForm.reset();
           this.hiddenPopUp = false;

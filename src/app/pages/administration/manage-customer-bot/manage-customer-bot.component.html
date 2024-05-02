@@ -193,20 +193,17 @@
         </div>
 
         <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'HYBRID'" >
+          <label class="label-control">Upload File<span class="star">*</span></label>
           <input type="file" formControlName="uploadFile" pInputText
               placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple />
               
-              <!-- <div class="form-group col-md-12 p-0 dropdown-wrapper">
-                <label class="label-control">Select your Model<span class="star">*</span></label>
-              </div> -->
-          <div class="form-group col-md-12 p-0">
+          <div class="form-group col-md-12 p-0 mt-3">
             <label class="label-control">Trained Model<span class="star">*</span></label>
             <div class="dropdown-container">
               <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select Trained Model"
               (onChange)="onModelChange($event.value)"></p-dropdown>
               </div>
-              <!-- <span *ngIf="trainBotForm.get('trainModel').invalid && trainBotForm.get('trainModel').touched"
-              class="required">Mandatory field</span> -->
+             
             </div>
         </div>
         

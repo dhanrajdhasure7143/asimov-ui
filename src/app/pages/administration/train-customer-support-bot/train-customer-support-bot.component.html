@@ -44,14 +44,14 @@
       <div class="h-100">
         <div class="create-header">
           <h3 *ngIf="isCreate">Train Model</h3>
-          <h3 *ngIf="!isCreate">Update Train Modelt</h3>
+          <h3 *ngIf="!isCreate">Update Train Model</h3>
         </div>
         <div class="createform-overlay ">
           <form [formGroup]="trainBotForm" #adddept="ngForm" class="h-100">
             <div>
               <div class="form-group col-md-12 p-0">
                 <label class="label-control">Model Name<span class="star">*</span></label>
-                <input type="text" formControlName="trainBotName" pInputText placeholder="Enter bot name" maxlength="51"
+                <input type="text" formControlName="trainBotName" pInputText placeholder="Enter Model Name" maxlength="51"
                   class="form-control data">
                 <span
                   *ngIf="trainBotForm.get('trainBotName').invalid && trainBotForm.get('trainBotName').touched && !trainBotForm.get('trainBotName').hasError('maxlength') && trainBotForm.get('trainBotName').value=='' && !trainBotForm.get('trainBotName').hasError('pattern')"
