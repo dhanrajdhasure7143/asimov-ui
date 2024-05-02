@@ -4108,3 +4108,9 @@ padding: 0px 30px;}
 .predefined-bots .p-steps-item{
   background: #fff !important;
 }
+
+.predefined-logs-grid .p-datatable-scrollable .p-datatable-wrapper {
+  position: relative;
+  overflow: auto;
+  height: 400px;
+}

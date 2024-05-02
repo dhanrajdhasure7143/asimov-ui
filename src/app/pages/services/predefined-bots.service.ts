@@ -26,7 +26,7 @@ export class PredefinedBotsService {
   }
 
   startPredefinedBot(id){
-    return this.http.post(`/rpa-service/predefined/start-predefined-bot/${id}`,{})
+    return this.http.post(`/rpa-service/predefined/start-predefinedbot/${id}`,{})
   }
 
   stopPredefinedBot(id){
