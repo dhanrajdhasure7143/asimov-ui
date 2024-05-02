@@ -27,6 +27,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   sampleObj: any = {};
   updateOverlayData: any;
   nextRecordId: number = 1;
+  filteredModelsList:any=[]
   trainBotList: any = [
     // { id: "1", trainBotName: "Customer Support Bot", trainData: "Document" },
     // { id: "2", trainBotName: "Agent Support Bot", trainData: "Web" },
@@ -84,8 +85,9 @@ export class TrainCustomerSupportBotComponent implements OnInit {
       (modelsList) => {
         console.log(modelsList, "modelsList");
   
-     
-        this.trainBotList = modelsList.map((model) => ({
+        this.filteredModelsList = modelsList.filter(model => model.tenantName === localStorage.getItem("tenantName"));
+
+        this.trainBotList = this.filteredModelsList.map((model) => ({
          
             id: model.id, trainBotName:model.modelName, trainData: model.fileName
           
@@ -151,7 +153,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     this.updateOverlayData = event
     this.trainBotForm.get("trainBotName").setValue(this.updateOverlayData["trainBotName"]);
     this.trainBotForm.get("trainModelFile").setValue(this.updateOverlayData["trainModelFile"]);
-    this.trainBotForm.get("trainModelName").setValue(this.updateOverlayData["trainModelName"]);
+    // this.trainBotForm.get("trainModelName").setValue(this.updateOverlayData["trainModelName"]);
     this.trainBotForm.get("trainFile").setValue(this.updateOverlayData["trainFile"]);
   }
 
@@ -253,8 +255,8 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   }
   saveDetails() {
     //call this method in this.trainTheModel() method after getting the response
-    
-    this.trainTheModel()
+    this.saveTrainedModelInfoIntoDataBase()
+    // this.trainTheModel()
     
   }
     

@@ -49,6 +49,7 @@ export class ManageCustomerBotComponent implements OnInit {
   tenantName: any;
   trainedModel:any;
   trainModelOptions: any[] = [];
+  filteredModelsList:any[]=[];
   trainBotOptions = [
   { label: 'TrainModel', value: 'TRAIN-MODEL' },
   { label: 'Document', value: 'DOC' },
@@ -119,13 +120,13 @@ export class ManageCustomerBotComponent implements OnInit {
     );
   }
 
-fetchPredefinedModels() {
+  fetchPredefinedModels() {
   this.rest_api.getPredefinedModels().subscribe(
     (modelsList) => {
       console.log(modelsList, "modelsList");
-
-
-      this.trainModelOptions = modelsList.map((model) => ({
+// Assuming modelsList is an array of objects containing the model information
+ this.filteredModelsList = modelsList.filter(model => model.tenantName === localStorage.getItem("tenantName"));
+      this.trainModelOptions = this.filteredModelsList.map((model) => ({
         label: model.modelName,
         value: model.modelName 
       }));
