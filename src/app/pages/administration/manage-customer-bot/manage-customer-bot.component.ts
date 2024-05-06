@@ -396,8 +396,8 @@ onUploadDoc() {
   formData.append('tenantName',this.tenantName);
   formData.append('type',"DOC");
   // formData.append('tenantName',localStorage.getItem("tenantName"));
-  // this.http.post('https://llm-python:5006/uploads', formData)
   this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
+  // this.http.post('http://localhost:5006/uploads', formData)
     .subscribe(
       (response) => {
         this.loader.hide();
@@ -421,8 +421,8 @@ onUploadeModelAndFile(botName:any) {
   modelAndFormData.append('botKey', this.botKey);
   modelAndFormData.append('tenantName',this.tenantName);
   modelAndFormData.append('model',this.trainedModel);
+  // this.http.post('http://localhost:5006/uploads', modelAndFormData)
   this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelAndFormData)
-  // this.http.post('http://llm-python:5006/uploads', modelAndFormData)
     .subscribe(
       (response) => {
         console.log('model and file uploaded successfully successful', response);
@@ -446,7 +446,9 @@ onUploadeMode(botName:any) {
     model: this.trainedModel
 
 };
-  // this.http.post('http://llm-python:5006/uploads/uploads', modelData)
+  this.hiddenPopUp = false;
+  // this.http.post('http://localhost:5006/uploads', modelData)
+  
   this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelData)
     .subscribe(
       (response) => {

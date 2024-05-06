@@ -256,7 +256,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   saveDetails() {
     //call this method in this.trainTheModel() method after getting the response
     this.saveTrainedModelInfoIntoDataBase()
-    // this.trainTheModel()
+    this.trainTheModel()
     
   }
     
