@@ -82,19 +82,22 @@ export class PagesComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if(this.isPredefinedBotUser){
+
         setTimeout(() => {
           const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
+          if(iframe)
           iframe.contentWindow.postMessage({ action: 'botKey', bot_key: 'g/ogMiS7UKhQwMXnUrKqlXGgNW/fm8cgloMwUzAuuAboQ/YIViOsalrEHPfMVdUWQId802CtpRrOdpW33YhGVqMSEUbXbJC5zkM=' }, '*');
         }, 2000);
         
         window.addEventListener('message', event => {
           const message = event.data;
           const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
+          if(iframe){
               iframe.style.height = message.height;
               iframe.style.width = message.width;
+          }
       });
-    }
+    
   }
 
   onToolbarMenuToggle() {
