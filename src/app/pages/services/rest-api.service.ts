@@ -1945,4 +1945,12 @@ getPaymentCards(){
   addNewCardURLGenerate(payload){
     return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
   }
+
+  getUploadDocs(formData){
+    return this.http.post("https://ezflowllm.dev.epsoftinc.com/uploads", formData)
+  }
+
+  getTrainedModel(formData){
+    return this.http.post('https://ezflowllm.dev.epsoftinc.com/train', formData)
+  }
 }

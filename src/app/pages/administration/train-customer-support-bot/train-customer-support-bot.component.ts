@@ -153,75 +153,8 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     this.updateOverlayData = event
     this.trainBotForm.get("trainBotName").setValue(this.updateOverlayData["trainBotName"]);
     this.trainBotForm.get("trainModelFile").setValue(this.updateOverlayData["trainModelFile"]);
-    // this.trainBotForm.get("trainModelName").setValue(this.updateOverlayData["trainModelName"]);
     this.trainBotForm.get("trainFile").setValue(this.updateOverlayData["trainFile"]);
   }
-
-  openEzAsk_Chat(rowData: any) {
-    // const embedUrl = rowData.customerSupportBotEmbedUrl;
-    const embedUrl = rowData.botKey;
-   
-    const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
-    window.open(fullUrl);
-  }
-
-
-
-
-  // saveDetails() {
-
-  //   this.trainTheModel()
-    // this.loader.show();
-    //   const recordId = Date.now();
-    //   const TrainedModel= localStorage.getItem("TrainedModel")
-    //   this.sampleObj = {
-    //     "id": recordId,
-    //     "trainBotName": this.trainBotForm.value.trainBotName,
-    //     "trainModelFile": this.trainBotForm.value.trainModelFile,
-    //     "trainModelName": this.trainBotForm.value.trainModelName,
-    //     "trainFile": this.trainBotForm.value.trainFile,
-        
-      
-
-    //   }
-      // this.trainBotList.push(this.sampleObj)
-      // localStorage.setItem('model', JSON.stringify(this.sampleObj))
-      // this.toastService.showSuccess("Saved Successfully","response")
-      // setTimeout(() => {
-      //   this.loader.hide();
-      // }, 1000);
-      // this.nextRecordId++;
-      // this.hiddenPopUp = false;
-      // this.trainBotForm.reset();
-
-  //   this.loader.show();
-  //   let req_body={
-  //     "trainBotName": this.trainBotForm.value.trainBotName,
-  //     "trainModelFile": this.trainBotForm.value.trainModelFile,
-  //     "trainModel": this.trainBotForm.value.trainModel,
-  //     "trainFile": this.trainBotForm.value.trainFile,
-  //   }
-  //   this.rest_api.saveDetails(req_body).subscribe((res: any) => {
-  //     let response = res;
-  //     let bot_Name = req_body.trainBotName;
-  //     this.loader.hide();
-  //     if (response.errorMessage == undefined) {
-  //       this.botKey = res.botKey,
-  //       this.tenantName = res.tenantId
-  //       this.onUpload(); 
-  //       this.toastService.showSuccess(bot_Name, 'save');
-  //       this.trainBotForm.reset();
-  //       this.hiddenPopUp = false;
-  //       this.getTableData(bot_Name);
-  //     } else {
-  //       this.toastService.showError(response.errorMessage);
-  //     }        
-  //   },(err: any) => {
-  //       this.loader.hide();
-  //       this.toastService.showError(this.toastMessages.saveError);
-  //     })
-  //   this.toastService.showSuccess("Saved Successfully","response")
-  //  }
 
   saveTrainedModelInfoIntoDataBase(){
     this.loader.show();
@@ -299,8 +232,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     formData.append('file', this.selectedFiles[0]);
     formData.append('modelName',this.trainBotForm.value.trainBotName);
     formData.append('tenantName',localStorage.getItem("tenantName"));
-    this.http.post('https://ezflowllm.dev.epsoftinc.com/train', formData)
-      .subscribe(
+    this.rest_service.getTrainedModel(formData).subscribe(
         (response) => {
           console.log('Response from train molde ', response);
           this.saveTrainedModelInfoIntoDataBase()

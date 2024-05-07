@@ -63,6 +63,7 @@ export class ManageCustomerBotComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private rest_api: CopilotService,
+    private api: RestApiService,
     private http: HttpClient,
   ) { }
 
@@ -395,11 +396,8 @@ onUploadDoc() {
   formData.append('botKey', this.botKey);
   formData.append('tenantName',this.tenantName);
   formData.append('type',"DOC");
-  // formData.append('tenantName',localStorage.getItem("tenantName"));
-  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
-  // this.http.post('http://localhost:5006/uploads', formData)
-    .subscribe(
-      (response) => {
+  this.api.getUploadDocs(formData).subscribe(
+      (response:any) => {
         this.loader.hide();
         this.manageBotForm.reset();
         this.hiddenPopUp = false;
@@ -421,9 +419,7 @@ onUploadeModelAndFile(botName:any) {
   modelAndFormData.append('botKey', this.botKey);
   modelAndFormData.append('tenantName',this.tenantName);
   modelAndFormData.append('model',this.trainedModel);
-  // this.http.post('http://localhost:5006/uploads', modelAndFormData)
-  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelAndFormData)
-    .subscribe(
+  this.api.getUploadDocs(modelAndFormData).subscribe(
       (response) => {
         console.log('model and file uploaded successfully successful', response);
         this.toastService.showSuccess(botName, 'save');
@@ -436,9 +432,6 @@ onUploadeModelAndFile(botName:any) {
     );
 }
 
-
-
-
 onUploadeMode(botName:any) {
   const modelData = {
     botKey: this.botKey,
@@ -447,10 +440,8 @@ onUploadeMode(botName:any) {
 
 };
   this.hiddenPopUp = false;
-  // this.http.post('http://localhost:5006/uploads', modelData)
   
-  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', modelData)
-    .subscribe(
+  this.api.getUploadDocs(modelData).subscribe(
       (response) => {
         console.log('model uploaded successfully', response);
         this.toastService.showSuccess(botName, 'save');
