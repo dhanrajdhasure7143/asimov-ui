@@ -95,4 +95,11 @@ updateCustomerBot(botId:any, requestBody: any){
   const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
   return this.http.put(url,requestBody, { headers: this.headers });
 }
+getUploadDocs(formData){
+  return this.http.post(environment.python_llm+"/uploads", formData)
+}
+
+getTrainedModel(formData){
+  return this.http.post(environment.python_llm+"/train", formData)
+}
 }

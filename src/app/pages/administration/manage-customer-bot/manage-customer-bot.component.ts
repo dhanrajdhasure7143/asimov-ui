@@ -63,7 +63,6 @@ export class ManageCustomerBotComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private rest_api: CopilotService,
-    private api: RestApiService,
     private http: HttpClient,
   ) { }
 
@@ -396,7 +395,7 @@ onUploadDoc() {
   formData.append('botKey', this.botKey);
   formData.append('tenantName',this.tenantName);
   formData.append('type',"DOC");
-  this.api.getUploadDocs(formData).subscribe(
+  this.rest_api.getUploadDocs(formData).subscribe(
       (response:any) => {
         this.loader.hide();
         this.manageBotForm.reset();
@@ -419,7 +418,7 @@ onUploadeModelAndFile(botName:any) {
   modelAndFormData.append('botKey', this.botKey);
   modelAndFormData.append('tenantName',this.tenantName);
   modelAndFormData.append('model',this.trainedModel);
-  this.api.getUploadDocs(modelAndFormData).subscribe(
+  this.rest_api.getUploadDocs(modelAndFormData).subscribe(
       (response) => {
         console.log('model and file uploaded successfully successful', response);
         this.toastService.showSuccess(botName, 'save');
@@ -441,7 +440,7 @@ onUploadeMode(botName:any) {
 };
   this.hiddenPopUp = false;
   
-  this.api.getUploadDocs(modelData).subscribe(
+  this.rest_api.getUploadDocs(modelData).subscribe(
       (response) => {
         console.log('model uploaded successfully', response);
         this.toastService.showSuccess(botName, 'save');

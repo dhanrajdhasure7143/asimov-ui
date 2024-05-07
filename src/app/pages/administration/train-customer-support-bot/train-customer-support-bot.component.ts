@@ -232,7 +232,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
     formData.append('file', this.selectedFiles[0]);
     formData.append('modelName',this.trainBotForm.value.trainBotName);
     formData.append('tenantName',localStorage.getItem("tenantName"));
-    this.rest_service.getTrainedModel(formData).subscribe(
+    this.rest_api.getTrainedModel(formData).subscribe(
         (response) => {
           console.log('Response from train molde ', response);
           this.saveTrainedModelInfoIntoDataBase()
