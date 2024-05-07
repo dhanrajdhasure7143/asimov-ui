@@ -45,4 +45,8 @@ export class PredefinedBotsService {
     return this.http.get("/rpa-service/predefined/predefinedbot-logs/"+id)
   }
 
+  validateRecruitmentBotData(body){
+    return this.http.post("/rpa-service/predefined/validate-predefined-inputs",body)
+  }
+
 }
