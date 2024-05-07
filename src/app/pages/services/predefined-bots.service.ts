@@ -26,7 +26,7 @@ export class PredefinedBotsService {
   }
 
   startPredefinedBot(id){
-    return this.http.post(`/rpa-service/predefined/start-predefined-bot/${id}`,{})
+    return this.http.post(`/rpa-service/predefined/start-predefinedbot/${id}`,{})
   }
 
   stopPredefinedBot(id){
@@ -42,7 +42,7 @@ export class PredefinedBotsService {
   // }
 
   getPredefinedBotLogs(id){
-    return this.http.get("/rpa-service/predefined/predefinedbotLogs/"+id)
+    return this.http.get("/rpa-service/predefined/predefinedbot-logs/"+id)
   }
 
 }

@@ -2614,7 +2614,8 @@ span.statusbadge_nc {
   height: calc(100vh - 200px) !important;
 }
 .rpalogsgrid .p-datatable-wrapper {
-  height: calc(100% - 177px); /* for rpa so logs grid */
+  /* height: calc(100% - 177px); /* for rpa so logs grid */
+  height: calc(100vh - 153px);
 }
 .rpaauditsgrid .p-datatable-wrapper,
 .rpapprovalsgrid .p-datatable-wrapper {
@@ -4107,4 +4108,8 @@ padding: 0px 30px;}
 }
 .predefined-bots .p-steps-item{
   background: #fff !important;
+}
+
+.predefined-logs-grid .p-datatable-scrollable .p-datatable-wrapper {
+  height: calc(100vh - 152px);
 }

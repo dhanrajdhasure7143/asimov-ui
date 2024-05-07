@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { PredefinedBotsRoutingModule } from './predefined-bots-routing.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
@@ -48,6 +48,6 @@ import { columnList } from 'src/app/shared/model/table_columns';
     MatDatepickerModule,
     SharedModule
   ],
-  providers: [toastMessages, BsModalRef, BsModalService, columnList]
+  providers: [toastMessages, BsModalRef, BsModalService, columnList, DatePipe]
 }) 
 export class PredefinedBotsModule { }

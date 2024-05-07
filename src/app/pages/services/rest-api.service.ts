@@ -1945,4 +1945,6 @@ getPaymentCards(){
   addNewCardURLGenerate(payload){
     return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
   }
+
+
 }
