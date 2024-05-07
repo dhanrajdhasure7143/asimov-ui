@@ -8,7 +8,6 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
 const routes: Routes = [
   {path:'', component:PagesComponent, children:[
     {path:'home', component:HomeComponent}, 
-    
     {path:'dashboard', loadChildren: () => import('././dashboard/dashboard.module').then(m => m.DashboardModule)},
     {path:'businessProcess', loadChildren: () => import('./business-process/business-process.module').then(m => m.BusinessProcessModule)},
     {path:'processIntelligence', loadChildren: () => import('./process-intelligence/process-intelligence.module').then(m => m.ProcessIntelligenceModule)},
@@ -18,8 +17,8 @@ const routes: Routes = [
     {path:'projects', loadChildren: () => import('./projects/projects.module').then(m => m.ProjectsModule)},
     {path:'admin', loadChildren:() => import('./administration/administration.module').then(m => m.AdministrationModule)},
     {path:'subscriptions', loadChildren:() => import('./manage-subscriptions/manage-subscriptions.module').then(m => m.ManageSubscriptionsModule)},
-    {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
-    {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
+    // {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
+    // {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
     {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
     {path:'predefinedbot', loadChildren: () => import('./predefined-bots/predefined-bots.module').then(m => m.PredefinedBotsModule)},
     {path:'success',component:SuccessPaymentComponent},
