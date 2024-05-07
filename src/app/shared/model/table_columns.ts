@@ -258,8 +258,8 @@ export class columnList{
       ];
       
       public train_cutomer_support_bot_coloumns = [
-        {ColumnName: "trainBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "trainData",DisplayName: "Train Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "trainBotName",DisplayName: "Trained Model Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "trainData",DisplayName: "File Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
       

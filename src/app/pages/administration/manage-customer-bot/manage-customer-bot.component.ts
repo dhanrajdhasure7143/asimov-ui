@@ -8,12 +8,18 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { CopilotService } from '../../services/copilot.service';
 import { HttpClient } from '@angular/common/http';
+import { RestApiService } from '../../services/rest-api.service';
 
 enum BotContentType {
   Web = 'WEB',
   Document = 'DOC',
   WebandDocument = 'WEB_DOC',
   Public = 'PUB',
+}
+enum TrainBotOptions {
+  TrainModel = 'TRAIN-MODEL',
+  Document = 'DOC'
+
 }
 
 @Component({
@@ -34,13 +40,20 @@ export class ManageCustomerBotComponent implements OnInit {
   botContentOptions = [
     { label: 'Document', value: 'DOC' },
     { label: 'Web', value: 'WEB' },
-    // { label: 'Web and Document', value: 'WEB_DOC' },
     { label: 'Public', value: 'PUB' },
+    { label: 'Train Model', value: 'MODEL' },
+    { label: 'Hybrid', value: 'HYBRID' }
   ];
   selectedFiles: any[] = [];
   botKey: any;
   tenantName: any;
-
+  trainedModel:any;
+  trainModelOptions: any[] = [];
+  filteredModelsList:any[]=[];
+  trainBotOptions = [
+  { label: 'TrainModel', value: 'TRAIN-MODEL' },
+  { label: 'Document', value: 'DOC' },
+];
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -61,8 +74,15 @@ export class ManageCustomerBotComponent implements OnInit {
     setTimeout(() => {
       this.loader.hide();
     }, 1000);
+    this.fetchPredefinedModels();
+    this.loadePreDefinedMOdels()
   }
 
+  loadePreDefinedMOdels(){
+    this.fetchPredefinedModels()
+  }
+ 
+ 
   private initializeBotForm() {
     const formControls = {
       customerSupportBotName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -99,7 +119,24 @@ export class ManageCustomerBotComponent implements OnInit {
       }
     );
   }
-  
+
+  fetchPredefinedModels() {
+  this.rest_api.getPredefinedModels().subscribe(
+    (modelsList) => {
+      console.log(modelsList, "modelsList");
+// Assuming modelsList is an array of objects containing the model information
+ this.filteredModelsList = modelsList.filter(model => model.tenantName === localStorage.getItem("tenantName"));
+      this.trainModelOptions = this.filteredModelsList.map((model) => ({
+        label: model.modelName,
+        value: model.modelName 
+      }));
+    },
+    (error) => {
+      console.error('Error loading models:', error);
+    }
+  );
+}
+
   viewDetails(event: any) {
     this.router.navigate(["/pages/admin/view-customer-bot-details"], {
       queryParams: { id: event.customerSupportBotId, name : event.customerSupportBotName, },
@@ -192,7 +229,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
         "greetingMessage": this.manageBotForm.value.greetingMessage,
         "primaryPrompt": this.manageBotForm.value.primaryPrompt,
-        "respPrefix": this.manageBotForm.value.respPrefix,
+        // "respPrefix": this.manageBotForm.value.respPrefix,
+        "respPrefix": this.trainedModel,
         "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
         "customerSupportBotEmbedUrl": "",
         "botKey": "",
@@ -207,22 +245,41 @@ export class ManageCustomerBotComponent implements OnInit {
       this.rest_api.saveCustomerBot(req_body).subscribe((res: any) => {
         let response = res;
         let bot_Name = req_body.customerSupportBotName;
-        this.loader.hide();
+      
         if (response.errorMessage == undefined) {
           this.botKey = res.botKey,
-          this.tenantName = res.tenantId
-          this.onUpload(); 
-          this.toastService.showSuccess(bot_Name, 'save');
+          this.tenantName = res.tenantId,
+          this.trainedModel=res.respPrefix
+          //here based on the condition call file uploade api or model and file uploade
+
+          //1.if is only file
+          if(req_body.customerSupportBotSource=="DOC"){
+            this.onUploadDoc();
+            this.getAllCustomerBots();
+          }
+       
+        //2.pytho api m ==> model name and file
+        if(req_body.customerSupportBotSource=="HYBRID"){
+          this.onUploadeModelAndFile(bot_Name)
+        
+        }
+        if(req_body.customerSupportBotSource=="MODEL"){
+          this.onUploadeMode(bot_Name)
+         
+        }else {
+          this.loader.hide();
           this.manageBotForm.reset();
           this.hiddenPopUp = false;
-          this.getAllCustomerBots();
-        } else {
-          this.toastService.showError(response.errorMessage);
-        }        
+          } 
+         
+        } 
+        this.getAllCustomerBots();
+               
       },(err: any) => {
           this.loader.hide();
           this.toastService.showError(this.toastMessages.saveError);
         })
+        this.manageBotForm.reset();
   }
     
   updateCustomerSupportBot() {
@@ -254,6 +311,11 @@ export class ManageCustomerBotComponent implements OnInit {
         let bot_Name = req_body.customerSupportBotName;
         this.loader.hide();
         if (response.errorMessage == undefined) {
+          if(req_body.customerSupportBotSource=="DOC"){
+            this.botKey = res.botKey,
+            this.tenantName = res.tenantId,
+            this.onUploadDoc();
+          }
           this.toastService.showSuccess(bot_Name, 'update');
           this.manageBotForm.reset();
           this.hiddenPopUp = false;
@@ -320,8 +382,11 @@ semicolumn(event: KeyboardEvent) {
 onFileSelected(event: any) {
   this.selectedFiles = event.target.files;
 }
+onModelChange(value:any){
+  this.trainedModel=value
+}
 
-onUpload() {
+onUploadDoc() {
   const formData = new FormData();
   // for (const file of this.selectedFiles) {
   //   formData.append('files[]', file);
@@ -329,16 +394,62 @@ onUpload() {
   formData.append('file', this.selectedFiles[0]);
   formData.append('botKey', this.botKey);
   formData.append('tenantName',this.tenantName);
-  formData.append('tenantName',localStorage.getItem("tenantName"));
-  this.http.post('https://ezflowllm.dev.epsoftinc.com/uploads', formData)
-    .subscribe(
-      (response) => {
-        console.log('Upload successful', response);
+  formData.append('type',"DOC");
+  this.rest_api.getUploadDocs(formData).subscribe(
+      (response:any) => {
+        this.loader.hide();
+        this.manageBotForm.reset();
+        this.hiddenPopUp = false;
+
       },
       (error) => {
         console.error('Upload error', error);
       }
     );
 }
+
+onUploadeModelAndFile(botName:any) {
+
+  const modelAndFormData = new FormData();
+  // for (const file of this.selectedFiles) {
+  //   formData.append('files[]', file);
+  // }
+  modelAndFormData.append('file', this.selectedFiles[0]);
+  modelAndFormData.append('botKey', this.botKey);
+  modelAndFormData.append('tenantName',this.tenantName);
+  modelAndFormData.append('model',this.trainedModel);
+  this.rest_api.getUploadDocs(modelAndFormData).subscribe(
+      (response) => {
+        console.log('model and file uploaded successfully successful', response);
+        this.toastService.showSuccess(botName, 'save');
+        this.manageBotForm.reset();
+        this.hiddenPopUp = false;
+      },
+      (error) => {
+        console.error('Failed to uploade  model mand file', error);
+      }
+    );
 }
 
+onUploadeMode(botName:any) {
+  const modelData = {
+    botKey: this.botKey,
+    tenantName: this.tenantName,
+    model: this.trainedModel
+
+};
+  this.hiddenPopUp = false;
+  
+  this.rest_api.getUploadDocs(modelData).subscribe(
+      (response) => {
+        console.log('model uploaded successfully', response);
+        this.toastService.showSuccess(botName, 'save');
+        this.loader.hide();
+        this.manageBotForm.reset();
+        this.hiddenPopUp = false;
+      },
+      (error) => {
+        console.error('Failed to uploade  model mand file', error);
+      }
+    );
+}}
