@@ -80,8 +80,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Bot Name", preAttributeLable: "Automation Bot Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
-      this.formFields.push(...res.data.filter(item=>  item.visibility))
-      this.duplicateAttributes.push(...res.data.filter(item=>  !item.visibility))
+      this.formFields.push(...res.data.filter(item=>  !item.duplicate))
+      this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
       // res.data.forEach(element => {
       //   this.formFields.push(element)
       // });
@@ -100,7 +100,11 @@ export class PredefinedBotsFormsComponent implements OnInit {
   generateDynamicForm(){
     const fieldsGroup = {};
     this.formFields.forEach(field => {
-      fieldsGroup[field.preAttributeName] = ['', Validators.required];
+      if(field.attributeRequired){
+        fieldsGroup[field.preAttributeName] = ['', Validators.required];
+      }else{
+        fieldsGroup[field.preAttributeName] = [''];
+      }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
@@ -226,12 +230,11 @@ if(this.params.type =='edit'){
   }
 
   nextPage() {
-    console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
-    if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
-      this.toaster.showError(this.toastMessages.jd_error)
-      
-      return
-    }
+    // console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
+    // if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
+    //   this.toaster.showError(this.toastMessages.jd_error)
+    //   return
+    // }
     if (this.currentPage < this.pages.length) {
       this.currentPage++;
       this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
@@ -372,7 +375,7 @@ if(this.params.type =='edit'){
     }
   }
 
-  onFieldBlur(type){
+  validateJobDescription(type){
     if(this.predefinedBotsForm.get("fields.Recruitment_email_jobDescrption").errors == null)
     if(this.predefinedBot_name == 'Recruitment' && type.preAttributeName =='Recruitment_email_jobDescrption'){
     let req_body={
@@ -409,6 +412,20 @@ if(this.params.type =='edit'){
 
   handleFileInput(event){
     console.log(event)
+  }
+
+  onRadioChange(value: string) {
+    console.log(value)
+    if (value === 'option1') {
+        // this.showTextarea = true;
+        // this.showFileUpload = false;
+    } else if (value === 'option2') {
+        // this.showTextarea = false;
+        // this.showFileUpload = true;
+    }
+    // const fd = new FormData();
+    // fd.append('file', this.selectedFile),
+    //   fd.append('permissionStatus', 'yes'),
   }
 
 }

@@ -26,8 +26,10 @@
                       [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
 
                       <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
-                          [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (blur)="onFieldBlur(field)"></textarea>
-                          <div *ngIf="field.preAttributeType === 'textarea' && predefinedBot_name == 'Recruitment' && field.preAttributeName =='Recruitment_email_jobDescrption'" style="width: 70%;">
+                          [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" ></textarea>
+                        <button type="button" class="btn bluebg-button" (click)="validateJobDescription(field)" *ngIf="field.preAttributeType === 'textarea' && predefinedBot_name == 'Recruitment' && field.preAttributeName.includes('jobDescrption')">Validate</button>
+
+                          <div *ngIf="field.preAttributeType === 'textarea' && predefinedBot_name == 'Recruitment' && field.preAttributeName.includes('jobDescrption')" style="width: 70%;">
                             <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
                             <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>
                             <span class="text-success" *ngIf="!isJobDescrption_error && validate_errorMessage.length>0 && !job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
@@ -42,18 +44,27 @@
                       <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                           [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
 
-                      <div *ngIf="field.preAttributeType === 'radio'" class="form-check">
+                      <!-- <div *ngIf="field.preAttributeType === 'radio'" class="form-check">
                           <label *ngFor="let option of field.options" class="form-check-label">
                               <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
                           </label>
-                      </div>
+                      </div> -->
+                      <div *ngIf="field.preAttributeType === 'radio'">
+                        <div class="form-check" *ngFor="let option of field.options">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
+                                (change)="onRadioChange(option.value)"> {{ option.label }}
+                            </label>
+                        </div>
+                        
+                    </div>
 
                       <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                           <label *ngFor="let option of field.options" class="form-check-label">
                               <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
                           </label>
                       </div>
-
+                      
                       <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="handleFileInput($event)">
 
 
