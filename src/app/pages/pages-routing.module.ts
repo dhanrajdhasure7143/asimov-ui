@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PagesComponent } from './pages.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
     {path:'predefinedbot', loadChildren: () => import('./predefined-bots/predefined-bots.module').then(m => m.PredefinedBotsModule)},
     {path:'success',component:SuccessPaymentComponent},
+    {path:'userDetails', component:UserDetailsComponent},
     {path:'**', redirectTo:'/home', pathMatch:"full"},
 
   ]}
