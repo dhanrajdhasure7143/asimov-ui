@@ -40,6 +40,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   isJobDescrptionValid:boolean= false;
   description_type:string='textarea';
   selectedFiles:any[]=[];
+  jobDescription:any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -317,6 +318,7 @@ if(this.params.type =='edit'){
   createBot() {
     if (this.predefinedBotsForm.valid) {
     this.spinner.show();
+          this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName).setValue(JSON.stringify(this.jobDescription.response))    
       let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
@@ -430,7 +432,9 @@ if(this.params.type =='edit'){
         this.isJobDescrption_error = false;
           this.validate_errorMessage = ["Valid"]
           this.isJobDescrptionValid = true;
-          this.predefinedBotsForm.get("fields."+type.preAttributeName).setValue(res.data)    
+          this.jobDescription = res
+          this.jobDescription["fieldName"]= type.preAttributeName
+          // this.predefinedBotsForm.get("fields."+type.preAttributeName).setValue(JSON.stringify(res.response))    
       }
       if(res.code == 500){
         this.validate_errorMessage = ["Error"];
