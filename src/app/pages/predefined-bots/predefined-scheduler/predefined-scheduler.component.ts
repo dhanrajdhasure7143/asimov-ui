@@ -355,20 +355,34 @@ gettime(){
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
          let data:any;
-        data={
-          scheduledIntervalid:27,
-          scheduleInterval:this.cronExpression,
-          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
-          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
-          timeZone:this.timezone,
-          botSource:"EPSoft",
-          botActionStatus:"New",
-          modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
-        }
+
+        let scheduleData= [
+          {
+          "intervalId":this.generateid(),
+         "scheduleInterval":this.cronExpression,
+         startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
+         endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
+         "timezone":this.timezone,
+         "save_status":"unsaved",
+         "processId":null,
+         "processName":"",
+         "envId":"",
+         "check":false
+        }]
+        // data={
+        //   scheduledIntervalid:27,
+        //   scheduleInterval:this.cronExpression,
+        //   startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
+        //   endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
+        //   timeZone:this.timezone,
+        //   botSource:"EPSoft",
+        //   botActionStatus:"New",
+        //   modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
+        // }
        // let scheduleArr=[...this.schedule_list];
         //scheduleArr.push(data);
-        this.schedulerData.emit(data)
-        console.log(data)
+        this.schedulerData.emit(scheduleData)
+        // console.log(data)
         return
         this.loader.show()
         this.rest.addbotSchedules([data]).subscribe((response:any)=>{
@@ -589,8 +603,7 @@ gettime(){
     })
   }
 
-  generateid()
-  {
+  generateid(){
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -676,7 +689,6 @@ gettime(){
   
   getAlltimezones(){
     this.rest.getTimeZone().subscribe(res =>{
-      
         this.timesZones=res;
      })
   }

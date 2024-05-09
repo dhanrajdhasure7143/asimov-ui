@@ -38,6 +38,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
   isValidateLoader:boolean = false;
   job_Descrption_error:boolean = false;
   isJobDescrptionValid:boolean= false;
+  description_type:string='textarea';
+  selectedFiles:any[]=[];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -80,7 +82,17 @@ export class PredefinedBotsFormsComponent implements OnInit {
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Bot Name", preAttributeLable: "Automation Bot Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
-      this.formFields.push(...res.data.filter(item=>  !item.duplicate))
+      // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
+      this.formFields.push(...res.data
+        .filter(item => !item.duplicate)
+        .map(item => {
+            if (item.preAttributeName === 'RecruitmentOne_email_jobDescrption') {
+                return { ...item, isValidateRequired: true };
+            } else {
+                return item;
+            }
+        })
+    );
       this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
       // res.data.forEach(element => {
       //   this.formFields.push(element)
@@ -109,6 +121,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    console.log("this.pages",this.pages)
       this.pages.forEach(element => {
         let obj ={label:" ",command: () => { this.goToPage(element)}}
           this.items.push(obj)
@@ -230,6 +243,7 @@ if(this.params.type =='edit'){
   }
 
   nextPage() {
+    console.log(this.formFields)
     // console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
     // if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
     //   this.toaster.showError(this.toastMessages.jd_error)
@@ -345,6 +359,7 @@ if(this.params.type =='edit'){
   readEmitValue(data){
     this.scheduler_data = data;
     this.scheduleOverlayFlag = false;
+    data.processName = this.predefinedBotsForm.value.fields.botName
     this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(data))
   }
 
@@ -376,17 +391,30 @@ if(this.params.type =='edit'){
   }
 
   validateJobDescription(type){
-    if(this.predefinedBotsForm.get("fields.Recruitment_email_jobDescrption").errors == null)
-    if(this.predefinedBot_name == 'Recruitment' && type.preAttributeName =='Recruitment_email_jobDescrption'){
-    let req_body={
-      "inputReference": this.predefinedBotsForm.value.fields.Recruitment_email_jobDescrption,
-      "inputType": "ceipal"
-    };
+    console.log("type",type)
+
+    if(this.predefinedBotsForm.get("fields.RecruitmentOne_email_jobDescrption").errors == null)
+    if(this.predefinedBot_name == 'Recruitment'){
+      console.log(this.predefinedBotsForm)
+      const formData = new FormData();
+        formData.append('inputType', "ceipal");
+      if(type.preAttributeType == "textarea"){
+        formData.append('type', "text");
+        formData.append('inputReference', this.predefinedBotsForm.value.fields.RecruitmentOne_email_jobDescrption);
+      }else{
+        formData.append('type', "file");
+        formData.append('filepath', this.selectedFiles[0]);
+      }
+
+    // let req_body={
+    //   "inputReference": this.predefinedBotsForm.value.fields.Recruitment_email_jobDescrption,
+    //   "inputType": "ceipal"
+    // };
     this.validate_errorMessage = [];
     this.isValidateLoader  = true;
     this.job_Descrption_error = false;
     this.isJobDescrptionValid = false;
-    this.rest_service.validateRecruitmentBotData(req_body).subscribe((res:any)=>{
+    this.rest_service.validateRecruitmentBotData(formData).subscribe((res:any)=>{
       console.log("response",res)
       this.isValidateLoader = false;
       this.isJobDescrption_error = false;
@@ -401,6 +429,7 @@ if(this.params.type =='edit'){
         this.isJobDescrption_error = false;
           this.validate_errorMessage = ["Valid"]
           this.isJobDescrptionValid = true;
+          this.predefinedBotsForm.get("fields."+type.preAttributeName).setValue(res.data)    
       }
       if(res.code == 500){
         this.validate_errorMessage = ["Error"];
@@ -410,22 +439,29 @@ if(this.params.type =='edit'){
   }
   }
 
-  handleFileInput(event){
-    console.log(event)
+  onFileSelected(event: any) {
+    this.selectedFiles = event.target.files;
   }
 
-  onRadioChange(value: string) {
-    console.log(value)
-    if (value === 'option1') {
-        // this.showTextarea = true;
-        // this.showFileUpload = false;
-    } else if (value === 'option2') {
-        // this.showTextarea = false;
-        // this.showFileUpload = true;
-    }
+  onRadioChange(value: string,option_item) {
+    console.log(value,option_item)
+
+    this.predefinedBotsForm.get("fields."+option_item.field).setValue("")
+    this.formFields.find(item=>item.preAttributeName == option_item.field && item.preAttributeType != value).visibility =false
+    this.formFields.find(item=>item.preAttributeName == option_item.field && item.preAttributeType == value).visibility =true
+    // console.log("field",field)
+      // this.description_type =value;
+
     // const fd = new FormData();
     // fd.append('file', this.selectedFile),
     //   fd.append('permissionStatus', 'yes'),
+  }
+
+  onKeydown(e,field){
+    this.isJobDescrptionValid = false;
+    this.isJobDescrption_error = true;
+    this.isValidateLoader = false;
+    this.validate_errorMessage=[];
   }
 
 }
