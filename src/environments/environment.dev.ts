@@ -49,6 +49,7 @@ export const environment = {
     environmentName: "DEV",
     paymentSuccessURL: "https://eziap.dev.epsoftinc.com/#/pages/success",
     paymentFailuerURL: "https://eziap.dev.epsoftinc.com/#/pages/subscriptions",
-    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
+    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
+    python_llm:"https://ezflowllm.dev.epsoftinc.com"
   };
   

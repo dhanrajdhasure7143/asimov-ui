@@ -180,4 +180,11 @@ setScreenList(module:any){
   mico_botList(value:any){
     this.microBotData.next(value);
   }
+
+  private tenant_Info:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  public _tenant_info=this.tenant_Info.asObservable();
+
+  tenantInfo(value:any){
+    this.tenant_Info.next(value);
+  }
 }

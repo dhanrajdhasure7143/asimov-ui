@@ -30,9 +30,14 @@ export class PredefinedBotsFormsComponent implements OnInit {
   schedulerComponentInput: any;
   private subscription: Subscription;
   private predefinedBot_id:any;
-  private predefinedBot_name:any;
+  public predefinedBot_name:any;
   public scheduler_data :any;
-  duplicateAttributes:any=[]
+  duplicateAttributes:any=[];
+  isJobDescrption_error:boolean = false;
+  validate_errorMessage=[];
+  isValidateLoader:boolean = false;
+  job_Descrption_error:boolean = false;
+  isJobDescrptionValid:boolean= false;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -84,50 +89,6 @@ export class PredefinedBotsFormsComponent implements OnInit {
       // this.formFields={...{},...res.data};
       this.predefinedBot_name = res.predefinedBotName;
       this.processName = "Automate your "+ this.predefinedBot_name +" Process"
-      // this.formFields = [
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "number", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "email", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "dropdown", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "dropdown", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "dropdown", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      //   { attributeRequired: true, id: 3, maxNumber: 100, minMumber: 0, placeholder: "Enter Email", preAttributeLabel: "Enter Email", name: "Email", preAttributeType: "text", predefinedBotId: 2, productId: "prod_PdiLNkF4ZbHkgj", visibility: true },
-      // ]
-    
-    //   this.formFields = [
-    //   { label: "Bot Name", name: "botName", type: "text", placeholder: "Enter bot name" },
-    //   { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
-    //   { label: "Tenant ID", name: "tenantId", type: "number", placeholder: "Enter tenant ID" },
-    //   { label: "Client ID", name: "clientId", type: "email", placeholder: "Enter client ID" },
-    //   { label: "Client Secret", name: "clientSecret", type: "text", placeholder: "Enter client secret" },
-    //   { label: "Web Driver Type", name: "webDriverType", type: "dropdown", options: ['Google Chrome', 'Microsoft Edge'], placeholder: "Select web driver type" },
-    //   { label: "URL", name: "url", type: "text", placeholder: "Enter URL" },
-    //   { label: "Web Element Type", name: "webElementType", type: "dropdown", options: ['X-Path', 'CSS Selector'], placeholder: "Select web element type" },
-    //   { label: "Web Element Value", name: "webElementValue", type: "text", placeholder: "Enter web element value" },
-    //   { label: "Value Type", name: "valueType", type: "dropdown", options: ['Text Box', 'Dropdown', 'Date Picker'], placeholder: "Select value type" },
-    //   { label: "Value", name: "value", type: "text", placeholder: "Enter value" },
-    //   { label: "Standard Dropdown Value", name: "standardDropdownValue", type: "text", placeholder: "Enter dropdown value" },
-    //   { label: "Click", name: "clickAction", type: "text", placeholder: "Enter click action" },
-    //   { label: "View", name: "viewType", type: "dropdown", options: ['Full Page', 'Default View'], placeholder: "Select view" },
-    //   { label: "Variable", name: "variable", type: "text", placeholder: "Define variable" },
-    //   { label: "Assignment", name: "assignment", type: "text", placeholder: "Describe assignment" },
-    //   { label: "Email/Organization Name", name: "emailOrganization", type: "dropdown", options: ['EPSoft', 'Microsoft'], placeholder: "Select organization" },
-    //   { label: "Email Reference", name: "emailReference", type: "text", placeholder: "Enter email reference" },
-    //   { label: "Recipient Email", name: "recipientEmail", type: "text", placeholder: "Enter recipient's email" },
-    //   { label: "Subject", name: "emailSubject", type: "text", placeholder: "Enter email subject" },
-    //   { label: "Mail Message", name: "mailMessage", type: "textarea", placeholder: "Type your message" },
-    //   { label: "File", name: "file", type: "text", placeholder: "Specify file path" },
-    //   { label: "Signature", name: "signature", type: "text", placeholder: "Enter signature details" },
-    //   { label: "Set Importance", name: "setImportance", type: "dropdown", options: ['Normal', 'Low', 'High'], placeholder: "Select importance level" },
-    //   { label: "CC Recipient", name: "ccRecipient", type: "text", placeholder: "Enter CC recipient's email" },
-    //   { label: "BCC Recipient", name: "bccRecipient", type: "text", placeholder: "Enter BCC recipient's email" }
-    // ];
       this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
@@ -265,6 +226,12 @@ if(this.params.type =='edit'){
   }
 
   nextPage() {
+    console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
+    if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
+      this.toaster.showError(this.toastMessages.jd_error)
+      
+      return
+    }
     if (this.currentPage < this.pages.length) {
       this.currentPage++;
       this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
@@ -403,6 +370,45 @@ if(this.params.type =='edit'){
     if (!this.predefinedBotsForm.get('isScheduleBot').value) {
         this.predefinedBotsForm.get('scheduleTime').setValue('');
     }
-}
+  }
+
+  onFieldBlur(type){
+    if(this.predefinedBotsForm.get("fields.Recruitment_email_jobDescrption").errors == null)
+    if(this.predefinedBot_name == 'Recruitment' && type.preAttributeName =='Recruitment_email_jobDescrption'){
+    let req_body={
+      "inputReference": this.predefinedBotsForm.value.fields.Recruitment_email_jobDescrption,
+      "inputType": "ceipal"
+    };
+    this.validate_errorMessage = [];
+    this.isValidateLoader  = true;
+    this.job_Descrption_error = false;
+    this.isJobDescrptionValid = false;
+    this.rest_service.validateRecruitmentBotData(req_body).subscribe((res:any)=>{
+      console.log("response",res)
+      this.isValidateLoader = false;
+      this.isJobDescrption_error = false;
+      this.validate_errorMessage = [];
+      if(res.code == 404){
+        if(res.is_fields_missing){
+          this.validate_errorMessage = res.missing;
+          this.isJobDescrption_error = res.is_fields_missing;
+        }
+      }
+      if(res.code == 200){
+        this.isJobDescrption_error = false;
+          this.validate_errorMessage = ["Valid"]
+          this.isJobDescrptionValid = true;
+      }
+      if(res.code == 500){
+        this.validate_errorMessage = ["Error"];
+        this.job_Descrption_error = true;
+      }
+    })
+  }
+  }
+
+  handleFileInput(event){
+    console.log(event)
+  }
 
 }

@@ -124,6 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.newAccessToken = resp;
         localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       });
+    this.getexpiryInfo();
   }
 
   ngOnInit() {
@@ -150,7 +151,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getTenantLists();
     this.navigationTenantName = localStorage.getItem("tenantSwitchName")
     this.isChatEnable = environment.isChatEnable? environment.isChatEnable : false;
-    this.getexpiryInfo();
   }
 
   loopTrackBy(index, term) {
@@ -427,7 +427,7 @@ getexpiryInfo(){
     // this.tenantSwitchDropdown = data.expiresIn === 0;
     this.tenantSwitchDropdown = data.expiresIn === 0 || data.expiresIn <= 0;
     this.isPredefinedBots = data.isPredefinedBots;
-    console.log(this.isPredefinedBots)
+    this.dataTransfer.tenantInfo(data);
   })
 }
 }

@@ -78,6 +78,14 @@ saveCustomerBot(body:any){
   return this.http.post(environment.asquare+"/a-square/admin/v1/customer-support-bot", body, {headers:this.headers})
 }
 
+getPredefinedModels(){
+  return this.http.get(environment.asquare+"/a-square/v1/external/conversation/models", {headers:this.headers})
+
+}
+
+saveTrinedModel(body:any){
+  return this.http.post(environment.asquare+"/a-square/v1/external/conversation/models",body, {headers:this.headers})
+}
 deleteCustomerBot(botId:any){
   const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
   return this.http.delete(url, { headers: this.headers });
@@ -86,5 +94,12 @@ deleteCustomerBot(botId:any){
 updateCustomerBot(botId:any, requestBody: any){
   const url = `${environment.asquare}/a-square/admin/v1/customer-support-bot/${botId}`;
   return this.http.put(url,requestBody, { headers: this.headers });
+}
+getUploadDocs(formData){
+  return this.http.post(environment.python_llm+"/uploads", formData)
+}
+
+getTrainedModel(formData){
+  return this.http.post(environment.python_llm+"/train", formData)
 }
 }

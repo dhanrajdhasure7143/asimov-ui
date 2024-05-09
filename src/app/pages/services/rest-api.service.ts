@@ -1958,4 +1958,5 @@ getPaymentCards(){
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/registration-continue', payload, { headers: headers, observe: 'response' })
   }
+
 }
