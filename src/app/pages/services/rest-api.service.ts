@@ -1959,4 +1959,8 @@ getPaymentCards(){
     return this.http.post<any>('/api/user/registration-continue', payload, { headers: headers, observe: 'response' })
   }
 
+  getUserStatus(body){
+    return this.http.post<any[]>("/api/login/beta/current-screen-status",body); 
+  }
+
 }

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { RestApiService } from '../services/rest-api.service';
 import { CryptoService } from '../services/crypto.service';
 import { environment } from 'src/environments/environment';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
 @Component({
     selector: 'app-user-details',
     templateUrl: './user-details.component.html',
@@ -36,7 +37,8 @@ export class UserDetailsComponent implements OnInit {
         private crypto: CryptoService,
         private spinner: NgxSpinnerService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toaster: ToasterService
 
 
     ) {
@@ -213,7 +215,7 @@ export class UserDetailsComponent implements OnInit {
         var payload = new FormData();
         var reqObj = {}
         reqObj = {
-            userId: "dade.tonny@foodfarms.net",
+            userId: localStorage.getItem("ProfileuserId"),
             jobTitle: this.userForm.value.jobTitle,
             department: this.userForm.value.department,
             // organization: this.userForm.value.organization,
@@ -225,31 +227,34 @@ export class UserDetailsComponent implements OnInit {
         }
         payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
         console.log("Req_Payload", reqObj);
-        // return
+
         this.rest_api.registrationContinue(payload).subscribe((res: any) => {
             this.spinner.hide();
             if (res.body.message == "User Details Saved Successfully!!") {
-                if (environment.isSubscrptionEnabled) {
-                    // let obj = {email : this.userId, password : this.userPsw}
-                    // this.router.navigate(['/subscription'],{
-                    //     queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
-                    //   });
-                    Swal.fire({
-                        title: 'Success!',
-                        text: `User Details Saved Successfully!`,
-                        icon: 'success',
-                        showCancelButton: false,
-                        allowOutsideClick: false
-                    }).then((result) => {
-                        if (result.value) {
-                            this.router.navigate(['/user']);
-                        }
-                    });
-                }
+                this.toaster.toastSuccess(res.body.message);
+                this.rest_api.expiryInfo().subscribe(data => {
+                    if(data.isPredefinedBots){
+                        this.router.navigate(["/pages/predefinedbot/home"]);
+                    }else{
+                        if(environment.isCopilotEnable)
+                        this.router.navigate(["/pages/copilot/home"]);
+                          if(!environment.isCopilotEnable)
+                            this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+                            let dashbordlist:any=res.data;
+                            let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+                            if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+                              this.router.navigate(["/pages/dashboard/create-dashboard"])
+                            }else{
+                              const newObj = {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName};
+                              this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+                            }
+                          })
+                    }
+                })
             }
         }, err => {
             this.spinner.hide();
-            Swal.fire("Error", "Failed to save details", "error")
+            
         })
     }
 }
