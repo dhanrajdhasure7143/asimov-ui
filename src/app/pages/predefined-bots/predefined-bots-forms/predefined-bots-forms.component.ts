@@ -318,7 +318,7 @@ if(this.params.type =='edit'){
   createBot() {
     if (this.predefinedBotsForm.valid) {
     this.spinner.show();
-          this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName).setValue(JSON.stringify(this.jobDescription.response))    
+          this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
       let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
