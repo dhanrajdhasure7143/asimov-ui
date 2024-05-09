@@ -245,10 +245,11 @@ if(this.params.type =='edit'){
   nextPage() {
     console.log(this.formFields)
     // console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
-    // if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
-    //   this.toaster.showError(this.toastMessages.jd_error)
-    //   return
-    // }
+    if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
+      this.toaster.showError(this.toastMessages.jd_error)
+      return
+    }
+
     if (this.currentPage < this.pages.length) {
       this.currentPage++;
       this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
@@ -403,7 +404,7 @@ if(this.params.type =='edit'){
         formData.append('inputReference', this.predefinedBotsForm.value.fields.RecruitmentOne_email_jobDescrption);
       }else{
         formData.append('type', "file");
-        formData.append('filepath', this.selectedFiles[0]);
+        formData.append('filePath', this.selectedFiles[0]);
       }
 
     // let req_body={
