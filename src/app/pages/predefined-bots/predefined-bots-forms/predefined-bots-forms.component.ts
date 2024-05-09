@@ -40,6 +40,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   isJobDescrptionValid:boolean= false;
   description_type:string='textarea';
   selectedFiles:any[]=[];
+  jobDescription:any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -245,10 +246,11 @@ if(this.params.type =='edit'){
   nextPage() {
     console.log(this.formFields)
     // console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
-    // if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
-    //   this.toaster.showError(this.toastMessages.jd_error)
-    //   return
-    // }
+    if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
+      this.toaster.showError(this.toastMessages.jd_error)
+      return
+    }
+
     if (this.currentPage < this.pages.length) {
       this.currentPage++;
       this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
@@ -316,6 +318,7 @@ if(this.params.type =='edit'){
   createBot() {
     if (this.predefinedBotsForm.valid) {
     this.spinner.show();
+          this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName).setValue(JSON.stringify(this.jobDescription.response))    
       let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
@@ -403,7 +406,7 @@ if(this.params.type =='edit'){
         formData.append('inputReference', this.predefinedBotsForm.value.fields.RecruitmentOne_email_jobDescrption);
       }else{
         formData.append('type', "file");
-        formData.append('filepath', this.selectedFiles[0]);
+        formData.append('filePath', this.selectedFiles[0]);
       }
 
     // let req_body={
@@ -429,7 +432,9 @@ if(this.params.type =='edit'){
         this.isJobDescrption_error = false;
           this.validate_errorMessage = ["Valid"]
           this.isJobDescrptionValid = true;
-          this.predefinedBotsForm.get("fields."+type.preAttributeName).setValue(res.data)    
+          this.jobDescription = res
+          this.jobDescription["fieldName"]= type.preAttributeName
+          // this.predefinedBotsForm.get("fields."+type.preAttributeName).setValue(JSON.stringify(res.response))    
       }
       if(res.code == 500){
         this.validate_errorMessage = ["Error"];
