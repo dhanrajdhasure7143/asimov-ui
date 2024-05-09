@@ -131,6 +131,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   editById(item: any) {
     console.log("testing",item)
+    return
     this.router.navigate(["/pages/predefinedbot/predefinedforms"],{queryParams:{type:"edit",id:item.predefinedOrchestrationBotId}});
   }
 
