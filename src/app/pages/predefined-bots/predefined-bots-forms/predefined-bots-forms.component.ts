@@ -40,7 +40,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   isJobDescrptionValid:boolean= false;
   description_type:string='textarea';
   selectedFiles:any[]=[];
-  jobDescription:any;
+  jobDescription:any={};
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -318,7 +318,9 @@ if(this.params.type =='edit'){
   createBot() {
     if (this.predefinedBotsForm.valid) {
     this.spinner.show();
-          this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
+    if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
+      this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
+    }
       let botName = this.predefinedBotsForm.value.fields.botName
       let req_body = this.predefinedBotsForm.value
       req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
