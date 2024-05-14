@@ -86,7 +86,7 @@ export class PagesComponent implements OnInit {
         setTimeout(() => {
           const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
           if(iframe)
-          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: '1n8OozyPY05bifhNC1hGiTDHHpP6UToXvygbCOxtXWU4tqi1d4F276swj9q5X9GstmLRpJcS1E2ZEUCuzUfMdT%2BgaRwAXSgpUbE%3D' }, '*');
+          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: '0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o=' }, '*');
         }, 2000);
         
         window.addEventListener('message', event => {
