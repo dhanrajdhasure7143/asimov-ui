@@ -17,7 +17,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   processName:string;
   currentPage = 1;
-  fieldsPerPage = 5;
+  fieldsPerPage = 20;
   formFields = [];
   predefinedBotsForm: FormGroup;
   pages: number[] = [];

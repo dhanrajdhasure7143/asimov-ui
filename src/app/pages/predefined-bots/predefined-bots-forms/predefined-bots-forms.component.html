@@ -17,10 +17,11 @@
             <div formGroupName="fields">
               <div *ngFor="let field of currentPageFields" class="form-group row">
                   <ng-container *ngIf="field.visibility">
-                    <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required">*</span></b></label>
+                    <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label>
                     <div class="col-md-6" style="padding-bottom: 15px;">
 
-                        <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder"></p-dropdown>
+                        <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
+                        optionLabel="label" optionValue="value"></p-dropdown>
 
                         <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
                         [id]="field.preAttributeName" 
@@ -54,7 +55,7 @@
 
                         <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                             <label *ngFor="let option of field.options" class="form-check-label">
-                                <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
+                                <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option.label" [value]="option.label" [formControlName]="field.preAttributeName"> {{ option.label }}
                             </label>
                         </div>
                         
