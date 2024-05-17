@@ -17,7 +17,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   processName:string;
   currentPage = 1;
-  fieldsPerPage = 5;
+  fieldsPerPage = 20;
   formFields = [];
   predefinedBotsForm: FormGroup;
   pages: number[] = [];
@@ -80,6 +80,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   fetchAllFields() {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Bot Name", preAttributeLable: "Automation Bot Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
@@ -471,4 +472,79 @@ if(this.params.type =='edit'){
     this.validate_errorMessage=[];
   }
 
+  onCheckboxChange(event: Event, option:any) {
+    const checkbox = event.target as HTMLInputElement;
+    console.log(checkbox.checked)
+    const validJsonStr = option.field.replace(/'/g, '"');
+    // const array = JSON.parse(validJsonStr);
+    let array;
+    try {
+      array = JSON.parse(validJsonStr);
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
+
+    if (Array.isArray(array)) {
+      if (checkbox.checked) {
+        // formArray.push(this.fb.control(label));
+        array.forEach((element: any) => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = true;
+          }
+        });
+      } else {
+        array.forEach(element => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = false;
+          }
+          let arrayList = this.getArrayValues(field.options.field)
+          console.log("arrayList",arrayList)
+          arrayList.forEach(element1 => {
+            const field1 = this.formFields.find(item => item.preAttributeName === element1);
+            if (field1) {
+              field1.visibility = false;
+            }
+          });
+        });
+        // const index = formArray.controls.findIndex(x => x.value === label);
+        // formArray.removeAt(index);
+      }
+    } else {
+      console.log('It is a string:', array);
+    }
+  }
+
+  onDropdownChange(event: any,options:any) {
+    console.log(event)
+    const selectedValue = event.value;
+    console.log('Selected value:', selectedValue);
+    const selectedObject = options.find(option => option.value === selectedValue);
+    console.log('Selected object:', selectedObject);
+    const validJsonStr = selectedObject.field.replace(/'/g, '"');
+    const array = JSON.parse(validJsonStr);
+    if (Array.isArray(array))
+    array.forEach((element: any) => {
+      const field = this.formFields.find(item => item.preAttributeName === element);
+      if (field) {
+        field.visibility = true;
+      }
+    })
+    // Add your custom logic here
+  }
+
+  getArrayValues(option){
+    console.log(option)
+    const validJsonStr = option.replace(/'/g, '"');
+    // const array = JSON.parse(validJsonStr);
+    let array = [];
+    try {
+      array = JSON.parse(validJsonStr);
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
+    console.log("array",array)
+    return array;
+  }
 }
