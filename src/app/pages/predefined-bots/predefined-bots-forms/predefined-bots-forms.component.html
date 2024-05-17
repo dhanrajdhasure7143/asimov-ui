@@ -28,6 +28,10 @@
                         [id]="field.preAttributeName" 
                         [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
 
+                        <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
+                        [id]="field.preAttributeName" 
+                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+
                         <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
                             (keydown)="onKeydown($event,field)"></textarea>
