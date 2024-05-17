@@ -80,6 +80,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   fetchAllFields() {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Bot Name", preAttributeLable: "Automation Bot Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
@@ -470,5 +471,49 @@ if(this.params.type =='edit'){
     this.isValidateLoader = false;
     this.validate_errorMessage=[];
   }
+  data = ['DropDown','xyz']
 
+  onCheckboxChange(event: Event, option:any) {
+    const checkbox = event.target as HTMLInputElement;
+    console.log(checkbox.checked)
+    const validJsonStr = option.field.replace(/'/g, '"');
+  const array = JSON.parse(validJsonStr);
+  console.log(array);
+
+    if (checkbox.checked) {
+      // formArray.push(this.fb.control(label));
+      array.forEach((element: any) => {
+        const field = this.formFields.find(item => item.preAttributeName === element);
+        if (field) {
+          field.visibility = true;
+        }
+      });
+    } else {
+      array.forEach(element => {
+        const field = this.formFields.find(item => item.preAttributeName === element);
+        if (field) {
+          field.visibility = false;
+        }
+      });
+      // const index = formArray.controls.findIndex(x => x.value === label);
+      // formArray.removeAt(index);
+    }
+  }
+
+  onDropdownChange(event: any,options:any) {
+    console.log(event)
+    const selectedValue = event.value;
+    console.log('Selected value:', selectedValue);
+    const selectedObject = options.find(option => option.value === selectedValue);
+    console.log('Selected object:', selectedObject);
+    const validJsonStr = selectedObject.field.replace(/'/g, '"');
+    const array = JSON.parse(validJsonStr);
+    array.forEach((element: any) => {
+      const field = this.formFields.find(item => item.preAttributeName === element);
+      if (field) {
+        field.visibility = true;
+      }
+    })
+    // Add your custom logic here
+  }
 }

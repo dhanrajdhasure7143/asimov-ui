@@ -21,7 +21,7 @@
                     <div class="col-md-6" style="padding-bottom: 15px;">
 
                         <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                        optionLabel="label" optionValue="value"></p-dropdown>
+                        optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
 
                         <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
                         [id]="field.preAttributeName" 
@@ -53,11 +53,24 @@
                             </div>
                         </div>
 
+                        <!-- <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
+                            <label *ngFor="let option of field.options" class="form-check-label">
+                                <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option.label" [value]="option.label" [formControlName]="field.preAttributeName" ()> {{ option.label }}
+                            </label>
+                        </div> -->
+
                         <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                             <label *ngFor="let option of field.options" class="form-check-label">
-                                <input type="checkbox" class="form-check-input" [id]="field.preAttributeName + '_' + option.label" [value]="option.label" [formControlName]="field.preAttributeName"> {{ option.label }}
+                                <input type="checkbox" 
+                                       class="form-check-input" 
+                                       [id]="field.preAttributeName + '_' + option.label" 
+                                       [value]="option.label" 
+                                       [formControlName]="field.preAttributeName" 
+                                       (change)="onCheckboxChange($event, option)">
+                                {{ option.label }}
                             </label>
                         </div>
+                        
                         
                         <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="onFileSelected($event)">
 
@@ -123,7 +136,7 @@
                         <input type="file" class="form-control" formControlName="fileUpload">
                     </div>
                 </div> -->
-                <div class="form-group row">
+                <div class="form-group row" *ngIf="predefinedBot_name !='Recruitment'">
                     <div class="col-md-4 col-form-label">
                         <input class="form-check-input" type="checkbox" id="scheduleBot" formControlName="isScheduleBot" (change)="clearScheduleTime()">
                         <label class="form-check-label" for="scheduleBot">
