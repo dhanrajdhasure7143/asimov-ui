@@ -81,7 +81,7 @@ export class TrainCustomerSupportBotComponent implements OnInit {
   }
 
   fetchPredefinedModels() {
-    this.rest_api.getPredefinedModels().subscribe(
+    this.rest_api.getPredefinedModels(localStorage.getItem("tenantName")).subscribe(
       (modelsList) => {
         console.log(modelsList, "modelsList");
   

@@ -78,8 +78,8 @@ saveCustomerBot(body:any){
   return this.http.post(environment.asquare+"/a-square/admin/v1/customer-support-bot", body, {headers:this.headers})
 }
 
-getPredefinedModels(){
-  return this.http.get(environment.asquare+"/a-square/v1/external/conversation/models", {headers:this.headers})
+getPredefinedModels(tenantName:any){
+  return this.http.get(environment.asquare+"/a-square/v1/external/conversation/models/"+tenantName, {headers:this.headers})
 
 }
 

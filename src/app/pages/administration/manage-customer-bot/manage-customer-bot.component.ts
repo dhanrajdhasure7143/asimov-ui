@@ -121,7 +121,7 @@ export class ManageCustomerBotComponent implements OnInit {
   }
 
   fetchPredefinedModels() {
-  this.rest_api.getPredefinedModels().subscribe(
+  this.rest_api.getPredefinedModels(localStorage.getItem("tenantName")).subscribe(
     (modelsList) => {
       console.log(modelsList, "modelsList");
 // Assuming modelsList is an array of objects containing the model information
