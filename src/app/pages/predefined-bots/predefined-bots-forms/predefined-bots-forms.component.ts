@@ -332,15 +332,19 @@ if(this.params.type =='edit'){
       if(this.duplicateAttributes.length >0){
         this.duplicateAttributes.forEach(element => {
           let v_key = element.preAttributeName.split("_")
+
+
           for (const key in req_body.fields) {
           const parts = key.split('_');
-          if(parts[1]+"_"+parts[2] == v_key[1]+"_"+v_key[2]){
+          
+          if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
               req_body.fields[element.preAttributeName] = req_body.fields[key]
           }
           }
         });
       }
       console.log('req_body---:', req_body);
+      return
       this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
         this.spinner.hide();
         this.router.navigate(["/pages/predefinedbot/list"]);
