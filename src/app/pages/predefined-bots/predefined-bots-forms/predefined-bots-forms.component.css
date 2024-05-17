@@ -178,6 +178,7 @@
 
   
 .form-container {
+    min-height: 65vh;
     max-height: 60vh;
     overflow-x: hidden;  /* Enable vertical scrolling */
     padding: 0 15px;   /* Optional: Padding for better content spacing */

@@ -471,32 +471,48 @@ if(this.params.type =='edit'){
     this.isValidateLoader = false;
     this.validate_errorMessage=[];
   }
-  data = ['DropDown','xyz']
 
   onCheckboxChange(event: Event, option:any) {
     const checkbox = event.target as HTMLInputElement;
     console.log(checkbox.checked)
     const validJsonStr = option.field.replace(/'/g, '"');
-  const array = JSON.parse(validJsonStr);
-  console.log(array);
+    // const array = JSON.parse(validJsonStr);
+    let array;
+    try {
+      array = JSON.parse(validJsonStr);
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
 
-    if (checkbox.checked) {
-      // formArray.push(this.fb.control(label));
-      array.forEach((element: any) => {
-        const field = this.formFields.find(item => item.preAttributeName === element);
-        if (field) {
-          field.visibility = true;
-        }
-      });
+    if (Array.isArray(array)) {
+      if (checkbox.checked) {
+        // formArray.push(this.fb.control(label));
+        array.forEach((element: any) => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = true;
+          }
+        });
+      } else {
+        array.forEach(element => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = false;
+          }
+          let arrayList = this.getArrayValues(field.options.field)
+          console.log("arrayList",arrayList)
+          arrayList.forEach(element1 => {
+            const field1 = this.formFields.find(item => item.preAttributeName === element1);
+            if (field1) {
+              field1.visibility = false;
+            }
+          });
+        });
+        // const index = formArray.controls.findIndex(x => x.value === label);
+        // formArray.removeAt(index);
+      }
     } else {
-      array.forEach(element => {
-        const field = this.formFields.find(item => item.preAttributeName === element);
-        if (field) {
-          field.visibility = false;
-        }
-      });
-      // const index = formArray.controls.findIndex(x => x.value === label);
-      // formArray.removeAt(index);
+      console.log('It is a string:', array);
     }
   }
 
@@ -508,6 +524,7 @@ if(this.params.type =='edit'){
     console.log('Selected object:', selectedObject);
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
     const array = JSON.parse(validJsonStr);
+    if (Array.isArray(array))
     array.forEach((element: any) => {
       const field = this.formFields.find(item => item.preAttributeName === element);
       if (field) {
@@ -515,5 +532,19 @@ if(this.params.type =='edit'){
       }
     })
     // Add your custom logic here
+  }
+
+  getArrayValues(option){
+    console.log(option)
+    const validJsonStr = option.replace(/'/g, '"');
+    // const array = JSON.parse(validJsonStr);
+    let array = [];
+    try {
+      array = JSON.parse(validJsonStr);
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
+    console.log("array",array)
+    return array;
   }
 }

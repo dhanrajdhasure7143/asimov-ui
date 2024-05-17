@@ -17,7 +17,8 @@
             <div formGroupName="fields">
               <div *ngFor="let field of currentPageFields" class="form-group row">
                   <ng-container *ngIf="field.visibility">
-                    <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label>
+                    <!-- <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label> -->
+                    <label [for]="field.name" class="col-md-4 col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                     <div class="col-md-6" style="padding-bottom: 15px;">
 
                         <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
