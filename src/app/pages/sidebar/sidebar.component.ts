@@ -50,17 +50,16 @@ export class SidebarComponent implements OnInit {
       document.cookie = "card_enabled=true";
     }
 
-    if(this.getCookie("workspacedsiabled")!="false"){
-      document.cookie = "workspacedsiabled=true";
-      console.log("testing..........")
-      this.workspaceEnabled = true;
-    }else{
-      this.workspaceEnabled = false;
-    }
-
     this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
+      console.log(this.userRoles)
+      if(this.getCookie("workspacedsiabled")!="false"){
+        document.cookie = "workspacedsiabled=true";
+        this.userRoles.includes('System Admin')?this.workspaceEnabled = false:this.workspaceEnabled = true;
+      }else{
+        this.userRoles.includes('System Admin')?this.workspaceEnabled = false:this.workspaceEnabled = false;
+      }
     });
     if(this.dashboardDetails)
     {

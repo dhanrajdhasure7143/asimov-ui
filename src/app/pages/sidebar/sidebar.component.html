@@ -150,7 +150,7 @@
           </span>
           <span class="side-menu-font">Orchestration</span>
         </a>
-        <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
+        <mat-list-item *ngIf="!isPredefinedBots || !workspaceEnabled" (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
           id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">

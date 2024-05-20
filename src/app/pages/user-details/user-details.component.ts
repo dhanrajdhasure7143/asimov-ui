@@ -254,7 +254,7 @@ export class UserDetailsComponent implements OnInit {
             }
         }, err => {
             this.spinner.hide();
-            
+            this.toaster.showError("Error occured, Please try again.")
         })
     }
 }
