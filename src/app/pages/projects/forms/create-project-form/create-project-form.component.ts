@@ -233,7 +233,6 @@ export class CreateProjectFormComponent implements OnInit {
     const selectedCategory = this.categories_list.find(category => category.categoryName === selectedCategoryName);
     if (selectedCategory) {
       this.categoryId = selectedCategory.categoryId;
-      console.log("Selected categoryId:", this.categoryId);
     }
   }  
   createproject() {

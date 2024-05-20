@@ -42,9 +42,7 @@ export class HtmlEditor implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.field.value);
     setTimeout(()=>{
-      console.log(this.field.value)
       this.form.get(this.field.name+"_"+this.field.id).setValue(this.field.value);
       CKEDITOR.replace("template-editor"+this.field.id, {
         height: 250,

@@ -57,7 +57,6 @@ export class ProjectProcessInfoComponent implements OnInit {
       this.getFrequency();
   }
   ngOnChanges(){
-    console.log("testing",this.isDashboardOverlay)
     if(this.isDashboardOverlay){
       let userRoles = localStorage.getItem("userRole")
       let name = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
@@ -74,7 +73,6 @@ export class ProjectProcessInfoComponent implements OnInit {
   getProcessDetails(project_id){
     this.rest.getProjectDetailsById(project_id).subscribe( res =>{
       this.projectDetails = res;
-      console.log(this.projectDetails)
       this.getProcessInfo();
       if(this.isDashboardOverlay){
         this.process_name = this.projectDetails.roiProcessName?this.projectDetails.roiProcessName:''

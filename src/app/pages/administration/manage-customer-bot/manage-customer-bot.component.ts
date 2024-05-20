@@ -123,7 +123,6 @@ export class ManageCustomerBotComponent implements OnInit {
   fetchPredefinedModels() {
   this.rest_api.getPredefinedModels(localStorage.getItem("tenantName")).subscribe(
     (modelsList) => {
-      console.log(modelsList, "modelsList");
 // Assuming modelsList is an array of objects containing the model information
  this.filteredModelsList = modelsList.filter(model => model.tenantName === localStorage.getItem("tenantName"));
       this.trainModelOptions = this.filteredModelsList.map((model) => ({
@@ -420,13 +419,11 @@ onUploadeModelAndFile(botName:any) {
   modelAndFormData.append('model',this.trainedModel);
   this.rest_api.getUploadDocs(modelAndFormData).subscribe(
       (response) => {
-        console.log('model and file uploaded successfully successful', response);
         this.toastService.showSuccess(botName, 'save');
         this.manageBotForm.reset();
         this.hiddenPopUp = false;
       },
       (error) => {
-        console.error('Failed to uploade  model mand file', error);
       }
     );
 }
@@ -442,14 +439,12 @@ onUploadeMode(botName:any) {
   
   this.rest_api.getUploadDocs(modelData).subscribe(
       (response) => {
-        console.log('model uploaded successfully', response);
         this.toastService.showSuccess(botName, 'save');
         this.loader.hide();
         this.manageBotForm.reset();
         this.hiddenPopUp = false;
       },
       (error) => {
-        console.error('Failed to uploade  model mand file', error);
       }
     );
 }}

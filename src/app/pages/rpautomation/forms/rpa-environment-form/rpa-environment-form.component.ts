@@ -298,7 +298,6 @@ export class RpaEnvironmentFormComponent implements OnInit {
   }
 
   keypair(event) {
-    console.log("--- sample ---",this.updateenvdata)
     this.isKeyValuePair = !this.isKeyValuePair;
     if (event.target.checked == true) {
       this.environmentForm.get("password").clearValidators();

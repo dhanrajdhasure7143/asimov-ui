@@ -182,7 +182,6 @@ onClickLogout(){
   screenNavigation(){
     this.tenantId = localStorage.getItem('tenantName');
     this.rest_api.getUserStatus({userId:localStorage.getItem("ProfileuserId")}).subscribe((userStatus_response:any)=>{
-      console.log(userStatus_response)
       this.userStatus = userStatus_response
     })
     this.rest_api.getUserRole(2).subscribe(res=>{
