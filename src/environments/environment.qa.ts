@@ -47,7 +47,7 @@ export const environment = {
   isCopilotEnable : true,
   isSubscrptionEnabled : true,
   isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
-  isCustomerBots : false,
+  isCustomerBots : true,
   environmentName: "QA",
   paymentSuccessURL: "https://eziap.qa.epsoftinc.com/#/pages/success",
   paymentFailuerURL: "https://eziap.qa.epsoftinc.com/#/pages/subscriptions",
