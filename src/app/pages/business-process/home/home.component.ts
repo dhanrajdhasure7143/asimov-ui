@@ -423,7 +423,6 @@ export class BpsHomeComponent implements OnInit {
           });
         });
     } else {
-      console.log(byteBpmn)
       this.bpmnModeler.importXML(byteBpmn, function (err) {
         if (err) {
           console.error("could not import BPMN EZFlow diagram", err);

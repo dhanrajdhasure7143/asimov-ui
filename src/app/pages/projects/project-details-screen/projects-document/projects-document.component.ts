@@ -1139,7 +1139,6 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   readSelectedData(data){
-    console.log(data)
   }
 
     singleFileUploadFolder(e){

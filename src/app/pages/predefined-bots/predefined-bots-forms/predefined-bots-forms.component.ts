@@ -123,7 +123,6 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    console.log("this.pages",this.pages)
       this.pages.forEach(element => {
         let obj ={label:" ",command: () => { this.goToPage(element)}}
           this.items.push(obj)
@@ -217,7 +216,6 @@ if(this.params.type =='edit'){
     }
     const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    console.log(this.pages)
     this.pages.forEach(element => {
       let obj ={label:" ",command: () => { this.goToPage(element)}}
         this.items.push(obj)
@@ -477,7 +475,6 @@ if(this.params.type =='edit'){
 
   onCheckboxChange(event: Event, option:any) {
     const checkbox = event.target as HTMLInputElement;
-    console.log(checkbox.checked)
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
     let array;
@@ -503,7 +500,6 @@ if(this.params.type =='edit'){
             field.visibility = false;
           }
           let arrayList = this.getArrayValues(field.options.field)
-          console.log("arrayList",arrayList)
           arrayList.forEach(element1 => {
             const field1 = this.formFields.find(item => item.preAttributeName === element1);
             if (field1) {
@@ -515,16 +511,13 @@ if(this.params.type =='edit'){
         // formArray.removeAt(index);
       }
     } else {
-      console.log('It is a string:', array);
     }
   }
 
   onDropdownChange(event: any,options:any) {
     console.log(event)
     const selectedValue = event.value;
-    console.log('Selected value:', selectedValue);
     const selectedObject = options.find(option => option.value === selectedValue);
-    console.log('Selected object:', selectedObject);
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
     const array = JSON.parse(validJsonStr);
     if (Array.isArray(array))
@@ -547,7 +540,6 @@ if(this.params.type =='edit'){
     } catch (e) {
       console.error("Parsing error:", e);
     }
-    console.log("array",array)
     return array;
   }
 }

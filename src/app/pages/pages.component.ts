@@ -70,7 +70,6 @@ export class PagesComponent implements OnInit {
   constructor(private dt: DataTransferService) {
     this.dt._tenant_info.subscribe(res=>{
       if(res){
-        console.log(res)
         this.tenantInfo=res;
         this.isPredefinedBotUser = res.isPredefinedBots
       }
