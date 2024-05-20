@@ -9,6 +9,7 @@ import { RestApiService } from '../services/rest-api.service';
 import { CryptoService } from '../services/crypto.service';
 import { environment } from 'src/environments/environment';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
     selector: 'app-user-details',
     templateUrl: './user-details.component.html',
@@ -35,7 +36,7 @@ export class UserDetailsComponent implements OnInit {
         private formBuilder: FormBuilder,
         private rest_api: RestApiService,
         private crypto: CryptoService,
-        private spinner: NgxSpinnerService,
+        private spinner: LoaderService,
         private router: Router,
         private route: ActivatedRoute,
         private toaster: ToasterService
