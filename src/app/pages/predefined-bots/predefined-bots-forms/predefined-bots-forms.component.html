@@ -65,7 +65,8 @@
                         </div> -->
 
                         <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
-                            <label *ngFor="let option of field.options" class="form-check-label">
+                            <div *ngFor="let option of field.options">
+                            <label class="form-check-label">
                                 <input type="checkbox" 
                                        class="form-check-input" 
                                        [id]="field.preAttributeName + '_' + option.label" 
@@ -75,11 +76,12 @@
                                 {{ option.label }}
                             </label>
                         </div>
+                        </div>
                         
                         
                         <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="onFileSelected($event)">
 
-                        <div style="width: 70%;" *ngIf="predefinedBot_name == 'Recruitment' && field.isValidateRequired">
+                        <div style="width: 70%;" *ngIf="field.isValidateRequired">
                             <div>
                                 <!-- <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i> -->
                                 <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader && validate_errorMessage.length>0">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>

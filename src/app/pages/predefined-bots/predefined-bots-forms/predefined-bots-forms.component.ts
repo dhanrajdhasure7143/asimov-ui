@@ -318,6 +318,7 @@ if(this.params.type =='edit'){
     if (this.predefinedBotsForm.valid) {
     this.spinner.show();
     if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
+      this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
       this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
     }
       let botName = this.predefinedBotsForm.value.fields.botName
@@ -399,24 +400,18 @@ if(this.params.type =='edit'){
 
   validateJobDescription(type){
     console.log("type",type)
-
-    if(this.predefinedBotsForm.get("fields.RecruitmentOne_email_jobDescrption").errors == null)
     if(this.predefinedBot_name == 'Recruitment'){
       console.log(this.predefinedBotsForm)
       const formData = new FormData();
         formData.append('inputType', "ceipal");
       if(type.preAttributeType == "textarea"){
         formData.append('type', "text");
-        formData.append('inputReference', this.predefinedBotsForm.value.fields.RecruitmentOne_email_jobDescrption);
+        formData.append('inputReference', this.predefinedBotsForm.value.fields[type.preAttributeName]);
       }else{
         formData.append('type', "file");
         formData.append('filePath', this.selectedFiles[0]);
       }
 
-    // let req_body={
-    //   "inputReference": this.predefinedBotsForm.value.fields.Recruitment_email_jobDescrption,
-    //   "inputType": "ceipal"
-    // };
     this.validate_errorMessage = [];
     this.isValidateLoader  = true;
     this.job_Descrption_error = false;
@@ -454,10 +449,13 @@ if(this.params.type =='edit'){
 
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
+    let array = this.getArrayValues(option_item.field)
+    array.forEach(each=>{
+      this.predefinedBotsForm.get("fields."+each).setValue("")
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
+    })
 
-    this.predefinedBotsForm.get("fields."+option_item.field).setValue("")
-    this.formFields.find(item=>item.preAttributeName == option_item.field && item.preAttributeType != value).visibility =false
-    this.formFields.find(item=>item.preAttributeName == option_item.field && item.preAttributeType == value).visibility =true
     // console.log("field",field)
       // this.description_type =value;
 
@@ -491,6 +489,8 @@ if(this.params.type =='edit'){
           const field = this.formFields.find(item => item.preAttributeName === element);
           if (field) {
             field.visibility = true;
+            field.attributeRequired =true;
+            this.updateValidators(element)
           }
         });
       } else {
@@ -498,19 +498,20 @@ if(this.params.type =='edit'){
           const field = this.formFields.find(item => item.preAttributeName === element);
           if (field) {
             field.visibility = false;
+            field.attributeRequired =false;
+            this.clearValidators(element);
           }
-          let arrayList = this.getArrayValues(field.options.field)
-          arrayList.forEach(element1 => {
-            const field1 = this.formFields.find(item => item.preAttributeName === element1);
-            if (field1) {
-              field1.visibility = false;
-            }
-          });
         });
+        // let arrayList = this.getArrayValues(option.disableFields)
+        // arrayList.forEach(element1 => {
+        //   const field1 = this.formFields.find(item => item.preAttributeName === element1);
+        //   if (field1) {
+        //     field1.visibility = false;
+        //   }
+        // });
         // const index = formArray.controls.findIndex(x => x.value === label);
         // formArray.removeAt(index);
       }
-    } else {
     }
   }
 
@@ -531,7 +532,6 @@ if(this.params.type =='edit'){
   }
 
   getArrayValues(option){
-    console.log(option)
     const validJsonStr = option.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
     let array = [];
@@ -541,5 +541,15 @@ if(this.params.type =='edit'){
       console.error("Parsing error:", e);
     }
     return array;
+  }
+
+  updateValidators(item){
+    this.predefinedBotsForm.get("fields."+item).setValidators(Validators.compose([Validators.required]));
+    this.predefinedBotsForm.get("fields."+item).updateValueAndValidity(); 
+  }
+
+  clearValidators(item){
+    this.predefinedBotsForm.get("fields."+item).clearValidators(); 
+    this.predefinedBotsForm.get("fields."+item).updateValueAndValidity();
   }
 }
