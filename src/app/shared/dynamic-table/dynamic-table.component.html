@@ -200,7 +200,7 @@
                             <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
-                            <span *ngIf="screenTable == 'customerSupportBots' || 'trainCustomerSupportBots'">
+                            <span *ngIf="screenTable == 'customerSupportBots' || screenTable == 'trainCustomerSupportBots'">
                             <a class="" (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
                                 <i class="pi pi-external-link" style="color: #232832"></i>
                                 <i class="pi pi-external-link" style="color: #507cd3" class="testplus hover-icon"></i>
