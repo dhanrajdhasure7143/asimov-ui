@@ -57,6 +57,17 @@
                 class="required"> Executable Path Required
                 </span>
             </div>
+
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="processOwner">Process Owner<span class="star">*</span></label>
+                <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
+                    filterBy="user_email,fullName" [autoDisplayFirst]="false"
+                    placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
+                    optionLabel="fullName">
+                </p-dropdown>
+                <span *ngIf="customTaskForm.get('processOwner').invalid && customTaskForm.get('processOwner').touched"
+                    class="required">Process Owner Required</span>
+            </div>
             <!-- temporarly commenting radio button condtional fields as it is not in use for now. -->
             <!-- <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
                 <label class="label-control" for="userName"> Executable Path <span class="star">*</span></label>
@@ -82,12 +93,10 @@
             <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
             <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
             <!-- <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="saveCustomTasks()">Draft</button> -->
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks(true)"> Save/Approval</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform" (click)="saveCustomTasks(false)"> Draft</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(true)"> Update</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button>
-
-
+            <button class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="(isupdateform && updatetaskDetails.approvalStatus !='Approved')" (click)="updateCustomTasks(true)"> Update</button>
+            <!-- <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button> -->
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform || (isupdateform && (updatetaskDetails.approvalStatus == 'Approved' || updatetaskDetails.approvalStatus == 'Draft' ))" (click)="saveCustomTasks(true)"> Submit for Approval</button>
         </div>
     </div>
 </div>

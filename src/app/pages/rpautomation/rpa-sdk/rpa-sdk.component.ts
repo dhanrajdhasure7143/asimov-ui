@@ -40,13 +40,7 @@ export class RpaSdkComponent implements OnInit {
 
   getTaskDetails(){
     this.spinner.show();
-    // this.rest.getCustomTasks().subscribe((res : any) =>{
-      const headers = new HttpHeaders().set("Authorization",`Bearer ${localStorage.accessToken}`)
-    .set("Refresh-Token", localStorage.refreshToken)
-    .set("Timezone", "Asia/Calcutta");
-    // this.api.createSdkCustomTasks(reqBody).subscribe((data : any) =>{
-      this.http.get("http://localhost:8080/rpa-service/sdk-custom/get-sdk-tasks",{headers}).subscribe((res:any)=>{
-      
+    this.rest.getCustomTasks().subscribe((res : any) =>{  
       this.customTasks = res
       this.customTasks.map(item=>{
         item.createdAt = new Date(item.createdAt)

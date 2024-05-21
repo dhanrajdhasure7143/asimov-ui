@@ -1855,6 +1855,7 @@ getbotTaskList(botId){
 }
 
 getCustomTasks(){
+  // return this.http.get('/rpa-service/sdk-custom/get-sdk-tasks')
   return this.http.get('/rpa-service/sdk-custom/get-sdk-tasks')
 }
 getEncryptedbotData(botId,body){

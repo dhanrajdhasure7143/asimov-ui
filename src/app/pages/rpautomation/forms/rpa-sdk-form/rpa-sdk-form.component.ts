@@ -7,6 +7,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 
 @Component({
   selector: 'app-rpa-sdk-form',
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class RpaSdkFormComponent implements OnInit {
   @Input() isupdateform:boolean;
   @Input() hideLabels:boolean;
-  @Input() updatetaskDetails:any;
+  @Input() updatetaskDetails:any ={};
   @Output() closeOverlay = new EventEmitter<any>();
   categoryList: any;
   public customTaskForm: FormGroup;
@@ -32,6 +33,8 @@ export class RpaSdkFormComponent implements OnInit {
   ];
   showCodeField : boolean = false;
   showPathField : boolean = false;
+  users_list:any;
+
   constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
     private chanref:ChangeDetectorRef,
@@ -39,13 +42,14 @@ export class RpaSdkFormComponent implements OnInit {
     private toastService : ToasterService,
     private toastMessages: toastMessages,
     private http:HttpClient,
-
+    private dt: DataTransferService
     ) {
 
       this.customTaskForm=this.formBuilder.group({
         customTaskName:["",Validators.compose([Validators.required])],
         languageType:["Java",Validators.compose([Validators.required])],
         executablePath:["",Validators.compose([Validators.required])],
+        processOwner:["",Validators.compose([Validators.required])],
         //temporarly commenting the selectedCategory as it is not in use for now.
         // selectedCategory:["",Validators.compose([Validators.required])],
         // executablePath:[""],
@@ -62,6 +66,7 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnInit(): void {
   // this.spinner.show();
+  this.getUsersList();
    this.languages = [
     {language:"Java"},
   //  {language:"Python"},
@@ -72,6 +77,7 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnChanges(){
     if (this.isupdateform) {
+      console.log(this.updatetaskDetails)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
       this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath);
@@ -131,10 +137,8 @@ export class RpaSdkFormComponent implements OnInit {
       "executablePath": this.customTaskForm.value.executablePath,
       "languageType": this.customTaskForm.value.languageType,
       "version":1,
-     
       "approvalStatus": data?"Pending":"draft",
     }
-    debugger
     console.log(data);
     const headers = new HttpHeaders().set("Authorization",`Bearer ${localStorage.accessToken}`)
     .set("Refresh-Token", localStorage.refreshToken)
@@ -179,6 +183,15 @@ export class RpaSdkFormComponent implements OnInit {
 
   cancelUpdate(){
     this.closeOverlay.emit(true);
+  }
+
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        console.log(this.users_list)
+      }
+    });
   }
 
 }
