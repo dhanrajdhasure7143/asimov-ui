@@ -1,0 +1,129 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-7 form-div" *ngIf="showUserScreen">
+            <div class="col-md-12 text-center" style="display: block; margin-top: 20px;">
+                <!-- <span style="font-size: 15px; font-weight: 800; color: black;">Now, Let us know more about you</span> -->
+                <span style="font-size: 15px; font-weight: 800; color: black;">Now, let us know few more information for us to complete setting up your account.</span>
+            </div>
+            <div class="loginblock">
+                <form [formGroup]="userForm" style="padding: 30px;" cdkTrapFocus autocomplete="off">
+                    <!-- <div class="fields"> -->
+                        <div class="row">
+                            <div class="form-group col-md-6 pl-0">
+                                <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
+                                <input type="text" pInputText formControlName="jobTitle" class="form-control" style="height: 45px !important;
+                                border-radius: 5px;" id="jobTitle" autocomplete="off"
+                                    (keypress)="lettersOnly($event)" placeholder="Enter job title" maxlength="51">
+                                <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
+                                    class="required">
+                                    {{ getErrorMessage('jobTitle') }}
+                                </span>
+                            </div>
+                            <div class="form-group col-md-6 pr-0">
+                                <label for="department" class="label-control">Department <span class="star">*</span> </label>
+                                <p-dropdown formControlName="department" [style]="{'width':'100%'}"
+                                  autocomplete="off" [options]="departments" optionLabel="departmentName" optionValue="departmentId" placeholder="Select Department"> 
+                                </p-dropdown>
+                                <div *ngIf="f.department.touched && f.department.errors" class="required">
+                                    <span>Department required </span>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group col-md-6 pr-0" >
+                                <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
+                                <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
+                                border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off"
+                                    (keypress)="lettersOnly($event)" placeholder="Enter organization" maxlength="51"
+                                    minlength="2">
+                                <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already exist</span>
+                                <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
+                                    class="required">
+                                    {{ getErrorMessage('organization') }}
+                                </span>
+                            </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 pl-0">
+                                <label for="country" class="label-control">Country <span class="star">*</span> </label>
+                                <p-dropdown formControlName="country" [filter]="true" [style]="{'width':'100%'}"
+                                  autocomplete="off" [options]="countryInfo" optionLabel="name" optionValue="name" placeholder="Select Country" (onChange)="onChangeCountry($event)"> 
+                                </p-dropdown>
+                                <span *ngIf="f.country.touched && f.country.errors && !isErrorMessage" class="required">
+                                    Country required </span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage}}</span>
+                            </div>
+                            <div class="form-group col-md-6 pr-0">
+                                <label for="state" class="label-control">State <span class="star">*</span> </label>
+                                <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
+                                  [options]="stateInfo" optionLabel="name" optionValue="name" placeholder="Select State" (onChange)="onChangeState($event)"> 
+                                </p-dropdown>
+                                <span *ngIf="f.state.touched && f.state.errors && !isErrorMessage" class="required">
+                                    State required </span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage1}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 pl-0">
+                                <label for="city" class="label-control">City <span class="star">*</span></label>
+                                <p-dropdown formControlName="city" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
+                                 [options]="cityInfo" optionLabel="name" optionValue="name" placeholder="Select City" (onChange)="onChangeCity($event.value)"> 
+                                </p-dropdown>
+                                <span *ngIf="f.city.touched && f.city.errors && !isErrorMessage" class="required">
+                                    City required </span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage2}}</span>
+                            </div>
+                            <div class="form-group col-md-6 pr-0">
+                                <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
+                                <input type="text" pInputText formControlName="zipCode" style="height: 45px !important;
+                                border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
+                                    placeholder="Enter zip code" maxlength="6" (keydown)="onKeydown($event)" required>
+                                <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="isInput"  class="form-group col-md-6 pl-0">
+                                <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                                    <div class="ng2tel-container">
+                                        <span class="ng2tel-flag"></span>
+                                            <input type="text" pInputText style="height: 45px !important;
+                                                border-radius: 5px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                                class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
+                                                onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                                [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                                    </div>
+                                <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                                    <span>Phone Number required </span>
+                                </div>
+                            </div>
+                            <div *ngIf="!isInput"  class="form-group col-md-6 pl-0">
+                                <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                                    <div class="ng2tel-container">
+                                        <span class="ng2tel-flag"></span>
+                                            <input type="text" pInputText style="height: 45px !important;
+                                                border-radius: 5px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                                class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
+                                                onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                                [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                                    </div>
+                                <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                                    <span>Phone Number required </span>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+                </div>
+                <!-- <div class="row"> -->
+                    <div class="col-md-12" style="display: flex; justify-content: flex-end; margin-top: -15px;">
+                        <!-- <button type="submit" class="btn btn-primary" style="margin-right: 30px;width: 75px;" (click)="backtoSignUp()"> Back </button> -->
+                        <button type="button" class="btn bluebg-button" style="margin-right:20px; width: 75px;" (click)="resetForm()"> Reset </button> 
+                        <button type="submit" class="btn bluebg-button" style="margin-right: 20px; width: 75px;"[disabled]="userForm.invalid" (click)="userDetailsSave()">
+                            <span>Continue</span> 
+                            <!-- <span *ngIf="isSubscriptionEnabled">Continue</span> 
+                            <span *ngIf="!isSubscriptionEnabled">Contact Sales</span>  -->
+                        </button>
+                    </div>
+                <!-- </div> -->
+        </div>
+    </div>
+</div>

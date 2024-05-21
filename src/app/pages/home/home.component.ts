@@ -34,6 +34,9 @@ export class HomeComponent implements OnInit {
   _params:any={};
   highestExpireIn:boolean = false;
   showWarningPopup:boolean;
+  isPredefinedBots: boolean;
+  userStatus:any={};
+
   constructor(private router: Router, 
     private dt:DataTransferService, 
     private rest_api: RestApiService, 
@@ -56,7 +59,9 @@ export class HomeComponent implements OnInit {
           });
       }
     
-    this.getAllPlans();
+    // this.getAllPlans();
+    this.screenNavigation();
+
     // this.rest_api.getUserRole(2).subscribe(res=>{
     // this.userRole=res.message;
     // if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
@@ -103,6 +108,7 @@ export class HomeComponent implements OnInit {
   if(environment.isSubscrptionEnabled){
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data;
+      this.isPredefinedBots = data.isPredefinedBots;
       console.log("left over days ----",this.expiry)
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
@@ -116,6 +122,10 @@ export class HomeComponent implements OnInit {
             this.showWarningPopup = true;
         }
      } else {
+      if(this.isPredefinedBots){
+        this.router.navigate(["/pages/predefinedbot/home"], {queryParams:this._params});
+        return
+      }
       if(environment.isCopilotEnable)
       this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
         if(!environment.isCopilotEnable)
@@ -168,5 +178,52 @@ onClickLogout(){
   this.authService.logout();
   this.router.navigate(['/redirect']);
 }
+
+  screenNavigation(){
+    this.tenantId = localStorage.getItem('tenantName');
+    this.rest_api.getUserStatus({userId:localStorage.getItem("ProfileuserId")}).subscribe((userStatus_response:any)=>{
+      this.userStatus = userStatus_response
+    })
+    this.rest_api.getUserRole(2).subscribe(res=>{
+        this.userRole=res.message;
+    if(environment.isSubscrptionEnabled){
+      this.rest_api.expiryInfo().subscribe(data => {
+        this.expiry = data;
+        this.isPredefinedBots = data.isPredefinedBots;
+        this.highestExpireIn = data.expiresIn === 0 || data.expiresIn <= 0;
+        if (this.highestExpireIn) {
+          if (this.userRole.includes('System Admin')) {
+              this.showWarningPopup = true;
+          } else if (this.userRole.includes('Process Owner')) {
+              this.showWarningPopup = true;
+          }
+      } else {
+        if(this.isPredefinedBots){
+          if(this.userStatus.current_registration_screen == "completed"){
+            this.router.navigate(["/pages/predefinedbot/home"], {queryParams:this._params});
+          }else{
+            this.router.navigate(["/pages/userDetails"], {queryParams:this._params});
+          }
+          return
+        }
+        if(environment.isCopilotEnable)
+        this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
+          if(!environment.isCopilotEnable)
+            this.rest_api.getDashBoardsList().subscribe((res:any)=>{
+            let dashbordlist:any=res.data;
+            let defaultDashBoard = dashbordlist.find(item=>item.defaultDashboard == true);
+            if(defaultDashBoard == undefined || dashbordlist.length == 0 ){
+              this.router.navigate(["/pages/dashboard/create-dashboard"],{ queryParams: this._params})
+            }else{
+              const newObj = Object.assign({}, this._params, {dashboardId: defaultDashBoard.id,dashboardName : defaultDashBoard.dashboardName});
+              this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj})
+            }
+          })
+      }
+    })
+    }
+    });
+  }
+
 
 }

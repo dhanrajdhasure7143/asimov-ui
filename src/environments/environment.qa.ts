@@ -47,11 +47,12 @@ export const environment = {
   isCopilotEnable : true,
   isSubscrptionEnabled : true,
   isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
-  isCustomerBots : false,
+  isCustomerBots : true,
   environmentName: "QA",
   paymentSuccessURL: "https://eziap.qa.epsoftinc.com/#/pages/success",
   paymentFailuerURL: "https://eziap.qa.epsoftinc.com/#/pages/subscriptions",
-  stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK"
+  stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK",
+  python_llm:"https://ezflowllm.qa.epsoftinc.com"
 };
 
 /*

@@ -92,7 +92,7 @@
             <button (click)="resetForm()" class="btn new-cancelbtn">Reset</button>
             <button *ngIf="!isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="createInfo()" class="btn bluebg-button"> 
                 <span *ngIf="isDashboardOverlay">Add</span>
-                <span *ngIf="!isDashboardOverlay">Create</span> 
+                <span *ngIf="!isDashboardOverlay">Save</span> 
             </button>
             <button *ngIf="isChange" [disabled]="processInfo.invalid || getTimeSavedPerExecutionValidation" (click)="updateInfo()" class="btn bluebg-button"> Update </button>
         </div>

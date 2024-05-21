@@ -1,5 +1,6 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { DataTransferService } from './services/data-transfer.service';
 
 @Component({
   selector: 'app-home',
@@ -60,21 +61,50 @@ export class PagesComponent implements OnInit {
 
   sideBarOpen: Boolean = true;
   contentMargin: any = 62;
+  tenantInfo:any={};
+  isPredefinedBotUser:boolean = false;
+
   @ViewChild(SidebarComponent) sidebar: SidebarComponent;
-  constructor() { }
+  @ViewChild('iframeRef') iframeRef: ElementRef;
+  
+  constructor(private dt: DataTransferService) {
+    this.dt._tenant_info.subscribe(res=>{
+      if(res){
+        this.tenantInfo=res;
+        this.isPredefinedBotUser = res.isPredefinedBots
+      }
+    })
+   }
+   
   ngOnInit(): void {
-    
     this.onToolbarMenuToggle();
+  }
+
+  ngAfterViewInit() {
+
+        setTimeout(() => {
+          const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
+          if(iframe)
+          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: '0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o=' }, '*');
+        }, 2000);
+        
+        window.addEventListener('message', event => {
+          const message = event.data;
+          const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
+          if(iframe){
+              iframe.style.height = message.height;
+              iframe.style.width = message.width;
+          }
+      });
+    
   }
 
   onToolbarMenuToggle() {
     this.sideBarOpen = !this.sideBarOpen;
     (!this.sideBarOpen)?this.hideSubMenu():this.contentMargin = 260;
   }
-  // sidenavEvents(str) {
-  // }
-  hideSubMenu()
-  {
+
+  hideSubMenu(){
     if(!(this.sidebar)) setTimeout(()=>{this.hideSubMenu()},100);
     else{
     this.sidebar.showSubmenu = false

@@ -43,6 +43,12 @@ export class DynamicTableComponent implements OnInit {
   @Output() approvedItem = new EventEmitter<any[]>();
   @Output() rejectItem = new EventEmitter<any[]>();
   @Output("openEzAsk") openEzAsk:any= new EventEmitter<any>();
+  @Input("show_run_btn") public show_run_btn:boolean;
+  @Input("show_stop_btn") public show_stop_btn:boolean;
+  @Input("show_view_logs") public show_view_logs:boolean;
+  @Output() runItem = new EventEmitter<any[]>();
+  @Output() stopItem = new EventEmitter<any[]>();
+  @Output() viewLogsByItem = new EventEmitter<any[]>();
   public loggedUserRole: any[]=[];
   _selectedColumns: any[];
   customers: any = [];
@@ -195,5 +201,16 @@ export class DynamicTableComponent implements OnInit {
   }
   onResubscribe(rowData){
     this.updateItem.emit(rowData);
+  }
+
+  onRunRow(row) {
+    this.runItem.emit(row);
+  }
+  onStopRow(row) {
+    this.stopItem.emit(row);
+  }
+
+  onViewLogs(row){
+    this.viewLogsByItem.emit(row)
   }
 }

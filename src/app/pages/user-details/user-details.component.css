@@ -1,0 +1,687 @@
+.login-bg{
+  width: 700px;
+}
+.userinput, .otpinput, .pswinput{
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  height: 40px !important;
+  border-radius: 0px !important;
+}
+img.buuton-icons {
+  width: 18px;
+  margin: 9px 5px;
+  vertical-align: middle;
+}
+
+.btn-buttons {
+  background: white;
+  border: 1px solid #333;
+  padding: 7px;
+  margin: 0px 5px;
+  min-width: 120px;
+  border-radius: 3px;
+  font-size:14px;
+}
+
+
+.inner-addon { 
+  position: relative; 
+}
+
+h6 {
+  width: 80%; 
+  text-align: center; 
+  border-bottom: 1px solid rgb(204, 204, 204); 
+  line-height: 0.1em;
+  margin: 10px 20px 10px 43px; 
+  
+} 
+
+h6 span { 
+   background:#fff; 
+   padding: 10px !important;
+}
+
+/* style icon */
+.inner-addon .userIcon ,.inner-addon .pswIcon, .inner-addon .otpIcon{
+position: absolute;
+padding: 10px;
+pointer-events: none;
+width: 40px;
+}
+.left-addon input  { padding-left:  40px; }
+.right-addon input { padding-right: 20px; }
+
+.inner-addon .pwd-class, .inner-addon .otp-class{
+  position: absolute;
+  padding: 10px;
+  z-index: 1000;
+  margin-left: 250px !important;
+  width: 40px;
+}
+
+.brand{
+  margin-bottom: 0px;
+}
+.brand img{
+  width: 230px;
+}
+.signup-btn{
+  /*margin-left: 45%;*/
+  margin-left:0%;
+  width: 130px !important;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 40px;
+  margin-left: 33%; 
+  margin-top: 20px;
+}
+.signupbtn{
+  width: 120px !important;
+  border-radius: 20px;
+  font-size: 14px;
+  height: 35px;
+  background-color: white;
+  border: 1px solid #0061cf;
+  color: #0061cf;
+}
+.signupbtn:hover{
+  background-color: #0061cf;
+  color: white;
+}
+.errordiv{
+  margin-top: 10px;
+}
+.signup{
+  margin-top: 20px;
+}
+
+.for_pass{
+  color: #0061cf !important;
+  text-decoration: none;
+}
+
+.for_pass:hover{
+  /*font-size: 16.5px;*/
+  font-weight: 420;
+  padding:5px;
+}
+
+.pwd-class, .otp-class{
+  width: 20px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #0061cf;
+  cursor: pointer;
+}
+.have_acc{
+  font-size: 15px;
+  color: #8b8a8a;
+}
+.register-btn{
+  margin-left: 40%;
+  width: 120px !important;
+  border-radius: 20px;
+  font-size: 14px;
+  height: 35px;
+}
+.have_account{
+  margin-left: 35%;
+}
+
+.card_sty{
+      /* top: 40%; */
+    /* position: absolute; */
+    /* -webkit-transform: translate(-15%, -30%); */
+    /* transform: translate(-15%, -30%); */
+    box-shadow: #5784e999 0px 1px 6px;
+    /* margin-top: 227px; */
+    /* height: 745px; */
+    display: inline-block;
+}
+/*
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  position: inherit;
+  width: 320px;
+  height: 62px;
+}*/
+
+:host ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0em !important;
+}
+
+.form-control{
+  height: 33px !important;
+}
+
+h6 {
+  width: 100%; 
+  text-align: center; 
+  border-bottom: 1px solid rgb(204, 204, 204); 
+  line-height: 0.1em;
+  margin: 10px 0 20px; 
+  
+} 
+
+h6 span { 
+   background:#fff; 
+   padding:0 10px; 
+   padding: 10px 0px 10px 0;
+}
+
+.btn_style{
+  width: 80%;
+  padding-right: 25px;
+  padding-left: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: 1px solid #ccc;
+  background-color: #ffffff !important;
+  border-radius: 4px;
+}
+
+.signup_styles{
+  font-weight: 420 !important;
+  font-size: 14px !important;
+}
+
+:host ::ng-deep input.mat-input-element {
+  margin-top: 0.8000em !important;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  width: 313px !important;
+}
+
+.btn_style{
+  padding-right: 25px;
+  padding-left: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.btn_style a{
+  text-decoration: none !important;
+}
+
+.signup_styles{
+  font-weight: 420 !important;
+  font-size: 14px !important;
+}
+
+.imgstyle{
+  height:200px;
+}
+
+.profile-pic-div{
+  padding: 0px;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
+    height: 109px;
+    width: 108px;
+  position: absolute;
+  top:50%;
+  left:40%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid grey;
+}
+
+#photo{
+  height:110px;
+  width: 110px;
+}
+
+#file{
+  display:none;
+}
+
+#uploadBtn{
+    position: absolute;
+    left: 13%;
+    top: 65%;
+    background: rgba(0, 0, 0, 0.7);
+    color:wheat;
+    display:none;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.profile-pic-div:hover{
+  #uploadBtn{
+  display:block;
+}
+}
+
+.hide{
+  display:none;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 8px 0px;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+   margin: 5px 0px !important;
+   padding-bottom: 0em;
+   padding-top: 0em;
+   padding-top: 0.5em;
+}
+
+:host ::ng-deep .mat-form-field-infix{
+  border-top: .4375em solid transparent;
+}
+
+:host ::ng-deep .mat-form-field{
+  margin: 0px 0px 0px 0px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0em 0 0.5em 0;
+}
+
+:host ::ng-deep .mat-form-field-prefix, .mat-form-field-suffix {
+  top: 0.70em !important;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  border-top: 1em solid transparent;
+}
+
+.bot-display {
+  height: 650px; /* Set the desired height for the scrollable content */
+}
+
+.bot-display:hover {
+overflow-y: scroll; /* Shows the scrollbar on hover */
+}
+
+/* For WebKit (Chrome, Safari) browsers */
+.bot-display::-webkit-scrollbar {
+  scrollbar-width: thin; /* Set the scrollbar width to a thin size */
+  scrollbar-color:  #9DBCEA;/* Set the scrollbar color to transparent */
+}
+
+.bot-display::-webkit-scrollbar-thumb {
+background-color: #9DBCEA; /* Set the scrollbar thumb color to transparent */
+}
+
+.bot-display::-webkit-scrollbar-track {
+background-color: transparent; /* Set the scrollbar track color to transparent */
+}
+
+.loginblock {
+  /* padding-top: 30px;
+  width: 400px !important;
+  margin: 0px auto;
+  height: 100vh; */
+  overflow: scroll;
+  height: 423px;
+;
+}
+
+.password-btn{
+  background: none !important;
+  border:none !important;
+  img{
+    height: 25px !important;
+    margin-top: -69px;
+    margin-left: 300px;
+  }
+}
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: #8b8a8a !important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label{
+  color: #8b8a8a !important;
+}
+
+input .form-control {
+  height: 45px !important;
+}
+
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
+.required,
+.star {
+color: #ea3d3d;
+font-size: 12px !important;
+line-height: 17px;
+letter-spacing: 0.2px;
+}
+
+.ezflow-img{
+width: 170px !important;
+margin-top: 10px
+}
+
+.bot-title-header{
+margin-top: 20px;
+}
+
+.bot-title{
+margin-left: 135px;
+font-size: 40px;
+font-weight: 800; color: black;
+}
+
+.bot-image{
+width: 450px;
+height: 350px; 
+margin-left: 100px;
+margin-top:-30px;
+}
+
+.tick{
+height: 10px; 
+width: 20px;
+}
+
+.bot-feature{
+margin-left: 5px;
+}
+
+.create{
+text-align: center;
+}
+
+.signup-header{
+font-size: large; 
+font-weight: 800; 
+margin-bottom: 0px !important; 
+color: black;
+}
+
+.create-label{
+padding-top: 2px;
+padding-left: 3px;
+}
+
+#email-buttons {
+position: relative !important;
+left: 93% !important;
+cursor: pointer;
+bottom: 33px !important;
+border-radius: 50% !important;
+color: #007bff;
+}
+
+#validate-buttons {
+position: relative !important;
+left: 90% !important;
+cursor: pointer;
+bottom: 35px !important;
+border-radius: 50% !important;
+color: #098de6;
+font-size: 0.7rem; 
+border: 1px solid #098de6; 
+padding: 6px; 
+}
+
+#validate-buttons:hover{
+background-color: #098de6;
+color: white;
+}
+
+#disable-validate-buttons{
+position: relative !important;
+left: 90% !important;
+bottom: 35px !important;
+border-radius: 50% !important;
+color: #EBEBE4;
+font-size: 0.7rem; 
+}
+
+.label-control{
+margin-bottom: 5px; 
+font-weight: 500; 
+}
+
+.form-control {
+height: 45px !important;
+border-radius: 5px;
+}
+
+#otp-message{
+margin-top: -10px !important;
+}
+
+.divide{
+padding-top:10px
+}
+
+.footer-google{
+margin-right: 0%;
+}
+
+.footer-microsoft{
+margin-left: 0%;
+}
+
+#footer-button{
+margin-top: 15px;
+}
+
+.resend, .resend-disable{
+  margin-left: 250px;
+  display: flex;
+  letter-spacing: 0.2px;
+  line-height: 17px;
+  color: #007bff;
+  margin-top: -20px;
+  font-weight: 420 !important;
+  font-size: 14px !important;
+  cursor: pointer;
+}
+
+.resend-disable {
+cursor: no-drop;
+}
+
+.verify{
+position: relative !important;
+left: 75% !important;
+cursor: pointer;
+line-height: 17px;
+letter-spacing: 0.2px;
+bottom: 35px !important;
+font-weight: 420 !important;
+font-size: 14px !important;
+}
+
+.verify:hover  {
+text-decoration: underline;
+}
+
+
+
+
+.bot-plan-details {
+height:650px;
+overflow-y: auto;
+width:auto;
+}
+
+.bot-plan-details:hover {
+overflow-y: scroll; 
+
+}
+
+.bot-plan-details::-webkit-scrollbar {
+scrollbar-width: thin;
+}
+
+.bot-plan-details::-webkit-scrollbar-thumb {
+background-color: #ffffff; /* Set the color of the scrollbar thumb */
+}
+
+.bot-plan-details:hover::-webkit-scrollbar-thumb {
+  background-color: #9DBCEA;
+}
+
+.planName {
+text-align: center;
+font-size: 25px;
+font-weight: 800; color: black;
+width: 600px; 
+display: inline-block; 
+}
+
+.feature{
+font-size: 16px;
+font-weight:bolder;
+color: #0061cf;
+}
+
+.feature-heading {
+width: 100%; 
+text-align: left; 
+margin-bottom: 10px; 
+
+}
+
+.feature-details {
+width: 550px; 
+margin: 0 auto;
+display: flex;
+flex-direction: column; 
+align-items: center;
+}
+
+.feature-item {
+width: 100%; 
+max-width: 290px; 
+margin-bottom: 10px;
+}
+
+.description {
+color: #0061cf;
+font-weight: bold;
+margin-top:5px;
+}
+
+.descript {
+display: inline-block;
+width: 600px; 
+text-align: justify;
+margin-top:10px;
+}
+
+.user-screen{
+margin: 10px;
+}
+
+.hand-image {
+width: 20px;
+margin:0px 10px;
+}
+
+.label-control{
+margin-bottom: 5px; 
+font-weight: 500; 
+}
+
+.user-screen{
+margin: 35px 0 0 50px;
+}
+
+.container-fluid{
+padding: 0 50px 0 50px;
+}
+
+@media screen and (max-width: 600px) {
+#phone {
+  width: 100% !important;
+}
+}
+
+.password-input{
+width: 100% !important;
+height: 45px !important;
+}
+
+:host ::ng-deep .iti {
+width: 100%;
+}
+
+.image-container {
+display: flex;
+position: relative;
+overflow: hidden;
+width: 100%;
+height: 100vh;
+}
+
+.background-image {
+display: flex;
+width: 100%; 
+height: 100%;
+}
+
+.logo {
+position: absolute;
+top: 20px;
+left: 20px; 
+z-index: 1; 
+}
+
+.img-box{
+padding-right: 0;
+}
+
+.container-fluid {
+padding: 0 15px 0 0;
+}
+
+.bottom-blue{
+height:  12px;
+background-color: #098de6;
+bottom: 0px !important;
+}
+
+.form-div{
+overflow: scroll !important;
+/* margin-left: 300px; */
+}
+
+#validate-button-disable {
+position: relative !important;
+left: 90% !important;
+bottom: 35px !important;
+border-radius: 50% !important;
+color: #52585c;
+font-size: 0.7rem; 
+border: 1px solid #52585c; 
+padding: 6px; 
+}
+
+.errspan_info {
+color:#696969;
+font-size: 12px !important;
+line-height: 17px;
+letter-spacing: 0.2px;
+}
+::ng-deep .p-dropdown{
+  height: 45px;
+}
+
+::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  color: #6c757d;
+  margin: 4px;
+}
+
+::ng-deep .iti__country-list {
+  width: 303px;
+}
+
+.ng2tel-container input[type="text"] {
+  box-sizing: border-box;
+  padding-right: 6px!important;
+  padding-left: 52px!important;
+  margin-left: 0;
+  width: 100%;
+}

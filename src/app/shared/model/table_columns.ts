@@ -258,8 +258,8 @@ export class columnList{
       ];
       
       public train_cutomer_support_bot_coloumns = [
-        {ColumnName: "trainBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "trainData",DisplayName: "Train Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "trainBotName",DisplayName: "Trained Model Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "trainData",DisplayName: "File Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
       
@@ -288,5 +288,14 @@ export class columnList{
         {ColumnName: "customerMailId",DisplayName: "Receipt Email",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Active','Cancelled'],sort: true,status_icon:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
+      ];
+
+      public predefined_orchestration_process_runs_columns=[
+        {ColumnName:"predefinedRunId",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        // {ColumnName:"environmentName",DisplayName:"Environment Name",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"startTS",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"endTS",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"}
       ];
 }
