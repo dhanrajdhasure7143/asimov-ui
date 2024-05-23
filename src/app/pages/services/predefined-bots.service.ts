@@ -49,4 +49,9 @@ export class PredefinedBotsService {
     return this.http.post("/rpa-service/predefined/validate-predefined-inputs",body)
   }
 
+  rfpFileUpload(body:any){
+    return this.http.post("/platform-service/document/uploadPredefinedRFPFile",body)
+  }
+
+
 }
