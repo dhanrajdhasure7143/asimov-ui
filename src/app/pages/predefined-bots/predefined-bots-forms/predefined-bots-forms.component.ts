@@ -44,6 +44,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   predefinedBot_uuid:any;
   selectedOption:any={};
   predefinedBot_schedulerRequired:boolean;
+  filePathValues:any[]=[];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -331,17 +332,20 @@ if(this.params.type =='edit'){
   rfpbotCreate(){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
-      const formData = new FormData();
-      formData.append('filePath', this.selectedFiles[0]);
-      this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
-        console.log("test", res)
+      // const formData = new FormData();
+      // formData.append('filePath', this.selectedFiles[0]);
+      // this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
+        // console.log("test", res)
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
-        req_body.fields[this.selectedOption.preAttributeName] = res.fileName
+        // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
+        this.filePathValues.forEach(element => {
+          req_body.fields[element.attributName] = element.filePath
+        });
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
           this.duplicateAttributes.forEach(element => {
@@ -366,7 +370,7 @@ if(this.params.type =='edit'){
           this.spinner.hide();
           this.toaster.showError(this.toastMessages.apierror)
         })
-      })
+      // })
       } else {
         this.toaster.showInfo("Fill All fields")
       }
@@ -510,6 +514,18 @@ if(this.params.type =='edit'){
   onFileSelected(event: any,field) {
     this.selectedFiles = event.target.files;
     this.selectedOption = field
+    console.log("this.selectedOption",this.selectedOption)
+    if(this.predefinedBot_uuid =='Pred_RFP'){
+      const formData = new FormData();
+      formData.append('filePath', this.selectedFiles[0]);
+      this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
+        console.log("res",res)
+        let obj = {filePath:res.fileName,
+          attributName:field.preAttributeName
+          }
+        this.filePathValues.push(obj)
+      })
+    }
   }
 
   onRadioChange(value: string,option_item) {
