@@ -3,52 +3,53 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+    production: false,
+  
+    pi_url: "http://pi.dev.epsoftinc.in",
+    bps_url: "http://bps.dev.epsoftinc.in",
+    rpa_url: "http://rpa.dev.epsoftinc.in",
+    loopback_url: "http://10.11.0.107:3000",
+    idm_url: "http://idm.dev.epsoftinc.in",
+    auth_url: "http://authservices.dev.epsoftinc.in",
+    //for Auto build
+    pi_node_url: "http://pinode.dev.epsoftinc.in",
+    pi_node_jobs: "http://pi-node-jobs:5000",
+    platform_url: "http://aiotalplatform.dev.epsoftinc.in",
+    schema_registry_url: "http://schemadev-registry:8081",
+    alerts_url: "http://alerts.dev.epsoftinc.in",
+    // Aiotal redirection urls
+    myaccount_url: "http://ezflow.dev.epsoftinc.in/#/activation",
+    logout_url: "http://ezflow.dev.epsoftinc.in/#/activation",
+    redirectout_url: "http://ezflow.dev.epsoftinc.in/#/signout",
+    platform_home_url: "http://ezflow.dev.epsoftinc.in/#/",
+    projectendpoint_url: "http://pcs.dev.epsoftinc.in",
+    subscriptionendpoint_url: "http://subscription.dev.epsoftinc.in",
+    // camunda navigation
+    camunda_url: "http://ezworkflow.dev.epsoftinc.com",
+    //A-Square/Copilot
+    asquare:"http://asquare.dev.epsoftinc.in",
+    // Data upload path
+    data_path: "/usr/share/confluent-ftp-data",
+    // PI Connectors
+    connector_topic: "nodeDev",
+    //DB Connector
+    dbConnectorHost: "pgpooldev",
+    dbName: "eiap_dev",
+    dbPort: "5432",
+    //RPA WebActions Action AttrId
+    webActionAttrId: 536,
+    //IPCTenant
+    ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c",
+    isChatEnable : true,
+    isProcessLogsEnable: true,
+    isCopilotEnable : true,
+    isSubscrptionEnabled : true,
+    isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
+    isCustomerBots : true,
+    environmentName: "DEV",
+    paymentSuccessURL: "http://eziap.dev.epsoftinc.in/#/pages/success",
+    paymentFailuerURL: "http://eziap.dev.epsoftinc.in/#/pages/subscriptions",
+    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
 
-  pi_url: "https://ezflow.dev.epsoftinc.com/prcintel",
-  bps_url: "https://ezflow.dev.epsoftinc.com/bpstudio",
-  rpa_url: "https://ezflow.dev.epsoftinc.com/wfrpa",
-  loopback_url: "http://10.11.0.107:3000",
-  idm_url: "https://ezidm.dev.epsoftinc.com",
-  auth_url: "https://ezflow.dev.epsoftinc.com/authservices",
-  //for Auto build
-  pi_node_url: "https://ezflow.dev.epsoftinc.com/pinode",
-  pi_node_jobs: "http://pi-node-jobs:5000",
-  platform_url: "https://ezflow.dev.epsoftinc.com/aiotalplatform",
-  schema_registry_url: "http://schemadev-registry:8081",
-  alerts_url: "https://ezflow.dev.epsoftinc.com/alerts",
-  // Aiotal redirection urls
-  myaccount_url: "https://ezflow.dev.epsoftinc.com/#/activation",
-  logout_url: "https://ezflow.dev.epsoftinc.com/#/activation",
-  redirectout_url: "https://ezflow.dev.epsoftinc.com/#/signout",
-  platform_home_url: "https://ezflow.dev.epsoftinc.com/#/",
-  projectendpoint_url: "https://ezflow.dev.epsoftinc.com/pcs",
-  subscriptionendpoint_url: "https://ezflow.dev.epsoftinc.com/subscriptions",
-  // camunda navigation
-  camunda_url: "https://ezworkflow.dev.epsoftinc.com",
-  //A-Square/Copilot
-  asquare:"https://ezflow.dev.epsoftinc.com",
-  // Data upload path
-  data_path: "/usr/share/confluent-ftp-data",
-  // PI Connectors
-  connector_topic: "nodeDev",
-  //DB Connector
-  dbConnectorHost: "pgpooldev",
-  dbName: "eiap_dev",
-  dbPort: "5430",
-  //RPA WebActions Action AttrId
-  webActionAttrId: 536,
-  //IPCTenant
-  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c",
-  isChatEnable : true,
-  isProcessLogsEnable: true,
-  isCopilotEnable : true,
-  isSubscrptionEnabled : true,
-  isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
-  isCustomerBots : true,
-  environmentName: "DEV",
-  paymentSuccessURL: "https://eziap.dev.epsoftinc.com/#/pages/success",
-  paymentFailuerURL: "https://eziap.dev.epsoftinc.com/#/pages/subscriptions",
-  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
-  python_llm:"https://ezflowllm.dev.epsoftinc.com"
-};
+    python_llm:"https://ezflowllm.dev.epsoftinc.in"
+  };
