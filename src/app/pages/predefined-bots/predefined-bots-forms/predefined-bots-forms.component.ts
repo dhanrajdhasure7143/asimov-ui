@@ -42,7 +42,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
   selectedFiles:any[]=[];
   jobDescription:any={};
   predefinedBot_uuid:any;
-  selectedOption:any={}
+  selectedOption:any={};
+  predefinedBot_schedulerRequired:boolean;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -106,6 +107,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       this.predefinedBot_name = res.predefinedBotName;
       this.processName = "Automate your "+ this.predefinedBot_name +" Process"
       this.predefinedBot_uuid = res.predefinedBotUUID
+      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
