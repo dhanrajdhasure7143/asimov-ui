@@ -1964,4 +1964,23 @@ getPaymentCards(){
     return this.http.post<any[]>("/api/login/beta/current-screen-status",body); 
   }
 
+  saveCustomTask(body){
+    return this.http.post("/rpa-service/sdk-custom/create-sdk-task",body)
+  }
+
+  getApprovalList(){
+    return this.http.get("/rpa-service/sdk-custom/sdk-tasks-approvedby")
+  }
+
+  updateCustomTasks(data: any) {
+    return this.http.post('/rpa-service/sdk-custom/sdk-edit-approvals',data)
+  }
+
+  sdkCustomTaskNameCheck(customeTaskName:any) {
+    return this.http.post(`/rpa-service/sdk-custom/validate-name/${customeTaskName}`,"")
+  }
+
+  approveRejectRequest(body:any){
+    return this.http.post('/rpa-service/sdk-custom/tasks/approve-reject', body)
+  }
 }

@@ -7,11 +7,15 @@
         <form [formGroup]="customTaskForm" class="h-100">
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Task Name <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="customTaskName" 
+                <input type="text" maxlength="51" class="form-control data" formControlName="customTaskName" (input)="checkSdkTaskName()"
                 value="" placeholder="Enter Task Name">
                 <span
                     *ngIf="(customTaskForm.get('customTaskName').invalid && customTaskForm.get('customTaskName').touched) && !customTaskForm.controls['customTaskName'].hasError('pattern') && !customTaskForm.controls['customTaskName'].hasError('maxlength')"
                     class="required"> Task Name Required
+                </span>
+                <span *ngIf="customTaskNameCheck && customTaskForm.get('customTaskName').value && !customTaskForm.get('customTaskName').hasError('pattern')"
+                    class="required">
+                    Task Name already exists*
                 </span>
             </div>
             <!-- temporarly commenting the input and output reference fields as it is not in use for now -->
@@ -59,14 +63,25 @@
             </div>
 
             <div class="col-md-12 p-0 form-group">
-                <label class="label-control" for="processOwner">Process Owner<span class="star">*</span></label>
+                <label class="label-control" for="approver">Select Approver<span class="star">*</span></label>
                 <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}" [appendTo]="'body'"
                     filterBy="user_email,fullName" [autoDisplayFirst]="false"
-                    placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
-                    optionLabel="fullName">
+                    placeholder="Select approver" formControlName="approver" optionValue="user_email"
+                    optionLabel="fullName" [dropdownIcon]="isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">
                 </p-dropdown>
-                <span *ngIf="customTaskForm.get('processOwner').invalid && customTaskForm.get('processOwner').touched"
+                <span *ngIf="customTaskForm.get('approver').invalid && customTaskForm.get('approver').touched"
                     class="required">Process Owner Required</span>
+            </div>
+
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="userName">Comments <span class="star">*</span></label>
+                    <textarea type="text" maxlength="250" class="form-control data" formControlName="comments" value=""
+                        placeholder="Enter comments" rows="3" cols="30" pInputTextarea [autoResize]="true">
+                    </textarea>
+                <span
+                    *ngIf="(customTaskForm.get('comments').invalid && customTaskForm.get('comments').touched) && !customTaskForm.controls['comments'].hasError('pattern') && !customTaskForm.controls['comments'].hasError('maxlength')"
+                    class="required"> Comments Required
+                </span>
             </div>
             <!-- temporarly commenting radio button condtional fields as it is not in use for now. -->
             <!-- <div class="col-md-12 p-0 form-group" *ngIf="showPathField">
@@ -93,10 +108,11 @@
             <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
             <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
             <!-- <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="saveCustomTasks()">Draft</button> -->
-            <button class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button>
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="(isupdateform && updatetaskDetails.approvalStatus !='Approved')" (click)="updateCustomTasks(true)"> Update</button>
+            <button *ngIf="!hideDraftButton" class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && updatetaskDetails.status !='Approved' && updatetaskDetails.status != 'Draft')" (click)="updateCustomTasks(true)"> Update</button>
             <!-- <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button> -->
-            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="!isupdateform || (isupdateform && (updatetaskDetails.approvalStatus == 'Approved' || updatetaskDetails.approvalStatus == 'Draft' ))" (click)="saveCustomTasks(true)"> Submit for Approval</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="!isupdateform " (click)="saveCustomTasks(true)"> Submit for Approval</button>
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && (updatetaskDetails.status == 'Approved' || updatetaskDetails.status == 'Draft' ))" (click)="updateApproval(true)"> Update for Approval</button>
         </div>
     </div>
 </div>
