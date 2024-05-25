@@ -9,6 +9,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { CopilotService } from '../../services/copilot.service';
 import { HttpClient } from '@angular/common/http';
 import { RestApiService } from '../../services/rest-api.service';
+import { environment } from 'src/environments/environment';
 
 enum BotContentType {
   Web = 'WEB',
@@ -365,7 +366,7 @@ export class ManageCustomerBotComponent implements OnInit {
     // const embedUrl = rowData.customerSupportBotEmbedUrl;
     const embedUrl = rowData.botKey;
    
-    const fullUrl = `https://ezflowezask.dev.epsoftinc.com/?q=${encodeURIComponent(embedUrl)}`;
+    const fullUrl = environment.ezaskUrl+`/?q=${encodeURIComponent(embedUrl)}`;
     window.open(fullUrl);
   }
 
