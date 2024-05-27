@@ -417,7 +417,6 @@ if(this.params.type =='edit'){
           })
         }
         console.log('req_body---:', req_body);
-        return;
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
           this.router.navigate(["/pages/predefinedbot/list"]);
