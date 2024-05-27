@@ -309,7 +309,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           }),
       ];
-    }, 1500)
+    }, 3000)
   }
 
   checkUncheckEnvironments(envId, value) {

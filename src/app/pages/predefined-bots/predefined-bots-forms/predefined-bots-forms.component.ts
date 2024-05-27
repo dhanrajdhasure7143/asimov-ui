@@ -41,6 +41,10 @@ export class PredefinedBotsFormsComponent implements OnInit {
   description_type:string='textarea';
   selectedFiles:any[]=[];
   jobDescription:any={};
+  predefinedBot_uuid:any;
+  selectedOption:any={};
+  predefinedBot_schedulerRequired:boolean;
+  filePathValues:any[]=[];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -103,6 +107,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
       // this.formFields={...{},...res.data};
       this.predefinedBot_name = res.predefinedBotName;
       this.processName = "Automate your "+ this.predefinedBot_name +" Process"
+      this.predefinedBot_uuid = res.predefinedBotUUID
+      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
@@ -315,45 +321,107 @@ if(this.params.type =='edit'){
   }
 
   createBot() {
+    console.log(this.selectedOption , this.predefinedBot_uuid)
+    if(this.predefinedBot_uuid =='Pred_RFP'){
+      this.rfpbotCreate()
+    }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
+      this.recruitmentbotCreate();
+    }
+  }
+
+  rfpbotCreate(){
     if (this.predefinedBotsForm.valid) {
-    this.spinner.show();
-    if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
-      this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
-      this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
-    }
-      let botName = this.predefinedBotsForm.value.fields.botName
-      let req_body = this.predefinedBotsForm.value
-      req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
-      req_body["predefinedBotType"] = this.predefinedBot_name
-      req_body["productId"] = this.predefinedBot_id
-      req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
-      delete req_body.fields.botName
-      if(this.duplicateAttributes.length >0){
-        this.duplicateAttributes.forEach(element => {
-          let v_key = element.preAttributeName.split("_")
-
-
-          for (const key in req_body.fields) {
-          const parts = key.split('_');
-          
-          if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
-              req_body.fields[element.preAttributeName] = req_body.fields[key]
-          }
-          }
+      this.spinner.show();
+      // const formData = new FormData();
+      // formData.append('filePath', this.selectedFiles[0]);
+      // this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
+        // console.log("test", res)
+        let botName = this.predefinedBotsForm.value.fields.botName
+        let req_body = this.predefinedBotsForm.value;
+        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["predefinedBotType"] = this.predefinedBot_name
+        req_body["productId"] = this.predefinedBot_id
+        req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
+        // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
+        this.filePathValues.forEach(element => {
+          req_body.fields[element.attributName] = element.filePath
         });
+        delete req_body.fields.botName
+        if(this.duplicateAttributes.length >0){
+          this.duplicateAttributes.forEach(element => {
+            let v_key = element.preAttributeName.split("_")
+  
+  
+            for (const key in req_body.fields) {
+            const parts = key.split('_');
+            
+            if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
+                req_body.fields[element.preAttributeName] = req_body.fields[key]
+            }
+            }
+          });
+        }
+        console.log('req_body------:', req_body);
+        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+          this.spinner.hide();
+          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.toaster.showSuccess(botName,"create")
+        },err=>{
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessages.apierror)
+        })
+      // })
+      } else {
+        this.toaster.showInfo("Fill All fields")
       }
-      console.log('req_body---:', req_body);
-      this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-        this.spinner.hide();
-        this.router.navigate(["/pages/predefinedbot/list"]);
-        this.toaster.showSuccess(botName,"create")
-      },err=>{
-        this.spinner.hide();
-        this.toaster.showError(this.toastMessages.apierror)
-      })
-    } else {
-      this.toaster.showInfo("Fill All fields")
-    }
+  }
+
+  recruitmentbotCreate(){
+    if (this.predefinedBotsForm.valid) {
+      this.spinner.show();
+      if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
+        this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
+        this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
+      }
+        let botName = this.predefinedBotsForm.value.fields.botName
+        let req_body = this.predefinedBotsForm.value;
+        // if( this.predefinedBot_uuid =='Pred_Recruitment'){
+        //   let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
+        //   appendValuesList.forEach(e=>{
+        //     req_body[e] = JSON.stringify(this.jobDescription.response)
+        //   })
+        // }
+        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["predefinedBotType"] = this.predefinedBot_name
+        req_body["productId"] = this.predefinedBot_id
+        req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
+        delete req_body.fields.botName
+        if(this.duplicateAttributes.length >0){
+          this.duplicateAttributes.forEach(element => {
+            let v_key = element.preAttributeName.split("_")
+  
+  
+            for (const key in req_body.fields) {
+            const parts = key.split('_');
+            
+            if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
+                req_body.fields[element.preAttributeName] = req_body.fields[key]
+            }
+            }
+          });
+        }
+        console.log('req_body---:', req_body);
+        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+          this.spinner.hide();
+          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.toaster.showSuccess(botName,"create")
+        },err=>{
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessages.apierror)
+        })
+      } else {
+        this.toaster.showInfo("Fill All fields")
+      }
   }
 
   onUpdateForm(){
@@ -443,12 +511,26 @@ if(this.params.type =='edit'){
   }
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any,field) {
     this.selectedFiles = event.target.files;
+    this.selectedOption = field
+    console.log("this.selectedOption",this.selectedOption)
+    if(this.predefinedBot_uuid =='Pred_RFP'){
+      const formData = new FormData();
+      formData.append('filePath', this.selectedFiles[0]);
+      this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
+        console.log("res",res)
+        let obj = {filePath:res.fileName,
+          attributName:field.preAttributeName
+          }
+        this.filePathValues.push(obj)
+      })
+    }
   }
 
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
+    this.selectedOption = option_item
     let array = this.getArrayValues(option_item.field)
     array.forEach(each=>{
       this.predefinedBotsForm.get("fields."+each).setValue("")
