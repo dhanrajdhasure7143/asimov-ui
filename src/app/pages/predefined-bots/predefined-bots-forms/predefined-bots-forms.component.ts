@@ -385,30 +385,36 @@ if(this.params.type =='edit'){
       }
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
-        // if( this.predefinedBot_uuid =='Pred_Recruitment'){
-        //   let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
-        //   appendValuesList.forEach(e=>{
-        //     req_body[e] = JSON.stringify(this.jobDescription.response)
-        //   })
-        // }
+          let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
+          console.log(appendValuesList)
+          appendValuesList.forEach(e=>{
+            req_body.fields[e] = JSON.stringify(this.jobDescription.response)
+          })
+        
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
+        console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
-          this.duplicateAttributes.forEach(element => {
-            let v_key = element.preAttributeName.split("_")
+          // this.duplicateAttributes.forEach(element => {
+          //   let v_key = element.preAttributeName.split("_")
   
   
-            for (const key in req_body.fields) {
-            const parts = key.split('_');
+          //   for (const key in req_body.fields) {
+          //   const parts = key.split('_');
             
-            if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
-                req_body.fields[element.preAttributeName] = req_body.fields[key]
+          //   if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
+          //       req_body.fields[element.preAttributeName] = req_body.fields[key]
+          //   }
+          //   }
+          // });
+          this.duplicateAttributes.forEach(ele=>{
+            if(ele.options){
+              req_body.fields[ele.preAttributeName] = req_body.fields[ele.options[0].duplicatesTo]
             }
-            }
-          });
+          })
         }
         console.log('req_body---:', req_body);
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
