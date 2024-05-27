@@ -112,7 +112,11 @@
             <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && updatetaskDetails.status !='Approved' && updatetaskDetails.status != 'Draft')" (click)="updateCustomTasks(true)"> Update</button>
             <!-- <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button> -->
             <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="!isupdateform " (click)="saveCustomTasks(true)"> Submit for Approval</button>
+<<<<<<< HEAD
             <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && (updatetaskDetails.status == 'Approved' || updatetaskDetails.status == 'Draft' ))" (click)="updateApproval(true)"> Submit for Approval</button>
+=======
+            <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && (updatetaskDetails.status == 'Approved' || updatetaskDetails.status == 'Draft' ))" (click)="updateApproval(true)"> Update for Approval</button>
+>>>>>>> f5f1b5b2b4d5fb16c372c02b9a3e80c2962a80c3
         </div>
     </div>
 </div>
