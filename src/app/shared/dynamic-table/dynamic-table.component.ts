@@ -82,7 +82,8 @@ export class DynamicTableComponent implements OnInit {
     New:'#3CA4F3',
     Started:'#4BD963',
     Stopped:"#FE665D",
-    Cancelled:"#B91C1C"
+    Cancelled:"#B91C1C",
+    Draft:"#e07b39"
   };
   searchValue: string;
   @ViewChild("dt1",{static:true}) table:Table;

@@ -1384,7 +1384,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.restapiresponse.forEach((data_obj) => {
           let key = {
             key: data_obj[attrnames[0]],
-            label: data_obj[attrnames[1]],
+            label: data_obj[attrnames[2]], // temporarly code we need to remove after Demo
           };
           options.push(key);
         });

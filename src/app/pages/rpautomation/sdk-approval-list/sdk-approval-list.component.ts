@@ -35,14 +35,15 @@ export class SdkApprovalListComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
-    this.columns_list = this.columnList.custom_tasks
-    this.getTaskDetails();
+    this.columns_list = this.columnList.sdk_approval_list
+    this.getApprovalList();
   }
 
-  getTaskDetails() {
+  getApprovalList() {
     this.spinner.show();
-    this.rest.getCustomTasks().subscribe((res: any) => {
+    this.rest.getApprovalList().subscribe((res: any) => {
       this.customTasks = res
+      console.log("Response", res);
       this.customTasks.map(item => {
         item.createdAt = new Date(item.createdAt)
       })
@@ -51,7 +52,7 @@ export class SdkApprovalListComponent implements OnInit {
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields = ["customTaskName", "languageType", "createdAt"]
+    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "createdBy"]
 
   }
 
@@ -103,7 +104,7 @@ export class SdkApprovalListComponent implements OnInit {
             })
 
           } else {
-            this.getTaskDetails();
+            this.getApprovalList();
             let status: any = res;
             this.spinner.hide();
             this.toastService.showSuccess(row.customTaskName, 'delete');
@@ -123,7 +124,28 @@ export class SdkApprovalListComponent implements OnInit {
 
   closeOverlay(event) {
     this.hiddenPopUp = false;
-    this.getTaskDetails();
+    this.getApprovalList();
+  }
+
+  onApproveItem(data: any, status: string) {
+    const payload = { ...data, status: status };
+    console.log("Payload to be sent:", payload);
+    this.spinner.show();
+    this.rest.approveRejectRequest(payload).subscribe((res: any) => {
+      if (res.code == 4200){
+        console.log('Payload sent successfully', res);
+        this.spinner.hide();
+        this.toastService.showSuccess(res.message, 'response');
+        this.getApprovalList();
+      }else{
+        this.spinner.hide();
+        this.toastService.showError(res.message);
+      }
+    },(error: any) => {
+      this.spinner.hide();
+      this.toastService.showError("Error occured");
+      }
+    );
   }
 
 }
