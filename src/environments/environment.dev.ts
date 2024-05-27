@@ -51,5 +51,5 @@ export const environment = {
     paymentFailuerURL: "http://eziap.dev.epsoftinc.in/#/pages/subscriptions",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
     python_llm:"http://10.11.0.67:5006",
-    ezaskUrl:"http://ezask.dev.epsoftinc.in"
+    ezaskUrl: "http://ezask.dev.epsoftinc.in/?q=0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
   };
