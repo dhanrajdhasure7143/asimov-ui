@@ -12,7 +12,7 @@
         <div class="credential-tablegrid">
           <app-dynamic-table
             [table_data]="customTasks"
-            [screenTable]="'common'"
+            [screenTable]="'SDK_taskList'"
             [columns_list]="columns_list"
             [checkBoxShow]="false"
             (selectedData)="readSelectedData($event)"
@@ -41,7 +41,7 @@
         [credupdatedata]="credupdatedata"
         (refreshTable)="refreshCredentialList($event)"
         ></app-rpa-sdk-form> -->
-        <app-rpa-sdk-form [isupdateform]="isupdateform" [hideDraftButton]="false" [updatetaskDetails]="updatetaskDetails" (closeOverlay)="closeOverlay($event)"></app-rpa-sdk-form>
+        <app-rpa-sdk-form [isupdateform]="isupdateform" [hideDraftButton]="false" [updatetaskDetails]="updatetaskDetails" (closeOverlay)="closeOverlay($event)" (taskSaved)="onTaskSaved()"></app-rpa-sdk-form>
     </app-split-overlay>
   </div>
 

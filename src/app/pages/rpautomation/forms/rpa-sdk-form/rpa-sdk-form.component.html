@@ -108,7 +108,8 @@
             <button class="btn new-cancelbtn" *ngIf="isupdateform" (click)="cancelUpdate()">Cancel</button>
             <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="resetCustomTasks()">Reset</button>
             <!-- <button class="btn new-cancelbtn" *ngIf="!isupdateform" (click)="saveCustomTasks()">Draft</button> -->
-            <button *ngIf="!hideDraftButton" class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button>
+            <!-- <button *ngIf="!hideDraftButton" class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button> -->
+            <button *ngIf="!hideDraftButton && !isupdateform" class="btn bluebg-button" (click)="saveCustomTasks(false)"> Draft</button>
             <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="(isupdateform && updatetaskDetails.status !='Approved' && updatetaskDetails.status != 'Draft')" (click)="updateCustomTasks(true)"> Update</button>
             <!-- <button class="btn bluebg-button" [disabled]="customTaskForm.invalid" *ngIf="isupdateform" (click)="updateCustomTasks(false)"> Draft</button> -->
             <button class="btn bluebg-button" [disabled]="customTaskForm.invalid || customTaskNameCheck" *ngIf="!isupdateform " (click)="saveCustomTasks(true)"> Submit for Approval</button>

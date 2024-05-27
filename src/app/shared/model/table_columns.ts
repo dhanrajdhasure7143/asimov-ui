@@ -270,13 +270,13 @@ export class columnList{
       ];
 
       public custom_tasks = [
-        {ColumnName: "customTaskName",DisplayName: "Custom Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text",sort: true,status_icon:false},
         {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java'],sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,filterType:"date",ShowGrid: true,sort: true,},
         {ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
         {ColumnName: "comments", DisplayName: "Comments", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, showTooltip: true },
         //temporarly commenting the input and output reference columns as it is not in use for now.
-        {ColumnName: "status",DisplayName: "Approved Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,status_icon:true},
+        { ColumnName: "status", DisplayName: "Status", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false, status_icon: true, dropdownList: ['Approved', 'Rejected', 'Pending', 'Draft']},
         // {ColumnName: "version",DisplayName: "Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
@@ -302,12 +302,13 @@ export class columnList{
       ];
 
   public sdk_approval_list = [
-    { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
-    { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", dropdownList: ['Java'], sort: true, },
-    { ColumnName: "createdAt", DisplayName: "Created Date", filterWidget: "normal", ShowFilter: true, filterType: "date", ShowGrid: true, sort: true, },
+    { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text", sort: true, status_icon: false },
+    { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", width: "flex: 0 0 11rem", dropdownList: ['Java'], sort: true, },
+    { ColumnName: "createdAt", DisplayName: "Created Date", filterWidget: "normal", width: "flex: 0 0 11rem", ShowFilter: true, filterType: "date", ShowGrid: true, sort: true, },
     { ColumnName: "createdBy", DisplayName: "Created By", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
-    { ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
-    { ColumnName: "status", DisplayName: "Approved Status", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, multi: false, status_icon: true },
+    // { ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
+    { ColumnName: "comments", DisplayName: "Comments", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, showTooltip: true },
+    { ColumnName: "status", DisplayName: "Status", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false, status_icon: true, dropdownList: ['Approved', 'Rejected', 'Pending']},
     { ColumnName: "action", DisplayName: "Actions", ShowGrid: true, ShowFilter: false, sort: false, multi: false, },
   ];
 }

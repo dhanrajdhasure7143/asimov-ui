@@ -50,7 +50,7 @@ export class RpaSdkComponent implements OnInit {
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields=["customTaskName","languageType","createdAt","approvedBy"]
+    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "approvedBy", "comments", "status"]
 
   }
 
@@ -124,6 +124,9 @@ export class RpaSdkComponent implements OnInit {
 
   closeOverlay(event){
     this.hiddenPopUp=false;
+    // this.getTaskDetails();
+  }
+  onTaskSaved() {
     this.getTaskDetails();
   }
 

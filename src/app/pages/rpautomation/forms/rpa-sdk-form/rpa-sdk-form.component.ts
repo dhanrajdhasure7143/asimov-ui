@@ -20,6 +20,7 @@ export class RpaSdkFormComponent implements OnInit {
   @Input() updatetaskDetails:any ={};
   @Input() hideDraftButton: boolean = false;
   @Output() closeOverlay = new EventEmitter<any>();
+  @Output() taskSaved = new EventEmitter<void>();
   categoryList: any;
   public customTaskForm: FormGroup;
   public Credupdateflag: Boolean;
@@ -150,13 +151,14 @@ export class RpaSdkFormComponent implements OnInit {
       "comments": this.customTaskForm.value.comments,
       "approverName": approverFullName,
       "createdUser": localStorage.getItem("firstName") + ' ' + localStorage.getItem("lastName"),
-      "version":1,
+      "version":0,
       "status": data?"Pending":"Draft",
     }
     console.log(data);
     console.log("Payload", reqBody);
     this.rest_api.saveCustomTask(reqBody).subscribe((data:any)=>{
       this.closeOverlay.emit(true);
+      this.taskSaved.emit();
       this.spinner.hide();
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'create');
     },err=>{
@@ -182,12 +184,13 @@ export class RpaSdkFormComponent implements OnInit {
       "status": staus?"Pending":"Draft",
       "customTaskId": this.updatetaskDetails.customTaskId,
       "createdBy":this.updatetaskDetails.createdBy,
-      // "version":1,
+      "version":this.updatetaskDetails.version,
     }
     console.log(this.updatetaskDetails.id);
     console.log("UPDATe",reqBody);
     this.rest_api.updateCustomTasks(reqBody).subscribe((data : any) =>{
-    this.spinner.hide();
+      this.taskSaved.emit();
+      this.spinner.hide();
       this.closeOverlay.emit(true);
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName,'update');
     },err=>{
@@ -202,7 +205,7 @@ export class RpaSdkFormComponent implements OnInit {
     const approverFullName = selectedApprover ? selectedApprover.fullName : '';
     let reqBody = {
       // "id": this.updatetaskDetails.status == "Approved" ? "" : this.updatetaskDetails.id,
-      "id": this.updatetaskDetails.status == "Approved" ? this.updatetaskDetails.id:"",
+      "id": this.updatetaskDetails.status == "Approved" || this.updatetaskDetails.status == "Pending" || this.updatetaskDetails.status == "Draft" ? this.updatetaskDetails.id:"",
       "code": "",
       "customTaskName": this.customTaskForm.value.customTaskName,
       "executablePath": this.customTaskForm.value.executablePath,
@@ -213,11 +216,12 @@ export class RpaSdkFormComponent implements OnInit {
       "status": staus ? "Pending" : "Draft",
       "customTaskId": this.updatetaskDetails.customTaskId,
       "createdBy": this.updatetaskDetails.createdBy,
-      // "version":1,
+      "version":this.updatetaskDetails.version,
     }
     console.log(this.updatetaskDetails.id);
     console.log("UPDATe", reqBody);
     this.rest_api.updateCustomTasks(reqBody).subscribe((data: any) => {
+      this.taskSaved.emit();
       this.spinner.hide();
       this.closeOverlay.emit(true);
       this.toastService.showSuccess(this.customTaskForm.value.customTaskName, 'update');

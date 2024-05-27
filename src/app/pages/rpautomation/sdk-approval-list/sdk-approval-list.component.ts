@@ -52,7 +52,7 @@ export class SdkApprovalListComponent implements OnInit {
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "createdBy"]
+    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "createdBy", "comments", "status"]
 
   }
 
