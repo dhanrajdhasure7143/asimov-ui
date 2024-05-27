@@ -805,7 +805,9 @@ importBot(){
 
   approvalsList()
   {
-    this.router.navigate(["/pages/rpautomation/approvals"])
+    this.router.navigate(["/pages/rpautomation/approvals"],{
+      queryParams: { index: 0 }
+    })
   }
 
 
