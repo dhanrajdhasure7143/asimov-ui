@@ -5,31 +5,31 @@
 export const environment = {
   production: false,
 
-  pi_url: "https://ezflow.qa.epsoftinc.com/prcintel",
-  bps_url: "https://ezflow.qa.epsoftinc.com/bpstudio",
-  rpa_url: "https://ezflow.qa.epsoftinc.com/wfrpa",
+  pi_url: "http://pi.qa.epsoftinc.in",
+  bps_url: "http://bps.qa.epsoftinc.in",
+  rpa_url: "http://rpa.qa.epsoftinc.in",
   loopback_url: "http://10.11.0.107:3000",
-  idm_url: "https://ezidm.qa.epsoftinc.com",
-  auth_url: "https://ezflow.qa.epsoftinc.com/authservices",
+  idm_url: "http://idm.qa.epsoftinc.in",
+  auth_url: "http://authservices.qa.epsoftinc.in",
   //for Auto build
-  pi_node_url: "https://ezflow.qa.epsoftinc.com/pinode",
+  pi_node_url: "http://pinode.qa.epsoftinc.in",
   pi_node_jobs: "http://pi-node-jobs:5000",
-  platform_url: "https://ezflow.qa.epsoftinc.com/aiotalplatform",
+  platform_url: "http://aiotalplatform.qa.epsoftinc.in",
   schema_registry_url: "http://schema-registry:8081",
-  alerts_url: "https://ezflow.qa.epsoftinc.com/alerts",
+  alerts_url: "http://alerts.qa.epsoftinc.in",
   // Aiotal redirection urls
-  myaccount_url: "https://ezflow.qa.epsoftinc.com/#/activation",
-  logout_url: "https://ezflow.qa.epsoftinc.com/#/activation",
-  redirectout_url: "https://ezflow.qa.epsoftinc.com/#/signout",
-  platform_home_url: "https://ezflow.qa.epsoftinc.com/#/",
-  projectendpoint_url: "https://ezflow.qa.epsoftinc.com/pcs",
-  subscriptionendpoint_url: "https://ezflow.qa.epsoftinc.com/subscriptions",
+  myaccount_url: "http://ezflow.qa.epsoftinc.in/#/activation",
+  logout_url: "http://ezflow.qa.epsoftinc.in/#/activation",
+  redirectout_url: "http://ezflow.qa.epsoftinc.in/#/signout",
+  platform_home_url: "http://ezflow.qa.epsoftinc.in/#/",
+  projectendpoint_url: "http://pcs.qa.epsoftinc.in",
+  subscriptionendpoint_url: "http://subscription.qa.epsoftinc.in",
   //BPMN Platform URL
-  bpmnplatformUrl: "https://ezworkflow.qa.epsoftinc.com",
+  bpmnplatformUrl: "http://ezworkflow.qa.epsoftinc.com",
   // camunda navigation
-  camunda_url: "https://ezworkflow.qa.epsoftinc.com",
+  camunda_url: "http://ezworkflow.qa.epsoftinc.com",
   //A-Square/Copilot
-  asquare:"https://ezflow.qa.epsoftinc.com",
+  asquare:"http://asquare.qa.epsoftinc.in",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
@@ -37,7 +37,7 @@ export const environment = {
   //DB Connector
   dbConnectorHost: "pgpoolqa",
   dbName: "eiap_qa",
-  dbPort: "5431",
+  dbPort: "5432",
   //RPA WebActions Action AttrId
   webActionAttrId: 580,
   //IPCTenant
@@ -49,11 +49,12 @@ export const environment = {
   isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
   isCustomerBots : true,
   environmentName: "QA",
-  paymentSuccessURL: "https://eziap.qa.epsoftinc.com/#/pages/success",
-  paymentFailuerURL: "https://eziap.qa.epsoftinc.com/#/pages/subscriptions",
+  paymentSuccessURL: "http://eziap.qa.epsoftinc.in/#/pages/success",
+  paymentFailuerURL: "http://eziap.qa.epsoftinc.in/#/pages/subscriptions",
   stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK",
-  python_llm:"https://ezflowllm.qa.epsoftinc.com",
-  ezaskUrl: "http://ezask.dev.epsoftinc.in"
+  // python_llm:"http://ezflowllm.qa.epsoftinc.com",
+  python_llm:"http://10.11.0.77:5006",
+  ezaskUrl: "http://ezask.qa.epsoftinc.in"
 };
 
 /*
