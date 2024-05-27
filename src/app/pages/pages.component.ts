@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DataTransferService } from './services/data-transfer.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -63,7 +64,7 @@ export class PagesComponent implements OnInit {
   contentMargin: any = 62;
   tenantInfo:any={};
   isPredefinedBotUser:boolean = false;
-
+  ezAskUrl = environment.ezaskUrl;
   @ViewChild(SidebarComponent) sidebar: SidebarComponent;
   @ViewChild('iframeRef') iframeRef: ElementRef;
   
