@@ -385,17 +385,18 @@ if(this.params.type =='edit'){
       }
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
-        // if( this.predefinedBot_uuid =='Pred_Recruitment'){
-        //   let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
-        //   appendValuesList.forEach(e=>{
-        //     req_body[e] = JSON.stringify(this.jobDescription.response)
-        //   })
-        // }
+          let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
+          console.log(appendValuesList)
+          appendValuesList.forEach(e=>{
+            req_body.fields[e] = JSON.stringify(this.jobDescription.response)
+          })
+        
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
+        console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
           this.duplicateAttributes.forEach(element => {
             let v_key = element.preAttributeName.split("_")
@@ -411,6 +412,7 @@ if(this.params.type =='edit'){
           });
         }
         console.log('req_body---:', req_body);
+        return;
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
           this.router.navigate(["/pages/predefinedbot/list"]);
