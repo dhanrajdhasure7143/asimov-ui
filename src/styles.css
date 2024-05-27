@@ -2846,6 +2846,7 @@ button.btn.btn-default {
   padding: 6px 22px !important;
   border-radius: var(--main-borderradius) !important;
   height: 36px !important;
+  margin-right: 10px;
 }
 button.btn.bluebg-button.savefoldername {
   margin-top: 15px;

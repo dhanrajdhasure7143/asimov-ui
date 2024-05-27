@@ -1,0 +1,21 @@
+.row.credential-search-tools {
+    width: auto;
+    position: absolute;
+    right: 275px;
+    z-index: 2;
+}
+
+.env-btn>button:disabled {
+    background-color: transparent !important;
+}
+
+.credential-btntool {
+    padding: 8px 6px;
+    position: relative;
+    margin-left: 174vh;
+}
+
+.credential-btntool img.testplus {
+    cursor: unset;
+    margin: 0px;
+}
