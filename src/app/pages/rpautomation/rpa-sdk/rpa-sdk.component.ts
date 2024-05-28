@@ -65,6 +65,8 @@ export class RpaSdkComponent implements OnInit {
   deleteCustomTask(row){
     const selectedCustomTasks=[]
     selectedCustomTasks.push(row.customTaskId);
+    const sdkId=[];
+    sdkId.push(row.id)
       this.confirmationService.confirm({
         message: this.toastMessages.delete_waring,
         header: 'Are you sure?',
@@ -78,7 +80,7 @@ export class RpaSdkComponent implements OnInit {
         key:"positionDialog_sdk_delete",
         accept: () => {
         this.spinner.show();
-        this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe( (res:any) =>{ 
+        this.rest.deleteCustomTasksbyId(selectedCustomTasks, sdkId).subscribe( (res:any) =>{ 
           if(res.data.length>0){
             let used_sdk_list = []
             res.data.forEach(element => {
