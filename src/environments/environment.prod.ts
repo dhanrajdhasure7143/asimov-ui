@@ -22,6 +22,8 @@ export const environment = {
   socialLoginRedirectURL: "https://ezflow.epsoftinc.com/#/user",
   // camunda navigation
   camunda_url: "https://ezworkflow.dev.epsoftinc.com",
+  //A-Square/Copilot
+  asquare:"https://ezflow.epsoftinc.com/a-square",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
