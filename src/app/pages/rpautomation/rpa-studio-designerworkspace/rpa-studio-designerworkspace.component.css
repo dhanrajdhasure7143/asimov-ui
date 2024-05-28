@@ -1,18 +1,19 @@
 
 .drag-area{
-  /* min-height: 70vh;
+  min-height: 75vh;
   width:100%;
   position: relative;
   float: left;
   transform-origin:0% 0%;
-  display: inline; */
-  min-height: 75vh;
+  display: inline;
+  overflow: auto;
+
+  /* float: left; */
+  /* transform-origin:0% 0%; */
+  /* display: inline; */
+  /* min-height: 75vh;
   width:100%;
-  position: absolute;
-  /* overflow: auto; */
-  /* float: left;
-  transform-origin:0% 0%;
-  display: inline; */
+  position: absolute; */
 }
 
 .studio_main_desginer {
