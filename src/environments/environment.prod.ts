@@ -43,5 +43,7 @@ export const environment = {
   environmentName: "PROD",
   paymentSuccessURL: "https://ezflow.epsoftinc.com/#/pages/subscriptions/paymentmethod",
   paymentFailuerURL: "https://ezflow.epsoftinc.com/#/pages/subscriptions/paymentmethod",
-  stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo"
+  stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo",
+  python_llm:"https://ezflowllm.epsoftinc.com",
+  ezaskUrl: "http://ezask.epsoftinc.in/?q=0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
 };

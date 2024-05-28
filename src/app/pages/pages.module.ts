@@ -46,6 +46,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CompareValidatorDirective } from '../shared/directives/compare-validator.directive';
 import { toastMessages } from '../shared/model/toast_messages';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 //  import { ChartModule } from 'primeng/chart';
 
 
@@ -68,7 +69,8 @@ export function jwtTokenGetter() {
     MyaccountComponent,
     ChangePasswordComponent,
     CompareValidatorDirective,
-    SuccessPaymentComponent
+    SuccessPaymentComponent,
+    UserDetailsComponent
    
     
   ],

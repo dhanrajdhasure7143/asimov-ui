@@ -200,7 +200,7 @@
                             <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
-                            <span *ngIf="screenTable == 'customerSupportBots'">
+                            <span *ngIf="screenTable == 'customerSupportBots' || screenTable == 'trainCustomerSupportBots'">
                             <a class="" (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
                                 <i class="pi pi-external-link" style="color: #232832"></i>
                                 <i class="pi pi-external-link" style="color: #507cd3" class="testplus hover-icon"></i>
@@ -209,11 +209,14 @@
                                 <i class="pi pi-external-link" style="color: #708090"></i>
                             </a>
                             </span>
-                            <a *ngIf="!isdisabled_edit" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                            <a *ngIf="!isdisabled_edit && !(screenTable == 'sdkApprovalList' && (rowData['status'] == 'Approved' || rowData['status'] == 'Rejected')) && !(screenTable == 'SDK_taskList' && rowData['status'] == 'Rejected')" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
                                 <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
                                 <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                             </a>
-                            <a *ngIf="isdisabled_edit" class="disbtn">
+                            <a *ngIf="isdisabled_edit && screenTable != 'sdkApprovalList' && screenTable != 'SDK_taskList'" class="disbtn">
+                            <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                            </a>
+                            <a *ngIf="(screenTable == 'sdkApprovalList' && (rowData['status'] == 'Approved' || rowData['status'] == 'Rejected')) || (screenTable == 'SDK_taskList' && rowData['status'] == 'Rejected')" class="disbtn">
                                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </a>
                         </span>
@@ -250,6 +253,25 @@
                             </a>
                             <a *ngIf="isdisabled_delete"  class="disbtn">
                                 <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
+                            </a>
+                        </span>
+
+                        <span *ngIf="show_run_btn">
+                            <a (click)="onRunRow(rowData)" pTooltip="Run" tooltipPosition="top">
+                                <img src="../../../../assets/images-n/gridicons/startbot-default.svg" class="testplus default-icon" alt="Start">
+                                <img src="../../../../assets/images-n/gridicons/startbot-hover.svg" class="testplus  hover-icon" alt="Start">
+                            </a>
+                        </span>
+                        <span *ngIf="show_stop_btn">
+                            <a (click)="onStopRow(rowData)" pTooltip="Stop" tooltipPosition="top">
+                                <img src="../../../assets/images-n/gridicons/stopbot-default.svg" class="testplus default-icon" alt="Stop">
+                                <img src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="Stop">
+                            </a>
+                        </span>
+                        <span *ngIf="show_view_logs">
+                            <a (click)="onViewLogs(rowData)" pTooltip="View logs" tooltipPosition="top">
+                                <img src="../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus" alt="View logs">
+                                <!-- <img style="color: #098de6;" src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="View logs"> -->
                             </a>
                         </span>
                     </span>

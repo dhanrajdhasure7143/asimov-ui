@@ -75,6 +75,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isChatEnable:boolean= false;
   highestExpireIn:any;
   tenantSwitchDropdown:boolean = false;
+  isPredefinedBots:boolean = true;
+
   constructor(
     private router: Router,
     public page_obj: PagesComponent,
@@ -122,6 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.newAccessToken = resp;
         localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       });
+    this.getexpiryInfo();
   }
 
   ngOnInit() {
@@ -148,7 +151,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getTenantLists();
     this.navigationTenantName = localStorage.getItem("tenantSwitchName")
     this.isChatEnable = environment.isChatEnable? environment.isChatEnable : false;
-    this.getexpiryInfo();
   }
 
   loopTrackBy(index, term) {
@@ -424,6 +426,8 @@ getexpiryInfo(){
   this.rest_api.expiryInfo().subscribe(data => {
     // this.tenantSwitchDropdown = data.expiresIn === 0;
     this.tenantSwitchDropdown = data.expiresIn === 0 || data.expiresIn <= 0;
+    this.isPredefinedBots = data.isPredefinedBots;
+    this.dataTransfer.tenantInfo(data);
   })
 }
 }

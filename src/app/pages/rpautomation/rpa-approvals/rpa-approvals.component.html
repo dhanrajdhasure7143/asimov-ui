@@ -1,6 +1,6 @@
 <div class="maincont">
   <div class="maincont-contentarea">
-    <div class="row main-content-head">
+    <!-- <div class="row main-content-head">
       <h3>
         <label id="popup_title">
             <a routerLink="/pages/rpautomation/home" class="imageBox">
@@ -10,12 +10,11 @@
         </label>
         <span class="title_text">Approvals</span>
       </h3>
-          <!-- <span class="module-back-button" routerLink="/pages/rpautomation/home">
+          <span class="module-back-button" routerLink="/pages/rpautomation/home">
               <i class="fas fa-arrow-left" aria-hidden="true"></i>
-          </span> -->
-    </div>
-   <div class="main-content-body">
-       <div class="rpa-content-div">
+          </span>
+    </div> -->
+   <!-- <div class="main-content-body"> -->
          <div class="row credential-search-tools">
              <div class="env-btn credential-btntool">
                <!-- <button
@@ -68,7 +67,10 @@
                </button> -->
              </div>
          </div>
-         <div class="col-md-12 rpapprovalsgrid p-0">
+       <div class="rpa-content-div">
+
+        <div class="col-md-12 con-envr p-0">
+          <div class="credential-tablegrid">
              <app-dynamic-table
                [columns_list]="columns_list"
                [table_data]="approvalsList"
@@ -87,6 +89,7 @@
                (selectedData)="readSelectedData($event)"
              >
              </app-dynamic-table>
+         </div>
          </div>
        </div>
 
@@ -144,7 +147,7 @@
            ></textarea>
          </div>
        </p-dialog>
-   </div>
+   <!-- </div> -->
  </div>
 </div>
 <p-toast  [style]="{marginTop:'50px'}" ></p-toast>

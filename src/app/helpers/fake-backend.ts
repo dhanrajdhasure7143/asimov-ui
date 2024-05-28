@@ -73,6 +73,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
            url = this.config.bussinessProcessEndPoint + req.url;
         else if(req.url.indexOf('newAccessToken') > -1)
             url = this.config.accessTokenEndPoint + req.url;
+        else if(req.url.indexOf('login/beta/current-screen-status') > -1)
+            url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
         if(req.url.indexOf('mailService') > -1)
@@ -84,7 +86,6 @@ export class BackendURLInterceptor implements HttpInterceptor {
         else if (req.url.indexOf('subscriptionservice') > -1)
             url = this.config.subscriptionendpoint_url + req.url;
         else if (req.url.indexOf('a-square/v1') > -1){
-            console.log(this.config.copilot,req.url)
             url = this.config.asquare + req.url;
         }
 

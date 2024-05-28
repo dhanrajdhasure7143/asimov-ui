@@ -258,8 +258,8 @@ export class columnList{
       ];
       
       public train_cutomer_support_bot_coloumns = [
-        {ColumnName: "trainBotName",DisplayName: "Bot Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
-        {ColumnName: "trainData",DisplayName: "Train Status",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
+        {ColumnName: "trainBotName",DisplayName: "Trained Model Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        {ColumnName: "trainData",DisplayName: "File Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
       
@@ -270,12 +270,14 @@ export class columnList{
       ];
 
       public custom_tasks = [
-        {ColumnName: "customTaskName",DisplayName: "Custom Task Name",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text",sort: true,status_icon:false},
         {ColumnName: "languageType",DisplayName: "Language Type",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Java'],sort: true,},
         {ColumnName:"createdAt",DisplayName:"Created Date",filterWidget: "normal",ShowFilter: true,filterType:"date",ShowGrid: true,sort: true,},
+        {ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
+        {ColumnName: "comments", DisplayName: "Comments", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, showTooltip: true },
         //temporarly commenting the input and output reference columns as it is not in use for now.
-        // {ColumnName: "inputReference",DisplayName: "Input Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,multi: false,},
-        // {ColumnName: "outputReference",DisplayName: "Output Reference",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
+        { ColumnName: "status", DisplayName: "Status", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false, status_icon: true, dropdownList: ['Approved', 'Rejected', 'Pending', 'Draft']},
+        // {ColumnName: "version",DisplayName: "Version",ShowGrid: true,ShowFilter: true,filterWidget: "normal",filterType: "text",sort: true,status_icon:false},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
 
@@ -289,4 +291,24 @@ export class columnList{
         {ColumnName: "status",DisplayName: "Status",ShowGrid: true,ShowFilter: true,filterWidget: "dropdown",filterType: "text",dropdownList:['Active','Cancelled'],sort: true,status_icon:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,ShowFilter: false,sort: false,multi: false,},
       ];
+
+      public predefined_orchestration_process_runs_columns=[
+        {ColumnName:"predefinedRunId",DisplayName:"Run Id",ShowFilter: false,width:"flex: 0 0 7rem",filterType:"text"},
+        // {ColumnName:"environmentName",DisplayName:"Environment Name",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"startTS",DisplayName:"Start Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"endTS",DisplayName:"End Date",ShowFilter: false,width:"",filterType:"date"},
+        {ColumnName:"status",DisplayName:"Status",ShowFilter: false,width:"",filterType:"text"},
+        {ColumnName:"info",DisplayName:"Info",ShowFilter: false,width:"",filterType:"text"}
+      ];
+
+  public sdk_approval_list = [
+    { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text", sort: true, status_icon: false },
+    { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", width: "flex: 0 0 11rem", dropdownList: ['Java'], sort: true, },
+    { ColumnName: "createdAt", DisplayName: "Created Date", filterWidget: "normal", width: "flex: 0 0 11rem", ShowFilter: true, filterType: "date", ShowGrid: true, sort: true, },
+    { ColumnName: "createdBy", DisplayName: "Created By", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
+    // { ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
+    { ColumnName: "comments", DisplayName: "Comments", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, showTooltip: true },
+    { ColumnName: "status", DisplayName: "Status", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", sort: true, multi: false, status_icon: true, dropdownList: ['Approved', 'Rejected', 'Pending']},
+    { ColumnName: "action", DisplayName: "Actions", ShowGrid: true, ShowFilter: false, sort: false, multi: false, },
+  ];
 }

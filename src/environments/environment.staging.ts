@@ -50,5 +50,7 @@ export const environment = {
   environmentName: "staging",
   paymentSuccessURL: "https://eziap.staging.epsoftinc.com/#/pages/success",
   paymentFailuerURL: "https://eziap.staging.epsoftinc.com/#/pages/subscriptions",
-  stripeKey:"pk_test_51P0dsYGtSXyupRk8b6KzrZkX2YsNl0HOLhVeZYrL6S12RR4rZd9CGa8O7ckFJLh3kZ3foGrmVdkewcq8cyYTVecj00dG5Dqo2P"
+  stripeKey:"pk_test_51P0dsYGtSXyupRk8b6KzrZkX2YsNl0HOLhVeZYrL6S12RR4rZd9CGa8O7ckFJLh3kZ3foGrmVdkewcq8cyYTVecj00dG5Dqo2P",
+  python_llm:"https://ezflowllm.staging.epsoftinc.com",
+  ezaskUrl: "http://ezask.staging.epsoftinc.in/?q=0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
 };

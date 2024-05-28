@@ -36,6 +36,8 @@ export class SidebarComponent implements OnInit {
   isSideMenuDisabled: boolean = false;
   highestExpireIn:any;
   isSubscriptionModuleEnable:boolean = false;
+  isPredefinedBots:boolean = true;
+  workspacedsiabled:boolean = false
 
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
@@ -47,6 +49,7 @@ export class SidebarComponent implements OnInit {
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
+
     this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
@@ -163,6 +166,17 @@ getexpiryInfo(){
       this.expiry = data.Expiresin;
       // this.isSideMenuDisabled = data.expiresIn === 0;
       this.isSideMenuDisabled = data.expiresIn === 0 || data.expiresIn <= 0;
+      this.isPredefinedBots = data.isPredefinedBots;
+      if(this.isPredefinedBots){
+      if(this.getCookie("workspacedsiabled")!="false"){
+        document.cookie = "workspacedsiabled=true";
+        this.workspacedsiabled = true;
+      }else{
+        this.workspacedsiabled = false;
+      }
+    }else{
+      this.workspacedsiabled = false
+    }
     });
 }
 

@@ -109,7 +109,7 @@
                 class="required">Bot key Required</span>
             </div>
           </div>
-            <div class="form-row">
+            <!-- <div class="form-row">
               <div class="form-group col-md-4">
                 <input type="checkbox" formControlName="hallucinationAllowed">
                 <span class="ml-2">Is Hallucination allowed</span>
@@ -122,7 +122,7 @@
                 <input type="checkbox" formControlName="deleted">
                 <span class="ml-2">Is Delete</span>
               </div>
-            </div>
+            </div> -->
 
             <!-- <div class="form-group col-md-12 p-0">
               <label class="label-control">Bot Content Type<span class="star">*</span></label>
@@ -132,45 +132,94 @@
                 *ngIf="manageBotForm.get('customerSupportBotSource').invalid && manageBotForm.get('customerSupportBotSource').touched"
                 class="required">Bot Content Source Required</span>
             </div> -->
-
-            <div class="form-group col-md-12 p-0">
+            <div class="form-group col-md-12 p-0 dropdown-wrapper">
               <label class="label-control">Bot Content Type<span class="star">*</span></label>
+              <div class="dropdown-container">
               <p-dropdown formControlName="customerSupportBotSource" [options]="botContentOptions" placeholder="Select bot content type"
               (onChange)="onBotContentTypeChange($event.value)"></p-dropdown>
+              </div>
               <span *ngIf="manageBotForm.get('customerSupportBotSource').invalid && manageBotForm.get('customerSupportBotSource').touched"
                     class="required">Bot Content Type Required</span>
             </div>
-            
-            <div class="form-group col-md-12 p-0">
-              <label class="label-control">Include Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+
+            <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">
+            <div class="form-group p-0">
+              <label class="label-control">Include Sites<span class="star">*</span></label>
               <!-- <input type="text" formControlName="includeSites" placeholder="Enter Include Sites"
                 class="form-control data" > -->
                 <div class="p-fluid">
                   <p-chips formControlName="includeSites" separator="," placeholder="Enter include sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
                   <!-- <input formControlName="includeSites" separator="," placeholder="Enter Include sites" class="form-control"  styleClass="customChip"> -->
                   <!-- <p-chips formControlName="includeSites" separator=";"  [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
-                  
                 </div>
-              <span *ngIf="manageBotForm.get('includeSites').invalid && manageBotForm.get('includeSites').touched"
-                class="required">Includes Sites Required</span>
-            </div>
-
+                <span *ngIf="manageBotForm.get('includeSites').invalid && manageBotForm.get('includeSites').touched"
+                class="required">Include Sites Required</span>
+              </div>
+              
+              <div class="form-group p-0">
+                <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
+                <!-- <input type="text" formControlName="excludeSites" placeholder="Enter Exclude Sites"
+                  class="form-control data" > -->
+                  <div class="p-fluid">
+                    <p-chips formControlName="excludeSites" separator="," placeholder="Enter exclude sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
+                    <!-- <input formControlName="excludeSites" separator="," placeholder="Enter Exclude sites" class="form-control" styleClass="customChip"> -->
+                    <!-- <p-chips formControlName="excludeSites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
+                    
+                  </div>
+                  <span *ngIf="manageBotForm.get('excludeSites').invalid && manageBotForm.get('excludeSites').touched"
+                  class="required">Exclude Sites Required</span>
+                </div>                
+              </div>
+            <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'DOC'"  class="uploadOption">
             <div class="form-group col-md-12 p-0">
-              <label class="label-control">Exclude Sites<span class="star" *ngIf="manageBotForm.get('customerSupportBotSource').value == 'WEB'">*</span></label>
-              <!-- <input type="text" formControlName="excludeSites" placeholder="Enter Exclude Sites"
-                class="form-control data" > -->
-                <div class="p-fluid">
-                  <p-chips formControlName="excludeSites" separator="," placeholder="Enter exclude sites (Hint: a, b, c)"  [allowDuplicate]="false" styleClass="customChip"></p-chips>
-                  <!-- <input formControlName="excludeSites" separator="," placeholder="Enter Exclude sites" class="form-control" styleClass="customChip"> -->
-                  <!-- <p-chips formControlName="excludeSites" separator=";" [addOnTab]="true" [addOnBlur]="true" placeholder="Hint: a, b, c" [allowDuplicate]="false" styleClass="customChip" (keydown)="semicolumn($event)"></p-chips> -->
-                  
-                </div>
-              <span *ngIf="manageBotForm.get('excludeSites').invalid && manageBotForm.get('excludeSites').touched"
-                class="required">Exclude Sites Required</span>
-            </div>
+            <label class="label-control">Upload File<span class="star">*</span></label>
+            <input type="file" formControlName="uploadFile" pInputText
+              placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple />
+<!--               
+              <div class="form-group col-md-12 p-0 dropdown-wrapper">
+                <label class="label-control">Select your Model<span class="star">*</span></label>
+              </div> -->
 
+            
+                  <!-- <div class="dropdown-container">
+                    <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select your trained model"
+                    (onChange)="onModelChange($event.value)"></p-dropdown>
+                    </div> -->
+          <!-- <input type="file" class="inputFile" (change)="onFileSelected($event)" multiple> -->
+          <!-- <button (click)="onUpload()" [disabled]="true" >Upload</button> -->
+          <!-- <input type="file" class="form-control inputFile" id="inputGroupFile04" (change)="onFileSelected($event)" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+          <button class="btn bluebg-button uploadFile" type="button" id="inputGroupFileAddon04" (click)="onUpload()">Upload</button> -->
           </div>
-        </form>
+        </div>
+
+        <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'HYBRID'" >
+          <label class="label-control">Upload File<span class="star">*</span></label>
+          <input type="file" formControlName="uploadFile" pInputText
+              placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple />
+              
+          <div class="form-group col-md-12 p-0 mt-3">
+            <label class="label-control">Trained Model<span class="star">*</span></label>
+            <div class="dropdown-container">
+              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select Trained Model"
+              (onChange)="onModelChange($event.value)"></p-dropdown>
+              </div>
+             
+            </div>
+        </div>
+        
+        <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'MODEL'" >
+          <div class="form-group col-md-12 p-0">
+            <label class="label-control">Select Trained Model<span class="star">*</span></label>
+            <div class="dropdown-container">
+              <p-dropdown formControlName="trainModelName" [options]="trainModelOptions" placeholder="Select Trained Model"
+              (onChange)="onModelChange($event.value)"></p-dropdown>
+              </div>
+            </div>
+        </div>
+
+
+        </div>
+        </form>        
         <div class="createform-footer">
           <button (click)="resetBotForm()" class="btn new-cancelbtn">Reset</button>
           <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="saveCustomerSupportBot()"

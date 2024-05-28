@@ -1855,6 +1855,7 @@ getbotTaskList(botId){
 }
 
 getCustomTasks(){
+  // return this.http.get('/rpa-service/sdk-custom/get-sdk-tasks')
   return this.http.get('/rpa-service/sdk-custom/get-sdk-tasks')
 }
 getEncryptedbotData(botId,body){
@@ -1944,5 +1945,42 @@ getPaymentCards(){
 
   addNewCardURLGenerate(payload){
     return this.http.post("/subscriptionservice/v1/paymentmethods/checkout-session-setup",payload)
+  }
+
+  organizationCheck(orgName: string): Observable<any> {
+    return this.http.get<any>(`/api/user/checkOrganizationExists?orgName=`+orgName);
+  }
+
+  getAllDepartments(): Observable<any> {
+    return this.http.get<any>(`/api/user/departments`);
+  }
+
+  registrationContinue(payload) {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>('/api/user/registration-continue', payload, { headers: headers, observe: 'response' })
+  }
+
+  getUserStatus(body){
+    return this.http.post<any[]>("/api/login/beta/current-screen-status",body); 
+  }
+
+  saveCustomTask(body){
+    return this.http.post("/rpa-service/sdk-custom/create-sdk-task",body)
+  }
+
+  getApprovalList(){
+    return this.http.get("/rpa-service/sdk-custom/sdk-tasks-approvedby")
+  }
+
+  updateCustomTasks(data: any) {
+    return this.http.post('/rpa-service/sdk-custom/sdk-edit-approvals',data)
+  }
+
+  sdkCustomTaskNameCheck(customeTaskName:any) {
+    return this.http.post(`/rpa-service/sdk-custom/validate-name/${customeTaskName}`,"")
+  }
+
+  approveRejectRequest(body:any){
+    return this.http.post('/rpa-service/sdk-custom/tasks/approve-reject', body)
   }
 }

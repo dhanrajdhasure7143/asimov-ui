@@ -264,12 +264,15 @@ this.selectedrow =i;
       "bpmnModelModifiedBy":data.bpmnModelModifiedBy,
       "bpmnModelModifiedByMailId":data.bpmnModelModifiedByMailId
     };
+    this.loader.show();
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
+        this.loader.hide();
         this.bpmnlist();
         this.toastService.showSuccess(bpmnProcessName+' approved successfully!','response');
       },
       err=>{
+      this.loader.hide();
       this.toastService.showError(this.toastMessages.bpsApproveError);
     });
     this.bpmnlist();
@@ -309,6 +312,8 @@ this.selectedrow =i;
     let bpmnProcessName =data.bpmnProcessName
      let reqObj = {
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
+      "approverEmail": data.approverEmail,
+      "active":true,
       "bpmnProcessInfo": {
        // "createdTimestamp": data.createdTimestamp,
        // "modifiedTimestamp": new Date(),
@@ -329,8 +334,9 @@ this.selectedrow =i;
         // "bpmnJsonNotation":data.bpmnJsonNotation,
         "processIntelligenceId": data.processIntelligenceId,
         // "category": data.category,
-        "categoryId": data.categoryId
-
+        "categoryId": data.categoryId,
+        "processOwner": data.processOwner,
+        "active": true
       },
       "approvalStatus": "REJECTED",
       "rejectedBy": data.approverName,
@@ -338,12 +344,15 @@ this.selectedrow =i;
       "role": parentInfo.role,
       "remarks":data.reviewComments
     }
+    this.loader.show();
     this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
+      this.loader.hide();
         this.bpmnlist();
         this.toastService.showSuccess(bpmnProcessName+" has been rejected!",'response');
       },
       err=>{
+      this.loader.hide();
         this.toastService.showError(this.toastMessages.bpsRejectError);
       });
    }

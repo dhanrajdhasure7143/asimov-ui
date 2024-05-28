@@ -88,7 +88,6 @@ export class RpaDatabaseFormComponent implements OnInit {
     const secretKey = '6575fae36288be6d1bad40b99808e37f';
     
     const encryptedPassword = this.encryptPassword(passwordToEncrypt, secretKey);
-    console.log('Encrypted Password:', encryptedPassword);
     // const decryptedPassword = this.decryptPassword(encryptedPassword, secretKey);
     // console.log('Decrypted Password:', decryptedPassword);
 

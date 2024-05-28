@@ -1,0 +1,164 @@
+<p-dialog  [draggable]="true" [(visible)]="display" [modal]="true" [baseZIndex]="10000" [style]="{width: '60vw', height:'40vw'}" (onHide)="closeLogsOverlay()" class="rpasologs">
+ 
+    <ng-template pTemplate="header">
+         
+         <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="getProcessRuns()">
+           <i class="fas fa-arrow-left" aria-hidden="true"></i>
+         </span>
+         
+         <span *ngIf="logsDisplayFlag=='BOT-LOGS'" class="module-back-button" (click)="getBotLogsByRunId(selectedRun)">
+           <i class="fas fa-arrow-left" aria-hidden="true"></i>
+         </span>
+ 
+         <span *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="module-back-button"  (click)="backTraversalLogs()">
+           <i class="fas fa-arrow-left" aria-hidden="true"></i>
+         </span>
+         <!-- <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="ViewlogByrunid(selectedIterationTask.run_id, selectedIterationTask.version)">
+           <i class="fas fa-arrow-left" aria-hidden="true"></i>
+         </span> -->
+ 
+         <b>Logs</b>
+         &nbsp;
+ 
+           <span *ngIf="selectedRun!=undefined && selectedRun != '' && (logsDisplayFlag=='LOGS' || logsDisplayFlag=='CHILD-LOGS' || logsDisplayFlag=='BOT-LOGS')">
+             - Run ID - {{selectedRun.processRunId}}
+           </span>
+         
+           &nbsp;
+           &nbsp;
+         
+           <span  *ngIf="logsDisplayFlag=='CHILD-LOGS' || logsDisplayFlag=='BOT-LOGS'"> / {{selectedBot.bot_name}} </span>
+         
+           &nbsp;
+           &nbsp;
+         
+           <span *ngIf="logsDisplayFlag=='CHILD-LOGS'"><span *ngFor="let task of traversalLogs">/ &nbsp;{{task.task_name}}&nbsp;</span></span>
+           <span *ngIf="logsLoading">
+             <i class="fa fa-spinner fa-spin"></i> 
+             Loading...
+           </span>
+           <span [hidden]="logsLoading">
+               <span (click)="getProcessRuns()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
+                 Refresh
+               </span>
+ 
+               <span (click)="getBotLogsByRunId(selectedRun)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
+                 Refresh
+               </span>
+ 
+               <span (click)="getTaskLogsByBot(selectedBot)" *ngIf="logsDisplayFlag=='BOT-LOGS'" class="clickable1 refecls">
+                 Refresh
+               </span>
+ 
+               <span (click)="getChildLogs(selectedTask, selectedTask.actual_log_id, selectedTask.actual_task_id, selectedTask.actual_iteration_id,'REFRESH')" *ngIf="logsDisplayFlag=='CHILD-LOGS'" class="clickable1 refecls">
+                 Refresh
+               </span>
+ 
+               <span (click)="getLoopLogs(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
+                 Refresh
+               </span>
+ 
+               <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
+                 Refresh
+               </span>
+             </span>
+     </ng-template>
+   
+     <div class="modal-body newmodelbodycl" >
+       <div class="logs-container" >
+           <div *ngIf="!logsLoading" class="main-content-body predefined-logs-grid"> 
+             <p-table #dt [value]="logsData" dataKey="id" [resizableColumns]="true" responsiveLayout="scroll"
+                 [reorderableColumns]="true" [scrollable]="true">
+                 <ng-template pTemplate="header">
+                     <tr>
+                         <th *ngFor="let each of columnList" [style]="each.width" pSortableColumn="{{each.ColumnName}}"
+                             pReorderableColumn pResizableColumn>{{each.DisplayName}}<p-sortIcon [field]="each.ColumnName"></p-sortIcon>
+                             <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" [showAddButton]="false" [showOperator]="true"
+                                 matchMode="contains" [showMatchModes]="false" [field]="each.ColumnName" display="menu"
+                                 [showApplyButton]="true">
+                                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                     <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"
+                                         class="p-inputtext" placeholder="Search">
+                                 </ng-template>
+                             </p-columnFilter>
+                             <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'" [showAddButton]="false"
+                     [showOperator]="false" type="date" [showMatchModes]="false" [field]="each.ColumnName"
+                     display="menu" [showApplyButton]="true">
+                 </p-columnFilter>
+                             <p-sortIcon *ngIf="each.ShowFilter" [field]="each.ColumnName"></p-sortIcon>
+                         </th>
+                     </tr>
+                 </ng-template>
+                 <ng-template pTemplate="body" let-logs>
+                     <tr class="action-desc">
+                         <td *ngFor="let col of columnList" [style]="col.width">     
+                           <span *ngIf="col.ColumnName=='processRunId'">
+                             <a class="clickable" (click)="getBotLogsByRunId(logs)">{{logs[col.ColumnName]}}</a>
+                           </span>
+                           <span  *ngIf="col.ColumnName=='bot_name'">
+                             <a *ngIf="logs['has_task_logs']" class="clickable" (click)="getTaskLogsByBot(logs)">{{logs[col.ColumnName]}}</a>
+                             <span *ngIf="!logs['has_task_logs']">{{logs[col.ColumnName]}}</span>
+                           </span>
+                           <span *ngIf="col.ColumnName=='task_name'">
+                             <span *ngIf="logs['child_logs_exist']==false  && logs['task_name']!='Loop-Start'">
+                               {{logs[col.ColumnName]}}
+                             </span>
+                             <span *ngIf="logs['task_name']=='Loop-Start'">
+                               <a (click)="getLoopLogs(logs)" class="clickable">{{logs[col.ColumnName]}}</a>
+                             </span>
+                             <span *ngIf="logs['child_logs_exist'] && logs['task_name']!='Loop-Start'">
+                               <a (click)="getChildLogs(logs, logs.log_id, logs.task_id, logs.iteration_id, 'FARWORD')" class="clickable">{{logs[col.ColumnName]}}</a>
+                             </span>
+                           </span>
+ 
+                           <span *ngIf="col.ColumnName == 'error_info' || col.ColumnName=='log_statement'" style="display: inline-block; max-width: 100%;">
+                          
+                             <div  style="display:flex">
+                               <div class="ellipsis-container" >
+                               <div class="ellipsis-content"  *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" [pTooltip]="logs[col.ColumnName]" tooltipPosition="top">
+                                 <span  class="text-ellipsis">{{ logs[col.ColumnName] }}</span>
+                               </div>
+                               </div>
+   
+                               <div *ngIf="logs[col.ColumnName] != null && logs[col.ColumnName] != ''" class="copy-container">
+                                 <span class="pi pi-copy" [pTooltip]="isCopied ? 'Copied!' : 'Copy'" tooltipPosition="bottom" (click)="copyToClipboard(logs[col.ColumnName],$event)"></span>
+                                 <p-overlayPanel [dismissable]="'true'" #overlayPanel>
+                                   Copied!
+                                 </p-overlayPanel>
+                               </div>
+                             </div>
+                           </span>
+                           <span *ngIf="col.ColumnName=='bot_status' || col.ColumnName=='runStatus' || col.ColumnName=='status'">
+                             <span>
+                               <span *ngIf="logs[col.ColumnName]=='Running'">
+                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                               </span>
+                               <span class="statusbadge_nc" *ngIf="logs[col.ColumnName]!='Running'"  [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span>
+                                 {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
+                               <span class="btn btn-xs btn-primary clickable1" *ngIf="col.ColumnName=='runStatus' && logs[col.ColumnName]=='Running'" (click)="killRun(logs)" >Kill</span> 
+                             </span>
+                           </span>
+                           <span *ngIf="col.ColumnName!='processRunId' && col.ColumnName != 'bot_name' && col.ColumnName!='runStatus' && col.ColumnName!='bot_status' && col.ColumnName!='status' && col.ColumnName!='error_info' && col.ColumnName!='log_statement' && col.ColumnName != 'task_name'">
+                               {{logs[col.ColumnName]}}
+                           </span>
+                           <span *ngIf="logs[col.ColumnName] == undefined || logs[col.ColumnName] == null || logs[col.ColumnName]==''">-</span>
+                         </td>
+                     </tr>
+                 </ng-template>
+                 <ng-template pTemplate="emptymessage">
+                     <tr>
+                         <td style="justify-content: center;" colspan="5">No records found</td>
+                     </tr>
+                 </ng-template>
+             </p-table>
+           </div>
+         <div class="logs-container" *ngIf="logsLoading==true">
+           <div class="logs-loader">
+             <img src="../../../../assets/images/EZFlow_Loader.gif" alt="">
+           </div>
+         </div>
+     </div>
+   
+   </div>
+   </p-dialog>
+ 

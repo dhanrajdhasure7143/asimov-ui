@@ -28,6 +28,7 @@ import { SharedModule } from './shared/shared.module';
 import { ToastModule } from "primeng/toast";
 import { toastMessages } from './shared/model/toast_messages';
 import { SoApprovalComponent } from './so-approval/so-approval.component';
+import {StepsModule} from 'primeng/steps';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { SoApprovalComponent } from './so-approval/so-approval.component';
     MentionModule,
     MatToolbarModule,
     SharedModule,
-    ToastModule
+    ToastModule,
+    StepsModule,
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
