@@ -67,6 +67,8 @@ export class SdkApprovalListComponent implements OnInit {
   deleteCustomTask(row) {
     const selectedCustomTasks = []
     selectedCustomTasks.push(row.customTaskId);
+    const sdkId=[];
+    sdkId.push(row.id)
     this.confirmationService.confirm({
       message: this.toastMessages.delete_waring,
       header: 'Are you sure?',
@@ -80,7 +82,7 @@ export class SdkApprovalListComponent implements OnInit {
       key: "positionDialog_sdk_delete",
       accept: () => {
         this.spinner.show();
-        this.rest.deleteCustomTasksbyId(selectedCustomTasks).subscribe((res: any) => {
+        this.rest.deleteCustomTasksbyId(selectedCustomTasks, sdkId).subscribe((res: any) => {
           if (res.data.length > 0) {
             let used_sdk_list = []
             res.data.forEach(element => {
@@ -128,24 +130,39 @@ export class SdkApprovalListComponent implements OnInit {
   }
 
   onApproveItem(data: any, status: string) {
-    const payload = { ...data, status: status };
-    console.log("Payload to be sent:", payload);
-    this.spinner.show();
-    this.rest.approveRejectRequest(payload).subscribe((res: any) => {
-      if (res.code == 4200){
-        console.log('Payload sent successfully', res);
-        this.spinner.hide();
-        this.toastService.showSuccess(res.message, 'response');
-        this.getApprovalList();
-      }else{
-        this.spinner.hide();
-        this.toastService.showError(res.message);
-      }
-    },(error: any) => {
-      this.spinner.hide();
-      this.toastService.showError("Error occured");
-      }
-    );
+    const action = status === 'Approved' ? 'approve' : 'reject';
+    this.confirmationService.confirm({
+      message: `Do you want to ${action.toLowerCase()} this item? This can't be undone.`,
+      header: 'Confirmation',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: null,
+      acceptIcon: null,
+      key: 'positionDialog_sdk_delete',
+      accept: () => {
+        const payload = { ...data, status: status };
+        console.log("Payload to be sent:", payload);
+        this.spinner.show();
+        this.rest.approveRejectRequest(payload).subscribe((res: any) => {
+          if (res.code == 4200) {
+            console.log('Payload sent successfully', res);
+            this.spinner.hide();
+            this.toastService.showSuccess(res.message, 'response');
+            this.getApprovalList();
+          } else {
+            this.spinner.hide();
+            this.toastService.showError(res.message);
+          }
+        }, (error: any) => {
+          this.spinner.hide();
+          this.toastService.showError("Error occurred");
+        }
+        );
+      },
+    });
   }
 
 }

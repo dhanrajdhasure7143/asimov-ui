@@ -1885,8 +1885,8 @@ updateSdkCustomTasks(id,data : any){
   return this.http.put('/rpa-service/sdk-custom/update-sdk-task/'+id, data)
 }
 
-deleteCustomTasksbyId(id:any){
-  return this.http.post(`/rpa-service/sdk-custom/delete-sdk-task/${id}`,"")
+deleteCustomTasksbyId(customTaskId: any, sdkId: any){
+  return this.http.post(`/rpa-service/sdk-custom/delete-sdk-task/${customTaskId}/${sdkId}`,"");
 }
 
 getCustomTasksbyId(id : any){
