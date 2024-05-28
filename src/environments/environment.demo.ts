@@ -51,5 +51,6 @@ export const environment = {
   paymentFailuerURL: "https://eziap.demo.epsoftinc.com/#/pages/subscriptions",
   stripeKey:"pk_test_51P0drWCJ3cQHk3CPJR9AeA28nQfYeKOIThMG6OGneyWSbbyQ0r61OHtZqkI2mssJrSRbgXDP1urCMu0GPSLewiZu00Usd94Uob",
   python_llm:"https://ezflowllm.demo.epsoftinc.com",
-  ezaskUrl: "http://ezask.demo.epsoftinc.in/?q=0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
+  ezaskUrl: "http://ezask.demo.epsoftinc.in",
+  ezChatBotKey:"0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
 };
