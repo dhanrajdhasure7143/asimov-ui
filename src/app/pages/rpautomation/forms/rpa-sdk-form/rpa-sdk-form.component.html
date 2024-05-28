@@ -7,7 +7,7 @@
         <form [formGroup]="customTaskForm" class="h-100">
             <div class="col-md-12 p-0 form-group">
                 <label class="label-control" for="userName"> Task Name <span class="star">*</span></label>
-                <input type="text" maxlength="51" class="form-control data" formControlName="customTaskName" (input)="checkSdkTaskName()"
+                <input [attr.disabled]="isupdateform ? true : null" type="text" maxlength="51" class="form-control data" formControlName="customTaskName" (input)="checkSdkTaskName()"
                 value="" placeholder="Enter Task Name">
                 <span
                     *ngIf="(customTaskForm.get('customTaskName').invalid && customTaskForm.get('customTaskName').touched) && !customTaskForm.controls['customTaskName'].hasError('pattern') && !customTaskForm.controls['customTaskName'].hasError('maxlength')"
