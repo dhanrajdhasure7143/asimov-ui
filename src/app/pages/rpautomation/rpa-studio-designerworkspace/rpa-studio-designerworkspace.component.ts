@@ -3159,8 +3159,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
           let pn: any = $("#" + item.id).first();
           let position: any = pn.position();
-          tempGroupData.x = position.left + "px";
-          tempGroupData.y = position.top + "px";
+          // tempGroupData.x = position.left + "px";
+          // tempGroupData.y = position.top + "px";
+          let element = document.getElementById(item.id);
+          tempGroupData.x = element.offsetLeft + "px";
+          tempGroupData.y = element.offsetTop + "px";
           delete tempGroupData.edit;
           delete tempGroupData.el;
           if (this.savedGroupsData.find((group: any) => group.groupId == item.id) == undefined)
