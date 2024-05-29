@@ -550,10 +550,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
     if (this.finalbot.botId != undefined) {
       setTimeout(async () => {
+        // this.addconnections(this.finalbot.sequences)
+        // await this.savedGroupsData.forEach(element => {
+        //   this.minimizeGroup(element)
+        // });
         this.addconnections(this.finalbot.sequences)
-        await this.savedGroupsData.forEach(element => {
-          this.minimizeGroup(element)
-        });
+        setTimeout(() => {
+          this.savedGroupsData.forEach(element => {
+            this.minimizeGroup(element)
+            this.jsPlumbInstance.repaintEverything();
+          });
+        }, 1000);
       }, 1000);
 
       //this.child_rpa_studio.spinner.hide()
@@ -3514,18 +3521,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   minimizeGroup(groupData){
-    setTimeout(() => {
+    // setTimeout(() => {
     // if(groupData.isMicroBot){
         groupData.nodeIds.forEach(element => {
           // If the group is collapsed, hide the node
          let div_element = document.getElementById(element) 
          if(div_element)
          div_element.style.display = 'none';
+      this.re_ArrangeNodes();
       });
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
     // }
-  }, 100);
+  // }, 100);
   }
 
   onExpandGroup(group,index){
