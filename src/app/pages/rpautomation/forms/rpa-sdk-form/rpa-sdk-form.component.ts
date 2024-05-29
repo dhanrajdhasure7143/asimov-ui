@@ -169,6 +169,7 @@ export class RpaSdkFormComponent implements OnInit {
   
   updateCustomTasks(staus:boolean){
     this.spinner.show();
+    console.log(this.updatetaskDetails)
     const approverEmail = this.customTaskForm.value.approver;
     const selectedApprover = this.users_list.find(user => user.user_email === approverEmail);
     const approverFullName = selectedApprover ? selectedApprover.fullName : '';
@@ -185,6 +186,7 @@ export class RpaSdkFormComponent implements OnInit {
       "customTaskId": this.updatetaskDetails.customTaskId,
       "createdBy":this.updatetaskDetails.createdBy,
       "version":this.updatetaskDetails.version,
+      "createdAt":this.updatetaskDetails.createdAt
     }
     console.log(this.updatetaskDetails.id);
     console.log("UPDATe",reqBody);

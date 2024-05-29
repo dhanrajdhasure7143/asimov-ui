@@ -50,7 +50,8 @@ export class PredefinedBotsService {
   }
 
   rfpFileUpload(body:any){
-    return this.http.post("/platform-service/document/uploadPredefinedRFPFile",body)
+    // return this.http.post("/platform-service/document/uploadPredefinedRFPFile",body)
+    return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
   }
 
 
