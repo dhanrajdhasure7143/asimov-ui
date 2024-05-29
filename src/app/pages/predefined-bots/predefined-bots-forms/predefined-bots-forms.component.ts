@@ -519,11 +519,18 @@ if(this.params.type =='edit'){
 
   onFileSelected(event: any,field) {
     this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles)
     this.selectedOption = field
     console.log("this.selectedOption",this.selectedOption)
     if(this.predefinedBot_uuid =='Pred_RFP'){
       const formData = new FormData();
-      formData.append('filePath', this.selectedFiles[0]);
+      // this.selectedFiles.forEach(e=>{
+      //   formData.append('filePath', e);
+      // })
+
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        formData.append("filePath", this.selectedFiles[i]);
+      }
       this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
         console.log("res",res)
         let obj = {filePath:res.fileName,

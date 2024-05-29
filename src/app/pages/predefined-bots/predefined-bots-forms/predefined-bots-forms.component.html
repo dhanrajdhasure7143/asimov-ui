@@ -79,7 +79,8 @@
                         </div>
                         
                         
-                        <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="onFileSelected($event,field)">
+                        <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                         (change)="onFileSelected($event,field)" multiple>
 
                         <div style="width: 70%;" *ngIf="field.isValidateRequired">
                             <div>

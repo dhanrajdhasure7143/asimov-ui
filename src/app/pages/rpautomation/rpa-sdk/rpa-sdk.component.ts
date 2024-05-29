@@ -22,6 +22,8 @@ export class RpaSdkComponent implements OnInit {
   table_searchFields: any[]=[];
   isupdateform:boolean= false;
   updatetaskDetails:any={};
+  selectedTab:number=0;
+  other_customTasks:any=[]
 
 
   constructor(
@@ -45,6 +47,8 @@ export class RpaSdkComponent implements OnInit {
       this.customTasks.map(item=>{
         item.createdAt = new Date(item.createdAt)
       })
+      this.customTasks = this.customTasks.filter(item =>item.status == "Approved");
+      console.log(this.customTasks)
       this.spinner.hide();
     },err=>{
       this.toastService.showError(this.toastMessages.loadDataErr)
@@ -130,6 +134,29 @@ export class RpaSdkComponent implements OnInit {
   }
   onTaskSaved() {
     this.getTaskDetails();
+  }
+
+  getOtherTaskDetails(){
+    this.spinner.show();
+    this.rest.getCustomTasks().subscribe((res : any) =>{  
+      this.other_customTasks = res
+      this.other_customTasks.map(item=>{
+        item.createdAt = new Date(item.createdAt)
+      })
+      this.other_customTasks = this.other_customTasks.filter(item =>item.status != "Approved");
+      this.spinner.hide();
+    },err=>{
+      this.toastService.showError(this.toastMessages.loadDataErr)
+    })
+
+    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "approvedBy", "comments", "status"]
+
+  }
+
+  onTabChanged(event){
+    console.log(event)
+    this.selectedTab=event.index;
+    this.selectedTab == 0?this.getTaskDetails():this.getOtherTaskDetails();
   }
 
 }
