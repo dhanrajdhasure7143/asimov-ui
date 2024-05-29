@@ -38,6 +38,7 @@ export class SidebarComponent implements OnInit {
   isSubscriptionModuleEnable:boolean = false;
   isPredefinedBots:boolean = true;
   workspacedsiabled:boolean = false
+  agentOrcheDisabled:boolean = false
 
   constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService,private router:Router,) { }
@@ -170,12 +171,16 @@ getexpiryInfo(){
       if(this.isPredefinedBots){
       if(this.getCookie("workspacedsiabled")!="false"){
         document.cookie = "workspacedsiabled=true";
+        document.cookie = "agentOrcheDisabled=true"
         this.workspacedsiabled = true;
+        this.agentOrcheDisabled = true;
       }else{
         this.workspacedsiabled = false;
+        this.agentOrcheDisabled = false;
       }
     }else{
       this.workspacedsiabled = false
+      this.agentOrcheDisabled = false
     }
     });
 }
