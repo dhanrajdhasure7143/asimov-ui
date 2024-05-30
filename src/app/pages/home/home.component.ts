@@ -117,8 +117,10 @@ export class HomeComponent implements OnInit {
       this.highestExpireIn = data.expiresIn === 0 || data.expiresIn <= 0;
       if (this.highestExpireIn) {
         if (this.userRole.includes('System Admin')) {
+            this.isLoading = false;
             this.showWarningPopup = true;
         } else if (this.userRole.includes('Process Owner')) {
+            this.isLoading = false;
             this.showWarningPopup = true;
         }
      } else {
@@ -193,8 +195,10 @@ onClickLogout(){
         this.highestExpireIn = data.expiresIn === 0 || data.expiresIn <= 0;
         if (this.highestExpireIn) {
           if (this.userRole.includes('System Admin')) {
+              this.isLoading = false;
               this.showWarningPopup = true;
           } else if (this.userRole.includes('Process Owner')) {
+              this.isLoading = false;
               this.showWarningPopup = true;
           }
       } else {
