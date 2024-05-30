@@ -556,8 +556,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         // });
         this.addconnections(this.finalbot.sequences)
         setTimeout(() => {
-          this.savedGroupsData.forEach(element => {
-            this.minimizeGroup(element)
+          console.log("savegroupdata",this.savedGroupsData);
+          this.savedGroupsData.forEach(async (element) => {
+            await this.minimizeGroup(element)
+            console.log(element);
             this.jsPlumbInstance.repaintEverything();
           });
         }, 1000);
@@ -3521,8 +3523,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   minimizeGroup(groupData){
-    // setTimeout(() => {
-    // if(groupData.isMicroBot){
+    setTimeout(() => {
+    // if(groupData.isMicroBot){    
         groupData.nodeIds.forEach(element => {
           // If the group is collapsed, hide the node
          let div_element = document.getElementById(element) 
@@ -3530,10 +3532,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
          div_element.style.display = 'none';
       this.re_ArrangeNodes();
       });
+      console.log("groupData",groupData);
       this.jsPlumbInstance.collapseGroup(groupData.id);
       this.re_ArrangeNodes();
     // }
-  // }, 100);
+  }, 100);
   }
 
   onExpandGroup(group,index){
