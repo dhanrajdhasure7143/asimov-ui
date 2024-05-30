@@ -167,7 +167,7 @@
               <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
               <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
               <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
-              <button *ngIf="params.type=='create' && isLastPage" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid">Create Bot</button>
+              <button *ngIf="params.type=='create' && isLastPage" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid">Save & Execute</button>
               <button *ngIf="params.type=='edit' && isLastPage" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid">Update Bot</button>
           </div>
         </div>
