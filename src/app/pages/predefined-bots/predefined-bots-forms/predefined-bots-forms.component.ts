@@ -382,7 +382,7 @@ if(this.params.type =='edit'){
 
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.router.navigate(["/pages/predefinedbot/home"]);
           this.toaster.showSuccess(botName,"create")
         },err=>{
           this.spinner.hide();
@@ -437,7 +437,7 @@ if(this.params.type =='edit'){
         console.log('req_body---:', req_body);
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.router.navigate(["/pages/predefinedbot/home"]);
           this.toaster.showSuccess(botName,"create")
         },err=>{
           this.spinner.hide();
@@ -482,7 +482,7 @@ if(this.params.type =='edit'){
         console.log('req_body---:', req_body);
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.router.navigate(["/pages/predefinedbot/home"]);
           this.toaster.showSuccess(botName,"create")
         },err=>{
           this.spinner.hide();
