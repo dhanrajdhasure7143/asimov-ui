@@ -45,6 +45,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   selectedOption:any={};
   predefinedBot_schedulerRequired:boolean;
   filePathValues:any[]=[];
+  checkedOptions: string[] = [];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -326,12 +327,16 @@ if(this.params.type =='edit'){
       this.rfpbotCreate()
     }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
       this.recruitmentbotCreate();
+    }else{
+      this.botCreate();
+
     }
   }
 
   rfpbotCreate(){
+
     if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
+      // this.spinner.show();
       // const formData = new FormData();
       // formData.append('filePath', this.selectedFiles[0]);
       // this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
@@ -346,6 +351,18 @@ if(this.params.type =='edit'){
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
+
+        if(this.checkedOptions.includes('RFP_Summarizer')){
+          req_body.fields["RFPBotOne_75279_If_condition"]="str_contains(\"true\",\"true\")"
+        }else{
+          req_body.fields["RFPBotOne_75279_If_condition"]="str_contains(\"true\",\"false\")"
+        }
+
+        if(this.checkedOptions.includes('Proposal_Generator')){
+          req_body.fields["RFPBotOne_75276_If_condition"]="str_contains(\"true\",\"true\")"
+        }else{
+          req_body.fields["RFPBotOne_75276_If_condition"]="str_contains(\"true\",\"false\")"
+        }
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
           this.duplicateAttributes.forEach(element => {
@@ -362,6 +379,7 @@ if(this.params.type =='edit'){
           });
         }
         console.log('req_body------:', req_body);
+
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
           this.router.navigate(["/pages/predefinedbot/list"]);
@@ -390,6 +408,51 @@ if(this.params.type =='edit'){
           appendValuesList.forEach(e=>{
             req_body.fields[e] = JSON.stringify(this.jobDescription.response)
           })
+        
+        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["predefinedBotType"] = this.predefinedBot_name
+        req_body["productId"] = this.predefinedBot_id
+        req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
+        delete req_body.fields.botName
+        console.log(this.duplicateAttributes)
+        if(this.duplicateAttributes.length >0){
+          // this.duplicateAttributes.forEach(element => {
+          //   let v_key = element.preAttributeName.split("_")
+  
+  
+          //   for (const key in req_body.fields) {
+          //   const parts = key.split('_');
+            
+          //   if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
+          //       req_body.fields[element.preAttributeName] = req_body.fields[key]
+          //   }
+          //   }
+          // });
+          this.duplicateAttributes.forEach(ele=>{
+            if(ele.options){
+              req_body.fields[ele.preAttributeName] = req_body.fields[ele.options[0].duplicatesTo]
+            }
+          })
+        }
+        console.log('req_body---:', req_body);
+        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+          this.spinner.hide();
+          this.router.navigate(["/pages/predefinedbot/list"]);
+          this.toaster.showSuccess(botName,"create")
+        },err=>{
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessages.apierror)
+        })
+      } else {
+        this.toaster.showInfo("Fill All fields")
+      }
+  }
+
+  botCreate(){
+    if (this.predefinedBotsForm.valid) {
+      this.spinner.show();
+        let botName = this.predefinedBotsForm.value.fields.botName
+        let req_body = this.predefinedBotsForm.value;
         
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
@@ -576,6 +639,17 @@ if(this.params.type =='edit'){
     } catch (e) {
       console.error("Parsing error:", e);
     }
+
+    if (checkbox.checked) {
+      this.checkedOptions.push(option.value);
+    } else {
+      const index = this.checkedOptions.indexOf(option.value);
+      if (index !== -1) {
+        this.checkedOptions.splice(index, 1);
+      }
+    }
+    console.log(this.checkedOptions);
+
 
     if (Array.isArray(array)) {
       if (checkbox.checked) {
