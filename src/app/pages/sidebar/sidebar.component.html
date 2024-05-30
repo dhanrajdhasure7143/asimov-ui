@@ -117,7 +117,7 @@
         <span class="side-menu-font" (click)="hightlight('AI Agents','null')">AI Agents</span>
       </a>
 
-        <a mat-list-item *ngIf="!agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
+        <a mat-list-item *ngIf="isPredefinedBots && !agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
           routerLink="/pages/predefinedbot/list" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
