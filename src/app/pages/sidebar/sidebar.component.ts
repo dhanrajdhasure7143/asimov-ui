@@ -171,11 +171,16 @@ getexpiryInfo(){
       if(this.isPredefinedBots){
       if(this.getCookie("workspacedsiabled")!="false"){
         document.cookie = "workspacedsiabled=true";
-        document.cookie = "agentOrcheDisabled=true"
         this.workspacedsiabled = true;
-        this.agentOrcheDisabled = true;
       }else{
         this.workspacedsiabled = false;
+      }
+
+      // cookie for AI agents orchestration hide
+      if(this.getCookie("agentOrcheDisabled")!="false"){
+        document.cookie = "agentOrcheDisabled=true"
+        this.agentOrcheDisabled = true;
+      }else{
         this.agentOrcheDisabled = false;
       }
     }else{
