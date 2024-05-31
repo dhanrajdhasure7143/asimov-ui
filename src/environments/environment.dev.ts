@@ -52,5 +52,5 @@ export const environment = {
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
     python_llm:"http://10.11.0.67:5006",
     ezaskUrl: "http://ezask.dev.epsoftinc.in",
-    ezChatBotKey:"0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o="
+    ezChatBotKey:"1n8OozyPY05bifhNC1hGiTDHHpP6UToXvygbCOxtXWU4tqi1d4F276swj9q5X9GstmLRpJcS1E2ZEUCuzUfMdT+gaRwAXSgpUbE="
   };
