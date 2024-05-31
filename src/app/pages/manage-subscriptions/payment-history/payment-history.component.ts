@@ -45,7 +45,7 @@ export class PaymentHistoryComponent implements OnInit {
       this.invoicedata.map(data=>{
         data["createDate"] = new Date(data.createDate);
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
-        data["amount_modified"] ="$"+String(data.amount);
+        data["amount_modified"] ="$"+String(data.dueAmmount);
         return data
       })
       this.table_searchFields = [
