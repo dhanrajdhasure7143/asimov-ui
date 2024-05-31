@@ -21,6 +21,7 @@ export class OverviewComponent implements OnInit {
   paymentMode: any = [];
   error: string;
   tableData: any = [];
+  tableData_new: any = [];
   result: any;
   error1: string;
   email: any;
@@ -139,6 +140,10 @@ export class OverviewComponent implements OnInit {
           // element["nextBillingDate"] = moment(element.nextBillingDate).format("MMMM DD [,] yy")
         });
       }
+
+      this.tableData_new = this.removeDuplicates(this.tableData)
+
+      console.log(this.tableData_new)
       
       // this.result = this.tableData.filter((obj) => {
       //   return obj.status == "Active";
@@ -147,6 +152,15 @@ export class OverviewComponent implements OnInit {
       // this.due_timestamp1 = moment(this.result.createdAt).add(1, "months").format("MMMM DD [,] yy")
       this.spinner.hide();
     });
+  }
+
+  removeDuplicates(subscriptions){
+    const uniqueSubscriptions = subscriptions.filter((value, index, self) => 
+      index === self.findIndex((t) => (
+        t.subscriptionId === value.subscriptionId
+      ))
+    );
+    return uniqueSubscriptions;
   }
 
   subscriptionCancel(item) {
