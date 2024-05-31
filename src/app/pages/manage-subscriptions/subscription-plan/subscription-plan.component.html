@@ -25,9 +25,9 @@
         </div>        
         
 
-        <div class="col-md-9" style="padding-right: 10px;">
+        <div class="col-md-9" style="padding-right: 0px; padding-left: 0;">
             <div class="bot-headers">
-                <h4 class="BotHeading" style="flex: 1;">Predefined Bots</h4>
+                <h4 class="BotHeading" style="flex: 1;">AI Agents</h4>
                 <div class="toggle-container">
                     <span [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" style="padding:0 10px 0 10px">Monthly</span>
                     <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()" class="BotToggle"></p-inputSwitch>
@@ -155,7 +155,7 @@
             </div>  -->
 
             <div class="row">
-                <div class="col-md-8 d-flex align-items-center justify-content-center" style="margin: 10px 0 0 50px;">
+                <div class="col-md-6 d-flex align-items-center justify-content-center" style="margin: 10px 0 0 0px;">
                     <div class="text-center" >
                         <h5 class="price-line">Your estimated 
                             <span *ngIf="selectedPlan === 'Monthly'">Monthly</span>
@@ -164,7 +164,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="col-md-2 d-flex align-items-center justify-content-end">
+                <div class="col-md-4 d-flex align-items-center justify-content-end">
                     <div class="text-right" style="margin: 10px 0px 5px 0;">
                         <button type="button" class="btn btn-primary btn-plan" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
                     </div>
