@@ -30,7 +30,7 @@
     border: 1px solid #098de6;
 }
 .selected-circle{
-    border: 6px solid #2c20ce;
+    border: 3px solid #098DE6;
 }
 
 .line {
@@ -126,6 +126,7 @@
     background-color: #098de6;
     height: 40px;
     width: 100%;
+    border-radius: 0px 4px 0px 0px;
 }
 
 .BotHeading{
@@ -133,7 +134,7 @@
     color: white;
     max-width: 100%;
     font-size: 23px;
-    padding-left: 20px;
+    padding-left: 41px;
     padding-top: 5px;
 }
 
@@ -278,8 +279,9 @@
 }
 
 .custom-bg-gray {
-    background-color: #e4e4e4;
+    background-color: #f2eeee;
     padding-bottom: 20px; 
+    border-radius: 0px 0px 4px 4px;
 }
 
 .enterprise-plan-wrapper {
@@ -297,6 +299,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    border-radius: 4px 0px 0px 0px;
 }
 
 .enterprise-plan h4 {
@@ -313,7 +316,7 @@
 
 #sales-btn {
     position: absolute;
-    bottom: 50px;
+    bottom: 26px;
     left: 50%;
     transform: translateX(-50%);
     width: 150px;
@@ -375,7 +378,7 @@
   .image-top img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
   }
   
   .content {
@@ -487,7 +490,7 @@
 }
 
 .selected-square {
-    border: 3px solid #2c20ce;
+    border: 3px solid #098DE6;
 }
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
@@ -501,15 +504,21 @@
 .btn-plan{
     margin-left: 100px;
     background-color: #63add1;
-    border-radius: 0%;
+    border-radius: 3px;
     font-weight: 600;
  }
 
  .price-line {
-    padding: 0px 0;
+    padding: 2px 0;
     background-color: white;
     font-size: 1.2rem;
     display: inline-block;
     width: 400px;
     white-space: nowrap;
+    border-radius: 4px;
+}
+
+.container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
 }
