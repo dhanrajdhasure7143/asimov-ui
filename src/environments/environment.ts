@@ -53,5 +53,5 @@ export const environment = {
 
     python_llm:"http://10.11.0.67:5006",
     ezaskUrl:"http://ezask.dev.epsoftinc.in",
-    ezChatBotKey:"1n8OozyPY05bifhNC1hGiTDHHpP6UToXvygbCOxtXWU4tqi1d4F276swj9q5X9GstmLRpJcS1E2ZEUCuzUfMdT+gaRwAXSgpUbE="
+    ezChatBotKey:"h33aCqY0IUITB%2B2fWH0W%2Fgzc2I68m4q4UfZnDoOVl6ZQCxxvQ2B86b4pe87iHgQ1rQdPImBF2T3B8ZiwUZZ0kwtDcciYV5sh8t0%3D"
   };

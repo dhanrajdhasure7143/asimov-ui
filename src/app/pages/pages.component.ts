@@ -85,8 +85,10 @@ export class PagesComponent implements OnInit {
 
         setTimeout(() => {
           const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
-          if(iframe)
-          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: environment.ezChatBotKey }, '*');
+          if(iframe){
+            console.log("testing.........iframe enabled")
+          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: environment.ezChatBotKey,accesstoken:localStorage.getItem("accessToken") }, '*');
+          }
         }, 2000);
         
         window.addEventListener('message', event => {
