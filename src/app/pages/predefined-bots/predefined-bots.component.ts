@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-predefined-bots',
@@ -7,8 +8,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./predefined-bots.component.css']
 })
 export class PredefinedBotsComponent implements OnInit {
-
-  constructor() { }
+  chatBotUrl:SafeResourceUrl
+  constructor(private sanitizer: DomSanitizer) {
+    const dynamicUrl = environment.ezaskUrl;
+    this.chatBotUrl = this.sanitizer.bypassSecurityTrustResourceUrl(dynamicUrl);
+  }
 
   ngOnInit(): void {
   }
