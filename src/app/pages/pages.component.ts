@@ -81,27 +81,6 @@ export class PagesComponent implements OnInit {
     this.onToolbarMenuToggle();
   }
 
-  ngAfterViewInit() {
-
-        setTimeout(() => {
-          const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
-          if(iframe){
-            console.log("testing.........iframe enabled")
-          iframe.contentWindow.postMessage({ action: 'botKey', bot_key: environment.ezChatBotKey,accesstoken:localStorage.getItem("accessToken") }, '*');
-          }
-        }, 2000);
-        
-        window.addEventListener('message', event => {
-          const message = event.data;
-          const iframe = document.getElementById('iframeRef') as HTMLIFrameElement;
-          if(iframe){
-              iframe.style.height = message.height;
-              iframe.style.width = message.width;
-          }
-      });
-    
-  }
-
   onToolbarMenuToggle() {
     this.sideBarOpen = !this.sideBarOpen;
     (!this.sideBarOpen)?this.hideSubMenu():this.contentMargin = 260;
