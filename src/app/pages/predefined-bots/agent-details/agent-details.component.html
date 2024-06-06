@@ -1,0 +1,229 @@
+<div class="h-100 main-screen">
+    <div class="screen-wrapper">
+        <div class="top-section">
+            <div class="bot-info">
+                <div class="bot-header">
+                    <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
+                    <div class="rem-execution">Remaining Executions: <span
+                            class="remaining-exe">{{remaining_exe}}</span></div>
+                </div>
+                <p class="bot-details">{{bot?.details || dataforbot}}
+                </p>
+            </div>
+
+            <div class="buttons-container">
+                <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()">
+                    <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
+                </button>
+                <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()">
+                    <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
+                </button>
+                <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
+                    <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-accordion">
+            <div class="custom-accordion-item " [ngClass]="item.expanded ? 'expanded-accord' : 'collapsed-accord'"
+                *ngFor="let item of items">
+                <div class="custom-accordion-header d-flex align-items-center justify-content-between "
+                    (click)="toggleItem(item)">
+                    <h4 class="subscription-heading">Subscription</h4>
+                    <div class="status-and-icon d-flex align-items-center gap-3">
+                        <span class="warning-message"> <img src="../../../../assets/images/agent/info_iocon.svg"
+                                alt="info icon" class="info-style"> {{ item.warningMessage }}</span>
+                        <div class="rotator-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-accordion-content">
+                    <div class="content-details">
+                        <p>Purchased On : <span style="padding-left: 30px;">{{ item.date }}</span></p>
+                        <p>Expires On : <span style="padding-left: 30px;">{{ item.expirationDate }}</span></p>
+
+                        <div class="base-content">
+                            <div class="info-content">
+                                <p><img src="../../../../assets/images/agent/info_iocon.svg" alt="info icon"
+                                        class="info-style">Your Purchase Plan Expires within 30 days. Extend Plan To
+                                    Continue Services</p>
+                            </div>
+                            <div class="renew-btns">
+                                <button class="btn-renew-cancel" (click)="renewBtns()">
+                                    Cancel
+                                </button>
+                                <button class="btn-renew" (click)="renewBtns()">
+                                    Renew
+                                </button>
+                                <button class="btn-renew" (click)="renewBtns()">
+                                    Select Plan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container" *ngIf="!showMiniLayout">
+        <div class="logs-container">
+            <h3><img src="../../../../assets/images/agent/hostory-icon.svg" alt="History icon" class="svg-icons">
+                History</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr *ngFor="let log of logs">
+                        <td>{{ log.date }}</td>
+                        <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
+                            log.status }}</td>
+                    </tr>
+                </table>
+            </div>
+            <button class="button-bottom" (click)="loadMoreLogs()">Show All History</button>
+        </div>
+
+        <div class="data-container">
+            <div class="header" style="height: auto !important;">
+                <h3><img src="../../../../assets/images/agent/upload-pin.svg" alt="History icon" class="svg-icons">
+                    Uploaded Data</h3>
+                <div class="icons">
+                    <img src="../../../../assets/images/agent/download-icon.svg" alt="History icon" class="svg-icons">
+                    <img src="../../../../assets/images/agent/delete-agent.svg" alt="Delete icon" class="svg-icons">
+                </div>
+            </div>
+
+            <div class="file-list">
+                <div *ngFor="let file of files" class="file-item" [ngClass]="{'selected': selectedFiles.includes(file)}"
+                    (click)="toggleFileSelection(file)">
+                    <img src="../../../../assets/images/agent/file-icon.svg" alt="File icon" class="svg-icons">
+                    <label [for]="file.name" class="file-name">{{ file.name }}</label>
+                    <div class="selection-indicator" [ngClass]="{'selected': selectedFiles.includes(file)}"></div>
+                </div>
+            </div>
+            <button class="button-bottom" (click)="loadMoreFiles()">Show All Files</button>
+        </div>
+    </div>
+
+    <!-- Full screen for the History Div -->
+    <div class="main-container" *ngIf="showMoreLogs">
+        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px;">
+            <div class="logs-header table-full">
+                <h3 style="display: flex; align-items: center; margin-right: auto;">
+                    <img src="../../../../assets/images/agent/hostory-icon.svg" alt="History icon" class="svg-icons"
+                        style="margin-right: 10px;"> History
+                </h3>
+                <div class="controls" style="display: flex; align-items: center; flex-wrap: wrap;">
+                    <input type="date" class="filter-input filter-calender" [(ngModel)]="selectedDateLog"
+                        (change)="filterLogsData()">
+
+                    <select class="filter-input filter-calender" [(ngModel)]="selectedStatus"
+                        (change)="filterLogsData()">
+                        <option value="">Status</option>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+
+                    <button class="filter-icn" (click)="filterLogsData()">
+                        <i class="pi pi-filter icons-mt"></i> Filter
+                    </button>
+                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0" (click)="downloadLogs()">
+                        <i class="pi pi-download"></i> Download Logs
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrapper table-base">
+                <table>
+                    <tr class="header-row">
+                        <th>S.No</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Info</th>
+                    </tr>
+                    <tr *ngFor="let log of filteredLogsData" class="table-base">
+                        <td>{{ log.sl_no }}</td>
+                        <td>{{ log.start_date }}</td>
+                        <td>{{ log.end_date }}</td>
+                        <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
+                            log.status }}</td>
+                        <td>{{ log.info }}</td>
+                    </tr>
+                </table>
+                <div *ngIf="filteredLogsData.length === 0" class="no-data-message">
+                    <span>No data found</span>
+                </div>
+            </div>
+            <button class="button-bottom" *ngIf="showMoreLogs" (click)="showLessLogs()">Show Less History</button>
+        </div>
+    </div>
+
+    <!-- Full Screen for Upload files div -->
+    <div class="main-container" *ngIf="showMoreFiles">
+        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px;">
+            <div class="logs-header table-full">
+                <h3 style="display: flex; align-items: center; margin-right: auto;">
+                    <img src="../../../../assets/images/agent/upload-pin.svg" alt="History icon" class="svg-icons">
+                    Uploaded Files
+                </h3>
+                <div class="controls" style="display: flex; align-items: center; flex-wrap: wrap;">
+                    <input type="text" placeholder="Search by File Name" class="search-input" [(ngModel)]="searchTerm"
+                        (input)="applyFilters()">
+                    <i class="pi pi-search serach-logs"></i>
+                    <select class="filter-input filter-calender" [(ngModel)]="selectedFileType"
+                        (change)="applyFilters()">
+                        <option value="">All Types</option>
+                        <option value="pdf">PDF</option>
+                        <option value="jpg">JPG</option>
+                        <option value="xlsx">XLSX</option>
+                        <option value="pptx">PPTX</option>
+                        <option value="mp3">MP3</option>
+                        <option value="mp4">MP4</option>
+                        <option value="zip">ZIP</option>
+                        <option value="py">PY</option>
+                        <option value="epub">EPUB</option>
+                        <option value="docx">DOCX</option>
+                    </select>
+                    <input type="date" class="filter-input filter-calender" [(ngModel)]="selectedDate"
+                        (change)="applyFilters()">
+                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0"
+                        (click)="downloadSelectedFiles()">
+                        <i class="pi pi-download"></i> Download
+                    </button>
+                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0"
+                        style="background-color: red !important;">
+                        <i class="pi pi-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrapper table-base">
+                <table>
+                    <tr class="header-row">
+                        <th><input type="checkbox" (change)="selectAllFiles($event)"
+                                style="height: 20px !important; width: 20px !important;"></th>
+                        <th>File Name</th>
+                        <th>File Type</th>
+                        <th>File Size</th>
+                        <th>Date Uploaded</th>
+                    </tr>
+                    <tr *ngFor="let file of filteredFiles" class="table-base">
+                        <td><input type="checkbox" (change)="toggleFileSelection(file)"
+                                [checked]="isFileSelected(file)"></td>
+                        <td><img src="../../../../assets/images/agent/file-icon.svg" alt="File icon"
+                                class="svg-icons">{{ file.fileName }}</td>
+                        <td>{{ file.fileType }}</td>
+                        <td>{{ file.fileSize }}</td>
+                        <td>{{ file.dateUploaded }}</td>
+                    </tr>
+                </table>
+                <div *ngIf="filteredFiles.length === 0" class="no-data-message">
+                    <span>No data found</span>
+                </div>
+            </div>
+            <button class="button-bottom" (click)="showLessFiles()">Show Less Files</button>
+        </div>
+    </div>
+
+</div>

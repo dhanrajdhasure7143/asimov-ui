@@ -21,6 +21,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { PredefinedBotsLogsComponent } from './predefined-bots-logs/predefined-bots-logs.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
+import { AgentDetailsComponent } from './agent-details/agent-details.component';
 
 
 
@@ -31,7 +32,8 @@ import { columnList } from 'src/app/shared/model/table_columns';
     PredefinedBotsListComponent,
     PredefinedBotsOrchestrationComponent,
     PredefinedSchedulerComponent,
-    PredefinedBotsLogsComponent
+    PredefinedBotsLogsComponent,
+    AgentDetailsComponent
   ],
   imports: [
     CommonModule,
