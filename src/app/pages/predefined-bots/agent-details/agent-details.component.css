@@ -4,6 +4,7 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 
 .main-screen {
     margin: 15px 0px 0px 0px;
+    overflow: auto;
 }
 
 .screen-wrapper {
@@ -445,11 +446,29 @@ hr {
     color: #098DE6;
     font-size: 18px;
     padding: 0px 15px;
-    font-weight: 500;
+    font-weight: 700;
+    text-decoration: underline !important;
+}
+
+.button-bottom-full {
+    /* position: absolute; */
+    bottom: 10px;
+    right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #098DE6;
+    font-size: 18px;
+    padding: 0px 15px;
+    font-weight: 700;
     text-decoration: underline !important;
 }
 
 .button-bottom:hover {
+    cursor: pointer;
+}
+
+.button-bottom-full:hover{
     cursor: pointer;
 }
 
@@ -641,6 +660,44 @@ input[type=checkbox] {
     font-size: 20px;
     font-weight: 500;
   }
+
+  /* Pagination Screen  */
+  .pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    height: 40px;
+    width: 40px;
+}
+
+.pagination-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-btn.current {
+    background-color: #098DE6;
+    color: white;
+}
 
 
 

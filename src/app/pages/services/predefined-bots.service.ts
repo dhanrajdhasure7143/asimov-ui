@@ -54,5 +54,20 @@ export class PredefinedBotsService {
     return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
   }
 
+  getAgentFiles(UUID){
+    return this.http.get("/platform-service/document/fetchPredefinedAgentFiles/"+UUID)
+  }
+
+  deleteAgentFIles(body:any){
+    return this.http.post("/platform-service/document/deleteMultiplePredefinedAgentFiles",body)
+  }
+
+  downloadAgentFiles(body:any){
+    return this.http.post("/platform-service/document/downloadMultiplePredefinedAgentFiles",body)
+  }
+
+  uploadAgentFIles(body:any){
+    return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
+  }
 
 }

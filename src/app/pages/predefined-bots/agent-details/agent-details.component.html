@@ -85,19 +85,19 @@
 
         <div class="data-container">
             <div class="header" style="height: auto !important;">
-                <h3><img src="../../../../assets/images/agent/upload-pin.svg" alt="History icon" class="svg-icons">
+                <h3><img src="../../../../assets/images/agent/upload-pin.svg" alt="Upload icon" class="svg-icons">
                     Uploaded Data</h3>
                 <div class="icons">
-                    <img src="../../../../assets/images/agent/download-icon.svg" alt="History icon" class="svg-icons">
-                    <img src="../../../../assets/images/agent/delete-agent.svg" alt="Delete icon" class="svg-icons">
+                    <img src="../../../../assets/images/agent/download-icon.svg" alt="Download icon" (click)="downloadAgentFiles()" class="svg-icons">
+                    <img src="../../../../assets/images/agent/delete-agent.svg" alt="Delete icon" (click)="deleteAgentFiles()" class="svg-icons">
                 </div>
             </div>
 
             <div class="file-list">
-                <div *ngFor="let file of files" class="file-item" [ngClass]="{'selected': selectedFiles.includes(file)}"
+                <div *ngFor="let file of file" class="file-item" [ngClass]="{'selected': selectedFiles.includes(file)}"
                     (click)="toggleFileSelection(file)">
                     <img src="../../../../assets/images/agent/file-icon.svg" alt="File icon" class="svg-icons">
-                    <label [for]="file.name" class="file-name">{{ file.name }}</label>
+                    <label [for]="file.originalFileName" class="file-name">{{ file.originalFileName }}</label>
                     <div class="selection-indicator" [ngClass]="{'selected': selectedFiles.includes(file)}"></div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
     <!-- Full screen for the History Div -->
     <div class="main-container" *ngIf="showMoreLogs">
-        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px;">
+        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px; padding-bottom:25px !important">
             <div class="logs-header table-full">
                 <h3 style="display: flex; align-items: center; margin-right: auto;">
                     <img src="../../../../assets/images/agent/hostory-icon.svg" alt="History icon" class="svg-icons"
@@ -142,7 +142,7 @@
                         <th>Status</th>
                         <th>Info</th>
                     </tr>
-                    <tr *ngFor="let log of filteredLogsData" class="table-base">
+                    <tr *ngFor="let log of getVisibleLogs()" class="table-base">
                         <td>{{ log.sl_no }}</td>
                         <td>{{ log.start_date }}</td>
                         <td>{{ log.end_date }}</td>
@@ -155,13 +155,30 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <button class="button-bottom" *ngIf="showMoreLogs" (click)="showLessLogs()">Show Less History</button>
+            <!-- <button class="button-bottom" *ngIf="showMoreLogs" (click)="showLessLogs()">Show Less History</button> -->
+            <div class="pagination-container">
+                <!-- "Show Less" button moved to the left corner -->
+                <button class="button-bottom-full" *ngIf="showMoreLogs" (click)="showLessLogs()" style="float: left;">
+                    Show Less History
+                </button>
+    
+                <!-- Pagination buttons -->
+                <div class="pagination">
+                    <button class="pagination-btn" (click)="goToFirstPage()"><<</button>
+                    <button class="pagination-btn" (click)="goToPreviousPage()"><</button>
+                    <ng-container *ngFor="let pageNumber of getPageNumbers()">
+                        <button class="pagination-btn" [class.current]="pageNumber === currentPage" (click)="goToPage(pageNumber)">{{ pageNumber }}</button>
+                    </ng-container>
+                    <button class="pagination-btn" (click)="goToNextPage()">></button>
+                    <button class="pagination-btn" (click)="goToLastPage()">>></button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Full Screen for Upload files div -->
     <div class="main-container" *ngIf="showMoreFiles">
-        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px;">
+        <div class="logs-container" style="width: 100%; max-height: 600px; margin-right: 0px; padding-bottom:25px !important">
             <div class="logs-header table-full">
                 <h3 style="display: flex; align-items: center; margin-right: auto;">
                     <img src="../../../../assets/images/agent/upload-pin.svg" alt="History icon" class="svg-icons">
@@ -222,7 +239,7 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <button class="button-bottom" (click)="showLessFiles()">Show Less Files</button>
+            <button class="button-bottom-full" (click)="showLessFiles()">Show Less Files</button>
         </div>
     </div>
 

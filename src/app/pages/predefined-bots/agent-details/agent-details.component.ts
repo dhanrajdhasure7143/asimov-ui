@@ -5,6 +5,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
+import * as JSZip from "jszip";
+import * as FileSaver from "file-saver";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-agent-details',
@@ -22,6 +25,7 @@ export class AgentDetailsComponent implements OnInit {
   isAccordionExpanded: boolean = false;
   predefined_botsList: any[] = [];
   remaining_exe="5"
+  UUID="";
   // selectedFiles = [];
 
   items: any[]= [
@@ -50,6 +54,41 @@ export class AgentDetailsComponent implements OnInit {
     { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
     { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
     { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
     { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
     { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
     { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
@@ -92,12 +131,13 @@ export class AgentDetailsComponent implements OnInit {
     ]
   
 
-  files = [
-    { name: 'Jr. Software Developer' },
-    { name: 'Full Stack Java Developer' },
-    { name: 'Product Manager Senior' },
+  // files = [
+  //   { name: 'Jr. Software Developer' },
+  //   { name: 'Full Stack Java Developer' },
+  //   { name: 'Product Manager Senior' },
     
-  ];
+  // ];
+  file: any[] = [];
 
   selectedLogs = [];
 
@@ -117,6 +157,7 @@ export class AgentDetailsComponent implements OnInit {
   filteredLogsData: any[] = [];
   selectedDateLog: string = '';
   selectedStatus: string = '';
+  product_id="";
 
   // Show hide variables 
   showMiniLayout = false;
@@ -124,6 +165,10 @@ export class AgentDetailsComponent implements OnInit {
   showMoreFiles = false;
   dummyBotName="AI Agent - EPSoft"
   dataforbot="This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows and streamline workflows."
+
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 6;
 
   constructor(
     private router: Router,
@@ -142,14 +187,17 @@ export class AgentDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const productId = params['id'];
       if (productId) {
-        this.getPredefinedBotsList(productId);
+        this.product_id=productId
+        this.getPredefinedBotsList(this.product_id);
       }
     });
 
+    // this.getAgentFiles();
     this.files_full.sort((a, b) => new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime());
     this.filteredFiles = [...this.files_full];
 
     this.filterLogsData();
+
   }
  
   getPredefinedBotsList(productId: string) {
@@ -160,6 +208,9 @@ export class AgentDetailsComponent implements OnInit {
         details: bot.description || 'This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows.'
       }));
       this.bot = this.predefined_botsList.find(bot => bot.productId === productId);
+      this.UUID=this.bot.predefinedUUID
+      console.log("UUID: ",this.bot.predefinedUUID )
+      this.getAgentFiles(this.bot.predefinedUUID);
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
@@ -239,10 +290,11 @@ export class AgentDetailsComponent implements OnInit {
       );
     }
 
-    // Sort the filtered logs in decreasing order based on start date
     filteredLogs.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
 
     this.filteredLogsData = filteredLogs;
+    // this.currentPage = 1;
+    // this.updatePagination();
   }
 
   downloadLogs(){
@@ -281,6 +333,249 @@ export class AgentDetailsComponent implements OnInit {
     this.showMoreFiles=!this.showMoreFiles
 
   }
+
+  getAgentFiles(id: string) {
+    this.spinner.show();
+    this.rest_api.getAgentFiles(id).subscribe((res: any) => {
+      console.log("Date File", res);
+      this.file = res.data;
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
+
+  deleteAgentFiles(){
+    this.spinner.show();
+    this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
+      console.log("Delete File: ", res);
+      this.getPredefinedBotsList(this.product_id);
+      this.spinner.hide();
+      this.toaster.showSuccess("Delete","delete")
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
+
+  // downloadAgentFiles(){
+  //   this.spinner.show();
+  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe((response: any) => {
+  //     console.log("Download API Call : ",response)
+  //       let resp_data = [];  
+  //       if(response.code == 4200){
+  //       resp_data = response.data;
+  //       if (resp_data.length > 0) {
+  //         if (resp_data.length == 1) {
+  //           let fileName = resp_data[0].label;
+  //           var link = document.createElement("a");
+  //           let extension = resp_data[0].dataType;
+  //           link.download = fileName;
+  //           link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
+  //               ? `data:image/${extension};base64,${resp_data[0].data}`
+  //               : `data:application/${extension};base64,${resp_data[0].data}`;
+  //           link.click();
+  //           this.toaster.showSuccess("Success","download")
+  //         } else {
+  //           var zip = new JSZip();
+  //           resp_data.forEach((value, i) => {
+  //             let fileName = resp_data[i].label;
+  //             let extension = resp_data[i].dataType;
+  //             if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
+  //               zip.file(fileName, value.data, { base64: true });
+  //             else zip.file(fileName, value.data);
+  //           });
+  //           zip.generateAsync({ type: "blob" }).then(function (content) {
+  //             FileSaver.saveAs(content, "AI_Agent" + ".zip");
+  //           });
+  //           this.toaster.showSuccess("Success","download")
+  //         }
+  //       }
+  //       // this.spinner.hide();
+  //       this.toaster.showError("Faied to download the files")
+  //     }
+  //     });
+  //     this.spinner.hide();
+  // }
+
+  // downloadAgentFiles() {
+  //   this.spinner.show();
+  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
+  //     (response: any) => {
+  //       console.log("Download API Call: ", response);
+  //       if (response.code == 4200) {
+  //         const resp_data = response.data;
+  //         if (resp_data.length > 0) {
+  //           if (resp_data.length == 1) {
+  //             const fileName = resp_data[0].fileName;
+  //             const fileData = resp_data[0].downloadedFile;
+  //             const link = document.createElement("a");
+  //             const extension = fileName.split('.').pop();
+  
+  //             link.download = fileName;
+  //             link.href =
+  //               extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+  //                 ? `data:image/${extension};base64,${fileData}`
+  //                 : `data:application/${extension};base64,${fileData}`;
+  
+  //             link.click();
+  //             this.toaster.showSuccess("Success", "File downloaded successfully");
+  //           } 
+  //           else {
+  //             const zip = new JSZip();
+  //             resp_data.forEach((value) => {
+  //               const fileName = value.fileName;
+  //               const fileData = value.downloadedFile;
+  //               zip.file(fileName, fileData, { base64: true });
+  //             });
+  //             zip.generateAsync({ type: "blob" }).then((content) => {
+  //               FileSaver.saveAs(content, "AI_Agent_Files.zip");
+  //             });
+  //             this.toaster.showSuccess("Success", "Files downloaded successfully");
+  //           }
+  //         } else {
+  //           this.toaster.showError("Error");
+  //         }
+  //       } else {
+  //         this.toaster.showError("Error");
+  //       }
+  //       this.spinner.hide();
+  //     },
+  //     (error) => {
+  //       console.error("Download API error: ", error);
+  //       this.toaster.showError("Error");
+  //       this.spinner.hide();
+  //     }
+  //   );
+  // }
+
+  downloadAgentFiles() {
+    this.spinner.show();
+    this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
+      (response: any) => {
+        console.log("Download API Call: ", response);
+        if (response.code == 4200) {
+          const resp_data = response.data;
+          if (resp_data.length > 0) {
+            if (resp_data.length == 1) {
+              const fileName = resp_data[0].fileName;
+              const fileData = resp_data[0].downloadedFile;
+              const link = document.createElement("a");
+              const extension = fileName.split('.').pop();
+  
+              link.download = fileName;
+              link.href =
+                extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                  ? `data:image/${extension};base64,${fileData}`
+                  : `data:application/${extension};base64,${fileData}`;
+  
+              link.click();
+              this.toaster.showSuccess("Success", "File downloaded successfully");
+            } else {
+              const zip = new JSZip();
+              const fileNames = new Set();
+  
+              resp_data.forEach((value) => {
+                let fileName = value.fileName;
+                const fileData = value.downloadedFile;
+                const extension = fileName.split('.').pop();
+                const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                let counter = 1;
+  
+                while (fileNames.has(fileName)) {
+                  fileName = `${baseName}_${counter}.${extension}`;
+                  counter++;
+                }
+                fileNames.add(fileName);
+                zip.file(fileName, fileData, { base64: true });
+              });
+  
+              zip.generateAsync({ type: "blob" }).then((content) => {
+                FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
+              });
+              this.toaster.showSuccess("Success", "Files downloaded successfully");
+            }
+          } else {
+            this.toaster.showError("Error");
+          }
+        } else {
+          this.toaster.showError("Error");
+        }
+        this.spinner.hide();
+      },
+      (error) => {
+        console.error("Download API error: ", error);
+        this.toaster.showError("Error");
+        this.spinner.hide();
+      }
+    );
+  }
+  
+  totalPages=0
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+    this.filteredLogsData = this.filteredLogsData.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
+    );
+  }
+
+  getPageNumbers(): number[] {
+    const pageNumbers: number[] = [];
+    const previousPage = this.currentPage - 1;
+    const nextPage = this.currentPage + 1;
+
+    if (previousPage > 0) {
+      pageNumbers.push(previousPage);
+    }
+
+    pageNumbers.push(this.currentPage);
+
+    if (nextPage <= this.totalPages) {
+      pageNumbers.push(nextPage);
+    }
+
+    return pageNumbers;
+  }
+
+  goToPage(pageNumber: number): void {
+      this.currentPage = pageNumber;
+  }
+
+  goToFirstPage(): void {
+      this.currentPage = 1;
+  }
+
+  goToLastPage(): void {
+      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+      this.currentPage = totalPages;
+  }
+
+  goToNextPage(): void {
+      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+      if (this.currentPage < totalPages) {
+          this.currentPage++;
+      }
+  }
+
+  goToPreviousPage(): void {
+      if (this.currentPage > 1) {
+          this.currentPage--;
+      }
+  }
+
+  getVisibleLogs(): any[] {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.filteredLogsData.slice(startIndex, endIndex);
+  }
+  
+  uploadAgentFiles(body){
+
+  }
+
 
   uploadData(): void {
   }
