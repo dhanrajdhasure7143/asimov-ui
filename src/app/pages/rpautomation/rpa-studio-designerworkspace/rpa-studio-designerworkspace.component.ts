@@ -179,6 +179,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   submitButtonText:any;
   editGroupData: any;
   microBotsList:any[]=[]
+  microbotGroupNodeIds:any[] = [];
 
   constructor(
     private rest: RestApiService,
@@ -3622,7 +3623,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   publishGroup(group:any,index) {
 
     let groupNodes = [] = this.collectGroupIds(group.id);
-
+    this.microbotGroupNodeIds = groupNodes;
     if (groupNodes.length === 0) {
       this.toastService.showInfo('Please add tasks to the group!');
       return;
@@ -3804,6 +3805,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       dropOverride:false
     };
     this.groupsData.push(GroupData);
+    console.log("GROUPDATA", this.groupsData);
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
@@ -4179,6 +4181,24 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.loadflag = true;
       this.addTasksToGroups();
     },1000);
+  }
+
+  belongsToSavedGroup(nodeId: string): boolean {
+    if (this.savedGroupsData && this.savedGroupsData.length > 0) {
+      for (const savedGroup of this.savedGroupsData) {
+        if (savedGroup.nodeIds && savedGroup.isMicroBot && savedGroup.nodeIds.includes(nodeId)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  belongsToMicroBotGroup(nodeId: string): boolean {
+    if (this.microBotData && this.microBotData.isMicroBot) {
+      return this.microBotData.groups.some(group => group.nodeIds.includes(nodeId));
+    }
+    return false;
   }
 }
 
