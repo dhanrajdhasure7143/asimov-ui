@@ -231,8 +231,8 @@
                         <td><img src="../../../../assets/images/agent/file-icon.svg" alt="File icon"
                                 class="svg-icons">{{ file.originalFileName }}</td>
                         <td>{{ file.dataType }}</td>
-                        <td>{{ file.fileSize }}</td>
-                        <td>{{ file.uploadedDate }}</td>
+                        <td>{{ (file.fileSize / (1024 * 1024) | number: '1.2-2') + ' MB' }}</td>
+                        <td>{{ file.uploadedDate | date: 'MMM d, y, h:mm a' }}</td>
                     </tr>
                 </table>
                 <div *ngIf="filteredFiles.length === 0" class="no-data-message">
