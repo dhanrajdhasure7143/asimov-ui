@@ -204,11 +204,11 @@
                     </select>
                     <input type="date" class="filter-input filter-calender" [(ngModel)]="selectedDate"
                         (change)="applyFilters()">
-                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0"
-                        (click)="downloadSelectedFiles()">
+                    <button class="logs-btn-btm"
+                        (click)="downloadAgentFiles()">
                         <i class="pi pi-download"></i> Download
                     </button>
-                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0"
+                    <button class="logs-btn-btm" (click)="deleteAgentFiles()"
                         style="background-color: red !important;">
                         <i class="pi pi-trash"></i> Delete
                     </button>
@@ -229,10 +229,10 @@
                         <td><input type="checkbox" (change)="toggleFileSelection(file)"
                                 [checked]="isFileSelected(file)"></td>
                         <td><img src="../../../../assets/images/agent/file-icon.svg" alt="File icon"
-                                class="svg-icons">{{ file.fileName }}</td>
-                        <td>{{ file.fileType }}</td>
+                                class="svg-icons">{{ file.originalFileName }}</td>
+                        <td>{{ file.dataType }}</td>
                         <td>{{ file.fileSize }}</td>
-                        <td>{{ file.dateUploaded }}</td>
+                        <td>{{ file.uploadedDate }}</td>
                     </tr>
                 </table>
                 <div *ngIf="filteredFiles.length === 0" class="no-data-message">

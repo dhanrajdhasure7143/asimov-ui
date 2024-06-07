@@ -146,7 +146,8 @@ export class AgentDetailsComponent implements OnInit {
   logSearchTerm: string = '';
 
   // Download files and File Table Variables
-  filteredFiles = [...this.files_full];
+  // filteredFiles = [...this.files_full];
+  filteredFiles :any[]=[];
   searchTerm: string = '';
   selectedFileType: string = '';
   selectedDate: string = '';
@@ -194,7 +195,7 @@ export class AgentDetailsComponent implements OnInit {
 
     // this.getAgentFiles();
     this.files_full.sort((a, b) => new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime());
-    this.filteredFiles = [...this.files_full];
+    // this.filteredFiles = [...this.files_full];
 
     this.filterLogsData();
 
@@ -253,10 +254,10 @@ export class AgentDetailsComponent implements OnInit {
 
   // File Method
   applyFilters(): void {
-    this.filteredFiles = this.files_full.filter(file => {
-      const matchesSearchTerm = this.searchTerm ? file.fileName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
-      const matchesFileType = this.selectedFileType ? file.fileType === this.selectedFileType : true;
-      const matchesDate = this.selectedDate ? file.dateUploaded.startsWith(this.selectedDate) : true;
+    this.filteredFiles = this.file.filter(file => {
+      const matchesSearchTerm = this.searchTerm ? file.originalFileName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
+      const matchesFileType = this.selectedFileType ? file.dataType === this.selectedFileType : true;
+      const matchesDate = this.selectedDate ? file.uploadedDate.startsWith(this.selectedDate) : true;
       return matchesSearchTerm && matchesFileType && matchesDate;
     });
   }
@@ -339,6 +340,7 @@ export class AgentDetailsComponent implements OnInit {
     this.rest_api.getAgentFiles(id).subscribe((res: any) => {
       console.log("Date File", res);
       this.file = res.data;
+      this.filteredFiles=res.data;
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
