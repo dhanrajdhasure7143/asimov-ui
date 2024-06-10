@@ -150,7 +150,8 @@ export class SdkApprovalListComponent implements OnInit {
         this.rest.approveRejectRequest(payload).subscribe((res: any) => {
           if (res.code == 4200) {
             this.spinner.hide();
-            this.toastService.showSuccess(payload.customTaskName, 'approve'); 
+            let type = payload.status == "Rejected"? 'reject': 'approve'
+            this.toastService.showSuccess(payload.customTaskName, type); 
             this.getApprovalList();
           } else {
             this.spinner.hide();
