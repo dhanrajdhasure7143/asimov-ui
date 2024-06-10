@@ -231,7 +231,7 @@ hr {
     padding: 10px 10px 10px 0px;
     border: none;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .logs-container table td.success {
@@ -666,7 +666,7 @@ input[type=checkbox] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px; /* Adjust margin as needed */
+    margin-top: 20px;
 }
 
 .pagination {
@@ -699,8 +699,31 @@ input[type=checkbox] {
     color: white;
 }
 
+.info-cell-logs {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+    font-size: 18px;
+    margin-bottom: 0px !important;
+}
 
+.table-base .info-cell {
+    max-width: 300px;
+    display: flex;
+  }
+  
+  .table-base .info-contents {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
+  .svg-dwld-btn{
+    cursor: pointer;
+  }
 @media only screen and (max-width: 1095px) {
     .custom-accordion-item.expanded-accord {
         height: 280px;

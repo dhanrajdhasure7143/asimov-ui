@@ -50,7 +50,7 @@ export class AgentDetailsComponent implements OnInit {
 
 
   logs_full = [
-    { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed '},
+    { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed, Successfull execution completed, Successfull execution completed, Successfull execution completed. '},
     { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
     { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
     { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
@@ -171,9 +171,10 @@ export class AgentDetailsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 6;
 
-  currentPageFiles: number = 1; // Current page number for files
-  itemsPerPageFiles: number = 5; // Number of items per page for files
-  totalPagesFiles: number = 0; // Total number of pages for files
+  currentPageFiles: number = 1;
+  itemsPerPageFiles: number = 5;
+  totalPagesFiles: number = 0;
+  displayedFiles: any[] = [];
 
   constructor(
     private router: Router,
@@ -202,7 +203,8 @@ export class AgentDetailsComponent implements OnInit {
     // this.filteredFiles = [...this.files_full];
 
     this.filterLogsData();
-
+    this.getPredefinedBotsList(this.product_id);
+    this.updateFilePagination();
   }
  
   getPredefinedBotsList(productId: string) {
@@ -214,7 +216,7 @@ export class AgentDetailsComponent implements OnInit {
       }));
       this.bot = this.predefined_botsList.find(bot => bot.productId === productId);
       this.UUID=this.bot.predefinedUUID
-      console.log("UUID: ",this.bot.predefinedUUID )
+      // console.log("UUID: ",this.bot.predefinedUUID )
       this.getAgentFiles(this.bot.predefinedUUID);
       this.spinner.hide();
     }, err => {
@@ -236,10 +238,10 @@ export class AgentDetailsComponent implements OnInit {
     const index = this.selectedFiles.indexOf(file);
     if (index > -1) {
       this.selectedFiles.splice(index, 1);
-      console.log("All Files Removed: " ,this.selectedFiles)
+      // console.log("All Files Removed: " ,this.selectedFiles)
     } else {
       this.selectedFiles.push(file);
-      console.log("All Files Added: " ,this.selectedFiles)
+      // console.log("All Files Added: " ,this.selectedFiles)
     }
   }
 
@@ -258,27 +260,15 @@ export class AgentDetailsComponent implements OnInit {
 
   // File Method
   applyFilters(): void {
-    this.filteredFiles = this.file.filter(file => {
+    this.displayedFiles = this.filteredFiles.filter(file => {
       const matchesSearchTerm = this.searchTerm ? file.originalFileName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
       const matchesFileType = this.selectedFileType ? file.dataType === this.selectedFileType : true;
       const matchesDate = this.selectedDate ? file.uploadedDate.startsWith(this.selectedDate) : true;
       return matchesSearchTerm && matchesFileType && matchesDate;
     });
-  }
 
-  downloadSelectedFiles(){
 
   }
-
-  // filterLogsData(): void {
-  //   if (this.selectedDateLog) {
-  //     this.filteredLogsData = this.logs_full.filter(log =>
-  //       log.start_date.startsWith(this.selectedDateLog)
-  //     );
-  //   } else {
-  //     this.filteredLogsData = [...this.logs_full];
-  //   }
-  // }
 
   filterLogsData(): void {
     let filteredLogs = [...this.logs_full];
@@ -342,9 +332,10 @@ export class AgentDetailsComponent implements OnInit {
   getAgentFiles(id: string) {
     this.spinner.show();
     this.rest_api.getAgentFiles(id).subscribe((res: any) => {
-      console.log("Date File", res);
+      // console.log("Date File", res);
       this.file = res.data;
       this.filteredFiles=res.data;
+      this.updateFilePagination()
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
@@ -355,7 +346,7 @@ export class AgentDetailsComponent implements OnInit {
   deleteAgentFiles(){
     this.spinner.show();
     this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
-      console.log("Delete File: ", res);
+      // console.log("Delete File: ", res);
       this.getPredefinedBotsList(this.product_id);
       this.spinner.hide();
       this.toaster.showSuccess("Delete","delete")
@@ -365,102 +356,11 @@ export class AgentDetailsComponent implements OnInit {
     });
   }
 
-  // downloadAgentFiles(){
-  //   this.spinner.show();
-  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe((response: any) => {
-  //     console.log("Download API Call : ",response)
-  //       let resp_data = [];  
-  //       if(response.code == 4200){
-  //       resp_data = response.data;
-  //       if (resp_data.length > 0) {
-  //         if (resp_data.length == 1) {
-  //           let fileName = resp_data[0].label;
-  //           var link = document.createElement("a");
-  //           let extension = resp_data[0].dataType;
-  //           link.download = fileName;
-  //           link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
-  //               ? `data:image/${extension};base64,${resp_data[0].data}`
-  //               : `data:application/${extension};base64,${resp_data[0].data}`;
-  //           link.click();
-  //           this.toaster.showSuccess("Success","download")
-  //         } else {
-  //           var zip = new JSZip();
-  //           resp_data.forEach((value, i) => {
-  //             let fileName = resp_data[i].label;
-  //             let extension = resp_data[i].dataType;
-  //             if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
-  //               zip.file(fileName, value.data, { base64: true });
-  //             else zip.file(fileName, value.data);
-  //           });
-  //           zip.generateAsync({ type: "blob" }).then(function (content) {
-  //             FileSaver.saveAs(content, "AI_Agent" + ".zip");
-  //           });
-  //           this.toaster.showSuccess("Success","download")
-  //         }
-  //       }
-  //       // this.spinner.hide();
-  //       this.toaster.showError("Faied to download the files")
-  //     }
-  //     });
-  //     this.spinner.hide();
-  // }
-
-  // downloadAgentFiles() {
-  //   this.spinner.show();
-  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
-  //     (response: any) => {
-  //       console.log("Download API Call: ", response);
-  //       if (response.code == 4200) {
-  //         const resp_data = response.data;
-  //         if (resp_data.length > 0) {
-  //           if (resp_data.length == 1) {
-  //             const fileName = resp_data[0].fileName;
-  //             const fileData = resp_data[0].downloadedFile;
-  //             const link = document.createElement("a");
-  //             const extension = fileName.split('.').pop();
-  
-  //             link.download = fileName;
-  //             link.href =
-  //               extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-  //                 ? `data:image/${extension};base64,${fileData}`
-  //                 : `data:application/${extension};base64,${fileData}`;
-  
-  //             link.click();
-  //             this.toaster.showSuccess("Success", "File downloaded successfully");
-  //           } 
-  //           else {
-  //             const zip = new JSZip();
-  //             resp_data.forEach((value) => {
-  //               const fileName = value.fileName;
-  //               const fileData = value.downloadedFile;
-  //               zip.file(fileName, fileData, { base64: true });
-  //             });
-  //             zip.generateAsync({ type: "blob" }).then((content) => {
-  //               FileSaver.saveAs(content, "AI_Agent_Files.zip");
-  //             });
-  //             this.toaster.showSuccess("Success", "Files downloaded successfully");
-  //           }
-  //         } else {
-  //           this.toaster.showError("Error");
-  //         }
-  //       } else {
-  //         this.toaster.showError("Error");
-  //       }
-  //       this.spinner.hide();
-  //     },
-  //     (error) => {
-  //       console.error("Download API error: ", error);
-  //       this.toaster.showError("Error");
-  //       this.spinner.hide();
-  //     }
-  //   );
-  // }
-
   downloadAgentFiles() {
     this.spinner.show();
     this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
       (response: any) => {
-        console.log("Download API Call: ", response);
+        // console.log("Download API Call: ", response);
         if (response.code == 4200) {
           const resp_data = response.data;
           if (resp_data.length > 0) {
@@ -511,7 +411,7 @@ export class AgentDetailsComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        console.error("Download API error: ", error);
+        // console.error("Download API error: ", error);
         this.toaster.showError("Error");
         this.spinner.hide();
       }
@@ -566,33 +466,32 @@ export class AgentDetailsComponent implements OnInit {
 
   goToFirstPageFiles(): void {
     this.currentPageFiles = 1;
-    this.updatePagination();
+    this.updateFilePagination();
   }
 
   goToPreviousPageFiles(): void {
     if (this.currentPageFiles > 1) {
       this.currentPageFiles--;
-      this.updatePagination();
+      this.updateFilePagination();
     }
   }
 
   goToPageFiles(pageNumber: number): void {
     this.currentPageFiles = pageNumber;
-    this.updatePagination();
+    this.updateFilePagination();
   }
 
   goToNextPageFiles(): void {
     if (this.currentPageFiles < this.totalPagesFiles) {
       this.currentPageFiles++;
-      this.updatePagination();
+      this.updateFilePagination();
     }
   }
 
   goToLastPageFiles(): void {
     this.currentPageFiles = this.totalPagesFiles;
-    this.updatePagination();
+    this.updateFilePagination();
   }
-
 
   goToPage(pageNumber: number): void {
       this.currentPage = pageNumber;
@@ -625,18 +524,15 @@ export class AgentDetailsComponent implements OnInit {
       const endIndex = startIndex + this.itemsPerPage;
       return this.filteredLogsData.slice(startIndex, endIndex);
   }
-  
-  uploadAgentFiles(body){
-
-  }
-
-
-  uploadData(): void {
-  }
-
-  deleteData(): void {
-  }
 
   renewBtns(){
+    
+  }
+
+  updateFilePagination(): void {
+    this.totalPagesFiles = Math.ceil(this.filteredFiles.length / this.itemsPerPageFiles);
+    const startIndex = (this.currentPageFiles - 1) * this.itemsPerPageFiles;
+    const endIndex = this.currentPageFiles * this.itemsPerPageFiles;
+    this.displayedFiles = this.filteredFiles.slice(startIndex, endIndex);
   }
 }
