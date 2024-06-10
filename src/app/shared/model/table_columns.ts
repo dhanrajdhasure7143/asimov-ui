@@ -271,7 +271,7 @@ export class columnList{
 
       public custom_tasks = [
         { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text",sort: true,status_icon:false},
-        { ColumnName: "createdAt", DisplayName: "Created By", filterWidget: "normal", ShowFilter: true, filterType: "text", ShowGrid: true, sort: true, multi: true, multiOptions: ["createdBy", "createdAt"], userProfile: true, datePipe: true, userProfileKey: "createdBy" },
+        { ColumnName: "createdBy", DisplayName: "Created By", filterWidget: "normal", ShowFilter: true, filterType: "text", ShowGrid: true, sort: true, multi: true, multiOptions: ["createdBy", "createdAt"], userProfile: true, datePipe: true, userProfileKey: "createdBy" },
         { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", dropdownList: ['Java'], sort: true, },
         {ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
         {ColumnName: "comments", DisplayName: "Comments", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, showTooltip: true },

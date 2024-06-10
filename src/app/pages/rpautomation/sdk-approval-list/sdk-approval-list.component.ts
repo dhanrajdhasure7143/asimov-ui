@@ -59,6 +59,7 @@ export class SdkApprovalListComponent implements OnInit {
   readSelectedData(e) { }
 
   updateCustomTasks(item) {
+    if(item.status == "Approved") return
     this.isupdateform = true;
     this.updatetaskDetails = item
     this.hiddenPopUp = true;
@@ -148,9 +149,8 @@ export class SdkApprovalListComponent implements OnInit {
         this.spinner.show();
         this.rest.approveRejectRequest(payload).subscribe((res: any) => {
           if (res.code == 4200) {
-            console.log('Payload sent successfully', res);
             this.spinner.hide();
-            this.toastService.showSuccess(res.message, 'response');
+            this.toastService.showSuccess(payload.customTaskName, 'approve'); 
             this.getApprovalList();
           } else {
             this.spinner.hide();

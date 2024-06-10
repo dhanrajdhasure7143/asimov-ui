@@ -33,6 +33,9 @@ export class ToasterService {
         case 'deploye':
               type = 'deployed';
             break;
+        case 'approve':
+              type = 'Approved';
+            break;
         case 'response':
               type = '';
             break;
