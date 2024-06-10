@@ -171,6 +171,10 @@ export class AgentDetailsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 6;
 
+  currentPageFiles: number = 1; // Current page number for files
+  itemsPerPageFiles: number = 5; // Number of items per page for files
+  totalPagesFiles: number = 0; // Total number of pages for files
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -541,6 +545,54 @@ export class AgentDetailsComponent implements OnInit {
 
     return pageNumbers;
   }
+
+  getPageNumbersFiles(): number[] {
+    const pageNumbers: number[] = [];
+    const previousPage = this.currentPageFiles - 1;
+    const nextPage = this.currentPageFiles + 1;
+
+    if (previousPage > 0) {
+      pageNumbers.push(previousPage);
+    }
+
+    pageNumbers.push(this.currentPageFiles);
+
+    if (nextPage <= this.totalPagesFiles) {
+      pageNumbers.push(nextPage);
+    }
+
+    return pageNumbers;
+  }
+
+  goToFirstPageFiles(): void {
+    this.currentPageFiles = 1;
+    this.updatePagination();
+  }
+
+  goToPreviousPageFiles(): void {
+    if (this.currentPageFiles > 1) {
+      this.currentPageFiles--;
+      this.updatePagination();
+    }
+  }
+
+  goToPageFiles(pageNumber: number): void {
+    this.currentPageFiles = pageNumber;
+    this.updatePagination();
+  }
+
+  goToNextPageFiles(): void {
+    if (this.currentPageFiles < this.totalPagesFiles) {
+      this.currentPageFiles++;
+      this.updatePagination();
+    }
+  }
+
+  goToLastPageFiles(): void {
+    this.currentPageFiles = this.totalPagesFiles;
+    this.updatePagination();
+  }
+
 
   goToPage(pageNumber: number): void {
       this.currentPage = pageNumber;

@@ -239,7 +239,21 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <button class="button-bottom-full" (click)="showLessFiles()">Show Less Files</button>
+            <div class="pagination-container">
+                <button class="button-bottom-full" (click)="showLessFiles()" style="float: left;">
+                    Show Less Files
+                </button>
+                <div class="pagination">
+                    <button class="pagination-btn" (click)="goToFirstPageFiles()"><<</button>
+                    <button class="pagination-btn" (click)="goToPreviousPageFiles()"><</button>
+                    <ng-container *ngFor="let pageNumber of getPageNumbersFiles()">
+                    <button class="pagination-btn" [class.current]="pageNumber === currentPageFiles" (click)="goToPageFiles(pageNumber)">{{ pageNumber }}</button>
+                    </ng-container>
+                    <button class="pagination-btn" (click)="goToNextPageFiles()">></button>
+                    <button class="pagination-btn" (click)="goToLastPageFiles()">>></button>
+                </div>
+            </div>
+            <!-- <button class="button-bottom-full" (click)="showLessFiles()">Show Less Files</button> -->
         </div>
     </div>
 
