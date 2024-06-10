@@ -6,13 +6,26 @@
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
                     <!-- <div class="bot-name">{{bot?.predefinedBotName ?? "Error !!"}}</div> -->
                     <div class="rem-execution">Remaining Executions: <span
-                            class="remaining-exe">{{remaining_exe}}</span></div>
+                            class="remaining-exe">{{remaining_exe}}</span>
+                    </div>
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
                 </p>
             </div>
 
             <div class="buttons-container">
+                <p-dropdown [options]="agents_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="name"
+                placeholder="Select a Agent" optionValue="agent_id" class="custom-dropdown"  [style]="{'height': '54px',
+                'border-radius': '10px',
+                'padding': '10px 25px 10px 15px',
+                'font-weight': '500',
+                'font-size': '18px',
+                'border-color': '#CFCACA !important',
+                'display':'flex',
+                'align-items':'center'
+                }"
+                ></p-dropdown>
+
                 <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()">
                     <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
                 </button>

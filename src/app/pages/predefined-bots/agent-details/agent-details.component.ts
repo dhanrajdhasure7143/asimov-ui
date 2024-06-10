@@ -28,6 +28,13 @@ export class AgentDetailsComponent implements OnInit {
   UUID="";
   // selectedFiles = [];
 
+  // Agents List
+  agents_list: any[] = [
+    { name: 'Dummy AI Agent', agent_id: 'dummy_ai_agent' },
+    { name: 'Automation Bot', agent_id: 'automation_bot' },
+  ];
+  selected_agent:string;
+
   items: any[]= [
     {
       subscriptionHeading: "Subscription",
@@ -205,6 +212,7 @@ export class AgentDetailsComponent implements OnInit {
     this.filterLogsData();
     this.getPredefinedBotsList(this.product_id);
     this.updateFilePagination();
+    console.log("Agent Selected : ",this.selected_agent)
   }
  
   getPredefinedBotsList(productId: string) {
@@ -526,7 +534,7 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   renewBtns(){
-    
+
   }
 
   updateFilePagination(): void {
@@ -534,5 +542,10 @@ export class AgentDetailsComponent implements OnInit {
     const startIndex = (this.currentPageFiles - 1) * this.itemsPerPageFiles;
     const endIndex = this.currentPageFiles * this.itemsPerPageFiles;
     this.displayedFiles = this.filteredFiles.slice(startIndex, endIndex);
+  }
+
+  onAgentChange(event: any): void {
+    this.selected_agent = event.value;
+    console.log('Selected Agent ID:', this.selected_agent);
   }
 }

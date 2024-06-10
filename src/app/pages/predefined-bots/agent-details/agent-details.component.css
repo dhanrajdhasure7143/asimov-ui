@@ -729,3 +729,28 @@ input[type=checkbox] {
         height: 280px;
     }
 }
+
+.p-dropdown{
+    height: 54px !important;
+    border-radius: 10px !important;
+    padding: 10px 25px 10px 15px !important;
+    font-weight: 500;
+    font-size: 18px !important;
+    border-color: #CFCACA !important;
+    /* margin-left: -13px; */
+}
+
+.custom-dropdown{
+    height: 54px !important;
+    border-radius: 10px !important;
+    width: 300px;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 18px !important;
+    border-color: #CFCACA !important;
+    background: white !important;
+}
+
+.p-dropdown-label{
+    font-size: 18px !important;
+}
