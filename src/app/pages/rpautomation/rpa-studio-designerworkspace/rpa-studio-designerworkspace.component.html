@@ -15,7 +15,7 @@
                 'background-image': 'url(' + node.path + ')'
               }">
               <!--Node close button-->
-              <span *ngIf="node.name != 'START' && node.name != 'STOP' && !microbotGroupNodeIds.includes(node.id) && !belongsToSavedGroup(node.id) && !belongsToMicroBotGroup(node.id)" class="node-delete" (click)="deletenode(node)">
+              <span *ngIf="node.name != 'START' && node.name != 'STOP' && !belongsToSavedGroup(node.id) && !node.isMicroBotNode " class="node-delete" (click)="deletenode(node)">
                 <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
                 <i class="ri-close-circle-fill"></i>
               </span>
