@@ -55,19 +55,27 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
+            <ng-container *ngIf="!isProcessAnalyst; else addTaskDisabled">
                 <button disabled *ngIf="selectedvalue==''" (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
-                    <!-- <img src="../../../../../assets/images-n/gridicons/add-default.svg" class="testplus default-icon" alt=""/>
-                    <img src="../../../../../assets/images-n/gridicons/add-hover.svg" class="testplus hover-icon" alt=""/> -->
                     <img src="../../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus" alt=""/>
                 </button>
                 <button  *ngIf=" selectedvalue !==''"  (click)="addtasks(addTask)"  pTooltip="Add Task" tooltipPosition="top">
                     <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" alt=""/>
                 </button>
+            </ng-container>
+
+            <ng-template #addTaskDisabled>
+                <button disabled  pTooltip="Add Task" tooltipPosition="top">
+                    <img src="../../../../../assets/images/RPA/icon_latest/new-dis.svg" class="" alt=""/>
+                </button>
+            </ng-template>
+
                 <button (click)="reset_all()" id="autoreset"  pTooltip="Reset" tooltipPosition="top">
                     <!-- <img src="../../../../../assets/images-n/gridicons/reset-default.svg" class="testplus default-icon" alt="">
                     <img src="../../../../../assets/images-n/gridicons/reset-hover.svg" class="testplus hover-icon" alt=""> -->
                     <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" alt="">
                 </button>
+            <ng-container *ngIf="!isProcessAnalyst; else analystDisabled">
                 <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess"  (click)="startprocess()" pTooltip="Run Process" tooltipPosition="top">
                     <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
                     <!-- <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span> -->
@@ -78,6 +86,13 @@
                     <img src="../../../../../assets/images-n/gridicons/startbot-hover.svg" alt="" class="testplus hover-icon"> -->
                     <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
                 </button>
+            </ng-container>
+
+            <ng-template #analystDisabled>
+                <button id="autoStartProcess" disabled>
+                    <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="">
+                </button>
+            </ng-template>
                 <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess"  (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
       <span class="testtooltip">Run Process</span>
