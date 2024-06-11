@@ -247,7 +247,11 @@ paymentPlan() {
   }
 
   let req_body = {
-    "price": filteredPriceIds,
+    //"price": filteredPriceIds,
+    "priceData": filteredPriceIds.map(priceId => ({
+      "price": priceId,
+      "quantity": "1"
+    })),
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
     // "cancelUrl": environment.paymentFailuerURL,
