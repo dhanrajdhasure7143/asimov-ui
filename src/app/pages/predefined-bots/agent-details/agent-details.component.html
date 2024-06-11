@@ -5,7 +5,7 @@
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
                     <!-- <div class="bot-name">{{bot?.predefinedBotName ?? "Error !!"}}</div> -->
-                    <div class="rem-execution">Remaining Executions: <span
+                    <div class="rem-execution">Remaining Agents: <span
                             class="remaining-exe">{{remaining_exe}}</span>
                     </div>
                 </div>
@@ -14,8 +14,8 @@
             </div>
 
             <div class="buttons-container">
-                <p-dropdown [options]="agents_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="name"
-                placeholder="Select a Agent" optionValue="agent_id" class="custom-dropdown"  [style]="{'height': '54px',
+                <p-dropdown [options]="agent_drop_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="label"
+                placeholder="Select a Agent" optionValue="value" class="custom-dropdown"  [style]="{'height': '54px',
                 'border-radius': '10px',
                 'padding': '10px 25px 10px 15px',
                 'font-weight': '500',
@@ -54,13 +54,13 @@
                 </div>
                 <div class="custom-accordion-content">
                     <div class="content-details">
-                        <p>Purchased On : <span style="padding-left: 30px;">{{ item.date }}</span></p>
-                        <p>Expires On : <span style="padding-left: 30px;">{{ item.expirationDate }}</span></p>
+                        <p>Purchased On : <span style="padding-left: 30px;">{{ subscription_dates?.subscription_created_at | date: 'MMM d, y, h:mm a'}}</span></p>
+                        <p>Expires On : <span style="padding-left: 30px;">{{ subscription_dates?.subscription_expiry_at | date: 'MMM d, y, h:mm a' }}</span></p>
 
                         <div class="base-content">
                             <div class="info-content">
                                 <p><img src="../../../../assets/images/agent/info_iocon.svg" alt="info icon"
-                                        class="info-style">Your Purchase Plan Expires within 30 days. Extend Plan To
+                                        class="info-style">Your Purchase Plan Expires within {{rem_days}}. Extend Plan To
                                     Continue Services</p>
                             </div>
                             <div class="renew-btns">

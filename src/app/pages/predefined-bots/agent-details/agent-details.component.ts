@@ -24,16 +24,10 @@ export class AgentDetailsComponent implements OnInit {
   runPlayer: boolean = false;
   isAccordionExpanded: boolean = false;
   predefined_botsList: any[] = [];
-  remaining_exe="5"
+  remaining_exe="";
   UUID="";
-  // selectedFiles = [];
-
-  // Agents List
-  agents_list: any[] = [
-    { name: 'Dummy AI Agent', agent_id: 'dummy_ai_agent' },
-    { name: 'Automation Bot', agent_id: 'automation_bot' },
-  ];
   selected_agent:string;
+  selected_drop_agent:any;
 
   items: any[]= [
     {
@@ -47,14 +41,6 @@ export class AgentDetailsComponent implements OnInit {
       remaining_exe:"5"
     }
   ];
-  logs = [
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Success' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Failed' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Success' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Failed' },
-    
-  ];
-
 
   logs_full = [
     { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed, Successfull execution completed, Successfull execution completed, Successfull execution completed. '},
@@ -68,84 +54,10 @@ export class AgentDetailsComponent implements OnInit {
     { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
     { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
     { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
     { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    
-  ];
-
-  files_full= [
-      {
-        "fileName": "Invoice_Processing_Bot_Log.pdf",
-        "fileType": "pdf",
-        "fileSize": "1.2MB",
-        "dateUploaded": "2024-06-01 10:15 AM (Saturday)"
-      },
-      {
-        "fileName": "Customer_Service_Chat_Log.jpg",
-        "fileType": "jpg",
-        "fileSize": "2.5MB",
-        "dateUploaded": "2024-06-02 11:20 AM (Sunday)"
-      },
-      {
-        "fileName": "Sales_Data_Bot_Report.xlsx",
-        "fileType": "xlsx",
-        "fileSize": "3.0MB",
-        "dateUploaded": "2024-06-03 12:25 PM (Monday)"
-      },
-      {
-        "fileName": "HR_Onboarding_Presentation.pptx",
-        "fileType": "pptx",
-        "fileSize": "5.5MB",
-        "dateUploaded": "2024-06-04 01:30 PM (Tuesday)"
-      },
-      {
-        "fileName": "Marketing_Automation_Audio.mp3",
-        "fileType": "mp3",
-        "fileSize": "4.8MB",
-        "dateUploaded": "2024-06-05 02:35 PM (Wednesday)"
-      }
-    ]
+    ];
   
-
-  // files = [
-  //   { name: 'Jr. Software Developer' },
-  //   { name: 'Full Stack Java Developer' },
-  //   { name: 'Product Manager Senior' },
-    
-  // ];
   file: any[] = [];
-
   selectedLogs = [];
 
   // History Logs Variables
@@ -153,13 +65,11 @@ export class AgentDetailsComponent implements OnInit {
   logSearchTerm: string = '';
 
   // Download files and File Table Variables
-  // filteredFiles = [...this.files_full];
   filteredFiles :any[]=[];
   searchTerm: string = '';
   selectedFileType: string = '';
   selectedDate: string = '';
   selectedFiles: any[] = [];
-
 
   // Hostory -New code
   filteredLogsData: any[] = [];
@@ -171,10 +81,11 @@ export class AgentDetailsComponent implements OnInit {
   showMiniLayout = false;
   showMoreLogs = false;
   showMoreFiles = false;
-  dummyBotName="AI Agent - EPSoft"
-  dataforbot="This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows and streamline workflows."
+  dummyBotName=""
+  dataforbot=""
 
   // Pagination
+  totalPages=0
   currentPage: number = 1;
   itemsPerPage: number = 6;
 
@@ -182,6 +93,13 @@ export class AgentDetailsComponent implements OnInit {
   itemsPerPageFiles: number = 5;
   totalPagesFiles: number = 0;
   displayedFiles: any[] = [];
+
+  // Subscription- Dates 
+  subscription_dates;
+  rem_days=''
+
+  agent_drop_list:any;
+  current_agent_details:any;
 
   constructor(
     private router: Router,
@@ -202,12 +120,18 @@ export class AgentDetailsComponent implements OnInit {
       if (productId) {
         this.product_id=productId
         this.getPredefinedBotsList(this.product_id);
+        this.current_agent_details=this.getAgentDetailsByProductId(this.product_id)
+        console.log("New Agent Details: ",this.current_agent_details)
+
+        // Remaining Agents
+        this.remaining_exe=this.current_agent_details.remaining_agents
+
+        // Subscription Dates 
+        this.subscription_dates=this.current_agent_details.subscriptionData[0]
+        this.rem_days=this.daysBetweenPlan(this.subscription_dates?.subscription_created_at,this.subscription_dates?.subscription_expiry_at)
+        this.agentDropdownList(this.current_agent_details)
       }
     });
-
-    // this.getAgentFiles();
-    this.files_full.sort((a, b) => new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime());
-    // this.filteredFiles = [...this.files_full];
 
     this.filterLogsData();
     this.getPredefinedBotsList(this.product_id);
@@ -220,7 +144,7 @@ export class AgentDetailsComponent implements OnInit {
     this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
       this.predefined_botsList = res.data.map(bot => ({
         ...bot,
-        details: bot.description || 'This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows.'
+        details: bot.description || 'No Description Found.'
       }));
       this.bot = this.predefined_botsList.find(bot => bot.productId === productId);
       this.UUID=this.bot.predefinedUUID
@@ -234,29 +158,21 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   onclickBot() {
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "update", id: "7896" } });
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId } });
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: "prod_PdiLNkF4ZbHkgj" } });
     this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-        // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details } });
-
   }
 
   toggleFileSelection(file: any): void {
     const index = this.selectedFiles.indexOf(file);
     if (index > -1) {
       this.selectedFiles.splice(index, 1);
-      // console.log("All Files Removed: " ,this.selectedFiles)
     } else {
       this.selectedFiles.push(file);
-      // console.log("All Files Added: " ,this.selectedFiles)
     }
   }
 
   selectAllFiles(event: any): void {
     if (event.target.checked) {
       this.selectedFiles = [...this.filteredFiles];
-      console.log("All Files Selected" ,this.selectedFiles)
     } else {
       this.selectedFiles = [];
     }
@@ -274,8 +190,6 @@ export class AgentDetailsComponent implements OnInit {
       const matchesDate = this.selectedDate ? file.uploadedDate.startsWith(this.selectedDate) : true;
       return matchesSearchTerm && matchesFileType && matchesDate;
     });
-
-
   }
 
   filterLogsData(): void {
@@ -294,10 +208,7 @@ export class AgentDetailsComponent implements OnInit {
     }
 
     filteredLogs.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
-
     this.filteredLogsData = filteredLogs;
-    // this.currentPage = 1;
-    // this.updatePagination();
   }
 
   downloadLogs(){
@@ -334,13 +245,11 @@ export class AgentDetailsComponent implements OnInit {
   loadMoreFiles(): void {
     this.showMiniLayout=!this.showMiniLayout
     this.showMoreFiles=!this.showMoreFiles
-
   }
 
   getAgentFiles(id: string) {
     this.spinner.show();
     this.rest_api.getAgentFiles(id).subscribe((res: any) => {
-      // console.log("Date File", res);
       this.file = res.data;
       this.filteredFiles=res.data;
       this.updateFilePagination()
@@ -354,7 +263,6 @@ export class AgentDetailsComponent implements OnInit {
   deleteAgentFiles(){
     this.spinner.show();
     this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
-      // console.log("Delete File: ", res);
       this.getPredefinedBotsList(this.product_id);
       this.spinner.hide();
       this.toaster.showSuccess("Delete","delete")
@@ -368,7 +276,6 @@ export class AgentDetailsComponent implements OnInit {
     this.spinner.show();
     this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
       (response: any) => {
-        // console.log("Download API Call: ", response);
         if (response.code == 4200) {
           const resp_data = response.data;
           if (resp_data.length > 0) {
@@ -419,14 +326,11 @@ export class AgentDetailsComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        // console.error("Download API error: ", error);
         this.toaster.showError("Error");
         this.spinner.hide();
       }
     );
   }
-  
-  totalPages=0
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
@@ -444,13 +348,11 @@ export class AgentDetailsComponent implements OnInit {
     if (previousPage > 0) {
       pageNumbers.push(previousPage);
     }
-
     pageNumbers.push(this.currentPage);
 
     if (nextPage <= this.totalPages) {
       pageNumbers.push(nextPage);
     }
-
     return pageNumbers;
   }
 
@@ -462,13 +364,11 @@ export class AgentDetailsComponent implements OnInit {
     if (previousPage > 0) {
       pageNumbers.push(previousPage);
     }
-
     pageNumbers.push(this.currentPageFiles);
 
     if (nextPage <= this.totalPagesFiles) {
       pageNumbers.push(nextPage);
     }
-
     return pageNumbers;
   }
 
@@ -545,7 +445,397 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   onAgentChange(event: any): void {
-    this.selected_agent = event.value;
-    console.log('Selected Agent ID:', this.selected_agent);
+    this.selected_drop_agent = event.value;
+    console.log('Selected Drop Agent Details:', this.selected_drop_agent);
   }
+ 
+  responseData=
+  {
+    "data": [
+      {
+        "productId": "prod_Q7bUSFihJEtZYR",
+        "subscriptionData": [
+          {
+            "subscription_id": "sub_1PHOoISGPu394velCwhpJZ40",
+            "subscription_created_at": "2024-05-17 11:19:20.956",
+            "subscription_expiry_at": "2025-05-17 11:18:50"
+          }
+        ],
+        "total_agents": 10,
+        "remaining_agents": 6,
+        "agentBotDetails": [
+          {
+            "predefinedOrchestrationBotId": 384,
+            "automationName": "Ajaystest",
+            "predefinedBotType": "RFP",
+            "schedule": "",
+            "productId": "prod_Q7bUSFihJEtZYR",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8691,
+                "botName": "RFPBotOne__Ajaystest",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 411,
+            "automationName": "agents",
+            "predefinedBotType": "RFP",
+            "schedule": "",
+            "productId": "prod_Q7bUSFihJEtZYR",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8737,
+                "botName": "RFPBotOne__agents",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 412,
+            "automationName": "RFP",
+            "predefinedBotType": "RFP",
+            "schedule": "",
+            "productId": "prod_Q7bUSFihJEtZYR",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8738,
+                "botName": "RFPBotOne__RFP",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 414,
+            "automationName": "RFP_Upload",
+            "predefinedBotType": "RFP",
+            "schedule": "",
+            "productId": "prod_Q7bUSFihJEtZYR",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8741,
+                "botName": "RFPBotOne__RFP_Upload",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          }
+        ],
+        "is_config_enable": true,
+        "agentUUID": "Pred_RFP",
+        "agentName": "RFP",
+        "description": "Request for Proposal (RFP) is a document issued by an organization to solicit proposals from potential vendors or service providers for a specific project or service. It outlines the project's requirements, objectives, and evaluation criteria, providing detailed information to help vendors understand what is needed and how to respond. The RFP process helps organizations compare different proposals to select the best supplier based on criteria such as cost, experience, and quality."
+      },
+      {
+        "productId": "prod_PdiLNkF4ZbHkgj",
+        "subscriptionData": [
+          {
+            "subscription_id": "sub_1PBW2fSGPu394velyvN4FnZV",
+            "subscription_created_at": "2024-05-01 05:49:46.526",
+            "subscription_expiry_at": "2025-05-01 05:49:21"
+          }
+        ],
+        "total_agents": 0,
+        "remaining_agents": 0,
+        "agentBotDetails": [],
+        "is_config_enable": false,
+        "agentUUID": "Pred_Recruitment",
+        "agentName": "Recruitment",
+        "description": "Recruitment is the process of finding and hiring the best-qualified candidates for job openings. It involves advertising, interviewing, and selecting individuals to join an organization."
+      },
+      {
+        "productId": "prod_PdiMYXuWmxy9dt",
+        "subscriptionData": [
+          {
+            "subscription_id": "sub_1PDVOCSGPu394velOQZARt5u",
+            "subscription_created_at": "2024-05-06 17:32:09.544",
+            "subscription_expiry_at": "2025-05-06 17:31:48"
+          }
+        ],
+        "total_agents": 3,
+        "remaining_agents": 0,
+        "agentBotDetails": [
+          {
+            "predefinedOrchestrationBotId": 419,
+            "automationName": "WithScheduler",
+            "predefinedBotType": "Marketing",
+            "schedule": "[{\"intervalId\":\"6bc68ef8-4c7f-4b68-0743-789f7063f058\",\"scheduleInterval\":\"*/2 * * * *\",\"startDate\":\"2024,6,10,10,38\",\"endDate\":\"2024,6,10,23,59\",\"timezone\":\"Asia/Kolkata\",\"save_status\":\"unsaved\",\"processId\":null,\"processName\":\"\",\"envId\":\"\",\"check\":false}]",
+            "productId": "prod_PdiMYXuWmxy9dt",
+            "quantity": 1,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8756,
+                "botName": "MarketingOne__WithScheduler",
+                "bot_order": 1
+              },
+              {
+                "botId": 8755,
+                "botName": "MarketingTwo__WithScheduler",
+                "bot_order": 2
+              }
+            ],
+            "scheduleBot": true
+          },
+          {
+            "predefinedOrchestrationBotId": 437,
+            "automationName": "aaaaa",
+            "predefinedBotType": "Marketing",
+            "schedule": "",
+            "productId": "prod_PdiMYXuWmxy9dt",
+            "quantity": 1,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8807,
+                "botName": "MarketingTwo__aaaaa",
+                "bot_order": 2
+              },
+              {
+                "botId": 8808,
+                "botName": "MarketingOne__aaaaa",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 418,
+            "automationName": "WithOutScheduler",
+            "predefinedBotType": "Marketing",
+            "schedule": "",
+            "productId": "prod_PdiMYXuWmxy9dt",
+            "quantity": 1,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8754,
+                "botName": "MarketingOne__WithOutScheduler",
+                "bot_order": 1
+              },
+              {
+                "botId": 8753,
+                "botName": "MarketingTwo__WithOutScheduler",
+                "bot_order": 2
+              }
+            ],
+            "scheduleBot": false
+          }
+        ],
+        "is_config_enable": false,
+        "agentUUID": "Pred_Marketing",
+        "agentName": "Marketing",
+        "description": "Marketing involves promoting products or services to attract and retain customers. It includes advertising, market research, and strategic communication efforts."
+      },
+      {
+        "productId": "prod_Q6W12nAKwKf07R",
+        "subscriptionData": [
+          {
+            "subscription_id": "sub_1PL0u0SGPu394veltLNiRjqc",
+            "subscription_created_at": "2024-05-27 10:35:53.513",
+            "subscription_expiry_at": "2024-06-27 10:35:40"
+          }
+        ],
+        "total_agents": 10,
+        "remaining_agents": 1,
+        "agentBotDetails": [
+          {
+            "predefinedOrchestrationBotId": 404,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8725,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 405,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8726,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 407,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8729,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 408,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8730,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 399,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8720,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 400,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8721,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 401,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8722,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 402,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8723,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          },
+          {
+            "predefinedOrchestrationBotId": 403,
+            "automationName": "Finance",
+            "predefinedBotType": "ClientOnbording",
+            "schedule": "",
+            "productId": "prod_Q6W12nAKwKf07R",
+            "quantity": 2,
+            "rpaPredefinedBotDetails": [
+              {
+                "botId": 8724,
+                "botName": "ClientOnbording__Finance",
+                "bot_order": 1
+              }
+            ],
+            "scheduleBot": false
+          }
+        ],
+        "is_config_enable": true,
+        "agentUUID": "Pred_ClientOnboarding",
+        "agentName": "Client Onboarding",
+        "description": "Client onboarding is the process of welcoming new clients and integrating them into a company's services. It includes initial setup, training, and providing necessary information to ensure a smooth start."
+      }
+    ]
+  }
+
+  getAgentDetailsByProductId(productId: string) {
+    for (const agent of this.responseData.data) {
+      if (agent.productId === productId) {
+        return agent;
+      }
+    }
+    return null;
+  }
+
+  agentDropdownList(agent_details){
+    this.agent_drop_list = agent_details.agentBotDetails.map(bot => ({
+      label: bot.automationName,
+      value: bot
+    }));
+  }
+
+  daysBetweenPlan(startDate: string, endDate: string): string {
+    const today = new Date();
+    const end = new Date(endDate);
+
+    const diffTime = Math.abs(end.getTime() - today.getTime());
+    let totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    const years = Math.floor(totalDays / 365);
+    totalDays %= 365;
+    const months = Math.floor(totalDays / 30);
+    const days = totalDays % 30;
+
+    let result = '';
+    if (years > 0) {
+      result += `${years} year${years > 1 ? 's' : ''} `;
+    }
+    if (months > 0) {
+      result += `${months} month${months > 1 ? 's' : ''} `;
+    }
+    if (days > 0) {
+      result += `${days} day${days > 1 ? 's' : ''}`;
+    }
+    return result.trim();
+  }
+
 }
