@@ -119,8 +119,10 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     Pending:"#FED653",
     Paused:"#FED653",Pause:"#FED653"
   };
-  searchValue:string
-  @ViewChild("dt",{static:true}) table:Table
+  searchValue:string;
+  isProcessAnalyst:boolean = false;
+  @ViewChild("dt",{static:true}) table:Table;
+  
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -192,6 +194,10 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     }else{
       this.isButtonVisible = false;
     }
+
+    if(this.userRole.includes('Process Analyst'))
+      this.isProcessAnalyst=true;
+
     this.route.queryParams.subscribe(params => {
       if(params.processid!=undefined)
         this.processId = params['processid'];
