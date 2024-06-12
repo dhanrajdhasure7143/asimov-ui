@@ -50,10 +50,11 @@
 
     <div class="col p-0 form-group">
         <!-- <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button> -->
-        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_sch()">Add</button>
+       <span *ngIf="!isProcessAnalyst"> <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_sch()">Add</button></span>
+       <span *ngIf="isProcessAnalyst"> <button class="btn bluebg-button" disabled>Add</button> </span>
 
     </div>
-    <div class="row justify-content-end scheduletimer-actionbtns">
+    <div class="row justify-content-end scheduletimer-actionbtns" *ngIf="!isProcessAnalyst">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
             <i class="ri-play-line testplus"></i>
             <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
@@ -75,6 +76,15 @@
             <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
         </button>
     </div>
+
+    <div class="row justify-content-end scheduletimer-actionbtns" *ngIf="isProcessAnalyst">
+        <button disabled mat-mini-fab color="basic" ><i class="ri-play-line testplus"></i></button>
+        <button disabled mat-mini-fab color="basic" ><i class="ri-pause-line testplus"></i></button>
+        <button disabled mat-mini-fab color="basic" ><i class="ri-skip-forward-line testplus"></i></button>
+        <button disabled mat-mini-fab color="basic" ><i class="ri-delete-bin-line testplus"></i></button>
+        <button disabled mat-mini-fab color="basic" ><i class="ri-refresh-line testplus"></i></button>
+    </div>
+
     <div class="RPA-scheduletable">
         <div class="maintabdiv">
             <!--For Bot Schedule-->

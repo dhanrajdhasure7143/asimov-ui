@@ -139,21 +139,33 @@
                     </ul>
                   </div>
                   <span class="bpsbtnsep">|</span>
-                  <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
+                  <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined && !isProcessAnalyst">
                     <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
                       (click)="clear()"  #versionControlPopup="bs-popover" [popover]="popTemplate" placement="bottom">
                       <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1" alt="">
                       <span class="testtooltip">Save Bot</span>
                     </button>
                   </div>
+
+                  <div class="action-item" *ngIf="isProcessAnalyst">
+                    <button disabled>
+                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="" alt="">
+                    </button>
+                  </div>
               
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                  <div class="action-item hovericon" *ngIf="!isProcessAnalyst">
                     <button class="tsttooltipbtn"
                       [disabled]="current_instance.finalbot.botId==undefined || current_instance.filteredEnvironments.length==0
                       || current_instance.actualTaskValue.length == 0"
                       (click)=" current_instance.executeBot()">
                       <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
                       <span class="testtooltip">Start Bot</span>
+                    </button>
+                  </div>
+
+                  <div class="action-item" *ngIf="isProcessAnalyst">
+                    <button disabled>
+                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="" alt="">
                     </button>
                   </div>
                   <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
@@ -236,8 +248,8 @@
                           (click)=" current_instance.downloadPdf()"><span>PDF</span></a></div>
                     </div> -->
                   </div>
-              
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined ">
+
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined && !isProcessAnalyst">
                     <button class="tsttooltipbtn"
                       [disabled]="current_instance.finalbot == undefined || isProcessAnalyst == true"
                       (click)=" current_instance.deleteBot()">
@@ -245,12 +257,26 @@
                       <span class="testtooltip">Delete</span>
                     </button>
                   </div>
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
+
+                  <div class="action-item" *ngIf="isProcessAnalyst">
+                    <button class="" disabled>
+                      <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="" alt="">
+                    </button>
+                  </div>
+
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined && !isProcessAnalyst">
                     <button class="tsttooltipbtn" (click)=" current_instance.resetDesigner()">
                       <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1" alt="">
                       <span class="testtooltip">Reset Bot</span>
                     </button>
                   </div>
+
+                  <div class="action-item " *ngIf="isProcessAnalyst">
+                    <button class="" disabled>
+                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="" alt="">
+                    </button>
+                  </div>
+                
                   <!-- <div class="action-item vrsn-btn" *ngIf="current_instance != undefined">
                     <p-toggleButton onLabel="V1" offLabel="V2" (click)="onChangeExecutionMode()" [(ngModel)]="executionMode"></p-toggleButton>
                   </div> -->

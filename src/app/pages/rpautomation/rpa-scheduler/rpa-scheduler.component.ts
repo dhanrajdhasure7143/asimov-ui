@@ -88,6 +88,9 @@ export class RpaSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
+  userRole:any;
+  isProcessAnalyst:boolean = false;
+
   constructor(
     private rest:RestApiService, 
     private notifier: NotifierService,
@@ -132,6 +135,10 @@ export class RpaSchedulerComponent implements OnInit {
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
+     this.userRole = localStorage.getItem("userRole")
+     this.userRole = this.userRole.split(',');
+     if(this.userRole.includes("Process Analyst"))
+      this.isProcessAnalyst=true;
   }  
 gettime(){
  
