@@ -672,6 +672,7 @@ input[type=checkbox] {
 .pagination {
     display: flex;
     align-items: center;
+    margin-right: 50px !important;
 }
 
 .pagination-btn {

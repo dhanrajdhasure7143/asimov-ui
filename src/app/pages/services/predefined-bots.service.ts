@@ -70,4 +70,11 @@ export class PredefinedBotsService {
     return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
   }
 
+  aiAgentDetails(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-details")
+  }
+
+  aiAgentHistory(id){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-logs/"+id)
+  }
 }

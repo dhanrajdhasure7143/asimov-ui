@@ -14,7 +14,7 @@ export class PredefinedBotsListComponent implements OnInit {
   predefined_botsList: any[] = [];
   filteredBotsList: any[] = [];
   searchTerm: string = '';
-  dummyyy:any[]=[];
+  unsubscribed_agents:any[]=[];
   displayModal: boolean = false;
   selectedBot: any;
 
@@ -26,44 +26,38 @@ export class PredefinedBotsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPredefinedBotsList();
-    this.generateDummyData(3);
   }
 
   getPredefinedBotsList() {
     this.spinner.show();
     this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
-      this.predefined_botsList = res.data.map(bot => ({
-        ...bot,
-        details: bot.description || 'This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows.'
-      }));
-      this.spinner.hide();
+        res.data.forEach(bot => {
+            const botDetails = {
+                ...bot,
+                details: bot.description || 'No Description Found'
+            };
+            if (bot.subscribed) {
+                this.predefined_botsList.push(botDetails);
+            } else {
+                this.unsubscribed_agents.push(botDetails)
+                this.filteredBotsList.push(botDetails);
+            }
+        });
+        this.spinner.hide();
     }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
     });
-  }
+}
 
   onclickBot(item) {
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details } });
+    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId} });
     // this.router.navigate(['/pages/predefinedbot/agent-details'], { state: { bot: item } });
     this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: item.productId } });
   }
 
-  generateDummyData(count: number): void {
-    for (let i = 1; i <= count; i++) {
-      const bot = {
-        id: i,
-        predefinedBotName: `Industry AI Bot ${i}`,
-        details: `This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows and streamline workflows.`
-      };
-      this.dummyyy.push(bot)
-    }
-    this.filteredBotsList = [...this.dummyyy];
-    this.predefined_botsList = [...this.dummyyy];
-}
-
   onSearch(): void {
-    this.filteredBotsList = [...this.dummyyy];
+    this.filteredBotsList = [...this.unsubscribed_agents];
 
     if (this.searchTerm.trim() !== '') {
       this.filteredBotsList = this.filteredBotsList.filter(bot =>
@@ -83,7 +77,7 @@ export class PredefinedBotsListComponent implements OnInit {
 
   onclickBot3(item): void {
     // this.router.navigate(['/pages/predefinedbot/predefinedconfig'], { state: { bot: item } });
-    this.router.navigate(['/pages/predefinedbot/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"false" } });
+    // this.router.navigate(['/pages/predefinedbot/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"false" } });
   }
 
   showMore(event: Event, bot: any) {

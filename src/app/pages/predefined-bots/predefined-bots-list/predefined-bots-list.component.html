@@ -80,7 +80,7 @@
     <div class="search-container">
         <div class="search-bar-wrapper">
             <img src="../../../../assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
-            <input type="text" placeholder="Find Your Agent..." [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
+            <input type="text" placeholder="Find Your Agent..." [disabled]="unsubscribed_agents.length === 0" [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
         </div>
     </div>
     <div class="grid-container">
@@ -100,6 +100,14 @@
                     {{ each.showMore ? 'Show Less' : 'Show More' }}
                 </span>
             </div>
+        </div>
+        <div *ngIf="unsubscribed_agents.length >=1 && filteredBotsList.length === 0" class="centered-message">
+            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+            No Agent Found ...
+        </div>
+        <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
+            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+            We are working on more AI Agents ...
         </div>
     </div>
 </div>

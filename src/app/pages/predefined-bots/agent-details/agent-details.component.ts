@@ -42,20 +42,22 @@ export class AgentDetailsComponent implements OnInit {
     }
   ];
 
-  logs_full = [
-    { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed, Successfull execution completed, Successfull execution completed, Successfull execution completed. '},
-    { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
-    { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    ];
+  // logs_full = [
+  //   { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed, Successfull execution completed, Successfull execution completed, Successfull execution completed. '},
+  //   { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
+  //   { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+  //   { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+  //   { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+  //   { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
+  //   { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
+  //   ];
+
+  logs_full:any[]=[]
   
   file: any[] = [];
   selectedLogs = [];
@@ -101,6 +103,12 @@ export class AgentDetailsComponent implements OnInit {
   agent_drop_list:any;
   current_agent_details:any;
 
+  // New response Data 
+  newResponseData:any[]=[];
+
+  // Run, Configure and Stop
+  isConfig:boolean=false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -120,23 +128,45 @@ export class AgentDetailsComponent implements OnInit {
       if (productId) {
         this.product_id=productId
         this.getPredefinedBotsList(this.product_id);
-        this.current_agent_details=this.getAgentDetailsByProductId(this.product_id)
-        console.log("New Agent Details: ",this.current_agent_details)
-
-        // Remaining Agents
-        this.remaining_exe=this.current_agent_details.remaining_agents
-
-        // Subscription Dates 
-        this.subscription_dates=this.current_agent_details.subscriptionData[0]
-        this.rem_days=this.daysBetweenPlan(this.subscription_dates?.subscription_created_at,this.subscription_dates?.subscription_expiry_at)
-        this.agentDropdownList(this.current_agent_details)
       }
     });
 
+    // this.getAIAgentHistory(this.product_id);
     this.filterLogsData();
-    this.getPredefinedBotsList(this.product_id);
     this.updateFilePagination();
     console.log("Agent Selected : ",this.selected_agent)
+  }
+
+  aiAgentDetails(){
+    this.spinner.show();
+    this.rest_api.aiAgentDetails().subscribe((res: any) => {
+      console.log("Newly Created API", res.data)
+      this.newResponseData=res.data
+      const agent = this.newResponseData.find(agent => agent.productId === this.product_id);
+
+      if (agent) {
+        this.current_agent_details = agent;
+        console.log("CURRENT AGENT: ",this.current_agent_details)
+        this.remaining_exe = agent.remaining_executions;
+
+        this.isConfig=this.current_agent_details.is_config_enable
+        const subscriptionDate = agent.subscriptionData[0];
+        this.subscription_dates = subscriptionDate;
+        this.rem_days = this.daysBetweenPlan(
+          subscriptionDate.subscription_created_at, 
+          subscriptionDate.subscription_expiry_at
+        );
+
+        this.getAIAgentHistory(this.product_id)
+        this.agentDropdownList(this.current_agent_details);
+      } else {
+        this.current_agent_details = undefined; 
+      }
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
   }
  
   getPredefinedBotsList(productId: string) {
@@ -148,7 +178,7 @@ export class AgentDetailsComponent implements OnInit {
       }));
       this.bot = this.predefined_botsList.find(bot => bot.productId === productId);
       this.UUID=this.bot.predefinedUUID
-      // console.log("UUID: ",this.bot.predefinedUUID )
+      this.aiAgentDetails()
       this.getAgentFiles(this.bot.predefinedUUID);
       this.spinner.hide();
     }, err => {
@@ -193,6 +223,8 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   filterLogsData(): void {
+
+    this.getAIAgentHistory(this.product_id)
     let filteredLogs = [...this.logs_full];
 
     if (this.selectedDateLog) {
@@ -427,9 +459,12 @@ export class AgentDetailsComponent implements OnInit {
       }
   }
 
+  new_array:any[]=[];
+
   getVisibleLogs(): any[] {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
+      this.new_array=this.filteredLogsData.slice(startIndex, endIndex);
       return this.filteredLogsData.slice(startIndex, endIndex);
   }
 
@@ -446,364 +481,8 @@ export class AgentDetailsComponent implements OnInit {
 
   onAgentChange(event: any): void {
     this.selected_drop_agent = event.value;
+    // this.isConfig=this.current_agent_details.is_config_enable
     console.log('Selected Drop Agent Details:', this.selected_drop_agent);
-  }
- 
-  responseData=
-  {
-    "data": [
-      {
-        "productId": "prod_Q7bUSFihJEtZYR",
-        "subscriptionData": [
-          {
-            "subscription_id": "sub_1PHOoISGPu394velCwhpJZ40",
-            "subscription_created_at": "2024-05-17 11:19:20.956",
-            "subscription_expiry_at": "2025-05-17 11:18:50"
-          }
-        ],
-        "total_agents": 10,
-        "remaining_agents": 6,
-        "agentBotDetails": [
-          {
-            "predefinedOrchestrationBotId": 384,
-            "automationName": "Ajaystest",
-            "predefinedBotType": "RFP",
-            "schedule": "",
-            "productId": "prod_Q7bUSFihJEtZYR",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8691,
-                "botName": "RFPBotOne__Ajaystest",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 411,
-            "automationName": "agents",
-            "predefinedBotType": "RFP",
-            "schedule": "",
-            "productId": "prod_Q7bUSFihJEtZYR",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8737,
-                "botName": "RFPBotOne__agents",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 412,
-            "automationName": "RFP",
-            "predefinedBotType": "RFP",
-            "schedule": "",
-            "productId": "prod_Q7bUSFihJEtZYR",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8738,
-                "botName": "RFPBotOne__RFP",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 414,
-            "automationName": "RFP_Upload",
-            "predefinedBotType": "RFP",
-            "schedule": "",
-            "productId": "prod_Q7bUSFihJEtZYR",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8741,
-                "botName": "RFPBotOne__RFP_Upload",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          }
-        ],
-        "is_config_enable": true,
-        "agentUUID": "Pred_RFP",
-        "agentName": "RFP",
-        "description": "Request for Proposal (RFP) is a document issued by an organization to solicit proposals from potential vendors or service providers for a specific project or service. It outlines the project's requirements, objectives, and evaluation criteria, providing detailed information to help vendors understand what is needed and how to respond. The RFP process helps organizations compare different proposals to select the best supplier based on criteria such as cost, experience, and quality."
-      },
-      {
-        "productId": "prod_PdiLNkF4ZbHkgj",
-        "subscriptionData": [
-          {
-            "subscription_id": "sub_1PBW2fSGPu394velyvN4FnZV",
-            "subscription_created_at": "2024-05-01 05:49:46.526",
-            "subscription_expiry_at": "2025-05-01 05:49:21"
-          }
-        ],
-        "total_agents": 0,
-        "remaining_agents": 0,
-        "agentBotDetails": [],
-        "is_config_enable": false,
-        "agentUUID": "Pred_Recruitment",
-        "agentName": "Recruitment",
-        "description": "Recruitment is the process of finding and hiring the best-qualified candidates for job openings. It involves advertising, interviewing, and selecting individuals to join an organization."
-      },
-      {
-        "productId": "prod_PdiMYXuWmxy9dt",
-        "subscriptionData": [
-          {
-            "subscription_id": "sub_1PDVOCSGPu394velOQZARt5u",
-            "subscription_created_at": "2024-05-06 17:32:09.544",
-            "subscription_expiry_at": "2025-05-06 17:31:48"
-          }
-        ],
-        "total_agents": 3,
-        "remaining_agents": 0,
-        "agentBotDetails": [
-          {
-            "predefinedOrchestrationBotId": 419,
-            "automationName": "WithScheduler",
-            "predefinedBotType": "Marketing",
-            "schedule": "[{\"intervalId\":\"6bc68ef8-4c7f-4b68-0743-789f7063f058\",\"scheduleInterval\":\"*/2 * * * *\",\"startDate\":\"2024,6,10,10,38\",\"endDate\":\"2024,6,10,23,59\",\"timezone\":\"Asia/Kolkata\",\"save_status\":\"unsaved\",\"processId\":null,\"processName\":\"\",\"envId\":\"\",\"check\":false}]",
-            "productId": "prod_PdiMYXuWmxy9dt",
-            "quantity": 1,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8756,
-                "botName": "MarketingOne__WithScheduler",
-                "bot_order": 1
-              },
-              {
-                "botId": 8755,
-                "botName": "MarketingTwo__WithScheduler",
-                "bot_order": 2
-              }
-            ],
-            "scheduleBot": true
-          },
-          {
-            "predefinedOrchestrationBotId": 437,
-            "automationName": "aaaaa",
-            "predefinedBotType": "Marketing",
-            "schedule": "",
-            "productId": "prod_PdiMYXuWmxy9dt",
-            "quantity": 1,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8807,
-                "botName": "MarketingTwo__aaaaa",
-                "bot_order": 2
-              },
-              {
-                "botId": 8808,
-                "botName": "MarketingOne__aaaaa",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 418,
-            "automationName": "WithOutScheduler",
-            "predefinedBotType": "Marketing",
-            "schedule": "",
-            "productId": "prod_PdiMYXuWmxy9dt",
-            "quantity": 1,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8754,
-                "botName": "MarketingOne__WithOutScheduler",
-                "bot_order": 1
-              },
-              {
-                "botId": 8753,
-                "botName": "MarketingTwo__WithOutScheduler",
-                "bot_order": 2
-              }
-            ],
-            "scheduleBot": false
-          }
-        ],
-        "is_config_enable": false,
-        "agentUUID": "Pred_Marketing",
-        "agentName": "Marketing",
-        "description": "Marketing involves promoting products or services to attract and retain customers. It includes advertising, market research, and strategic communication efforts."
-      },
-      {
-        "productId": "prod_Q6W12nAKwKf07R",
-        "subscriptionData": [
-          {
-            "subscription_id": "sub_1PL0u0SGPu394veltLNiRjqc",
-            "subscription_created_at": "2024-05-27 10:35:53.513",
-            "subscription_expiry_at": "2024-06-27 10:35:40"
-          }
-        ],
-        "total_agents": 10,
-        "remaining_agents": 1,
-        "agentBotDetails": [
-          {
-            "predefinedOrchestrationBotId": 404,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8725,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 405,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8726,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 407,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8729,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 408,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8730,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 399,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8720,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 400,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8721,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 401,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8722,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 402,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8723,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          },
-          {
-            "predefinedOrchestrationBotId": 403,
-            "automationName": "Finance",
-            "predefinedBotType": "ClientOnbording",
-            "schedule": "",
-            "productId": "prod_Q6W12nAKwKf07R",
-            "quantity": 2,
-            "rpaPredefinedBotDetails": [
-              {
-                "botId": 8724,
-                "botName": "ClientOnbording__Finance",
-                "bot_order": 1
-              }
-            ],
-            "scheduleBot": false
-          }
-        ],
-        "is_config_enable": true,
-        "agentUUID": "Pred_ClientOnboarding",
-        "agentName": "Client Onboarding",
-        "description": "Client onboarding is the process of welcoming new clients and integrating them into a company's services. It includes initial setup, training, and providing necessary information to ensure a smooth start."
-      }
-    ]
-  }
-
-  getAgentDetailsByProductId(productId: string) {
-    for (const agent of this.responseData.data) {
-      if (agent.productId === productId) {
-        return agent;
-      }
-    }
-    return null;
   }
 
   agentDropdownList(agent_details){
@@ -837,5 +516,42 @@ export class AgentDetailsComponent implements OnInit {
     }
     return result.trim();
   }
+
+  // History - AI Agents 
+  getAIAgentHistory(id){
+    this.spinner.show()
+    this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
+      console.log("HISTORY:   : ",res.data)
+      this.logs_full=res.data
+      this.new_array=res.data
+      // this.getVisibleLogs()
+      console.log("LOGGGGGGGGGGGGGGA", this.logs_full)
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
+
+  runAiAgent(event){
+    this.spinner.show()
+    let id=this.selected_drop_agent.predefinedOrchestrationBotId
+    this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
+      this.spinner.hide();
+
+      if (res.errorCode==3054) {
+        this.toaster.showWarn(res.errorMessage)
+      }
+      else{
+        this.toaster.showSuccess("Success","Run")
+      }
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+      console.log("Run Stoped")
+    });
+
+    console.log(this.selected_drop_agent.predefinedOrchestrationBotId)
+  } 
 
 }

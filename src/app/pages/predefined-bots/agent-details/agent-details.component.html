@@ -5,7 +5,7 @@
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
                     <!-- <div class="bot-name">{{bot?.predefinedBotName ?? "Error !!"}}</div> -->
-                    <div class="rem-execution">Remaining Agents: <span
+                    <div class="rem-execution">Remaining Executions: <span
                             class="remaining-exe">{{remaining_exe}}</span>
                     </div>
                 </div>
@@ -26,10 +26,12 @@
                 }"
                 ></p-dropdown>
 
-                <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()">
+                <!-- <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()"> -->
+                <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                     <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
                 </button>
-                <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()">
+                <!-- <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()"> -->
+                <button class="button-top start-button" [disabled]="!isConfig" (click)="runAiAgent($event)">
                     <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                 </button>
                 <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
@@ -88,7 +90,7 @@
             <div class="table-wrapper">
                 <table>
                     <tr *ngFor="let log of logs_full">
-                        <td>Executed On {{ log.start_date }}</td>
+                        <td>Executed On {{ log.startTS | date: 'MMM d, y, h:mm a'}}</td>
                         <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
                             log.status }}</td>
                     </tr>
@@ -156,27 +158,27 @@
             <div class="table-wrapper table-base">
                 <table>
                     <tr class="header-row">
-                        <th>S.No</th>
+                        <th>Agent</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
                         <th>Info</th>
                     </tr>
-                    <tr *ngFor="let log of getVisibleLogs()" class="table-base">
-                        <td>{{ log.sl_no }}</td>
-                        <td>{{ log.start_date }}</td>
-                        <td>{{ log.end_date }}</td>
+                    <tr *ngFor="let log of new_array" class="table-base">
+                        <td>{{ log.agentName }}</td>
+                        <td>{{ log.startTS | date: 'MMM d, y, h:mm a' }}</td>
+                        <td>{{ log.endTS | date: 'MMM d, y, h:mm a' }}</td>
                         <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
                             log.status }}</td>
                         <!-- <td class="info-cell-logs">{{ log.info }}</td> -->
                         <td class="info-cell">
                             <div class="info-contents" [pTooltip]="log.info" tooltipPosition="top">
-                                <span>{{ log.info }}</span>
+                                <span>{{ log.info ?? "No Info Found" }}</span>
                             </div>
                         </td>
                     </tr>
                 </table>
-                <div *ngIf="filteredLogsData.length === 0" class="no-data-message">
+                <div *ngIf="new_array.length === 0" class="no-data-message">
                     <span>No data found</span>
                 </div>
             </div>
