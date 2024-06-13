@@ -1,0 +1,88 @@
+<div class="card cron-editor-main">
+    <div class="card-header">
+    </div>
+    <!-- Tab content -->
+    <div class="card-body cron-editor-container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="tab-content">
+            <!-- Weekly-->
+              <div class="" *ngIf="isDisplayed">
+                <div class="row align-items-center mb-3">
+                  <div class="col-sm-3 p-0 mb-3">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.MON"
+                      [ngClass]="options.formCheckboxClass"> Monday
+                  </div>
+                  <div class="col-sm-3 p-0 mb-3">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.TUE"
+                      [ngClass]="options.formCheckboxClass"> Tuesday
+                  </div>
+                  <div class="col-sm-3 p-0 mb-3">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.WED"
+                      [ngClass]="options.formCheckboxClass"> Wednesday
+                  </div>
+                  <div class="col-sm-3 p-0 mb-3">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.THU"
+                      [ngClass]="options.formCheckboxClass"> Thursday
+                  </div>
+                  <div class="col-sm-3 p-0">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.FRI"
+                      [ngClass]="options.formCheckboxClass"> Friday
+                  </div>
+                  <div class="col-sm-3 p-0">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.SAT"
+                      [ngClass]="options.formCheckboxClass"> Saturday
+                  </div>
+                  <div class="col-sm-3 p-0">
+                    <input type="checkbox" (change)="regenerateCron()" [(ngModel)]="state.weekly.SUN"
+                      [ngClass]="options.formCheckboxClass"> Sunday
+                  </div>
+                </div>
+              </div>
+  
+            <!-- Monthly-->
+                <div class="" *ngIf="isMonthly">
+                    <div class="row align-items-center mb-3">
+                      <div class="col-auto">
+                        Every
+                      </div>
+                      <div class="col-auto">
+                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.month" [ngClass]="options.formSelectClass">
+                          <option *ngFor="let month of selectOptions.months" [ngValue]="month">
+                            {{ monthDisplay(month) }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-auto">
+                        on the
+                      </div>
+                      <div class="col-auto">
+                        <select *ngIf="options.cronFlavor === 'quartz'" class="form-control month-days" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.day" [ngClass]="options.formSelectClass">
+                          <option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts" [ngValue]="monthDaysWithLast">
+                            {{ monthDayDisplay(monthDaysWithLast) }}
+                          </option>
+                        </select>
+                        <select *ngIf="options.cronFlavor === 'standard'" class="form-control month-days" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.day" [ngClass]="options.formSelectClass">
+                          <option *ngFor="let monthDaysWithOutLast of selectOptions.monthDaysWithOutLasts" [ngValue]="monthDaysWithOutLast">
+                            {{ monthDayDisplay(monthDaysWithOutLast) }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-auto">
+                        at
+                      </div>
+                      <div class="row-auto">
+                        <cron-time-picker (change)="regenerateCron()"
+                                          [(model)]="state.yearly.specificMonthDay"
+                                          [selectClass]="options.formSelectClass"
+                                          [use24HourTime]="options.use24HourTime"
+                                          [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+                        </cron-time-picker>
+                      </div>
+                    </div>
+                </div>           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

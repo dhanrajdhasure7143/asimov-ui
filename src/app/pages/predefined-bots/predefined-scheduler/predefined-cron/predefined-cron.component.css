@@ -1,0 +1,8 @@
+cron-time-picker {
+    display: inline-block;
+    vertical-align: middle; /* Ensure vertical alignment with text */
+  }
+  
+  .form-control {
+    margin-right: 5px; /* Optional: Add some space between elements */
+  }

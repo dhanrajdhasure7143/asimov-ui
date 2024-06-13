@@ -1,12 +1,13 @@
 <div class="createform-overlay">
     <div class="row">
-        <div class="col-sm-11 p-0 form-group">
+        <div class="col-sm-6 p-1 form-group">
+            <label for="timezone">TimeZone:</label>
             <span>
                 <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput="ngModel" required>
                   <option value="" disabled hidden>Select Timezone</option>
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
                 </select>
-
+                                
                 <!-- <p-dropdown [style]="{'width':'70%'}" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput 
                     [options]="timesZones" 
                     optionLabel="timezoneName" optionValue="timezoneName" placeholder="Select Timezone" required>
@@ -32,8 +33,93 @@
                 <button (click)="reset()" tooltip="Reset"><img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" alt="" class="testplus"></button>
             </span>
         </div> -->
+    <!-- </div> -->
+    <div class="col-sm-6 p-1 form-group">
+        <form [formGroup]="form">
+        <label for="frequency">Frequency:</label>
+        <select class="rpa-control form-control freq-tab" formControlName="frequency" (change)="onFrequencyChange($event)" required>
+            <option value="" disabled hidden>Select Frequency</option>
+            <option *ngFor="let option of frequencyOptions" [value]="option.value">{{option.frequencyName}}</option>
+        </select>
+    </form>
+        </div>
     </div>
-    <div class="row scheduler-tabsrow">
+    <div *ngIf="selectedFrequency === 'recurring'">
+        <div class="card cron-editor-main">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs tab-nav" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" [ngClass]="{'active': activeTab === 'daily'}" aria-controls="daily" role="tab" data-toggle="tab" (click)="setActiveTab('daily', $event)">Daily</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" [ngClass]="{'active': activeTab === 'weekly'}" aria-controls="weekly" role="tab" data-toggle="tab" (click)="setActiveTab('weekly', $event)">Weekly</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" [ngClass]="{'active': activeTab === 'monthly'}" aria-controls="monthly" role="tab" data-toggle="tab" (click)="setActiveTab('monthly', $event)">Monthly</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body cron-editor-container">
+                <div class="tab-content">
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'daily'}">
+                        <div class="row RPA-scheduletimer-body">
+                            <div class="col-md-4 p-1 form-group">
+                                <input type="date" (change)="dateChange($event, 'startdate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="startdate" id="txtDate">
+                            </div>
+                            <div class="col-md-4 p-1 form-group">
+                                <input type="date" (change)="dateChange($event, 'enddate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="enddate" id="enddatepicker">
+                            </div>
+                            <div class="col-md-4 p-1 form-group">
+                                <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onChangeHour($event, 'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                                <span class="required" *ngIf="beforetime">{{starttimeerror}}</span>
+                            </div>
+                            <div  *ngIf="compareScheduleDates"  class="col-12 pl-0 form-group">
+                                <span class="required">Start date should be less than end date</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'weekly'}">
+                        <div class="col p-0 form-group">
+                            <app-predefined-cron [isDisplayed]="isDisplayed" [(options)]="cronOptions"></app-predefined-cron>
+                        </div>
+                        <div class="row RPA-scheduletimer-body">
+                            <div class="col-md-4 p-1 form-group">
+                                <input type="date" (change)="dateChange($event, 'startdate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="startdate" id="txtDateWeekly">
+                            </div>
+                            <div class="col-md-4 p-1 form-group">
+                                <input type="date" (change)="dateChange($event, 'enddate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="enddate" id="enddatepickerWeekly">
+                            </div>
+                            <div class="col-md-4 p-1 form-group">
+                                <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onChangeHour($event, 'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                                <span class="required" *ngIf="beforetime">{{starttimeerror}}</span>
+                            </div>
+                            <div *ngIf="compareScheduleDates"  class="col-12 pl-0 form-group">
+                                <span class="required">Start date should be less than end date</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'monthly'}">
+                        <div class="col p-0 form-group">
+                            <app-predefined-cron [isMonthly]="isMonthly" [(options)]="cronOptions"></app-predefined-cron>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div *ngIf="selectedFrequency === 'onetime'">
+            <div class="row">
+                <div class="col-md-6 p-1 form-group">
+                    <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="startdate" id="txtDate">
+                </div>
+                <div class="col-md-6 p-1 form-group">
+                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onChangeHour($event,'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                    <span class='required' *ngIf="beforetime">{{starttimeerror}}</span>
+                </div>
+            </div>
+        </div>  
+
+    <!-- <div class="row scheduler-tabsrow">
         <div class="col p-0 form-group">
             <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron here...
             </cron-editor>
@@ -53,10 +139,10 @@
         <div  *ngIf="compareScheduleDates"  class="col-12 pl-0 form-group">
             <span class="required">Start date should be less than end date</span>
         </div>
-    </div>
+    </div> -->
 
     <div class="col-12 p-0 form-group">
-        <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || compareScheduleDates" (click)="add_scheduler()"  style="float: inline-end;">Add</button>
+        <button class="btn bluebg-button" [disabled]="beforetime==true  || compareScheduleDates" (click)="add_scheduler()"  style="float: inline-end;">Add</button>
     </div>
     <!-- <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">

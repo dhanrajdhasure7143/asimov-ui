@@ -1,4 +1,4 @@
-import {Input, Component, OnInit, EventEmitter,Output } from '@angular/core';
+import {Input, Component, OnInit, EventEmitter,Output, SimpleChanges } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import cronstrue from 'cronstrue';
@@ -7,6 +7,7 @@ import { NotifierService } from 'angular-notifier';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-predefined-scheduler',
@@ -15,7 +16,18 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 })
 export class PredefinedSchedulerComponent implements OnInit {
   @Output() schedulerData = new EventEmitter<any>();
+  @Input() public disabled: boolean;
+  @Input() public options: CronOptions;
 
+  @Input() get cron(): string { return this.localCron; }
+  set cron(value: string) {
+        this.localCron = value;
+        this.cronChange.emit(this.localCron);
+  }
+
+  @Output() cronChange = new EventEmitter();
+
+  private localCron: string;
   botid:any;
   processid:any;
   beforetime:boolean=false;
@@ -32,9 +44,9 @@ export class PredefinedSchedulerComponent implements OnInit {
 
     hideMinutesTab: false,
     hideHourlyTab: false,
-    hideDailyTab: false,
-    hideWeeklyTab: false,
-    hideMonthlyTab: false,
+    hideDailyTab: true,
+    hideWeeklyTab: true,
+    hideMonthlyTab: true,
     hideYearlyTab: false,
     hideAdvancedTab: false,
     hideSpecificWeekDayTab : false,
@@ -84,12 +96,27 @@ export class PredefinedSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
+  activeTab: string = 'daily';
+  frequency: string = '';
+  form: FormGroup;
+  selectedFrequency: any;
+  frequencyOptions = [
+    { frequencyName: 'Recurring', value: 'recurring' },
+    { frequencyName: 'One Time', value: 'onetime' }
+  ];
+
+selectedDays: string[] = [];
+selectedRecurringType: string;
+isDisplayed: boolean= true;
+isMonthly: boolean=true;
+
   constructor(
     private rest:RestApiService, 
     private notifier: NotifierService,
     private loader:LoaderService,
     private toastService: ToasterService,
     private toastMessages: toastMessages,
+    private fb: FormBuilder
      ) { }
   mindate= moment().format("YYYY-MM-DD");
   ngOnInit() {
@@ -114,7 +141,11 @@ export class PredefinedSchedulerComponent implements OnInit {
    this.gettime();
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
+    this.form = this.fb.group({
+      frequency: ['', Validators.required]
+    });
   }  
+
 gettime(){
  
   this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();
@@ -164,6 +195,21 @@ gettime(){
 
   // }
 
+  onFrequencyChange(event: any) {
+    this.selectedFrequency = event.target.value;
+    this.selectedRecurringType = 'recurring'; 
+}
+
+onRecurringTypeChange(event: any) {
+  this.selectedRecurringType = event.target.value;
+}
+
+public setActiveTab(tab: string, event: any) {
+  event; 
+  if (!this.disabled) {
+      this.activeTab = tab;
+  }
+}
 
   onTimeZoneChange(timezone){
     let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
@@ -347,14 +393,14 @@ gettime(){
   }
 
   addscheduler(){
-    if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined){
+    if(this.startdate !="" && this.enddate!=""  && this.starttime!=undefined  && this.timezone!=""){
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
        let endtime=this.endtime.split(":")
        let endtimeparse=parseInt(endtime[0]);
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
-         let data:any;
+        //  let data:any;
 
         let scheduleData= [
           {
@@ -363,11 +409,11 @@ gettime(){
          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
          "timezone":this.timezone,
-         "save_status":"unsaved",
-         "processId":null,
-         "processName":"",
-         "envId":"",
-         "check":false
+        //  "save_status":"unsaved",
+        //  "processId":null,
+        //  "processName":"",
+        //  "envId":"",
+        //  "check":false
         }]
         // data={
         //   scheduledIntervalid:27,
@@ -383,19 +429,19 @@ gettime(){
         //scheduleArr.push(data);
         this.schedulerData.emit(scheduleData)
         // console.log(data)
-        return
-        this.loader.show()
-        this.rest.addbotSchedules([data]).subscribe((response:any)=>{
-          this.loader.hide();
-          if(response.errorMessage == undefined){
-            this.toastService.showSuccess(this.toastMessages.saveSchedule, 'response');   
-          }  
-          else
-         this.toastService.showError(response.errorMessage+'!');
-        },err=>{
-          this.loader.hide();
-          this.toastService.showError(this.toastMessages.saveError)
-        })
+        // return
+        // this.loader.show()
+        // this.rest.addbotSchedules([data]).subscribe((response:any)=>{
+        //   this.loader.hide();
+        //   if(response.errorMessage == undefined){
+        //     this.toastService.showSuccess(this.toastMessages.saveSchedule, 'response');   
+        //   }  
+        //   else
+        //  this.toastService.showError(response.errorMessage+'!');
+        // },err=>{
+        //   this.loader.hide();
+        //   this.toastService.showError(this.toastMessages.saveError)
+        // })
     }
     else
     {
@@ -692,7 +738,6 @@ gettime(){
         this.timesZones=res;
      })
   }
-
 
   get compareScheduleDates(){
     let startDate:Date=new Date(this.startdate);
