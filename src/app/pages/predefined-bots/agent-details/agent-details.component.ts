@@ -42,21 +42,6 @@ export class AgentDetailsComponent implements OnInit {
     }
   ];
 
-  // logs_full = [
-  //   { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed, Successfull execution completed, Successfull execution completed, Successfull execution completed. '},
-  //   { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
-  //   { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-  //   { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-  //   { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-  //   { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-  //   { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-  //   ];
-
   logs_full:any[]=[]
   
   file: any[] = [];
@@ -108,6 +93,7 @@ export class AgentDetailsComponent implements OnInit {
 
   // Run, Configure and Stop
   isConfig:boolean=false;
+  enabledRun:boolean=false;
 
   constructor(
     private router: Router,
@@ -132,7 +118,7 @@ export class AgentDetailsComponent implements OnInit {
     });
 
     // this.getAIAgentHistory(this.product_id);
-    this.filterLogsData();
+    // this.filterLogsData();
     this.updateFilePagination();
     console.log("Agent Selected : ",this.selected_agent)
   }
@@ -224,7 +210,7 @@ export class AgentDetailsComponent implements OnInit {
 
   filterLogsData(): void {
 
-    this.getAIAgentHistory(this.product_id)
+    // this.getAIAgentHistory(this.product_id)
     let filteredLogs = [...this.logs_full];
 
     if (this.selectedDateLog) {
@@ -481,6 +467,7 @@ export class AgentDetailsComponent implements OnInit {
 
   onAgentChange(event: any): void {
     this.selected_drop_agent = event.value;
+    this.enabledRun=true
     // this.isConfig=this.current_agent_details.is_config_enable
     console.log('Selected Drop Agent Details:', this.selected_drop_agent);
   }
@@ -523,6 +510,7 @@ export class AgentDetailsComponent implements OnInit {
     this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
       console.log("HISTORY:   : ",res.data)
       this.logs_full=res.data
+      this.filteredLogs=res.data
       this.new_array=res.data
       // this.getVisibleLogs()
       console.log("LOGGGGGGGGGGGGGGA", this.logs_full)
@@ -545,13 +533,12 @@ export class AgentDetailsComponent implements OnInit {
       else{
         this.toaster.showSuccess("Success","Run")
       }
+      this.getPredefinedBotsList(this.product_id);
+      
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessage.apierror);
-      console.log("Run Stoped")
     });
-
-    console.log(this.selected_drop_agent.predefinedOrchestrationBotId)
   } 
 
 }

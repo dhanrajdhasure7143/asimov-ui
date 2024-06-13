@@ -31,7 +31,7 @@
                     <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
                 </button>
                 <!-- <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()"> -->
-                <button class="button-top start-button" [disabled]="!isConfig" (click)="runAiAgent($event)">
+                <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0" (click)="runAiAgent($event)">
                     <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                 </button>
                 <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
@@ -164,7 +164,7 @@
                         <th>Status</th>
                         <th>Info</th>
                     </tr>
-                    <tr *ngFor="let log of new_array" class="table-base">
+                    <tr *ngFor="let log of getVisibleLogs()" class="table-base">
                         <td>{{ log.agentName }}</td>
                         <td>{{ log.startTS | date: 'MMM d, y, h:mm a' }}</td>
                         <td>{{ log.endTS | date: 'MMM d, y, h:mm a' }}</td>
