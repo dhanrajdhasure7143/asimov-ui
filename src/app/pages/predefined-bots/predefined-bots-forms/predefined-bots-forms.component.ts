@@ -334,6 +334,7 @@ if(this.params.type =='edit'){
   }
 
   rfpbotCreate(){
+    
 
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
@@ -351,27 +352,25 @@ if(this.params.type =='edit'){
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
+        this.formFields.forEach(e => {
+          if (e.preAttributeName === 'RFP_dropdown') {
+            e.options.forEach(item => {
+              const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
+                (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
+              if (key) {
+                const [fieldName, fieldValue] = key.split(':');
+                req_body.fields[fieldName] = fieldValue;
+              }
+            });
+          }
+        });
 
-        if(this.checkedOptions.includes('RFP_Summarizer')){
-          req_body.fields["RFPBotOne_75279_If_condition"]="str_contains(\"true\",\"true\")"
-        }else{
-          req_body.fields["RFPBotOne_75279_If_condition"]="str_contains(\"true\",\"false\")"
-        }
-
-        if(this.checkedOptions.includes('Proposal_Generator')){
-          req_body.fields["RFPBotOne_75276_If_condition"]="str_contains(\"true\",\"true\")"
-        }else{
-          req_body.fields["RFPBotOne_75276_If_condition"]="str_contains(\"true\",\"false\")"
-        }
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
           this.duplicateAttributes.forEach(element => {
             let v_key = element.preAttributeName.split("_")
-  
-  
             for (const key in req_body.fields) {
             const parts = key.split('_');
-            
             if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
                 req_body.fields[element.preAttributeName] = req_body.fields[key]
             }
@@ -379,7 +378,6 @@ if(this.params.type =='edit'){
           });
         }
         console.log('req_body------:', req_body);
-
         this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
           this.spinner.hide();
           this.router.navigate(["/pages/predefinedbot/home"]);
