@@ -515,6 +515,20 @@ export class RpaHomeComponent implements OnInit {
         this.rpaCategory = this.categaoriesList[0].categoryId;
           this.categoryName = this.categaoriesList[0].categoryName;
       }
+      if (this.categaoriesList.length === 0) {
+        this.confirmationService.confirm({
+          message: "No categories available. Please contact the system admin to get access.",
+          header: "Info",
+          acceptLabel: "Ok",
+          rejectVisible: false,
+          acceptButtonStyleClass: "btn bluebg-button",
+          defaultFocus: "none",
+          acceptIcon: "null",
+          accept: () => {
+            // Add your logic here for contacting the system administrator
+          },
+        });
+      }
     });
   }
 

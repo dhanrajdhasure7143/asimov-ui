@@ -1012,6 +1012,7 @@ export class ProjectsDocumentComponent implements OnInit {
       this.toastService.showError(this.toastMessages.fldrNameExists);
       return;
      }
+     this.isDialogBox = false;
     let req_body = [{
       key: String(this.folder_files.length>0?Number(this.folder_files[this.folder_files.length - 1].key)+1:1),
       label: this.folder_name,
