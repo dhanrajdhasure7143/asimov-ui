@@ -389,7 +389,6 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
                 return "th";
         }
     }
-
     private getSelectOptions() {
         return {
             months: this.getRange(1, 12),

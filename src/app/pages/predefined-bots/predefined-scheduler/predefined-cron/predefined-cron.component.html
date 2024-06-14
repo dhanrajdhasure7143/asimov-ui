@@ -41,7 +41,7 @@
               </div>
   
             <!-- Monthly-->
-                <div class="" *ngIf="isMonthly">
+                <div class="" *ngIf="isMonthly">                        
                     <div class="row align-items-center mb-3">
                       <div class="col-auto">
                         Every
@@ -71,13 +71,9 @@
                       <div class="col-auto">
                         at
                       </div>
-                      <div class="row-auto">
-                        <cron-time-picker (change)="regenerateCron()"
-                                          [(model)]="state.yearly.specificMonthDay"
-                                          [selectClass]="options.formSelectClass"
-                                          [use24HourTime]="options.use24HourTime"
-                                          [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
-                        </cron-time-picker>
+                      <div class="col-auto">
+                        <cron-time-picker (change)="regenerateCron()" [(model)]="state.yearly.specificMonthDay" [selectClass]="options.formSelectClass"
+                        [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz"> </cron-time-picker>
                       </div>
                     </div>
                 </div>           

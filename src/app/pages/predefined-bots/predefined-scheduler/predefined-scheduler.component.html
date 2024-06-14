@@ -1,7 +1,7 @@
 <div class="createform-overlay">
     <div class="row">
         <div class="col-sm-6 p-1 form-group">
-            <label for="timezone">TimeZone:</label>
+            <label for="timezone">Timezone:</label>
             <span>
                 <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone" name="timezoneInput" #timezoneInput="ngModel" required>
                   <option value="" disabled hidden>Select Timezone</option>

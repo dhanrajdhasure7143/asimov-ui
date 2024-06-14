@@ -393,7 +393,7 @@ public setActiveTab(tab: string, event: any) {
   }
 
   addscheduler(){
-    if(this.startdate !="" && this.enddate!=""  && this.starttime!=undefined  && this.timezone!=""){
+    if(this.startdate !="" && this.enddate!=""  && this.starttime!=undefined  && this.timezone!="" && this.timezone!=undefined){
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
        let endtime=this.endtime.split(":")
