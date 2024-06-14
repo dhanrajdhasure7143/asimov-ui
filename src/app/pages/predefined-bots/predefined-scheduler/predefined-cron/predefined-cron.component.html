@@ -43,9 +43,7 @@
             <!-- Monthly-->
                 <div class="" *ngIf="isMonthly">                        
                     <div class="row align-items-center mb-3">
-                      <div class="col-auto">
-                        Every
-                      </div>
+                        From
                       <div class="col-auto">
                         <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.month" [ngClass]="options.formSelectClass">
                           <option *ngFor="let month of selectOptions.months" [ngValue]="month">
@@ -53,9 +51,15 @@
                           </option>
                         </select>
                       </div>
+                      to
                       <div class="col-auto">
-                        on the
+                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.month" [ngClass]="options.formSelectClass">
+                          <option *ngFor="let month of selectOptions.months" [ngValue]="month">
+                            {{ monthDisplay(month) }}
+                          </option>
+                        </select>
                       </div>
+                        on the
                       <div class="col-auto">
                         <select *ngIf="options.cronFlavor === 'quartz'" class="form-control month-days" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.day" [ngClass]="options.formSelectClass">
                           <option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts" [ngValue]="monthDaysWithLast">
@@ -67,14 +71,10 @@
                             {{ monthDayDisplay(monthDaysWithOutLast) }}
                           </option>
                         </select>
-                      </div>
-                      <div class="col-auto">
+                        </div>
                         at
-                      </div>
-                      <div class="col-auto">
                         <cron-time-picker (change)="regenerateCron()" [(model)]="state.yearly.specificMonthDay" [selectClass]="options.formSelectClass"
                         [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz"> </cron-time-picker>
-                      </div>
                     </div>
                 </div>           
           </div>
