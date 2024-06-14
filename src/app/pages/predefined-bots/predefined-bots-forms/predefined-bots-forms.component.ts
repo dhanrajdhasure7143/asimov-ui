@@ -85,6 +85,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   fetchAllFields() {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+      console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }

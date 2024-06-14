@@ -77,4 +77,8 @@ export class PredefinedBotsService {
   aiAgentHistory(id){
     return this.http.get("/rpa-service/predefined/v2/ai-agents-logs/"+id)
   }
+
+  getAiAgentUpdateForm(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
+  }
 }
