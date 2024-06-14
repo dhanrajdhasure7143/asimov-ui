@@ -602,7 +602,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         tasks: this.toolset.find((data) => data.name == nodename).tasks,
         path:"",
         action_uid:element.actionUUID,
-        isModified:element.isModified?element.isModified:false
+        isModified:element.isModified?element.isModified:false,
+        securityActionItem: element.securityActionItem ? element.securityActionItem : false
       };
       if(node.tasks.find((item)=>item.taskId==element.tMetaId)){
         let selectedTask=node.tasks.find((item)=>item.taskId==element.tMetaId);
@@ -1778,7 +1779,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       x: this.selectedNode.x,
       y: this.selectedNode.y,
       attributes: obj,
-      actionUUID:this.selectedNode.action_uid
+      actionUUID:this.selectedNode.action_uid,
+      securityActionItem: false
     };
     let index = this.finaldataobjects.findIndex(
       (sweetdata) => sweetdata.nodeId == cutedata.nodeId
@@ -2196,6 +2198,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           (response: any) => {
             this.spinner.hide();
             if (response.errorMessage == undefined) {
+              this.nodes.forEach(node => {
+                const nodeId = node.id.trim().toLowerCase();
+                const matchingTask = response.tasks.find(task => task.nodeId.split('__').pop().trim().toLowerCase() === nodeId);
+                node.securityActionItem = matchingTask?.securityActionItem ?? false;
+                if (!matchingTask) {
+                  console.log("No matching task found for Node ID:", nodeId);
+                }
+              });
               var botName = this.finalbot.botName;
               this.isBotUpdated = false;
               // this.finalbot=response;
