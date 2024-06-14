@@ -219,6 +219,117 @@ public setActiveTab(tab: string, event: any) {
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
 
+  onOnetimeChange(event,time){ 
+    //  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+        this.todaytime = moment().format("HH:mm");
+     
+        event=this.tConv24(event)
+        this.beforetime=false;
+        this.aftertime=false;
+        
+        if(this.isDateToday(this.selecteddate)){
+          if(time=='starttime'){
+            this.currenttime=this.tConv24(this.todaytime)
+            this.end_time=this.tConv24(this.endtime)
+            //  let a=moment(event,'h:mma')
+            //  let b=moment(this.currenttime,'h:mma')
+            //  let f=moment(this.end_time,'h:mma')
+
+            let a = moment(event, 'h:mma');
+            let b = moment(this.currenttime,'h:mma')
+            let f = a.clone().add(5, 'minutes').format('h:mma');
+           console.log("start and end time:",a,f);
+             this.isbefore=(a.isBefore(b));
+             let g=(a.isAfter(f))
+             this.issame=(a.isSame(f))
+            if(this.isbefore){
+              this.starttimeerror="start time should not be before than current time"
+              this.beforetime=true
+            }
+            
+            if(g){
+               this.starttimeerror="start time should not be greater than end time";
+               this.beforetime=true
+            }
+            if(this.issame){
+              this.starttimeerror="start time should not be equal to end time";
+              this.beforetime=true
+            }
+           
+          }
+          else{
+            this.start_time=this.tConv24(this.starttime);
+            this.currenttime=this.tConv24(this.todaytime)
+            
+            let c=moment(this.start_time,'h:mma')
+            let d=moment(event,'h:mma');
+            let currenttime=moment(this.currenttime,'h:mma')
+            let beforecurrenttime=(d.isBefore(currenttime))
+           
+            let e=(c.isBefore(d))
+           let starttime_error=(c.isBefore(currenttime))
+            
+            if(e==false ){
+              this.aftertime=true;
+              this.endtimeerror="end time should not be before than or equal to start time"
+            }
+            if(beforecurrenttime){
+              this.aftertime=true;
+              this.endtimeerror="end time should not be before than or equal to current time"
+            }
+           if(starttime_error){
+             this.beforetime=true;
+             this.starttimeerror="start time should not be before than current time"
+           }
+          }
+        }
+        else{
+          if(this.startdate==this.enddate){
+            if(time=='starttime'){
+         
+    
+              this.end_time=this.tConv24(this.endtime)
+              this.start_time=this.tConv24(this.starttime)
+               let a=moment(this.end_time,'h:mma')
+               let b=moment(this.start_time,'h:mma')
+              this.issame=(a.isSame(b))
+               this.isbefore=(b.isAfter(a));
+              if(this.isbefore){
+                this.beforetime=true;
+                this.starttimeerror="start time should not be before than end time"
+      
+              }
+              if(this.issame ){
+                this.beforetime=true;
+                this.starttimeerror="start time should not be equal to end time"
+              }
+             
+            }
+            else{
+              this.end_time=this.tConv24(this.endtime)
+              this.start_time=this.tConv24(this.starttime)
+               let a=moment(this.end_time,'h:mma')
+               let b=moment(this.start_time,'h:mma')
+               this.issame=(a.isSame(b))
+               this.isbefore=(a.isBefore(b));
+               if(this.isbefore ){
+                this.aftertime=true;
+                this.endtimeerror="end time should not be before than start time"
+               }
+               if(this.issame){
+                this.aftertime=true;
+                this.endtimeerror="end time should not be equal to start time"
+               }
+              
+      
+            }
+          }
+         
+        }
+       
+       
+      }
+
   onChangeHour(event,time){ 
 //  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
     this.todaytime = moment().format("HH:mm");
@@ -394,6 +505,9 @@ public setActiveTab(tab: string, event: any) {
 
   addscheduler(){
     if(this.startdate !="" && this.enddate!=""  && this.starttime!=undefined  && this.timezone!="" && this.timezone!=undefined){
+      if (this.selectedFrequency === 'onetime') {
+        this.cronExpression = '*/5 * * * *';
+      }
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
        let endtime=this.endtime.split(":")
