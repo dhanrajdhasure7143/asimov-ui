@@ -339,7 +339,23 @@ export class ProjectsListScreenComponent implements OnInit {
           item["dropdownList"] = this.categories_list
         }
       })
+      if (this.categoryList.data.length === 0) {
+        this.confirmationService.confirm({
+          message: "No categories available. Please contact the system admin to get access.",
+          header: "Info",
+          acceptLabel: "Ok",
+          rejectVisible: false,
+          acceptButtonStyleClass: "btn bluebg-button",
+          defaultFocus: "none",
+          acceptIcon: "null",
+          accept: () => {
+            // Add your logic here for contacting the system administrator
+          },
+        });
+      }
+
     });
+    
   }
 
   onClikCreateProgram() {
