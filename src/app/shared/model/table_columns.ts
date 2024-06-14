@@ -270,7 +270,7 @@ export class columnList{
       ];
 
       public custom_tasks = [
-        { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text",sort: true,status_icon:false},
+        { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text", sort: true, status_icon: false, showTooltip: true },
         { ColumnName: "createdUser", DisplayName: "Created By", filterWidget: "normal", ShowFilter: true, filterType: "text", ShowGrid: true, sort: true, multi: true, multiOptions: ["createdUser", "createdAt"], userProfile: true, datePipe: true, userProfileKey: "createdBy" },
         { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", dropdownList: ['Java'], sort: true, },
         {ColumnName: "approverName", DisplayName: "Approver", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false },
@@ -302,7 +302,7 @@ export class columnList{
       ];
 
   public sdk_approval_list = [
-    { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text", sort: true, status_icon: false },
+    { ColumnName: "customTaskName", DisplayName: "Custom Task Name", ShowGrid: true, ShowFilter: true, filterWidget: "normal", width: "flex: 0 0 13rem", filterType: "text", sort: true, status_icon: false, showTooltip: true },
     // { ColumnName: "createdAt", DisplayName: "Created Date", filterWidget: "normal", width: "flex: 0 0 11rem", ShowFilter: true, filterType: "date", ShowGrid: true, sort: true, },
     { ColumnName: "createdUser", DisplayName: "Created By", ShowGrid: true, ShowFilter: true, filterWidget: "normal", filterType: "text", sort: true, status_icon: false, multi: true, multiOptions: ["createdUser", "createdAt"], userProfile: true, datePipe: true, userProfileKey: "createdBy" },
     { ColumnName: "languageType", DisplayName: "Language Type", ShowGrid: true, ShowFilter: true, filterWidget: "dropdown", filterType: "text", width: "flex: 0 0 11rem", dropdownList: ['Java'], sort: true, },
