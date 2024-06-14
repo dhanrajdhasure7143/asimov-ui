@@ -31,11 +31,12 @@
 <p-dialog header="Warning!" [(visible)]="showWarningPopup" [modal]="true" [style]="{width: '30vw'}" [resizable]="false"
     [closable]="false">
     <ng-container *ngIf="userRole.includes('System Admin')">
-        <p>There is no longer any subscription for you! In order to use the Ezflow product, please contact to <strong>sales@epsoftinc.com</strong>.</p>
+        <p *ngIf="!isSubscriptionModuleEnable">There is no longer any subscription for you! In order to use the Ezflow product, please contact to <strong>sales@epsoftinc.com</strong>.</p>
+        <p *ngIf="isSubscriptionModuleEnable">There is no longer any subscription for you! In order to use the Ezflow product, please resubscribe.</p>
     </ng-container>
     <ng-container *ngIf="userRole.includes('Process Owner')">
         <p>There is no longer any subscription for you! To resubscribe, please contact your system admin.</p>
     </ng-container>
-    <button class="btn btn-primary" style="float: right;" (click)="onClickLogout()">OK</button>
-    <!-- <button *ngIf="this.userRole.includes('System Admin')" class="btn btn-primary" style="float: right;" (click)="onResubscribe()">OK..</button> -->
+    <button *ngIf='!isSubscriptionModuleEnable' class="btn btn-primary" style="float: right;" (click)="onClickLogout()">OK</button>
+    <button *ngIf="userRole.includes('System Admin') && isSubscriptionModuleEnable" class="btn btn-primary" style="float: right;" (click)="onResubscribe()">OK</button>
 </p-dialog>
