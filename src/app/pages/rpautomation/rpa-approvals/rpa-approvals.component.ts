@@ -121,7 +121,6 @@ export class RpaApprovalsComponent implements OnInit {
       this.comments="";
       this.getApprovalList();
     }, err=>{
-      console.log(err);
       this.toastService.showError(this.toastMessages.apprvlUpdateErr);
       this.spinner.hide();
     })

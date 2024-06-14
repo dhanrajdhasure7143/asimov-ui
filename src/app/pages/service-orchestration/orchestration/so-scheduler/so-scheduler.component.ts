@@ -84,6 +84,10 @@ export class SoSchedulerComponent implements OnInit {
   currenttime: any;
   start_time:any;
   end_time:any;
+  userRole:any;
+  isProcessAnalyst:boolean = false;
+
+
   constructor(private rest:RestApiService,
     private notifier: NotifierService,
     private spinner:NgxSpinnerService,
@@ -142,6 +146,10 @@ export class SoSchedulerComponent implements OnInit {
     this.getAlltimezones();
     this.startdate =  moment(new Date()).format("YYYY-MM-DD");
     this.enddate = moment(new Date()).format("YYYY-MM-DD");
+    this.userRole = localStorage.getItem("userRole");
+    this.userRole = this.userRole.split(',');
+    if(this.userRole.includes("Process Analyst"))
+     this.isProcessAnalyst = true;
   }
 
   get_schedule()
