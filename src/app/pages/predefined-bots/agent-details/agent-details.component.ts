@@ -8,6 +8,7 @@ import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { saveAs } from "file-saver";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-agent-details',
@@ -74,7 +75,7 @@ export class AgentDetailsComponent implements OnInit {
   // Pagination
   totalPages=0
   currentPage: number = 1;
-  itemsPerPage: number = 6;
+  itemsPerPage: number = 7;
 
   currentPageFiles: number = 1;
   itemsPerPageFiles: number = 5;
@@ -209,29 +210,62 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   filterLogsData(): void {
-
-    // this.getAIAgentHistory(this.product_id)
     let filteredLogs = [...this.logs_full];
 
     if (this.selectedDateLog) {
-      filteredLogs = filteredLogs.filter(log =>
-        log.start_date.startsWith(this.selectedDateLog)
-      );
+        filteredLogs = filteredLogs.filter(log =>
+            log.startTS.startsWith(this.selectedDateLog)
+        );
     }
 
     if (this.selectedStatus) {
-      filteredLogs = filteredLogs.filter(log =>
-        log.status === this.selectedStatus
-      );
+        filteredLogs = filteredLogs.filter(log =>
+            log.status === this.selectedStatus
+        );
     }
 
-    filteredLogs.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
+    filteredLogs.sort((a, b) => new Date(b.startTS).getTime() - new Date(a.startTS).getTime());
     this.filteredLogsData = filteredLogs;
-  }
+    this.currentPage = 1;
+    this.updateVisibleLogs();
+}
 
-  downloadLogs(){
+downloadLogs(): void {
+  this.spinner.show();
+  try {
+      const logs = this.filteredLogsData;
+      const data = logs.map(log => ({
+          Agent: log.agentName,
+          'Start Date': new Date(log.startTS).toLocaleString(),
+          'End Date': new Date(log.endTS).toLocaleString(),
+          Status: log.status,
+          Info: log.info ?? 'No Info Found'
+      }));
 
+      // excel creating for history 
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+      const wb: XLSX.WorkBook = { Sheets: { 'history': ws }, SheetNames: ['history'] };
+      const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `${this.bot.predefinedBotName}-history`);
+
+      this.toaster.toastSuccess("History Downloaded Successfully");
+  } catch (error) {
+      this.toaster.showError("Failed to Download History");
+  } finally {
+      this.spinner.hide();
   }
+}
+
+saveAsExcelFile(buffer: any, fileName: string): void {
+  try {
+      const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      const EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+      FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
+  } catch (error) {
+      throw error;
+  }
+}
 
   handleBotPlayer () {
     this.runPlayer = !this.runPlayer
@@ -283,7 +317,7 @@ export class AgentDetailsComponent implements OnInit {
     this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
       this.getPredefinedBotsList(this.product_id);
       this.spinner.hide();
-      this.toaster.showSuccess("Delete","delete")
+      this.toaster.toastSuccess("Files Deleted Successfully.")
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessage.apierror);
@@ -310,7 +344,7 @@ export class AgentDetailsComponent implements OnInit {
                   : `data:application/${extension};base64,${fileData}`;
   
               link.click();
-              this.toaster.showSuccess("Success", "File downloaded successfully");
+              this.toaster.toastSuccess("File downloaded successfully");
             } else {
               const zip = new JSZip();
               const fileNames = new Set();
@@ -333,13 +367,13 @@ export class AgentDetailsComponent implements OnInit {
               zip.generateAsync({ type: "blob" }).then((content) => {
                 FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
               });
-              this.toaster.showSuccess("Success", "Files downloaded successfully");
+              this.toaster.toastSuccess("File's downloaded successfully");
             }
           } else {
-            this.toaster.showError("Error");
+            this.toaster.showError("Error Downloading Files.");
           }
         } else {
-          this.toaster.showError("Error");
+          this.toaster.showError("Error Downloading Files.");
         }
         this.spinner.hide();
       },
@@ -420,42 +454,50 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   goToPage(pageNumber: number): void {
-      this.currentPage = pageNumber;
-  }
+    this.currentPage = pageNumber;
+    this.updateVisibleLogs();
+}
 
-  goToFirstPage(): void {
-      this.currentPage = 1;
-  }
+goToFirstPage(): void {
+    this.currentPage = 1;
+    this.updateVisibleLogs();
+}
 
-  goToLastPage(): void {
-      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
-      this.currentPage = totalPages;
-  }
+goToLastPage(): void {
+    const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+    this.currentPage = totalPages;
+    this.updateVisibleLogs();
+}
 
-  goToNextPage(): void {
-      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
-      if (this.currentPage < totalPages) {
-          this.currentPage++;
-      }
-  }
+goToNextPage(): void {
+    const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+        this.currentPage++;
+        this.updateVisibleLogs();
+    }
+}
 
-  goToPreviousPage(): void {
-      if (this.currentPage > 1) {
-          this.currentPage--;
-      }
-  }
+goToPreviousPage(): void {
+    if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updateVisibleLogs();
+    }
+}
 
   new_array:any[]=[];
 
   getVisibleLogs(): any[] {
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      this.new_array=this.filteredLogsData.slice(startIndex, endIndex);
-      return this.filteredLogsData.slice(startIndex, endIndex);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredLogsData.slice(startIndex, endIndex);
+  }
+
+  updateVisibleLogs(): void {
+    this.new_array = this.getVisibleLogs();
   }
 
   renewBtns(){
-
+    this.toaster.toastSuccess("Please contact EPsoft")
   }
 
   updateFilePagination(): void {
@@ -504,20 +546,23 @@ export class AgentDetailsComponent implements OnInit {
     return result.trim();
   }
 
-  // History - AI Agents 
-  getAIAgentHistory(id){
-    this.spinner.show()
+  getAIAgentHistory(id) {
+    this.spinner.show();
     this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
-      console.log("HISTORY:   : ",res.data)
-      this.logs_full=res.data
-      this.filteredLogs=res.data
-      this.new_array=res.data
-      // this.getVisibleLogs()
-      console.log("LOGGGGGGGGGGGGGGA", this.logs_full)
-      this.spinner.hide();
+        console.log("HISTORY: ", res.data);
+
+        this.logs_full = res.data;
+        this.logs_full.sort((a, b) => {
+            return new Date(b.startTS).getTime() - new Date(a.startTS).getTime();
+        });
+
+        this.filteredLogsData = this.logs_full.slice(); 
+        this.new_array = this.logs_full.slice(0, this.itemsPerPage); 
+
+        this.spinner.hide();
     }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
     });
   }
 
@@ -526,12 +571,14 @@ export class AgentDetailsComponent implements OnInit {
     let id=this.selected_drop_agent.predefinedOrchestrationBotId
     this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
       this.spinner.hide();
-
-      if (res.errorCode==3054) {
-        this.toaster.showWarn(res.errorMessage)
+      this.remaining_exe=""
+      this.new_array=[]
+      this.logs_full=[]
+      if (res.errorCode==4200) {
+        this.toaster.toastSuccess("Agent Execution Started")
       }
       else{
-        this.toaster.showSuccess("Success","Run")
+        this.toaster.showWarn(res.errorMessage)
       }
       this.getPredefinedBotsList(this.product_id);
       

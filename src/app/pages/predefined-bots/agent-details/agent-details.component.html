@@ -5,8 +5,9 @@
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
                     <!-- <div class="bot-name">{{bot?.predefinedBotName ?? "Error !!"}}</div> -->
-                    <div class="rem-execution">Remaining Executions: <span
-                            class="remaining-exe">{{remaining_exe}}</span>
+                    <div class="rem-execution">Remaining Executions: 
+                        <span *ngIf="remaining_exe.length !=0" class="remaining-exe" >{{remaining_exe}}</span>
+                        <span *ngIf="remaining_exe.length===0" class="remaining-exe"><i class="pi pi-spin pi-spinner"></i></span>
                     </div>
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
@@ -149,7 +150,8 @@
                     <button class="filter-icn" (click)="filterLogsData()">
                         <i class="pi pi-filter icons-mt"></i> Filter
                     </button>
-                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0" (click)="downloadLogs()">
+                    
+                    <button class="logs-btn-btm" [disabled]="filteredLogsData.length === 0" (click)="downloadLogs()">
                         <i class="pi pi-download"></i> Download Logs
                     </button>
                 </div>
@@ -164,7 +166,7 @@
                         <th>Status</th>
                         <th>Info</th>
                     </tr>
-                    <tr *ngFor="let log of getVisibleLogs()" class="table-base">
+                    <tr *ngFor="let log of new_array" class="table-base">
                         <td>{{ log.agentName }}</td>
                         <td>{{ log.startTS | date: 'MMM d, y, h:mm a' }}</td>
                         <td>{{ log.endTS | date: 'MMM d, y, h:mm a' }}</td>
