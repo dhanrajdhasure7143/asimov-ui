@@ -118,16 +118,16 @@ export class AgentDetailsComponent implements OnInit {
       }
     });
 
-    // this.getAIAgentHistory(this.product_id);
-    // this.filterLogsData();
     this.updateFilePagination();
-    console.log("Agent Selected : ",this.selected_agent)
+  }
+
+  refreshAgentDashboard(){
+    this.getPredefinedBotsList(this.product_id);
   }
 
   aiAgentDetails(){
     this.spinner.show();
     this.rest_api.aiAgentDetails().subscribe((res: any) => {
-      console.log("Newly Created API", res.data)
       this.newResponseData=res.data
       const agent = this.newResponseData.find(agent => agent.productId === this.product_id);
 
@@ -576,6 +576,9 @@ goToPreviousPage(): void {
       this.logs_full=[]
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
+      }
+      else if(res.status){
+        this.toaster.showWarn(res.status)
       }
       else{
         this.toaster.showWarn(res.errorMessage)

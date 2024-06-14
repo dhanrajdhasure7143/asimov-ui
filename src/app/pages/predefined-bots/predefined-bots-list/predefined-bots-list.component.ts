@@ -96,9 +96,18 @@ export class PredefinedBotsListComponent implements OnInit {
     this.closeModal();
   }
 
-  toggleDetails(event: Event,bot: any) {
+  toggleDetails(event: Event,bot: any, detailsWrapper: HTMLElement) {
     event.stopPropagation();
     bot.showMore = !bot.showMore;
+
+    if (!bot.showMore) {
+      setTimeout(() => {
+        detailsWrapper.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+      });
+      }, 0);
+    }
   }
 }
 
