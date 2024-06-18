@@ -443,3 +443,7 @@ ul#versions li:hover {
 .refresh-load{
   width: 80px;
 }
+
+::ng-deep .p-dialog-content {
+  overflow-y: hidden;
+}
