@@ -450,6 +450,22 @@ export class BpsHomeComponent implements OnInit {
       this.categories_list.forEach((element) => {
         this.categories_list_new.push(element.categoryName);
       });
+
+      if (this.categoryList.data.length === 0) {
+        this.confirmationService.confirm({
+          message: "No categories available. Please contact the system admin to get access.",
+          header: "Info",
+          acceptLabel: "Ok",
+          rejectVisible: false,
+          acceptButtonStyleClass: "btn bluebg-button",
+          defaultFocus: "none",
+          acceptIcon: "null",
+          key:'confirm2',
+          accept: () => {
+            // Add your logic here for contacting the system administrator
+          },
+        });
+      }
     });
   }
 

@@ -34,7 +34,8 @@ export class SoProcesslogComponent implements OnInit {
     Success: '#4BD963',
     Killed:"#B91C1C",
     Stopped: '#FE665D',
-    Running:"#FFA033"
+    Running:"#FFA033",
+    Approved:"#4BD963"
   };
   isDataEmpty:boolean=false;
   traversalLogs:any=[];
@@ -68,6 +69,7 @@ export class SoProcesslogComponent implements OnInit {
         this.logsDisplayFlag="RUNS";
         this.processRuns=response;
         this.logsData=response;
+        console.log(this.logsData)
        },(err=>{
         this.handleException(err);
        }));

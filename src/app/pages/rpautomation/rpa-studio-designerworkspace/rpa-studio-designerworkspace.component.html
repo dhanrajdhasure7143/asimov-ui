@@ -8,14 +8,14 @@
         }">
           <!--Nodes inside designer-->
           <ng-container *ngFor="let node of nodes; let i = index">
-            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) || (node.selectedNodeTask.includes('Corrupted')) )?'hide-node':''):(node.isModified || node.selectedNodeTask.includes('Corrupted'))?'hide-node':'' " [pTooltip]="node.isModified ? ('This task is deprecated!') : (node.selectedNodeTask == 'Corrupted'? 'This task is corrupted, Please add right one.':'')" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
+            <div id="{{ node.id }}" class="dndDropzone" [ngClass]="isCopilot?((isNavigateCopilot && (node.selectedNodeId == 1 ||node.selectedNodeId == 2 || node.selectedNodeId == 81 ||node.selectedNodeId == 141) || (node.selectedNodeTask.includes('Corrupted') || node.securityActionItem) )?'hide-node':''):(node.isModified || node.selectedNodeTask.includes('Corrupted'))?'hide-node':'' " [pTooltip]="node.isModified ? ('This task is deprecated!') : (node.selectedNodeTask == 'Corrupted'? 'This task is corrupted, Please add right one.':'')" tooltipPosition="bottom" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)"
               (contextmenu)="onRightClick(node, $event, i); ($event.prevent)" [ngStyle]="{
                 left: node.x,
                 top: node.y,
                 'background-image': 'url(' + node.path + ')'
               }">
               <!--Node close button-->
-              <span *ngIf="node.name != 'START' && node.name != 'STOP'" class="node-delete" (click)="deletenode(node)">
+              <span *ngIf="node.name != 'START' && node.name != 'STOP' && !belongsToSavedGroup(node.id) && !node.isMicroBotNode " class="node-delete" (click)="deletenode(node)">
                 <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
                 <i class="ri-close-circle-fill"></i>
               </span>
