@@ -54,5 +54,31 @@ export class PredefinedBotsService {
     return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
   }
 
+  getAgentFiles(UUID){
+    return this.http.get("/platform-service/document/fetchPredefinedAgentFiles/"+UUID)
+  }
 
+  deleteAgentFIles(body:any){
+    return this.http.post("/platform-service/document/deleteMultiplePredefinedAgentFiles",body)
+  }
+
+  downloadAgentFiles(body:any){
+    return this.http.post("/platform-service/document/downloadMultiplePredefinedAgentFiles",body)
+  }
+
+  uploadAgentFIles(body:any){
+    return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
+  }
+
+  aiAgentDetails(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-details")
+  }
+
+  aiAgentHistory(id){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-logs/"+id)
+  }
+
+  getAiAgentUpdateForm(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
+  }
 }
