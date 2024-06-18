@@ -179,6 +179,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   submitButtonText:any;
   editGroupData: any;
   microBotsList:any[]=[]
+  microbotGroupNodeIds:any[] = [];
 
   constructor(
     private rest: RestApiService,
@@ -875,6 +876,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               node.isSelected = false
               node.action_uid = null
               node.tasks = []
+              node.isMicroBotNode = true;
               const toolsetData = this.toolset.find((data) => data.name === nodename);
               const taskWithIcon = toolsetData.tasks.find(task => task.taskIcon !== "null" && task.taskIcon !== '' && task.taskId == item.tMetaId);
               node.path = taskWithIcon ? `data:image/png;base64,${taskWithIcon.taskIcon}` : toolsetData.path;
@@ -917,6 +919,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       const node = event.data;
       node.isCompiled = false;
       node.id = this.idGenerator();
+      node.isMicroBotNode = false;
       // node.selectedNodeTask = "";
       // node.selectedNodeId = "";
       const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);    
@@ -2330,7 +2333,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         isMicroBot: item.isMicroBot? true:false,
         description: item.description? item.description: "",
         // anchor:"TopLeft",
-        orphan: true,
+        // orphan: true,
+        orphan: !item.isMicroBot ? true : false,
         endpoint:[ "Dot", { radius:4 } ],
         droppable: item.isMicroBot? false: true,
         dropOverride:false,
@@ -3632,7 +3636,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   publishGroup(group:any,index) {
 
     let groupNodes = [] = this.collectGroupIds(group.id);
-
     if (groupNodes.length === 0) {
       this.toastService.showInfo('Please add tasks to the group!');
       return;
@@ -3667,6 +3670,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           item.collapsed = true
           item.droppable= false
           item["microBotId"]= parsedResponce.microBotId? parsedResponce.microBotId: null
+          groupNodes.forEach(nodeId => {
+            let node = this.nodes.find(n => n.id === nodeId);
+            if (node) {
+                node.isMicroBotNode = true;
+              }
+          });
           setTimeout(() => {
             this.jsPlumbInstance.repaintEverything();
           }, 500);
@@ -3810,10 +3819,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       microBotId: botData.id,
       endpoint:[ "Dot", { radius:4 } ],
       droppable: false,
-      orphan:true,
+      // orphan:true,
+      orphan: item.isMicroBot ? true : false,
       dropOverride:false
     };
     this.groupsData.push(GroupData);
+    console.log("GROUPDATA", this.groupsData);
     setTimeout(() => {
       let element: any = document.getElementById(GroupData.id);
       this.groupsData.find((item: any) => item.id == GroupData.id).el = element;
@@ -4190,6 +4201,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.addTasksToGroups();
     },1000);
   }
+
+  belongsToSavedGroup(nodeId: string): boolean {
+    if (this.savedGroupsData && this.savedGroupsData.length > 0) {
+      for (const savedGroup of this.savedGroupsData) {
+        if (savedGroup.nodeIds && savedGroup.isMicroBot && savedGroup.nodeIds.includes(nodeId)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 @Pipe({ name: "Checkoutputbox" })
