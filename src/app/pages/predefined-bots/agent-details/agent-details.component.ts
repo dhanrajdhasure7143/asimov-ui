@@ -34,12 +34,7 @@ export class AgentDetailsComponent implements OnInit {
     {
       subscriptionHeading: "Subscription",
       warningMessage: "Your Subscription expiring soon!",
-      expanded: false,
-      date: "2024-06-05",
-      expirationDate: "2024-07-05",
-      amount: "$10.00",
-      purchase: "Online Store",
-      remaining_exe:"5"
+      expanded: false
     }
   ];
 
@@ -134,7 +129,6 @@ export class AgentDetailsComponent implements OnInit {
 
       if (agent) {
         this.current_agent_details = agent;
-        console.log("CURRENT AGENT: ",this.current_agent_details)
         this.remaining_exe = agent.remaining_executions;
 
         this.isConfig=this.current_agent_details.is_config_enable
@@ -175,19 +169,13 @@ export class AgentDetailsComponent implements OnInit {
     });
   }
 
-  // onclickBot() {
-  //   this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-  // }
-
   onclickBot() {
 
     if(this.isConfig && (this.selected_drop_agent === null || this.selected_drop_agent === undefined)){
       this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-      // this.toaster.toastSuccess("Navigating to Create Agent ")
     }
     else{
       this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId, orchId:this.selected_drop_agent.predefinedOrchestrationBotId } });
-      // this.toaster.toastSuccess(`Navigating to Update Agent${this.selected_drop_agent.predefinedOrchestrationBotId}`)
     }
     
   }
@@ -524,8 +512,6 @@ goToPreviousPage(): void {
   onAgentChange(event: any): void {
     this.selected_drop_agent = event.value;
     this.enabledRun=true
-    // this.isConfig=this.current_agent_details.is_config_enable
-    console.log('Selected Drop Agent Details:', this.selected_drop_agent);
   }
 
   agentDropdownList(agent_details){
@@ -563,7 +549,6 @@ goToPreviousPage(): void {
   getAIAgentHistory(id) {
     this.spinner.show();
     this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
-        console.log("HISTORY: ", res.data);
 
         this.logs_full = res.data;
         this.logs_full.sort((a, b) => {
@@ -608,10 +593,6 @@ goToPreviousPage(): void {
   getAiAgentUpdateForm(){
     this.spinner.show()
     this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
-
-
-      console.log("THis is the Update form Getting from the API: ", res.data)
-
       this.spinner.hide(); 
     }, err => {
       this.spinner.hide();

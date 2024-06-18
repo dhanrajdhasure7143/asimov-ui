@@ -4,7 +4,6 @@
             <div class="bot-info">
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <!-- <div class="bot-name">{{bot?.predefinedBotName ?? "Error !!"}}</div> -->
                     <div class="rem-execution">Remaining Executions: 
                         <span *ngIf="remaining_exe.length !=0" class="remaining-exe" >{{remaining_exe}}</span>
                         <span *ngIf="remaining_exe.length===0" class="remaining-exe"><i class="pi pi-spin pi-spinner"></i></span>
@@ -27,11 +26,9 @@
                 }"
                 ></p-dropdown>
 
-                <!-- <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()"> -->
                 <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                     <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
                 </button>
-                <!-- <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()"> -->
                 <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0" (click)="runAiAgent($event)">
                     <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                 </button>
@@ -172,7 +169,6 @@
                         <td>{{ log.endTS | date: 'MMM d, y, h:mm a' }}</td>
                         <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
                             log.status }}</td>
-                        <!-- <td class="info-cell-logs">{{ log.info }}</td> -->
                         <td class="info-cell">
                             <div class="info-contents" [pTooltip]="log.info" tooltipPosition="top">
                                 <span>{{ log.info ?? "No Info Found" }}</span>
