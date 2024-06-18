@@ -72,7 +72,6 @@ export class PredefinedBotsFormsComponent implements OnInit {
     });
     if(this.params.type == "create"){
       this.fetchAllFields();
-      // this.calculateNodes();
     }else{
       this.fetchAllFieldsToUpdateData();
     }
@@ -125,8 +124,9 @@ export class PredefinedBotsFormsComponent implements OnInit {
   generateDynamicForm(){
     const fieldsGroup = {};
     this.formFields.forEach(field => {
+      console.log("field",field)
       if(field.attributeRequired){
-        fieldsGroup[field.preAttributeName] = ['', Validators.required];
+        fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
       }else{
         fieldsGroup[field.preAttributeName] = [''];
       }
@@ -149,92 +149,50 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   fetchAllFieldsToUpdateData() {
-    this.spinner.show();
-    // this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
-    //   this.spinner.hide();
-    // },err=>{
-    //   this.spinner.hide();
-    //   this.toaster.showError(this.toastMessages.apierror)
-    // })
-    this.formFields = [
-      { label: "Bot Name", name: "botName", type: "text", placeholder: "Enter bot name" },
-      { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
-      { label: "Tenant ID", name: "tenantId", type: "number", placeholder: "Enter tenant ID" },
-      { label: "Client ID", name: "clientId", type: "email", placeholder: "Enter client ID" },
-      { label: "Client Secret", name: "clientSecret", type: "text", placeholder: "Enter client secret" },
-      { label: "Web Driver Type", name: "webDriverType", type: "dropdown", options: ['Google Chrome', 'Microsoft Edge'], placeholder: "Select web driver type" },
-      { label: "URL", name: "url", type: "text", placeholder: "Enter URL" },
-      { label: "Web Element Type", name: "webElementType", type: "dropdown", options: ['X-Path', 'CSS Selector'], placeholder: "Select web element type" },
-      { label: "Web Element Value", name: "webElementValue", type: "text", placeholder: "Enter web element value" },
-      { label: "Value Type", name: "valueType", type: "dropdown", options: ['Text Box', 'Dropdown', 'Date Picker'], placeholder: "Select value type" },
-      { label: "Value", name: "value", type: "text", placeholder: "Enter value" },
-      { label: "Standard Dropdown Value", name: "standardDropdownValue", type: "text", placeholder: "Enter dropdown value" },
-      { label: "Click", name: "clickAction", type: "text", placeholder: "Enter click action" },
-      { label: "View", name: "viewType", type: "dropdown", options: ['Full Page', 'Default View'], placeholder: "Select view" },
-      { label: "Variable", name: "variable", type: "text", placeholder: "Define variable" },
-      { label: "Assignment", name: "assignment", type: "text", placeholder: "Describe assignment" },
-      { label: "Email/Organization Name", name: "emailOrganization", type: "dropdown", options: ['EPSoft', 'Microsoft'], placeholder: "Select organization" },
-      { label: "Email Reference", name: "emailReference", type: "text", placeholder: "Enter email reference" },
-      { label: "Recipient Email", name: "recipientEmail", type: "text", placeholder: "Enter recipient's email" },
-      { label: "Subject", name: "emailSubject", type: "text", placeholder: "Enter email subject" },
-      { label: "Mail Message", name: "mailMessage", type: "textarea", placeholder: "Type your message" },
-      { label: "File", name: "file", type: "text", placeholder: "Specify file path" },
-      { label: "Signature", name: "signature", type: "text", placeholder: "Enter signature details" },
-      { label: "Set Importance", name: "setImportance", type: "dropdown", options: ['Normal', 'Low', 'High'], placeholder: "Select importance level" },
-      { label: "CC Recipient", name: "ccRecipient", type: "text", placeholder: "Enter CC recipient's email" },
-      { label: "BCC Recipient", name: "bccRecipient", type: "text", placeholder: "Enter BCC recipient's email" }
-    ];
+    // this.spinner.show();
+    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agent_id).subscribe((res:any)=>{
+      this.spinner.hide();
+      console.log("res,",res)
+      this.agent_uuid = res.predefinedBotUUID
+      console.log("Form Attributes: ", res.data)
+      this.spinner.hide();
+      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
+      this.formFields.push(obj);
+      // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
+      this.formFields.push(...res.data
+        .filter(item => !item.duplicate)
+        .map(item => {
+            if (item.preAttributeName === 'RecruitmentOne_email_jobDescrption') {
+                return { ...item, isValidateRequired: true };
+            } else {
+                return item;
+            }
+        })
+    );
+      this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
+      this.predefinedBot_name = res.predefinedBotName;
+      this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
+      this.predefinedBot_uuid = res.predefinedBotUUID
+      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.generateDynamicForm();
     
-    const fieldsGroup = {};
-    this.formFields.forEach(field => {
-      fieldsGroup[field.name] = ['', Validators.required];
-    }); 
-    this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
+    // const fieldsGroup = {};
+    // this.formFields.forEach(field => {
+    //   fieldsGroup[field.name] = ['', Validators.required];
+    // }); 
+    // this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
 
-if(this.params.type =='edit'){
-  const existingBotData = {
-    botName: 'Marketing Bot',
-    sharePointUrl: 'https://example.sharepoint.com',
-    tenantId: 12345,
-    clientId: 'example-client-id',
-    clientSecret: 'secret-value',
-    webDriverType: 'Google Chrome',
-    url: 'https://example.com',
-    webElementType: 'CSS Selector',
-    webElementValue: '#example',
-    valueType: 'Text Box',
-    value: 'Hello, World!',
-    standardDropdownValue: 'Option 1',
-    clickAction: 'Click Here',
-    viewType: 'Full Page',
-    variable: 'varExample',
-    assignment: 'Assign Example',
-    emailOrganization: 'EPSoft',
-    emailReference: 'Reference Example',
-    recipientEmail: 'example@example.com',
-    emailSubject: 'Subject Example',
-    mailMessage: 'This is an email message example.',
-    file: '/path/to/file.txt',
-    signature: 'Best Regards',
-    setImportance: 'Normal',
-    ccRecipient: 'cc@example.com',
-    bccRecipient: 'bcc@example.com'
-  };
-    this.formFields.forEach(field => {
-      fieldsGroup[field.name] = [existingBotData[field.name] || '', Validators.required];
-    });
-    this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    }
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    this.pages.forEach(element => {
-      let obj ={label:" ",command: () => { this.goToPage(element)}}
-        this.items.push(obj)
-    });
+    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
+    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    // this.pages.forEach(element => {
+    //   let obj ={label:" ",command: () => { this.goToPage(element)}}
+    //     this.items.push(obj)
+    // });
 
-    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
-        });
+    // this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+    //       this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+    //     });
+      })
   }
 
   calculateNodes(): void {
