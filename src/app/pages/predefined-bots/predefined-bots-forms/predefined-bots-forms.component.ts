@@ -587,7 +587,7 @@ if(this.params.type =='edit'){
     console.log(this.selectedFiles)
     this.selectedOption = field
     console.log("this.selectedOption",this.selectedOption)
-    if(this.predefinedBot_uuid =='Pred_RFP'){
+    // if(this.predefinedBot_uuid =='Pred_RFP'){
       const formData = new FormData();
       // this.selectedFiles.forEach(e=>{
       //   formData.append('filePath', e);
@@ -607,7 +607,7 @@ if(this.params.type =='edit'){
           }
         this.filePathValues.push(obj)
       })
-    }
+    // }
   }
 
   onRadioChange(value: string,option_item) {
