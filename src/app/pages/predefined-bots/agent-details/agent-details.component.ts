@@ -186,7 +186,7 @@ export class AgentDetailsComponent implements OnInit {
       this.toaster.toastSuccess("Navigating to Create Agent ")
     }
     else{
-      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "update", id: this.bot?.productId, orchId:this.selected_drop_agent.predefinedOrchestrationBotId } });
+      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId, orchId:this.selected_drop_agent.predefinedOrchestrationBotId } });
       this.toaster.toastSuccess(`Navigating to Update Agent${this.selected_drop_agent.predefinedOrchestrationBotId}`)
     }
     
