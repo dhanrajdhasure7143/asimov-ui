@@ -92,6 +92,7 @@ export class AgentDetailsComponent implements OnInit {
   enabledRun:boolean=false;
 
   // FileTypes for the Agent Files DOwnload 
+  sortOrder: boolean = true;
   fileTypes = [
     { value: '', label: 'All Types' },
     { value: 'pdf', label: 'PDF' },
@@ -260,7 +261,24 @@ export class AgentDetailsComponent implements OnInit {
     this.filteredLogsData = filteredLogs;
     this.currentPage = 1;
     this.updateVisibleLogs();
-}
+  }
+
+  sortLogs(): void {
+    this.filteredLogsData.sort((a, b) => {
+      if (this.sortOrder) {
+        return a.agentName.localeCompare(b.agentName);
+      } else {
+        return b.agentName.localeCompare(a.agentName);
+      }
+    });
+    this.updateVisibleLogs();
+    this.sortOrder = !this.sortOrder;
+    
+  }
+
+  toggleAgentOrder(): void {
+    this.sortLogs();
+  }
 
 downloadLogs(): void {
   this.spinner.show();

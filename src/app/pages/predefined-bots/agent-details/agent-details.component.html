@@ -144,7 +144,7 @@
                         <option value="Failed">Failed</option>
                     </select>
 
-                    <button class="filter-icn" (click)="filterLogsData()">
+                    <button class="filter-icn" (click)="sortLogs()">
                         <i class="pi pi-filter icons-mt"></i> Filter
                     </button>
                     
@@ -157,7 +157,10 @@
             <div class="table-wrapper table-base">
                 <table>
                     <tr class="header-row">
-                        <th>Agent</th>
+                        <!-- <th>Agent</th> -->
+                        <th (click)="toggleAgentOrder()">Agent
+                            <i class="pi" [ngClass]="sortOrder ? 'pi-sort-alpha-down' : 'pi-sort-alpha-up'"></i>
+                        </th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
