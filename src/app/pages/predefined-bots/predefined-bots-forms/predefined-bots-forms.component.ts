@@ -46,6 +46,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   predefinedBot_schedulerRequired:boolean;
   filePathValues:any[]=[];
   checkedOptions: string[] = [];
+  agent_uuid:any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -85,6 +86,8 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   fetchAllFields() {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+      console.log("res: ", res)
+      this.agent_uuid = res.predefinedBotUUID
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
@@ -584,15 +587,19 @@ if(this.params.type =='edit'){
     console.log(this.selectedFiles)
     this.selectedOption = field
     console.log("this.selectedOption",this.selectedOption)
-    if(this.predefinedBot_uuid =='Pred_RFP'){
+    // if(this.predefinedBot_uuid =='Pred_RFP'){
       const formData = new FormData();
       // this.selectedFiles.forEach(e=>{
       //   formData.append('filePath', e);
       // })
 
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        formData.append("filePath", this.selectedFiles[i]);
+        formData.append("file", this.selectedFiles[i]);
       }
+      formData.append("filePath", this.predefinedBot_name);
+      formData.append("predefinedAgentUUID", this.predefinedBot_uuid );
+      formData.append("productId", this.predefinedBot_id);
+
       this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
         console.log("res",res)
         let obj = {filePath:res.fileName,
@@ -600,7 +607,7 @@ if(this.params.type =='edit'){
           }
         this.filePathValues.push(obj)
       })
-    }
+    // }
   }
 
   onRadioChange(value: string,option_item) {
