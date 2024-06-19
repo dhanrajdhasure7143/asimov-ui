@@ -12,6 +12,10 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
   @Input() public options: CronOptions;
   @Input() public isDisplayed : boolean;
   @Input() public isMonthly: boolean;
+  // the name is an Angular convention, @Input variable name + "Change" suffix
+  @Output() cronChange = new EventEmitter();
+  @Output() emitWeeklyValue = new EventEmitter();
+  @Output() emitMonthlyValue = new EventEmitter();
 
   @Input() get cron(): string { return this.localCron; }
   set cron(value: string) {
@@ -19,12 +23,11 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
       this.cronChange.emit(this.localCron);
   }
 
-  // the name is an Angular convention, @Input variable name + "Change" suffix
-  @Output() cronChange = new EventEmitter();
-
   public activeTab: string;
   public selectOptions = this.getSelectOptions();
   public state: any;
+  public fromMonth: string;
+  public toMonth: string;
 
   private localCron: string;
   private isDirty: boolean;
@@ -84,7 +87,8 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
 
     public regenerateCron() {
         this.isDirty = true;
-
+        this.emitWeeklyValue.emit(this.state.weekly);
+        this.emitMonthlyValue.emit(this.state.yearly.specificMonthDay);
         switch (this.activeTab) {
             case "minutes":
                 this.cron = `${this.isCronFlavorQuartz ? this.state.minutes.seconds : ''} */${this.state.minutes.minutes} * * * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
@@ -106,8 +110,8 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
                 break;
             case "weekly":
                 const days = this.selectOptions.days
-                    .reduce((acc, day) => this.state.weekly[day] ? acc.concat([day]) : acc, [])
-                    .join(",");
+                .reduce((acc, day) => this.state.weekly[day] ? acc.concat([day]) : acc, [])
+                .join(",");
                 this.cron = `${this.isCronFlavorQuartz ? this.state.weekly.seconds : ''} ${this.state.weekly.minutes} ${this.hourToCron(this.state.weekly.hours, this.state.weekly.hourType)} ${this.monthDayDefaultChar} * ${days} ${this.yearDefaultChar}`.trim();
                 break;
             case "monthly":
@@ -140,6 +144,8 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
             default:
                 throw "Invalid cron active tab selection";
         }
+        // this.emitWeeklyValue.emit(this.state.weekly);
+
     }
 
     private getAmPmHour(hour: number) {
@@ -311,7 +317,7 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
                 }
             },
             weekly: {
-                MON: true,
+                MON: false,
                 TUE: false,
                 WED: false,
                 THU: false,
@@ -346,7 +352,8 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
             yearly: {
                 subTab: "specificMonthDay",
                 specificMonthDay: {
-                    month: 1,
+                    fromMonth: 1,
+                    toMonth: 1,
                     day: "1",
                     hours: this.getAmPmHour(defaultHours),
                     minutes: defaultMinutes,
@@ -409,4 +416,5 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
         const length = end - start + 1;
         return Array.apply(null, Array(length)).map((_, i) => i + start);
     }
+
 }

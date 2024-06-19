@@ -45,7 +45,7 @@
                     <div class="row align-items-center mb-3">
                         From
                       <div class="col-auto">
-                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.month" [ngClass]="options.formSelectClass">
+                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.fromMonth" [ngClass]="options.formSelectClass">
                           <option *ngFor="let month of selectOptions.months" [ngValue]="month">
                             {{ monthDisplay(month) }}
                           </option>
@@ -53,7 +53,7 @@
                       </div>
                       to
                       <div class="col-auto">
-                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.month" [ngClass]="options.formSelectClass">
+                        <select class="form-control months" (change)="regenerateCron()" [(ngModel)]="state.yearly.specificMonthDay.toMonth" [ngClass]="options.formSelectClass">
                           <option *ngFor="let month of selectOptions.months" [ngValue]="month">
                             {{ monthDisplay(month) }}
                           </option>

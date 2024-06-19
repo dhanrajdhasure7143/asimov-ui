@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { keys } from 'highcharts';
 
 @Component({
   selector: 'app-predefined-scheduler',
@@ -18,7 +19,9 @@ export class PredefinedSchedulerComponent implements OnInit {
   @Output() schedulerData = new EventEmitter<any>();
   @Input() public disabled: boolean;
   @Input() public options: CronOptions;
-
+  selectOptions: any;
+  state: any;
+  
   @Input() get cron(): string { return this.localCron; }
   set cron(value: string) {
         this.localCron = value;
@@ -109,6 +112,8 @@ selectedDays: string[] = [];
 selectedRecurringType: string;
 isDisplayed: boolean= true;
 isMonthly: boolean=true;
+response:any;
+monthlyValue: any;
 
   constructor(
     private rest:RestApiService, 
@@ -195,9 +200,9 @@ gettime(){
 
   // }
 
-  onFrequencyChange(event: any) {
-    this.selectedFrequency = event.target.value;
-    this.selectedRecurringType = 'recurring'; 
+onFrequencyChange(event: any) {
+  this.selectedFrequency = event.target.value;
+  this.selectedRecurringType = 'recurring'; 
 }
 
 onRecurringTypeChange(event: any) {
@@ -482,7 +487,18 @@ public setActiveTab(tab: string, event: any) {
       return false;
     }
   }
+
+  readValue(weeklyResponse){
+    this.response = weeklyResponse;
+  }
+
+  readMonthlyValue(monthlyResponse) {
+    this.monthlyValue = monthlyResponse;
+    console.log("monthlyvalue:", this.monthlyValue);
+  }
+
   add_scheduler(){
+    console.log(this.response)
     // Scheduler
     if(this.isDateToday(this.selecteddate)){
       this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
@@ -505,9 +521,6 @@ public setActiveTab(tab: string, event: any) {
 
   addscheduler(){
     if(this.startdate !="" && this.enddate!=""  && this.starttime!=undefined  && this.timezone!="" && this.timezone!=undefined){
-      if (this.selectedFrequency === 'onetime') {
-        this.cronExpression = '*/5 * * * *';
-      }
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
        let endtime=this.endtime.split(":")
@@ -515,6 +528,29 @@ public setActiveTab(tab: string, event: any) {
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
         //  let data:any;
+
+        if (this.selectedFrequency === 'onetime') {
+          this.cronExpression = '*/5 * * * *';
+        }
+
+        if (this.selectedFrequency === 'recurring' && this.activeTab === 'daily' && this.starttime) {
+          const [hour, minute] = this.starttime.split(':');
+          this.cronExpression = `${minute} ${hour} * * *`;
+        }
+
+        if (this.selectedFrequency === 'recurring' && this.activeTab === 'weekly' && this.starttime) {
+          const days = this.response;
+          const [hour, minute] = this.starttime.split(':');
+          const daysSelected = Object.keys(days).filter(key => days[key] === true);
+          this.cronExpression = `${minute} ${hour} * * ${daysSelected}`;
+        }
+
+        if (this.selectedFrequency === 'recurring' && this.activeTab === 'monthly' && this.starttime) {
+          const months = this.monthlyValue;
+          const [hour, minute] = this.starttime.split(':');
+          const monthsSelected = 
+          this.cronExpression = `${minute} ${hour} * *`;
+        }
 
         let scheduleData= [
           {
@@ -542,6 +578,7 @@ public setActiveTab(tab: string, event: any) {
        // let scheduleArr=[...this.schedule_list];
         //scheduleArr.push(data);
         this.schedulerData.emit(scheduleData)
+        console.log("schedulerData:", this.schedulerData)
         // console.log(data)
         // return
         // this.loader.show()
@@ -858,5 +895,9 @@ public setActiveTab(tab: string, event: any) {
     let endDate:Date=new Date(this.enddate);
     return (startDate > endDate)?true:false;
   }
+
+  // readValue(weeklyResponse){
+  //   this.response = weeklyResponse;
+  // }
 
 }
