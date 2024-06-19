@@ -91,6 +91,36 @@ export class AgentDetailsComponent implements OnInit {
   isConfig:boolean=false;
   enabledRun:boolean=false;
 
+  // FileTypes for the Agent Files DOwnload 
+  fileTypes = [
+    { value: '', label: 'All Types' },
+    { value: 'pdf', label: 'PDF' },
+    { value: 'jpg', label: 'JPG' },
+    { value: 'jpeg', label: 'JPEG' },
+    { value: 'png', label: 'PNG' },
+    { value: 'gif', label: 'GIF' },
+    { value: 'xlsx', label: 'XLSX' },
+    { value: 'xls', label: 'XLS' },
+    { value: 'pptx', label: 'PPTX' },
+    { value: 'ppt', label: 'PPT' },
+    { value: 'mp3', label: 'MP3' },
+    { value: 'mp4', label: 'MP4' },
+    { value: 'wav', label: 'WAV' },
+    { value: 'zip', label: 'ZIP' },
+    { value: 'rar', label: 'RAR' },
+    { value: 'tar', label: 'TAR' },
+    { value: 'gz', label: 'GZ' },
+    { value: 'py', label: 'PY' },
+    { value: 'epub', label: 'EPUB' },
+    { value: 'docx', label: 'DOCX' },
+    { value: 'doc', label: 'DOC' },
+    { value: 'txt', label: 'TXT' },
+    { value: 'csv', label: 'CSV' },
+    { value: 'xml', label: 'XML' },
+    { value: 'html', label: 'HTML' },
+    { value: 'json', label: 'JSON' }
+  ];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
