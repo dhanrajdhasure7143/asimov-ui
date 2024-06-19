@@ -113,7 +113,7 @@ export class AgentDetailsComponent implements OnInit {
       }
     });
 
-    this.getAiAgentUpdateForm();
+    // this.getAiAgentUpdateForm();
     this.updateFilePagination();
   }
 
@@ -250,7 +250,7 @@ downloadLogs(): void {
       const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, `${this.bot.predefinedBotName}-history`);
 
-      this.toaster.toastSuccess("History Downloaded Successfully");
+      this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent History Downloaded Successfully`);
   } catch (error) {
       this.toaster.showError("Failed to Download History");
   } finally {
@@ -320,7 +320,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
       this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
         this.getPredefinedBotsList(this.product_id);
         this.spinner.hide();
-        this.toaster.toastSuccess("Files Deleted Successfully.")
+        this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Deleted Successfully..`)
       }, err => {
         this.spinner.hide();
         this.toaster.showError(this.toastMessage.apierror);
@@ -351,7 +351,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
                     : `data:application/${extension};base64,${fileData}`;
     
                 link.click();
-                this.toaster.toastSuccess("File downloaded successfully");
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
               } else {
                 const zip = new JSZip();
                 const fileNames = new Set();
@@ -374,7 +374,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
                 zip.generateAsync({ type: "blob" }).then((content) => {
                   FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
                 });
-                this.toaster.toastSuccess("File's downloaded successfully");
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
               }
             } else {
               this.toaster.showError("Error Downloading Files.");
@@ -578,19 +578,22 @@ goToPreviousPage(): void {
     let id=this.selected_drop_agent.predefinedOrchestrationBotId
     this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
       this.spinner.hide();
-      this.remaining_exe=""
-      this.new_array=[]
-      this.logs_full=[]
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
         this.getPredefinedBotsList(this.product_id);
       }
       else if(res.status){
         this.toaster.toastSuccess(res.status)
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
         this.getPredefinedBotsList(this.product_id);
       }
       else{
-        this.toaster.showWarn(res.errorMessage)
+        this.toaster.toastSuccess(res.errorMessage)
       }
     }, err => {
       this.spinner.hide();
@@ -598,13 +601,13 @@ goToPreviousPage(): void {
     });
   } 
 
-  getAiAgentUpdateForm(){
-    this.spinner.show()
-    this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
-      this.spinner.hide(); 
-    }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
-    });
-  }
+  // getAiAgentUpdateForm(){
+  //   this.spinner.show()
+  //   this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
+  //     this.spinner.hide(); 
+  //   }, err => {
+  //     this.spinner.hide();
+  //     this.toaster.showError(this.toastMessage.apierror);
+  //   });
+  // }
 }
