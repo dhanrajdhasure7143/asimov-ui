@@ -105,8 +105,8 @@
                 <h3><img src="../../../../assets/images/agent/upload-pin.svg" alt="Upload icon" class="svg-icons">
                     Uploaded Data</h3>
                 <div class="icons">
-                    <img src="../../../../assets/images/agent/download-icon.svg" pTooltip="Download Files" tooltipPosition="top" alt="Download icon" (click)="downloadAgentFiles()" class="svg-icons svg-dwld-btn">
-                    <img src="../../../../assets/images/agent/delete-agent.svg" pTooltip="Delete Files" tooltipPosition="top" alt="Delete icon" (click)="deleteAgentFiles()" class="svg-icons svg-dwld-btn">
+                    <img src="../../../../assets/images/agent/download-icon.svg"  [class.disabled-btns]="file.length < 1"  pTooltip="Download Files" tooltipPosition="top" alt="Download icon" (click)="downloadAgentFiles()" class="svg-icons svg-dwld-btn">
+                    <img src="../../../../assets/images/agent/delete-agent.svg" [class.disabled-btns]="file.length < 1" pTooltip="Delete Files" tooltipPosition="top" alt="Delete icon" (click)="deleteAgentFiles()" class="svg-icons svg-dwld-btn">
                 </div>
             </div>
 

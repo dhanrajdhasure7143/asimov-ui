@@ -315,75 +315,83 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   }
 
   deleteAgentFiles(){
-    this.spinner.show();
-    this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
-      this.getPredefinedBotsList(this.product_id);
-      this.spinner.hide();
-      this.toaster.toastSuccess("Files Deleted Successfully.")
-    }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
-    });
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
+        this.getPredefinedBotsList(this.product_id);
+        this.spinner.hide();
+        this.toaster.toastSuccess("Files Deleted Successfully.")
+      }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
+      });
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
 
   downloadAgentFiles() {
-    this.spinner.show();
-    this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
-      (response: any) => {
-        if (response.code == 4200) {
-          const resp_data = response.data;
-          if (resp_data.length > 0) {
-            if (resp_data.length == 1) {
-              const fileName = resp_data[0].fileName;
-              const fileData = resp_data[0].downloadedFile;
-              const link = document.createElement("a");
-              const extension = fileName.split('.').pop();
-  
-              link.download = fileName;
-              link.href =
-                extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-                  ? `data:image/${extension};base64,${fileData}`
-                  : `data:application/${extension};base64,${fileData}`;
-  
-              link.click();
-              this.toaster.toastSuccess("File downloaded successfully");
-            } else {
-              const zip = new JSZip();
-              const fileNames = new Set();
-  
-              resp_data.forEach((value) => {
-                let fileName = value.fileName;
-                const fileData = value.downloadedFile;
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
+        (response: any) => {
+          if (response.code == 4200) {
+            const resp_data = response.data;
+            if (resp_data.length > 0) {
+              if (resp_data.length == 1) {
+                const fileName = resp_data[0].fileName;
+                const fileData = resp_data[0].downloadedFile;
+                const link = document.createElement("a");
                 const extension = fileName.split('.').pop();
-                const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-                let counter = 1;
-  
-                while (fileNames.has(fileName)) {
-                  fileName = `${baseName}_${counter}.${extension}`;
-                  counter++;
-                }
-                fileNames.add(fileName);
-                zip.file(fileName, fileData, { base64: true });
-              });
-  
-              zip.generateAsync({ type: "blob" }).then((content) => {
-                FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
-              });
-              this.toaster.toastSuccess("File's downloaded successfully");
+    
+                link.download = fileName;
+                link.href =
+                  extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                    ? `data:image/${extension};base64,${fileData}`
+                    : `data:application/${extension};base64,${fileData}`;
+    
+                link.click();
+                this.toaster.toastSuccess("File downloaded successfully");
+              } else {
+                const zip = new JSZip();
+                const fileNames = new Set();
+    
+                resp_data.forEach((value) => {
+                  let fileName = value.fileName;
+                  const fileData = value.downloadedFile;
+                  const extension = fileName.split('.').pop();
+                  const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                  let counter = 1;
+    
+                  while (fileNames.has(fileName)) {
+                    fileName = `${baseName}_${counter}.${extension}`;
+                    counter++;
+                  }
+                  fileNames.add(fileName);
+                  zip.file(fileName, fileData, { base64: true });
+                });
+    
+                zip.generateAsync({ type: "blob" }).then((content) => {
+                  FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
+                });
+                this.toaster.toastSuccess("File's downloaded successfully");
+              }
+            } else {
+              this.toaster.showError("Error Downloading Files.");
             }
           } else {
             this.toaster.showError("Error Downloading Files.");
           }
-        } else {
-          this.toaster.showError("Error Downloading Files.");
+          this.spinner.hide();
+        },
+        (error) => {
+          this.toaster.showError("Error");
+          this.spinner.hide();
         }
-        this.spinner.hide();
-      },
-      (error) => {
-        this.toaster.showError("Error");
-        this.spinner.hide();
-      }
-    );
+      );
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
 
   updatePagination(): void {

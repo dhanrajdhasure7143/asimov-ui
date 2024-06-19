@@ -731,16 +731,6 @@ input[type=checkbox] {
     }
 }
 
-/* .p-dropdown{
-    height: 54px !important;
-    border-radius: 10px !important;
-    padding: 10px 25px 10px 15px !important;
-    font-weight: 500;
-    font-size: 18px !important;
-    border-color: #CFCACA !important;
-    
-} */
-
 .custom-dropdown{
     height: 54px !important;
     border-radius: 10px !important;
@@ -752,6 +742,8 @@ input[type=checkbox] {
     background: white !important;
 }
 
-/* .p-dropdown-label{
-    font-size: 18px !important;
-} */
+.disabled-btns{
+    opacity: 0.9;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
