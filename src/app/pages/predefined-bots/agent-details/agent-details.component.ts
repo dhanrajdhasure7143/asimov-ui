@@ -575,15 +575,15 @@ goToPreviousPage(): void {
       this.logs_full=[]
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
+        this.getPredefinedBotsList(this.product_id);
       }
       else if(res.status){
-        this.toaster.showWarn(res.status)
+        this.toaster.toastSuccess(res.status)
+        this.getPredefinedBotsList(this.product_id);
       }
       else{
         this.toaster.showWarn(res.errorMessage)
       }
-      this.getPredefinedBotsList(this.product_id);
-      
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessage.apierror);
