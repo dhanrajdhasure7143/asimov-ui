@@ -118,7 +118,7 @@ export class AgentDetailsComponent implements OnInit {
       }
     });
 
-    this.getAiAgentUpdateForm();
+    // this.getAiAgentUpdateForm();
     this.updateFilePagination();
   }
 

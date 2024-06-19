@@ -522,3 +522,42 @@
     padding-right: 0px;
     padding-left: 0px;
 }
+
+ 
+.quantity-controls {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: center;
+  }
+ 
+  .quantity-btn {
+    padding: 4px 8px; /* Adjust padding to make buttons smaller */
+    font-size: 14px; /* Adjust font size */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+ 
+  .quantity-btn:hover {
+    background-color: #0056b3;
+  }
+ 
+  .quantity-btn:active {
+    background-color: #0056b3;
+    transform: translateY(1px);
+  }
+ 
+  .quantity-btn[disabled] {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+  }
+ 
+  input[type="number"] {
+    padding: 4px;
+    font-size: 14px; /* Adjust font size */
+    width: 40px; /* Adjust width */
+    text-align: center;
+  }
+ 
