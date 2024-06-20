@@ -1,6 +1,9 @@
 <div class="container mt-3">
     <div class="form-flow predefined-bots">
         <div class="p-name">
+            <button class="back-button" (click)="goBackAgentHome()">
+                &larr; Go Back
+            </button>
             <h4 *ngIf="processName">{{ processName }}</h4>
         </div>
 
