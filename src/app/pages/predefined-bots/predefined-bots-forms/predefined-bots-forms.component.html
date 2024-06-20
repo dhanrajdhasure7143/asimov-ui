@@ -75,7 +75,7 @@
                                        [id]="option.value" 
                                        [value]="option.label" 
                                        [formControlName]="option.value"
-                                       (change)="onCheckboxChange($event, option)">
+                                       (change)="onCheckboxChange($event, option,'onchange')">
                                 {{ option.label }}
                             </label>
                         </div>

@@ -598,8 +598,15 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.validate_errorMessage=[];
   }
 
-  onCheckboxChange(event: Event, option:any) {
-    const checkbox = event.target as HTMLInputElement;
+  onCheckboxChange(event, option:any,type:any) {
+    let checkbox:any
+    let checkValue:any
+    if(type == "onchange"){
+        checkbox = event.target as HTMLInputElement;
+        checkValue = checkbox.checked;
+    }else{
+      checkValue = event;
+    }
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
     let array;
@@ -609,7 +616,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       console.error("Parsing error:", e);
     }
 
-    if (checkbox.checked) {
+    if (checkValue) {
       this.checkedOptions.push(option.value);
     } else {
       const index = this.checkedOptions.indexOf(option.value);
@@ -621,7 +628,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
 
     if (Array.isArray(array)) {
-      if (checkbox.checked) {
+      if (checkValue) {
         // formArray.push(this.fb.control(label));
         array.forEach((element: any) => {
           const field = this.formFields.find(item => item.preAttributeName === element);
@@ -694,15 +701,6 @@ export class PredefinedBotsFormsComponent implements OnInit {
   generateDynamicFormUpdate(){
     const fieldsGroup = {};
     // console.log("formFields",JSON.stringify(this.formFields))
-    // let data = [
-    //   {"attributeRequired":true,"maxNumber":100,"minMumber":0,"placeholder":"Enter Agent Name","preAttributeLable":"Automation Agent Name","preAttributeName":"botName","preAttributeType":"text","visibility":true,"preAttributeValue":"RFP"},
-    //   {"id":102,"preAttributeType":"checkbox","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFP_dropdown","preAttributeLable":"AI Action","placeholder":null,"attributeOrderBy":1,"preAttributeValue":"true","agentName":"Test_2","options":[{"field":"['RFPBotOne_75267_Download Jackrabbit File_fileName','RFPBotOne_75273_Send Mail_sendTo']","label":"RFP Summarizer","value":"RFP_Summarizer","ifTrue":"RFPBotOne_75279_If_condition:str_contains(\"true\",\"true\")","checked":true,"ifFalse":"RFPBotOne_75279_If_condition:str_contains(\"true\",\"false\")"},{"field":"['RFPBotOne_75275_Download Jackrabbit File_fileName','RFPBotOne_74641_Download Jackrabbit File_fileName','RFPBotOne_75266_Send Mail_sendTo']","label":"Proposal Generator","value":"Proposal_Generator","ifTrue":"RFPBotOne_75276_If_condition:str_contains(\"true\",\"true\")","checked":false,"ifFalse":"RFPBotOne_75276_If_condition:str_contains(\"true\",\"false\")"}],"visibility":true,"attributeRequired":true,"duplicate":false},
-    //   {"id":110,"preAttributeType":"file","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFPBotOne_75267_Download Jackrabbit File_fileName","preAttributeLable":"RFP Document","placeholder":"upload summary pdf","attributeOrderBy":2,"preAttributeValue":"predefined/RFP/ca1463d3-d318-46df-88f4-c14383ac4dd6_cleanup_removeRecords.sql","agentName":"Test_2","options":null,"visibility":false,"attributeRequired":false,"duplicate":false},
-    //   {"id":105,"preAttributeType":"text","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFPBotOne_75273_Send Mail_sendTo","preAttributeLable":"Enter Summary Email","placeholder":"Enter Summary Email","attributeOrderBy":3,"preAttributeValue":"test@gmail.com","agentName":"Test_2","options":null,"visibility":false,"attributeRequired":false,"duplicate":false},
-    //   {"id":112,"preAttributeType":"file","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFPBotOne_75275_Download Jackrabbit File_fileName","preAttributeLable":"Sample RFPs and Relevant Documents","placeholder":"upload collection creation","attributeOrderBy":4,"preAttributeValue":"","agentName":"Test_2","options":null,"visibility":false,"attributeRequired":false,"duplicate":false},
-    //   {"id":111,"preAttributeType":"file","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFPBotOne_74641_Download Jackrabbit File_fileName","preAttributeLable":"Response Template","placeholder":"upload document generator","attributeOrderBy":5,"preAttributeValue":"","agentName":"Test_2","options":null,"visibility":false,"attributeRequired":false,"duplicate":false},
-    //   {"id":113,"preAttributeType":"text","productId":"prod_Q7bUSFihJEtZYR","maxNumber":1000,"minNumber":1,"preAttributeName":"RFPBotOne_75266_Send Mail_sendTo","preAttributeLable":"Enter document generator mail id","placeholder":"Enter document generator mail id","attributeOrderBy":6,"preAttributeValue":"","agentName":"Test_2","options":null,"visibility":false,"attributeRequired":false,"duplicate":false},
-    // ]
     this.formFields.forEach(field => {
       if(field.attributeRequired){
         if(field.preAttributeType == "checkbox"){
@@ -715,7 +713,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
               console.log("filteredFields", filteredFields);
               if (filteredFields.preAttributeValue) {
                 fieldsGroup[option.value] = [true, Validators.required];
-                this.onCheckboxChangeOnUpdate(true, option);
+                this.onCheckboxChange(true, option, "onUpdate");
               } else {
                 fieldsGroup[option.value] = ["", Validators.required];
               }
