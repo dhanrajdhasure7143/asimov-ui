@@ -4,14 +4,14 @@
             <h4 *ngIf="processName">{{ processName }}</h4>
         </div>
 
-        <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false">
+        <!-- <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"> -->
         <!-- <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"> -->
             <!-- <ng-template let-item pTemplate="item">
               <div (click)="goToPage(item)">
                 Step {{ item }}
               </div>
             </ng-template> -->
-          </p-steps>          
+          <!-- </p-steps>           -->
 
           <div class="form-container" [formGroup]="predefinedBotsForm">
             <div formGroupName="fields">
@@ -69,9 +69,9 @@
                             <label class="form-check-label">
                                 <input type="checkbox" 
                                        class="form-check-input" 
-                                       [id]="field.preAttributeName + '_' + option.label" 
+                                       [id]="option.value" 
                                        [value]="option.label" 
-                                       [formControlName]="field.preAttributeName" 
+                                       [formControlName]="option.value"
                                        (change)="onCheckboxChange($event, option)">
                                 {{ option.label }}
                             </label>
@@ -97,12 +97,14 @@
 
 
                         <!-- Update error messages to display preAttributeLable -->
-                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
-                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
-                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
-                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
-                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.maxlength">{{ field.preAttributeLable }} can't be longer than {{ field.maxNumber }} characters.</div>
-                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.pattern">{{ field.preAttributeLable }} has an invalid format.</div>
+                         <div *ngIf="field.preAttributeType != 'checkbox'">
+                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.maxlength">{{ field.preAttributeLable }} can't be longer than {{ field.maxNumber }} characters.</div>
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.pattern">{{ field.preAttributeLable }} has an invalid format.</div>
+                            </div>
                         </div>
                         <!-- <div class="required" *ngIf="predefinedBotsForm.get(field.preAttributeName) && predefinedBotsForm.get(field.preAttributeName).invalid && (predefinedBotsForm.get(field.preAttributeName).dirty || predefinedBotsForm.get(field.preAttributeName).touched)">
                             <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.required">Field is required.</div>
@@ -166,9 +168,9 @@
             <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
               <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
               <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
-              <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button>
+              <!-- <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button> -->
               <button *ngIf="params.type=='create' && isLastPage" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid">Save</button>
-              <button *ngIf="params.type=='edit' && isLastPage" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid">Update Bot</button>
+              <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid">Update Bot</button>
           </div>
         </div>
     </div>
