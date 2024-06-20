@@ -1227,6 +1227,7 @@ this.rest_api.getusersListByProjectId(this.project_id).subscribe((res:any)=>{
         ele["taskCount"]=element.taskCount?element.taskCount:0
     })
   });
+  this.dt.updateExistingUsersList(this.existingUsersList);
   this.onUsersTab(tab_index?tab_index:0);
 })
 }
