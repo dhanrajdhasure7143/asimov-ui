@@ -34,12 +34,7 @@ export class AgentDetailsComponent implements OnInit {
     {
       subscriptionHeading: "Subscription",
       warningMessage: "Your Subscription expiring soon!",
-      expanded: false,
-      date: "2024-06-05",
-      expirationDate: "2024-07-05",
-      amount: "$10.00",
-      purchase: "Online Store",
-      remaining_exe:"5"
+      expanded: false
     }
   ];
 
@@ -96,6 +91,37 @@ export class AgentDetailsComponent implements OnInit {
   isConfig:boolean=false;
   enabledRun:boolean=false;
 
+  // FileTypes for the Agent Files DOwnload 
+  sortOrder: boolean = true;
+  fileTypes = [
+    { value: '', label: 'All Types' },
+    { value: 'pdf', label: 'PDF' },
+    { value: 'jpg', label: 'JPG' },
+    { value: 'jpeg', label: 'JPEG' },
+    { value: 'png', label: 'PNG' },
+    { value: 'gif', label: 'GIF' },
+    { value: 'xlsx', label: 'XLSX' },
+    { value: 'xls', label: 'XLS' },
+    { value: 'pptx', label: 'PPTX' },
+    { value: 'ppt', label: 'PPT' },
+    { value: 'mp3', label: 'MP3' },
+    { value: 'mp4', label: 'MP4' },
+    { value: 'wav', label: 'WAV' },
+    { value: 'zip', label: 'ZIP' },
+    { value: 'rar', label: 'RAR' },
+    { value: 'tar', label: 'TAR' },
+    { value: 'gz', label: 'GZ' },
+    { value: 'py', label: 'PY' },
+    { value: 'epub', label: 'EPUB' },
+    { value: 'docx', label: 'DOCX' },
+    { value: 'doc', label: 'DOC' },
+    { value: 'txt', label: 'TXT' },
+    { value: 'csv', label: 'CSV' },
+    { value: 'xml', label: 'XML' },
+    { value: 'html', label: 'HTML' },
+    { value: 'json', label: 'JSON' }
+  ];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -134,7 +160,6 @@ export class AgentDetailsComponent implements OnInit {
 
       if (agent) {
         this.current_agent_details = agent;
-        console.log("CURRENT AGENT: ",this.current_agent_details)
         this.remaining_exe = agent.remaining_executions;
 
         this.isConfig=this.current_agent_details.is_config_enable
@@ -175,19 +200,13 @@ export class AgentDetailsComponent implements OnInit {
     });
   }
 
-  // onclickBot() {
-  //   this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-  // }
-
   onclickBot() {
 
     if(this.isConfig && (this.selected_drop_agent === null || this.selected_drop_agent === undefined)){
       this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-      // this.toaster.toastSuccess("Navigating to Create Agent ")
     }
     else{
       this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId, orchId:this.selected_drop_agent.predefinedOrchestrationBotId } });
-      // this.toaster.toastSuccess(`Navigating to Update Agent${this.selected_drop_agent.predefinedOrchestrationBotId}`)
     }
     
   }
@@ -242,7 +261,24 @@ export class AgentDetailsComponent implements OnInit {
     this.filteredLogsData = filteredLogs;
     this.currentPage = 1;
     this.updateVisibleLogs();
-}
+  }
+
+  sortLogs(): void {
+    this.filteredLogsData.sort((a, b) => {
+      if (this.sortOrder) {
+        return a.agentName.localeCompare(b.agentName);
+      } else {
+        return b.agentName.localeCompare(a.agentName);
+      }
+    });
+    this.updateVisibleLogs();
+    this.sortOrder = !this.sortOrder;
+    
+  }
+
+  toggleAgentOrder(): void {
+    this.sortLogs();
+  }
 
 downloadLogs(): void {
   this.spinner.show();
@@ -262,7 +298,7 @@ downloadLogs(): void {
       const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, `${this.bot.predefinedBotName}-history`);
 
-      this.toaster.toastSuccess("History Downloaded Successfully");
+      this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent History Downloaded Successfully`);
   } catch (error) {
       this.toaster.showError("Failed to Download History");
   } finally {
@@ -327,75 +363,83 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   }
 
   deleteAgentFiles(){
-    this.spinner.show();
-    this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
-      this.getPredefinedBotsList(this.product_id);
-      this.spinner.hide();
-      this.toaster.toastSuccess("Files Deleted Successfully.")
-    }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
-    });
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
+        this.getPredefinedBotsList(this.product_id);
+        this.spinner.hide();
+        this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Deleted Successfully..`)
+      }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
+      });
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
 
   downloadAgentFiles() {
-    this.spinner.show();
-    this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
-      (response: any) => {
-        if (response.code == 4200) {
-          const resp_data = response.data;
-          if (resp_data.length > 0) {
-            if (resp_data.length == 1) {
-              const fileName = resp_data[0].fileName;
-              const fileData = resp_data[0].downloadedFile;
-              const link = document.createElement("a");
-              const extension = fileName.split('.').pop();
-  
-              link.download = fileName;
-              link.href =
-                extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-                  ? `data:image/${extension};base64,${fileData}`
-                  : `data:application/${extension};base64,${fileData}`;
-  
-              link.click();
-              this.toaster.toastSuccess("File downloaded successfully");
-            } else {
-              const zip = new JSZip();
-              const fileNames = new Set();
-  
-              resp_data.forEach((value) => {
-                let fileName = value.fileName;
-                const fileData = value.downloadedFile;
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
+        (response: any) => {
+          if (response.code == 4200) {
+            const resp_data = response.data;
+            if (resp_data.length > 0) {
+              if (resp_data.length == 1) {
+                const fileName = resp_data[0].fileName;
+                const fileData = resp_data[0].downloadedFile;
+                const link = document.createElement("a");
                 const extension = fileName.split('.').pop();
-                const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-                let counter = 1;
-  
-                while (fileNames.has(fileName)) {
-                  fileName = `${baseName}_${counter}.${extension}`;
-                  counter++;
-                }
-                fileNames.add(fileName);
-                zip.file(fileName, fileData, { base64: true });
-              });
-  
-              zip.generateAsync({ type: "blob" }).then((content) => {
-                FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
-              });
-              this.toaster.toastSuccess("File's downloaded successfully");
+    
+                link.download = fileName;
+                link.href =
+                  extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                    ? `data:image/${extension};base64,${fileData}`
+                    : `data:application/${extension};base64,${fileData}`;
+    
+                link.click();
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
+              } else {
+                const zip = new JSZip();
+                const fileNames = new Set();
+    
+                resp_data.forEach((value) => {
+                  let fileName = value.fileName;
+                  const fileData = value.downloadedFile;
+                  const extension = fileName.split('.').pop();
+                  const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                  let counter = 1;
+    
+                  while (fileNames.has(fileName)) {
+                    fileName = `${baseName}_${counter}.${extension}`;
+                    counter++;
+                  }
+                  fileNames.add(fileName);
+                  zip.file(fileName, fileData, { base64: true });
+                });
+    
+                zip.generateAsync({ type: "blob" }).then((content) => {
+                  FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
+                });
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
+              }
+            } else {
+              this.toaster.showError("Error Downloading Files.");
             }
           } else {
             this.toaster.showError("Error Downloading Files.");
           }
-        } else {
-          this.toaster.showError("Error Downloading Files.");
+          this.spinner.hide();
+        },
+        (error) => {
+          this.toaster.showError("Error");
+          this.spinner.hide();
         }
-        this.spinner.hide();
-      },
-      (error) => {
-        this.toaster.showError("Error");
-        this.spinner.hide();
-      }
-    );
+      );
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
 
   updatePagination(): void {
@@ -524,8 +568,6 @@ goToPreviousPage(): void {
   onAgentChange(event: any): void {
     this.selected_drop_agent = event.value;
     this.enabledRun=true
-    // this.isConfig=this.current_agent_details.is_config_enable
-    console.log('Selected Drop Agent Details:', this.selected_drop_agent);
   }
 
   agentDropdownList(agent_details){
@@ -563,7 +605,6 @@ goToPreviousPage(): void {
   getAIAgentHistory(id) {
     this.spinner.show();
     this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
-        console.log("HISTORY: ", res.data);
 
         this.logs_full = res.data;
         this.logs_full.sort((a, b) => {
@@ -585,37 +626,36 @@ goToPreviousPage(): void {
     let id=this.selected_drop_agent.predefinedOrchestrationBotId
     this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
       this.spinner.hide();
-      this.remaining_exe=""
-      this.new_array=[]
-      this.logs_full=[]
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
+        this.getPredefinedBotsList(this.product_id);
       }
       else if(res.status){
-        this.toaster.showWarn(res.status)
+        this.toaster.toastSuccess(res.status)
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
+        this.getPredefinedBotsList(this.product_id);
       }
       else{
-        this.toaster.showWarn(res.errorMessage)
+        this.toaster.toastSuccess(res.errorMessage)
       }
-      this.getPredefinedBotsList(this.product_id);
-      
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessage.apierror);
     });
   } 
 
-  getAiAgentUpdateForm(){
-    this.spinner.show()
-    this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
-
-
-      console.log("THis is the Update form Getting from the API: ", res.data)
-
-      this.spinner.hide(); 
-    }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
-    });
-  }
+  // getAiAgentUpdateForm(){
+  //   this.spinner.show()
+  //   this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
+  //     this.spinner.hide(); 
+  //   }, err => {
+  //     this.spinner.hide();
+  //     this.toaster.showError(this.toastMessage.apierror);
+  //   });
+  // }
 }

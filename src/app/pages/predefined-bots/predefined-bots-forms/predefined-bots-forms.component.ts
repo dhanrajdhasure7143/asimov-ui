@@ -298,11 +298,14 @@ if(this.params.type =='edit'){
   }
 
   goBackList(){
-    if(this.params.type == "create"){
-      this.router.navigate(["/pages/predefinedbot/home"]);
-    }else{
-      this.router.navigate(["/pages/predefinedbot/list"]);
-    }
+    // if(this.params.type == "create"){
+    //   this.router.navigate(["/pages/predefinedbot/home"]);
+    // }else{
+    //   this.router.navigate(["/pages/predefinedbot/list"]);
+    // }
+
+    // Navigat to the Agent Details Screen.
+    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   navigateForm(){
@@ -726,5 +729,9 @@ if(this.params.type =='edit'){
   clearValidators(item){
     this.predefinedBotsForm.get("fields."+item).clearValidators(); 
     this.predefinedBotsForm.get("fields."+item).updateValueAndValidity();
+  }
+
+  goBackAgentHome(){
+    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 }
