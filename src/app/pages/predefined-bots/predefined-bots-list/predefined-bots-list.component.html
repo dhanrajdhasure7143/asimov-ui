@@ -20,8 +20,28 @@
             </div>
         </div>
         <div *ngIf="predefined_botsList.length ===0" class="centered-message">
-            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-            No Agent Found ... Please Subscribe to the Agents
+            <div *ngIf="!showSkeleton">
+                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                No Agent Found ... Please Subscribe to the Agents
+            </div>
+               
+            <div *ngIf="showSkeleton">
+                <div class="p-grid p-formgrid skeleton-box">
+                    <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3]">
+                      <div class="custom-skeleton">
+                        <div class="skeleton-header">
+                          <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
+                          <p-skeleton width="13rem" height="1.7rem"></p-skeleton>
+                        </div>
+                        <p-skeleton width="100%" height="100px" styleClass="info-skeleton"></p-skeleton>
+                        <div class="skeleton-footer">
+                          <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                          <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>                    
         </div>
     </div>
 
@@ -55,8 +75,10 @@
             No Agent Found ...
         </div>
         <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
-            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-            We are working on more AI Agents ...
+            <div>
+                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                We are working on more AI Agents ...
+            </div> 
         </div>
     </div>
 </div>

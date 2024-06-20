@@ -4,6 +4,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import {SkeletonModule} from 'primeng/skeleton';
 
 @Component({
   selector: 'app-predefined-bots-list',
@@ -17,6 +18,7 @@ export class PredefinedBotsListComponent implements OnInit {
   unsubscribed_agents:any[]=[];
   displayModal: boolean = false;
   selectedBot: any;
+  showSkeleton:boolean = true;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -42,6 +44,7 @@ export class PredefinedBotsListComponent implements OnInit {
                 this.unsubscribed_agents.push(botDetails)
                 this.filteredBotsList.push(botDetails);
             }
+            this.showSkeleton=!this.showSkeleton
         });
         this.spinner.hide();
     }, err => {
