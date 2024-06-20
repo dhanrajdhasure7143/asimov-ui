@@ -98,9 +98,14 @@
                             </div>
                         </div>
                     </div>
+                                        
                     <div class="tab-pane" [ngClass]="{'active': activeTab === 'monthly'}">
                         <div class="col p-0 form-group">
-                            <app-predefined-cron [isMonthly]="isMonthly" [(options)]="cronOptions" [(cron)]="cronExpression" (emitMonthlyValue)="monthlyValue($event)"></app-predefined-cron>
+                            <app-predefined-cron [isMonthly]="isMonthly" [(options)]="cronOptions" [(cron)]="cronExpression" (emitMonthlyValue)="readMonthlyValue($event)"></app-predefined-cron>
+                        <div class="col-md-4 p-1 form-group">
+                            <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onChangeHour($event, 'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                            <span class="required" *ngIf="beforetime">{{starttimeerror}}</span>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -113,7 +118,7 @@
                     <input type="date" (change)="dateChange($event,'startdate')" [min]="mindate" class="rpa-control form-control" [(ngModel)]="startdate" id="txtDate">
                 </div>
                 <div class="col-md-6 p-1 form-group">
-                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onOnetimeChange($event,'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                    <ngx-timepicker-field [controlOnly]="true" (timeChanged)="onOnetimeChange($event,'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
                     <span class='required' *ngIf="beforetime">{{starttimeerror}}</span>
                 </div>
             </div>
@@ -142,7 +147,7 @@
     </div> -->
 
     <div class="col-12 p-0 form-group">
-        <button class="btn bluebg-button" [disabled]="beforetime==true  || compareScheduleDates" (click)="add_scheduler()"  style="float: inline-end;">Add</button>
+        <button class="btn bluebg-button" [disabled]= "isButtonDisabled" (click)="add_scheduler()"  style="float: inline-end;">Add</button>
     </div>
     <!-- <div class="row justify-content-end scheduletimer-actionbtns">
         <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">

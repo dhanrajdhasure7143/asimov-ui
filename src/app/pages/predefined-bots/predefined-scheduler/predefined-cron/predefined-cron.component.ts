@@ -15,8 +15,7 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
   // the name is an Angular convention, @Input variable name + "Change" suffix
   @Output() cronChange = new EventEmitter();
   @Output() emitWeeklyValue = new EventEmitter();
-  @Output() emitMonthlyValue = new EventEmitter();
-
+  @Output() emitMonthlyValue = new EventEmitter<{ fromMonth: any, toMonth: any, day: any }>();
   @Input() get cron(): string { return this.localCron; }
   set cron(value: string) {
       this.localCron = value;
@@ -88,7 +87,10 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
     public regenerateCron() {
         this.isDirty = true;
         this.emitWeeklyValue.emit(this.state.weekly);
-        this.emitMonthlyValue.emit(this.state.yearly.specificMonthDay);
+        const fromMonth = this.state.yearly.specificMonthDay.fromMonth;
+        const toMonth = this.state.yearly.specificMonthDay.toMonth;
+        const day =  this.state.yearly.specificMonthDay.day;
+        this.emitMonthlyValue.emit({ fromMonth, toMonth, day });
         switch (this.activeTab) {
             case "minutes":
                 this.cron = `${this.isCronFlavorQuartz ? this.state.minutes.seconds : ''} */${this.state.minutes.minutes} * * * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
@@ -144,8 +146,6 @@ export class PredefinedCronComponent implements OnInit, OnChanges {
             default:
                 throw "Invalid cron active tab selection";
         }
-        // this.emitWeeklyValue.emit(this.state.weekly);
-
     }
 
     private getAmPmHour(hour: number) {
