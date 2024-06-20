@@ -4117,7 +4117,7 @@ padding: 0px 30px;}
 
 .sdk-table .p-datatable-wrapper td:nth-child(1) span,
 .sdk-table .p-datatable-wrapper td:nth-child(5) span { /* for sdk-table grid CSS*/
-  width: 250px;
+  width: 230px;
   display: block;
 }
 
