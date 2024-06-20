@@ -124,7 +124,7 @@
                                                 <p-dropdown [options]="users_list" [filter]="true"
                                                     [style]="{'width':'100%'}" filterBy="user_email,fullName" required
                                                     [autoDisplayFirst]="false" placeholder="Select Assignee"
-                                                    [(ngModel)]="resources" optionValue="user_email" optionLabel="fullName">
+                                                    [(ngModel)]="resources" optionValue="user_email" optionLabel="fullName" (onChange)="onAssigneeChange($event)">
                                                 </p-dropdown>
                                                 <span class="editfields">
                                                     <i class="pi pi-check" (click)="onUpdateDetails('resources')"></i>

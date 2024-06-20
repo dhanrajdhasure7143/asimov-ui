@@ -119,7 +119,31 @@
                                     </div>
                                   </div>
                                 </div>
-                            </div>      
+                            </div>  
+                            <ng-container *ngFor="let detail of plan.priceCollection">
+                                <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
+                                    <div class="quantity-controls"  *ngIf="!detail.isPlanSubscribed && plan.isSelected">
+                                    <button class="quantity-btn" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 1">
+                                        <i class="fa fa-minus"></i>
+                                      </button>
+                                      <input type="number" [value]="plan.quantity" readonly>
+                                      <button class="quantity-btn" (click)="incrementQuantity(plan)">
+                                        <i class="fa fa-plus"></i>
+                                      </button>
+                                  </div>
+                                </div>
+                                <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' ">
+                                    <div class="quantity-controls"  *ngIf="!detail.isPlanSubscribed && plan.isSelected">
+                                        <button class="quantity-btn" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 1">
+                                            <i class="fa fa-minus"></i>
+                                          </button>
+                                          <input type="number" [value]="plan.quantity" readonly>
+                                          <button class="quantity-btn" (click)="incrementQuantity(plan)">
+                                            <i class="fa fa-plus"></i>
+                                          </button>
+                                  </div>
+                                </div>
+                                </ng-container>    
                         </div>                         
                     </div>
                 </div>
