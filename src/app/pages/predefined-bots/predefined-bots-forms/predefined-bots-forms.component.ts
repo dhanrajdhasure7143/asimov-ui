@@ -258,11 +258,14 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   goBackList(){
-    if(this.params.type == "create"){
-      this.router.navigate(["/pages/predefinedbot/home"]);
-    }else{
-      this.router.navigate(["/pages/predefinedbot/list"]);
-    }
+    // if(this.params.type == "create"){
+    //   this.router.navigate(["/pages/predefinedbot/home"]);
+    // }else{
+    //   this.router.navigate(["/pages/predefinedbot/list"]);
+    // }
+
+    // Navigat to the Agent Details Screen.
+    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   navigateForm(){
@@ -773,5 +776,9 @@ export class PredefinedBotsFormsComponent implements OnInit {
         });
       }
     }
+  }
+
+  goBackAgentHome(){
+    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 }
