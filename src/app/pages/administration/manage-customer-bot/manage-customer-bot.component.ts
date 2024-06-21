@@ -55,6 +55,7 @@ export class ManageCustomerBotComponent implements OnInit {
   { label: 'TrainModel', value: 'TRAIN-MODEL' },
   { label: 'Document', value: 'DOC' },
 ];
+  botNameCheck: boolean;
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -449,4 +450,16 @@ onUploadeMode(botName:any) {
       (error) => {
       }
     );
-}}
+}
+
+  checkCustomerBotName(botname) {
+    this.rest_api.checkCustomerBotName(botname).subscribe(data => {
+      if (data == false) {
+        this.botNameCheck = false;
+      } else {
+        this.botNameCheck = true;
+      }
+    });
+  }
+  
+}
