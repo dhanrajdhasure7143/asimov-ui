@@ -102,4 +102,9 @@ getUploadDocs(formData){
 getTrainedModel(formData){
   return this.http.post(environment.python_llm+"/train", formData)
 }
+
+  checkCustomerBotName(botname) {
+    return this.http.get(environment.asquare + "/admin/v1/customer-support-bot/check-bot?botName=" + botname, { headers: this.headers })
+  }
+
 }
