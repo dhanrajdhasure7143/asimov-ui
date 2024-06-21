@@ -111,7 +111,8 @@ export class ManageCustomerBotComponent implements OnInit {
 
   getAllCustomerBots() {
     this.loader.show();
-    this.rest_api.getCustomerBots().subscribe((botlist) => {
+
+    this.rest_api.getCustomerBots(localStorage.getItem("tenantName")).subscribe((botlist) => {
       this.manageBotList = botlist;
       this.loader.hide();
       this.table_searchFields = ['customerSupportBotName', 'customerSupportBotSource'];
