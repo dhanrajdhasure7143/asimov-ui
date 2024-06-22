@@ -741,9 +741,9 @@ export class RestApiService{
       return this.http.get("/rpa-service/process-logsV2/"+processId);
     }
 
-    getprocessruniddata(processId,processrunid){
+    getprocessruniddata(processId,processrunid,oldLogsToggle){
       // return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
-      return this.http.get("/rpa-service/process-logsV2/"+processId+"/"+processrunid  );
+      return this.http.get("/rpa-service/process-logsV2/"+processId+"/"+processrunid+"?old_logs_toggle="+oldLogsToggle);
     }
 
     deployBPMNNotation(url, body){
