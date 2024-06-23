@@ -82,4 +82,12 @@ export class PredefinedBotsService {
   getAiAgentUpdateForm(){
     return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
   }
+
+  getAgentAttributeswithData(productid,id){
+    return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+  }
+
+  updatePredefinedAttributesData(agentId,botId,body){
+    return this.http.post(`rpa-service/predefined/v2/ai-agent?productId=${agentId}&botId=${botId}`,body)
+  }
 }

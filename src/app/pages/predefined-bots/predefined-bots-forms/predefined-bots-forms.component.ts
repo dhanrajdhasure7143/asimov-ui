@@ -47,6 +47,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   filePathValues:any[]=[];
   checkedOptions: string[] = [];
   agent_uuid:any;
+  isEdit:boolean = false;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -72,9 +73,10 @@ export class PredefinedBotsFormsComponent implements OnInit {
     });
     if(this.params.type == "create"){
       this.fetchAllFields();
-      // this.calculateNodes();
+      this.isEdit = false;
     }else{
       this.fetchAllFieldsToUpdateData();
+      this.isEdit = true;
     }
   }
 
@@ -125,116 +127,81 @@ export class PredefinedBotsFormsComponent implements OnInit {
   generateDynamicForm(){
     const fieldsGroup = {};
     this.formFields.forEach(field => {
+      console.log("field",field)
       if(field.attributeRequired){
-        fieldsGroup[field.preAttributeName] = ['', Validators.required];
+        if(field.preAttributeType == "checkbox"){
+          fieldsGroup[field.preAttributeName] = [false, Validators.required];
+        }else{
+          fieldsGroup[field.preAttributeName] = ["", Validators.required];
+        }
       }else{
         fieldsGroup[field.preAttributeName] = [''];
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-      this.pages.forEach(element => {
-        let obj ={label:" ",command: () => { this.goToPage(element)}}
-          this.items.push(obj)
-      }); 
-    setTimeout(() => {
+    console.log("predefinedBotsForm",this.predefinedBotsForm)
+    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
+    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    //   this.pages.forEach(element => {
+    //     let obj ={label:" ",command: () => { this.goToPage(element)}}
+    //       this.items.push(obj)
+    //   }); 
+    // setTimeout(() => {
 
-      this.activeIndex = 0 
-      // this.activeIndex = 0 
-    }, 200);
+    //   this.activeIndex = 0 
+    // }, 200);
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
-        });
+      });
   }
 
   fetchAllFieldsToUpdateData() {
-    this.spinner.show();
-    // this.rest_service.getPredefinedBotAttributesListToUpdate(this.params.id).subscribe(res=>{
-    //   this.spinner.hide();
-    // },err=>{
-    //   this.spinner.hide();
-    //   this.toaster.showError(this.toastMessages.apierror)
-    // })
-    this.formFields = [
-      { label: "Bot Name", name: "botName", type: "text", placeholder: "Enter bot name" },
-      { label: "SharePoint URL", name: "sharePointUrl", type: "text", placeholder: "Enter SharePoint URL" },
-      { label: "Tenant ID", name: "tenantId", type: "number", placeholder: "Enter tenant ID" },
-      { label: "Client ID", name: "clientId", type: "email", placeholder: "Enter client ID" },
-      { label: "Client Secret", name: "clientSecret", type: "text", placeholder: "Enter client secret" },
-      { label: "Web Driver Type", name: "webDriverType", type: "dropdown", options: ['Google Chrome', 'Microsoft Edge'], placeholder: "Select web driver type" },
-      { label: "URL", name: "url", type: "text", placeholder: "Enter URL" },
-      { label: "Web Element Type", name: "webElementType", type: "dropdown", options: ['X-Path', 'CSS Selector'], placeholder: "Select web element type" },
-      { label: "Web Element Value", name: "webElementValue", type: "text", placeholder: "Enter web element value" },
-      { label: "Value Type", name: "valueType", type: "dropdown", options: ['Text Box', 'Dropdown', 'Date Picker'], placeholder: "Select value type" },
-      { label: "Value", name: "value", type: "text", placeholder: "Enter value" },
-      { label: "Standard Dropdown Value", name: "standardDropdownValue", type: "text", placeholder: "Enter dropdown value" },
-      { label: "Click", name: "clickAction", type: "text", placeholder: "Enter click action" },
-      { label: "View", name: "viewType", type: "dropdown", options: ['Full Page', 'Default View'], placeholder: "Select view" },
-      { label: "Variable", name: "variable", type: "text", placeholder: "Define variable" },
-      { label: "Assignment", name: "assignment", type: "text", placeholder: "Describe assignment" },
-      { label: "Email/Organization Name", name: "emailOrganization", type: "dropdown", options: ['EPSoft', 'Microsoft'], placeholder: "Select organization" },
-      { label: "Email Reference", name: "emailReference", type: "text", placeholder: "Enter email reference" },
-      { label: "Recipient Email", name: "recipientEmail", type: "text", placeholder: "Enter recipient's email" },
-      { label: "Subject", name: "emailSubject", type: "text", placeholder: "Enter email subject" },
-      { label: "Mail Message", name: "mailMessage", type: "textarea", placeholder: "Type your message" },
-      { label: "File", name: "file", type: "text", placeholder: "Specify file path" },
-      { label: "Signature", name: "signature", type: "text", placeholder: "Enter signature details" },
-      { label: "Set Importance", name: "setImportance", type: "dropdown", options: ['Normal', 'Low', 'High'], placeholder: "Select importance level" },
-      { label: "CC Recipient", name: "ccRecipient", type: "text", placeholder: "Enter CC recipient's email" },
-      { label: "BCC Recipient", name: "bccRecipient", type: "text", placeholder: "Enter BCC recipient's email" }
-    ];
+    // this.spinner.show();
+    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agent_id).subscribe((res:any)=>{
+      this.spinner.hide();
+      console.log("res,",res)
+      this.agent_uuid = res.predefinedBotUUID
+      console.log("Form Attributes: ", res.data)
+      this.spinner.hide();
+      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
+                  preAttributeType: "text", visibility: true, preAttributeValue: res.predefinedBotName}
+      this.formFields.push(obj);
+      // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
+      this.formFields.push(...res.data
+        .filter(item => !item.duplicate)
+        .map(item => {
+            if (item.preAttributeName === 'RecruitmentOne_email_jobDescrption') {
+                return { ...item, isValidateRequired: true };
+            } else {
+                return item;
+            }
+        })
+    );
+      this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
+      this.predefinedBot_name = res.predefinedBotName;
+      this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
+      this.predefinedBot_uuid = res.predefinedBotUUID
+      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      // this.generateDynamicForm();
+      this.generateDynamicFormUpdate();
     
-    const fieldsGroup = {};
-    this.formFields.forEach(field => {
-      fieldsGroup[field.name] = ['', Validators.required];
-    }); 
-    this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
+    // const fieldsGroup = {};
+    // this.formFields.forEach(field => {
+    //   fieldsGroup[field.name] = ['', Validators.required];
+    // }); 
+    // this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
 
-if(this.params.type =='edit'){
-  const existingBotData = {
-    botName: 'Marketing Bot',
-    sharePointUrl: 'https://example.sharepoint.com',
-    tenantId: 12345,
-    clientId: 'example-client-id',
-    clientSecret: 'secret-value',
-    webDriverType: 'Google Chrome',
-    url: 'https://example.com',
-    webElementType: 'CSS Selector',
-    webElementValue: '#example',
-    valueType: 'Text Box',
-    value: 'Hello, World!',
-    standardDropdownValue: 'Option 1',
-    clickAction: 'Click Here',
-    viewType: 'Full Page',
-    variable: 'varExample',
-    assignment: 'Assign Example',
-    emailOrganization: 'EPSoft',
-    emailReference: 'Reference Example',
-    recipientEmail: 'example@example.com',
-    emailSubject: 'Subject Example',
-    mailMessage: 'This is an email message example.',
-    file: '/path/to/file.txt',
-    signature: 'Best Regards',
-    setImportance: 'Normal',
-    ccRecipient: 'cc@example.com',
-    bccRecipient: 'bcc@example.com'
-  };
-    this.formFields.forEach(field => {
-      fieldsGroup[field.name] = [existingBotData[field.name] || '', Validators.required];
-    });
-    this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    }
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    this.pages.forEach(element => {
-      let obj ={label:" ",command: () => { this.goToPage(element)}}
-        this.items.push(obj)
-    });
+    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
+    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    // this.pages.forEach(element => {
+    //   let obj ={label:" ",command: () => { this.goToPage(element)}}
+    //     this.items.push(obj)
+    // });
 
-    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-          this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
-        });
+    // this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+    //       this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+    //     });
+      })
   }
 
   calculateNodes(): void {
@@ -329,20 +296,17 @@ if(this.params.type =='edit'){
   }
 
   createBot() {
-    console.log(this.selectedOption , this.predefinedBot_uuid)
+    console.log(this.selectedOption , this.predefinedBotsForm)
     if(this.predefinedBot_uuid =='Pred_RFP'){
-      this.rfpbotCreate()
+      this.rfpbotCreate('create')
     }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-      this.recruitmentbotCreate();
+      this.recruitmentbotCreate('create');
     }else{
-      this.botCreate();
-
+      this.botCreate('create');
     }
   }
 
-  rfpbotCreate(){
-    
-
+  rfpbotCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       // const formData = new FormData();
@@ -385,21 +349,14 @@ if(this.params.type =='edit'){
           });
         }
         console.log('req_body------:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
+        this.saveBot(req_body,botName,type)
       // })
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
-  recruitmentbotCreate(){
+  recruitmentbotCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
@@ -440,20 +397,13 @@ if(this.params.type =='edit'){
           })
         }
         console.log('req_body---:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
+        this.saveBot(req_body,botName,type)
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
-  botCreate(){
+  botCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
         let botName = this.predefinedBotsForm.value.fields.botName
@@ -466,41 +416,51 @@ if(this.params.type =='edit'){
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
-          // this.duplicateAttributes.forEach(element => {
-          //   let v_key = element.preAttributeName.split("_")
-  
-  
-          //   for (const key in req_body.fields) {
-          //   const parts = key.split('_');
-            
-          //   if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
-          //       req_body.fields[element.preAttributeName] = req_body.fields[key]
-          //   }
-          //   }
-          // });
           this.duplicateAttributes.forEach(ele=>{
             if(ele.options){
               req_body.fields[ele.preAttributeName] = req_body.fields[ele.options[0].duplicatesTo]
             }
           })
         }
+        this.saveBot(req_body,botName,type)
         console.log('req_body---:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
+  saveBot(req_body,botName,type) {
+    if(type == "create"){
+    this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+      this.spinner.hide();
+      this.goBackAgentHome();
+      this.toaster.showSuccess(botName,"create")
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror)
+    })
+  }else{
+    this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agent_id,req_body).subscribe(res=>{
+      this.spinner.hide();
+      this.goBackAgentHome();
+      this.toaster.showSuccess(botName,"update")
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror)
+    })
+  }
+  }
+
   onUpdateForm(){
     if (this.predefinedBotsForm.valid) {
-      console.log('Form Data:', this.predefinedBotsForm.value);
+      console.log(this.selectedOption , this.predefinedBotsForm)
+      if(this.predefinedBot_uuid =='Pred_RFP'){
+        this.rfpbotCreate('update')
+      }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
+        this.recruitmentbotCreate('update');
+      }else{
+        this.botCreate('update');
+      }
     } else {
       console.log('Form is not valid!');
     }
@@ -638,8 +598,15 @@ if(this.params.type =='edit'){
     this.validate_errorMessage=[];
   }
 
-  onCheckboxChange(event: Event, option:any) {
-    const checkbox = event.target as HTMLInputElement;
+  onCheckboxChange(event, option:any,type:any) {
+    let checkbox:any
+    let checkValue:any
+    if(type == "onchange"){
+        checkbox = event.target as HTMLInputElement;
+        checkValue = checkbox.checked;
+    }else{
+      checkValue = event;
+    }
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
     let array;
@@ -649,7 +616,7 @@ if(this.params.type =='edit'){
       console.error("Parsing error:", e);
     }
 
-    if (checkbox.checked) {
+    if (checkValue) {
       this.checkedOptions.push(option.value);
     } else {
       const index = this.checkedOptions.indexOf(option.value);
@@ -661,7 +628,7 @@ if(this.params.type =='edit'){
 
 
     if (Array.isArray(array)) {
-      if (checkbox.checked) {
+      if (checkValue) {
         // formArray.push(this.fb.control(label));
         array.forEach((element: any) => {
           const field = this.formFields.find(item => item.preAttributeName === element);
@@ -694,7 +661,7 @@ if(this.params.type =='edit'){
   }
 
   onDropdownChange(event: any,options:any) {
-    console.log(event)
+    console.log(event,options)
     const selectedValue = event.value;
     const selectedObject = options.find(option => option.value === selectedValue);
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
@@ -731,7 +698,115 @@ if(this.params.type =='edit'){
     this.predefinedBotsForm.get("fields."+item).updateValueAndValidity();
   }
 
+  generateDynamicFormUpdate(){
+    const fieldsGroup = {};
+    console.log("formFields",this.formFields)
+    this.formFields.forEach(field => {
+      // if(field.attributeRequired){
+        if(field.preAttributeType == "checkbox"){
+      console.log("field---------",field)
+            field.options.forEach(option => {
+            let array = this.getArrayValues(option.field);
+            if (array.length > 0) {
+              console.log("array", array);
+              const filteredFields = this.formFields.find(field => field.preAttributeName === array[0]);
+              console.log("filteredFields", filteredFields);
+              if (filteredFields.preAttributeValue) {
+                  fieldsGroup[option.value] = [true, Validators.required];
+                  console.group("option.value",option.value)
+                // this.onCheckboxChange(true, option, "onUpdate");
+                this.onCheckboxChangeOnUpdate(true, option);
+              } else {
+                fieldsGroup[option.value] = ["", Validators.required];
+              }
+            }
+            });
+          }else if(field.preAttributeType == "radio"){
+            fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
+            this.onRadioChangeUpdateFlow(field.preAttributeValue , field.options.find(option => option.value == field.preAttributeValue))
+          }
+          else if(field.preAttributeType == "dropdown"){
+            fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
+            this.onDropdownChange({value: field.preAttributeValue}, field.options)
+          } else{
+            if(field.preAttributeType == "file"){
+            console.log("fieldwhegweaf f uhwifewf wfwebfwefgwe",field)
+              fieldsGroup[field.preAttributeName] = [''];
+            }else{
+              fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+            }
+            // field.preAttributeType != "file" ? fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required] : fieldsGroup[field.preAttributeName] = ['', Validators.required];
+            // fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+        }
+      // }else{
+      //   fieldsGroup[field.preAttributeName] = [''];
+      // }
+    });
+    this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
+    console.log("predefinedBotsForm",this.predefinedBotsForm)
+
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+      this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+  });
+  }
+
+  onCheckboxChangeOnUpdate(event, option:any) {
+    console.log("test....................")
+    const checkbox = event;
+    const validJsonStr = option.field.replace(/'/g, '"');
+    // const array = JSON.parse(validJsonStr);
+    let array;
+    try {
+      array = JSON.parse(validJsonStr);
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
+
+    if (checkbox) {
+      this.checkedOptions.push(option.value);
+    } else {
+      const index = this.checkedOptions.indexOf(option.value);
+      if (index !== -1) {
+        this.checkedOptions.splice(index, 1);
+      }
+    }
+    if (Array.isArray(array)) {
+      if (checkbox) {
+        // formArray.push(this.fb.control(label));
+        array.forEach((element: any) => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = true;
+            field.attributeRequired =true;
+            setTimeout(() => {
+              this.updateValidators(element)
+            }, 500);
+          }
+        });
+      } else {
+        array.forEach(element => {
+          const field = this.formFields.find(item => item.preAttributeName === element);
+          if (field) {
+            field.visibility = false;
+            field.attributeRequired =false;
+            this.clearValidators(element);
+          }
+        });
+      }
+    }
+  }
+
   goBackAgentHome(){
     this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+  }
+
+  onRadioChangeUpdateFlow(value: string,option_item) {
+    console.log(value,option_item)
+    this.selectedOption = option_item
+    let array = this.getArrayValues(option_item.field)
+    array.forEach(each=>{
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
+    })
   }
 }

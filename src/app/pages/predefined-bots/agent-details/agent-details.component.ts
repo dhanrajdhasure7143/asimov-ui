@@ -201,12 +201,14 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   onclickBot() {
+    console.log("Selected Drop Agent: ", this.selected_drop_agent)
 
     if(this.isConfig && (this.selected_drop_agent === null || this.selected_drop_agent === undefined)){
       this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
     }
     else{
-      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId, orchId:this.selected_drop_agent.predefinedOrchestrationBotId } });
+      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "edit", id: this.bot?.productId, agent_id:this.selected_drop_agent.predefinedOrchestrationBotId } });
+      // this.toaster.toastSuccess(`Navigating to Update Agent${this.selected_drop_agent.predefinedOrchestrationBotId}`)
     }
     
   }
