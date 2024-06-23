@@ -77,7 +77,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getBotLogsByRunId(runData:any){
       this.logsLoading=true;
-      this.rest.getprocessruniddata(runData.processId, runData.processRunId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getprocessruniddata(runData.processId, runData.processRunId,runData.oldLogsToggle).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.selectedRun=runData;
@@ -211,7 +211,7 @@ export class SoProcesslogComponent implements OnInit {
 
     updateVersion=(logs:any)=>{
       logs=logs.map((item:any)=>{
-        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
+        item["modifiedVersionNew"]=item["versionNew"]?"V"+parseFloat(item["versionNew"]).toFixed(1):null;
         return item;
       })
       return logs
