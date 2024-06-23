@@ -47,6 +47,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   filePathValues:any[]=[];
   checkedOptions: string[] = [];
   agent_uuid:any;
+  isEdit:boolean = false;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -72,8 +73,10 @@ export class PredefinedBotsFormsComponent implements OnInit {
     });
     if(this.params.type == "create"){
       this.fetchAllFields();
+      this.isEdit = false;
     }else{
       this.fetchAllFieldsToUpdateData();
+      this.isEdit = true;
     }
   }
 
@@ -126,26 +129,30 @@ export class PredefinedBotsFormsComponent implements OnInit {
     this.formFields.forEach(field => {
       console.log("field",field)
       if(field.attributeRequired){
-        fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+        if(field.preAttributeType == "checkbox"){
+          fieldsGroup[field.preAttributeName] = [false, Validators.required];
+        }else{
+          fieldsGroup[field.preAttributeName] = ["", Validators.required];
+        }
       }else{
         fieldsGroup[field.preAttributeName] = [''];
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-      this.pages.forEach(element => {
-        let obj ={label:" ",command: () => { this.goToPage(element)}}
-          this.items.push(obj)
-      }); 
-    setTimeout(() => {
+    console.log("predefinedBotsForm",this.predefinedBotsForm)
+    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
+    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    //   this.pages.forEach(element => {
+    //     let obj ={label:" ",command: () => { this.goToPage(element)}}
+    //       this.items.push(obj)
+    //   }); 
+    // setTimeout(() => {
 
-      this.activeIndex = 0 
-      // this.activeIndex = 0 
-    }, 200);
+    //   this.activeIndex = 0 
+    // }, 200);
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
-        });
+      });
   }
 
   fetchAllFieldsToUpdateData() {
@@ -289,20 +296,17 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   createBot() {
-    console.log(this.selectedOption , this.predefinedBot_uuid)
+    console.log(this.selectedOption , this.predefinedBotsForm)
     if(this.predefinedBot_uuid =='Pred_RFP'){
-      this.rfpbotCreate()
+      this.rfpbotCreate('create')
     }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-      this.recruitmentbotCreate();
+      this.recruitmentbotCreate('create');
     }else{
-      this.botCreate();
-
+      this.botCreate('create');
     }
   }
 
-  rfpbotCreate(){
-    
-
+  rfpbotCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       // const formData = new FormData();
@@ -345,21 +349,14 @@ export class PredefinedBotsFormsComponent implements OnInit {
           });
         }
         console.log('req_body------:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
+        this.saveBot(req_body,botName,type)
       // })
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
-  recruitmentbotCreate(){
+  recruitmentbotCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
@@ -400,20 +397,13 @@ export class PredefinedBotsFormsComponent implements OnInit {
           })
         }
         console.log('req_body---:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
+        this.saveBot(req_body,botName,type)
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
-  botCreate(){
+  botCreate(type){
     if (this.predefinedBotsForm.valid) {
       this.spinner.show();
         let botName = this.predefinedBotsForm.value.fields.botName
@@ -426,41 +416,51 @@ export class PredefinedBotsFormsComponent implements OnInit {
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
-          // this.duplicateAttributes.forEach(element => {
-          //   let v_key = element.preAttributeName.split("_")
-  
-  
-          //   for (const key in req_body.fields) {
-          //   const parts = key.split('_');
-            
-          //   if(parts[2]+"_"+parts[3] == v_key[2]+"_"+v_key[3]){
-          //       req_body.fields[element.preAttributeName] = req_body.fields[key]
-          //   }
-          //   }
-          // });
           this.duplicateAttributes.forEach(ele=>{
             if(ele.options){
               req_body.fields[ele.preAttributeName] = req_body.fields[ele.options[0].duplicatesTo]
             }
           })
         }
+        this.saveBot(req_body,botName,type)
         console.log('req_body---:', req_body);
-        this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
-          this.spinner.hide();
-          this.router.navigate(["/pages/predefinedbot/home"]);
-          this.toaster.showSuccess(botName,"create")
-        },err=>{
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror)
-        })
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
+  saveBot(req_body,botName,type) {
+    if(type == "create"){
+    this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+      this.spinner.hide();
+      this.goBackAgentHome();
+      this.toaster.showSuccess(botName,"create")
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror)
+    })
+  }else{
+    this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agent_id,req_body).subscribe(res=>{
+      this.spinner.hide();
+      this.goBackAgentHome();
+      this.toaster.showSuccess(botName,"update")
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror)
+    })
+  }
+  }
+
   onUpdateForm(){
     if (this.predefinedBotsForm.valid) {
-      console.log('Form Data:', this.predefinedBotsForm.value);
+      console.log(this.selectedOption , this.predefinedBotsForm)
+      if(this.predefinedBot_uuid =='Pred_RFP'){
+        this.rfpbotCreate('update')
+      }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
+        this.recruitmentbotCreate('update');
+      }else{
+        this.botCreate('update');
+      }
     } else {
       console.log('Form is not valid!');
     }
@@ -661,7 +661,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   onDropdownChange(event: any,options:any) {
-    console.log(event)
+    console.log(event,options)
     const selectedValue = event.value;
     const selectedObject = options.find(option => option.value === selectedValue);
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
@@ -700,9 +700,9 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   generateDynamicFormUpdate(){
     const fieldsGroup = {};
-    // console.log("formFields",JSON.stringify(this.formFields))
+    console.log("formFields",this.formFields)
     this.formFields.forEach(field => {
-      if(field.attributeRequired){
+      // if(field.attributeRequired){
         if(field.preAttributeType == "checkbox"){
       console.log("field---------",field)
             field.options.forEach(option => {
@@ -712,26 +712,46 @@ export class PredefinedBotsFormsComponent implements OnInit {
               const filteredFields = this.formFields.find(field => field.preAttributeName === array[0]);
               console.log("filteredFields", filteredFields);
               if (filteredFields.preAttributeValue) {
-                fieldsGroup[option.value] = [true, Validators.required];
-                this.onCheckboxChange(true, option, "onUpdate");
+                  fieldsGroup[option.value] = [true, Validators.required];
+                  console.group("option.value",option.value)
+                // this.onCheckboxChange(true, option, "onUpdate");
+                this.onCheckboxChangeOnUpdate(true, option);
               } else {
                 fieldsGroup[option.value] = ["", Validators.required];
               }
             }
             });
-          }else{
-            field.preAttributeType == "checkbox"? fieldsGroup[field.preAttributeName] = ['', Validators.required]
-            : fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+          }else if(field.preAttributeType == "radio"){
+            fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
+            this.onRadioChangeUpdateFlow(field.preAttributeValue , field.options.find(option => option.value == field.preAttributeValue))
+          }
+          else if(field.preAttributeType == "dropdown"){
+            fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
+            this.onDropdownChange({value: field.preAttributeValue}, field.options)
+          } else{
+            if(field.preAttributeType == "file"){
+            console.log("fieldwhegweaf f uhwifewf wfwebfwefgwe",field)
+              fieldsGroup[field.preAttributeName] = [''];
+            }else{
+              fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+            }
+            // field.preAttributeType != "file" ? fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required] : fieldsGroup[field.preAttributeName] = ['', Validators.required];
+            // fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
         }
-      }else{
-        fieldsGroup[field.preAttributeName] = [''];
-      }
+      // }else{
+      //   fieldsGroup[field.preAttributeName] = [''];
+      // }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     console.log("predefinedBotsForm",this.predefinedBotsForm)
+
+    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+      this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+  });
   }
 
   onCheckboxChangeOnUpdate(event, option:any) {
+    console.log("test....................")
     const checkbox = event;
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
@@ -778,5 +798,15 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   goBackAgentHome(){
     this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+  }
+
+  onRadioChangeUpdateFlow(value: string,option_item) {
+    console.log(value,option_item)
+    this.selectedOption = option_item
+    let array = this.getArrayValues(option_item.field)
+    array.forEach(each=>{
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
+      this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
+    })
   }
 }
