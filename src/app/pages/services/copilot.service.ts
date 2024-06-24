@@ -104,7 +104,7 @@ getTrainedModel(formData){
 }
 
   checkCustomerBotName(botname) {
-    return this.http.get(environment.asquare + "/admin/v1/customer-support-bot/check-bot?botName=" + botname, { headers: this.headers })
+    return this.http.get(environment.asquare + "/admin/v1/customer-support-bot/check-bot?botName=" + botname + "&tenantId=" + localStorage.getItem('tenantName'), { headers: this.headers });
   }
 
 }
