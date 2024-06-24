@@ -99,6 +99,7 @@ export class ManageCustomerBotComponent implements OnInit {
       customerSupportBotSource: ['', [Validators.required]],
       includeSites: ['', [Validators.required]],
       excludeSites: ['', [Validators.required]],
+      trainModelName: ['', [Validators.required]],
     };
     this.manageBotForm = this.formBuilder.group(formControls);
   }
@@ -213,6 +214,10 @@ export class ManageCustomerBotComponent implements OnInit {
         this.updateOverlayData.excludeSitesArray = [];
         this.updateOverlayData.includeSitesArray = [];
       }
+
+      this.manageBotForm.patchValue({
+        trainModelName: this.updateOverlayData.respPrefix
+      });
       this.manageBotForm.patchValue(this.updateOverlayData);
     } else {
       console.error('update Overlay Data is undefined or null.');
@@ -275,6 +280,8 @@ export class ManageCustomerBotComponent implements OnInit {
           } 
          
         } 
+
+        this.toastService.showSuccess(bot_Name,"create")
         this.getAllCustomerBots();
                
       },(err: any) => {
@@ -296,7 +303,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
         "greetingMessage": this.manageBotForm.value.greetingMessage,
         "primaryPrompt": this.manageBotForm.value.primaryPrompt,
-        "respPrefix": this.manageBotForm.value.respPrefix,
+        // "respPrefix": this.manageBotForm.value.respPrefix,
+        "respPrefix": this.manageBotForm.value.trainModelName,
         "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
         "customerSupportBotEmbedUrl": this.manageBotForm.value.customerSupportBotEmbedUrl,
         "botKey": this.manageBotForm.value.botKey,
