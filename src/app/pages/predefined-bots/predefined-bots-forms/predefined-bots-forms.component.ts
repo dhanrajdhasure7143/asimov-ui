@@ -164,7 +164,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
-                  preAttributeType: "text", visibility: true, preAttributeValue: res.predefinedBotName}
+                  preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
       this.formFields.push(obj);
       // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
       this.formFields.push(...res.data
