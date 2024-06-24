@@ -202,7 +202,7 @@
                             <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
-                            <span *ngIf="screenTable == 'customerSupportBots' || screenTable == 'trainCustomerSupportBots'">
+                            <span *ngIf="screenTable == 'customerSupportBots'">
                             <a class="" (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
                                 <i class="pi pi-external-link" style="color: #232832"></i>
                                 <i class="pi pi-external-link" style="color: #507cd3" class="testplus hover-icon"></i>
@@ -229,7 +229,41 @@
                             </a>
                         </span>
 
-                        <button *ngIf="show_approve_btn" class="undobtn">
+                        <span *ngIf="screenTable == 'soInboxList'">
+                            <ng-container *ngFor="let action of ['approve', 'reject']">
+                              <button *ngIf="(action === 'approve' ? show_approve_btn : show_reject_btn) && loggedUserRole.includes('Process Analyst')" class="undobtn">
+                                <span class="disbtn">
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                </span>
+                              </button>
+                              <button *ngIf="(action === 'approve' ? show_approve_btn : show_reject_btn) && !loggedUserRole.includes('Process Analyst')" class="undobtn">
+                                <span *ngIf="rowData['status'] != 'Approved' && rowData['status'] != 'Rejected'" (click)="action === 'approve' ? getapproved(rowData) : getRejected(rowData)" pTooltip="{{ action | titlecase }}" tooltipPosition="top">
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
+                                </span>
+                                <span *ngIf="rowData['status'] == 'Approved' || rowData['status'] == 'Rejected'" class="disbtn">
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                </span>
+                              </button>
+                            </ng-container>
+                          </span>
+                          
+                          <ng-container *ngIf="screenTable != 'soInboxList'">
+                            <ng-container *ngFor="let action of ['approve', 'reject']">
+                              <button *ngIf="action === 'approve' ? show_approve_btn : show_reject_btn" class="undobtn">
+                                <span *ngIf="rowData['status'] != 'Approved' && rowData['status'] != 'Rejected'" (click)="action === 'approve' ? getapproved(rowData) : getRejected(rowData)" pTooltip="{{ action | titlecase }}" tooltipPosition="top">
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
+                                </span>
+                                <span *ngIf="rowData['status'] == 'Approved' || rowData['status'] == 'Rejected'" class="disbtn">
+                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                </span>
+                              </button>
+                            </ng-container>
+                          </ng-container>
+                          
+
+                        <!-- <button *ngIf="show_approve_btn" class="undobtn">
                             <span *ngIf="rowData['status'] !='Approved' && rowData['status'] !='Rejected'" (click)="getapproved(rowData)" pTooltip="Approve" tooltipPosition="top">
                                 <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
                                 <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
@@ -246,7 +280,7 @@
                             <span *ngIf="rowData['status'] =='Approved' || rowData['status'] =='Rejected'" class="disbtn">
                                 <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
                             </span>                               
-                        </button>
+                        </button> -->
 
                         <span *ngIf="show_delete_btn">
                             <a *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">

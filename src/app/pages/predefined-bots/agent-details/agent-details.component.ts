@@ -8,6 +8,7 @@ import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { saveAs } from "file-saver";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-agent-details',
@@ -24,121 +25,22 @@ export class AgentDetailsComponent implements OnInit {
   runPlayer: boolean = false;
   isAccordionExpanded: boolean = false;
   predefined_botsList: any[] = [];
-  remaining_exe="5"
+  remaining_exe="";
   UUID="";
-  // selectedFiles = [];
+  selected_agent:string;
+  selected_drop_agent:any;
 
   items: any[]= [
     {
       subscriptionHeading: "Subscription",
       warningMessage: "Your Subscription expiring soon!",
-      expanded: false,
-      date: "2024-06-05",
-      expirationDate: "2024-07-05",
-      amount: "$10.00",
-      purchase: "Online Store",
-      remaining_exe:"5"
+      expanded: false
     }
   ];
-  logs = [
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Success' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Failed' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Success' },
-    { date: 'Executed on 2024-06-01 07:37 AM', status: 'Failed' },
-    
-  ];
 
-
-  logs_full = [
-    { sl_no: '01',start_date: '2024-07-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success' , info: 'Successfull execution completed '},
-    { sl_no: '02',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed', info: 'Filed execution completed ' },
-    { sl_no: '03',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '04',start_date: '2024-08-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '05',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Success', info: 'Successfull execution completed ' },
-    { sl_no: '06',start_date: '2024-05-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '07',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '08',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    { sl_no: '09',start_date: '2024-06-01 07:37 AM', end_date: '2024-06-01 08:37 AM', status: 'Failed',info: 'Failed execution completed '  },
-    
-  ];
-
-  files_full= [
-      {
-        "fileName": "Invoice_Processing_Bot_Log.pdf",
-        "fileType": "pdf",
-        "fileSize": "1.2MB",
-        "dateUploaded": "2024-06-01 10:15 AM (Saturday)"
-      },
-      {
-        "fileName": "Customer_Service_Chat_Log.jpg",
-        "fileType": "jpg",
-        "fileSize": "2.5MB",
-        "dateUploaded": "2024-06-02 11:20 AM (Sunday)"
-      },
-      {
-        "fileName": "Sales_Data_Bot_Report.xlsx",
-        "fileType": "xlsx",
-        "fileSize": "3.0MB",
-        "dateUploaded": "2024-06-03 12:25 PM (Monday)"
-      },
-      {
-        "fileName": "HR_Onboarding_Presentation.pptx",
-        "fileType": "pptx",
-        "fileSize": "5.5MB",
-        "dateUploaded": "2024-06-04 01:30 PM (Tuesday)"
-      },
-      {
-        "fileName": "Marketing_Automation_Audio.mp3",
-        "fileType": "mp3",
-        "fileSize": "4.8MB",
-        "dateUploaded": "2024-06-05 02:35 PM (Wednesday)"
-      }
-    ]
+  logs_full:any[]=[]
   
-
-  // files = [
-  //   { name: 'Jr. Software Developer' },
-  //   { name: 'Full Stack Java Developer' },
-  //   { name: 'Product Manager Senior' },
-    
-  // ];
   file: any[] = [];
-
   selectedLogs = [];
 
   // History Logs Variables
@@ -146,13 +48,11 @@ export class AgentDetailsComponent implements OnInit {
   logSearchTerm: string = '';
 
   // Download files and File Table Variables
-  // filteredFiles = [...this.files_full];
   filteredFiles :any[]=[];
   searchTerm: string = '';
   selectedFileType: string = '';
   selectedDate: string = '';
   selectedFiles: any[] = [];
-
 
   // Hostory -New code
   filteredLogsData: any[] = [];
@@ -164,12 +64,63 @@ export class AgentDetailsComponent implements OnInit {
   showMiniLayout = false;
   showMoreLogs = false;
   showMoreFiles = false;
-  dummyBotName="AI Agent - EPSoft"
-  dataforbot="This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows and streamline workflows."
+  dummyBotName=""
+  dataforbot=""
 
   // Pagination
+  totalPages=0
   currentPage: number = 1;
-  itemsPerPage: number = 6;
+  itemsPerPage: number = 7;
+
+  currentPageFiles: number = 1;
+  itemsPerPageFiles: number = 5;
+  totalPagesFiles: number = 0;
+  displayedFiles: any[] = [];
+
+  // Subscription- Dates 
+  subscription_dates;
+  rem_days=''
+
+  agent_drop_list:any;
+  current_agent_details:any;
+
+  // New response Data 
+  newResponseData:any[]=[];
+
+  // Run, Configure and Stop
+  isConfig:boolean=false;
+  enabledRun:boolean=false;
+
+  // FileTypes for the Agent Files DOwnload 
+  sortOrder: boolean = true;
+  fileTypes = [
+    { value: '', label: 'All Types' },
+    { value: 'pdf', label: 'PDF' },
+    { value: 'jpg', label: 'JPG' },
+    { value: 'jpeg', label: 'JPEG' },
+    { value: 'png', label: 'PNG' },
+    { value: 'gif', label: 'GIF' },
+    { value: 'xlsx', label: 'XLSX' },
+    { value: 'xls', label: 'XLS' },
+    { value: 'pptx', label: 'PPTX' },
+    { value: 'ppt', label: 'PPT' },
+    { value: 'mp3', label: 'MP3' },
+    { value: 'mp4', label: 'MP4' },
+    { value: 'wav', label: 'WAV' },
+    { value: 'zip', label: 'ZIP' },
+    { value: 'rar', label: 'RAR' },
+    { value: 'tar', label: 'TAR' },
+    { value: 'gz', label: 'GZ' },
+    { value: 'py', label: 'PY' },
+    { value: 'epub', label: 'EPUB' },
+    { value: 'docx', label: 'DOCX' },
+    { value: 'doc', label: 'DOC' },
+    { value: 'txt', label: 'TXT' },
+    { value: 'csv', label: 'CSV' },
+    { value: 'xml', label: 'XML' },
+    { value: 'html', label: 'HTML' },
+    { value: 'json', label: 'JSON' }
+  ];
 
   constructor(
     private router: Router,
@@ -193,12 +144,42 @@ export class AgentDetailsComponent implements OnInit {
       }
     });
 
-    // this.getAgentFiles();
-    this.files_full.sort((a, b) => new Date(b.dateUploaded).getTime() - new Date(a.dateUploaded).getTime());
-    // this.filteredFiles = [...this.files_full];
+    // this.getAiAgentUpdateForm();
+    this.updateFilePagination();
+  }
 
-    this.filterLogsData();
+  refreshAgentDashboard(){
+    this.getPredefinedBotsList(this.product_id);
+  }
 
+  aiAgentDetails(){
+    this.spinner.show();
+    this.rest_api.aiAgentDetails().subscribe((res: any) => {
+      this.newResponseData=res.data
+      const agent = this.newResponseData.find(agent => agent.productId === this.product_id);
+
+      if (agent) {
+        this.current_agent_details = agent;
+        this.remaining_exe = agent.remaining_executions;
+
+        this.isConfig=this.current_agent_details.is_config_enable
+        const subscriptionDate = agent.subscriptionData[0];
+        this.subscription_dates = subscriptionDate;
+        this.rem_days = this.daysBetweenPlan(
+          subscriptionDate.subscription_created_at, 
+          subscriptionDate.subscription_expiry_at
+        );
+
+        this.getAIAgentHistory(this.product_id)
+        this.agentDropdownList(this.current_agent_details);
+      } else {
+        this.current_agent_details = undefined; 
+      }
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
   }
  
   getPredefinedBotsList(productId: string) {
@@ -206,11 +187,11 @@ export class AgentDetailsComponent implements OnInit {
     this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
       this.predefined_botsList = res.data.map(bot => ({
         ...bot,
-        details: bot.description || 'This AI Agent assists with various automated tasks and provides insights based on data analysis. It is designed to enhance productivity and streamline workflows and streamline workflows.'
+        details: bot.description || 'No Description Found.'
       }));
       this.bot = this.predefined_botsList.find(bot => bot.productId === productId);
       this.UUID=this.bot.predefinedUUID
-      console.log("UUID: ",this.bot.predefinedUUID )
+      this.aiAgentDetails()
       this.getAgentFiles(this.bot.predefinedUUID);
       this.spinner.hide();
     }, err => {
@@ -220,29 +201,30 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   onclickBot() {
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "update", id: "7896" } });
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId } });
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: "prod_PdiLNkF4ZbHkgj" } });
-    this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
-        // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details } });
+    console.log("Selected Drop Agent: ", this.selected_drop_agent)
 
+    if(this.isConfig && (this.selected_drop_agent === null || this.selected_drop_agent === undefined)){
+      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: this.bot?.productId } });
+    }
+    else{
+      this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "edit", id: this.bot?.productId, agent_id:this.selected_drop_agent.predefinedOrchestrationBotId } });
+      // this.toaster.toastSuccess(`Navigating to Update Agent${this.selected_drop_agent.predefinedOrchestrationBotId}`)
+    }
+    
   }
 
   toggleFileSelection(file: any): void {
     const index = this.selectedFiles.indexOf(file);
     if (index > -1) {
       this.selectedFiles.splice(index, 1);
-      console.log("All Files Removed: " ,this.selectedFiles)
     } else {
       this.selectedFiles.push(file);
-      console.log("All Files Added: " ,this.selectedFiles)
     }
   }
 
   selectAllFiles(event: any): void {
     if (event.target.checked) {
       this.selectedFiles = [...this.filteredFiles];
-      console.log("All Files Selected" ,this.selectedFiles)
     } else {
       this.selectedFiles = [];
     }
@@ -254,7 +236,7 @@ export class AgentDetailsComponent implements OnInit {
 
   // File Method
   applyFilters(): void {
-    this.filteredFiles = this.file.filter(file => {
+    this.displayedFiles = this.filteredFiles.filter(file => {
       const matchesSearchTerm = this.searchTerm ? file.originalFileName.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
       const matchesFileType = this.selectedFileType ? file.dataType === this.selectedFileType : true;
       const matchesDate = this.selectedDate ? file.uploadedDate.startsWith(this.selectedDate) : true;
@@ -262,45 +244,80 @@ export class AgentDetailsComponent implements OnInit {
     });
   }
 
-  downloadSelectedFiles(){
-
-  }
-
-  // filterLogsData(): void {
-  //   if (this.selectedDateLog) {
-  //     this.filteredLogsData = this.logs_full.filter(log =>
-  //       log.start_date.startsWith(this.selectedDateLog)
-  //     );
-  //   } else {
-  //     this.filteredLogsData = [...this.logs_full];
-  //   }
-  // }
-
   filterLogsData(): void {
     let filteredLogs = [...this.logs_full];
 
     if (this.selectedDateLog) {
-      filteredLogs = filteredLogs.filter(log =>
-        log.start_date.startsWith(this.selectedDateLog)
-      );
+        filteredLogs = filteredLogs.filter(log =>
+            log.startTS.startsWith(this.selectedDateLog)
+        );
     }
 
     if (this.selectedStatus) {
-      filteredLogs = filteredLogs.filter(log =>
-        log.status === this.selectedStatus
-      );
+        filteredLogs = filteredLogs.filter(log =>
+            log.status === this.selectedStatus
+        );
     }
 
-    filteredLogs.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
-
+    filteredLogs.sort((a, b) => new Date(b.startTS).getTime() - new Date(a.startTS).getTime());
     this.filteredLogsData = filteredLogs;
-    // this.currentPage = 1;
-    // this.updatePagination();
+    this.currentPage = 1;
+    this.updateVisibleLogs();
   }
 
-  downloadLogs(){
-
+  sortLogs(): void {
+    this.filteredLogsData.sort((a, b) => {
+      if (this.sortOrder) {
+        return a.agentName.localeCompare(b.agentName);
+      } else {
+        return b.agentName.localeCompare(a.agentName);
+      }
+    });
+    this.updateVisibleLogs();
+    this.sortOrder = !this.sortOrder;
+    
   }
+
+  toggleAgentOrder(): void {
+    this.sortLogs();
+  }
+
+downloadLogs(): void {
+  this.spinner.show();
+  try {
+      const logs = this.filteredLogsData;
+      const data = logs.map(log => ({
+          Agent: log.agentName,
+          'Start Date': new Date(log.startTS).toLocaleString(),
+          'End Date': new Date(log.endTS).toLocaleString(),
+          Status: log.status,
+          Info: log.info ?? 'No Info Found'
+      }));
+
+      // excel creating for history 
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+      const wb: XLSX.WorkBook = { Sheets: { 'history': ws }, SheetNames: ['history'] };
+      const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `${this.bot.predefinedBotName}-history`);
+
+      this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent History Downloaded Successfully`);
+  } catch (error) {
+      this.toaster.showError("Failed to Download History");
+  } finally {
+      this.spinner.hide();
+  }
+}
+
+saveAsExcelFile(buffer: any, fileName: string): void {
+  try {
+      const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      const EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+      FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
+  } catch (error) {
+      throw error;
+  }
+}
 
   handleBotPlayer () {
     this.runPlayer = !this.runPlayer
@@ -332,15 +349,14 @@ export class AgentDetailsComponent implements OnInit {
   loadMoreFiles(): void {
     this.showMiniLayout=!this.showMiniLayout
     this.showMoreFiles=!this.showMoreFiles
-
   }
 
   getAgentFiles(id: string) {
     this.spinner.show();
     this.rest_api.getAgentFiles(id).subscribe((res: any) => {
-      console.log("Date File", res);
       this.file = res.data;
       this.filteredFiles=res.data;
+      this.updateFilePagination()
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
@@ -349,172 +365,84 @@ export class AgentDetailsComponent implements OnInit {
   }
 
   deleteAgentFiles(){
-    this.spinner.show();
-    this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
-      console.log("Delete File: ", res);
-      this.getPredefinedBotsList(this.product_id);
-      this.spinner.hide();
-      this.toaster.showSuccess("Delete","delete")
-    }, err => {
-      this.spinner.hide();
-      this.toaster.showError(this.toastMessage.apierror);
-    });
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
+        this.getPredefinedBotsList(this.product_id);
+        this.spinner.hide();
+        this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Deleted Successfully..`)
+      }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
+      });
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
-
-  // downloadAgentFiles(){
-  //   this.spinner.show();
-  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe((response: any) => {
-  //     console.log("Download API Call : ",response)
-  //       let resp_data = [];  
-  //       if(response.code == 4200){
-  //       resp_data = response.data;
-  //       if (resp_data.length > 0) {
-  //         if (resp_data.length == 1) {
-  //           let fileName = resp_data[0].label;
-  //           var link = document.createElement("a");
-  //           let extension = resp_data[0].dataType;
-  //           link.download = fileName;
-  //           link.href =extension == "png" || extension == "jpg" || extension == "svg" || extension == "gif"
-  //               ? `data:image/${extension};base64,${resp_data[0].data}`
-  //               : `data:application/${extension};base64,${resp_data[0].data}`;
-  //           link.click();
-  //           this.toaster.showSuccess("Success","download")
-  //         } else {
-  //           var zip = new JSZip();
-  //           resp_data.forEach((value, i) => {
-  //             let fileName = resp_data[i].label;
-  //             let extension = resp_data[i].dataType;
-  //             if (extension == "jpg" || "PNG" || "svg" || "jpeg" || "png")
-  //               zip.file(fileName, value.data, { base64: true });
-  //             else zip.file(fileName, value.data);
-  //           });
-  //           zip.generateAsync({ type: "blob" }).then(function (content) {
-  //             FileSaver.saveAs(content, "AI_Agent" + ".zip");
-  //           });
-  //           this.toaster.showSuccess("Success","download")
-  //         }
-  //       }
-  //       // this.spinner.hide();
-  //       this.toaster.showError("Faied to download the files")
-  //     }
-  //     });
-  //     this.spinner.hide();
-  // }
-
-  // downloadAgentFiles() {
-  //   this.spinner.show();
-  //   this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
-  //     (response: any) => {
-  //       console.log("Download API Call: ", response);
-  //       if (response.code == 4200) {
-  //         const resp_data = response.data;
-  //         if (resp_data.length > 0) {
-  //           if (resp_data.length == 1) {
-  //             const fileName = resp_data[0].fileName;
-  //             const fileData = resp_data[0].downloadedFile;
-  //             const link = document.createElement("a");
-  //             const extension = fileName.split('.').pop();
-  
-  //             link.download = fileName;
-  //             link.href =
-  //               extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-  //                 ? `data:image/${extension};base64,${fileData}`
-  //                 : `data:application/${extension};base64,${fileData}`;
-  
-  //             link.click();
-  //             this.toaster.showSuccess("Success", "File downloaded successfully");
-  //           } 
-  //           else {
-  //             const zip = new JSZip();
-  //             resp_data.forEach((value) => {
-  //               const fileName = value.fileName;
-  //               const fileData = value.downloadedFile;
-  //               zip.file(fileName, fileData, { base64: true });
-  //             });
-  //             zip.generateAsync({ type: "blob" }).then((content) => {
-  //               FileSaver.saveAs(content, "AI_Agent_Files.zip");
-  //             });
-  //             this.toaster.showSuccess("Success", "Files downloaded successfully");
-  //           }
-  //         } else {
-  //           this.toaster.showError("Error");
-  //         }
-  //       } else {
-  //         this.toaster.showError("Error");
-  //       }
-  //       this.spinner.hide();
-  //     },
-  //     (error) => {
-  //       console.error("Download API error: ", error);
-  //       this.toaster.showError("Error");
-  //       this.spinner.hide();
-  //     }
-  //   );
-  // }
 
   downloadAgentFiles() {
-    this.spinner.show();
-    this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
-      (response: any) => {
-        console.log("Download API Call: ", response);
-        if (response.code == 4200) {
-          const resp_data = response.data;
-          if (resp_data.length > 0) {
-            if (resp_data.length == 1) {
-              const fileName = resp_data[0].fileName;
-              const fileData = resp_data[0].downloadedFile;
-              const link = document.createElement("a");
-              const extension = fileName.split('.').pop();
-  
-              link.download = fileName;
-              link.href =
-                extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-                  ? `data:image/${extension};base64,${fileData}`
-                  : `data:application/${extension};base64,${fileData}`;
-  
-              link.click();
-              this.toaster.showSuccess("Success", "File downloaded successfully");
-            } else {
-              const zip = new JSZip();
-              const fileNames = new Set();
-  
-              resp_data.forEach((value) => {
-                let fileName = value.fileName;
-                const fileData = value.downloadedFile;
+    if (this.selectedFiles.length>=1) {
+      this.spinner.show();
+      this.rest_api.downloadAgentFiles(this.selectedFiles).subscribe(
+        (response: any) => {
+          if (response.code == 4200) {
+            const resp_data = response.data;
+            if (resp_data.length > 0) {
+              if (resp_data.length == 1) {
+                const fileName = resp_data[0].fileName;
+                const fileData = resp_data[0].downloadedFile;
+                const link = document.createElement("a");
                 const extension = fileName.split('.').pop();
-                const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-                let counter = 1;
-  
-                while (fileNames.has(fileName)) {
-                  fileName = `${baseName}_${counter}.${extension}`;
-                  counter++;
-                }
-                fileNames.add(fileName);
-                zip.file(fileName, fileData, { base64: true });
-              });
-  
-              zip.generateAsync({ type: "blob" }).then((content) => {
-                FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
-              });
-              this.toaster.showSuccess("Success", "Files downloaded successfully");
+    
+                link.download = fileName;
+                link.href =
+                  extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                    ? `data:image/${extension};base64,${fileData}`
+                    : `data:application/${extension};base64,${fileData}`;
+    
+                link.click();
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
+              } else {
+                const zip = new JSZip();
+                const fileNames = new Set();
+    
+                resp_data.forEach((value) => {
+                  let fileName = value.fileName;
+                  const fileData = value.downloadedFile;
+                  const extension = fileName.split('.').pop();
+                  const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                  let counter = 1;
+    
+                  while (fileNames.has(fileName)) {
+                    fileName = `${baseName}_${counter}.${extension}`;
+                    counter++;
+                  }
+                  fileNames.add(fileName);
+                  zip.file(fileName, fileData, { base64: true });
+                });
+    
+                zip.generateAsync({ type: "blob" }).then((content) => {
+                  FileSaver.saveAs(content, `${this.bot.predefinedBotName}_AI_Agent_Files.zip`);
+                });
+                this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Downloaded Successfully..`);
+              }
+            } else {
+              this.toaster.showError("Error Downloading Files.");
             }
           } else {
-            this.toaster.showError("Error");
+            this.toaster.showError("Error Downloading Files.");
           }
-        } else {
+          this.spinner.hide();
+        },
+        (error) => {
           this.toaster.showError("Error");
+          this.spinner.hide();
         }
-        this.spinner.hide();
-      },
-      (error) => {
-        console.error("Download API error: ", error);
-        this.toaster.showError("Error");
-        this.spinner.hide();
-      }
-    );
+      );
+    } else {
+      this.toaster.showWarn("Please select the Files.")
+    }
   }
-  
-  totalPages=0
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
@@ -532,59 +460,204 @@ export class AgentDetailsComponent implements OnInit {
     if (previousPage > 0) {
       pageNumbers.push(previousPage);
     }
-
     pageNumbers.push(this.currentPage);
 
     if (nextPage <= this.totalPages) {
       pageNumbers.push(nextPage);
     }
-
     return pageNumbers;
   }
 
+  getPageNumbersFiles(): number[] {
+    const pageNumbers: number[] = [];
+    const previousPage = this.currentPageFiles - 1;
+    const nextPage = this.currentPageFiles + 1;
+
+    if (previousPage > 0) {
+      pageNumbers.push(previousPage);
+    }
+    pageNumbers.push(this.currentPageFiles);
+
+    if (nextPage <= this.totalPagesFiles) {
+      pageNumbers.push(nextPage);
+    }
+    return pageNumbers;
+  }
+
+  goToFirstPageFiles(): void {
+    this.currentPageFiles = 1;
+    this.updateFilePagination();
+  }
+
+  goToPreviousPageFiles(): void {
+    if (this.currentPageFiles > 1) {
+      this.currentPageFiles--;
+      this.updateFilePagination();
+    }
+  }
+
+  goToPageFiles(pageNumber: number): void {
+    this.currentPageFiles = pageNumber;
+    this.updateFilePagination();
+  }
+
+  goToNextPageFiles(): void {
+    if (this.currentPageFiles < this.totalPagesFiles) {
+      this.currentPageFiles++;
+      this.updateFilePagination();
+    }
+  }
+
+  goToLastPageFiles(): void {
+    this.currentPageFiles = this.totalPagesFiles;
+    this.updateFilePagination();
+  }
+
   goToPage(pageNumber: number): void {
-      this.currentPage = pageNumber;
-  }
+    this.currentPage = pageNumber;
+    this.updateVisibleLogs();
+}
 
-  goToFirstPage(): void {
-      this.currentPage = 1;
-  }
+goToFirstPage(): void {
+    this.currentPage = 1;
+    this.updateVisibleLogs();
+}
 
-  goToLastPage(): void {
-      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
-      this.currentPage = totalPages;
-  }
+goToLastPage(): void {
+    const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+    this.currentPage = totalPages;
+    this.updateVisibleLogs();
+}
 
-  goToNextPage(): void {
-      const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
-      if (this.currentPage < totalPages) {
-          this.currentPage++;
-      }
-  }
+goToNextPage(): void {
+    const totalPages = Math.ceil(this.filteredLogsData.length / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+        this.currentPage++;
+        this.updateVisibleLogs();
+    }
+}
 
-  goToPreviousPage(): void {
-      if (this.currentPage > 1) {
-          this.currentPage--;
-      }
-  }
+goToPreviousPage(): void {
+    if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updateVisibleLogs();
+    }
+}
+
+  new_array:any[]=[];
 
   getVisibleLogs(): any[] {
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      return this.filteredLogsData.slice(startIndex, endIndex);
-  }
-  
-  uploadAgentFiles(body){
-
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredLogsData.slice(startIndex, endIndex);
   }
 
-
-  uploadData(): void {
-  }
-
-  deleteData(): void {
+  updateVisibleLogs(): void {
+    this.new_array = this.getVisibleLogs();
   }
 
   renewBtns(){
+    this.toaster.toastSuccess("Please contact EPsoft")
   }
+
+  updateFilePagination(): void {
+    this.totalPagesFiles = Math.ceil(this.filteredFiles.length / this.itemsPerPageFiles);
+    const startIndex = (this.currentPageFiles - 1) * this.itemsPerPageFiles;
+    const endIndex = this.currentPageFiles * this.itemsPerPageFiles;
+    this.displayedFiles = this.filteredFiles.slice(startIndex, endIndex);
+  }
+
+  onAgentChange(event: any): void {
+    this.selected_drop_agent = event.value;
+    this.enabledRun=true
+  }
+
+  agentDropdownList(agent_details){
+    this.agent_drop_list = agent_details.agentBotDetails.map(bot => ({
+      label: bot.automationName,
+      value: bot
+    }));
+  }
+
+  daysBetweenPlan(startDate: string, endDate: string): string {
+    const today = new Date();
+    const end = new Date(endDate);
+
+    const diffTime = Math.abs(end.getTime() - today.getTime());
+    let totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    const years = Math.floor(totalDays / 365);
+    totalDays %= 365;
+    const months = Math.floor(totalDays / 30);
+    const days = totalDays % 30;
+
+    let result = '';
+    if (years > 0) {
+      result += `${years} year${years > 1 ? 's' : ''} `;
+    }
+    if (months > 0) {
+      result += `${months} month${months > 1 ? 's' : ''} `;
+    }
+    if (days > 0) {
+      result += `${days} day${days > 1 ? 's' : ''}`;
+    }
+    return result.trim();
+  }
+
+  getAIAgentHistory(id) {
+    this.spinner.show();
+    this.rest_api.aiAgentHistory(id).subscribe((res: any) => {
+
+        this.logs_full = res.data;
+        this.logs_full.sort((a, b) => {
+            return new Date(b.startTS).getTime() - new Date(a.startTS).getTime();
+        });
+
+        this.filteredLogsData = this.logs_full.slice(); 
+        this.new_array = this.logs_full.slice(0, this.itemsPerPage); 
+
+        this.spinner.hide();
+    }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
+
+  runAiAgent(event){
+    this.spinner.show()
+    let id=this.selected_drop_agent.predefinedOrchestrationBotId
+    this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
+      this.spinner.hide();
+      if (res.errorCode==4200) {
+        this.toaster.toastSuccess("Agent Execution Started")
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
+        this.getPredefinedBotsList(this.product_id);
+      }
+      else if(res.status){
+        this.toaster.toastSuccess(res.status)
+        this.remaining_exe=""
+        this.new_array=[]
+        this.logs_full=[]
+        this.getPredefinedBotsList(this.product_id);
+      }
+      else{
+        this.toaster.toastSuccess(res.errorMessage)
+      }
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  } 
+
+  // getAiAgentUpdateForm(){
+  //   this.spinner.show()
+  //   this.rest_api.getAiAgentUpdateForm().subscribe((res: any) => {
+  //     this.spinner.hide(); 
+  //   }, err => {
+  //     this.spinner.hide();
+  //     this.toaster.showError(this.toastMessage.apierror);
+  //   });
+  // }
 }

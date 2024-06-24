@@ -70,8 +70,8 @@ deleteConversation(data){
   return this.http.post(environment.asquare+"/v1/conversation/purge", data, {headers:this.headers})
 }
 
-getCustomerBots(){
-  return this.http.get(environment.asquare+"/admin/v1/customer-support-bot", {headers:this.headers})
+getCustomerBots(tenantId:any){
+  return this.http.get(environment.asquare+"/admin/v1/customer-support-bot/byTenantId/"+`${tenantId}`, {headers:this.headers})
 }
 
 saveCustomerBot(body:any){
@@ -102,4 +102,9 @@ getUploadDocs(formData){
 getTrainedModel(formData){
   return this.http.post(environment.python_llm+"/train", formData)
 }
+
+  checkCustomerBotName(botname) {
+    return this.http.get(environment.asquare + "/admin/v1/customer-support-bot/check-bot?botName=" + botname + "&tenantId=" + localStorage.getItem('tenantName'), { headers: this.headers });
+  }
+
 }

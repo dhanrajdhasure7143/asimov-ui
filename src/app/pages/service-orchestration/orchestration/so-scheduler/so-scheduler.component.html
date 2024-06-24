@@ -53,10 +53,11 @@
                 </div>
             </div>
             <div class="col p-0 form-group">
-                <button class="btn bluebg-button" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button>
+                <button class="btn bluebg-button" *ngIf="!isProcessAnalyst" [disabled]="(beforetime==true || aftertime==true) || (schedule_list.length>0) || compareScheduleDates" (click)="add_sch()">Add</button>
+                <button class="btn bluebg-button" *ngIf="isProcessAnalyst" disabled>Add</button>
             </div>
             <div class="row justify-content-end">
-                <div class="scheduletimer-actionbtns">
+                <div class="scheduletimer-actionbtns" *ngIf="!isProcessAnalyst">
 
                     <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
                         <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
@@ -82,6 +83,15 @@
                     <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
                   </button>
                 </div>
+
+                <div class="row justify-content-end scheduletimer-actionbtns" *ngIf="isProcessAnalyst">
+                    <button disabled mat-mini-fab color="basic" ><i class="ri-play-line testplus"></i></button>
+                    <button disabled mat-mini-fab color="basic" ><i class="ri-pause-line testplus"></i></button>
+                    <button disabled mat-mini-fab color="basic" ><i class="ri-skip-forward-line testplus"></i></button>
+                    <button disabled mat-mini-fab color="basic" ><i class="ri-delete-bin-line testplus"></i></button>
+                    <button disabled mat-mini-fab color="basic" ><i class="ri-refresh-line testplus"></i></button>
+                </div>
+
             </div>
             <!--For Bot Schedule-->
             <div *ngIf="botid!='' && botid !=undefined">
@@ -170,7 +180,7 @@
         </div>        
     </div>
     <div class="createform-footer">
-        <button class="btn bluebg-button eiap-btn" (click)="saveschedule()">Save</button>
+        <button class="btn bluebg-button eiap-btn" [disabled]="isProcessAnalyst" (click)="saveschedule()">Save</button>
     </div>
 </div>
 <p-toast  [style]="{marginTop: '50px'}" key="so_Scheduler"></p-toast>

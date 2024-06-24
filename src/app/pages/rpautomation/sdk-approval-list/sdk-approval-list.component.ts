@@ -8,6 +8,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-sdk-approval-list',
@@ -23,7 +24,7 @@ export class SdkApprovalListComponent implements OnInit {
   table_searchFields: any[] = [];
   isupdateform: boolean = false;
   updatetaskDetails: any = {};
-
+  users_list:any[]=[];
 
   constructor(
     private rest: RestApiService,
@@ -32,27 +33,28 @@ export class SdkApprovalListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private toastService: ToasterService,
     private toastMessages: toastMessages,
-    private http: HttpClient) { }
+    private dt : DataTransferService) { }
 
   ngOnInit() {
     this.columns_list = this.columnList.sdk_approval_list
-    this.getApprovalList();
+    this.getUsersList();
   }
 
   getApprovalList() {
     this.spinner.show();
     this.rest.getApprovalList().subscribe((res: any) => {
       this.customTasks = res
-      console.log("Response", res);
       this.customTasks.map(item => {
-        item.createdAt = new Date(item.createdAt)
+        item.createdAt = new Date(item.createdAt);
+        item["createdUser"] = this.getUserName(item.createdBy);
+        item["approverName"] = this.getUserName(item.approvedBy);
       })
       this.spinner.hide();
     }, err => {
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "createdBy", "comments", "status"]
+    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "createdUser", "comments", "status"]
 
   }
 
@@ -145,7 +147,6 @@ export class SdkApprovalListComponent implements OnInit {
       key: 'positionDialog_sdk_delete',
       accept: () => {
         const payload = { ...data, status: status };
-        console.log("Payload to be sent:", payload);
         this.spinner.show();
         this.rest.approveRejectRequest(payload).subscribe((res: any) => {
           if (res.code == 4200) {
@@ -165,5 +166,23 @@ export class SdkApprovalListComponent implements OnInit {
       },
     });
   }
+
+  getUsersList() {
+    this.spinner.show()
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        this.getApprovalList();
+      }
+    });
+  }
+
+  getUserName(emailId){
+    let user = this.users_list.find(item => item.user_email == emailId);
+    if(user)
+      return user["fullName"]
+      else
+      return '-';
+    }
 
 }

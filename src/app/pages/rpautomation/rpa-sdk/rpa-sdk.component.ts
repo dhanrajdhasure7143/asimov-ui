@@ -8,6 +8,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-rpa-sdk',
@@ -23,7 +24,8 @@ export class RpaSdkComponent implements OnInit {
   isupdateform:boolean= false;
   updatetaskDetails:any={};
   selectedTab:number=0;
-  other_customTasks:any=[]
+  other_customTasks:any=[];
+  users_list:any[]=[];
 
 
   constructor(
@@ -33,28 +35,31 @@ export class RpaSdkComponent implements OnInit {
     private confirmationService:ConfirmationService,
     private toastService: ToasterService,
     private toastMessages: toastMessages,
+    private dt: DataTransferService,
     private http:HttpClient) { }
 
   ngOnInit(){
     this.columns_list = this.columnList.custom_tasks
-    this.getTaskDetails();
+    this.getUsersList();
   }
 
   getTaskDetails(){
     this.spinner.show();
     this.rest.getCustomTasks().subscribe((res : any) =>{  
-      this.customTasks = res
-      this.customTasks.map(item=>{
+      const customTasks_list = res
+      customTasks_list.map(item=>{
         item.createdAt = new Date(item.createdAt)
+        item["createdUser"] = this.getUserName(item.createdBy);
+        item["approverName"] = this.getUserName(item.approvedBy);
       })
-      this.customTasks = this.customTasks.filter(item =>item.status == "Approved");
-      console.log(this.customTasks)
+      this.customTasks = customTasks_list.filter(item =>item.status == "Approved");
+      this.other_customTasks = customTasks_list.filter(item =>item.status != "Approved");
       this.spinner.hide();
     },err=>{
       this.toastService.showError(this.toastMessages.loadDataErr)
     })
 
-    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "approvedBy", "comments", "status"]
+    this.table_searchFields = ["customTaskName","createdUser","languageType", "createdAt", "approverName", "comments", "status"]
 
   }
 
@@ -136,27 +141,28 @@ export class RpaSdkComponent implements OnInit {
     this.getTaskDetails();
   }
 
-  getOtherTaskDetails(){
-    this.spinner.show();
-    this.rest.getCustomTasks().subscribe((res : any) =>{  
-      this.other_customTasks = res
-      this.other_customTasks.map(item=>{
-        item.createdAt = new Date(item.createdAt)
-      })
-      this.other_customTasks = this.other_customTasks.filter(item =>item.status != "Approved");
-      this.spinner.hide();
-    },err=>{
-      this.toastService.showError(this.toastMessages.loadDataErr)
-    })
-
-    this.table_searchFields = ["customTaskName", "languageType", "createdAt", "approvedBy", "comments", "status"]
-
-  }
-
   onTabChanged(event){
-    console.log(event)
     this.selectedTab=event.index;
-    this.selectedTab == 0?this.getTaskDetails():this.getOtherTaskDetails();
+    // this.selectedTab == 0?this.getTaskDetails():this.getOtherTaskDetails();
+    this.getTaskDetails();
   }
+
+  getUsersList() {
+    this.spinner.show()
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        this.getTaskDetails();
+      }
+    });
+  }
+
+  getUserName(emailId){
+    let user = this.users_list.find(item => item.user_email == emailId);
+    if(user)
+      return user["fullName"]
+      else
+      return '-';
+    }
 
 }

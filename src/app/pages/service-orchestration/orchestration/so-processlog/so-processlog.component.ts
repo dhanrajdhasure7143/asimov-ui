@@ -34,7 +34,8 @@ export class SoProcesslogComponent implements OnInit {
     Success: '#4BD963',
     Killed:"#B91C1C",
     Stopped: '#FE665D',
-    Running:"#FFA033"
+    Running:"#FFA033",
+    Approved:"#4BD963"
   };
   isDataEmpty:boolean=false;
   traversalLogs:any=[];
@@ -68,6 +69,7 @@ export class SoProcesslogComponent implements OnInit {
         this.logsDisplayFlag="RUNS";
         this.processRuns=response;
         this.logsData=response;
+        console.log(this.logsData)
        },(err=>{
         this.handleException(err);
        }));
@@ -75,7 +77,7 @@ export class SoProcesslogComponent implements OnInit {
 
     getBotLogsByRunId(runData:any){
       this.logsLoading=true;
-      this.rest.getprocessruniddata(runData.processId, runData.processRunId).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
+      this.rest.getprocessruniddata(runData.processId, runData.processRunId,runData.oldLogsToggle).pipe(filter(data => Array.isArray(data)),map(data=>this.updateVersion(data)),map(data=>this.updateDateFormat(data, ["end_time", "start_time"]))).subscribe((response:any)=>{
         this.logsLoading=false;
         if(this.validateErrorMessage(response)) return (this.logsData=[]);
         this.selectedRun=runData;
@@ -209,7 +211,7 @@ export class SoProcesslogComponent implements OnInit {
 
     updateVersion=(logs:any)=>{
       logs=logs.map((item:any)=>{
-        item["modifiedVersionNew"]="V"+parseFloat(item["versionNew"]).toFixed(1);
+        item["modifiedVersionNew"]=item["versionNew"]?"V"+parseFloat(item["versionNew"]).toFixed(1):null;
         return item;
       })
       return logs

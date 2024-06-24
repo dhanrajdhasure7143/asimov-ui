@@ -6,6 +6,7 @@ import { ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
 import { Table } from "primeng/table";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-project-rpa-design",
@@ -25,6 +26,7 @@ export class ProjectRpaDesignComponent implements OnInit {
   public myDataArray: any;
   selectedId: any;
   projectId: any;
+  projectName: any;
   programId: any;
   taskId: any;
   rpaDesignsLength: any;
@@ -44,7 +46,7 @@ export class ProjectRpaDesignComponent implements OnInit {
     private rest_api: RestApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     private toastService: ToasterService,
     private confirmationService: ConfirmationService,
     private toastMessages: toastMessages
@@ -54,6 +56,7 @@ export class ProjectRpaDesignComponent implements OnInit {
       this.projectId = params.projectId;
       this.taskId = params.taskId;
       this.programId = params.programId;
+      this.projectName = params.projectName
     });
   }
   @Input() get selectedColumns(): any[] {
@@ -141,7 +144,7 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   backToProjects() {
     this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { project_id: this.projectId, programId: this.programId },
+      queryParams: { project_id: this.projectId, programId: this.programId, project_name: this.projectName },
     });
   }
 

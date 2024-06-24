@@ -51,7 +51,8 @@ export class PredefinedBotsService {
 
   rfpFileUpload(body:any){
     // return this.http.post("/platform-service/document/uploadPredefinedRFPFile",body)
-    return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
+    // return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
+    return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
   }
 
   getAgentFiles(UUID){
@@ -70,4 +71,23 @@ export class PredefinedBotsService {
     return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
   }
 
+  aiAgentDetails(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-details")
+  }
+
+  aiAgentHistory(id){
+    return this.http.get("/rpa-service/predefined/v2/ai-agents-logs/"+id)
+  }
+
+  getAiAgentUpdateForm(){
+    return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
+  }
+
+  getAgentAttributeswithData(productid,id){
+    return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+  }
+
+  updatePredefinedAttributesData(agentId,botId,body){
+    return this.http.post(`rpa-service/predefined/v2/ai-agent?productId=${agentId}&botId=${botId}`,body)
+  }
 }

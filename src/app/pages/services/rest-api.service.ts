@@ -736,14 +736,14 @@ export class RestApiService{
     {
       return this.http.get("/platform-service/project/getallUsersByDept");
     }
-    getProcesslogsdata(processId)
-    {
-      return this.http.get("/rpa-service/process-logs/"+processId);
+    getProcesslogsdata(processId){
+      // return this.http.get("/rpa-service/process-logs/"+processId);
+      return this.http.get("/rpa-service/process-logsV2/"+processId);
     }
 
-    getprocessruniddata(processId,processrunid)
-    {
-      return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+    getprocessruniddata(processId,processrunid,oldLogsToggle){
+      // return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+      return this.http.get("/rpa-service/process-logsV2/"+processId+"/"+processrunid+"?old_logs_toggle="+oldLogsToggle);
     }
 
     deployBPMNNotation(url, body){

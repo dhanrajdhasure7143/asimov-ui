@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   showWarningPopup:boolean;
   isPredefinedBots: boolean;
   userStatus:any={};
+  isSubscriptionModuleEnable:boolean=false;
 
   constructor(private router: Router, 
     private dt:DataTransferService, 
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.isSubscriptionModuleEnable = environment.isSubscriptionModuleEnable;
         // Disable service worker
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistrations().then(registrations => {

@@ -228,7 +228,7 @@ export class ProjectTaskListComponent implements OnInit {
       });
     }
     if (data.taskCategory == "RPA Design") {
-      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id}})
+      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id, projectName:this.project_name}})
     }
 
     if (data.taskCategory == "Process Mining") {

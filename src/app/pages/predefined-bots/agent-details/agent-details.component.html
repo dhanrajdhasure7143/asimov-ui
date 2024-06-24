@@ -4,18 +4,32 @@
             <div class="bot-info">
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <div class="rem-execution">Remaining Executions: <span
-                            class="remaining-exe">{{remaining_exe}}</span></div>
+                    <div class="rem-execution">Remaining Executions: 
+                        <span *ngIf="remaining_exe.length !=0" class="remaining-exe" >{{remaining_exe}}</span>
+                        <span *ngIf="remaining_exe.length===0" class="remaining-exe"><i class="pi pi-spin pi-spinner"></i></span>
+                    </div>
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
                 </p>
             </div>
 
             <div class="buttons-container">
-                <button class="button-top configure-button" [disabled]="isVisible==false" (click)="onclickBot()">
+                <p-dropdown [options]="agent_drop_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="label"
+                placeholder="Select a Agent" optionValue="value" class="custom-dropdown"  [style]="{'height': '54px',
+                'border-radius': '10px',
+                'padding': '10px 25px 10px 15px',
+                'font-weight': '500',
+                'font-size': '18px',
+                'border-color': '#CFCACA !important',
+                'display':'flex',
+                'align-items':'center'
+                }"
+                ></p-dropdown>
+
+                <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                     <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
                 </button>
-                <button class="button-top start-button" [disabled]="runPlayer && isVisible" (click)="handleBotPlayer()">
+                <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0" (click)="runAiAgent($event)">
                     <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                 </button>
                 <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
@@ -40,13 +54,13 @@
                 </div>
                 <div class="custom-accordion-content">
                     <div class="content-details">
-                        <p>Purchased On : <span style="padding-left: 30px;">{{ item.date }}</span></p>
-                        <p>Expires On : <span style="padding-left: 30px;">{{ item.expirationDate }}</span></p>
+                        <p>Purchased On : <span style="padding-left: 30px;">{{ subscription_dates?.subscription_created_at | date: 'MMM d, y, h:mm a'}}</span></p>
+                        <p>Expires On : <span style="padding-left: 30px;">{{ subscription_dates?.subscription_expiry_at | date: 'MMM d, y, h:mm a' }}</span></p>
 
                         <div class="base-content">
                             <div class="info-content">
                                 <p><img src="../../../../assets/images/agent/info_iocon.svg" alt="info icon"
-                                        class="info-style">Your Purchase Plan Expires within 30 days. Extend Plan To
+                                        class="info-style">Your Purchase Plan Expires within {{rem_days}}. Extend Plan To
                                     Continue Services</p>
                             </div>
                             <div class="renew-btns">
@@ -73,14 +87,17 @@
                 History</h3>
             <div class="table-wrapper">
                 <table>
-                    <tr *ngFor="let log of logs">
-                        <td>{{ log.date }}</td>
+                    <tr *ngFor="let log of logs_full">
+                        <td>Executed On {{ log.startTS | date: 'MMM d, y, h:mm a'}}</td>
                         <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
                             log.status }}</td>
                     </tr>
                 </table>
+                <div *ngIf="logs_full.length === 0" class="no-data-message">
+                    <span>No data found</span>
+                </div>
             </div>
-            <button class="button-bottom" (click)="loadMoreLogs()">Show All History</button>
+            <button *ngIf="logs_full.length >= 1" class="button-bottom" (click)="loadMoreLogs()">Show All History</button>
         </div>
 
         <div class="data-container">
@@ -88,20 +105,23 @@
                 <h3><img src="../../../../assets/images/agent/upload-pin.svg" alt="Upload icon" class="svg-icons">
                     Uploaded Data</h3>
                 <div class="icons">
-                    <img src="../../../../assets/images/agent/download-icon.svg" alt="Download icon" (click)="downloadAgentFiles()" class="svg-icons">
-                    <img src="../../../../assets/images/agent/delete-agent.svg" alt="Delete icon" (click)="deleteAgentFiles()" class="svg-icons">
+                    <img src="../../../../assets/images/agent/download-icon.svg"  [class.disabled-btns]="file.length < 1"  pTooltip="Download Files" tooltipPosition="top" alt="Download icon" (click)="downloadAgentFiles()" class="svg-icons svg-dwld-btn">
+                    <img src="../../../../assets/images/agent/delete-agent.svg" [class.disabled-btns]="file.length < 1" pTooltip="Delete Files" tooltipPosition="top" alt="Delete icon" (click)="deleteAgentFiles()" class="svg-icons svg-dwld-btn">
                 </div>
             </div>
 
             <div class="file-list">
                 <div *ngFor="let file of file" class="file-item" [ngClass]="{'selected': selectedFiles.includes(file)}"
                     (click)="toggleFileSelection(file)">
-                    <img src="../../../../assets/images/agent/file-icon.svg" alt="File icon" class="svg-icons">
+                    <img src="../../../../assets/images/agent/file-icon.svg" alt="File icon" class="svg-icons ">
                     <label [for]="file.originalFileName" class="file-name">{{ file.originalFileName }}</label>
                     <div class="selection-indicator" [ngClass]="{'selected': selectedFiles.includes(file)}"></div>
                 </div>
+                <div *ngIf="file.length === 0" class="no-data-message">
+                    <span>No data found</span>
+                </div>
             </div>
-            <button class="button-bottom" (click)="loadMoreFiles()">Show All Files</button>
+            <button *ngIf="file.length >= 1" class="button-bottom" (click)="loadMoreFiles()">Show All Files</button>
         </div>
     </div>
 
@@ -124,10 +144,11 @@
                         <option value="Failed">Failed</option>
                     </select>
 
-                    <button class="filter-icn" (click)="filterLogsData()">
+                    <button class="filter-icn" (click)="sortLogs()">
                         <i class="pi pi-filter icons-mt"></i> Filter
                     </button>
-                    <button class="logs-btn-btm" [disabled]="selectedLogs.length === 0" (click)="downloadLogs()">
+                    
+                    <button class="logs-btn-btm" [disabled]="filteredLogsData.length === 0" (click)="downloadLogs()">
                         <i class="pi pi-download"></i> Download Logs
                     </button>
                 </div>
@@ -136,28 +157,33 @@
             <div class="table-wrapper table-base">
                 <table>
                     <tr class="header-row">
-                        <th>S.No</th>
+                        <!-- <th>Agent</th> -->
+                        <th (click)="toggleAgentOrder()">Agent
+                            <i class="pi" [ngClass]="sortOrder ? 'pi-sort-alpha-down' : 'pi-sort-alpha-up'"></i>
+                        </th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
                         <th>Info</th>
                     </tr>
-                    <tr *ngFor="let log of getVisibleLogs()" class="table-base">
-                        <td>{{ log.sl_no }}</td>
-                        <td>{{ log.start_date }}</td>
-                        <td>{{ log.end_date }}</td>
+                    <tr *ngFor="let log of new_array" class="table-base">
+                        <td>{{ log.agentName }}</td>
+                        <td>{{ log.startTS | date: 'MMM d, y, h:mm a' }}</td>
+                        <td>{{ log.endTS | date: 'MMM d, y, h:mm a' }}</td>
                         <td [ngClass]="{ 'success': log.status === 'Success', 'failed': log.status === 'Failed' }">{{
                             log.status }}</td>
-                        <td>{{ log.info }}</td>
+                        <td class="info-cell">
+                            <div class="info-contents" [pTooltip]="log.info" tooltipPosition="top">
+                                <span>{{ log.info ?? "No Info Found" }}</span>
+                            </div>
+                        </td>
                     </tr>
                 </table>
-                <div *ngIf="filteredLogsData.length === 0" class="no-data-message">
+                <div *ngIf="new_array.length === 0" class="no-data-message">
                     <span>No data found</span>
                 </div>
             </div>
-            <!-- <button class="button-bottom" *ngIf="showMoreLogs" (click)="showLessLogs()">Show Less History</button> -->
             <div class="pagination-container">
-                <!-- "Show Less" button moved to the left corner -->
                 <button class="button-bottom-full" *ngIf="showMoreLogs" (click)="showLessLogs()" style="float: left;">
                     Show Less History
                 </button>
@@ -190,17 +216,7 @@
                     <i class="pi pi-search serach-logs"></i>
                     <select class="filter-input filter-calender" [(ngModel)]="selectedFileType"
                         (change)="applyFilters()">
-                        <option value="">All Types</option>
-                        <option value="pdf">PDF</option>
-                        <option value="jpg">JPG</option>
-                        <option value="xlsx">XLSX</option>
-                        <option value="pptx">PPTX</option>
-                        <option value="mp3">MP3</option>
-                        <option value="mp4">MP4</option>
-                        <option value="zip">ZIP</option>
-                        <option value="py">PY</option>
-                        <option value="epub">EPUB</option>
-                        <option value="docx">DOCX</option>
+                        <option *ngFor="let fileType of fileTypes" [value]="fileType.value">{{ fileType.label }}</option>
                     </select>
                     <input type="date" class="filter-input filter-calender" [(ngModel)]="selectedDate"
                         (change)="applyFilters()">
@@ -225,7 +241,7 @@
                         <th>File Size</th>
                         <th>Date Uploaded</th>
                     </tr>
-                    <tr *ngFor="let file of filteredFiles" class="table-base">
+                    <tr *ngFor="let file of displayedFiles" class="table-base">
                         <td><input type="checkbox" (change)="toggleFileSelection(file)"
                                 [checked]="isFileSelected(file)"></td>
                         <td><img src="../../../../assets/images/agent/file-icon.svg" alt="File icon"
@@ -239,7 +255,20 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <button class="button-bottom-full" (click)="showLessFiles()">Show Less Files</button>
+            <div class="pagination-container">
+                <button class="button-bottom-full" (click)="showLessFiles()" style="float: left;">
+                    Show Less Files
+                </button>
+                <div class="pagination">
+                    <button class="pagination-btn" (click)="goToFirstPageFiles()"><<</button>
+                    <button class="pagination-btn" (click)="goToPreviousPageFiles()"><</button>
+                    <ng-container *ngFor="let pageNumber of getPageNumbersFiles()">
+                    <button class="pagination-btn" [class.current]="pageNumber === currentPageFiles" (click)="goToPageFiles(pageNumber)">{{ pageNumber }}</button>
+                    </ng-container>
+                    <button class="pagination-btn" (click)="goToNextPageFiles()">></button>
+                    <button class="pagination-btn" (click)="goToLastPageFiles()">>></button>
+                </div>
+            </div>
         </div>
     </div>
 

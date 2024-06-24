@@ -19,4 +19,11 @@
     cursor: unset;
     margin: 0px;
 }
+::ng-deep .sdk-table .credential-tablegrid .p-datatable-wrapper {
+    height: calc(100vh - 305px) !important;
+}
+
+/* ::ng-deep .sdk-table .p-datatable-resizable>.p-datatable-wrapper {
+    overflow-x: hidden;
+} */
   

@@ -187,4 +187,11 @@ setScreenList(module:any){
   tenantInfo(value:any){
     this.tenant_Info.next(value);
   }
+
+  private existingUsersListSource = new BehaviorSubject<any[]>([]);
+  existingUsersList$ = this.existingUsersListSource.asObservable();
+
+  updateExistingUsersList(usersList: any[]) {
+    this.existingUsersListSource.next(usersList);
+  }
 }

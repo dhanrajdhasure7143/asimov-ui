@@ -83,7 +83,6 @@ export class RpaSdkFormComponent implements OnInit {
 
   ngOnChanges(){
     if (this.isupdateform) {
-      console.log(this.updatetaskDetails)
       this.customTaskForm.get("customTaskName").setValue(this.updatetaskDetails.customTaskName)
       this.customTaskForm.get("languageType").setValue(this.updatetaskDetails.languageType)
       this.customTaskForm.get("executablePath").setValue(this.updatetaskDetails.executablePath);
@@ -154,8 +153,6 @@ export class RpaSdkFormComponent implements OnInit {
       "version":0,
       "status": data?"Pending":"Draft",
     }
-    console.log(data);
-    console.log("Payload", reqBody);
     this.rest_api.saveCustomTask(reqBody).subscribe((data:any)=>{
       this.closeOverlay.emit(true);
       this.taskSaved.emit();
@@ -169,7 +166,6 @@ export class RpaSdkFormComponent implements OnInit {
   
   updateCustomTasks(staus:boolean){
     this.spinner.show();
-    console.log(this.updatetaskDetails)
     const approverEmail = this.customTaskForm.value.approver;
     const selectedApprover = this.users_list.find(user => user.user_email === approverEmail);
     const approverFullName = selectedApprover ? selectedApprover.fullName : '';
@@ -188,8 +184,6 @@ export class RpaSdkFormComponent implements OnInit {
       "version":this.updatetaskDetails.version,
       "createdAt":this.updatetaskDetails.createdAt
     }
-    console.log(this.updatetaskDetails.id);
-    console.log("UPDATe",reqBody);
     this.rest_api.updateCustomTasks(reqBody).subscribe((data : any) =>{
       this.taskSaved.emit();
       this.spinner.hide();
@@ -220,8 +214,6 @@ export class RpaSdkFormComponent implements OnInit {
       "createdBy": this.updatetaskDetails.createdBy,
       "version":this.updatetaskDetails.version,
     }
-    console.log(this.updatetaskDetails.id);
-    console.log("UPDATe", reqBody);
     this.rest_api.updateCustomTasks(reqBody).subscribe((data: any) => {
       this.taskSaved.emit();
       this.spinner.hide();
@@ -241,7 +233,6 @@ export class RpaSdkFormComponent implements OnInit {
     this.dt.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         this.users_list = res;
-        console.log(this.users_list)
       }
       this.isLoading = false
     });

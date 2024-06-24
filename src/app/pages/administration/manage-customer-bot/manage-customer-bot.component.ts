@@ -55,6 +55,7 @@ export class ManageCustomerBotComponent implements OnInit {
   { label: 'TrainModel', value: 'TRAIN-MODEL' },
   { label: 'Document', value: 'DOC' },
 ];
+  botNameCheck: boolean;
   constructor(
     private columns: columnList,
     private formBuilder: FormBuilder,
@@ -98,6 +99,7 @@ export class ManageCustomerBotComponent implements OnInit {
       customerSupportBotSource: ['', [Validators.required]],
       includeSites: ['', [Validators.required]],
       excludeSites: ['', [Validators.required]],
+      trainModelName: ['', [Validators.required]],
     };
     this.manageBotForm = this.formBuilder.group(formControls);
   }
@@ -110,7 +112,8 @@ export class ManageCustomerBotComponent implements OnInit {
 
   getAllCustomerBots() {
     this.loader.show();
-    this.rest_api.getCustomerBots().subscribe((botlist) => {
+
+    this.rest_api.getCustomerBots(localStorage.getItem("tenantName")).subscribe((botlist) => {
       this.manageBotList = botlist;
       this.loader.hide();
       this.table_searchFields = ['customerSupportBotName', 'customerSupportBotSource'];
@@ -211,6 +214,10 @@ export class ManageCustomerBotComponent implements OnInit {
         this.updateOverlayData.excludeSitesArray = [];
         this.updateOverlayData.includeSitesArray = [];
       }
+
+      this.manageBotForm.patchValue({
+        trainModelName: this.updateOverlayData.respPrefix
+      });
       this.manageBotForm.patchValue(this.updateOverlayData);
     } else {
       console.error('update Overlay Data is undefined or null.');
@@ -273,6 +280,8 @@ export class ManageCustomerBotComponent implements OnInit {
           } 
          
         } 
+
+        this.toastService.showSuccess(bot_Name,"create")
         this.getAllCustomerBots();
                
       },(err: any) => {
@@ -294,7 +303,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "customerSupportBotName": this.manageBotForm.value.customerSupportBotName,
         "greetingMessage": this.manageBotForm.value.greetingMessage,
         "primaryPrompt": this.manageBotForm.value.primaryPrompt,
-        "respPrefix": this.manageBotForm.value.respPrefix,
+        // "respPrefix": this.manageBotForm.value.respPrefix,
+        "respPrefix": this.manageBotForm.value.trainModelName,
         "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
         "customerSupportBotEmbedUrl": this.manageBotForm.value.customerSupportBotEmbedUrl,
         "botKey": this.manageBotForm.value.botKey,
@@ -448,4 +458,16 @@ onUploadeMode(botName:any) {
       (error) => {
       }
     );
-}}
+}
+
+  checkCustomerBotName(botname) {
+    this.rest_api.checkCustomerBotName(botname).subscribe(data => {
+      if (data == false) {
+        this.botNameCheck = false;
+      } else {
+        this.botNameCheck = true;
+      }
+    });
+  }
+  
+}
