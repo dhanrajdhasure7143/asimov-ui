@@ -18,10 +18,10 @@ export const environment = {
     schema_registry_url: "http://schemadev-registry:8081",
     alerts_url: "http://alerts.dev.epsoftinc.in",
     // Aiotal redirection urls
-    myaccount_url: "http://ezflow.dev.epsoftinc.in/#/activation",
-    logout_url: "http://ezflow.dev.epsoftinc.in/#/activation",
-    redirectout_url: "http://ezflow.dev.epsoftinc.in/#/signout",
-    platform_home_url: "http://ezflow.dev.epsoftinc.in/#/",
+    myaccount_url: "http://epsoft.dev.ai/#/activation",
+    logout_url: "http://epsoft.dev.ai/#/activation",
+    redirectout_url: "http://epsoft.dev.ai/#/signout",
+    platform_home_url: "http://epsoft.dev.ai/#/",
     projectendpoint_url: "http://pcs.dev.epsoftinc.in",
     subscriptionendpoint_url: "http://subscription.dev.epsoftinc.in",
     // camunda navigation
@@ -47,8 +47,8 @@ export const environment = {
     isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
     isCustomerBots : true,
     environmentName: "DEV",
-    paymentSuccessURL: "http://eziap.dev.epsoftinc.in/#/pages/success",
-    paymentFailuerURL: "http://eziap.dev.epsoftinc.in/#/pages/subscriptions",
+    paymentSuccessURL: "http://epsoftiap.dev.ai/#/pages/success",
+    paymentFailuerURL: "http://epsoftiap.dev.ai/#/pages/subscriptions",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
 
     python_llm:"http://10.11.0.67:5006",
