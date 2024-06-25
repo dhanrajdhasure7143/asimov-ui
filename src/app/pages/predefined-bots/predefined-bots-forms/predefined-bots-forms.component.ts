@@ -17,7 +17,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   processName:string;
   currentPage = 1;
-  fieldsPerPage = 20;
+  fieldsPerPage = 30;
   formFields = [];
   predefinedBotsForm: FormGroup;
   pages: number[] = [];
@@ -474,9 +474,9 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   convertSchedule(scheduleData) {
-      const startDateArray = scheduleData.startDate.split(',').map(Number);
-      const endDateArray = scheduleData.endDate.split(',').map(Number);
-      const interval = scheduleData.scheduleInterval;
+      const startDateArray = scheduleData[0].startDate.split(',').map(Number);
+      const endDateArray = scheduleData[0].endDate.split(',').map(Number);
+      const interval = scheduleData[0].scheduleInterval;
 
       // Formatting start date
       const startDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startDateArray[3], startDateArray[4]);
