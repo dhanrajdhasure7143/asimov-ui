@@ -10,7 +10,7 @@ networks:
 
 services:
   asimov-ui-ai-agents:
-    image: ${DOCKER_REGISTRY_URL}/asimov-ui:${DOCKER_TAG}
+    image: ${DOCKER_REGISTRY_URL}/asimov-ui-ai-agents:${DOCKER_TAG}
     deploy:
       replicas: 1
     networks:
