@@ -728,6 +728,11 @@ public setActiveTab(tab: string, event: any) {
           const fromMonth = this.fromMonth;
           const toMonth = this.toMonth;
           const day = this.day;
+
+          // Added a Selected Month based on the selected Month.
+          startdate[1]= this.fromMonth
+          enddate[1]= this.toMonth
+
           this.cronExpression = `${minute} ${hour} ${day} ${fromMonth}-${toMonth} *`;
           console.log("payload for monthly (hour, minute, frommonth, tomonth,day):",minute,hour,day,fromMonth,toMonth);
           console.log("cron expression for monthly is:", this.cronExpression);
