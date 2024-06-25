@@ -669,6 +669,6 @@ goToPreviousPage(): void {
       this.aiAgentDetails();
       this.getAIAgentHistory(this.product_id);
       this.loading = false;
-    }, 5000);
+    }, 6000);
   }
 }
