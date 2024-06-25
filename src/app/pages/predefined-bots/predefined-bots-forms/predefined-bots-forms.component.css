@@ -4,8 +4,11 @@
 }
 
 .p-name{
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
 }
 
 .form-row {
@@ -240,3 +243,18 @@
      left: 5px;
     }
 .custom-file-input:hover::before { border-color: none; }
+
+.back-button {
+    background: none;
+    border: none;
+    color: #098de6;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}

@@ -22,6 +22,7 @@ import { PredefinedBotsLogsComponent } from './predefined-bots-logs/predefined-b
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { PredefinedCronComponent } from './predefined-scheduler/predefined-cron/predefined-cron.component';
+import { AgentDetailsComponent } from './agent-details/agent-details.component';
 
 
 
@@ -33,7 +34,8 @@ import { PredefinedCronComponent } from './predefined-scheduler/predefined-cron/
     PredefinedBotsOrchestrationComponent,
     PredefinedSchedulerComponent,
     PredefinedBotsLogsComponent,
-    PredefinedCronComponent
+    PredefinedCronComponent,
+    AgentDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -30,9 +30,8 @@
         [show_search_field]="true"
         [search_fields]="table_searchFields" 
         [show_clear_filter]="true" 
-        [show_view_btn]="true"
-        (viewItem)="viewDetails($event)" 
-        (onRowDoubleClick)="openUpdateOverlay($event)">
+        [show_view_btn]="false"
+        (viewItem)="viewDetails($event)">
       </app-dynamic-table>
       </div>
     </div>
@@ -52,8 +51,11 @@
             <div class="row">
             <div class="form-group col pl-0">
               <label class="label-control">Bot Name<span class="star">*</span></label>
-              <input type="text" formControlName="customerSupportBotName" pInputText placeholder="Enter bot name" maxlength="51"
+              <input type="text" (input)="checkCustomerBotName($event.target.value)" formControlName="customerSupportBotName" pInputText placeholder="Enter bot name" maxlength="51"
                 class="form-control data">
+                <div *ngIf="botNameCheck" class="errspan required">
+                  Bot Name is already exists
+                </div>
               <span
                 *ngIf="manageBotForm.get('customerSupportBotName').invalid && manageBotForm.get('customerSupportBotName').touched && !manageBotForm.get('customerSupportBotName').hasError('maxlength') && manageBotForm.get('customerSupportBotName').value=='' && !manageBotForm.get('customerSupportBotName').hasError('pattern')"
                 class="required">Bot Name Required</span>
@@ -222,7 +224,7 @@
         </form>        
         <div class="createform-footer">
           <button (click)="resetBotForm()" class="btn new-cancelbtn">Reset</button>
-          <button *ngIf="isCreate" [disabled]="manageBotForm.invalid" (click)="saveCustomerSupportBot()"
+          <button *ngIf="isCreate" [disabled]="manageBotForm.invalid || botNameCheck" (click)="saveCustomerSupportBot()"
             class="btn bluebg-button">Save</button>
           <button *ngIf="!isCreate" [disabled]="manageBotForm.invalid" (click)="updateCustomerSupportBot()"
             class="btn bluebg-button">Update</button>
