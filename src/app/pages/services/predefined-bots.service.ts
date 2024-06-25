@@ -88,6 +88,6 @@ export class PredefinedBotsService {
   }
 
   updatePredefinedAttributesData(agentId,botId,body){
-    return this.http.post(`rpa-service/predefined/v2/ai-agent?productId=${agentId}&botId=${botId}`,body)
+    return this.http.post(`/rpa-service/predefined/v2/ai-agent-update/${botId}`,body)
   }
 }
