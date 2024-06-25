@@ -90,7 +90,7 @@ export class AgentDetailsComponent implements OnInit {
   // Run, Configure and Stop
   isConfig:boolean=false;
   enabledRun:boolean=false;
-
+  loading: boolean = false;
   // FileTypes for the Agent Files DOwnload 
   sortOrder: boolean = true;
   fileTypes = [
@@ -121,6 +121,7 @@ export class AgentDetailsComponent implements OnInit {
     { value: 'html', label: 'HTML' },
     { value: 'json', label: 'JSON' }
   ];
+
 
   constructor(
     private router: Router,
@@ -627,23 +628,23 @@ goToPreviousPage(): void {
     this.spinner.show()
     let id=this.selected_drop_agent.predefinedOrchestrationBotId
     this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
-      this.spinner.hide();
+    this.spinner.hide();
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
         this.remaining_exe=""
         this.new_array=[]
         this.logs_full=[]
-        this.getPredefinedBotsList(this.product_id);
+         this.loadAgentDetails()
       }
       else if(res.status){
         this.toaster.toastSuccess(res.status)
         this.remaining_exe=""
         this.new_array=[]
         this.logs_full=[]
-        this.getPredefinedBotsList(this.product_id);
+        this.loadAgentDetails()
       }
       else{
-        this.toaster.toastSuccess(res.errorMessage)
+        this.toaster.showInfo(res.errorMessage)
       }
     }, err => {
       this.spinner.hide();
@@ -660,4 +661,14 @@ goToPreviousPage(): void {
   //     this.toaster.showError(this.toastMessage.apierror);
   //   });
   // }
+
+  loadAgentDetails() {
+    this.getPredefinedBotsList(this.product_id)
+    this.loading = true;
+    setTimeout(() => {
+      this.aiAgentDetails();
+      this.getAIAgentHistory(this.product_id);
+      this.loading = false;
+    }, 5000);
+  }
 }

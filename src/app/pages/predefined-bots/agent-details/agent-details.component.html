@@ -4,9 +4,15 @@
             <div class="bot-info">
                 <div class="bot-header">
                     <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <div class="rem-execution">Remaining Executions: 
-                        <span *ngIf="remaining_exe.length !=0" class="remaining-exe" >{{remaining_exe}}</span>
-                        <span *ngIf="remaining_exe.length===0" class="remaining-exe"><i class="pi pi-spin pi-spinner"></i></span>
+                    <div class="rem-execution">Remaining Executions:
+                        <!-- <span *ngIf="remaining_exe.length !=0" class="remaining-exe">{{remaining_exe}}
+                            <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+                        </span>
+                        <span *ngIf="remaining_exe.length===0" class="remaining-exe">{{remaining_exe}}</span> -->
+                        <span *ngIf="loading" class="remaining-exe">
+                            <i class="pi pi-spin pi-spinner"></i>
+                        </span>
+                        <span *ngIf="!loading" class="remaining-exe">{{remaining_exe}}</span>
                     </div>
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
