@@ -9,14 +9,14 @@ networks:
     name: host
 
 services:
-  asimov-ui:
+  asimov-ui-ai-agents:
     image: ${DOCKER_REGISTRY_URL}/asimov-ui:${DOCKER_TAG}
     deploy:
       replicas: 1
     networks:
       - eps_net
     ports:
-      - 9197:80
+      - 9203:80
     logging:
       options:
         tag: "{{.Name}}"
