@@ -8,7 +8,7 @@ import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
 import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AiAgentSchedulerComponent } from './predefined-scheduler/ai-agent-scheduler.component';
+import { AiAgentSchedulerComponent } from './ai-agent-scheduler/ai-agent-scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,7 +21,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { AiAgentLogsComponent } from './ai-agent-logs/ai-agent-logs.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { AiAgentCronComponent } from './predefined-scheduler/ai-agent-cron/ai-agent-cron.component';
+import { AiAgentCronComponent } from './ai-agent-scheduler/ai-agent-cron/ai-agent-cron.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
 
 

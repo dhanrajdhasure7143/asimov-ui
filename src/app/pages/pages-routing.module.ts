@@ -21,7 +21,7 @@ const routes: Routes = [
     // {path:'support', loadChildren:() => import('./support/support.module').then(m => m.SupportModule)},
     // {path:'vcm', loadChildren:() => import('./vcm/vcm.module').then(m => m.VcmModule)},
     // {path:'copilot', loadChildren: () => import('./copilot/copilot.module').then(m => m.CopilotModule)},
-    {path:'aiagent', loadChildren: () => import('./predefined-bots/ai-agents.module').then(m => m.AiAgentsModule)},
+    {path:'aiagent', loadChildren: () => import('./ai-agents/ai-agents.module').then(m => m.AiAgentsModule)},
     {path:'success',component:SuccessPaymentComponent},
     {path:'userDetails', component:UserDetailsComponent},
     {path:'**', redirectTo:'/home', pathMatch:"full"},
