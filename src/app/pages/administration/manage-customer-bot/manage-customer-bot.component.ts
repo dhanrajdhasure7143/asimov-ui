@@ -319,9 +319,11 @@ export class ManageCustomerBotComponent implements OnInit {
       this.rest_api.updateCustomerBot(cutomerBotId, req_body).subscribe((res: any) => {
         let response = res;
         let bot_Name = req_body.customerSupportBotName;
+        let botNameUpdated = this.manageBotForm.value.customerSupportBotName !== this.updateOverlayData.customerSupportBotName;
+        let greetingMessageUpdated = this.manageBotForm.value.greetingMessage !== this.updateOverlayData.greetingMessage;
         this.loader.hide();
         if (response.errorMessage == undefined) {
-          if(req_body.customerSupportBotSource=="DOC"){
+          if (req_body.customerSupportBotSource == "DOC" && !(botNameUpdated || greetingMessageUpdated)) {
             this.botKey = res.botKey,
             this.tenantName = res.tenantId,
             this.onUploadDoc();
