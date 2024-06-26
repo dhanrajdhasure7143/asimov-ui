@@ -272,7 +272,7 @@ export class AiAgentFormComponent implements OnInit {
     // }
 
     // Navigat to the Agent Details Screen.
-    this.router.navigate(['/pages/aiagent/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   navigateForm(){
@@ -797,7 +797,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/aiagent/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {

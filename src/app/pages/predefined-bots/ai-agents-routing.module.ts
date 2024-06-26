@@ -11,7 +11,7 @@ const routes: Routes = [
     {path:'home', component:AiAgentListComponent},
     {path:'list', component:PredefinedBotsOrchestrationComponent},
     {path:'form', component:AiAgentFormComponent},
-    {path:'agent-details', component:AgentDetailsComponent}
+    {path:'details', component:AgentDetailsComponent}
   ]
 }
 ]
