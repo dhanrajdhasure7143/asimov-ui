@@ -377,7 +377,7 @@
                                             </button>
                                         </span>
                                         <span>
-                                            <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.sourceType == 'EPSoft'"
+                                            <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.assignedUserId == '0'"
                                                 pTooltip="View Bot" tooltipPosition="top">
                                                 <img src="../../../../../assets/images-n/gridicons/view-default.svg" class="testplus default-icon" alt=""/>
                                                 <img src="../../../../../assets/images-n/gridicons/view-hover.svg" class="testplus hover-icon" alt=""/>
