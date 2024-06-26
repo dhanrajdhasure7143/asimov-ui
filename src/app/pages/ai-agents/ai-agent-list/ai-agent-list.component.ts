@@ -7,11 +7,11 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import {SkeletonModule} from 'primeng/skeleton';
 
 @Component({
-  selector: 'app-predefined-bots-list',
-  templateUrl: './predefined-bots-list.component.html',
-  styleUrls: ['./predefined-bots-list.component.css']
+  selector: 'app-ai-agent-list',
+  templateUrl: './ai-agent-list.component.html',
+  styleUrls: ['./ai-agent-list.component.css']
 })
-export class PredefinedBotsListComponent implements OnInit {
+export class AiAgentListComponent implements OnInit {
   predefined_botsList: any[] = [];
   filteredBotsList: any[] = [];
   searchTerm: string = '';
@@ -54,9 +54,9 @@ export class PredefinedBotsListComponent implements OnInit {
 }
 
   onclickBot(item) {
-    // this.router.navigate(["/pages/predefinedbot/predefinedforms"], { queryParams: { type: "create", id: item.productId} });
-    // this.router.navigate(['/pages/predefinedbot/agent-details'], { state: { bot: item } });
-    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: item.productId } });
+    // this.router.navigate(["/pages/aiagent/forms"], { queryParams: { type: "create", id: item.productId} });
+    // this.router.navigate(['/pages/aiagent/details'], { state: { bot: item } });
+    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: item.productId } });
   }
 
   onSearch(): void {
@@ -70,13 +70,13 @@ export class PredefinedBotsListComponent implements OnInit {
   }
 
   onclickBot2(item): void {
-    // this.router.navigate(['/pages/predefinedbot/predefinedconfig'], { state: { bot: item } });
-    this.router.navigate(['/pages/predefinedbot/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"true" } });
+    // this.router.navigate(['/pages/aiagent/predefinedconfig'], { state: { bot: item } });
+    this.router.navigate(['/pages/aiagent/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"true" } });
   }
 
   onclickBot3(item): void {
-    // this.router.navigate(['/pages/predefinedbot/predefinedconfig'], { state: { bot: item } });
-    // this.router.navigate(['/pages/predefinedbot/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"false" } });
+    // this.router.navigate(['/pages/aiagent/predefinedconfig'], { state: { bot: item } });
+    // this.router.navigate(['/pages/aiagent/predefinedconfig'],  { queryParams: { type: "create", id: item.productId, name: item.predefinedBotName, desc: item.details, isVisible:"false" } });
   }
 
   showMore(event: Event, bot: any) {

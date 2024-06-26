@@ -3,11 +3,11 @@ import { CronOptions } from "src/app/shared/cron-editor/CronOptions";
 import { Days, MonthWeeks, Months } from "src/app/shared/cron-editor/enums";
 
 @Component({
-  selector: 'app-predefined-cron',
-  templateUrl: './predefined-cron.component.html',
-  styleUrls: ['./predefined-cron.component.css']
+  selector: 'app-ai-agent-cron',
+  templateUrl: './ai-agent-cron.component.html',
+  styleUrls: ['./ai-agent-cron.component.css']
 })
-export class PredefinedCronComponent implements OnInit, OnChanges {
+export class AiAgentCronComponent implements OnInit, OnChanges {
   @Input() public disabled: boolean;
   @Input() public options: CronOptions;
   @Input() public isDisplayed : boolean;

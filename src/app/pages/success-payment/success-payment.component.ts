@@ -44,7 +44,7 @@ export class SuccessPaymentComponent implements OnInit {
     ).subscribe(() => {
       this.countdown--;
       if (this.countdown === 0) {
-        this.router.navigate(['/pages/predefinedbot/home']);
+        this.router.navigate(['/pages/aiagent/home']);
       }
     });
   }

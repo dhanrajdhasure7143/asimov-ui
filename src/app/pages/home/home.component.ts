@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
         }
      } else {
       if(this.isPredefinedBots){
-        this.router.navigate(["/pages/predefinedbot/home"], {queryParams:this._params});
+        this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
         return
       }
       if(environment.isCopilotEnable)
@@ -206,7 +206,7 @@ onClickLogout(){
       } else {
         if(this.isPredefinedBots){
           if(this.userStatus.current_registration_screen == "completed"){
-            this.router.navigate(["/pages/predefinedbot/home"], {queryParams:this._params});
+            this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
           }else{
             this.router.navigate(["/pages/userDetails"], {queryParams:this._params});
           }

@@ -55,7 +55,7 @@
         <span class="side-menu-font" (click)="hightlight('dynamicdashboard','null')">Dashboard</span>
       </a> -->
  
-        <a *ngIf="!isPredefinedBots" mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
+        <!-- <a *ngIf="!isPredefinedBots" mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
           routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -70,7 +70,8 @@
             </span>
           </span>
           <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
-        </a>
+        </a> -->
+
         <!-- ToDO  Enable/Disable for VCM -->
         <!-- <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
           [ngClass]="{'activeMenu' : showprocessesSubmenu}" id='expand_processes' class="link processesimg"
@@ -101,7 +102,7 @@
         </div> -->
 
         <a *ngIf="isPredefinedBots" mat-list-item class="link" id="automate" (click)="hightlight('AI Agents',null)"
-        routerLink="/pages/predefinedbot/home" [matTooltip]=" !obj.sideBarOpen ? 'AI Agents' : ''"
+        routerLink="/pages/aiagent/home" [matTooltip]=" !obj.sideBarOpen ? 'AI Agents' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
           <span class="active-img" id="eiap-home-icon-active">
@@ -117,8 +118,8 @@
         <span class="side-menu-font" (click)="hightlight('AI Agents','null')">AI Agents</span>
       </a>
 
-        <a mat-list-item *ngIf="isPredefinedBots && !agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
-          routerLink="/pages/predefinedbot/list" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
+        <!-- <a mat-list-item *ngIf="isPredefinedBots && !agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
+          routerLink="/pages/aiagent/list" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
             <span class="active-img" id="eiap-home-icon-active">
@@ -132,9 +133,9 @@
             </span>
           </span>
           <span class="side-menu-font">Orchestration</span>
-        </a>
+        </a> -->
       
-        <a mat-list-item class="link orchimg" id='so' *ngIf="!isPredefinedBots" (click)="hightlight('so',null)"
+        <!-- <a mat-list-item class="link orchimg" id='so' *ngIf="!isPredefinedBots" (click)="hightlight('so',null)"
           routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -149,7 +150,8 @@
             </span>
           </span>
           <span class="side-menu-font">Orchestration</span>
-        </a>
+        </a> -->
+
         <mat-list-item *ngIf="!workspacedsiabled" (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
           id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -169,14 +171,14 @@
           </mat-icon>
         </mat-list-item>
         <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
-          <a mat-list-item class="link" id="pi" (click)="hightlight('pi','expand_menu')"
+          <!-- <a mat-list-item class="link" id="pi" (click)="hightlight('pi','expand_menu')"
             routerLink="/pages/processIntelligence/upload">
             <span class="side-menu-font">Process Intelligence</span>
           </a>
           <a mat-list-item class="link" id='bps' (click)="hightlight('bps','expand_menu')"
             routerLink="/pages/businessProcess/home">
             <span class="side-menu-font">Business Process Studio</span>
-          </a>
+          </a> -->
           <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa','expand_menu')"
             routerLink="/pages/rpautomation/home">
             <span class="side-menu-font">RPA</span>
@@ -239,14 +241,15 @@
       </span>
                     <span class="side-menu-font">Support</span>
                 </a> -->
-                <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
+
+                <!-- <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
           *ngIf="this.userRoles.includes('System Admin') && !isPredefinedBots" routerLink="/pages/admin/admin-screen-list">
           <span class="side-icon">
-            <!-- <mat-icon>settings</mat-icon> -->
           </span>
           <span class="side-menu-font">Screen Generation</span>
-        </a>
-        <div class="CS_botHeader" *ngIf="isCustomerBots && !isPredefinedBots">
+        </a> -->
+
+        <!-- <div class="CS_botHeader" *ngIf="isCustomerBots && !isPredefinedBots">
           <mat-list-item (click)="showCustomerSupportBotsSubmenu = !showCustomerSupportBotsSubmenu;"
             [ngClass]="{'activeMenu' : showCustomerSupportBotsSubmenu}" class="link">
             <span class="side-menu-font">Customer Support Bots</span>
@@ -265,7 +268,8 @@
               <span class="side-menu-font">Train Support Bot</span>
             </a>
           </div>
-        </div>
+        </div> -->
+        
         <!-- <span *ngFor="let screen of screensList">
           <a mat-list-item class="link" (click)="onClickScreen(screen)" (click)="hightlight('usermanagement','expand_admin')">
             <div class="side-menu-font scrngenitems">{{screen.Screen_Name}}</div>

@@ -3,11 +3,11 @@ import { environment } from 'src/environments/environment';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-predefined-bots',
-  templateUrl: './predefined-bots.component.html',
-  styleUrls: ['./predefined-bots.component.css']
+  selector: 'app-ai-agents',
+  templateUrl: './ai-agents.component.html',
+  styleUrls: ['./ai-agents.component.css']
 })
-export class PredefinedBotsComponent implements OnInit {
+export class AiAgentsComponent implements OnInit {
   chatBotUrl:SafeResourceUrl
   constructor(private sanitizer: DomSanitizer) {
     const dynamicUrl = environment.ezaskUrl;
