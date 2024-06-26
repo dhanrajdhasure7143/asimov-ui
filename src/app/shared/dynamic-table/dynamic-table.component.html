@@ -203,12 +203,14 @@
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
                             <span *ngIf="screenTable == 'customerSupportBots'">
-                            <a class="" (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
-                                <i class="pi pi-external-link" style="color: #232832"></i>
-                                <i class="pi pi-external-link" style="color: #507cd3" class="testplus hover-icon"></i>
+                            <a (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
+                                <!-- <i class="pi pi-external-link" style="color: #708090"></i> -->
+                                <img src="../../../assets/images-n/gridicons/external-link-default.svg" alt="Edit" class="default-icon">
+                                <img src="../../../assets/images-n/gridicons/external-link-hover.svg" alt="Edit" class="hover-icon">
                             </a>
                             <a *ngIf="!(this.loggedUserRole.includes('System Admin'))"  class="disbtn">
-                                <i class="pi pi-external-link" style="color: #708090"></i>
+                                <!-- <i class="pi pi-external-link" style="color: #708090"></i> -->
+                                <img src="../../../assets/images-n/gridicons/external-link-default.svg" alt="Edit">
                             </a>
                             </span>
                             <a *ngIf="!isdisabled_edit && !(screenTable == 'sdkApprovalList' && (rowData['status'] == 'Approved' || rowData['status'] == 'Rejected')) && !(screenTable == 'SDK_taskList' && rowData['status'] == 'Rejected')" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
