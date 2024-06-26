@@ -9,11 +9,11 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
-  selector: 'app-predefined-bots-forms',
-  templateUrl: './predefined-bots-forms.component.html',
-  styleUrls: ['./predefined-bots-forms.component.css']
+  selector: 'app-ai-agent-form',
+  templateUrl: './ai-agent-form.component.html',
+  styleUrls: ['./ai-agent-form.component.css']
 })
-export class PredefinedBotsFormsComponent implements OnInit {
+export class AiAgentFormComponent implements OnInit {
 
   processName:string;
   currentPage = 1;
@@ -266,13 +266,13 @@ export class PredefinedBotsFormsComponent implements OnInit {
 
   goBackList(){
     // if(this.params.type == "create"){
-    //   this.router.navigate(["/pages/predefinedbot/home"]);
+    //   this.router.navigate(["/pages/aiagent/home"]);
     // }else{
-    //   this.router.navigate(["/pages/predefinedbot/list"]);
+    //   this.router.navigate(["/pages/aiagent/list"]);
     // }
 
     // Navigat to the Agent Details Screen.
-    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   navigateForm(){
@@ -797,7 +797,7 @@ export class PredefinedBotsFormsComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/predefinedbot/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/agent-details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {

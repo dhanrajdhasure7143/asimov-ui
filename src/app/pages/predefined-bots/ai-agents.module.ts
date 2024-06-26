@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { PredefinedBotsRoutingModule } from './predefined-bots-routing.module';
+import { AiAgentsRoutingModule } from './ai-agents-routing.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
-import { PredefinedBotsComponent } from './predefined-bots.component';
-import { PredefinedBotsFormsComponent } from './predefined-bots-forms/predefined-bots-forms.component';
-import { PredefinedBotsListComponent } from './predefined-bots-list/predefined-bots-list.component';
+import { AiAgentsComponent } from './ai-agents.component';
+import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
+import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PredefinedSchedulerComponent } from './predefined-scheduler/predefined-scheduler.component';
+import { AiAgentSchedulerComponent } from './predefined-scheduler/ai-agent-scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -18,28 +18,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
-import { PredefinedBotsLogsComponent } from './predefined-bots-logs/predefined-bots-logs.component';
+import { AiAgentLogsComponent } from './ai-agent-logs/ai-agent-logs.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
-import { PredefinedCronComponent } from './predefined-scheduler/predefined-cron/predefined-cron.component';
+import { AiAgentCronComponent } from './predefined-scheduler/ai-agent-cron/ai-agent-cron.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
 
 
 
 @NgModule({
   declarations: [
-    PredefinedBotsComponent,
-    PredefinedBotsFormsComponent,
-    PredefinedBotsListComponent,
+    AiAgentsComponent,
+    AiAgentFormComponent,
+    AiAgentListComponent,
     PredefinedBotsOrchestrationComponent,
-    PredefinedSchedulerComponent,
-    PredefinedBotsLogsComponent,
-    PredefinedCronComponent,
+    AiAgentSchedulerComponent,
+    AiAgentLogsComponent,
+    AiAgentCronComponent,
     AgentDetailsComponent
   ],
   imports: [
     CommonModule,
-    PredefinedBotsRoutingModule,
+    AiAgentsRoutingModule,
     PrimengCustomModule,
     FormsModule,
     ReactiveFormsModule,
@@ -54,4 +54,4 @@ import { AgentDetailsComponent } from './agent-details/agent-details.component';
   ],
   providers: [toastMessages, BsModalRef, BsModalService, columnList, DatePipe]
 }) 
-export class PredefinedBotsModule { }
+export class AiAgentsModule { }

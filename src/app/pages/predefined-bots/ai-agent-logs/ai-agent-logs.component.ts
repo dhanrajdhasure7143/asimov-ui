@@ -11,11 +11,11 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { DatePipe } from '@angular/common';
 @Component({
-  selector: 'app-predefined-bots-logs',
-  templateUrl: './predefined-bots-logs.component.html',
-  styleUrls: ['./predefined-bots-logs.component.css']
+  selector: 'app-ai-agent-logs',
+  templateUrl: './ai-agent-logs.component.html',
+  styleUrls: ['./ai-agent-logs.component.css']
 })
-export class PredefinedBotsLogsComponent implements OnInit {
+export class AiAgentLogsComponent implements OnInit {
   @Input('processId') public processId: any;
   @Input('environments') public environments: any[];
   @Output("closeEvent") public closeEvent: any = new EventEmitter<any>()

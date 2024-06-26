@@ -80,7 +80,7 @@
                     </div>
                     <div class="tab-pane" [ngClass]="{'active': activeTab === 'weekly'}">
                         <div class="col p-0 form-group">
-                            <app-predefined-cron [isDisplayed]="isDisplayed" [(options)]="cronOptions" [(cron)]="cronExpression" (emitWeeklyValue)="readValue($event)"></app-predefined-cron>
+                            <app-ai-agent-cron [isDisplayed]="isDisplayed" [(options)]="cronOptions" [(cron)]="cronExpression" (emitWeeklyValue)="readValue($event)"></app-ai-agent-cron>
                         </div>
                         <div class="row RPA-scheduletimer-body">
                             <div class="col-md-4 p-1 form-group">
@@ -101,7 +101,7 @@
                                         
                     <div class="tab-pane" [ngClass]="{'active': activeTab === 'monthly'}">
                         <div class="col p-0 form-group">
-                            <app-predefined-cron [isMonthly]="isMonthly" [(options)]="cronOptions" [(cron)]="cronExpression" (emitMonthlyValue)="readMonthlyValue($event)"></app-predefined-cron>
+                            <app-ai-agent-cron [isMonthly]="isMonthly" [(options)]="cronOptions" [(cron)]="cronExpression" (emitMonthlyValue)="readMonthlyValue($event)"></app-ai-agent-cron>
                         <div class="col-md-4 p-1 form-group">
                             <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" (timeChanged)="onChangeHour($event, 'starttime')" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
                             <span class="required" *ngIf="beforetime">{{starttimeerror}}</span>

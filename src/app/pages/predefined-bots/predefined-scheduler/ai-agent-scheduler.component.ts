@@ -11,11 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { keys } from 'highcharts';
 
 @Component({
-  selector: 'app-predefined-scheduler',
-  templateUrl: './predefined-scheduler.component.html',
-  styleUrls: ['./predefined-scheduler.component.css']
+  selector: 'app-ai-agent-scheduler',
+  templateUrl: './ai-agent-scheduler.component.html',
+  styleUrls: ['./ai-agent-scheduler.component.css']
 })
-export class PredefinedSchedulerComponent implements OnInit {
+export class AiAgentSchedulerComponent implements OnInit {
   @Output() schedulerData = new EventEmitter<any>();
   @Input() public disabled: boolean;
   @Input() public options: CronOptions;

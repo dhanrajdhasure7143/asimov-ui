@@ -50,7 +50,7 @@ export const environment = {
     paymentSuccessURL: "http://epsoftiap.dev.ai/#/pages/success",
     paymentFailuerURL: "http://epsoftiap.dev.ai/#/pages/subscriptions",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
-    python_llm:"http://10.11.0.67:5006",
+    python_llm:"http://llmpython.dev.epsoftinc.in/",
     ezaskUrl: "http://ezask.dev.epsoftinc.in",
     ezChatBotKey:"0pjhB9YyHAMbBm464XnHfOxra4x5k3CkD%2ByvLEJR65%2FU12JbRbj7IIE0%2FWGAgxKhMGb%2B3SV8AkNRpiy%2FRg4l%2F%2FJ6APpk8TaCjRs%3D"
   };

@@ -235,7 +235,7 @@ export class UserDetailsComponent implements OnInit {
                 this.toaster.toastSuccess(res.body.message);
                 this.rest_api.expiryInfo().subscribe(data => {
                     if(data.isPredefinedBots){
-                        this.router.navigate(["/pages/predefinedbot/home"]);
+                        this.router.navigate(["/pages/aiagent/home"]);
                     }else{
                         if(environment.isCopilotEnable)
                         this.router.navigate(["/pages/copilot/home"]);

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PredefinedBotsComponent } from './predefined-bots.component';
-import { PredefinedBotsListComponent } from './predefined-bots-list/predefined-bots-list.component';
-import { PredefinedBotsFormsComponent } from './predefined-bots-forms/predefined-bots-forms.component';
+import { AiAgentsComponent } from './ai-agents.component';
+import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
+import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
 
 const routes: Routes = [
-  {path:'', component:PredefinedBotsComponent, children:[
-    {path:'home', component:PredefinedBotsListComponent},
+  {path:'', component:AiAgentsComponent, children:[
+    {path:'home', component:AiAgentListComponent},
     {path:'list', component:PredefinedBotsOrchestrationComponent},
-    {path:'predefinedforms', component:PredefinedBotsFormsComponent},
+    {path:'form', component:AiAgentFormComponent},
     {path:'agent-details', component:AgentDetailsComponent}
   ]
 }
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PredefinedBotsRoutingModule { }
+export class AiAgentsRoutingModule { }
