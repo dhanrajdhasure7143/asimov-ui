@@ -12,6 +12,7 @@ import { DataTransferService } from "src/app/pages/services/data-transfer.servic
 import { ConfirmationService } from "primeng/api";
 import { ToasterService } from "src/app/shared/service/toaster.service";
 import { toastMessages } from "src/app/shared/model/toast_messages";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-users",
@@ -318,6 +319,7 @@ export class UsersComponent implements OnInit {
       inviteeMailId: this.inviteeMail.toLowerCase(),
       departmentId: this.departments.toString(),
       office365User: false,
+      userProduct:environment.product,
       redirectionUrl: this.config.platform_home_url,
       tenantId:localStorage.getItem("tenantName"),
       masterTenant:localStorage.getItem("masterTenant"),
@@ -334,6 +336,7 @@ export class UsersComponent implements OnInit {
         inviteeMailId: this.inviteeMail.toLowerCase(),
         departmentId: this.departments.toString(),
         office365User: true,
+        userProduct:environment.product,
         redirectionUrl: this.config.platform_home_url,
         tenantId:localStorage.getItem("tenantName"),
         masterTenant:localStorage.getItem("masterTenant"),
