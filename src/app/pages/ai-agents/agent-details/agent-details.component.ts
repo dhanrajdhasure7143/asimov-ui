@@ -569,6 +569,7 @@ goToPreviousPage(): void {
   }
 
   onAgentChange(event: any): void {
+    this.isConfig=true
     this.selected_drop_agent = event.value;
     this.enabledRun=true
   }

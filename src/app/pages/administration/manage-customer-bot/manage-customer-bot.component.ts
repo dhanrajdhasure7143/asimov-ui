@@ -99,9 +99,29 @@ export class ManageCustomerBotComponent implements OnInit {
       customerSupportBotSource: ['', [Validators.required]],
       includeSites: ['', [Validators.required]],
       excludeSites: ['', [Validators.required]],
-      trainModelName: ['', [Validators.required]],
+      trainModelName: [''],
+      uploadFile:[""]
     };
     this.manageBotForm = this.formBuilder.group(formControls);
+  }
+
+  private updateValidators(sourceValue: string) {
+    const trainModelControl = this.manageBotForm.get('trainModelName');
+
+    if(this.isCreate==false){
+      return;
+    } 
+    trainModelControl.reset();
+    if (sourceValue === 'HYBRID') {
+      trainModelControl.setValidators([Validators.required]);
+    } else if (sourceValue === 'MODEL') {
+      trainModelControl.setValidators([Validators.required]);
+    } else {
+      trainModelControl.clearValidators();
+    }
+    
+
+    trainModelControl.updateValueAndValidity();
   }
 
   addNew() {
@@ -237,7 +257,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "greetingMessage": this.manageBotForm.value.greetingMessage,
         "primaryPrompt": this.manageBotForm.value.primaryPrompt,
         // "respPrefix": this.manageBotForm.value.respPrefix,
-        "respPrefix": this.trainedModel,
+        // "respPrefix": this.trainedModel,
+        "respPrefix": this.manageBotForm.value.trainModelName,
         "customerSupportBotSource": this.manageBotForm.value.customerSupportBotSource,
         "customerSupportBotEmbedUrl": "",
         "botKey": "",
@@ -372,6 +393,12 @@ export class ManageCustomerBotComponent implements OnInit {
     }
     includeSitesControl.updateValueAndValidity();
     excludeSitesControl.updateValueAndValidity();
+
+    this.manageBotForm.get('customerSupportBotSource').valueChanges.subscribe(value => {
+      console.log("this.updateValidators(value)" , value)
+      this.updateValidators(value);
+    });
+
   }
 
   openEzAsk_Chat(rowData: any) {

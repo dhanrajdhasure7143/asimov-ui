@@ -47,13 +47,12 @@
         <div class="custom-accordion">
             <div class="custom-accordion-item " [ngClass]="item.expanded ? 'expanded-accord' : 'collapsed-accord'"
                 *ngFor="let item of items">
-                <div class="custom-accordion-header d-flex align-items-center justify-content-between "
-                    (click)="toggleItem(item)">
+                <div class="custom-accordion-header d-flex align-items-center justify-content-between">
                     <h4 class="subscription-heading">Subscription</h4>
                     <div class="status-and-icon d-flex align-items-center gap-3">
                         <span class="warning-message"> <img src="../../../../assets/images/agent/info_iocon.svg"
                                 alt="info icon" class="info-style"> {{ item.warningMessage }}</span>
-                        <div class="rotator-icon">
+                        <div class="rotator-icon" (click)="toggleItem(item)">
                             <i class="fas fa-chevron-down"></i>
                         </div>
                     </div>
