@@ -295,16 +295,16 @@ export class AiAgentFormComponent implements OnInit {
     this.scheduleOverlayFlag = event;
   }
 
-  createBot() {
-    console.log(this.selectedOption , this.predefinedBotsForm)
-    if(this.predefinedBot_uuid =='Pred_RFP'){
-      this.rfpbotCreate('create')
-    }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-      this.recruitmentbotCreate('create');
-    }else{
-      this.botCreate('create');
-    }
-  }
+  // createBot() {
+  //   console.log(this.selectedOption , this.predefinedBotsForm)
+  //   if(this.predefinedBot_uuid =='Pred_RFP'){
+  //     this.rfpbotCreate('create')
+  //   }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
+  //     this.recruitmentbotCreate('create');
+  //   }else{
+  //     this.botCreate('create');
+  //   }
+  // }
 
   rfpbotCreate(type){
     if (this.predefinedBotsForm.valid) {
@@ -361,7 +361,7 @@ export class AiAgentFormComponent implements OnInit {
       this.spinner.show();
       if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
         this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
-        this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
+        // this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
       }
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
@@ -370,7 +370,7 @@ export class AiAgentFormComponent implements OnInit {
           appendValuesList.forEach(e=>{
             req_body.fields[e] = JSON.stringify(this.jobDescription.response)
           })
-        
+        req_body.fields[this.jobDescription.fieldName] = JSON.stringify(this.jobDescription.response)
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
@@ -510,8 +510,11 @@ export class AiAgentFormComponent implements OnInit {
         formData.append('type', "text");
         formData.append('inputReference', this.predefinedBotsForm.value.fields[type.preAttributeName]);
       }else{
-        formData.append('type', "file");
-        formData.append('filePath', this.selectedFiles[0]);
+        const selectedFiles = this.selectedFiles[type.preAttributeName];
+        if (selectedFiles && selectedFiles.length > 0) {
+          formData.append('type', "file");
+          formData.append('filePath', selectedFiles[0]);
+        }
       }
 
     this.validate_errorMessage = [];
@@ -545,34 +548,86 @@ export class AiAgentFormComponent implements OnInit {
   }
   }
 
-  onFileSelected(event: any,field) {
-    this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles)
-    this.selectedOption = field
-    console.log("this.selectedOption",this.selectedOption)
-    // if(this.predefinedBot_uuid =='Pred_RFP'){
-      const formData = new FormData();
-      // this.selectedFiles.forEach(e=>{
-      //   formData.append('filePath', e);
-      // })
+  // onFileSelected(event: any,field) {
+  //   this.selectedFiles = event.target.files;
+  //   console.log(this.selectedFiles)
+  //   this.selectedOption = field
+  //   console.log("this.selectedOption",this.selectedOption)
+  //   // if(this.predefinedBot_uuid =='Pred_RFP'){
+  //     const formData = new FormData();
+  //     // this.selectedFiles.forEach(e=>{
+  //     //   formData.append('filePath', e);
+  //     // })
 
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        formData.append("file", this.selectedFiles[i]);
-      }
-      formData.append("filePath", this.predefinedBot_name);
-      formData.append("predefinedAgentUUID", this.predefinedBot_uuid );
-      formData.append("productId", this.predefinedBot_id);
+  //     for (let i = 0; i < this.selectedFiles.length; i++) {
+  //       formData.append("file", this.selectedFiles[i]);
+  //     }
+  //     formData.append("filePath", this.predefinedBot_name);
+  //     formData.append("predefinedAgentUUID", this.predefinedBot_uuid );
+  //     formData.append("productId", this.predefinedBot_id);
 
-      this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
-        console.log("res",res)
-        let obj = {filePath:res.fileName,
-          attributName:field.preAttributeName
-          }
-        this.filePathValues.push(obj)
-      })
-    // }
+  //     this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
+  //       console.log("res",res)
+  //       let obj = {filePath:res.fileName,
+  //         attributName:field.preAttributeName
+  //         }
+  //       this.filePathValues.push(obj)
+  //     })
+  //   // }
+  // }
+  onFileSelected(event: any, field: any) {
+    const selectedFiles = event.target.files;
+    this.selectedFiles[field.preAttributeName] = selectedFiles;
+    console.log("Selected files for " + field.preAttributeName, selectedFiles);
   }
 
+  uploadFilesAndCreateBot(action: string) {
+    const uploadPromises = [];
+    for (const key in this.selectedFiles) {
+      const files = this.selectedFiles[key];
+
+      for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append("file", files[i]);
+        formData.append("filePath", this.predefinedBot_name);
+        formData.append("predefinedAgentUUID", this.predefinedBot_uuid);
+        formData.append("productId", this.predefinedBot_id);
+
+        const uploadPromise = this.rest_service.rfpFileUpload(formData).toPromise();
+        uploadPromises.push(uploadPromise);
+
+        uploadPromise.then((res: any) => {
+          console.log("res", res);
+          let obj = {
+            filePath: res.fileName,
+            attributName: key
+          };
+          this.filePathValues.push(obj);
+        });
+      }
+    }
+
+    Promise.all(uploadPromises).then(() => {
+      // After all uploads are complete, proceed with creating the bot
+      if (this.predefinedBot_uuid === 'Pred_RFP') {
+        this.rfpbotCreate(action);
+      } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
+        this.recruitmentbotCreate(action);
+      }
+    }).catch((error) => {
+      console.error("File upload error", error);
+      // Handle error if needed
+    });
+  }
+  
+ createBot() {
+    console.log(this.predefinedBotsForm.value);
+    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
+      this.uploadFilesAndCreateBot('create');
+    } else {
+      this.botCreate('create');
+    }
+  }
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
     this.selectedOption = option_item
@@ -582,7 +637,7 @@ export class AiAgentFormComponent implements OnInit {
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
     })
-
+    this.clearValidationStatus();
     // console.log("field",field)
       // this.description_type =value;
 
@@ -808,5 +863,38 @@ export class AiAgentFormComponent implements OnInit {
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
     })
+  }
+
+  isFormValidAndJobDescriptionValid(): boolean {
+    const isFormValid = this.predefinedBotsForm.valid;
+    const jobDescriptionField = this.currentPageFields.find(field => field.preAttributeLable === 'Job Description');
+
+    if (jobDescriptionField && jobDescriptionField.isValidateRequired) {
+      return isFormValid && this.isJobDescrptionValid;
+    }
+    return isFormValid;
+  }
+  
+  isValidateDisabled(field: any): boolean {
+    if (field.preAttributeLable !== 'Job Description') {
+      return false;
+    }
+    if (field.preAttributeType === 'textarea') {
+      const value = this.predefinedBotsForm.get('fields.' + field.preAttributeName)?.value;
+      return !value || value.trim().length === 0;
+    } else if (field.preAttributeType === 'file') {
+      const fileInput = document.getElementById(field.preAttributeName) as HTMLInputElement;
+      return !fileInput || fileInput.files.length === 0;
+    }
+    return false;
+  }
+
+  clearValidationStatus() {
+    this.validate_errorMessage = [];
+    this.isValidateLoader = false;
+    this.job_Descrption_error = false;
+    this.isJobDescrptionValid = false;
+    this.isJobDescrption_error = false;
+    this.jobDescription = null;
   }
 }
