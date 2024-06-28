@@ -9,6 +9,7 @@ import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { saveAs } from "file-saver";
 import * as XLSX from 'xlsx';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-agent-details',
@@ -91,6 +92,9 @@ export class AgentDetailsComponent implements OnInit {
   isConfig:boolean=false;
   enabledRun:boolean=false;
   loading: boolean = false;
+  isScheduled: boolean = false;
+  isAgentSelected: boolean = false ;
+  remaining_agents: any;
   // FileTypes for the Agent Files DOwnload 
   sortOrder: boolean = true;
   fileTypes = [
@@ -129,7 +133,8 @@ export class AgentDetailsComponent implements OnInit {
     private spinner: LoaderService,
     private rest_api: PredefinedBotsService,
     private toaster: ToasterService,
-    private toastMessage: toastMessages
+    private toastMessage: toastMessages,
+    private confirmationService: ConfirmationService
     
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -162,7 +167,7 @@ export class AgentDetailsComponent implements OnInit {
       if (agent) {
         this.current_agent_details = agent;
         this.remaining_exe = agent.remaining_executions;
-
+        this.remaining_agents = agent.remaining_agents;
         this.isConfig=this.current_agent_details.is_config_enable
         const subscriptionDate = agent.subscriptionData[0];
         this.subscription_dates = subscriptionDate;
@@ -572,6 +577,8 @@ goToPreviousPage(): void {
     this.isConfig=true
     this.selected_drop_agent = event.value;
     this.enabledRun=true
+    this.isScheduled = this.selected_drop_agent.scheduleBot;
+    this.isAgentSelected = true;
   }
 
   agentDropdownList(agent_details){
@@ -671,5 +678,40 @@ goToPreviousPage(): void {
       this.getAIAgentHistory(this.product_id);
       this.loading = false;
     }, 6000);
+  }
+
+
+  deleteAiAgent() {
+    console.log(this.selected_drop_agent)
+    let botName = this.selected_drop_agent.automationName
+    this.confirmationService.confirm({
+      message: "Do you want to delete this agent? This can't be undo.",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deletePredefinedBot(this.selected_drop_agent.predefinedOrchestrationBotId).subscribe(res => {
+          this.spinner.hide();
+          this.toaster.showSuccess(botName,"delete")
+          // this.getListOfItems();
+          this.agent_drop_list=""
+          this.isConfig=false
+          this.enabledRun=false
+          this.isAgentSelected = false;
+          this.loadAgentDetails();
+          this.agentDropdownList(this.current_agent_details);
+        }, err => {
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessage.apierror)
+        });
+      },
+      reject: (type) => { }
+    });
   }
 }

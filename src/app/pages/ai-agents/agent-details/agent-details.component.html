@@ -3,8 +3,8 @@
         <div class="top-section">
             <div class="bot-info">
                 <div class="bot-header">
-                    <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <div class="rem-execution">Remaining Executions:
+                    <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}}</div>
+                    <div class="rem-execution">Remaining Runs for Today:
                         <!-- <span *ngIf="remaining_exe.length !=0" class="remaining-exe">{{remaining_exe}}
                             <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
                         </span>
@@ -12,8 +12,15 @@
                         <span *ngIf="loading" class="remaining-exe">
                             <i class="pi pi-spin pi-spinner"></i>
                         </span>
-                        <span *ngIf="!loading" class="remaining-exe">{{remaining_exe}}</span>
+                        <span *ngIf="!loading" class="remaining-exe" style="margin-right: 10px;">{{remaining_exe}}</span>
                     </div>
+                    <div class="rem-agents">Remaining Agents:
+                        <span *ngIf="loading" class="remaining-agents">
+                            <i class="pi pi-spin pi-spinner"></i>
+                        </span>
+                        <span *ngIf="!loading" class="remaining-agents">{{remaining_agents}}</span>
+                    </div>
+                    
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
                 </p>
@@ -33,13 +40,16 @@
                 ></p-dropdown>
 
                 <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
-                    <i class="fas fa-cogs" style="padding-right: 10px;"></i> Configure
-                </button>
-                <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0" (click)="runAiAgent($event)">
+                    <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
+                  </button>                  
+                <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
                     <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                 </button>
                 <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
                     <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
+                </button>
+                <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
+                    <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
                 </button>
             </div>
         </div>
@@ -278,3 +288,6 @@
     </div>
 
 </div>
+
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+[closable]="false"></p-confirmDialog>
