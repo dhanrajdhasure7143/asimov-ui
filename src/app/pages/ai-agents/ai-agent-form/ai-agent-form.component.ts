@@ -637,7 +637,7 @@ export class AiAgentFormComponent implements OnInit {
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
     })
-
+    this.clearValidationStatus();
     // console.log("field",field)
       // this.description_type =value;
 
@@ -863,5 +863,38 @@ export class AiAgentFormComponent implements OnInit {
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType != value).visibility =false
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
     })
+  }
+
+  isFormValidAndJobDescriptionValid(): boolean {
+    const isFormValid = this.predefinedBotsForm.valid;
+    const jobDescriptionField = this.currentPageFields.find(field => field.preAttributeLable === 'Job Description');
+
+    if (jobDescriptionField && jobDescriptionField.isValidateRequired) {
+      return isFormValid && this.isJobDescrptionValid;
+    }
+    return isFormValid;
+  }
+  
+  isValidateDisabled(field: any): boolean {
+    if (field.preAttributeLable !== 'Job Description') {
+      return false;
+    }
+    if (field.preAttributeType === 'textarea') {
+      const value = this.predefinedBotsForm.get('fields.' + field.preAttributeName)?.value;
+      return !value || value.trim().length === 0;
+    } else if (field.preAttributeType === 'file') {
+      const fileInput = document.getElementById(field.preAttributeName) as HTMLInputElement;
+      return !fileInput || fileInput.files.length === 0;
+    }
+    return false;
+  }
+
+  clearValidationStatus() {
+    this.validate_errorMessage = [];
+    this.isValidateLoader = false;
+    this.job_Descrption_error = false;
+    this.isJobDescrptionValid = false;
+    this.isJobDescrption_error = false;
+    this.jobDescription = null;
   }
 }
