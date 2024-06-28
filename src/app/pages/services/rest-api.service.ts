@@ -1983,4 +1983,8 @@ getPaymentCards(){
   approveRejectRequest(body:any){
     return this.http.post('/rpa-service/sdk-custom/tasks/approve-reject', body)
   }
+
+  cancelSubscriptionList(req_body){
+    return this.http.post('/subscriptionservice/v1/subscriptions/cancel/cancel-subscription',req_body);
+  }
 }
