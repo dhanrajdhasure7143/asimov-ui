@@ -2,7 +2,7 @@
   <div class="nav-main subcriptionExpiry" [class.disabled]="isSideMenuDisabled">
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
-        <span *ngIf="isCopilotEnable && !isPredefinedBots" >
+        <!-- <span *ngIf="isCopilotEnable && !isPredefinedBots" >
           <a mat-list-item class="link" [ngClass]="_selectedModule=='eiap-home' && isCopilotEnable ?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
             routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Copilot' : ''"
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -19,8 +19,8 @@
             </span>
             <span class="side-menu-font">Copilot</span>
           </a>
-        </span>
-        <a mat-list-item *ngIf="!isPredefinedBots" class="link" [ngClass]="_selectedModule=='eiap-home' && (!(isCopilotEnable)) ?'active':'' " [id]="(!(isCopilotEnable))?'eiap-home':'dashboard'" (click)="hightlight(((!(isCopilotEnable))?'eiap-home':'dashboard'),null)"
+        </span> -->
+        <!-- <a mat-list-item *ngIf="!isPredefinedBots" class="link" [ngClass]="_selectedModule=='eiap-home' && (!(isCopilotEnable)) ?'active':'' " [id]="(!(isCopilotEnable))?'eiap-home':'dashboard'" (click)="hightlight(((!(isCopilotEnable))?'eiap-home':'dashboard'),null)"
           [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
           matTooltipPosition="right">
           <span class="side-icon">
@@ -35,7 +35,7 @@
             </span>
           </span>
           <span class="side-menu-font">Dashboard</span>
-        </a>
+        </a> -->
 
 
         <!-- <a mat-list-item class="link" id="dashboard" (click)="navigateToDashBoard()"
@@ -101,7 +101,7 @@
           </a>
         </div> -->
 
-        <a *ngIf="isPredefinedBots" mat-list-item class="link" id="automate" (click)="hightlight('AI Agents',null)"
+        <a mat-list-item class="link" id="automate" (click)="hightlight('AI Agents',null)"
         routerLink="/pages/aiagent/home" [matTooltip]=" !obj.sideBarOpen ? 'AI Agents' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
@@ -152,7 +152,7 @@
           <span class="side-menu-font">Orchestration</span>
         </a> -->
 
-        <mat-list-item *ngIf="!workspacedsiabled" (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
+        <!-- <mat-list-item *ngIf="!workspacedsiabled" (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}"
           id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -169,7 +169,7 @@
           <span class="side-menu-font">Workspace</span>
           <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}">&#xe5cf;
           </mat-icon>
-        </mat-list-item>
+        </mat-list-item> -->
         <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
           <!-- <a mat-list-item class="link" id="pi" (click)="hightlight('pi','expand_menu')"
             routerLink="/pages/processIntelligence/upload">
@@ -179,10 +179,10 @@
             routerLink="/pages/businessProcess/home">
             <span class="side-menu-font">Business Process Studio</span>
           </a> -->
-          <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa','expand_menu')"
+          <!-- <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa','expand_menu')"
             routerLink="/pages/rpautomation/home">
             <span class="side-menu-font">RPA</span>
-          </a>
+          </a> -->
         </div>
 
         <mat-list-item *ngIf="this.userRoles.includes('System Admin')"
@@ -208,7 +208,6 @@
           <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
             *ngIf="this.userRoles.includes('System Admin')" (click)="userManagement()">
             <span class="side-icon">
-              <!-- <mat-icon>settings</mat-icon> -->
             </span>
             <span class="side-menu-font">User Management</span>
           </a>
