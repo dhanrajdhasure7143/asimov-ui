@@ -76,23 +76,6 @@ export class HomeComponent implements OnInit {
     // },error => {
     //   //this.error = "Please complete your registration process";
     // })
-
-    //  --- Redirection to copilot ---
-    if (!environment.isSubscrptionEnabled) {
-      if (environment.isCopilotEnable)
-        this.router.navigate(["/pages/copilot/home"], { queryParams: this._params });
-      if (!environment.isCopilotEnable)
-        this.rest_api.getDashBoardsList().subscribe((res: any) => {
-          let dashbordlist: any = res.data;
-          let defaultDashBoard = dashbordlist.find(item => item.defaultDashboard == true);
-          if (defaultDashBoard == undefined || dashbordlist.length == 0) {
-            this.router.navigate(["/pages/dashboard/create-dashboard"], { queryParams: this._params })
-          } else {
-            const newObj = Object.assign({}, this._params, { dashboardId: defaultDashBoard.id, dashboardName: defaultDashBoard.dashboardName });
-            this.router.navigate(['/pages/dashboard/dynamicdashboard'], { queryParams: newObj })
-          }
-        })
-    }
   }
 
   navigateToModule(){
@@ -108,6 +91,7 @@ export class HomeComponent implements OnInit {
     this.rest_api.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
   if(environment.isSubscrptionEnabled){
+    console.log("test........")
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data;
       this.isPredefinedBots = data.isPredefinedBots;
@@ -126,10 +110,10 @@ export class HomeComponent implements OnInit {
             this.showWarningPopup = true;
         }
      } else {
-      if(this.isPredefinedBots){
+      // if(this.isPredefinedBots){
         this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
         return
-      }
+      // }
       if(environment.isCopilotEnable)
       this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
         if(!environment.isCopilotEnable)
@@ -204,14 +188,14 @@ onClickLogout(){
               this.showWarningPopup = true;
           }
       } else {
-        if(this.isPredefinedBots){
+        
           if(this.userStatus.current_registration_screen == "completed"){
             this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
           }else{
             this.router.navigate(["/pages/userDetails"], {queryParams:this._params});
           }
           return
-        }
+        
         if(environment.isCopilotEnable)
         this.router.navigate(["/pages/copilot/home"], {queryParams:this._params});
           if(!environment.isCopilotEnable)
