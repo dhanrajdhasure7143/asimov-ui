@@ -38,6 +38,8 @@ export class ManageCustomerBotComponent implements OnInit {
   nextRecordId = 1;
   manageBotList = [];
   table_searchFields: string[];
+  fileName:any;
+  editFileName = false;
   botContentOptions = [
     { label: 'Document', value: 'DOC' },
     { label: 'Web', value: 'WEB' },
@@ -100,7 +102,7 @@ export class ManageCustomerBotComponent implements OnInit {
       includeSites: ['', [Validators.required]],
       excludeSites: ['', [Validators.required]],
       trainModelName: [''],
-      uploadFile:[""]
+      fileName:['']
     };
     this.manageBotForm = this.formBuilder.group(formControls);
   }
@@ -204,6 +206,8 @@ export class ManageCustomerBotComponent implements OnInit {
 
   openUpdateOverlay(event: any) {
     this.hiddenPopUp = true;
+    this.editFileName = true;
+    this.fileName = event.fileName;
     this.isCreate = false;
     this.updateOverlayData = event;
     const includeSitesControl = this.manageBotForm.get('includeSites');
@@ -244,7 +248,16 @@ export class ManageCustomerBotComponent implements OnInit {
     }
   }
 
+
+  uploadFiles(){
+    let filesNames = null;
+    for(var files of this.selectedFiles){
+      filesNames = filesNames==null?files.name:filesNames+","+files.name;
+    }
+    return filesNames;
+  }
   saveCustomerSupportBot() {
+    this.editFileName = false;
     this.loader.show();
     const includeSites = this.manageBotForm.value.includeSites ? this.manageBotForm.value.includeSites.join(';'):null;
     const excludeSites = this.manageBotForm.value.excludeSites ? this.manageBotForm.value.excludeSites.join(';'):null;
@@ -268,7 +281,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "botDisplayName": this.manageBotForm.value.customerSupportBotName,
         "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
         "active": this.manageBotForm.value.active,
-        "deleted": this.manageBotForm.value.deleted
+        "deleted": this.manageBotForm.value.deleted,
+        "fileName": this.uploadFiles()
       }
       this.rest_api.saveCustomerBot(req_body).subscribe((res: any) => {
         let response = res;
@@ -317,6 +331,8 @@ export class ManageCustomerBotComponent implements OnInit {
     const includeSites = this.manageBotForm.value.includeSites ? this.manageBotForm.value.includeSites.join(';'):null;
     const excludeSites = this.manageBotForm.value.excludeSites ? this.manageBotForm.value.excludeSites.join(';'):null;
     let cutomerBotId = this.updateOverlayData.customerSupportBotId
+    let fileNames = this.selectedFiles[0]?this.uploadFiles():this.manageBotForm.value.fileName;
+    let pythonAPI = this.selectedFiles[0]?true:false;
     let req_body={
         "customerSupportBotId": cutomerBotId,
         "userId": "",
@@ -335,7 +351,8 @@ export class ManageCustomerBotComponent implements OnInit {
         "botDisplayName": this.manageBotForm.value.customerSupportBotName,
         "hallucinationAllowed": this.manageBotForm.value.hallucinationAllowed,
         "active": this.manageBotForm.value.active,
-        "deleted": this.manageBotForm.value.deleted
+        "deleted": this.manageBotForm.value.deleted,
+        "fileName": fileNames
       }
       this.rest_api.updateCustomerBot(cutomerBotId, req_body).subscribe((res: any) => {
         let response = res;
@@ -344,11 +361,12 @@ export class ManageCustomerBotComponent implements OnInit {
         let greetingMessageUpdated = this.manageBotForm.value.greetingMessage !== this.updateOverlayData.greetingMessage;
         this.loader.hide();
         if (response.errorMessage == undefined) {
-          if (req_body.customerSupportBotSource == "DOC" && !(botNameUpdated || greetingMessageUpdated)) {
+          if (req_body.customerSupportBotSource == "DOC" && !(botNameUpdated || greetingMessageUpdated) && pythonAPI) {
             this.botKey = res.botKey,
             this.tenantName = res.tenantId,
             this.onUploadDoc();
           }
+          this.selectedFiles = [];
           this.toastService.showSuccess(bot_Name, 'update');
           this.manageBotForm.reset();
           this.hiddenPopUp = false;
@@ -420,6 +438,7 @@ semicolumn(event: KeyboardEvent) {
 
 onFileSelected(event: any) {
   this.selectedFiles = event.target.files;
+  this.editFileName = false;
 }
 onModelChange(value:any){
   this.trainedModel=value
