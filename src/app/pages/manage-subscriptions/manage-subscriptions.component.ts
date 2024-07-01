@@ -30,13 +30,13 @@ export class ManageSubscriptionsComponent implements OnInit {
     private spinner: LoaderService,private route: ActivatedRoute,private router:Router) {
        this.route.queryParams.subscribe((data) => {
         this.params = data;
-    //   if(data.index){
-    //   this.activeIndex = data.index
-    //   this.check_tab = data.index;
-    // } else {
-    //     this.activeIndex=0;
-    //     this.check_tab = 0;
-    //   }
+        if(data.index){
+        this.activeIndex = data.index
+        this.check_tab = data.index;
+        } else {
+          this.activeIndex=0;
+          this.check_tab = 0;
+        }
     });}
 
   ngOnInit(): void {

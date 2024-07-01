@@ -44,8 +44,9 @@ export class AiAgentListComponent implements OnInit {
                 this.unsubscribed_agents.push(botDetails)
                 this.filteredBotsList.push(botDetails);
             }
-            this.showSkeleton=!this.showSkeleton
+            
         });
+        this.showSkeleton=!this.showSkeleton
         this.spinner.hide();
     }, err => {
         this.spinner.hide();

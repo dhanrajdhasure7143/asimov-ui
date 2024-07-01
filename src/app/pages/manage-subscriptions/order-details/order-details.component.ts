@@ -119,7 +119,7 @@ export class OrderDetailsComponent implements OnInit {
       }
     });
     }
-    else if(data.message=='Cancellation Abrupted!!'){
+    else if(data=='Cancellation Abrupted!!'){
       //Swal.fire("Warning","Subscription cancellation is in progress!","success");
       Swal.fire({
         title: 'Warning',
