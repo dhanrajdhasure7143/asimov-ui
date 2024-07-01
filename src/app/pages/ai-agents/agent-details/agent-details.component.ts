@@ -673,6 +673,9 @@ goToPreviousPage(): void {
   loadAgentDetails() {
     this.getPredefinedBotsList(this.product_id)
     this.loading = true;
+    this.isConfig=false
+    this.enabledRun=false
+    this.isAgentSelected = false;
     setTimeout(() => {
       this.aiAgentDetails();
       this.getAIAgentHistory(this.product_id);

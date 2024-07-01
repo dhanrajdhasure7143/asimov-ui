@@ -4,7 +4,7 @@
             <div class="bot-info">
                 <div class="bot-header">
                     <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <div class="rem-execution">Remaining Runs for Today:
+                    <div class="rem-execution">Remaining Runs:
                         <!-- <span *ngIf="remaining_exe.length !=0" class="remaining-exe">{{remaining_exe}}
                             <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
                         </span>
@@ -14,12 +14,12 @@
                         </span>
                         <span *ngIf="!loading" class="remaining-exe" style="margin-right: 10px;">{{remaining_exe}}</span>
                     </div>
-                    <div class="rem-agents">Remaining Agents:
+                    <!-- <div class="rem-agents">Remaining Agents:
                         <span *ngIf="loading" class="remaining-agents">
                             <i class="pi pi-spin pi-spinner"></i>
                         </span>
                         <span *ngIf="!loading" class="remaining-agents">{{remaining_agents}}</span>
-                    </div>
+                    </div> -->
                     
                 </div>
                 <p class="bot-details">{{bot?.details || dataforbot}}
