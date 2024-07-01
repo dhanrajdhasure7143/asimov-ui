@@ -127,6 +127,7 @@ export class ManageCustomerBotComponent implements OnInit {
   }
 
   addNew() {
+    this.editFileName = false;
     this.hiddenPopUp = true;
     this.isCreate = true;
     this.initializeBotForm();
@@ -318,12 +319,12 @@ export class ManageCustomerBotComponent implements OnInit {
 
         this.toastService.showSuccess(bot_Name,"create")
         this.getAllCustomerBots();
-               
+        this.manageBotForm.reset();       
       },(err: any) => {
           this.loader.hide();
           this.toastService.showError(this.toastMessages.saveError);
         })
-        this.manageBotForm.reset();
+
   }
     
   updateCustomerSupportBot() {
