@@ -46,7 +46,6 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
     margin: 10px;
     height: 50px;
     border-radius: 10px;
-    font-size: 20px;
 }
 
 .configure-button {
@@ -67,6 +66,11 @@ hr {
 
 .start-button {
     background-color:#36D733;
+    color: white;
+}
+
+.delete-button {
+    background-color:#e64558;
     color: white;
 }
 
@@ -418,7 +422,7 @@ hr {
     color: #001C47;
     font-weight: 700;
     font-size: 30px;
-    margin-right: 20px;
+    margin-right: 25px;
 }
 
 .rem-execution {
@@ -748,3 +752,19 @@ input[type=checkbox] {
     pointer-events: none;
     cursor: not-allowed;
   }
+
+  .rem-agents {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    border-left: 2px solid black;
+    padding-left: 20px;
+    font-weight: 600;
+}
+
+.remaining-agents {
+    color: rgb(241, 144, 17);
+    margin-left: 5px;
+    font-weight: 600;
+    font-size: 20px;
+}
