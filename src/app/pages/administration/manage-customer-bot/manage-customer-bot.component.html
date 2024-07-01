@@ -175,7 +175,7 @@
             <div *ngIf="manageBotForm.get('customerSupportBotSource').value == 'DOC'"  class="uploadOption">
             <div class="form-group col-md-12 p-0">
             <label class="label-control">Upload File<span class="star">*</span></label>
-            <input type="file" formControlName="fileName" pInputText
+            <input type="file" pInputText
               placeholder="Upload file" class="form-control data" (change)="onFileSelected($event)" multiple />
               <label *ngIf = "editFileName" for="file" class="upload_file">{{ fileName }}</label>
 <!--               
