@@ -360,7 +360,8 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   getAgentFiles(id: string) {
     this.spinner.show();
     this.rest_api.getAgentFiles(id).subscribe((res: any) => {
-      this.file = res.data;
+      console.log("Agent Files: ", res)
+      this.file = res.data?res.data:[];
       this.filteredFiles=res.data;
       this.updateFilePagination()
       this.spinner.hide();

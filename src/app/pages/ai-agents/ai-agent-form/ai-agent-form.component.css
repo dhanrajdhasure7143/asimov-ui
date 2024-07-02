@@ -258,3 +258,17 @@
 .back-button:hover {
     text-decoration: underline;
 }
+
+.attachment {
+    padding: 5px;
+    /* border: 1px solid #ddd; */
+    margin-bottom: 5px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+  }
+  .attachment-btns{
+    /* display: flex;
+    align-items: center; */
+  }
