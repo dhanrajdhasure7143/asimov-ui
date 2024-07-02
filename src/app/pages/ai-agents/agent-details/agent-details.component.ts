@@ -127,6 +127,9 @@ export class AgentDetailsComponent implements OnInit {
   ];
 
 
+  // changes for btn view
+  btn_style: string | null = null;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -139,6 +142,19 @@ export class AgentDetailsComponent implements OnInit {
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.bot = navigation?.extras.state?.bot;
+
+    // Added params for Buttons DEMO
+    this.route.queryParams.subscribe(params => {
+      this.btn_style = params['style'] || "type1";
+
+      if (!params['style']) {
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { style: 'type1' },
+          queryParamsHandling: 'merge'
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
