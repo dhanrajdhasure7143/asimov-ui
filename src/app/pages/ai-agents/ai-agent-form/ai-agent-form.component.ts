@@ -48,6 +48,11 @@ export class AiAgentFormComponent implements OnInit {
   checkedOptions: string[] = [];
   agent_uuid:any;
   isEdit:boolean = false;
+  attachments:any[]=[
+    {name:"RFP.pdf",value:"RFP"},
+    {name:"Proposal.txt",value:"Proposal"},
+    {name:"Job Description.pdf",value:"Job Description"}
+  ]
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -135,7 +140,11 @@ export class AiAgentFormComponent implements OnInit {
           fieldsGroup[field.preAttributeName] = ["", Validators.required];
         }
       }else{
-        fieldsGroup[field.preAttributeName] = [''];
+        if(field.preAttributeType == "checkbox"){
+          fieldsGroup[field.preAttributeName] = [false];
+        }else{
+          fieldsGroup[field.preAttributeName] = [''];
+        }
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
@@ -755,37 +764,49 @@ export class AiAgentFormComponent implements OnInit {
 
   generateDynamicFormUpdate(){
     const fieldsGroup = {};
-    console.log("formFields",this.formFields)
+    // console.log("formFields",this.formFields)
     this.formFields.forEach(field => {
       // if(field.attributeRequired){
-        if(field.preAttributeType == "checkbox"){
-      console.log("field---------",field)
+        if(field.preAttributeType === "checkbox"){
+          if(field.options.length ==0 || field.options == null){
+            fieldsGroup[field.preAttributeName] = [field.preAttributeValue]
+          }else{
             field.options.forEach(option => {
             let array = this.getArrayValues(option.field);
             if (array.length > 0) {
               console.log("array", array);
               const filteredFields = this.formFields.find(field => field.preAttributeName === array[0]);
-              console.log("filteredFields", filteredFields);
               if (filteredFields.preAttributeValue) {
                   fieldsGroup[option.value] = [true, Validators.required];
-                  console.group("option.value",option.value)
                 // this.onCheckboxChange(true, option, "onUpdate");
                 this.onCheckboxChangeOnUpdate(true, option);
               } else {
-                fieldsGroup[option.value] = ["", Validators.required];
+                fieldsGroup[option.value] = [false, Validators.required];
               }
             }
             });
+          }
           }else if(field.preAttributeType == "radio"){
             fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
             this.onRadioChangeUpdateFlow(field.preAttributeValue , field.options.find(option => option.value == field.preAttributeValue))
           }
           else if(field.preAttributeType == "dropdown"){
             fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
-            this.onDropdownChange({value: field.preAttributeValue}, field.options)
-          } else{
+            if (field.preAttributeValue) {
+              fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+              this.onDropdownChange({value: field.preAttributeValue}, field.options)
+            } else {
+              fieldsGroup[field.preAttributeName] = [''];
+            }
+          }else if(field.preAttributeType == "textarea"){
+            if(this.predefinedBot_uuid =='Pred_Recruitment'){
+              let jobDesc= JSON.parse(field.preAttributeValue).inputJobDescrption
+                fieldsGroup['RecruitmentOne_email_jobDescrption'] = [String(jobDesc), Validators.required]                
+            }else{
+              fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
+            }
+           } else{
             if(field.preAttributeType == "file"){
-            console.log("fieldwhegweaf f uhwifewf wfwebfwefgwe",field)
               fieldsGroup[field.preAttributeName] = [''];
             }else{
               fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
@@ -806,7 +827,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   onCheckboxChangeOnUpdate(event, option:any) {
-    console.log("test....................")
+    // console.log("test....................")
     const checkbox = event;
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);

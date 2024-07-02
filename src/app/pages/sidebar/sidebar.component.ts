@@ -55,13 +55,13 @@ export class SidebarComponent implements OnInit {
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
     });
-    if(this.dashboardDetails)
-    {
-      this.rest_service.getDashBoardsList().subscribe((res:any)=>{
-        let dashbordlist:any=res.data;
-        this.dashboardDetails = dashbordlist.find(item=>item.defaultDashboard == true);
-      })
-    }
+    // if(this.dashboardDetails)
+    // {
+    //   this.rest_service.getDashBoardsList().subscribe((res:any)=>{
+    //     let dashbordlist:any=res.data;
+    //     this.dashboardDetails = dashbordlist.find(item=>item.defaultDashboard == true);
+    //   })
+    // }
     let active_module=localStorage.getItem('selectedModule')
     if(active_module){
     let selected_module=active_module.split('&')
