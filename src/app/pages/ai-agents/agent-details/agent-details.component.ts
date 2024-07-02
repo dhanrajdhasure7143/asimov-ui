@@ -375,6 +375,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
       this.spinner.show();
       this.rest_api.deleteAgentFIles(this.selectedFiles).subscribe((res: any) => {
         this.getPredefinedBotsList(this.product_id);
+        this.selectedFiles=[];
         this.spinner.hide();
         this.toaster.toastSuccess(`${this.bot.predefinedBotName} - Agent files Deleted Successfully..`)
       }, err => {
