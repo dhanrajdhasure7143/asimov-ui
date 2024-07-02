@@ -39,19 +39,56 @@
                 }"
                 ></p-dropdown>
 
-                <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
-                    <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
-                  </button>                  
-                <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
-                    <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
-                </button>
-                <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
-                    <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
-                </button>
-                <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
-                    <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
-                </button>
-            </div>
+                <!-- Original Btns -->
+                <div *ngIf="btn_style === 'type1'" style="display: flex;
+                flex-direction: column;
+                align-items: end;">
+                    <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
+                        <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
+                      </button>                  
+                    <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+                        <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
+                    </button>
+                    <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
+                        <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
+                    </button>
+                    <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
+                        <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
+                    </button>
+                </div>
+
+                <!-- small btns -->
+                <div *ngIf="btn_style === 'type2'" style="margin-top: 10px ; display: flex; gap: 10px;">
+                    <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()" style="margin: 5px; width: 60px;">
+                        <i class="fas fa-cogs" style="padding-right: 10px;"></i>
+                      </button>                  
+                    <button class="button-top start-button" style="margin: 5px; width: 60px;" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+                        <i class="fas fa-play-circle" style="padding-right: 10px;"></i>
+                    </button>
+                    <button class="button-top stop-button" style="margin: 5px; width: 60px;" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
+                        <i class="fas fa-stop-circle" style="padding-right: 10px;"></i>
+                    </button>
+                    <button class="button-top delete-button" style="margin: 5px; width: 60px;" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
+                        <i class="pi pi-trash" style="padding-right: 10px;"></i>
+                    </button>
+                </div>               
+            </div>    
+        </div>
+
+        <!-- Horizantal btns -->
+        <div *ngIf="btn_style === 'type3'" >
+            <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
+                <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
+                </button>                  
+            <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+                <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
+            </button>
+            <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
+                <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
+            </button>
+            <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
+                <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
+            </button>
         </div>
 
         <div class="custom-accordion">
