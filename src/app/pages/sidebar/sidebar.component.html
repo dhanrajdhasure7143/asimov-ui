@@ -118,6 +118,23 @@
         <span class="side-menu-font" (click)="hightlight('AI Agents','null')">AI Agents</span>
       </a>
 
+      <a mat-list-item class="link" id="automate" (click)="hightlight('Inbox',null)"
+        routerLink="/pages/aiagent/inbox" [matTooltip]=" !obj.sideBarOpen ? 'Inbox' : ''"
+        matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+        <span class="side-icon">
+          <span class="active-img" id="eiap-home-icon-active">
+            <img src="../../../assets/images/Sidebar/Orchestration-Active.svg" alt="">
+          </span>
+          <span class="hover-img" id="eiap-home-icon-white">
+            <img src="../../../assets/images/Sidebar/Orchestration-Hover.svg" alt="">
+          </span>
+          <span class="default-img" id="eiap-home-icon-gray">
+            <img src="../../../assets/images/Sidebar/Orchestration-Normal.svg" alt="">
+          </span>
+        </span>
+        <span class="side-menu-font" (click)="hightlight('Inbox','null')">Inbox</span>
+      </a>
+
         <!-- <a mat-list-item *ngIf="isPredefinedBots && !agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
           routerLink="/pages/aiagent/list" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
           matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">

@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="maincontent">
 <div class="h-100">
     <div class="row main-content-head">
@@ -41,4 +41,73 @@
 
 <div *ngIf="viewLogsFlag">
     <app-ai-agent-logs [predefinedOrchestrationBotId]="logsData" (closeEvent)="closeLogsOverlay()"></app-ai-agent-logs>
-</div>
+</div> -->
+
+
+<!-- <div class="row">
+    <div class="col-md-3">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let historyItem of history; let i = index" (click)="selectItem(i)">
+                {{ historyItem.title }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div *ngIf="selectedItem">
+            <h3>{{ selectedItem.title }}</h3>
+            <p>{{ selectedItem.details }}</p>
+        </div>
+        <div *ngIf="!selectedItem">
+            Select an item to view its details.
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid email-container">
+    <div class="row">
+      <div class="col-md-3 email-list">
+        <div class="email-list-header">
+          <!-- <h2 class="active">Focused</h2> -->
+          <h2>Inbox ({{emails.length}})</h2>
+          <div class="icons">
+            <span class="icon">□</span>
+            <span class="icon">≡</span>
+          </div>
+        </div>
+        <div class="email-item" *ngFor="let email of emails; let i = index">
+          <div class="avatar">{{ email.sender[0] }}</div>
+          <div class="email-summary" (click)="selectEmail(i)">
+            <div class="sender">{{ email.sender }}</div>
+            <div class="subject">{{ email.subject }}</div>
+            <div class="preview">{{ email.preview }}</div>
+          </div>
+          <!-- <button class="btn btn-danger delete-btn" (click)="deleteEmail(i)">Delete</button> -->
+        </div>
+      </div>
+      <div class="col-md-9 email-content" *ngIf="selectedEmail">
+        <h2>{{ selectedEmail.subject }}</h2>
+        <p><strong>From:</strong> {{ selectedEmail.sender }}</p>
+        <div class="attachments" *ngIf="selectedEmail.attachments && selectedEmail.attachments.length">
+            <h3 >Attachments: <span>
+                    <img src="../../../../assets/images/agent/download-icon.svg" *ngIf="selectedEmail.attachments.length>0"  pTooltip="Download All" tooltipPosition="top" alt="Download icon" class="svg-icons svg-dwld-btn">
+                    </span>
+            </h3>
+            <div class="attachment" *ngFor="let attachment of selectedEmail.attachments">
+                <div
+                     (mouseenter)="attachment.showDownload = true" 
+                     (mouseleave)="attachment.showDownload = false">
+                  <i class="fa fa-file"></i>
+                  <span>{{ attachment.name }}</span>
+                  <!-- <button 
+                          (click)="downloadAttachment(attachment)" 
+                          class="download-button">
+                    <i class="fa fa-download"></i>
+                  </button> -->
+                </div>
+              </div>
+          </div>
+          <br>
+        <div [innerHTML]="selectedEmail.content"></div>
+      </div>
+    </div>
+  </div>

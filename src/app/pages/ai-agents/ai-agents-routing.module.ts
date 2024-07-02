@@ -9,7 +9,7 @@ import { AgentDetailsComponent } from './agent-details/agent-details.component';
 const routes: Routes = [
   {path:'', component:AiAgentsComponent, children:[
     {path:'home', component:AiAgentListComponent},
-    {path:'list', component:PredefinedBotsOrchestrationComponent},
+    {path:'inbox', component:PredefinedBotsOrchestrationComponent},
     {path:'form', component:AiAgentFormComponent},
     {path:'details', component:AgentDetailsComponent}
   ]
