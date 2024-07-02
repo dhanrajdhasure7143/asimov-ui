@@ -28,6 +28,227 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
   showBotForm: boolean = false;
   viewLogsFlag: boolean = false;
   logsData: any;
+  emails = [
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'Thanks & Regards Aravind Goud ...',
+      content: `
+        <p>Hi aravind,</p>
+        <p>Based on the job description provided, our system identified several suitable profiles from the SheJobs portal. Attached are the detailed profiles of candidates matching the required criteria.</p>
+        
+        <h3>Name: G.Bhargavi</h3>
+      <p><strong>Profile Summary:</strong> G.Bhargavi is a Bachelor of Engineering graduate in E.C.E from Bharati Institute of Engineering & Technology, Hyderabad. She has experience in Python programming and SQL databases. She has worked on a project titled 'Online Merchant Management System' where she played the role of a developer and tester. She has also developed Graphical User Interfaces (GUI) with PAGE software. She has strong analytical aptitude and problem-solving skills. She has also worked on a project titled 'Environmental monitoring using zigbee technology'.</p>
+      <p><strong>Match Percentage:</strong> 70%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: EKTA BANGAR</h3>
+      <p><strong>Profile Summary:</strong> Ekta Bangar is an Application Consultant at IBM India Pvt Ltd with experience in data fixes, code changes, data cleansing, and converting business requirements into technical solutions. She has a Bachelor's degree in Computer Science.</p>
+      <p><strong>Match Percentage:</strong> 75%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Shanthini Chenna</h3>
+      <p><strong>Profile Summary:</strong> Shantini Chenna is a dedicated Software Testing professional with over 5 years of experience in the software industry. She has worked from Functional to Design, Manual, and Automation testing in a business intelligence environment. Her specialties include SQL, QTP/UFT, QC/ALM, and JIRA. She has worked on data warehouse projects and is familiar with ETL concepts.</p>
+      <p><strong>Match Percentage:</strong> 80%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Pruthvi</h3>
+      <p><strong>Profile Summary:</strong> Pruthvi is a qualified Information Expert (Level 100) with profound perfection in Salesforce Programming dialect with data quality standards. She has experience in sandboxes, developments, and coding of Apex class models using MVC structure. Pruthvi has a degree in Computer Application and has knowledge in creating ETL Data Load, Java, J-Query techniques, and Sales Computing.</p>
+      <p><strong>Match Percentage:</strong> 65%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Arunadevi A</h3>
+      <p><strong>Profile Summary:</strong> Arunadevi A is a professional with good knowledge in Visual Basic and C SQL Server databases, SQL server integration Services(SSIS), Data warehouse concepts, and understanding of online analytical processing(OLAP). She has experience in designing SSIS packages for extracting data from various sources. Her skills include SQL Server 2005/2008, T-SQL, and C#.</p>
+      <p><strong>Match Percentage:</strong> 85%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: K. SHALINI</h3>
+      <p><strong>Profile Summary:</strong> K. Shalini is a professional with 5 years and 8 months of experience as a Business Analyst. She has experience in working with users/clients to gather requirements, creating analytical documents & specifications, coordinating in creating product and functional specifications, performing gap analysis, and managing data models. She has a degree in Computer Science and Engineering from VR Siddhartha Engineering College.</p>
+      <p><strong>Match Percentage:</strong> 72%</p>
+          <p><strong>Profile Summary:</strong> Arunadevi A is a professional with good knowledge in Visual Basic and C SQL Server databases, SQL server integration Services(SSIS), Data warehouse concepts, and understanding of online analytical processing(OLAP). She has experience in designing SSIS packages for extracting data from various sources. Her skills include SQL Server 2005/2008, T-SQL, and C#.</p>
+          <p><strong>Match Percentage:</strong> 85%</p>
+          <p><strong>Source:</strong> SheJobs</p>
+
+          <h3>Name: K. SHALINI</h3>
+          <p><strong>Profile Summary:</strong> K. Shalini is a professional with 5 years and 8 months of experience as a Business Analyst. She has experience in working with users/clients to gather requirements, creating analytical documents & specifications, coordinating in creating product and functional specifications, performing gap analysis, and managing data models. She has a degree in Computer Science and Engineering from VR Siddhartha Engineering College.</p>
+
+      <h3>Name: T V Sai Santhoshi</h3>
+      <p><strong>Profile Summary:</strong> T V Sai Santhoshi is a professional in Human Resource Management with experience in staffing, annual employee performance, and strategy planning. She has worked as an HR Business Partner at Matrix Laboratories for 2 years and has knowledge of HR generalist activities. She holds a Master's degree in Human Resource Management and has completed her HRM from Acharya Nagarjuna University.</p>
+      <p><strong>Match Percentage:</strong> 55%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Sri Laxmi Gopisetty</h3>
+      <p><strong>Profile Summary:</strong> Sri Laxmi Gopisetty is a Software Test Engineer with 2 years of experience in manual and automation testing. She has worked with HSBC and JPMC and has experience in Selenium WebDriver with Java and TestNG. Her technical skills include Core Java, Selenium WebDriver, TestNG, Maven, Jenkins, and GIT. She has hands-on experience in writing test scripts using Selenium WebDriver.</p>
+      <p><strong>Match Percentage:</strong> 70%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: LAYA NYAPATHY</h3>
+      <p><strong>Profile Summary:</strong> LAYA NYAPATHY is a full-stack web developer experienced in Python programming and Django coding. She has worked with Django Framework and Django Rest Framework for API development. She has also done an internship in UI UX and Python development. She has knowledge of JavaScript, React JS, Node.js, and databases.</p>
+      <p><strong>Match Percentage:</strong> 68%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <p>Please review these profiles and let me know if you need any additional information or if you'd like to proceed with any of these candidates.</p>
+
+      <p>Best regards,<br>Aravind Goud Chedurupally</p>
+      `,
+      attachments: [
+        { name: 'Satyanarayana_resume.pdf' },
+        { name: 'Sai_Krishna_resume.pdf' },
+        { name: 'Aravind_Resume.pdf' },
+        { name: 'Pranitha_resume.pdf' },
+        { name: 'Deekshitha.pdf' },
+        { name: 'Lakshmi.Pdf' },
+        { name: 'Satyanarayana_resume.pdf' },
+        { name: 'Sai_Krishna_resume.pdf' },
+        { name: 'Aravind_Resume.pdf' },
+        { name: 'Pranitha_resume.pdf' },
+      ]
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'CAUTION: This email originated f...',
+      content: `
+        <p>Hi aravind,</p>
+        <p>Based on the job description provided, our system identified several suitable profiles from the SheJobs portal. Attached are the detailed profiles of candidates matching the required criteria.</p>
+
+      <h3>Name: EKTA BANGAR</h3>
+      <p><strong>Profile Summary:</strong> Ekta Bangar is an Application Consultant at IBM India Pvt Ltd with experience in data fixes, code changes, data cleansing, and converting business requirements into technical solutions. She has a Bachelor's degree in Computer Science.</p>
+      <p><strong>Match Percentage:</strong> 75%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Pruthvi</h3>
+      <p><strong>Profile Summary:</strong> Pruthvi is a qualified Information Expert (Level 100) with profound perfection in Salesforce Programming dialect with data quality standards. She has experience in sandboxes, developments, and coding of Apex class models using MVC structure. Pruthvi has a degree in Computer Application and has knowledge in creating ETL Data Load, Java, J-Query techniques, and Sales Computing.</p>
+      <p><strong>Match Percentage:</strong> 65%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Arunadevi A</h3>
+      <p><strong>Profile Summary:</strong> Arunadevi A is a professional with good knowledge in Visual Basic and C SQL Server databases, SQL server integration Services(SSIS), Data warehouse concepts, and understanding of online analytical processing(OLAP). She has experience in designing SSIS packages for extracting data from various sources. Her skills include SQL Server 2005/2008, T-SQL, and C#.</p>
+      <p><strong>Match Percentage:</strong> 85%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: S GANESH RANI</h3>
+      <p><strong>Profile Summary:</strong> S Ganesh Rani has a strong passion as a Backend/Java developer with 3 years of knowledge in C programming and a proficient in SoftSkills Level. She has participated in various activities and technical events related to programming, C#, and machine learning. However, she does not have the required years of experience in the specific skills of data analysis, SQL, Excel, and Python as required for this Senior Data Quality Analyst at EPSoft.</p>
+      <p><strong>Match Percentage:</strong> 60%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: T V Sai Santhoshi</h3>
+      <p><strong>Profile Summary:</strong> T V Sai Santhoshi is a professional in Human Resource Management with experience in staffing, annual employee performance, and strategy planning. She has worked as an HR Business Partner at Matrix Laboratories for 2 years and has knowledge of HR generalist activities. She holds a Master's degree in Human Resource Management and has completed her HRM from Acharya Nagarjuna University.</p>
+      <p><strong>Match Percentage:</strong> 55%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Shanthini Chenna</h3>
+      <p><strong>Profile Summary:</strong> Shantini Chenna is a dedicated Software Testing professional with over 5 years of experience in the software industry. She has worked from Functional to Design, Manual, and Automation testing in a business intelligence environment. Her specialties include SQL, QTP/UFT, QC/ALM, and JIRA. She has worked on data warehouse projects and is familiar with ETL concepts.</p>
+      <p><strong>Match Percentage:</strong> 80%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+
+      <h3>Name: Sri Laxmi Gopisetty</h3>
+      <p><strong>Profile Summary:</strong> Sri Laxmi Gopisetty is a Software Test Engineer with 2 years of experience in manual and automation testing. She has worked with HSBC and JPMC and has experience in Selenium WebDriver with Java and TestNG. Her technical skills include Core Java, Selenium WebDriver, TestNG, Maven, Jenkins, and GIT. She has hands-on experience in writing test scripts using Selenium WebDriver.</p>
+      <p><strong>Match Percentage:</strong> 70%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: LAYA NYAPATHY</h3>
+      <p><strong>Profile Summary:</strong> LAYA NYAPATHY is a full-stack web developer experienced in Python programming and Django coding. She has worked with Django Framework and Django Rest Framework for API development. She has also done an internship in UI UX and Python development. She has knowledge of JavaScript, React JS, Node.js, and databases.</p>
+      <p><strong>Match Percentage:</strong> 68%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <p>Please review these profiles and let me know if you need any additional information or if you'd like to proceed with any of these candidates.</p>
+
+      <p>Best regards,<br>Aravind Goud Chedurupally</p>
+      `,
+      attachments: [
+        { name: 'Satyanarayana_resume.pdf' },
+        { name: 'Sai_Krishna_resume.pdf' },
+      ]
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'Thank you for your kind words...',
+      content: `
+        <p>Hi aravind,</p>
+        <p>Based on the job description provided, our system identified several suitable profiles from the SheJobs portal. Attached are the detailed profiles of candidates matching the required criteria.</p>
+        
+        <h3>Name: G.Bhargavi</h3>
+      <p><strong>Profile Summary:</strong> G.Bhargavi is a Bachelor of Engineering graduate in E.C.E from Bharati Institute of Engineering & Technology, Hyderabad. She has experience in Python programming and SQL databases. She has worked on a project titled 'Online Merchant Management System' where she played the role of a developer and tester. She has also developed Graphical User Interfaces (GUI) with PAGE software. She has strong analytical aptitude and problem-solving skills. She has also worked on a project titled 'Environmental monitoring using zigbee technology'.</p>
+      <p><strong>Match Percentage:</strong> 70%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: EKTA BANGAR</h3>
+      <p><strong>Profile Summary:</strong> Ekta Bangar is an Application Consultant at IBM India Pvt Ltd with experience in data fixes, code changes, data cleansing, and converting business requirements into technical solutions. She has a Bachelor's degree in Computer Science.</p>
+      <p><strong>Match Percentage:</strong> 75%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Shanthini Chenna</h3>
+      <p><strong>Profile Summary:</strong> Shantini Chenna is a dedicated Software Testing professional with over 5 years of experience in the software industry. She has worked from Functional to Design, Manual, and Automation testing in a business intelligence environment. Her specialties include SQL, QTP/UFT, QC/ALM, and JIRA. She has worked on data warehouse projects and is familiar with ETL concepts.</p>
+      <p><strong>Match Percentage:</strong> 80%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Pruthvi</h3>
+      <p><strong>Profile Summary:</strong> Pruthvi is a qualified Information Expert (Level 100) with profound perfection in Salesforce Programming dialect with data quality standards. She has experience in sandboxes, developments, and coding of Apex class models using MVC structure. Pruthvi has a degree in Computer Application and has knowledge in creating ETL Data Load, Java, J-Query techniques, and Sales Computing.</p>
+      <p><strong>Match Percentage:</strong> 65%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <h3>Name: Arunadevi A</h3>
+      <p><strong>Profile Summary:</strong> Arunadevi A is a professional with good knowledge in Visual Basic and C SQL Server databases, SQL server integration Services(SSIS), Data warehouse concepts, and understanding of online analytical processing(OLAP). She has experience in designing SSIS packages for extracting data from various sources. Her skills include SQL Server 2005/2008, T-SQL, and C#.</p>
+      <p><strong>Match Percentage:</strong> 85%</p>
+      <p><strong>Source:</strong> SheJobs</p>
+
+      <p>Please review these profiles and let me know if you need any additional information or if you'd like to proceed with any of these candidates.</p>
+
+      <p>Best regards,<br>Aravind Goud Chedurupally</p>
+      `,
+      attachments: [
+        { name: 'Thank_You_Note.pdf' }
+      ]
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'CAUTION: This email originated f...',
+      content: 'Full content of Madhu Parla\'s email...',
+      attachments: []
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'Thank you for your kind words...',
+      content: 'Full content of Sandhya Rani Adigerla\'s email...',
+      attachments: [
+        { name: 'Thank_You_Note.pdf' }
+      ]
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'CAUTION: This email originated f...',
+      content: 'Full content of Madhu Parla\'s email...',
+      attachments: []
+    },
+    {
+      sender: 'Noreply EZFlow',
+      subject: 'Candidate Profiles Matched',
+      preview: 'Thank you for your kind words...',
+      content: 'Full content of Sandhya Rani Adigerla\'s email...',
+      attachments: [
+        { name: 'Thank_You_Note.pdf' }
+      ]
+    }
+  ];
+
+  selectedEmail: any = null;
+
+  selectEmail(index: number) {
+    this.selectedEmail = this.emails[index];
+  }
+
+  deleteEmail(index: number) {
+    this.emails.splice(index, 1);
+    if (this.selectedEmail === this.emails[index]) {
+      this.selectedEmail = null;
+    }
+  }
 
   constructor(
     private rest: PredefinedBotsService,
@@ -166,6 +387,13 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
 
   closeLogsOverlay(){
     this.viewLogsFlag=false;
+  }
+
+  downloadAttachment(attachment: any) {
+    // const link = document.createElement('a');
+    // link.href = attachment.url;
+    // link.download = attachment.name;
+    // link.click();
   }
 
 }
