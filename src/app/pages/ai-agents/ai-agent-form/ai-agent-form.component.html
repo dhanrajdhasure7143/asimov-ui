@@ -119,15 +119,14 @@
                          <ng-container *ngIf="field.preAttributeType === 'file' && isEdit && predefinedBot_uuid =='Pred_RFP'">
                          <div class="attachment " *ngFor="let attachment of attachments">
                             <div>
-                              <i class="fa fa-file"></i>
-                              <span>{{ attachment.name }}</span>
+                            <i class="pi pi-file" style="font-size: 0.9rem"></i> &nbsp;
+                              <span>{{ attachment.name }}</span> &nbsp;
                               <span class="attachment-btns">
                                 <button class="download-button"  pTooltip="Download" tooltipPosition="top">
-                                    <i class="fa fa-download"></i>
-                                </button>
-                                <button>
-                                    <a class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
-                                        alt="close" pTooltip="Delete" tooltipPosition="top"></a>
+                                    <i class="pi pi-download" style="font-size: 0.9rem"></i>
+                                </button> 
+                                <button pTooltip="Delete" tooltipPosition="top">
+                                        <i class="pi pi-times" style="font-size: 0.9rem"></i>
                                 </button>
                             </span>
                             </div>
