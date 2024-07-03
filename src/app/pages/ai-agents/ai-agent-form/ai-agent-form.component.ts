@@ -53,6 +53,7 @@ export class AiAgentFormComponent implements OnInit {
     {name:"Proposal.txt",value:"Proposal"},
     {name:"Job Description.pdf",value:"Job Description"}
   ]
+  schedulerValue:any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -191,6 +192,8 @@ export class AiAgentFormComponent implements OnInit {
       this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.predefinedBotsForm.get('isScheduleBot').setValue(this.predefinedBot_schedulerRequired)
+      if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
       // this.generateDynamicForm();
       this.generateDynamicFormUpdate();
     
@@ -821,9 +824,9 @@ export class AiAgentFormComponent implements OnInit {
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
     console.log("predefinedBotsForm",this.predefinedBotsForm)
 
-    this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
-      this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
-  });
+  //   this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
+  //     this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
+  // });
   }
 
   onCheckboxChangeOnUpdate(event, option:any) {

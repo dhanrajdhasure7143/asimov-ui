@@ -231,7 +231,7 @@
         <div class="h-100">
             <div class="h-100">
               <!-- <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler> -->
-              <app-ai-agent-scheduler (schedulerData)="readEmitValue($event)"> </app-ai-agent-scheduler>
+              <app-ai-agent-scheduler (schedulerData)="readEmitValue($event)" [isEdit]="isEdit" [schedulerValue]="schedulerValue"> </app-ai-agent-scheduler>
             </div>
           </div>
     </p-dialog>

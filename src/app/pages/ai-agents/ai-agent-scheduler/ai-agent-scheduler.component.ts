@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { isArray } from 'highcharts';
 // import { keys } from 'highcharts';
 
 @Component({
@@ -19,6 +20,8 @@ export class AiAgentSchedulerComponent implements OnInit {
   @Output() schedulerData = new EventEmitter<any>();
   @Input() public disabled: boolean;
   @Input() public options: CronOptions;
+  @Input() public schedulerValue: any;
+  @Input() public isEdit: any;
   selectOptions: any;
   state: any;
     
@@ -115,6 +118,7 @@ isMonthly: boolean=true;
 response:any;
 fromMonth: any;
 toMonth: any;
+scheduled_data:any={};
 
   constructor(
     private rest:RestApiService, 
@@ -150,6 +154,16 @@ toMonth: any;
       frequency: ['', Validators.required]
     });
   }  
+
+  ngOnChanges(){
+    console.log(this.isEdit)
+    if(this.isEdit){
+      console.log("schedulerValue",JSON.parse(this.schedulerValue));
+      if(Array.isArray(JSON.parse(this.schedulerValue)))
+      this.scheduled_data = JSON.parse(this.schedulerValue)[0];
+      this.timezone = this.scheduled_data.timezone;
+    }
+  }
 
 gettime(){
  
