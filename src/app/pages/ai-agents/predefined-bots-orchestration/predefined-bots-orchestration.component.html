@@ -80,13 +80,18 @@
             <div class="sender">{{ email.sender }}</div>
             <div class="subject">{{ email.subject }}</div>
             <div class="preview">{{ email.preview }}</div>
+            <div class="time">{{ email.time }}</div>
           </div>
           <!-- <button class="btn btn-danger delete-btn" (click)="deleteEmail(i)">Delete</button> -->
         </div>
       </div>
       <div class="col-md-9 email-content" *ngIf="selectedEmail">
-        <h2>{{ selectedEmail.subject }}</h2>
+        <div class="email-header">
+          <h2>{{ selectedEmail.subject }}</h2>
+          <div class="time">{{ selectedEmail.time }}</div>
+        </div>
         <p><strong>From:</strong> {{ selectedEmail.sender }}</p>
+        
         <div class="attachments" *ngIf="selectedEmail.attachments && selectedEmail.attachments.length">
             <h3 >Attachments: <span>
                     <img src="../../../../assets/images/agent/download-icon.svg" *ngIf="selectedEmail.attachments.length>0"  pTooltip="Download All" tooltipPosition="top" alt="Download icon" class="svg-icons svg-dwld-btn">
