@@ -721,6 +721,7 @@ goToPreviousPage(): void {
           this.spinner.hide();
           this.toaster.showSuccess(botName,"delete")
           // this.getListOfItems();
+          this.selected_drop_agent = null;
           this.agent_drop_list=""
           this.isConfig=false
           this.enabledRun=false
