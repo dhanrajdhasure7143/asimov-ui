@@ -158,10 +158,15 @@ scheduled_data:any={};
   ngOnChanges(){
     console.log(this.isEdit)
     if(this.isEdit){
-      console.log("schedulerValue",JSON.parse(this.schedulerValue));
-      if(Array.isArray(JSON.parse(this.schedulerValue)))
-      this.scheduled_data = JSON.parse(this.schedulerValue)[0];
-      this.timezone = this.scheduled_data.timezone;
+      if (this.schedulerValue) {
+        console.log("schedulerValue For Formating",JSON.parse(this.schedulerValue));
+        if(Array.isArray(JSON.parse(this.schedulerValue)))
+        this.scheduled_data = JSON.parse(this.schedulerValue)[0];
+        this.timezone = this.scheduled_data.timezone;
+
+        // Method that changes the data to display in overlay (Update case)
+        this.schedularInfoSetup(this.scheduled_data)
+      }
     }
   }
 
@@ -718,6 +723,10 @@ public setActiveTab(tab: string, event: any) {
         let enddate=this.enddate.split("-");
 
         if (this.selectedFrequency === 'onetime') {
+          // changing the time to end of the update day in ontime case 
+          let end_time="23:59";
+          endtime=end_time.split(":")
+          enddate=this.startdate.split("-");
           this.cronExpression = '*/5 * * * *';
         }
 
@@ -1103,4 +1112,90 @@ public setActiveTab(tab: string, event: any) {
       return this.beforetime || this.compareScheduleDates
     }
   }
+
+  // Method to check the Cron Expression and display in Update Case
+  schedularInfoSetup(scheduleData: any): void {
+    const { startDate, endDate, scheduleInterval } = scheduleData;
+
+    const startDateArray = startDate.split(',').map(Number);
+    const endDateArray = endDate.split(',').map(Number);
+    const startDateObj = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startDateArray[3], startDateArray[4]);
+    const endDateObj = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endDateArray[3], endDateArray[4]);
+
+    const onetime = startDateObj.getFullYear() === endDateObj.getFullYear() &&
+    startDateObj.getMonth() === endDateObj.getMonth() &&
+    startDateObj.getDate() === endDateObj.getDate();
+
+    const formattedStartDate = startDateObj.toLocaleDateString('en-CA');
+    const formattedEndDate = endDateObj.toLocaleDateString('en-CA');
+    const formattedStartTime = startDateObj.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const formattedEndTime = endDateObj.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+
+    // One Time
+    if (onetime) {
+      this.frequency = "onetime";
+      this.form.get('frequency').setValue(this.frequency.toLowerCase());
+      this.selectedFrequency = "onetime";
+
+      this.startdate = formattedStartDate;
+      this.enddate = formattedEndDate;
+      this.starttime = formattedStartTime;
+      this.endtime = formattedEndTime;
+      return;
+    }
+
+    // Reccurring
+    const recurring = !onetime;
+
+    if (recurring) {
+      this.frequency = "Recurring";
+      this.form.get('frequency').setValue(this.frequency.toLowerCase());
+      this.selectedFrequency = "recurring";
+      this.cronExpression=scheduleInterval
+    }
+
+    let isMonthly = false;
+    let isWeekly = false;
+    let isDaily = false;
+    let monthRange: string | undefined;
+    let days: string[] | undefined;
+    
+
+    const cronParts = scheduleInterval.split(' ');
+
+    if (cronParts[2] !== '*' && cronParts[3].includes('-')) {
+        isMonthly = true;
+        const fromMonth = Number(cronParts[3].split('-')[0]);
+        const toMonth = Number(cronParts[3].split('-')[1]);
+        monthRange = `${fromMonth} - ${toMonth}`;
+    }
+
+    if (cronParts[4] !== '*') {
+        isWeekly = true;
+        days = cronParts[4].split(',');
+    }
+
+    if (cronParts[4] === '*' && cronParts[5] === '*') {
+        isDaily = true;
+    }
+
+    if (onetime) {
+    } else if (isMonthly) {
+        this.activeTab = 'monthly'
+        this.isMonthly=true
+    } else if (isWeekly) {
+        this.activeTab = 'weekly'
+    } else {
+        this.activeTab = 'daily'
+        const formattedStartDate = startDateObj.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+        const formattedEndDate = endDateObj.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+    }
+
+    this.startdate = formattedStartDate;
+    this.enddate = formattedEndDate;
+    this.starttime = formattedStartTime;
+    this.endtime = formattedEndTime;
+  }
+
 }

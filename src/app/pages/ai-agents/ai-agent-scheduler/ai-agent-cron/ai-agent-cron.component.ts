@@ -225,7 +225,18 @@ export class AiAgentCronComponent implements OnInit, OnChanges {
             this.state.weekly.hourType = this.getHourType(parsedHours);
             this.state.weekly.minutes = parseInt(minutes);
             this.state.weekly.seconds = parseInt(seconds);
-        } else if (cron.match(/\d+ \d+ \d+ (\d+|L|LW|1W) 1\/\d+ [\?\*] \*/)) {
+        } else if (cron.match(/\d+ \d+ \d+ \d+ (\d+-\d+) \*/)) {
+            // Added this condition to check for the Cron Expression for monthly in Update case. 
+            const [fromMonth, toMonth] = month.split('-').map(Number);
+            this.state.yearly.specificMonthDay = {
+              fromMonth,
+              toMonth,
+              day: dayOfMonth
+            };
+            this.isMonthly = true;
+            this.emitMonthlyValue.emit(this.state.yearly.specificMonthDay);
+          }
+        else if (cron.match(/\d+ \d+ \d+ (\d+|L|LW|1W) 1\/\d+ [\?\*] \*/)) {
             this.activeTab = "monthly";
             this.state.monthly.subTab = "specificDay";
             this.state.monthly.specificDay.day = dayOfMonth;

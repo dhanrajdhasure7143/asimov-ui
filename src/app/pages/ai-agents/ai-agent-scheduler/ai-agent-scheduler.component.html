@@ -254,7 +254,7 @@
     <div class="col-sm-6 p-1 form-group">
         <form [formGroup]="form">
         <label for="frequency">Frequency:</label>
-        <select class="rpa-control form-control freq-tab" formControlName="frequency" (change)="onFrequencyChange($event)" required>
+        <select class="rpa-control form-control freq-tab" [(ngModel)]="frequency" formControlName="frequency" (change)="onFrequencyChange($event)" required>
             <option value="" disabled hidden>Select Frequency</option>
             <option *ngFor="let option of frequencyOptions" [value]="option.value">{{option.frequencyName}}</option>
         </select>
