@@ -27,17 +27,21 @@
             </div>
 
             <div class="buttons-container">
+            <div class="dropdown-container">
                 <p-dropdown [options]="agent_drop_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="label"
-                placeholder="Select a Agent" optionValue="value" class="custom-dropdown"  [style]="{'height': '54px',
+                 placeholder="Select an Agent" [(ngModel)]="selected_drop_agent" optionValue="value" class="custom-dropdown"
+                [style]="{
+                'height': '54px',
                 'border-radius': '10px',
-                'padding': '10px 25px 10px 15px',
+                'padding': '10px 5px 10px 15px',
                 'font-weight': '500',
                 'font-size': '18px',
                 'border-color': '#CFCACA !important',
                 'display':'flex',
                 'align-items':'center'
-                }"
-                ></p-dropdown>
+                }" appendTo="body"></p-dropdown>
+                <button class="clear-btn" (click)="clearDropdown()" *ngIf="selected_drop_agent"><i class="pi pi-times"></i></button>
+            </div>
 
                 <!-- Original Btns -->
                 <div *ngIf="btn_style === 'type1'" style="display: flex;

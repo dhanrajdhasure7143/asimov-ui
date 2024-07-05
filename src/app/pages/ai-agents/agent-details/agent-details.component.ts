@@ -736,4 +736,10 @@ goToPreviousPage(): void {
       reject: (type) => { }
     });
   }
+
+  clearDropdown() {
+    this.selected_drop_agent = null;
+    this.isAgentSelected = false;
+  }
+  
 }
