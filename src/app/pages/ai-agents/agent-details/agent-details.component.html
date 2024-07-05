@@ -50,7 +50,7 @@
                     <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                         <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
                       </button>                  
-                    <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+                    <button class="button-top start-button" [disabled]="!isAgentSelected && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
                         <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
                     </button>
                     <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
@@ -66,7 +66,7 @@
                     <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()" style="margin: 5px; width: 60px;">
                         <i class="fas fa-cogs" style="padding-right: 10px;"></i>
                       </button>                  
-                    <button class="button-top start-button" style="margin: 5px; width: 60px;" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+                    <button class="button-top start-button" style="margin: 5px; width: 60px;" [disabled]="!isAgentSelected && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
                         <i class="fas fa-play-circle" style="padding-right: 10px;"></i>
                     </button>
                     <button class="button-top stop-button" style="margin: 5px; width: 60px;" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
@@ -84,7 +84,7 @@
             <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                 <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
                 </button>                  
-            <button class="button-top start-button" [disabled]="!enabledRun && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
+            <button class="button-top start-button" [disabled]="!isAgentSelected && remaining_exe.length !=0 || isScheduled" (click)="runAiAgent($event)">
                 <i class="fas fa-play-circle" style="padding-right: 10px;"></i> Run
             </button>
             <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
