@@ -196,6 +196,7 @@ export class AiAgentFormComponent implements OnInit {
       if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
       // this.generateDynamicForm();
       this.generateDynamicFormUpdate();
+      this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(this.schedulerValue,true))
     
     // const fieldsGroup = {};
     // this.formFields.forEach(field => {
@@ -482,13 +483,19 @@ export class AiAgentFormComponent implements OnInit {
     this.scheduler_data = data;
     this.scheduleOverlayFlag = false;
     data.processName = this.predefinedBotsForm.value.fields.botName
-    this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(data))
+    this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(data,false))
   }
 
-  convertSchedule(scheduleData) {
-      const startDateArray = scheduleData[0].startDate.split(',').map(Number);
-      const endDateArray = scheduleData[0].endDate.split(',').map(Number);
-      const interval = scheduleData[0].scheduleInterval;
+  convertSchedule(scheduleData1,isEdit: boolean ) {
+    let scheduleData = scheduleData1;
+    if(isEdit) {
+      scheduleData = JSON.parse(scheduleData1);
+    }
+
+    // this.describeScheduleType(scheduleData[0]);
+    const startDateArray = scheduleData[0]?.startDate?.split(',').map(Number);
+    const endDateArray = scheduleData[0]?.endDate?.split(',').map(Number);
+    const interval = scheduleData[0]?.scheduleInterval;
 
       // Formatting start date
       const startDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startDateArray[3], startDateArray[4]);
