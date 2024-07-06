@@ -150,6 +150,7 @@
                         <!-- Update error messages to display preAttributeLable -->
                          <div *ngIf="field.preAttributeType != 'checkbox'">
                             <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
+                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.nameTaken">{{ field.preAttributeLable }} is already taken.</div>
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
