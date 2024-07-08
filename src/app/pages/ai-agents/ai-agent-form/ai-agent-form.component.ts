@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -153,6 +153,11 @@ export class AiAgentFormComponent implements OnInit {
         }else{
           fieldsGroup[field.preAttributeName] = [''];
         }
+      }
+
+      // Condition to add a method to check the Agent Name is present or not.
+      if (field.preAttributeType === 'text' && field.preAttributeLable === 'Automation Agent Name' && !this.isEdit) {
+        fieldsGroup[field.preAttributeName] = ["", [this.agentNameCheck.bind(this)]];
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
@@ -966,5 +971,25 @@ export class AiAgentFormComponent implements OnInit {
     this.isJobDescrptionValid = false;
     this.isJobDescrption_error = false;
     this.jobDescription = null;
+  }
+
+  agentNameCheck(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value || this.isEdit) {
+      return null;
+    }
+
+    this.rest_service.checkAiAgentName(value).subscribe(
+      (data: any) => {
+        if (data.code === 4200 && data.data === true) {
+          control.setErrors({ nameTaken: true });
+        }
+      },
+      error => {
+        console.log("falied to check agent name")
+      }
+    );
+    return null;
   }
 }
