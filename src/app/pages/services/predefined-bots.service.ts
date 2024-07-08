@@ -90,4 +90,7 @@ export class PredefinedBotsService {
   updatePredefinedAttributesData(agentId,botId,body){
     return this.http.post(`/rpa-service/predefined/v2/ai-agent-update/${botId}`,body)
   }
+  captureAgentIdandfileIds(agentId: any, body){
+    return this.http.post(`/platform-service/document/updateAIAgentIdToDocs/${agentId}`, body)
+}
 }

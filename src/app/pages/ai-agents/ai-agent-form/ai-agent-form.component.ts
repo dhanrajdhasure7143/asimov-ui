@@ -54,7 +54,8 @@ export class AiAgentFormComponent implements OnInit {
     {name:"Job Description.pdf",value:"Job Description"}
   ]
   schedulerValue:any;
-
+  fieldInputKey:any;
+  capturedFileIds:any=[];
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -96,11 +97,17 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
+      this.fieldInputKey = {};
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
       let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
       this.formFields.push(obj);
+      res.data.forEach(item => {
+        if (item.preAttributeType === 'file') {
+          this.fieldInputKey[item.preAttributeName] = item.preAttributeLable;
+        }
+      });
       // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
       this.formFields.push(...res.data
         .filter(item => !item.duplicate)
@@ -444,7 +451,9 @@ export class AiAgentFormComponent implements OnInit {
 
   saveBot(req_body,botName,type) {
     if(type == "create"){
-    this.rest_service.savePredefinedAttributesData(req_body).subscribe(res=>{
+    this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
+      const agentId = res.data[0].agentId;
+        this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
       this.toaster.showSuccess(botName,"create")
@@ -454,6 +463,8 @@ export class AiAgentFormComponent implements OnInit {
     })
   }else{
     this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agent_id,req_body).subscribe(res=>{
+        const agentId = this.params.agent_id;
+        this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
       this.toaster.showSuccess(botName,"update")
@@ -462,6 +473,19 @@ export class AiAgentFormComponent implements OnInit {
       this.toaster.showError(this.toastMessages.apierror)
     })
   }
+  }
+
+  captureAgentIdAndFileIds(agentId: number, fileIds: number[]) {
+    const payload = {
+      ids: fileIds
+    };
+    this.rest_service.captureAgentIdandfileIds(agentId, payload).subscribe(res => {
+      console.log("Captured agent ID and file IDs:", res);
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+      console.error("Error capturing agent ID and file IDs:", err);
+    });
   }
 
   onUpdateForm(){
@@ -601,42 +625,57 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   uploadFilesAndCreateBot(action: string) {
-    const uploadPromises = [];
-    for (const key in this.selectedFiles) {
-      const files = this.selectedFiles[key];
+    this.spinner.show();
+    const fileKeys = Object.keys(this.selectedFiles);
+    const totalKeys = fileKeys.length;
+    let currentIndex = 0;
+    const uploadNextFile = () => {
+      if (currentIndex < totalKeys) {
+        const key = fileKeys[currentIndex];
+        const files = this.selectedFiles[key];
 
-      for (let i = 0; i < files.length; i++) {
-        const formData = new FormData();
-        formData.append("file", files[i]);
-        formData.append("filePath", this.predefinedBot_name);
-        formData.append("predefinedAgentUUID", this.predefinedBot_uuid);
-        formData.append("productId", this.predefinedBot_id);
+        if (files.length > 0) {
+          const formData = new FormData();
+          formData.append("filePath", this.predefinedBot_name);
+          formData.append("predefinedAgentUUID", this.predefinedBot_uuid);
+          formData.append("productId", this.predefinedBot_id);
+          formData.append("inputKey", this.fieldInputKey[key]);
 
-        const uploadPromise = this.rest_service.rfpFileUpload(formData).toPromise();
-        uploadPromises.push(uploadPromise);
+          for (let i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+          }
 
-        uploadPromise.then((res: any) => {
-          console.log("res", res);
-          let obj = {
-            filePath: res.fileName,
-            attributName: key
-          };
-          this.filePathValues.push(obj);
-        });
+          const uploadPromise = this.rest_service.rfpFileUpload(formData).toPromise();
+          uploadPromise.then((res: any) => {
+            // this.capturedFileIds = res.data.map((item: any) => item.id).join(',');
+            const ids = res.data.map((item: any) => item.id);
+            this.capturedFileIds.push(...ids);
+            console.log("Uploaded file for key:", key, "Response:", res);
+            let obj = {
+              filePath: res.fileName,
+              attributName: key
+            };
+            this.filePathValues.push(obj);
+            currentIndex++;
+            uploadNextFile();
+          }).catch((error) => {
+            this.spinner.hide();
+            this.toaster.showError(this.toastMessages.uploadError,)
+            // console.error("File upload error for key:", key, error);
+          });
+        } else {
+          currentIndex++;
+          uploadNextFile();
+        }
+      } else {
+        if (this.predefinedBot_uuid === 'Pred_RFP') {
+          this.rfpbotCreate(action);
+        } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
+          this.recruitmentbotCreate(action);
+        }
       }
-    }
-
-    Promise.all(uploadPromises).then(() => {
-      // After all uploads are complete, proceed with creating the bot
-      if (this.predefinedBot_uuid === 'Pred_RFP') {
-        this.rfpbotCreate(action);
-      } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
-        this.recruitmentbotCreate(action);
-      }
-    }).catch((error) => {
-      console.error("File upload error", error);
-      // Handle error if needed
-    });
+    };
+    uploadNextFile();
   }
   
  createBot() {
