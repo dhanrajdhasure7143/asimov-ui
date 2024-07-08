@@ -234,6 +234,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
   closeOverlay(event){
     this.hiddenPopUp=event;
+    this.overlay_data = {};
+
   }
 
   removeFileExtension(filename: string): string {
