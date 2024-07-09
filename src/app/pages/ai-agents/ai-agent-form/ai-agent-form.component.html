@@ -24,7 +24,7 @@
 
           <div class="form-container" [formGroup]="predefinedBotsForm">
             <div formGroupName="fields">
-              <div *ngFor="let field of currentPageFields" class="form-group row">
+              <div *ngFor="let field of currentPageFields; trackBy:loopTrackBy" class="form-group row">
                   <ng-container *ngIf="field.visibility">
                     <!-- <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label> -->
                     <label [for]="field.name" class="col-md-4 col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
@@ -59,7 +59,7 @@
                             </label>
                         </div> -->
                         <div *ngIf="field.preAttributeType === 'radio'">
-                            <div class="form-check" *ngFor="let option of field.options">
+                            <div class="form-check" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
                                     (change)="onRadioChange(option.value,option)"> {{ option.label }}
@@ -75,7 +75,7 @@
 
                         <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                             <ng-container *ngIf="field.options.length >0; else noOptions">
-                                <div *ngFor="let option of field.options">
+                                <div *ngFor="let option of field.options; trackBy:loopTrackBy">
                                 <label class="form-check-label">
                                     <!-- <input type="checkbox" *ngIf="predefinedBot_uuid =='Pred_Recruitment'"
                                         class="form-check-input" 
@@ -116,16 +116,16 @@
                         <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                          (change)="onFileSelected($event,field)" multiple>
                          
-                         <ng-container *ngIf="field.preAttributeType === 'file' && isEdit && predefinedBot_uuid =='Pred_RFP'">
-                         <div class="attachment " *ngFor="let attachment of attachments">
+                         <ng-container *ngIf="field.preAttributeType === 'file'">
+                         <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
                             <div>
                             <i class="pi pi-file" style="font-size: 0.9rem"></i> &nbsp;
-                              <span>{{ attachment.name }}</span> &nbsp;
+                              <span>{{ attachment.originalFileName}}</span> &nbsp;
                               <span class="attachment-btns">
-                                <button class="download-button"  pTooltip="Download" tooltipPosition="top">
+                                <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment.attachmentId)">
                                     <i class="pi pi-download" style="font-size: 0.9rem"></i>
                                 </button> 
-                                <button pTooltip="Delete" tooltipPosition="top">
+                                <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment.attachmentId)">
                                         <i class="pi pi-times" style="font-size: 0.9rem"></i>
                                 </button>
                             </span>
@@ -150,7 +150,7 @@
                         <!-- Update error messages to display preAttributeLable -->
                          <div *ngIf="field.preAttributeType != 'checkbox'">
                             <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
-                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.nameTaken">{{ field.preAttributeLable }} is already taken.</div>
+                                <!-- <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.nameTaken">{{ field.preAttributeLable }} is already taken.</div> -->
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
                                 <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
