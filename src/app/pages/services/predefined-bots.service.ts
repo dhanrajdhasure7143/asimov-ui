@@ -49,7 +49,7 @@ export class PredefinedBotsService {
     return this.http.post("/rpa-service/predefined/validate-predefined-inputs",body)
   }
 
-  rfpFileUpload(body:any){
+  agentFileUpload(body:any){
     // return this.http.post("/platform-service/document/uploadPredefinedRFPFile",body)
     // return this.http.post("/platform-service/document/uploadMultiplePredefinedRFPFile",body)
     return this.http.post("/platform-service/document/uploadMultiplePredefinedAgentFiles",body)
@@ -97,5 +97,9 @@ export class PredefinedBotsService {
 
   checkAiAgentName(agent_name){
     return this.http.get(`/rpa-service/predefined/uniqu-agent-name/${agent_name}`)
+  }
+
+  uploadAIAgentFilesUpdate(body:any){
+    return this.http.get("platform-service/document/uploadAIAgentFilesUpdate",body)
   }
 }

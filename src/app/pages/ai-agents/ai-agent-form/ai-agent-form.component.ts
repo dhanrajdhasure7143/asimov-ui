@@ -48,11 +48,7 @@ export class AiAgentFormComponent implements OnInit {
   checkedOptions: string[] = [];
   agent_uuid:any;
   isEdit:boolean = false;
-  attachments:any[]=[
-    {name:"RFP.pdf",value:"RFP"},
-    {name:"Proposal.txt",value:"Proposal"},
-    {name:"Job Description.pdf",value:"Job Description"}
-  ]
+  attachmentMap:any[]=[]
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
@@ -105,7 +101,7 @@ export class AiAgentFormComponent implements OnInit {
       this.formFields.push(obj);
       res.data.forEach(item => {
         if (item.preAttributeType === 'file') {
-          this.fieldInputKey[item.preAttributeName] = item.preAttributeLable;
+          this.fieldInputKey[item.preAttributeName] = item.preAttributeName;
         }
       });
       // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
@@ -180,8 +176,12 @@ export class AiAgentFormComponent implements OnInit {
   fetchAllFieldsToUpdateData() {
     // this.spinner.show();
     this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agent_id).subscribe((res:any)=>{
+      const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
+      res.attachments.forEach((attachment) => {
+        const fieldName = keyMap[attachment.key];
+        this.attachmentMap[fieldName] = [...(this.attachmentMap[fieldName] || []), ...attachment.attList.map((att) => ({ key: fieldName, originalFileName: att.originalFileName, attachmentId: att.id }))];
+      });
       this.spinner.hide();
-      console.log("res,",res)
       this.agent_uuid = res.predefinedBotUUID
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
@@ -208,7 +208,9 @@ export class AiAgentFormComponent implements OnInit {
       if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
       // this.generateDynamicForm();
       this.generateDynamicFormUpdate();
-      this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(this.schedulerValue,true))
+      if (this.predefinedBot_schedulerRequired) {
+        this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(this.schedulerValue,true))
+      }
     
     // const fieldsGroup = {};
     // this.formFields.forEach(field => {
@@ -650,7 +652,7 @@ export class AiAgentFormComponent implements OnInit {
             formData.append("file", files[i]);
           }
 
-          const uploadPromise = this.rest_service.rfpFileUpload(formData).toPromise();
+          const uploadPromise = this.rest_service.agentFileUpload(formData).toPromise();
           uploadPromise.then((res: any) => {
             // this.capturedFileIds = res.data.map((item: any) => item.id).join(',');
             const ids = res.data.map((item: any) => item.id);
@@ -843,8 +845,7 @@ export class AiAgentFormComponent implements OnInit {
           }else if(field.preAttributeType == "radio"){
             fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
             this.onRadioChangeUpdateFlow(field.preAttributeValue , field.options.find(option => option.value == field.preAttributeValue))
-          }
-          else if(field.preAttributeType == "dropdown"){
+          }else if(field.preAttributeType == "dropdown"){
             fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
             if (field.preAttributeValue) {
               fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
@@ -991,5 +992,22 @@ export class AiAgentFormComponent implements OnInit {
       }
     );
     return null;
+  }
+
+  deleteAttachment(attachmentId: any) {
+
+  }
+
+  downloadAttachment(attachmentId: any) {
+    console.log("downloadAttachment", attachmentId);
+
+  }
+
+  getAttachements(key){
+    return this.attachmentMap[key]
+  }
+
+  loopTrackBy(index, term) {
+    return index;
   }
 }
