@@ -49,7 +49,8 @@
                 <span *ngIf="billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
                 </span>
-                <span *ngIf="billingForm.get('addressLine1').hasError('pattern')" addressLine1.trim() class="required">
+                <span *ngIf="billingForm.get('addressLine1').hasError('pattern')" class="required">
+                    Special characters not allowed except(,.-/) and Space between words are allowed
                 </span>
                 <!-- <span *ngIf="billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
                     Double Spaces are not allowed.
@@ -65,7 +66,8 @@
                     <span *ngIf="billingForm.controls['addressLine2'].hasError('maxlength')" class="required">
                         Maximum of 50 characters
                     </span>
-                    <span *ngIf="billingForm.get('addressLine2').hasError('pattern')" addressLine2.trim() class="required">
+                    <span *ngIf="billingForm.get('addressLine2').hasError('pattern')" class="required">
+                            Special characters not allowed except(,.-/) and Space between words are allowed
                     </span>
             </div>
 
