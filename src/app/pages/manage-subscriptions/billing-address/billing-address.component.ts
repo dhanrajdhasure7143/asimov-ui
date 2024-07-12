@@ -48,8 +48,9 @@ export class BillingAddressComponent implements OnInit {
       city: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       // state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       postalcode: ["", Validators.compose([Validators.required, Validators.maxLength(6), Validators.pattern('^[0-9]+$')])],
-      addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
-      addressLine2: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
+      // addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
+      addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9,./-]+( [a-zA-Z0-9,./-]+)*$'), Validators.maxLength(50)])],
+      addressLine2: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9,./-]+( [a-zA-Z0-9,./-]+)*$'), Validators.maxLength(50)])],
       // phoneNumber: ["", Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])],
       email: ["", Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"), Validators.maxLength(50)])],
     });
