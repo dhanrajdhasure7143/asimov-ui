@@ -94,9 +94,9 @@
           </form>
           <div class="createform-footer">
             <button (click)="resetbotform()" class="btn new-cancelbtn">Reset</button>
-            <button *ngIf="isCreate" [disabled]="!trainBotForm.invalid" (click)="saveDetails()"
+            <button *ngIf="isCreate" [disabled]="trainBotForm.invalid" (click)="saveTrainModel()"
               class="btn bluebg-button">Save</button>
-            <button *ngIf="!isCreate" [disabled]="trainBotForm.invalid" (click)="updateDatails()"
+            <button *ngIf="!isCreate" [disabled]="trainBotForm.invalid" (click)="updateTrainModel()"
               class="btn bluebg-button">Update</button>
           </div>
         </div>

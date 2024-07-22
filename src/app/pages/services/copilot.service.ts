@@ -111,4 +111,8 @@ getTrainedModel(formData){
     let headers =  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey})
      return headers
    }
+
+  trainUploads(formData) {
+    return this.http.post(environment.python_llm + "/train-uploads", formData)
+  }
 }
