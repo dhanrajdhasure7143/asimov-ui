@@ -54,6 +54,6 @@ export const environment = {
 
     python_llm:"http://llmpython.dev.epsoftinc.in/",
     ezaskUrl:"http://ezask.dev.epsoftinc.in",
-    ezChatBotKey:"0pjhB9YyHAMbBm464XnHfOxra4x5k3CkD%2ByvLEJR65%2FU12JbRbj7IIE0%2FWGAgxKhMGb%2B3SV8AkNRpiy%2FRg4l%2F%2FJ6APpk8TaCjRs%3D",
+    ezChatBotKey:"hZsZpO2XI6mnL+liZJlQ17BAFT20m19RNj/eS6U9AdK+KQYvE0rKxYrm9YP6mfewkm2zX1CYB6ojeP8L94FFZhb4HiF5IjOcMC4=",
     product:"AiAgents"
   };
