@@ -53,7 +53,7 @@ export const environment = {
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
 
     python_llm:"http://llmpython.dev.epsoftinc.in/",
-    ezaskUrl:"http://localhost:51952/",
+    ezaskUrl:"http://ezask.dev.epsoftinc.in",
     ezChatBotKey:"2HWmb5poa3BIcOunc329hfFTLrGHNx2iiXi1UaTGDi4HqdQtGhP8DgCHUG35UpiJ5reRkXfbhLV9qWSUZJGIfm2BB6OQKyAZCNA=",
     product:"AiAgents"
   };
