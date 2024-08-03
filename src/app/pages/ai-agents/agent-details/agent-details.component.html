@@ -3,30 +3,48 @@
         <div class="top-section">
             <div class="bot-info">
                 <div class="bot-header">
-                    <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}}</div>
-                    <div class="rem-execution">Remaining Runs:
-                        <!-- <span *ngIf="remaining_exe.length !=0" class="remaining-exe">{{remaining_exe}}
-                            <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
-                        </span>
-                        <span *ngIf="remaining_exe.length===0" class="remaining-exe">{{remaining_exe}}</span> -->
+                    <div class="row">
+                        <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}} Agents</div>
+                        <div class="add-more-agents" style="margin-inline-start: auto;"> <a> Add More Agents</a></div>
+                    </div>
+                    <div class="h-100 main-screen">
+                        <div >
+                            <div class="cards-container">
+                                <div class="card" *ngFor="let agent of agent_drop_list" (click)="onAgentSelect(agent)">
+                                    <div class="card-content">
+                                        <div class="bot-image">
+                                            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                                        </div>
+                                        <h3 class="agent-name">{{ agent.label }}</h3>
+                                        <div class="expiry-date">
+                                            <span class="">Last run date: {{ agent.expiryDate }}</span> <br>
+                                        <span class="">Expiry: {{ agent.expiryDate }}</span>
+                                        </div>
+                                        <!-- Add more details as needed -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="top-section">
+                                <div class="bot-image">
+                                    <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                                </div>
+                                <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
+                                
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="rem-execution">Remaining Runs:
                         <span *ngIf="loading" class="remaining-exe">
                             <i class="pi pi-spin pi-spinner"></i>
                         </span>
                         <span *ngIf="!loading" class="remaining-exe" style="margin-right: 10px;">{{remaining_exe}}</span>
-                    </div>
-                    <!-- <div class="rem-agents">Remaining Agents:
-                        <span *ngIf="loading" class="remaining-agents">
-                            <i class="pi pi-spin pi-spinner"></i>
-                        </span>
-                        <span *ngIf="!loading" class="remaining-agents">{{remaining_agents}}</span>
                     </div> -->
-                    
                 </div>
-                <p class="bot-details">{{bot?.details || dataforbot}}
-                </p>
+                <!-- <p class="bot-details">{{bot?.details || dataforbot}}
+                </p> -->
             </div>
 
-            <div class="buttons-container">
+            <!-- <div class="buttons-container">
             <div class="dropdown-container">
                 <p-dropdown [options]="agent_drop_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="label"
                  placeholder="Select an Agent" [(ngModel)]="selected_drop_agent" optionValue="value" class="custom-dropdown"
@@ -43,7 +61,6 @@
                 <button class="clear-btn" (click)="clearDropdown()" *ngIf="selected_drop_agent"><i class="pi pi-times"></i></button>
             </div>
 
-                <!-- Original Btns -->
                 <div *ngIf="btn_style === 'type1'" style="display: flex;
                 flex-direction: column;
                 align-items: end;">
@@ -56,12 +73,8 @@
                     <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
                         <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
                     </button>
-                    <!-- <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
-                        <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
-                    </button> -->
                 </div>
 
-                <!-- small btns -->
                 <div *ngIf="btn_style === 'type2'" style="margin-top: 10px ; display: flex; gap: 10px;">
                     <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()" style="margin: 5px; width: 60px;">
                         <i class="fas fa-cogs" style="padding-right: 10px;"></i>
@@ -76,11 +89,11 @@
                         <i class="pi pi-trash" style="padding-right: 10px;"></i>
                     </button>
                 </div>               
-            </div>    
+            </div>     -->
         </div>
 
         <!-- Horizantal btns -->
-        <div *ngIf="btn_style === 'type3'" >
+        <!-- <div *ngIf="btn_style === 'type3'" >
             <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                 <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
                 </button>                  
@@ -93,9 +106,9 @@
             <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
                 <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
             </button>
-        </div>
+        </div> -->
 
-        <div class="custom-accordion">
+        <!-- <div class="custom-accordion">
             <div class="custom-accordion-item " [ngClass]="item.expanded ? 'expanded-accord' : 'collapsed-accord'"
                 *ngFor="let item of items">
                 <div class="custom-accordion-header d-flex align-items-center justify-content-between">
@@ -134,10 +147,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
-    <div class="main-container" *ngIf="!showMiniLayout">
+    <!-- <div class="main-container" *ngIf="!showMiniLayout">
         <div class="logs-container">
             <h3><img src="../../../../assets/images/agent/hostory-icon.svg" alt="History icon" class="svg-icons">
                 History</h3>
@@ -179,7 +192,7 @@
             </div>
             <button *ngIf="file.length >= 1" class="button-bottom" (click)="loadMoreFiles()">Show All Files</button>
         </div>
-    </div>
+    </div> -->
 
     <!-- Full screen for the History Div -->
     <div class="main-container" *ngIf="showMoreLogs">
@@ -239,12 +252,12 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <div class="pagination-container">
+            <!-- <div class="pagination-container">
                 <button class="button-bottom-full" *ngIf="showMoreLogs" (click)="showLessLogs()" style="float: left;">
                     Show Less History
                 </button>
     
-                <!-- Pagination buttons -->
+                Pagination buttons
                 <div class="pagination">
                     <button class="pagination-btn" (click)="goToFirstPage()"><<</button>
                     <button class="pagination-btn" (click)="goToPreviousPage()"><</button>
@@ -254,7 +267,7 @@
                     <button class="pagination-btn" (click)="goToNextPage()">></button>
                     <button class="pagination-btn" (click)="goToLastPage()">>></button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

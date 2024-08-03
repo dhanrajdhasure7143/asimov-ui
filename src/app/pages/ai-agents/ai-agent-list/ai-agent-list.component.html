@@ -7,9 +7,9 @@
                     <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }}</h3>
+                    <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
                 </div>
-                
+                <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
                 <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                     <p class="bot-details">{{ each.details }}</p>
                 </div>
@@ -53,13 +53,13 @@
         </div>
     </div>
     <div class="grid-container">
-        <div *ngFor="let each of filteredBotsList" class="grid-item" [ngClass]="{'highlighted': searchTerm && each.predefinedBotName.toLowerCase().includes(searchTerm.toLowerCase())}" (click)="onclickBot3(each)">
+        <div *ngFor="let each of predefined_botsList" class="grid-item" [ngClass]="{'highlighted': searchTerm && each.predefinedBotName.toLowerCase().includes(searchTerm.toLowerCase())}" (click)="onclickBot3(each)">
             <div class="content">
                 <div class="top-section">
                     <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }}</h3>
+                    <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
                 </div>
                 <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                     <p class="bot-details">{{ each.details }}</p>
@@ -74,12 +74,12 @@
             <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
             No Agent Found ...
         </div>
-        <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
+        <!-- <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
             <div>
                 <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                 We are working on more AI Agents ...
             </div> 
-        </div>
+        </div> -->
     </div>
 </div>
 

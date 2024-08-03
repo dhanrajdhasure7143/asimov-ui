@@ -9,8 +9,8 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 
 .screen-wrapper {
     margin: 0px 20px;
-    background: rgba(49, 153, 255, 0.10);
-    padding: 30px;
+    /* background: rgba(49, 153, 255, 0.10); */
+    padding: 5px;
     border-radius: 20px;
     height: auto;
 }
@@ -21,7 +21,7 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 }
 
 .bot-info {
-    width: 70%;
+    width: 100%;
 }
 
 .bot-details {
@@ -413,15 +413,16 @@ hr {
 }
 
 .bot-header {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     width: 100%;
 }
 
 .bot-name {
     color: #001C47;
-    font-weight: 700;
-    font-size: 30px;
+    font-weight: 600;
+    /* font-size: 30px; */
+    font-size: 20px;
     margin-right: 25px;
 }
 
@@ -787,3 +788,57 @@ input[type=checkbox] {
     align-items: center;
     color: #6c757d;
 }
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 20px; Adjust gap as needed */
+    gap: 40px; /* Adjust gap as needed */
+  }
+  
+  .card {
+    /* background: #fff; */
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    /* width: calc(33.333% - 20px); Adjust width as needed */
+    width: calc(33.333% - 150px); /* Adjust width as needed */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    border: #aaa 1px solid;
+    height: 125px
+  }
+  
+  .card-content {
+    text-align: center;
+  }
+  
+  .agent-name {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: -25px;
+  }
+  .cards-container .bot-image img {
+    width: 30px !important; /* Adjust the width as needed */
+    height: auto !important; /* Maintain aspect ratio */
+  }
+
+  .bot-image {
+    width: 15%;
+  }
+  
+.cards-container {
+    display: flex;
+    align-items: center;
+    /* border-bottom: 1px solid #ddd; */
+    margin-bottom: 10px;
+    /* margin-bottom: -8px; */
+}
+/* .expiry-date{
+    margin-left: -190px;
+} */

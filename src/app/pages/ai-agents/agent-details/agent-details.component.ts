@@ -741,5 +741,8 @@ goToPreviousPage(): void {
     this.selected_drop_agent = null;
     this.isAgentSelected = false;
   }
-  
+  onAgentSelect(agent: any) {
+    this.selected_drop_agent = agent.value;
+    console.log('Selected Agent:', this.selected_drop_agent);
+  }
 }
