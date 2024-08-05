@@ -50,7 +50,7 @@ export const environment = {
     // Asimov-ui URl to redirect from stripe to application
     paymentSuccessURL: "http://epsoftiap.internaldev.ai/#/pages/success",
     paymentFailuerURL: "http://epsoftiap.internaldev.ai/#/pages/subscriptions",
-    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
+    stripeKey:"pk_test_51PjIMqJZCEXZ8Zrct2ntJVGOgqwWLvEBFV7DUJwm7nLEwoNpKClC2GuDs3CPUUedXpv5m0pDTHLJwJKrFQC9fg1I00zKCS3psO",
     python_llm:"http://llmpython.dev.epsoftinc.in/",
     ezaskUrl: "http://ezask.dev.epsoftinc.in",
     ezChatBotKey:"2HWmb5poa3BIcOunc329hfFTLrGHNx2iiXi1UaTGDi4HqdQtGhP8DgCHUG35UpiJ5reRkXfbhLV9qWSUZJGIfm2BB6OQKyAZCNA=",
