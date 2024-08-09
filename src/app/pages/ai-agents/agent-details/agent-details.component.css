@@ -3,7 +3,8 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 }
 
 .main-screen {
-    margin: 15px 0px 0px 0px;
+    /* margin: 15px 0px 0px 0px; */
+
     overflow: auto;
 }
 
@@ -789,13 +790,51 @@ input[type=checkbox] {
     color: #6c757d;
 }
 
-.cards-container {
+/* .cards-container {
     display: flex;
     flex-wrap: wrap;
-    /* gap: 20px; Adjust gap as needed */
-    gap: 40px; /* Adjust gap as needed */
+    gap: 40px;
+  } */
+
+  .top-right-view-renew-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 28px;
   }
+  .top-right-view-renew-btn button {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 14px ;
+  }
+  .bottom-expires-section {
+    margin-top: 15px !important;
+  }
+  .top-image-header-section-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .top-right-view-renew-btn button.active-vi {
+    background: #098DE6 !important;
+  }
+
+  .top-right-view-renew-btn button.active-re {
+    background: #ff8e43;
+  }
+
   
+  .single-outer-agents-cards {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 20px;
+  }
   .card {
     /* background: #fff; */
     background: #f9f9f9;
@@ -806,12 +845,12 @@ input[type=checkbox] {
     /* width: calc(33.333% - 20px); Adjust width as needed */
     width: calc(33.333% - 150px); /* Adjust width as needed */
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     /* justify-content: center; */
     /* align-items: center; */
     border: #aaa 1px solid;
-    height: 125px
+    /* height: 125px */
   }
   
   .card-content {
@@ -820,10 +859,14 @@ input[type=checkbox] {
   
   .agent-name {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: -25px;
   }
-  .cards-container .bot-image img {
+  .new-agent-heading-section {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .bot-image img {
     width: 30px !important; /* Adjust the width as needed */
     height: auto !important; /* Maintain aspect ratio */
   }
@@ -842,3 +885,53 @@ input[type=checkbox] {
 /* .expiry-date{
     margin-left: -190px;
 } */
+
+.single-inner-agents-cards {
+    position: relative;
+}
+
+.bottom-bin-section {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+}
+.bottom-bin-section .bin-outer-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.manage-subscription-btn {
+    background: rgb(223 242 246);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid #ccc;
+    padding: 4px 16px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+    font-weight: 600;
+    color: blue;
+    border-radius: 30px;
+}
+
+.manage-subscription-btn:hover {
+    background: rgb(223 242 246); 
+}
+
+.add-more-qty {
+    /* background: rgb(223 242 246 / 50%); */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid #ccc;
+    padding: 4px 16px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+    font-weight: 600;
+    color: #098de6;
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+}

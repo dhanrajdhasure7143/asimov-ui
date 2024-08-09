@@ -102,4 +102,9 @@ export class PredefinedBotsService {
   uploadAIAgentFilesUpdate(body:any){
     return this.http.get("platform-service/document/uploadAIAgentFilesUpdate",body)
   }
+
+  getSubAiAgent(product_id,tenant_id){
+    return this.http.get(`/subscriptionservice/v1/subscriptions/api/agents?productId=${product_id}&tenantId=${tenant_id}`)
+  }
+
 }

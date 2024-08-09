@@ -3,26 +3,52 @@
         <div class="top-section">
             <div class="bot-info">
                 <div class="bot-header">
-                    <div class="row">
+                    <div class="row" style="margin-top: 10px !important;">
                         <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}} Agents</div>
-                        <div class="add-more-agents" style="margin-inline-start: auto;"> <a> Add More Agents</a></div>
+                        <!-- <div class="add-more-agents" style="margin-inline-start: auto;"> <a> Add More Agents</a></div> -->
+                        <div class="add-more-agents" style="display: flex; justify-content: flex-end; gap: 10px; margin-inline-start: auto; align-items: center;">
+                            <button class="manage-subscription-btn">Manage Subscription</button>  
+                            <button class="add-more-qty">Add More Agents</button>
+                        </div>
+                        
                     </div>
                     <div class="h-100 main-screen">
                         <div >
-                            <div class="cards-container">
-                                <div class="card" *ngFor="let agent of agent_drop_list" (click)="onAgentSelect(agent)">
+                            <div class="single-outer-agents-cards">
+                                <div class="card position-relative single-inner-agents-cards w-100" *ngFor="let agent of agent_drop_list" (click)="onAgentSelect(agent)">
                                     <div class="card-content">
-                                        <div class="bot-image">
-                                            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                                        <div class="top-image-header-section-card">
+                                            <div class="bot-image">
+                                                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                                            </div>
+                                            <div class="agent-name-sec">
+                                                <h3 class="new-agent-heading-section">{{ agent.agentName }}</h3>
+                                            </div>
                                         </div>
-                                        <h3 class="agent-name">{{ agent.label }}</h3>
-                                        <div class="expiry-date">
-                                            <span class="">Last run date: {{ agent.expiryDate }}</span> <br>
-                                        <span class="">Expiry: {{ agent.expiryDate }}</span>
+                                        <div class="expiry-date bottom-expires-section">
+                                            <!-- <span>Last run date: {{ agent.createdAt | date:'medium' }}</span><br>
+                                            <span>Expires: {{ agent.expiryDate | date:'medium' }}</span> -->
+                                            <div class="single-expiry-dates">
+                                                <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastRunDate!=null">Last run date: {{ agent.lastRunDate}}</p>
+                                            </div>
+                                            <div class="single-expiry-dates">
+                                                <p class="inner-dates-sec text-left m-0">
+                                                    <span *ngIf="!agent.isExpired">Expires: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
+                                                    <span *ngIf="agent.isExpired" style="color: red;">Expired: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
+                                                    </p>
+                                            </div>
                                         </div>
                                         <!-- Add more details as needed -->
                                     </div>
-                                </div>
+                                    <div class="bottom-bin-section" *ngIf="agent.isExpired">
+                                        <button type="button" class="bin-outer-btn">
+                                            <img src="../../../../assets/images/agent/bin.svg" alt="">
+                                        </button>
+                                    </div>
+                                    <div class="top-right-view-renew-btn">
+                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn() : null" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
+                                    </div>
+                                </div>                                
                             </div>
                             <!-- <div class="top-section">
                                 <div class="bot-image">

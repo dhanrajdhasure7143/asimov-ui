@@ -82,7 +82,7 @@ export class AgentDetailsComponent implements OnInit {
   subscription_dates;
   rem_days=''
 
-  agent_drop_list:any;
+  agent_drop_list:any[] = [];
   current_agent_details:any;
 
   // New response Data 
@@ -130,6 +130,10 @@ export class AgentDetailsComponent implements OnInit {
   // changes for btn view
   btn_style: string | null = null;
 
+
+  // Renwe Button Toggler
+  renewBtnToggle : boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -167,7 +171,9 @@ export class AgentDetailsComponent implements OnInit {
     });
 
     // this.getAiAgentUpdateForm();
-    this.updateFilePagination();
+    // this.updateFilePagination();
+
+    this.getSubAgents();
   }
 
   refreshAgentDashboard(){
@@ -600,10 +606,10 @@ goToPreviousPage(): void {
   }
 
   agentDropdownList(agent_details){
-    this.agent_drop_list = agent_details.agentBotDetails.map(bot => ({
-      label: bot.automationName,
-      value: bot
-    }));
+    // this.agent_drop_list = agent_details.agentBotDetails.map(bot => ({
+    //   label: bot.automationName,
+    //   value: bot
+    // }));
   }
 
   daysBetweenPlan(startDate: string, endDate: string): string {
@@ -722,7 +728,7 @@ goToPreviousPage(): void {
           this.toaster.showSuccess(botName,"delete")
           // this.getListOfItems();
           this.selected_drop_agent = null;
-          this.agent_drop_list=""
+          this.agent_drop_list=[]
           this.isConfig=false
           this.enabledRun=false
           this.isAgentSelected = false;
@@ -745,4 +751,40 @@ goToPreviousPage(): void {
     this.selected_drop_agent = agent.value;
     console.log('Selected Agent:', this.selected_drop_agent);
   }
+
+  getSubAgents() {
+    this.spinner.show();
+    let tenant_id = localStorage.getItem("tenantName");
+    this.rest_api.getSubAiAgent(this.product_id, tenant_id).subscribe((res: any) => {
+      this.agent_drop_list = res;
+  
+      const today = new Date();
+      const twoDaysBeforeToday = new Date(today.setDate(today.getDate() - 2));
+  
+      this.agent_drop_list.forEach(agent => {
+        const shouldExpire = Math.random() < 0.3;
+  
+        if (shouldExpire) {
+          let randomDate = new Date();
+          randomDate.setDate(today.getDate() - Math.floor(Math.random() * 30));
+          agent.isExpired = true;
+          agent.expiryDate = twoDaysBeforeToday.toISOString();
+          agent.lastRunDate = "July 31 2024";
+        } else {
+          
+          agent.lastRunDate =null;
+        }
+      });
+  
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
+  
+  handleRenewBtn() {
+    this.renewBtnToggle = !this.renewBtnToggle
+  }
+
 }
