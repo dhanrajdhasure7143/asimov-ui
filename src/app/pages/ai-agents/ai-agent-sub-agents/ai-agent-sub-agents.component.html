@@ -9,7 +9,6 @@
                             <button class="manage-subscription-btn">Manage Subscription</button>  
                             <button class="add-more-qty" (click)="showAddAgentDialog($event)">Add More Agents</button>
                         </div>
-                        
                     </div>
                     <div class="h-100 main-screen">
                         <div >
@@ -32,7 +31,7 @@
                                                 <p class="inner-dates-sec text-left m-0">
                                                     <span *ngIf="!agent.isExpired">Expires: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
                                                     <span *ngIf="agent.isExpired" style="color: red;">Expired: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
-                                                    </p>
+                                                </p>
                                             </div>
                                         </div>
                                         <!-- Add more details as needed -->
@@ -43,27 +42,21 @@
                                         </button>
                                     </div>
                                     <div class="top-right-view-renew-btn">
-                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn() : null" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
+                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn() : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
                                     </div>
                                 </div>                                
                             </div>
-                           
                         </div>
                     </div>
-                   
                 </div>
-            
             </div>
-
         </div>
-
-        
-
     </div>
-
-
-
 </div>
 
-<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
-[closable]="false"></p-confirmDialog>
+    <p-confirmDialog 
+        [style]="{width: '30vw'}" 
+        position="center" 
+        [baseZIndex]="10000" 
+        [closable]="false">
+    </p-confirmDialog>

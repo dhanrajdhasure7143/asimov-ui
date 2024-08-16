@@ -72,10 +72,8 @@ export class AiAgentSubAgentsComponent implements OnInit {
   
       const today = new Date();
       const twoDaysBeforeToday = new Date(today.setDate(today.getDate() - 2));
-  
       this.subAgentList.forEach(async agent => {
         const shouldExpire = Math.random() < 0.3;
-  
         if (shouldExpire) {
           let randomDate = new Date();
           randomDate.setDate(today.getDate() - Math.floor(Math.random() * 30));
@@ -86,7 +84,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
           agent.lastRunDate = lastRunDate ? lastRunDate : null;
           console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
         } else {
-          // agent.lastRunDate =null;
           const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
           agent.lastRunDate = lastRunDate ? lastRunDate : null;
           console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
@@ -125,4 +122,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
   handleRenewBtn(){
 
   }
+
+  viewAgentDetails(agent: any) {
+    console.log('Viewing agent details:', agent);
+        this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentType, agentId : agent.agentId} });
+  } 
 }
