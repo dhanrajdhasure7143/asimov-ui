@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiAgentsComponent } from './ai-agents.component';
-import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
+import { AiAgentListComponent } from './ai-agent-home/ai-agent-home.component';
 import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';

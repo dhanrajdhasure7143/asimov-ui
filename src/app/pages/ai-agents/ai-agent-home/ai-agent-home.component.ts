@@ -10,9 +10,9 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-ai-agent-list',
-  templateUrl: './ai-agent-list.component.html',
-  styleUrls: ['./ai-agent-list.component.css']
+  selector: 'app-ai-agent-home',
+  templateUrl: './ai-agent-home.component.html',
+  styleUrls: ['./ai-agent-home.component.css']
 })
 export class AiAgentListComponent implements OnInit {
   predefined_botsList: any[] = [];

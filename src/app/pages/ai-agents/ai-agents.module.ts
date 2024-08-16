@@ -5,7 +5,7 @@ import { AiAgentsRoutingModule } from './ai-agents-routing.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { AiAgentsComponent } from './ai-agents.component';
 import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
-import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
+import { AiAgentListComponent } from './ai-agent-home/ai-agent-home.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AiAgentSchedulerComponent } from './ai-agent-scheduler/ai-agent-scheduler.component';
