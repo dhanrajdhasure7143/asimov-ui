@@ -8,11 +8,25 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from "primeng/inplace";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-ai-agent-form',
   templateUrl: './ai-agent-form.component.html',
-  styleUrls: ['./ai-agent-form.component.css']
+  styleUrls: ['./ai-agent-form.component.css'],
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: '0px',
+        minHeight: '0',
+        display: 'none'
+      })),
+      state('expanded', style({
+        height: '*'
+      })),
+      transition('expanded <=> collapsed', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class AiAgentFormComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
@@ -54,6 +68,8 @@ export class AiAgentFormComponent implements OnInit {
   fieldInputKey:any;
   capturedFileIds:any=[];
   _agentName:any;
+  subAgentName:any="Agent 01"
+  isSubAgentNameEdit:boolean = false;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -125,7 +141,7 @@ export class AiAgentFormComponent implements OnInit {
       // this.formFields ={...res.data};
       // this.formFields={...{},...res.data};
       this.predefinedBot_name = res.predefinedBotName;
-      this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
+      this.processName = this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.generateDynamicForm();      
@@ -931,7 +947,8 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
+    // this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {
@@ -1017,6 +1034,10 @@ export class AiAgentFormComponent implements OnInit {
   inplaceActivate() {
     this._agentName = this.processName
   }
+  onClicksubAgentName() {
+    this.isSubAgentNameEdit = true;
+    this._agentName = this.subAgentName
+  }
 
   Space(event: any) {
     if (event.target.selectionStart === 0 && event.code === "Space") {
@@ -1030,6 +1051,7 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");
       this.spinner.hide();
+      this.isSubAgentNameEdit = false;
     }, err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
@@ -1037,7 +1059,15 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   onDeactivate(){
-    this.inplace.deactivate();
+    // this.inplace.deactivate();
+    this.isSubAgentNameEdit = false;
+
+  }
+
+  isExpanded = false;
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
   }
 
 }

@@ -39,30 +39,27 @@ export class AiAgentSubAgentsComponent implements OnInit {
       const productId = params['id'];
       if (productId) {
         this.product_id=productId
+        this.getPredefinedBotsList(this.product_id);
         this.getSubAgents();
       }
     });
   }
 
-  // refreshAgentDashboard(){
-  //   this.getPredefinedBotsList(this.product_id);
-  // }
-
-  // getPredefinedBotsList(productId: string) {
-  //   this.spinner.show();
-  //   this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
-  //     this.agentList = res.data.map(bot => ({
-  //       ...bot,
-  //       details: bot.description || 'No Description Found.'
-  //     }));
-  //     this.bot = this.agentList.find(bot => bot.productId === productId);
-  //     this.UUID=this.bot.predefinedUUID
-  //     this.spinner.hide();
-  //   }, err => {
-  //     this.spinner.hide();
-  //     this.toaster.showError(this.toastMessage.apierror);
-  //   });
-  // }
+  getPredefinedBotsList(productId: string) {
+    this.spinner.show();
+    this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
+      this.agentList = res.data.map(bot => ({
+        ...bot,
+        details: bot.description || 'No Description Found.'
+      }));
+      this.bot = this.agentList.find(bot => bot.productId === productId);
+      this.UUID=this.bot.predefinedUUID
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
 
   getSubAgents() {
     this.spinner.show();
