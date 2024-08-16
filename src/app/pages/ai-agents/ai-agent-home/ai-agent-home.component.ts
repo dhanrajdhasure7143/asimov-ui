@@ -69,7 +69,8 @@ export class AiAgentHomeComponent implements OnInit {
   onclickBot(item) {
     // this.router.navigate(["/pages/aiagent/forms"], { queryParams: { type: "create", id: item.productId} });
     // this.router.navigate(['/pages/aiagent/details'], { state: { bot: item } });
-    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: item.productId } });
+    // this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: item.productId } });
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: item.productId } });
   }
 
   onSearch(): void {

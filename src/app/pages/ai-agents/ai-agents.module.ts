@@ -25,6 +25,8 @@ import { AiAgentCronComponent } from './ai-agent-scheduler/ai-agent-cron/ai-agen
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
+import { AiAgentSubAgentsComponent } from './ai-agent-sub-agents/ai-agent-sub-agents.component';
+import { AiAgentAddAgentsDialogComponent } from './ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
 
 
 
@@ -37,7 +39,9 @@ import { environment } from 'src/environments/environment';
     AiAgentSchedulerComponent,
     AiAgentLogsComponent,
     AiAgentCronComponent,
-    AgentDetailsComponent
+    AgentDetailsComponent,
+    AiAgentSubAgentsComponent,
+    AiAgentAddAgentsDialogComponent
   ],
   imports: [
     CommonModule,
