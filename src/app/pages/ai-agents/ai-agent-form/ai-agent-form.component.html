@@ -10,7 +10,22 @@
                     <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
                 </a>
             </label>
-            <h4 *ngIf="processName">{{ processName }}</h4>
+            <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
+                <ng-template pTemplate="display">
+                  <!-- <h3> <span class="title_text">{{selectedDashBoardName}}</span></h3> -->
+                    <h4 *ngIf="processName">{{ processName }}</h4>
+                </ng-template>
+                
+                <ng-template pTemplate="content">
+                    <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
+                        [(ngModel)]="_agentName" (keydown)="Space($event)" />
+                    <span class="editfields">
+                        <i class="pi pi-check" *ngIf="_agentName" (click)="updateDashboardName()"></i>
+                        <i class="pi pi-times " (click)="onDeactivate()"></i>
+                    </span>
+                </ng-template>
+          </p-inplace>
+
         </div>
 
         <!-- <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"> -->

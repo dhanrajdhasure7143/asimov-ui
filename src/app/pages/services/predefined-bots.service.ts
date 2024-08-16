@@ -110,4 +110,8 @@ export class PredefinedBotsService {
   subAgentLastExecution(id){
     return this.http.get("/rpa-service/predefined/last-execution-date/"+id)
   }
+
+  updateSubAgentName(subagentId,subAgentName){
+    return this.http.put(`/rpa-service/predefined/update-agent-name/${subagentId}?newName=${subAgentName}`,'')
+  }
 }

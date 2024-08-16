@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -7,6 +7,7 @@ import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from "primeng/inplace";
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -14,7 +15,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   styleUrls: ['./ai-agent-form.component.css']
 })
 export class AiAgentFormComponent implements OnInit {
-
+  @ViewChild("inplace") inplace!: Inplace;
   processName:string;
   currentPage = 1;
   fieldsPerPage = 30;
@@ -52,6 +53,8 @@ export class AiAgentFormComponent implements OnInit {
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
+  _agentName:any;
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -1010,4 +1013,31 @@ export class AiAgentFormComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
+
+  inplaceActivate() {
+    this._agentName = this.processName
+  }
+
+  Space(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+  }
+
+  updateDashboardName(){
+    this.inplace.deactivate();
+    this.spinner.show();
+    this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
+      this.toaster.showSuccess("Agent Name","update");
+      this.spinner.hide();
+    }, err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    })
+  }
+
+  onDeactivate(){
+    this.inplace.deactivate();
+  }
+
 }
