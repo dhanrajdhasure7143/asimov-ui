@@ -3,74 +3,30 @@
         <div class="top-section">
             <div class="bot-info">
                 <div class="bot-header">
-                    <div class="row" style="margin-top: 10px !important;">
-                        <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}} Agents</div>
-                        <!-- <div class="add-more-agents" style="margin-inline-start: auto;"> <a> Add More Agents</a></div> -->
-                        <div class="add-more-agents" style="display: flex; justify-content: flex-end; gap: 10px; margin-inline-start: auto; align-items: center;">
-                            <button class="manage-subscription-btn">Manage Subscription</button>  
-                            <button class="add-more-qty" (click)="showAddAgentDialog($event)">Add More Agents</button>
-                        </div>
-                        
-                    </div>
-                    <div class="h-100 main-screen">
-                        <div >
-                            <div class="single-outer-agents-cards">
-                                <div class="card position-relative single-inner-agents-cards w-100" *ngFor="let agent of agent_drop_list" (click)="onAgentSelect(agent)">
-                                    <div class="card-content">
-                                        <div class="top-image-header-section-card">
-                                            <div class="bot-image">
-                                                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-                                            </div>
-                                            <div class="agent-name-sec">
-                                                <h3 class="new-agent-heading-section">{{ agent.agentName }}</h3>
-                                            </div>
-                                        </div>
-                                        <div class="expiry-date bottom-expires-section">
-                                            <!-- <span>Last run date: {{ agent.createdAt | date:'medium' }}</span><br>
-                                            <span>Expires: {{ agent.expiryDate | date:'medium' }}</span> -->
-                                            <div class="single-expiry-dates">
-                                                <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastRunDate!='null'">Last run date: {{ agent.lastRunDate |date:'MMM dd, y hh:mm' }}</p>
-                                            </div>
-                                            <div class="single-expiry-dates">
-                                                <p class="inner-dates-sec text-left m-0">
-                                                    <span *ngIf="!agent.isExpired">Expires: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
-                                                    <span *ngIf="agent.isExpired" style="color: red;">Expired: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
-                                                    </p>
-                                            </div>
-                                        </div>
-                                        <!-- Add more details as needed -->
-                                    </div>
-                                    <div class="bottom-bin-section" *ngIf="agent.isExpired">
-                                        <button type="button" class="bin-outer-btn">
-                                            <img src="../../../../assets/images/agent/bin.svg" alt="">
-                                        </button>
-                                    </div>
-                                    <div class="top-right-view-renew-btn">
-                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn() : null" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- <div class="top-section">
-                                <div class="bot-image">
-                                    <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-                                </div>
-                                <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
-                                
-                            </div> -->
-                        </div>
-                    </div>
-                    <!-- <div class="rem-execution">Remaining Runs:
+                    <div class="bot-name" (click)="refreshAgentDashboard()">{{bot?.predefinedBotName || dummyBotName}}</div>
+                    <div class="rem-execution">Remaining Runs:
+                        <!-- <span *ngIf="remaining_exe.length !=0" class="remaining-exe">{{remaining_exe}}
+                            <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+                        </span>
+                        <span *ngIf="remaining_exe.length===0" class="remaining-exe">{{remaining_exe}}</span> -->
                         <span *ngIf="loading" class="remaining-exe">
                             <i class="pi pi-spin pi-spinner"></i>
                         </span>
                         <span *ngIf="!loading" class="remaining-exe" style="margin-right: 10px;">{{remaining_exe}}</span>
+                    </div>
+                    <!-- <div class="rem-agents">Remaining Agents:
+                        <span *ngIf="loading" class="remaining-agents">
+                            <i class="pi pi-spin pi-spinner"></i>
+                        </span>
+                        <span *ngIf="!loading" class="remaining-agents">{{remaining_agents}}</span>
                     </div> -->
+                    
                 </div>
-                <!-- <p class="bot-details">{{bot?.details || dataforbot}}
-                </p> -->
+                <p class="bot-details">{{bot?.details || dataforbot}}
+                </p>
             </div>
 
-            <!-- <div class="buttons-container">
+            <div class="buttons-container">
             <div class="dropdown-container">
                 <p-dropdown [options]="agent_drop_list" (onChange)="onAgentChange($event)" variant="filled" optionLabel="label"
                  placeholder="Select an Agent" [(ngModel)]="selected_drop_agent" optionValue="value" class="custom-dropdown"
@@ -87,6 +43,7 @@
                 <button class="clear-btn" (click)="clearDropdown()" *ngIf="selected_drop_agent"><i class="pi pi-times"></i></button>
             </div>
 
+                <!-- Original Btns -->
                 <div *ngIf="btn_style === 'type1'" style="display: flex;
                 flex-direction: column;
                 align-items: end;">
@@ -99,8 +56,12 @@
                     <button class="button-top stop-button" [disabled]="!runPlayer && isVisible" (click)="handleBotPlayer()">
                         <i class="fas fa-stop-circle" style="padding-right: 10px;"></i> Stop
                     </button>
+                    <!-- <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
+                        <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
+                    </button> -->
                 </div>
 
+                <!-- small btns -->
                 <div *ngIf="btn_style === 'type2'" style="margin-top: 10px ; display: flex; gap: 10px;">
                     <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()" style="margin: 5px; width: 60px;">
                         <i class="fas fa-cogs" style="padding-right: 10px;"></i>
@@ -115,11 +76,11 @@
                         <i class="pi pi-trash" style="padding-right: 10px;"></i>
                     </button>
                 </div>               
-            </div>     -->
+            </div>    
         </div>
 
         <!-- Horizantal btns -->
-        <!-- <div *ngIf="btn_style === 'type3'" >
+        <div *ngIf="btn_style === 'type3'" >
             <button class="button-top configure-button" [disabled]="!isConfig" (click)="onclickBot()">
                 <i class="fas fa-cogs" style="padding-right: 10px;"></i>{{ isAgentSelected ? 'Edit Configure' : 'New Configure' }}
                 </button>                  
@@ -132,9 +93,9 @@
             <button class="button-top delete-button" [disabled]="!isAgentSelected" (click)="deleteAiAgent()">
                 <i class="pi pi-trash" style="padding-right: 10px;"></i> Delete
             </button>
-        </div> -->
+        </div>
 
-        <!-- <div class="custom-accordion">
+        <div class="custom-accordion">
             <div class="custom-accordion-item " [ngClass]="item.expanded ? 'expanded-accord' : 'collapsed-accord'"
                 *ngFor="let item of items">
                 <div class="custom-accordion-header d-flex align-items-center justify-content-between">
@@ -173,10 +134,10 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
-    <!-- <div class="main-container" *ngIf="!showMiniLayout">
+    <div class="main-container" *ngIf="!showMiniLayout">
         <div class="logs-container">
             <h3><img src="../../../../assets/images/agent/hostory-icon.svg" alt="History icon" class="svg-icons">
                 History</h3>
@@ -218,7 +179,7 @@
             </div>
             <button *ngIf="file.length >= 1" class="button-bottom" (click)="loadMoreFiles()">Show All Files</button>
         </div>
-    </div> -->
+    </div>
 
     <!-- Full screen for the History Div -->
     <div class="main-container" *ngIf="showMoreLogs">
@@ -278,12 +239,12 @@
                     <span>No data found</span>
                 </div>
             </div>
-            <!-- <div class="pagination-container">
+            <div class="pagination-container">
                 <button class="button-bottom-full" *ngIf="showMoreLogs" (click)="showLessLogs()" style="float: left;">
                     Show Less History
                 </button>
     
-                Pagination buttons
+                <!-- Pagination buttons -->
                 <div class="pagination">
                     <button class="pagination-btn" (click)="goToFirstPage()"><<</button>
                     <button class="pagination-btn" (click)="goToPreviousPage()"><</button>
@@ -293,7 +254,7 @@
                     <button class="pagination-btn" (click)="goToNextPage()">></button>
                     <button class="pagination-btn" (click)="goToLastPage()">>></button>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -368,37 +329,6 @@
     </div>
 
 </div>
-<p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}" [modal]="true" [showHeader]="false" [closable]="true" styleClass="custom-dialog">
-    <div class="dialog-header">
-      <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
-      <!-- <h3>Add {{ selectedAgent?.predefinedBotName }} Agents</h3> -->
-      <h3>Add Recruitment Agents</h3>
-      <button class="close-button" (click)="displayAddAgentDialog = false">×</button>
-    </div>
-    <div class="dialog-content">
-      <!-- <div class="pricing-toggle">
-        <span [class.active]="!yearlyPricing" (click)="yearlyPricing = false">Monthly</span>
-        <p-inputSwitch [(ngModel)]="yearlyPricing"></p-inputSwitch>
-        <span [class.active]="yearlyPricing" (click)="yearlyPricing = true">Yearly</span>
-      </div> -->
-      <div class="price-display">
-        <h2>$ {{ yearlyPricing ? '100.00' : '10.00' }}<span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span></h2>
-      <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
-      <div class="agent-count">
-        <button (click)="decrementAgentCount()" [disabled]="agentCount <= 1">-</button>
-        <span>{{ agentCount }}</span>
-        <button (click)="incrementAgentCount()">+</button>
-        <span>Select no of Agents</span>
-      </div>
-    </div>
-    </div>
-    <div class="dialog-footer">
-      <div class="total-price">
-        <h3>$ {{ calculateTotalPrice() }}</h3>
-        <span>Total {{ yearlyPricing ? 'yearly' : 'monthly' }} price estimate excl taxes</span>
-      </div>
-      <button class="proceed-button" (click)="proceedToPay()">Proceed to Pay</button>
-    </div>
-  </p-dialog>
+
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>

@@ -3,15 +3,14 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 }
 
 .main-screen {
-    /* margin: 15px 0px 0px 0px; */
-
+    margin: 15px 0px 0px 0px;
     overflow: auto;
 }
 
 .screen-wrapper {
     margin: 0px 20px;
-    /* background: rgba(49, 153, 255, 0.10); */
-    padding: 5px;
+    background: rgba(49, 153, 255, 0.10);
+    padding: 30px;
     border-radius: 20px;
     height: auto;
 }
@@ -22,7 +21,7 @@ p, a, ul, li , h1,h2,h3,h4,h5,h6, table, tr, td, th, button, span, input, label,
 }
 
 .bot-info {
-    width: 100%;
+    width: 70%;
 }
 
 .bot-details {
@@ -414,16 +413,15 @@ hr {
 }
 
 .bot-header {
-    /* display: flex; */
+    display: flex;
     align-items: center;
     width: 100%;
 }
 
 .bot-name {
     color: #001C47;
-    font-weight: 600;
-    /* font-size: 30px; */
-    font-size: 20px;
+    font-weight: 700;
+    font-size: 30px;
     margin-right: 25px;
 }
 
@@ -788,358 +786,4 @@ input[type=checkbox] {
     display: flex;
     align-items: center;
     color: #6c757d;
-}
-
-/* .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-  } */
-
-  .top-right-view-renew-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 80px;
-    height: 28px;
-  }
-  .top-right-view-renew-btn button {
-    width: 100%;
-    height: 100%;
-    border-radius: 40px;
-    color: #fff !important;
-    font-weight: 600;
-    font-size: 14px ;
-  }
-  .bottom-expires-section {
-    margin-top: 15px !important;
-  }
-  .top-image-header-section-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .top-right-view-renew-btn button.active-vi {
-    background: #098DE6 !important;
-  }
-
-  .top-right-view-renew-btn button.active-re {
-    background: #ff8e43;
-  }
-
-  
-  .single-outer-agents-cards {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    margin-top: 20px;
-  }
-  .card {
-    /* background: #fff; */
-    background: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-    cursor: pointer;
-    /* width: calc(33.333% - 20px); Adjust width as needed */
-    width: calc(33.333% - 150px); /* Adjust width as needed */
-    box-sizing: border-box;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    border: #aaa 1px solid;
-    /* height: 125px */
-  }
-  
-  .card-content {
-    text-align: center;
-  }
-  
-  .agent-name {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: -25px;
-  }
-  .new-agent-heading-section {
-    font-size: 18px;
-    font-weight: 500;
-  }
-  .bot-image img {
-    width: 30px !important; /* Adjust the width as needed */
-    height: auto !important; /* Maintain aspect ratio */
-  }
-
-  .bot-image {
-    width: 15%;
-  }
-  
-.cards-container {
-    display: flex;
-    align-items: center;
-    /* border-bottom: 1px solid #ddd; */
-    margin-bottom: 10px;
-    /* margin-bottom: -8px; */
-}
-/* .expiry-date{
-    margin-left: -190px;
-} */
-
-.single-inner-agents-cards {
-    position: relative;
-}
-
-.bottom-bin-section {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 20px;
-    height: 20px;
-}
-.bottom-bin-section .bin-outer-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.manage-subscription-btn {
-    background: rgb(223 242 246);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1px solid #ccc;
-    padding: 4px 16px;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease;
-    font-weight: 600;
-    color: blue;
-    border-radius: 30px;
-}
-
-.manage-subscription-btn:hover {
-    background: rgb(223 242 246); 
-}
-
-.add-more-qty {
-    /* background: rgb(223 242 246 / 50%); */
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1px solid #ccc;
-    padding: 4px 16px;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease;
-    font-weight: 600;
-    color: #098de6;
-    text-decoration: underline !important;
-    text-underline-offset: 3px;
-}
-
-
-  /* Dialog Styles */
-  :host ::ng-deep .custom-dialog .p-dialog {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-  }
-  
-  :host ::ng-deep .p-dialog .p-dialog-content {
-    padding: 0 !important;
-  }
-  
-  :host ::ng-deep .p-dialog-content {
-    overflow-y: hidden;
-    flex-grow: 1;
-  }
-  
-  :host ::ng-deep .custom-dialog .p-dialog-content {
-    padding: 0;
-    border-radius: 12px;
-  }
-  
-  .dialog-header {
-    display: flex;
-    align-items: center;
-    /* padding: 16px 20px; */
-    padding: 8px 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-  }
-  
-  .dialog-bot-image {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-  }
-  
-  .dialog-header h3 {
-    flex-grow: 1;
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #6c757d;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .dialog-content {
-    padding: 20px;
-    background-color: whitesmoke;
-  }
-  
-  .pricing-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  .pricing-toggle span {
-    margin: 0 8px;
-    font-size: 14px;
-    color: #6c757d;
-  }
-  
-  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    background-color: #3B82F6;
-  }
-  
-  .price-display {
-    /* background-color: #f8f9fa; */
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #d9dadc;
-  }
-  
-  .price-display h2 {
-    font-size: 32px;
-    color: #3B82F6;
-    margin: 0 0 8px 0;
-  }
-  
-  .price-display span {
-    font-size: 14px;
-    /* color: #6c757d; */
-    color: black;
-  }
-  
-  .agent-features {
-    font-size: 14px;
-    color: #6c757d;
-    /* text-align: center; */
-    margin-bottom: 20px;
-  }
-  
-  .agent-count {
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    /* background-color: #f8f9fa; */
-    border-radius: 8px;
-    /* padding: 12px; */
-  }
-  
-  .agent-count button {
-    background-color: #e9ecef;
-    border: none;
-    color: #495057;
-    font-size: 18px;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .agent-count span {
-    margin: 0 16px;
-    font-size: 18px;
-    color: #495057;
-  }
-  
-  .agent-count span:last-child {
-    font-size: 14px;
-    color: #6c757d;
-    margin-left: 16px;
-  }
-  
-  .dialog-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-  }
-  
-  .total-price h3 {
-    font-size: 24px;
-    color: #3B82F6;
-    margin: 0 0 4px 0;
-  }
-  
-  .total-price span {
-    font-size: 14px;
-    color: #6c757d;
-  }
-  
-  .proceed-button {
-    /* background-color: #3B82F6; */
-    background: #098DE6 !important;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .proceed-button:hover {
-    background-color: #2563EB;
-  }
-
-  /* .add-agents{
-    text-align: right;
-    font-size: 13px;
-    font-weight: 500;
-    margin-right: 20px;
-    width: 30%;
-    display: inline-block; 
-  } */
-
-  .add-agents {
-    color: #87CEEB; /* Sky blue color */
-    cursor: pointer;
-    transition: color 0.3s ease;
-    font-weight: 500; /* Makes the text slightly bold */
-    display: inline-block; /* Allows the text to have padding */
-    border-radius: 4px; /* Rounds the corners slightly */
-    margin-right: 10px; /* Adds some space above the text */
-    width: 30%;
-}
-
-.add-agents:hover {
-    color: #1E90FF; /* Darker blue color on hover */
-    /* background-color: rgba(135, 206, 235, 0.1);  */
-    /* Light sky blue background on hover */
-}
-
-/* Optional: Add a subtle + icon before the text */
-.add-agents::before {
-    /* content: "+"; */
-    margin-right: 5px;
-    font-weight: bold;
 }
