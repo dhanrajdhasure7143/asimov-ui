@@ -105,6 +105,9 @@ export class PredefinedBotsService {
 
   getSubAiAgent(product_id,tenant_id){
     return this.http.get(`/subscriptionservice/v1/subscriptions/api/agents?productId=${product_id}&tenantId=${tenant_id}`)
-  }
+  } 
 
+  subAgentLastExecution(id){
+    return this.http.get("/rpa-service/predefined/last-execution-date/"+id)
+  }
 }

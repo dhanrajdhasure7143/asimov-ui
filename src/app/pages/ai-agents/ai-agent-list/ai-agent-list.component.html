@@ -8,6 +8,7 @@
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
                     <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
+                    <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
                 <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
                 <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
@@ -100,3 +101,77 @@
         </div>
     </div>
 </div>
+
+<!-- <p-dialog header="Add Agents" [(visible)]="displayAddAgentDialog" [style]="{width: '50vw'}">
+    <p>Here you can add new agents to your list.</p>
+    Add your form or content for adding agents here
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="displayAddAgentDialog = false"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveNewAgent()"></button>
+    </ng-template>
+  </p-dialog> -->
+
+  <!-- <p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '400px'}" [modal]="true" [showHeader]="false" [closable]="false" styleClass="custom-dialog">
+    <div class="dialog-header">
+      <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+      <h3>Add {{ selectedAgent?.predefinedBotName }} Agents</h3>
+      <button class="close-button" (click)="displayAddAgentDialog = false">×</button>
+    </div>
+    <div class="dialog-content">
+      <div class="pricing-toggle">
+        <span [class.active]="!yearlyPricing" (click)="yearlyPricing = false">Monthly</span>
+        <p-inputSwitch [(ngModel)]="yearlyPricing"></p-inputSwitch>
+        <span [class.active]="yearlyPricing" (click)="yearlyPricing = true">Yearly</span>
+      </div>
+      <div class="price-display">
+        <h2>$ {{ yearlyPricing ? '100.00' : '10.00' }}</h2>
+        <span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span>
+      </div>
+      <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
+      <div class="agent-count">
+        <button (click)="decrementAgentCount()" [disabled]="agentCount <= 1">-</button>
+        <span>{{ agentCount }}</span>
+        <button (click)="incrementAgentCount()">+</button>
+        <span>Select no of Agents</span>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <div class="total-price">
+        <h3>$ {{ calculateTotalPrice() }}</h3>
+        <span>Total {{ yearlyPricing ? 'yearly' : 'monthly' }} price estimate excl taxes</span>
+      </div>
+      <button class="proceed-button" (click)="proceedToPay()">Proceed to Pay</button>
+    </div>
+  </p-dialog> -->
+  
+  <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}" [modal]="true" [showHeader]="false" [closable]="true" styleClass="custom-dialog">
+    <div class="dialog-header">
+      <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+      <h3>Add {{ selectedAgent?.predefinedBotName }} Agents</h3>
+      <button class="close-button" (click)="displayAddAgentDialog = false">×</button>
+    </div>
+    <div class="dialog-content">
+      <!-- <div class="pricing-toggle">
+        <span [class.active]="!yearlyPricing" (click)="yearlyPricing = false">Monthly</span>
+        <p-inputSwitch [(ngModel)]="yearlyPricing"></p-inputSwitch>
+        <span [class.active]="yearlyPricing" (click)="yearlyPricing = true">Yearly</span>
+      </div> -->
+      <div class="price-display">
+        <h2>$ {{ yearlyPricing ? '100.00' : '10.00' }}<span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span></h2>
+      <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
+      <div class="agent-count">
+        <button (click)="decrementAgentCount()" [disabled]="agentCount <= 1">-</button>
+        <span>{{ agentCount }}</span>
+        <button (click)="incrementAgentCount()">+</button>
+        <span>Select no of Agents</span>
+      </div>
+    </div>
+    </div>
+    <div class="dialog-footer">
+      <div class="total-price">
+        <h3>$ {{ calculateTotalPrice() }}</h3>
+        <span>Total {{ yearlyPricing ? 'yearly' : 'monthly' }} price estimate excl taxes</span>
+      </div>
+      <button class="proceed-button" (click)="proceedToPay()">Proceed to Pay</button>
+    </div>
+  </p-dialog>

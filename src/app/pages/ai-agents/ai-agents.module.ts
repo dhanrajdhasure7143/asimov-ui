@@ -23,6 +23,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { AiAgentCronComponent } from './ai-agent-scheduler/ai-agent-cron/ai-agent-cron.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -50,7 +52,8 @@ import { AgentDetailsComponent } from './agent-details/agent-details.component';
     NgxPaginationModule,
     NgbTimepickerModule,
     MatDatepickerModule,
-    SharedModule
+    SharedModule,
+    NgxStripeModule.forRoot(environment.stripeKey)
   ],
   providers: [toastMessages, BsModalRef, BsModalService, columnList, DatePipe]
 }) 

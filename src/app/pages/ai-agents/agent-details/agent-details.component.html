@@ -8,7 +8,7 @@
                         <!-- <div class="add-more-agents" style="margin-inline-start: auto;"> <a> Add More Agents</a></div> -->
                         <div class="add-more-agents" style="display: flex; justify-content: flex-end; gap: 10px; margin-inline-start: auto; align-items: center;">
                             <button class="manage-subscription-btn">Manage Subscription</button>  
-                            <button class="add-more-qty">Add More Agents</button>
+                            <button class="add-more-qty" (click)="showAddAgentDialog($event)">Add More Agents</button>
                         </div>
                         
                     </div>
@@ -29,7 +29,7 @@
                                             <!-- <span>Last run date: {{ agent.createdAt | date:'medium' }}</span><br>
                                             <span>Expires: {{ agent.expiryDate | date:'medium' }}</span> -->
                                             <div class="single-expiry-dates">
-                                                <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastRunDate!=null">Last run date: {{ agent.lastRunDate}}</p>
+                                                <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastRunDate!='null'">Last run date: {{ agent.lastRunDate |date:'MMM dd, y hh:mm' }}</p>
                                             </div>
                                             <div class="single-expiry-dates">
                                                 <p class="inner-dates-sec text-left m-0">
@@ -368,6 +368,37 @@
     </div>
 
 </div>
-
+<p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}" [modal]="true" [showHeader]="false" [closable]="true" styleClass="custom-dialog">
+    <div class="dialog-header">
+      <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+      <!-- <h3>Add {{ selectedAgent?.predefinedBotName }} Agents</h3> -->
+      <h3>Add Recruitment Agents</h3>
+      <button class="close-button" (click)="displayAddAgentDialog = false">×</button>
+    </div>
+    <div class="dialog-content">
+      <!-- <div class="pricing-toggle">
+        <span [class.active]="!yearlyPricing" (click)="yearlyPricing = false">Monthly</span>
+        <p-inputSwitch [(ngModel)]="yearlyPricing"></p-inputSwitch>
+        <span [class.active]="yearlyPricing" (click)="yearlyPricing = true">Yearly</span>
+      </div> -->
+      <div class="price-display">
+        <h2>$ {{ yearlyPricing ? '100.00' : '10.00' }}<span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span></h2>
+      <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
+      <div class="agent-count">
+        <button (click)="decrementAgentCount()" [disabled]="agentCount <= 1">-</button>
+        <span>{{ agentCount }}</span>
+        <button (click)="incrementAgentCount()">+</button>
+        <span>Select no of Agents</span>
+      </div>
+    </div>
+    </div>
+    <div class="dialog-footer">
+      <div class="total-price">
+        <h3>$ {{ calculateTotalPrice() }}</h3>
+        <span>Total {{ yearlyPricing ? 'yearly' : 'monthly' }} price estimate excl taxes</span>
+      </div>
+      <button class="proceed-button" (click)="proceedToPay()">Proceed to Pay</button>
+    </div>
+  </p-dialog>
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
