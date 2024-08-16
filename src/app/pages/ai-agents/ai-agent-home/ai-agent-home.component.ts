@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './ai-agent-home.component.html',
   styleUrls: ['./ai-agent-home.component.css']
 })
-export class AiAgentListComponent implements OnInit {
+export class AiAgentHomeComponent implements OnInit {
   predefined_botsList: any[] = [];
   filteredBotsList: any[] = [];
   searchTerm: string = '';
