@@ -45,55 +45,51 @@ export class AiAgentSubAgentsComponent implements OnInit {
       const productId = params['id'];
       if (productId) {
         this.product_id=productId
+        this.getPredefinedBotsList(this.product_id);
         this.getSubAgents();
       }
     });
   }
 
-  // refreshAgentDashboard(){
-  //   this.getPredefinedBotsList(this.product_id);
-  // }
-
-  // getPredefinedBotsList(productId: string) {
-  //   this.spinner.show();
-  //   this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
-  //     this.agentList = res.data.map(bot => ({
-  //       ...bot,
-  //       details: bot.description || 'No Description Found.'
-  //     }));
-  //     this.bot = this.agentList.find(bot => bot.productId === productId);
-  //     this.UUID=this.bot.predefinedUUID
-  //     this.spinner.hide();
-  //   }, err => {
-  //     this.spinner.hide();
-  //     this.toaster.showError(this.toastMessage.apierror);
-  //   });
-  // }
+  getPredefinedBotsList(productId: string) {
+    this.spinner.show();
+    this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
+      this.agentList = res.data.map(bot => ({
+        ...bot,
+        details: bot.description || 'No Description Found.'
+      }));
+      this.bot = this.agentList.find(bot => bot.productId === productId);
+      this.UUID=this.bot.predefinedUUID
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessage.apierror);
+    });
+  }
 
   getSubAgents() {
     this.spinner.show();
     let tenant_id = localStorage.getItem("tenantName");
     this.rest_api.getSubAiAgent(this.product_id, tenant_id).subscribe((res: any) => {
       this.subAgentList = res;
-  
       const today = new Date();
       const twoDaysBeforeToday = new Date(today.setDate(today.getDate() - 2));
       this.subAgentList.forEach(async agent => {
-        const shouldExpire = Math.random() < 0.3;
-        if (shouldExpire) {
-          let randomDate = new Date();
-          randomDate.setDate(today.getDate() - Math.floor(Math.random() * 30));
-          agent.isExpired = true;
-          agent.expiryDate = twoDaysBeforeToday.toISOString();
-          // agent.lastRunDate = "July 31 2024";
+        // const shouldExpire = Math.random() < 0.3;
+        // if (shouldExpire) {
+        //   let randomDate = new Date();
+        //   randomDate.setDate(today.getDate() - Math.floor(Math.random() * 30));
+        //   agent.isExpired = true;
+        //   agent.expiryDate = twoDaysBeforeToday.toISOString();
+        //   // agent.lastRunDate = "July 31 2024";
+        //   const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
+        //   agent.lastRunDate = lastRunDate ? lastRunDate : null;
+        //   console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
+        // } else {
           const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
           agent.lastRunDate = lastRunDate ? lastRunDate : null;
           console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
-        } else {
-          const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
-          agent.lastRunDate = lastRunDate ? lastRunDate : null;
-          console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
-        }
+        // }
       });
   
       this.spinner.hide();
