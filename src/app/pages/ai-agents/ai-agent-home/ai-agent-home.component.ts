@@ -70,7 +70,7 @@ export class AiAgentHomeComponent implements OnInit {
     // this.router.navigate(["/pages/aiagent/forms"], { queryParams: { type: "create", id: item.productId} });
     // this.router.navigate(['/pages/aiagent/details'], { state: { bot: item } });
     // this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: item.productId } });
-    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: item.productId } });
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: item.productId, botName: item.predefinedBotName } });
   }
 
   onSearch(): void {
@@ -129,85 +129,33 @@ export class AiAgentHomeComponent implements OnInit {
     this.displayAddAgentDialog = true;
   }
 
-  saveNewAgent() {
-    // Implement the logic to save the new agent
-    console.log('Saving new agent...');
+  closeDialog() {
     this.displayAddAgentDialog = false;
   }
 
-  incrementAgentCount() {
-    this.agentCount++;
-  }
-
-  decrementAgentCount() {
-    if (this.agentCount > 1) {
-      this.agentCount--;
+  decreaseAgentCount(agent: any) {
+    if (agent.selectedCount && agent.selectedCount > 0) {
+      agent.selectedCount--;
     }
   }
 
-  calculateTotalPrice(): string {
-    const basePrice = this.yearlyPricing ? 100 : 10;
-    return (basePrice * this.agentCount).toFixed(2);
+  increaseAgentCount(agent: any) {
+    if (!agent.selectedCount) {
+      agent.selectedCount = 0;
+    }
+    agent.selectedCount++;
   }
-  // proceedToPay() {
-  //   console.log('Proceeding to payment...');
-  //   // Implement payment logic here
-  //   this.displayAddAgentDialog = false;
-  // }
+
+  getTotalSelectedAgents(): number {
+    return this.unsubscribed_agents.reduce((total, agent) => total + (agent.selectedCount || 0), 0);
+  }
+
   proceedToPay() {
-    this.spinner.show();
-    this.displayAddAgentDialog = false;
-    let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
-    let filteredPriceIds = [];
-    this.selectedPlans.forEach((element) => {
-      element.priceCollection.forEach((price) => {
-        if (price.recurring.interval === selectedInterval) {
-          let obj={}
-          obj["id"]=price.id
-          obj["quantity"]=element.quantity
-          filteredPriceIds.push(obj);
-        }
-      });
-    });
-  
-    if (filteredPriceIds.length === 0) {
-      // Handle the case when no price is selected for the chosen interval
-      console.error('No price selected for the chosen interval.');
-      this.spinner.hide();
-      return;
-    }
-  
-    let req_body = {
-      //"price": filteredPriceIds,
-      "priceData": filteredPriceIds.map(price => ({
-        "price": price.id,
-        "quantity": price.quantity
-      })),
-      // "customerEmail": this.userEmail,
-      // "successUrl": environment.paymentSuccessURL,
-      // // "cancelUrl": environment.paymentFailuerURL,
-      // "paymentMethodId": this.selectedCard,
-    };
-    // if(this.isbillingInfoDisble){
-    //   req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=4"
-    // }else{
-    //   req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=2"
-    // }
-    
-    this.rest_api_service.getCheckoutScreen(req_body).pipe(
-        switchMap((session: any) => {
-          this.spinner.hide();
-          return this.stripeService.redirectToCheckout({ sessionId: session.id });
-        })
-      ).subscribe(
-        res => {
-          this.spinner.hide();
-        },error => {
-          this.spinner.hide();
-          this.toastService.showError("Failed to redirect to payment gateway");
-          console.error('Error during payment:', error);
-        }
-      );
+    console.log('Proceeding to pay: $' + this.getTotalPrice().toFixed(2));
+  }
+
+  getTotalPrice(): number {
+    return this.getTotalSelectedAgents() * 10; // Assuming $10 per agent
   }
 
 }

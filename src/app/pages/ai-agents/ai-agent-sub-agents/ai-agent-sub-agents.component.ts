@@ -20,6 +20,8 @@ export class AiAgentSubAgentsComponent implements OnInit {
   UUID="";
   subAgentList: any[] = [];
   dummyBotName:any;
+  selectedAgent: any;
+  displayAddAgentDialog: boolean = false;
   
   constructor(
     private router: Router,
@@ -32,10 +34,14 @@ export class AiAgentSubAgentsComponent implements OnInit {
     private rest_api_service:RestApiService,
     private stripeService: StripeService,
     private toastService: ToasterService,
-  ) { }
+  ) { 
+    const navigation = this.router.getCurrentNavigation();
+    this.bot = navigation?.extras.state?.bot;
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+      this.bot = params['botName'] ? { botName: params['botName'] } : null;
       const productId = params['id'];
       if (productId) {
         this.product_id=productId
@@ -115,13 +121,21 @@ export class AiAgentSubAgentsComponent implements OnInit {
     });
   }
 
-  showAddAgentDialog(event){
-
+  showAddAgentDialog( agent: any) {
+    console.log(agent);
+    this.selectedAgent = agent;
+    this.displayAddAgentDialog = true;
   }
 
-  handleRenewBtn(){
-
+  closeDialog() {
+    this.displayAddAgentDialog = false;
   }
+
+  handleRenewBtn(agent: any) {
+    this.selectedAgent = agent;
+    this.displayAddAgentDialog = true;
+  }
+
 
   viewAgentDetails(agent: any) {
     console.log('Viewing agent details:', agent);

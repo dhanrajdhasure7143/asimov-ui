@@ -108,11 +108,11 @@ hr {
 }
 
 
-.search-container {
+/* .search-container {
     text-align: center;
     margin-bottom: 50px;
     margin-left: 70px;
-}
+} */
 
 .search-bar {
     width: 60%;
@@ -132,9 +132,12 @@ hr {
 }
 
 .search-container {
-    text-align: center;
+    /* text-align: center;
     margin-bottom: 50px;
-    margin-left: 70px;
+    margin-left: 70px; */
+    text-align: center;
+    margin-bottom: 0px; /* Reduced from 50px */
+    /* padding: 15px; */
 }
 
 .search-bar-wrapper {
@@ -214,7 +217,8 @@ hr {
     width: 31%;
     /* max-width: 360px; */
     /* height: 255px; */
-    height: 170px;
+    /* height: 170px; */
+    height: 190px;
     /* background: #fff; */
     display: flex;
     flex-direction: column;
@@ -262,7 +266,8 @@ hr {
 }
 
 .bot-name {
-    width: 70%;
+    /* width: 70%; */
+    width: 65%;
     font-weight: bold;
     margin: 0;
     box-sizing: border-box;
@@ -491,7 +496,11 @@ hr {
 .skeleton-box {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  grid-gap: 30px;
+  gap: 30px;
+  margin: 20px 0px 50px 30px;
+  margin-top: -30px;
+  margin-left: 5px;
 }
 
 .skeleton-card-box {
@@ -500,7 +509,7 @@ hr {
 
 .custom-skeleton {
   max-width: 350px;
-  max-height: 255px;
+  max-height: 195px;
   width: 100%;
   height: 100%;
   border: 1px solid lightgrey;
@@ -539,11 +548,6 @@ hr {
     margin-top: -20px;
 }
   /* Dialog Styles */
-:host ::ng-deep .custom-dialog .p-dialog {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-  }
   
   :host ::ng-deep .p-dialog .p-dialog-content {
     padding: 0 !important;
@@ -559,188 +563,169 @@ hr {
     border-radius: 12px;
   }
   
-  .dialog-header {
-    display: flex;
-    align-items: center;
-    /* padding: 16px 20px; */
-    padding: 8px 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-  }
-  
-  .dialog-bot-image {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-  }
-  
-  .dialog-header h3 {
-    flex-grow: 1;
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #6c757d;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .dialog-content {
-    padding: 20px;
-    background-color: whitesmoke;
-  }
-  
-  .pricing-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  .pricing-toggle span {
-    margin: 0 8px;
-    font-size: 14px;
-    color: #6c757d;
-  }
-  
-  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    background-color: #3B82F6;
-  }
-  
-  .price-display {
-    /* background-color: #f8f9fa; */
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #d9dadc;
-  }
-  
-  .price-display h2 {
-    font-size: 32px;
-    color: #3B82F6;
-    margin: 0 0 8px 0;
-  }
-  
-  .price-display span {
-    font-size: 14px;
-    /* color: #6c757d; */
-    color: black;
-  }
-  
-  .agent-features {
-    font-size: 14px;
-    color: #6c757d;
-    /* text-align: center; */
-    margin-bottom: 20px;
-  }
-  
-  .agent-count {
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    /* background-color: #f8f9fa; */
-    border-radius: 8px;
-    /* padding: 12px; */
-  }
-  
-  .agent-count button {
-    background-color: #e9ecef;
-    border: none;
-    color: #495057;
-    font-size: 18px;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .agent-count span {
-    margin: 0 16px;
-    font-size: 18px;
-    color: #495057;
-  }
-  
-  .agent-count span:last-child {
-    font-size: 14px;
-    color: #6c757d;
-    margin-left: 16px;
-  }
-  
-  .dialog-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-  }
-  
-  .total-price h3 {
-    font-size: 24px;
-    color: #3B82F6;
-    margin: 0 0 4px 0;
-  }
-  
-  .total-price span {
-    font-size: 14px;
-    color: #6c757d;
-  }
-  
-  .proceed-button {
-    /* background-color: #3B82F6; */
-    background: #098DE6 !important;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .proceed-button:hover {
-    background-color: #2563EB;
-  }
-
-  /* .add-agents{
-    text-align: right;
-    font-size: 13px;
-    font-weight: 500;
-    margin-right: 20px;
-    width: 30%;
-    display: inline-block; 
-  } */
+  /* Dialog Styles - Ended*/
 
   .add-agents {
-    color: #87CEEB; /* Sky blue color */
+    color: #1E90FF; 
     cursor: pointer;
     transition: color 0.3s ease;
-    font-weight: 500; /* Makes the text slightly bold */
-    display: inline-block; /* Allows the text to have padding */
-    border-radius: 4px; /* Rounds the corners slightly */
-    margin-right: 10px; /* Adds some space above the text */
+    font-weight: 500;
+    display: inline-block;
+    border-radius: 4px;
+    margin-right: 10px;
     width: 30%;
 }
 
-.add-agents:hover {
-    color: #1E90FF; /* Darker blue color on hover */
-    /* background-color: rgba(135, 206, 235, 0.1);  */
-    /* Light sky blue background on hover */
+/* ----------------------------------- New styles */
+.sticky-explore-section {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* padding: 20px 0; */
+  margin: 0px 10px 20px 0px !important;
 }
 
-/* Optional: Add a subtle + icon before the text */
-.add-agents::before {
-    /* content: "+"; */
-    margin-right: 5px;
-    font-weight: bold;
+.scrollable-explore-content {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.agent-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 15px;
+}
+
+.selection-buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  border-radius: 2px;
+  background: #e7ebee;
+}
+
+.selection-buttons button {
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: #B1BBC6;
+  cursor: pointer;
+}
+
+.selection-buttons span {
+  margin: 0 10px;
+  font-weight: bold;
+  width: 15px;
+  text-align: center;
+}
+.selection-buttons button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.selection-buttons button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.count-button {
+  font-size: 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.pricing {
+  margin-bottom: 15px;
+  margin-left: 15px;
+  height: 18px;
+}
+.pricing1{
+  margin-left: 35px;
+  font-size: 24px;
+  font-weight: bold;
+
+}
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3199ff;
+}
+
+.price-details {
+  font-size: 14px;
+  color: #666;
+}
+
+.bot-details-wrapper {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.bot-details-wrapper.show-more {
+  max-height: none;
+}
+
+
+.select-agents {
+  font-size: 7px;
+  display: inline-block;
+  transform: scale(1.5);
+  transform-origin: left center;
+  margin-right: 22px;
+}
+
+
+
+
+.total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  justify-content: flex-end;
+}
+
+.total-price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.total-price .price-details {
+  font-size: 14px;
+  color: #666;
+  margin-left: 10px;
+}
+
+.proceed-to-pay {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.proceed-to-pay:hover {
+  background-color: #0056b3;
+}
+
+.proceed-to-pay-placeholder {
+  height: 38px;
+}
+
+.explore-more-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }

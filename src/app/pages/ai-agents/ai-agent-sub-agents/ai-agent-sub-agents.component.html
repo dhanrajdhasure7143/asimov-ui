@@ -4,7 +4,7 @@
             <div class="bot-info">
                 <div class="bot-header">
                     <div class="row" style="margin-top: 10px !important;">
-                        <div class="bot-name">{{bot?.predefinedBotName || dummyBotName}} Agents</div>
+                        <div class="bot-name">{{bot?.botName || dummyBotName}} Agents</div>
                         <div class="add-more-agents" style="display: flex; justify-content: flex-end; gap: 10px; margin-inline-start: auto; align-items: center;">
                             <button class="manage-subscription-btn">Manage Subscription</button>  
                             <button class="add-more-qty" (click)="showAddAgentDialog($event)">Add More Agents</button>
@@ -42,7 +42,7 @@
                                         </button>
                                     </div>
                                     <div class="top-right-view-renew-btn">
-                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn() : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
+                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
                                     </div>
                                 </div>                                
                             </div>
@@ -60,3 +60,7 @@
         [baseZIndex]="10000" 
         [closable]="false">
     </p-confirmDialog>
+
+    <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
+        <app-ai-agent-add-agents-dialog [botName]="bot.botName" [selectedAgent]="selectedAgent" (close)="closeDialog()"></app-ai-agent-add-agents-dialog>
+    </p-dialog>

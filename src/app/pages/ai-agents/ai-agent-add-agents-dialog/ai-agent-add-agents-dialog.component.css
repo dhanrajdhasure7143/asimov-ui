@@ -1,0 +1,290 @@
+  /* Dialog Styles */
+  :host ::ng-deep .custom-dialog .p-dialog {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+  }
+  
+  :host ::ng-deep .p-dialog .p-dialog-content {
+    padding: 0 !important;
+  }
+  
+  :host ::ng-deep .p-dialog-content {
+    overflow-y: hidden;
+    flex-grow: 1;
+  }
+  
+  :host ::ng-deep .custom-dialog .p-dialog-content {
+    padding: 0;
+    border-radius: 12px;
+  }
+  
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    /* padding: 16px 20px; */
+    padding: 0px 10px;
+    background-color: #f8f9fa;
+    /* border-bottom: 1px solid #e9ecef; */
+    border-bottom: 1px solid #d4d7da;
+  }
+  
+  .dialog-bot-image {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+  
+  .dialog-header h3 {
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 300;
+  }
+  
+  .dialog-content {
+    padding: 20px;
+    background-color: whitesmoke;
+  }
+  
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .pricing-toggle span {
+    margin: 0 8px;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: #3B82F6;
+  }
+  
+  .price-display {
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #d9dadc;
+  }
+
+  .price-display h2 {
+    font-size: 32px;
+    /* color: #3B82F6; */
+    color: #3199ff;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    font-variant: proportional-nums;
+  }
+  
+  .price-display span {
+    font-size: 14px;
+    /* color: #6c757d; */
+    color: black;
+  }
+  
+  .agent-features {
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  .agent-count {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+  }
+  
+  .agent-count button {
+    background-color: #e9ecef;
+    border: none;
+    color: #495057;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .agent-count span {
+    margin: 0 16px;
+    font-size: 18px;
+    color: #495057;
+  }
+  
+  .agent-count span:last-child {
+    font-size: 14px;
+    color: #6c757d;
+    margin-left: 16px;
+  }
+  
+  .dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    background-color: whitesmoke;
+    height: 180px;
+  }
+  
+  .total-price h3 {
+    font-size: 32px;
+    /* color: #1ec34c ; */
+    color: #3199ff ;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    font-variant: proportional-nums;
+  }
+  
+  .total-price span {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .proceed-button {
+    /* background: #1ec34c; */
+    background: #3199ff;
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 35px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .proceed-button.dull-green {
+    /* background: #90cca0 !important; */
+    background: #a7d0f9 !important;
+    color: #f9f9f9 !important; 
+    cursor: not-allowed !important;
+}
+
+.gray-text {
+    color: #b1bbc6 !important;
+  }
+  
+  :host ::ng-deep .order-details-tooltip {
+    max-width: 250px;
+    background-color: white !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  }
+  
+  :host ::ng-deep .order-details-tooltip .p-tooltip-arrow {
+    border-top-color: white !important;
+    filter: drop-shadow(0 -1px 0px #ccc);
+  }
+  
+  :host ::ng-deep .order-details-tooltip .p-tooltip-text {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+  
+  :host ::ng-deep .order-details-tooltip .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  :host ::ng-deep .order-details-tooltip .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  :host ::ng-deep .order-details-tooltip .my-2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  :host ::ng-deep .order-details-tooltip .font-bold {
+    font-weight: bold;
+  }
+  
+  :host ::ng-deep .order-details-tooltip hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+  }
+
+.relative {
+  position: relative;
+  display: grid;
+}
+
+.order-details-popup {
+  position: absolute;
+  bottom: 100%;
+  left: -23%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+.popup-content {
+  font-size: 0.9em;
+}
+
+.popup-content .flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-content hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.popup-content .font-bold {
+  font-weight: bold;
+}
+
+.popup-arrow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(345%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+.popup-arrow::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -23%;
+  transform: translateX(-50%);
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 11px solid #ccc;
+  z-index: -1;
+}
