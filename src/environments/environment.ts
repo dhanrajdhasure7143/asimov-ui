@@ -49,7 +49,7 @@ export const environment = {
     environmentName: "DEV",
     // Asimov-ui URl to redirect from stripe to application
     paymentSuccessURL: "http://epsoftiap.internaldev.ai/#/pages/success",
-    paymentFailuerURL: "http://epsoftiap.internaldev.ai/#/pages/subscriptions",
+    paymentFailuerURL: "http://epsoftiap.internaldev.ai/#/pages/aiagent/home",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
 
     python_llm:"http://llmpython.dev.epsoftinc.in/",

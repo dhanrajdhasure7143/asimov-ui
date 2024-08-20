@@ -16,12 +16,12 @@ import { StripeService } from 'ngx-stripe';
 export class AiAgentSubAgentsComponent implements OnInit {
   product_id="";
   agentList: any[] = [];
-  bot: any;
-  UUID="";
+  agentName: string='';
   subAgentList: any[] = [];
-  dummyBotName:any;
   selectedAgent: any;
   displayAddAgentDialog: boolean = false;
+  showSkeleton:boolean = true;
+  agentExpire: any;
   
   constructor(
     private router: Router,
@@ -35,13 +35,8 @@ export class AiAgentSubAgentsComponent implements OnInit {
     private stripeService: StripeService,
     private toastService: ToasterService,
   ) { 
-    const navigation = this.router.getCurrentNavigation();
-    this.bot = navigation?.extras.state?.bot;
-  }
-
-  ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.bot = params['botName'] ? { botName: params['botName'] } : null;
+      this.agentName = params['botName'] ? params['botName'] : null;
       const productId = params['id'];
       if (productId) {
         this.product_id=productId
@@ -49,6 +44,11 @@ export class AiAgentSubAgentsComponent implements OnInit {
         this.getSubAgents();
       }
     });
+    // const navigation = this.router.getCurrentNavigation();
+    // this.bot = navigation?.extras.state?.bot;
+  }
+
+  ngOnInit(): void {
   }
 
   getPredefinedBotsList(productId: string) {
@@ -58,8 +58,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
         ...bot,
         details: bot.description || 'No Description Found.'
       }));
-      this.bot = this.agentList.find(bot => bot.productId === productId);
-      this.UUID=this.bot.predefinedUUID
+      console.log("Agent List",this.agentList)
+      this.agentName = this.agentList.find(bot => bot.productId === productId).predefinedBotName;
+      // this.UUID=this.agentName.predefinedUUID
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
@@ -69,9 +70,14 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
   getSubAgents() {
     this.spinner.show();
-    let tenant_id = localStorage.getItem("tenantName");
-    this.rest_api.getSubAiAgent(this.product_id, tenant_id).subscribe((res: any) => {
-      this.subAgentList = res;
+    // let tenant_id = localStorage.getItem("tenantName");
+    this.rest_api.getSubAiAgent(this.product_id).subscribe((res: any) => {
+      this.subAgentList = res.data;
+      if(res.code == 4200){
+        this.agentExpire = res.expiryDate;
+        this.agentName = res.agentName;
+      }
+      this.showSkeleton= false;
       const today = new Date();
       const twoDaysBeforeToday = new Date(today.setDate(today.getDate() - 2));
       this.subAgentList.forEach(async agent => {
@@ -86,9 +92,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
         //   agent.lastRunDate = lastRunDate ? lastRunDate : null;
         //   console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
         // } else {
-          const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
-          agent.lastRunDate = lastRunDate ? lastRunDate : null;
-          console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
+          // const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
+          // agent.lastRunDate = lastRunDate ? lastRunDate : null;
+          // console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
         // }
       });
   
@@ -134,7 +140,12 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
 
   viewAgentDetails(agent: any) {
-    console.log('Viewing agent details:', agent);
-        this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentType, agentId : agent.agentId} });
+      this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentId, agentId : agent.subAgentId} });
   } 
+
+  navigateManageSubscription() {
+    this.router.navigate(["/pages/subscriptions"],{
+      queryParams:{index:0}
+    })
+  }
 }

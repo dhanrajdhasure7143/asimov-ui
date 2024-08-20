@@ -424,7 +424,7 @@ hr {
     font-weight: 600;
     /* font-size: 30px; */
     font-size: 20px;
-    margin-right: 25px;
+    /* margin-right: 25px; */
 }
 
 .rem-execution {
@@ -803,6 +803,13 @@ input[type=checkbox] {
     width: 80px;
     height: 28px;
   }
+  .top-right-changable-btn:hover{
+    cursor: pointer;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1) !important;
+  }
+
   .top-right-view-renew-btn button {
     width: 100%;
     height: 100%;
@@ -841,7 +848,7 @@ input[type=checkbox] {
     border-radius: 10px;
     padding: 20px;
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-    cursor: pointer;
+    /* cursor: pointer; */
     /* width: calc(33.333% - 20px); Adjust width as needed */
     width: calc(33.333% - 150px); /* Adjust width as needed */
     box-sizing: border-box;
@@ -953,3 +960,59 @@ input[type=checkbox] {
     border-radius: 12px;
   }
   /* Dialog Styles Ended */
+
+  .skeleton-box {
+    /* display: flex;
+    flex-wrap: wrap;
+    grid-gap: 30px;
+    gap: 30px; */
+    /* margin: 20px 10px 50px 30px; */
+    /* margin-top: -30px; */
+    /* margin-left: 5px; */
+  }
+  
+  .skeleton-card-box {
+    flex: 1 1 30%;
+    padding: 10px;
+  }
+  
+  .custom-skeleton {
+    /* max-width: 350px;
+    max-height: 195px; */
+    width: 100%;
+    height: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+  }
+  
+  .skeleton-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 20px;
+  }
+  
+  .circle-skeleton {
+    margin-right: 8px;
+  }
+  
+  .name-skeleton {
+    margin: 0px 20px !important;
+  }
+  
+  .info-skeleton {
+    margin-bottom: 16px;
+  }
+  
+  .skeleton-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  .agent-expire{
+    margin-left: 10px;
+    font-size: 12px;
+  }

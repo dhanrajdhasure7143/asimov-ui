@@ -1,3 +1,4 @@
+
 <div class="dialog-header">
   <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
   <h3>Add {{ botName || selectedAgent?.predefinedBotName }} Agents</h3>
@@ -56,10 +57,14 @@
       <div class="popup-arrow"></div>
     </div>
   
-    <button [ngClass]="{'proceed-button': true, 'dull-green': agentCount === 0}" 
+    <!-- <button [ngClass]="{'proceed-button': true, 'dull-green': agentCount === 0}" 
             [disabled]="agentCount === 0"
             (click)="proceedToPay()">
       Proceed to Pay: $ {{agentCount === 0 ? '00.00': calculateTotalPrice() }}
+    </button> -->
+    <button [ngClass]="{'proceed-button': true, 'dull-green': agentCount === 0}" 
+            [disabled]="agentCount === 0"
+            (click)="proceedToPay()">Proceed to Pay
     </button>
   </div>
 

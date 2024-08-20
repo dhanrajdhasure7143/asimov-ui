@@ -1,20 +1,28 @@
 <div class="grid-wrapper">
     <h2 class="grid-heading">AI Agents</h2>
     <div class="grid-container">
-        <div *ngFor="let each of predefined_botsList" class="grid-item" (click)="onclickBot(each)">
+        <div *ngFor="let each of predefined_botsList" class="grid-item">
             <div class="content">
                 <div class="top-section">
-                    <div class="bot-image">
+                    <div class="bot-image" (click)="onclickBot(each)">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
                     <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
+                    <!-- <div (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+                        <ng-container *ngIf="!isHovered; else hyperlink">
+                          <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
+                        </ng-container>
+                        <ng-template #hyperlink>
+                          <a href="https://epsoft.ai/" target="_blank" class="bot-name">{{ each.predefinedBotName }} Agent</a>
+                        </ng-template>
+                      </div> -->
                     <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
                 <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
                 <!-- <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                     <p class="bot-details">{{ each.details }}</p>
                 </div> -->
-                <div class="bot-details-wrapper">
+                <div class="bot-details-wrapper" (click)="onclickBot(each)">
                     <p class="bot-details">{{ each.details }}</p>
                 </div>
 
@@ -56,7 +64,7 @@
         <div class="search-container">
             <div class="search-bar-wrapper">
                 <img src="../../../../assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
-                <input type="text" placeholder="Find Your Agent..." [disabled]="botPlans.length === 0"
+                <input type="text" placeholder="Find Your Agent..." [disabled]="unfilteredAgentsList.length === 0"
                     [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
             </div>
 
@@ -66,7 +74,7 @@
             <div class="d-inline-block mr-4 order-det" *ngIf="totalAmount >0" (mouseenter)="showPopup()"
                 (mouseleave)="hidePopup()">Order details
                 <div class="popup" [ngClass]="{'show': isPopupVisible}">
-                    <div *ngFor="let plan of botPlans" class="popup-plan-sec" style="text-align: left !important;">
+                    <div *ngFor="let plan of unsubscribed_agents" class="popup-plan-sec" style="text-align: left !important;">
                         <ng-container *ngIf="plan.quantity>=1">
                             <p>{{ plan.name }}: {{ plan.quantity }} ( {{plan.selectedTire}} )
                                 <span *ngFor="let price of plan.priceCollection">
@@ -94,7 +102,7 @@
         </div>
         <div class="scrollable-explore-content">
             <div class="inner-cards-container">
-                <div class="card" *ngFor="let plan of botPlans; let i = index"
+                <div class="card" *ngFor="let plan of unsubscribed_agents; let i = index"
                     (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed))">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 10px;">
@@ -175,7 +183,8 @@
 
                         <!-- Agent Features -->
                         <div class="frame">
-                            <p class="text-design-below">{{formatFeatures(plan.features)}}</p>
+                            <!-- <p class="text-design-below">{{formatFeatures(plan.features)}}</p> -->
+                            <p class="text-design-below">{{plan.description}}</p>
                         </div>
 
                         <!-- Agent plan toggle monthly or yearly -->
@@ -198,11 +207,11 @@
                 </div>
             </div>
 
-            <div *ngIf="unsubscribed_agents.length >=1 && filteredBotsList.length === 0" class="centered-message">
+            <div *ngIf="unsubscribed_agents.length == 0" class="centered-message">
                 <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-                No Agent Found ...
+                No Agent Found
             </div>
-            <div *ngIf="botPlans.length === 0" class="centered-message">
+            <div *ngIf="unfilteredAgentsList.length === 0" class="centered-message">
                 <div>
                     <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     We are working on more AI Agents ...
@@ -230,7 +239,7 @@
         </div>
     </div>
 
-    <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}"
+    <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'24vw'}"
         [modal]="true" [showHeader]="false" [closable]="true" styleClass="custom-dialog">
         <app-ai-agent-add-agents-dialog [selectedAgent]="selectedAgent"
             (close)="closeDialog()"></app-ai-agent-add-agents-dialog>

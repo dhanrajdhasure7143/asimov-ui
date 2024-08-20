@@ -3183,7 +3183,8 @@ textarea.p-inputtextarea {
 /* headercss start*/
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
-  color: var(--main-bluecolor) !important;
+  /* color: var(--main-bluecolor) !important; */
+  color: #747b80 !important;
   width: 2.6rem !important;
   height: 2.6rem !important;
   margin: 0px !important

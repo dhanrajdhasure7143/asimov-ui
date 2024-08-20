@@ -28,6 +28,7 @@ export class AiAgentHomeComponent implements OnInit {
   agentCount: number = 1;
   selectedPlans:any=[];
   selectedPlan: string = 'Monthly';
+  isHovered = false;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -45,6 +46,7 @@ export class AiAgentHomeComponent implements OnInit {
   getPredefinedBotsList() {
     this.spinner.show();
     this.rest_api.getPredefinedBotsList().subscribe((res: any) => {
+      console.log(res)
         res.data.forEach(bot => {
             const botDetails = {
                 ...bot,
@@ -54,6 +56,7 @@ export class AiAgentHomeComponent implements OnInit {
                 this.predefined_botsList.push(botDetails);
             } else {
                 this.unsubscribed_agents.push(botDetails)
+                console.log("this.unsubscribed_agents",this.unsubscribed_agents)
                 this.filteredBotsList.push(botDetails);
             }
             

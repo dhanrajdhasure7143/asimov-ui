@@ -48,7 +48,7 @@ export const environment = {
   isCustomerBots : false,
   environmentName: "DEMO",
   paymentSuccessURL: "https://eziap.demo.epsoftinc.com/#/pages/success",
-  paymentFailuerURL: "https://eziap.demo.epsoftinc.com/#/pages/subscriptions",
+  paymentFailuerURL: "https://eziap.demo.epsoftinc.com/#/pages/aiagent/home",
   stripeKey:"pk_test_51P0drWCJ3cQHk3CPJR9AeA28nQfYeKOIThMG6OGneyWSbbyQ0r61OHtZqkI2mssJrSRbgXDP1urCMu0GPSLewiZu00Usd94Uob",
   python_llm:"https://ezflowllm.demo.epsoftinc.com",
   ezaskUrl: "http://ezask.demo.epsoftinc.in",

@@ -103,8 +103,9 @@ export class PredefinedBotsService {
     return this.http.get("platform-service/document/uploadAIAgentFilesUpdate",body)
   }
 
-  getSubAiAgent(product_id,tenant_id){
-    return this.http.get(`/subscriptionservice/v1/subscriptions/api/agents?productId=${product_id}&tenantId=${tenant_id}`)
+  getSubAiAgent(product_id){
+    // return this.http.get(`/subscriptionservice/v1/subscriptions/api/agents?productId=${product_id}&tenantId=${tenant_id}`)
+    return this.http.get(`/rpa-service/predefined/sub-agents/${product_id}`)
   } 
 
   subAgentLastExecution(id){
@@ -113,5 +114,13 @@ export class PredefinedBotsService {
 
   updateSubAgentName(subagentId,subAgentName){
     return this.http.put(`/rpa-service/predefined/update-agent-name/${subagentId}?newName=${subAgentName}`,'')
+  }
+
+  getPlansList(){
+    return this.http.get("/subscriptionservice/v1/stripe/load-predefined-bots")
+  }
+
+  getCheckoutScreen(body){
+    return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
   }
 }

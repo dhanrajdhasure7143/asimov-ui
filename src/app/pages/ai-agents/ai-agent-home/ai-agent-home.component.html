@@ -7,7 +7,15 @@
                     <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
+                    <!-- <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br> -->
+                    <div (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+                      <ng-container *ngIf="!isHovered; else hyperlink">
+                        <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
+                      </ng-container>
+                      <ng-template #hyperlink>
+                        <a href="your-link-here" class="bot-name">{{ each.predefinedBotName }} Agent</a>
+                      </ng-template>
+                    </div>
                     <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
                 <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
@@ -135,6 +143,6 @@
     </div>
 </div>
 
-  <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'29vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
+  <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'24vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
     <app-ai-agent-add-agents-dialog [selectedAgent]="selectedAgent" (close)="closeDialog()"></app-ai-agent-add-agents-dialog>
   </p-dialog>

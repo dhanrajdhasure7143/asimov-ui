@@ -44,7 +44,7 @@ export const environment = {
   isCustomerBots : false,
   environmentName: "PROD",
   paymentSuccessURL: "https://ezflow.epsoftinc.com/#/pages/subscriptions/paymentmethod",
-  paymentFailuerURL: "https://ezflow.epsoftinc.com/#/pages/subscriptions/paymentmethod",
+  paymentFailuerURL: "https://ezflow.epsoftinc.com/#/pages/aiagent/home",
   stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo",
   python_llm:"https://ezflowllm.epsoftinc.com",
   ezaskUrl: "http://ezask.epsoftinc.in",

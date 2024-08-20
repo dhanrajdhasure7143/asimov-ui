@@ -575,6 +575,9 @@ hr {
     margin-right: 10px;
     width: 30%;
 }
+.add-agents:hover{
+  font-weight: 600 !important;
+}
 
 /* ----------------------------------- New styles */
 .sticky-explore-section {

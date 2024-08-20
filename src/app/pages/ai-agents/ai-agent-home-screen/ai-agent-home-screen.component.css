@@ -1021,3 +1021,13 @@ input[type="radio"]:checked + .custom-radio::after {
 .amount, .total-amount {
   float: right;
 }
+
+.bot-name {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.bot-name:hover {
+  color: blue; /* Change the color or style on hover */
+  text-decoration: underline;
+}
