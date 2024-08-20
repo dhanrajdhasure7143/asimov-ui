@@ -52,7 +52,7 @@ export const environment = {
     paymentFailuerURL: "http://epsoftiap.internaldev.ai/#/pages/subscriptions",
     stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
 
-    python_llm:"http://llmpython.dev.epsoftinc.in/",
+    python_llm:"http://10.11.3.98:5006/",
     ezaskUrl:"http://ezask.dev.epsoftinc.in",
     ezChatBotKey:"1STWkvY7eRPyOmOUq5kHRfGQ4u2rX4+vq6cAXyw3smk+jCjVtj2p9iF9xEfqRLbgDjNn1uM+q4B615AGqG1tIeDpntAvP1MKN38=",
     product:"AiAgents"
