@@ -7,7 +7,6 @@ import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestr
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
 import { AiAgentSubAgentsComponent } from './ai-agent-sub-agents/ai-agent-sub-agents.component';
 import { AiAgentHomeScreenComponent } from './ai-agent-home-screen/ai-agent-home-screen.component';
-import { RecruitmentAiSalesPageComponent } from './sales-pages/app-recruitment-ai-sales-page';
 
 const routes: Routes = [
   {path:'', component:AiAgentsComponent, children:[
@@ -17,7 +16,6 @@ const routes: Routes = [
     {path:'form', component:AiAgentFormComponent},
     {path:'details', component:AgentDetailsComponent},
     {path:'sub-agents', component:AiAgentSubAgentsComponent},
-    {path: 'recruitment-ai-sales-page', component: RecruitmentAiSalesPageComponent},
   ]
 }
 ]
