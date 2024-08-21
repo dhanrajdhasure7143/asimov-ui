@@ -7,15 +7,12 @@
                     <div class="bot-image" (click)="onclickBot(each)">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br>
-                    <!-- <div (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
-                        <ng-container *ngIf="!isHovered; else hyperlink">
-                          <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
-                        </ng-container>
-                        <ng-template #hyperlink>
-                          <a href="https://epsoft.ai/" target="_blank" class="bot-name">{{ each.predefinedBotName }} Agent</a>
-                        </ng-template>
-                      </div> -->
+                    <!-- <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> -->
+
+                    <span class="bot-name" (mouseenter)="each.isHovered = true" (mouseleave)="each.isHovered = false">
+                        <h3 *ngIf="!each.isHovered" class="agent-name">{{ each.predefinedBotName }} Agent</h3>
+                        <a *ngIf="each.isHovered" href="https://epsoft.ai/" target="_blank" class="agent-name">{{ each.predefinedBotName }} Agent</a>
+                    </span>
                     <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
                 <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->

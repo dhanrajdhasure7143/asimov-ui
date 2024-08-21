@@ -2264,7 +2264,8 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans 3', sans-serif !important;
+  /* font-family: 'Source Sans 3', sans-serif !important; */
+  font-family: "Roboto", sans-serif !important;
   font-size: var(--main-fontsize);
   font-weight: var(--main-fontweight);
   color: var(--main-txtcolor) !important;
@@ -2294,7 +2295,8 @@ div {
   text-decoration: none !important;
   /* list-style: none; */
   color: inherit;
-  font-family:  'Source Sans 3', sans-serif;
+  /* font-family:  'Source Sans 3', sans-serif; */
+  font-family:  "Roboto", sans-serif;
   font-weight: 400;
 }
 .row {
@@ -3184,7 +3186,7 @@ textarea.p-inputtextarea {
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
   /* color: var(--main-bluecolor) !important; */
-  color: #747b80 !important;
+  color: #000 !important;
   width: 2.6rem !important;
   height: 2.6rem !important;
   margin: 0px !important

@@ -10,14 +10,13 @@
     width: 100%;
 }
 
-.bot-name {
+/* .bot-name {
     font-weight: bold;
     margin-bottom: 10px;
     text-align: left;
     width: 100%;
-    /* font-size: 23px; */
     font-size: 16px;
-}
+} */
 
 .bot-details {
     text-align: left;
@@ -68,12 +67,12 @@ hr {
     width: 100%;
 }
 
-.bot-name {
+/* .bot-name {
     font-weight: bold;
     margin-bottom: 10px; 
     text-align: left;
     width: 100%;
-}
+} */
 
 .bot-details {
     text-align: left;
@@ -587,6 +586,9 @@ hr {
     width: 30%;
     margin-bottom: 0 !important;
 }
+.add-agents:hover{
+  font-weight: 650;
+}
 
 /* ----------------------------------- New styles */
 .sticky-explore-section {
@@ -1001,7 +1003,6 @@ input[type="radio"]:checked + .custom-radio::after {
   text-align: left !important;
 }
 
-
 .popup-plan-sec{
   max-height: 200px !important;
   overflow-y: auto !important;
@@ -1022,12 +1023,14 @@ input[type="radio"]:checked + .custom-radio::after {
   float: right;
 }
 
-.bot-name {
-  color: inherit;
+.agent-name{
   text-decoration: none;
+  font-weight: 500 !important;
+  box-sizing: border-box;
+  color: #001C47;
+  font-size: 20px !important;
 }
-
-a.bot-name:hover {
-  color: blue; /* Change the color or style on hover */
-  text-decoration: underline;
+.agent-name:hover{
+  color: #1E90FF !important;
+  text-decoration: underline !important;
 }

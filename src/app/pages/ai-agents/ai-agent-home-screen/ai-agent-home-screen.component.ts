@@ -60,7 +60,8 @@ export class AiAgentHomeScreenComponent implements OnInit {
         res.data.forEach(bot => {
             const botDetails = {
                 ...bot,
-                details: bot.description || 'No Description Found'
+                details: bot.description || 'No Description Found',
+                isHovered: false
             };
             if (bot.subscribed) {
                 this.predefined_botsList.push(botDetails);
