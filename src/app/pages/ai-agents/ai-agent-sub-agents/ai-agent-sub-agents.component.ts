@@ -148,4 +148,12 @@ export class AiAgentSubAgentsComponent implements OnInit {
       queryParams:{index:0}
     })
   }
+
+  truncateText(text: string, limit: number): string {
+    if (text.length > limit) {
+      return text.substring(0, limit) + '...';
+    } else {
+      return text;
+    }
+  }
 }

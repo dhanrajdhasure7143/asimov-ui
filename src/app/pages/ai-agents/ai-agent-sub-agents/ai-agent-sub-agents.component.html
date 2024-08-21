@@ -39,7 +39,7 @@
                                                 <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                                             </div>
                                             <div class="agent-name-sec">
-                                                <h3 class="new-agent-heading-section">{{ agent.subAgentName }}</h3>
+                                                <h3 class="new-agent-heading-section" pTooltip="{{ agent.subAgentName }}" tooltipPosition="top">{{ truncateText(agent.subAgentName, 10) }}</h3>
                                             </div>
                                         </div>
                                         <div class="expiry-date bottom-expires-section">
