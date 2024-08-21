@@ -102,6 +102,8 @@
         </div> -->
 
         <a mat-list-item class="link" id="AI_Agents" (click)="hightlight('AI_Agents',null)"
+          [matTooltip]=" !obj.sideBarOpen ? 'Explore' : ''"
+            matTooltipClass="sidebarTooltip" matTooltipPosition="right"
         routerLink="/pages/aiagent/home">
         <span class="side-icon">
           <span class="active-img" id="eiap-home-icon-active">
@@ -121,6 +123,8 @@
         <span class="side-menu-font" (click)="hightlight('AI_Agents','null')">Explore</span>
       </a>
           <a mat-list-item class="link" id="subscription" (click)="hightlight('subscription',null)"
+          [matTooltip]=" !obj.sideBarOpen ? 'Manage Subscription' : ''"
+            matTooltipClass="sidebarTooltip" matTooltipPosition="right"
             routerLink="/pages/subscriptions">
             <span class="side-icon">
               <span class="active-img" id="eiap-home-icon-active">

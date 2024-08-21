@@ -723,8 +723,10 @@ foreignObject {
 
 #sidenav.menu-close .mat-list-item-content .menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
   right: 50%;
-  bottom: -10px;
-  transform: translate(10px, 0px);
+  /* bottom: -10px;
+  transform: translate(10px, 0px); */
+  bottom: -5px;
+  transform: translate(12px, 0px);
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
@@ -4131,5 +4133,6 @@ padding: 0px 30px;}
 }
 
 .mat-list-base .mat-list-item{
-  height: 65px !important;
+  /* height: 65px !important; */
+  height: 60px !important;
 }

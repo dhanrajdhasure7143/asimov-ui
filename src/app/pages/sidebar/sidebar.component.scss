@@ -100,7 +100,7 @@
 
 .sidebar-main {
   height: calc(100% - 60px);
-  overflow: auto;
+  // overflow: auto;
 }
 
 .nav-main {
@@ -132,7 +132,8 @@
   height: auto;
    padding: 0px;
   background: #00a0e309;
-  padding-left: 30px;
+  // padding-left: 30px;
+  padding-left: 18px;
   padding-bottom: 15px;
 }
 // .submenus.adminsubmenus.expanded {
@@ -206,7 +207,7 @@ label.epsoft-label sup {
 
 .side-icon img {
   height: auto;
-  width: 24px;
+  width: 20px;
 }
 
 .mat-list-item:hover {
@@ -234,7 +235,7 @@ label.epsoft-label sup {
 .mat-list-base .mat-list-option {
   display: block;
   // height: 60px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   padding: 0;
@@ -361,11 +362,16 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 }
 
 .side-nav-label{
-  font-size: 12px;
+  // font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
-  margin-left: -5px;
+  // margin-left: -5px;
+  // margin-left: -16px;
   color: #667791;
   line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .side-nav-label-active{
   color: #098de6;
