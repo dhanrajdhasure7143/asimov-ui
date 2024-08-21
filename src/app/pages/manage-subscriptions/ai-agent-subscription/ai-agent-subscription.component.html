@@ -48,8 +48,10 @@
                     <div class="sub-agent-header">
                         <div class="header-cell" style="flex:1.5; display:inline-block ;overflow: hidden;
                         white-space: nowrap;
-                        text-overflow: ellipsis;"><input type="checkbox" (change)="selectAll(agent)"
-                                style="margin-right:10px" /> Ai Agent Name</div>
+                        text-overflow: ellipsis;">
+                        <!-- <input type="checkbox" (change)="selectAll(agent)"
+                                style="margin-right:10px" />  -->
+                                Ai Agent Name</div>
                         <div class="header-cell">Status</div>
                         <div class="header-cell">Expiry On</div>
                         <div class="header-cell">Purchase On</div>
@@ -59,8 +61,10 @@
                     </div>
 
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row">
-                        <div class="row-cell" style="flex:1.56"><input type="checkbox" [(ngModel)]="subAgent.selected"
-                                style="margin-right:10px" /> {{ subAgent.name }}</div>
+                        <div class="row-cell" style="flex:1.56">
+                            <!-- <input type="checkbox" [(ngModel)]="subAgent.selected"
+                                style="margin-right:10px" />  -->
+                                {{ subAgent.name }}</div>
                         <div class="row-cell">
                             <span class="status-badge"
                                 [ngClass]="subAgent.status === 'Active' ? 'active-status' : 'inactive-status'">

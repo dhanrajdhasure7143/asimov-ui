@@ -29,7 +29,7 @@
               <app-payment-history></app-payment-history>
             </span>
           </p-tabPanel>
-          <p-tabPanel header="Billing Information" *ngIf="isbillingInfoDisble">
+          <p-tabPanel header="Billing Information">
             <ng-template pTemplate = "header">
               <i class="pi pi-dollar icon-color tab_icons"></i>
               <span class="tab_title">Billing Information</span>
@@ -38,7 +38,7 @@
               <app-billing-address></app-billing-address>
             </span>
           </p-tabPanel>
-          <p-tabPanel header="Payment Methods"  *ngIf="isbillingInfoDisble">
+          <p-tabPanel header="Payment Methods">
             <ng-template pTemplate = "header">
               <i class="pi pi-credit-card icon-color tab_icons"></i>
               <span class="tab_title">Payment Methods</span>

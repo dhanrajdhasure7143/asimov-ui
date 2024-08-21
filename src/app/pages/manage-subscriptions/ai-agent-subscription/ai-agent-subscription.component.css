@@ -172,10 +172,11 @@
     align-items: center;
     position: relative;
     width: auto; 
+}
     
     .custom-toggle-label {
       margin-right: 10px;
-      font-weight: bold;
+      font-weight: 500;
       /* color: skyblue; */
     }
   
@@ -220,7 +221,7 @@
     input:checked + .custom-slider::before {
       transform: translateX(14px);
     }
-  }
+  
 
   .header-cell {
     position: relative;
@@ -231,7 +232,7 @@
   
   .remaining-days {
     color: #3199FF; 
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px; 
   }
@@ -256,12 +257,12 @@
   }
   
   .next-bill-est{
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
   }
 
   .agent-parent-name{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
     flex: 1.5;
     align-items: center;
@@ -269,8 +270,8 @@
   }
 
   .agent-table-headers .header-cell{
-    font-size: 18px !important;
-    font-weight: 500 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
   }
 
   .agent-icon {

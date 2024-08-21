@@ -123,14 +123,11 @@
         <span class="side-menu-font" (click)="hightlight('AI_Agents','null')">Explore</span>
       </a>
           <a mat-list-item class="link" id="subscription" (click)="hightlight('subscription',null)"
-          [matTooltip]=" !obj.sideBarOpen ? 'Manage Subscription' : ''"
-            matTooltipClass="sidebarTooltip" matTooltipPosition="right"
             routerLink="/pages/subscriptions">
             <span class="side-icon">
               <span class="active-img" id="eiap-home-icon-active">
                 <img src="../../../assets/images/agent/side-nav/active-manage.svg" alt="">
                 <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-active">Manage Subscription</p>
-
               </span>
               <span class="hover-img" id="eiap-home-icon-white">
                 <img src="../../../assets/images/agent/side-nav/hover-manage.svg" alt="">
@@ -143,9 +140,7 @@
             </span>
             <span class="side-menu-font">Manage Subscription</span>
           </a>
-          <a mat-list-item class="link" id="quick_access" (click)="hightlight('quick_access',null)"
-             [matTooltip]=" !obj.sideBarOpen ? 'Quick Access' : ''"
-            matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+          <a mat-list-item class="link" id="quick_access" (click)="hightlight('quick_access',null)">
             <span class="side-icon">
               <span class="active-img" id="eiap-home-icon-active">
                 <img src="../../../assets/images/agent/side-nav/active-quickaccess.svg" alt="">
