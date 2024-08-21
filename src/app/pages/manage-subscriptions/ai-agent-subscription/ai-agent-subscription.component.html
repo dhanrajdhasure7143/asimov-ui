@@ -4,7 +4,7 @@
         <div class="header-cell">No. of Agents</div>
         <div class="header-cell">Next Bill Estimates</div>
         <div class="header-cell">Payment Due</div>
-        <div class="header-cell">Actions</div>
+        <div class="header-cell">Auto Renew</div>
     </div>
 
     <div class="scroll-container">
@@ -28,8 +28,17 @@
 
                 </div>
 
-                <div class="header-cell">
+                <!-- <div class="header-cell">
                     <button class="action-btn"><u>Renew</u></button>
+                </div> -->
+                <div class="header-cell">
+                    <div class="custom-toggle">
+                        <label>
+                            <span class="custom-toggle-label">{{ agent.autoRenew ? 'Enabled' : 'Disabled'}}</span>
+                            <input type="checkbox" [(ngModel)]="agent.autoRenew" />
+                            <span class="custom-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -45,8 +54,8 @@
                         <div class="header-cell">Expiry On</div>
                         <div class="header-cell">Purchase On</div>
                         <div class="header-cell">Pricing</div>
-                        <div class="header-cell">Auto Renew</div>
-                        <div class="header-cell">Billing Cycle</div>
+                        <!-- <div class="header-cell">Auto Renew</div> -->
+                        <!-- <div class="header-cell">Billing Cycle</div> -->
                     </div>
 
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row">
@@ -62,7 +71,7 @@
                         <div class="row-cell">{{ subAgent.purchaseOn }}</div>
                         <div class="row-cell" style="font-weight: 600; color: #006bd5; font-size: 15px;">{{
                             subAgent.pricing }}.00</div>
-                        <div class="row-cell">
+                        <!-- <div class="row-cell">
                             <div class="custom-toggle">
                                 <label>
                                     <span class="custom-toggle-label">{{ subAgent.autoRenew ? 'Enabled' : 'Disabled'
@@ -71,8 +80,8 @@
                                     <span class="custom-slider"></span>
                                 </label>
                             </div>
-                        </div>
-                        <div class="row-cell">{{ subAgent.billingCycle }}</div>
+                        </div> -->
+                        <!-- <div class="row-cell">{{ subAgent.billingCycle }}</div> -->
                     </div>
                     <div class="pagination">
                         <span class="page" (click)="setPage(agent, agent.currentPage - 1)"

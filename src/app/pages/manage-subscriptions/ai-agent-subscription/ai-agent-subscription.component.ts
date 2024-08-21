@@ -16,6 +16,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       paymentDue: '2024-11-01',
       expanded: false,
       currentPage: 1,
+      autoRenew:true,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -33,6 +34,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       paymentDue: '2024-09-01',
       expanded: false,
       currentPage: 1,
+      autoRenew:true,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -48,6 +50,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       paymentDue: '2024-12-01',
       expanded: false,
       currentPage: 1,
+      autoRenew:false,
       subAgents: [
         { name: 'Agent 01', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
@@ -61,6 +64,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       paymentDue: '2024-08-25',
       expanded: false,
       currentPage: 1,
+      autoRenew:true,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -75,6 +79,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       nextBillEstimate: 600,
       paymentDue: '2024-11-01',
       expanded: false,
+      autoRenew:true,
       currentPage: 1,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },

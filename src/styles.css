@@ -2492,7 +2492,7 @@ input.p-inputtext {
 .p-tabview .p-tabview-nav {
   border: none !important;
   background: transparent !important;
-  height: 70px;
+  height: 50px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
@@ -2541,8 +2541,8 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .tabs_screen .p-tabview-nav-content {
   border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
-  border-radius: 6px;
-  height: 70px;
+  border-radius: 5px;
+  height: 50px;
   width: 100%;
 }
 span.tabscount {
@@ -4128,4 +4128,8 @@ padding: 0px 30px;}
 .sdk-approval-list .p-datatable-wrapper td:nth-child(4) span { /* for sdk-approval-list grid CSS*/
   width: 250px;
   display: block;
+}
+
+.mat-list-base .mat-list-item{
+  height: 65px !important;
 }

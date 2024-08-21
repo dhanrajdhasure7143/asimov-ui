@@ -359,3 +359,17 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .CS_botHeader {
   // max-height: 30px;
 }
+
+.side-nav-label{
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: -5px;
+  color: #667791;
+  line-height: normal;
+}
+.side-nav-label-active{
+  color: #098de6;
+}
+.side-nav-label-hover{
+  color: #fff;
+}
