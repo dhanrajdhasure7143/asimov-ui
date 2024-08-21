@@ -35,11 +35,10 @@ import { Component } from '@angular/core';
 
     <div class="section benefits">
       <div class="container">
-        <h2 class="section-title">Benefits</h2>
+        <h2 class="section-title1">Benefits</h2>
         <div class="grid">
           <div class="card icon-card" *ngFor="let benefit of benefits">
             <div class="icon-placeholder">
-              // <i [class]="benefit.icon"></i>
             <img [src]="benefit.icon" [alt]="benefit.title">    
 
             </div>
@@ -50,7 +49,7 @@ import { Component } from '@angular/core';
       </div>
     </div>
 
-    <div class="section">
+    <div class="section  how-it-works">
       <div class="container">
         <h2 class="section-title">How Does Our Recruitment AI Agent Work?</h2>
         <div class="grid">
@@ -95,7 +94,7 @@ import { Component } from '@angular/core';
       background-size: cover;
       background-position: center;
       color: white;
-      padding: 80px 0;
+      padding: 70px 0;
     }
     .hero h1 {
       font-size: 2.8em;
@@ -103,19 +102,25 @@ import { Component } from '@angular/core';
       font-weight: bold;
     }
     .hero p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .how-it-works .card h3 {
+      color: #3199ff;
     }
     .hero ul {
       list-style-type: none;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px 30px;
+      gap: 0px 30px;
       margin-bottom: 30px;
+      width:620px
     }
     .hero li {
       display: flex;
       align-items: center;
+      font-size: 15px;
+      font-weight:bold;
     }
     .hero li:before {
       content: "•";
@@ -124,60 +129,84 @@ import { Component } from '@angular/core';
       margin-right: 10px;
     }
     .btn {
-      background-color: #4a90e2;
+      background-color: #3199ff;
       color: white;
       padding: 12px 24px;
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
       display: inline-block;
+      font-size:17px;
     }
     .section {
-      padding: 80px 0;
+      padding: 100px 0;
       background-color: #f8f9fa;
     }
     .section-title {
       text-align: center;
       font-size: 2.2em;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
+      color: #001c47;
+      font-weight: 700;
+      margin-top: -60px;
+      margin-bottom: 30px;
+    }
+    .section-title1{
+      text-align: center;
+      font-size: 2.2em;
+      margin-bottom: 40px;
       color: #fff;
+      font-weight: 700;
+      margin-top: -18px;
     }
     .section-description {
       text-align: center;
-      max-width: 800px;
+      max-width: 890px;
       margin: 0 auto 50px;
-      color: #666;
       font-size: 1.1em;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      gap: 20px;
+      margin-bottom: -45px;
     }
     .card {
       background-color: white;
-      border-radius: 8px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .card-image {
       height: 200px;
       background-color: #e0e0e0;
     }
+    .card-image img {
+      width: -webkit-fill-available;
+      width: -moz-available;
+      width: stretch;
+    }
     .card-content {
-      padding: 20px;
+      padding: 14px;
+      border-right: 1px solid #b5b3b3;;
+      border-left: 1px solid #b5b3b3;;
+      border-bottom: 1px solid #b5b3b3;;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
     }
     .card h3 {
-      color: #4a90e2;
       margin-bottom: 10px;
-      font-size: 1.3em;
+      font-size: 17px;
+      font-weight: bold;
     }
     .card p {
-      color: #666;
     }
     .icon-card {
       text-align: center;
-      padding: 30px 20px;
+      padding: 12px 10px;
+      border:1px solid #b5b3b3
+    }
+      .section:last-of-type .card h3 {
+      color: #3199ff;
     }
     .icon-placeholder {
       width: 80px;
@@ -196,7 +225,6 @@ import { Component } from '@angular/core';
       background-image: url('/assets/images/agent/sales/benfits.png');
       background-size: cover;
       background-position: center;
-      color: white;
       padding: 80px 0;
     }
     .cta {
@@ -267,22 +295,22 @@ export class RecruitmentAiSalesPageComponent {
     {
       icon: '../../../assets/images/agent/sales/time-efficiency.svg',
       title: 'Time Efficiency',
-      description: 'Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring.'
+      description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
     },
     {
       icon: '../../../assets/images/agent/sales/improved-qulity.svg',
       title: 'Improved Quality',
-      description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations.'
+      description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
     },
     {
       icon: '../../../assets/images/agent/sales/decision-making.svg',
       title: 'Enhanced Decision-Making',
-      description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates.'
+      description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
     },
     {
       icon: '../../../assets/images/agent/sales/streamline-process.svg',
       title: 'Streamlined Processes',
-      description: 'Automates job posting and profile summarization, making recruitment more efficient and less time-intensive.'
+      description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
     }
   ];
 
@@ -290,7 +318,7 @@ export class RecruitmentAiSalesPageComponent {
     {
       icon: '../../../assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
-      description: 'Start with a simple subscription process—no hidden fees or complexities.'
+      description: 'Start with a simple subscription process — no hidden fees or complexities.'
     },
     {
       icon: '../../../assets/images/agent/sales/preferences.svg',
