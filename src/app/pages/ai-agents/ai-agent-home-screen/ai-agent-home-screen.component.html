@@ -11,7 +11,7 @@
 
                     <span class="bot-name" (mouseenter)="each.isHovered = true" (mouseleave)="each.isHovered = false">
                         <h3 *ngIf="!each.isHovered" class="agent-name">{{ each.predefinedBotName }} Agent</h3>
-                        <a *ngIf="each.isHovered" href="https://epsoft.ai/" target="_blank" class="agent-name">{{ each.predefinedBotName }} Agent</a>
+                        <a *ngIf="each.isHovered" target="_blank" href="" [routerLink]="['/pages/aiagent/recruitment-ai-sales-page']" class="agent-name">{{ each.predefinedBotName }} Agent</a>
                     </span>
                     <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
@@ -109,7 +109,11 @@
                                         height="30px" width="30px">
                                 </div>
                                 <div class="agent-names" style="margin-left: 10px;">
-                                    <span class="card-title-new">{{plan.name}}</span>
+                                    <!-- <span class="card-title-new">{{plan.name}}</span> -->
+                                    <span class="card-title-new" (mouseenter)="plan.isHovered = true" (mouseleave)="plan.isHovered = false">
+                                        <span *ngIf="!plan.isHovered" class="agent-name">{{plan.name}}</span>
+                                        <a *ngIf="plan.isHovered" target="_blank" href="" [routerLink]="['/pages/aiagent/recruitment-ai-sales-page']" class="agent-name">{{plan.name}}</a>
+                                    </span>
                                 </div>
                             </div>
                             <div class="view-more d-flex align-items-center">

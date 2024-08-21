@@ -365,7 +365,7 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   font-weight: 500;
   margin-left: -5px;
   color: #667791;
-  line-height: normal;
+  line-height: normal !important;
 }
 .side-nav-label-active{
   color: #098de6;
