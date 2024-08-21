@@ -28,6 +28,7 @@ import { environment } from 'src/environments/environment';
 import { AiAgentSubAgentsComponent } from './ai-agent-sub-agents/ai-agent-sub-agents.component';
 import { AiAgentAddAgentsDialogComponent } from './ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
 import { AiAgentHomeScreenComponent } from './ai-agent-home-screen/ai-agent-home-screen.component';
+import { RecruitmentAiSalesPageComponent } from './sales-pages/app-recruitment-ai-sales-page';
 
 
 
@@ -43,7 +44,8 @@ import { AiAgentHomeScreenComponent } from './ai-agent-home-screen/ai-agent-home
     AgentDetailsComponent,
     AiAgentSubAgentsComponent,
     AiAgentAddAgentsDialogComponent,
-    AiAgentHomeScreenComponent
+    AiAgentHomeScreenComponent,
+    RecruitmentAiSalesPageComponent
   ],
   imports: [
     CommonModule,
