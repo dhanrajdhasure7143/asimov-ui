@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   template: `
   <div class="sales-page-container">
     <div class="hero">
-    <img src="../../../assets/images-n/ai-agents/Rectangle 2667.png" alt="">
-
       <div class="container">
         <h1>Source Smarter To Hire Faster</h1>
         <p>Match the right talent 5X faster, automate outreach and collaborate on candidates</p>
@@ -35,13 +33,15 @@ import { Component } from '@angular/core';
       </div>
     </div>
 
-    <div class="section">
+    <div class="section benefits">
       <div class="container">
         <h2 class="section-title">Benefits</h2>
         <div class="grid">
           <div class="card icon-card" *ngFor="let benefit of benefits">
             <div class="icon-placeholder">
-              <i [class]="benefit.icon"></i>
+              // <i [class]="benefit.icon"></i>
+            <img [src]="benefit.icon" [alt]="benefit.title">    
+
             </div>
             <h3>{{ benefit.title }}</h3>
             <p>{{ benefit.description }}</p>
@@ -56,7 +56,7 @@ import { Component } from '@angular/core';
         <div class="grid">
           <div class="card icon-card" *ngFor="let step of workingSteps">
             <div class="icon-placeholder">
-              <i [class]="step.icon"></i>
+              <img [src]="step.icon" [alt]="step.title">    
             </div>
             <h3>{{ step.title }}</h3>
             <p>{{ step.description }}</p>
@@ -68,7 +68,7 @@ import { Component } from '@angular/core';
     <div class="cta">
       <div class="container">
         <h2>Unlock Exceptional Talent with Unmatched AI Precision</h2>
-        <a href="#" class="btn">Get Started</a>
+        <a href="" class="btn">Get Started</a>
       </div>
     </div>
 </div>
@@ -91,7 +91,7 @@ import { Component } from '@angular/core';
       padding: 0 20px;
     }
     .hero {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/assets/images/hero-background.jpg');
+      background-image: url('/assets/images/agent/sales/Rectangle 2667.png');
       background-size: cover;
       background-position: center;
       color: white;
@@ -140,7 +140,7 @@ import { Component } from '@angular/core';
       text-align: center;
       font-size: 2.2em;
       margin-bottom: 20px;
-      color: #333;
+      color: #fff;
     }
     .section-description {
       text-align: center;
@@ -182,7 +182,6 @@ import { Component } from '@angular/core';
     .icon-placeholder {
       width: 80px;
       height: 80px;
-      background-color: #e6f3ff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -193,8 +192,15 @@ import { Component } from '@angular/core';
       font-size: 2.5em;
       color: #4a90e2;
     }
+    .benefits {
+      background-image: url('/assets/images/agent/sales/benfits.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 80px 0;
+    }
     .cta {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/assets/images/cta-background.jpg');
+      background-image: url('/assets/images/agent/sales/get-started.png');
       background-size: cover;
       background-position: center;
       color: white;
@@ -236,22 +242,22 @@ export class RecruitmentAiSalesPageComponent {
 
   keyFeatures = [
     {
-      image:"../../../assets/images-n/ai-agents/content 1.png",
+      image:"../../../assets/images/agent/sales/content 1.png",
       title: 'Accurate Job Descriptions',
       description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
     },
     {
-      image:"../../../assets/images-n/ai-agents/content 2.png",
+      image:"../../../assets/images/agent/sales/content 2.png",
       title: 'Candidate Sourcing',
       description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
     },
     {
-      image:"../../../assets/images-n/ai-agents/content 3.png",
+      image:"../../../assets/images/agent/sales/content 3.png",
       title: 'Matching Percentage',
       description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
     },
     {
-      image:"../../../assets/images-n/ai-agents/content 4.png",
+      image:"../../../assets/images/agent/sales/content 4.png",
       title: 'Automated Job Posting',
       description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
     }
@@ -259,22 +265,22 @@ export class RecruitmentAiSalesPageComponent {
 
   benefits = [
     {
-      icon: 'pi pi-clock',
+      icon: '../../../assets/images/agent/sales/time-efficiency.svg',
       title: 'Time Efficiency',
       description: 'Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring.'
     },
     {
-      icon: 'pi pi-users',
+      icon: '../../../assets/images/agent/sales/improved-qulity.svg',
       title: 'Improved Quality',
       description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations.'
     },
     {
-      icon: 'pi pi-chart-bar',
+      icon: '../../../assets/images/agent/sales/decision-making.svg',
       title: 'Enhanced Decision-Making',
       description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates.'
     },
     {
-      icon: 'pi pi-sync',
+      icon: '../../../assets/images/agent/sales/streamline-process.svg',
       title: 'Streamlined Processes',
       description: 'Automates job posting and profile summarization, making recruitment more efficient and less time-intensive.'
     }
@@ -282,17 +288,17 @@ export class RecruitmentAiSalesPageComponent {
 
   workingSteps = [
     {
-      icon: 'pi pi-user-plus',
+      icon: '../../../assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
       description: 'Start with a simple subscription process—no hidden fees or complexities.'
     },
     {
-      icon: 'pi pi-cog',
+      icon: '../../../assets/images/agent/sales/preferences.svg',
       title: 'Set Your Preferences',
       description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
     },
     {
-      icon: 'pi pi-refresh',
+      icon: '../../../assets/images/agent/sales/automate.svg',
       title: 'Automate',
       description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
     }

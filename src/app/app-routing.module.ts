@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RedirectionComponent } from './rediraction/redirection.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { SoApprovalComponent } from './so-approval/so-approval.component';
+import { RecruitmentAiSalesPageComponent } from './sales-pages/recruitment-ai-sales-page';
 
 const routes: Routes = [
   { path:'', redirectTo:"login", pathMatch:"full" },
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path:'soapprovals', component:SoApprovalComponent},
   { path: 'login', component: LoginComponent },
   { path: 'redirect', component: RedirectionComponent },
+  { path: 'recruitment', component: RecruitmentAiSalesPageComponent },
   { path: 'pages', loadChildren: () => import('src/app/pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },
   { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },//resolve: {userSharedData: ContentReslover}
   { path: '**', redirectTo: 'login'}
