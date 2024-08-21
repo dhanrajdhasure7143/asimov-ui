@@ -56,7 +56,7 @@ import { Component } from '@angular/core';
         <div class="grid">
           <div class="card icon-card" *ngFor="let step of workingSteps">
             <div class="icon-placeholder">
-              <i [class]="step.icon"></i>
+              <img [src]="step.icon" [alt]="step.title">    
             </div>
             <h3>{{ step.title }}</h3>
             <p>{{ step.description }}</p>
@@ -140,7 +140,7 @@ import { Component } from '@angular/core';
       text-align: center;
       font-size: 2.2em;
       margin-bottom: 20px;
-      color: #333;
+      color: #fff;
     }
     .section-description {
       text-align: center;
@@ -182,7 +182,6 @@ import { Component } from '@angular/core';
     .icon-placeholder {
       width: 80px;
       height: 80px;
-      background-color: #e6f3ff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -289,17 +288,17 @@ export class RecruitmentAiSalesPageComponent {
 
   workingSteps = [
     {
-      icon: 'pi pi-user-plus',
+      icon: '../../../assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
       description: 'Start with a simple subscription process—no hidden fees or complexities.'
     },
     {
-      icon: 'pi pi-cog',
+      icon: '../../../assets/images/agent/sales/preferences.svg',
       title: 'Set Your Preferences',
       description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
     },
     {
-      icon: 'pi pi-refresh',
+      icon: '../../../assets/images/agent/sales/automate.svg',
       title: 'Automate',
       description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
     }
