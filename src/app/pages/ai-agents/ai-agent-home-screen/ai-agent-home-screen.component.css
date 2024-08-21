@@ -96,7 +96,7 @@ hr {
 
 .grid-item {
     /* width: 30%; */
-    min-width: 340px;
+    /* min-width: 340px; */
     height: auto;
     background: #fff !important;
     display: flex;
