@@ -12,10 +12,11 @@
           <p-tabPanel header="Overview">
             <ng-template pTemplate = "header">
               <i class="pi pi-eject icon-color tab_icons"></i>
-              <span class="tab_title">Overview</span>
+              <span class="tab_title">Subscription</span>
             </ng-template>
             <span *ngIf="check_tab == 0">
-                <app-overview></app-overview>
+                <!-- <app-overview></app-overview> -->
+                 <app-ai-agent-subscription></app-ai-agent-subscription>
             </span>
           </p-tabPanel>
           <p-tabPanel header="Invoices" >

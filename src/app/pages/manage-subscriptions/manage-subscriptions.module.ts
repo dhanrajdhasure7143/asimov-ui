@@ -44,12 +44,13 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { SubscriptionPlanComponent } from './subscription-plan/subscription-plan.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
+import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-subscription.component';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent, SubscriptionPlanComponent],
+     OrderDetailsComponent,OrderByPipe, AddcardComponent, OverviewComponent, SubscriptionPlanComponent, AiAgentSubscriptionComponent],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,

@@ -1,0 +1,97 @@
+<div class="subscription-table">
+    <div class="table-header agent-table-headers">
+        <div class="header-cell" style="flex:1.25">AI Agents</div>
+        <div class="header-cell">No. of Agents</div>
+        <div class="header-cell">Next Bill Estimates</div>
+        <div class="header-cell">Payment Due</div>
+        <div class="header-cell">Actions</div>
+    </div>
+
+    <div class="scroll-container">
+        <div *ngFor="let agent of subscriptions" class="accordion">
+            <div class="accordion-header" (click)="toggleAccordion(agent)">
+                <!-- <span class="icon">{{ agent.expanded ? '<' : '>' }}</span> -->
+                <span>
+                    <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
+                </span>
+                <div class="header-cell agent-parent-name">
+                    <img src="../../../../assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
+                    <span class="agent-name" [title]="agent.name">{{ agent.name }}</span>
+                </div>
+                <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
+                <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div>
+                <div class="header-cell">
+                    <div class="remaining-days" [ngClass]="getRemainingDaysClass(agent.paymentDue)">{{
+                        getRemainingDays(agent.paymentDue) }} days
+                    </div>
+                    <span class="date-format">{{ agent.paymentDue }}</span>
+
+                </div>
+
+                <div class="header-cell">
+                    <button class="action-btn"><u>Renew</u></button>
+                </div>
+            </div>
+
+            <div class="accordion-content" *ngIf="agent.expanded">
+                <p class="">Subscribed Agents</p>
+                <div class="sub-agent-table">
+                    <div class="sub-agent-header">
+                        <div class="header-cell" style="flex:1.5; display:inline-block ;overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;"><input type="checkbox" (change)="selectAll(agent)"
+                                style="margin-right:10px" /> Ai Agent Name</div>
+                        <div class="header-cell">Status</div>
+                        <div class="header-cell">Expiry On</div>
+                        <div class="header-cell">Purchase On</div>
+                        <div class="header-cell">Pricing</div>
+                        <div class="header-cell">Auto Renew</div>
+                        <div class="header-cell">Billing Cycle</div>
+                    </div>
+
+                    <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row">
+                        <div class="row-cell" style="flex:1.56"><input type="checkbox" [(ngModel)]="subAgent.selected"
+                                style="margin-right:10px" /> {{ subAgent.name }}</div>
+                        <div class="row-cell">
+                            <span class="status-badge"
+                                [ngClass]="subAgent.status === 'Active' ? 'active-status' : 'inactive-status'">
+                                {{ subAgent.status }}
+                            </span>
+                        </div>
+                        <div class="row-cell">{{ subAgent.expiryOn }}</div>
+                        <div class="row-cell">{{ subAgent.purchaseOn }}</div>
+                        <div class="row-cell" style="font-weight: 600; color: #006bd5; font-size: 15px;">{{
+                            subAgent.pricing }}.00</div>
+                        <div class="row-cell">
+                            <div class="custom-toggle">
+                                <label>
+                                    <span class="custom-toggle-label">{{ subAgent.autoRenew ? 'Enabled' : 'Disabled'
+                                        }}</span>
+                                    <input type="checkbox" [(ngModel)]="subAgent.autoRenew" />
+                                    <span class="custom-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row-cell">{{ subAgent.billingCycle }}</div>
+                    </div>
+                    <div class="pagination">
+                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)"
+                            [class.disabled]="agent.currentPage === 1">
+                            &lt;
+                        </span>
+
+                        <span class="page" *ngFor="let page of getPages(agent); let i = index"
+                            [class.active]="agent.currentPage === i + 1" (click)="setPage(agent, i + 1)">
+                            {{ i + 1 }}
+                        </span>
+
+                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)"
+                            [class.disabled]="agent.currentPage === getPages(agent).length">
+                            &gt;
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
