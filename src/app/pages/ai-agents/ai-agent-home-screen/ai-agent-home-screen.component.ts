@@ -279,6 +279,7 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
             this.unsubscribed_agent_ids.forEach((id) => {
               if(this.botPlans.find((bot) => bot.id == id)){
                 let obj = this.botPlans.find((bot) => bot.id == id);
+                obj["isHovered"] = false;
                 // obj["description"] = this.totalAiAgents.find((bot) => bot.productId == id).description;
                 this.unfilteredAgentsList.push(obj);
                 this.unsubscribed_agents = this.unfilteredAgentsList

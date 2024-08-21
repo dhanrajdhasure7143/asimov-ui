@@ -11,7 +11,8 @@
         <p-tabView #tabView [(activeIndex)]="activeIndex" styleClass="tabview-custom" (onChange)="handleChange($event,tabView)"  >
           <p-tabPanel header="Overview">
             <ng-template pTemplate = "header">
-              <i class="pi pi-eject icon-color tab_icons"></i>
+              <!-- <i class="pi pi-eject icon-color tab_icons"></i> -->
+              <img src="../../../assets/images/agent/side-nav/active-manage.svg" alt="subscription">
               <span class="tab_title">Subscription</span>
             </ng-template>
             <span *ngIf="check_tab == 0">

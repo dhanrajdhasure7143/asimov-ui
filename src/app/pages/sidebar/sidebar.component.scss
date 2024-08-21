@@ -372,6 +372,7 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: normal !important;
 }
 .side-nav-label-active{
   color: #098de6;
