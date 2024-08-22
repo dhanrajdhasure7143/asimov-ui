@@ -123,14 +123,15 @@ export class AiAgentSubAgentsComponent implements OnInit {
     });
   }
 
-  showAddAgentDialog( agent: any) {
-    console.log(agent);
-    this.selectedAgent = agent;
+  showAddAgentDialog( ) {
+
+    this.selectedAgent = this.agentList.find(bot => bot.productId === this.product_id);
     this.displayAddAgentDialog = true;
   }
 
   closeDialog() {
     this.displayAddAgentDialog = false;
+    this.getSubAgents();
   }
 
   handleRenewBtn(agent: any) {

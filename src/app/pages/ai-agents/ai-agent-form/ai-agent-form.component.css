@@ -402,4 +402,24 @@
     color: #007bff;
     font-size: 18px;
   }
-  
+ 
+::ng-deep .custom-accordion .p-accordion-header-link {
+  flex-direction: row-reverse !important;
+  padding: 1rem !important;
+}
+
+::ng-deep .custom-accordion .p-accordion-header-text {
+  flex: 1;
+}
+
+::ng-deep .custom-accordion .p-accordion-toggle-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+::ng-deep .custom-accordion .custom-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

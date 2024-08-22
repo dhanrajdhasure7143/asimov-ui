@@ -13,20 +13,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 @Component({
   selector: 'app-ai-agent-form',
   templateUrl: './ai-agent-form.component.html',
-  styleUrls: ['./ai-agent-form.component.css'],
-  animations: [
-    trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0px',
-        minHeight: '0',
-        display: 'none'
-      })),
-      state('expanded', style({
-        height: '*'
-      })),
-      transition('expanded <=> collapsed', animate('300ms ease-in-out'))
-    ])
-  ]
+  styleUrls: ['./ai-agent-form.component.css']
 })
 export class AiAgentFormComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
@@ -149,6 +136,10 @@ export class AiAgentFormComponent implements OnInit {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
     })
+    
+  }
+
+  onSave() {
     
   }
 
@@ -1062,12 +1053,6 @@ export class AiAgentFormComponent implements OnInit {
     // this.inplace.deactivate();
     this.isSubAgentNameEdit = false;
 
-  }
-
-  isExpanded = false;
-
-  toggleExpand() {
-    this.isExpanded = !this.isExpanded;
   }
 
 }

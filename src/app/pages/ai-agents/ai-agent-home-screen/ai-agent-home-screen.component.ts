@@ -141,6 +141,7 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
   }
 
   closeDialog() {
+    console.log("close")
     this.displayAddAgentDialog = false;
   }
 

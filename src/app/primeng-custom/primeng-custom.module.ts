@@ -47,6 +47,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {StepsModule} from 'primeng/steps';
+import {AccordionModule} from 'primeng/accordion';
 
 @NgModule({
   declarations: [],
@@ -97,7 +98,8 @@ import {StepsModule} from 'primeng/steps';
     SkeletonModule,
     InputSwitchModule,
     ProgressSpinnerModule,
-    StepsModule
+    StepsModule,
+    AccordionModule
   ],
   exports: [
     CommonModule,
@@ -146,7 +148,8 @@ import {StepsModule} from 'primeng/steps';
     SkeletonModule,
     InputSwitchModule,
     ProgressSpinnerModule,
-    StepsModule
+    StepsModule,
+    AccordionModule
   ],
   providers: [ConfirmationService, MessageService]
 })

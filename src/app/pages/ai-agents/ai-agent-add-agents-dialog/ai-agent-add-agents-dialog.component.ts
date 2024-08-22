@@ -30,12 +30,12 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selectedAgent)
+    console.log("this.selectedAgent",this.selectedAgent)
 
   }
 
   ngOnChanges(){
-    console.log(this.selectedAgent)
+    console.log("this.selectedAgent",this.selectedAgent)
   }
   
   proceedToPay() {
@@ -73,11 +73,8 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
     let req_body = {
       "userId":localStorage.getItem("ProfileuserId"),
       "productId":this.selectedAgent.productId,
-      "priceId":this.selectedAgent.productId,
       "quantity":this.agentCount
       }
-      console.log("req_body",req_body)
-      return
 
     
     this.rest_api.addMoreSubAgents(req_body).subscribe(
@@ -85,6 +82,7 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
           this.spinner.hide();
           // this.toastService.showSuccess("Redirecting to payment gateway");
           this.toastService.toastSuccess("Agent added successfully");
+          this.onClose();
         },error => {
           this.spinner.hide();
           this.toastService.showError("Failed to redirect to payment gateway");
