@@ -9,6 +9,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ai-agent-home-screen',
@@ -38,6 +39,12 @@ export class AiAgentHomeScreenComponent implements OnInit {
   botPlans:any[]=[];
   totalAiAgents:any[]=[];
   unfilteredAgentsList:any[]=[];
+  isOpenEnterprice = false;
+  isOpenThankyou = false;
+  isOpensuccessDialog = false;
+  userEmail : any;
+  enterPrise_plan:any={};
+  enterpriseFeatures = [];
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -46,7 +53,9 @@ export class AiAgentHomeScreenComponent implements OnInit {
     private toastMessage: toastMessages,
     private rest_api_service:RestApiService,
     private stripeService: StripeService,
-    private toastService: ToasterService,) { }
+    private toastService: ToasterService,) {
+      this.userEmail = localStorage.getItem('ProfileuserId');
+     }
 
   ngOnInit(): void {
     this.getPredefinedBotsList();
@@ -277,6 +286,10 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
                 obj['selectedTire']='Yearly'
                 this.botPlans.push(obj);
             });
+
+            this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});
+            this.enterpriseFeatures = JSON.parse(this.enterPrise_plan.metadata.product_features);
+
             this.unsubscribed_agent_ids.forEach((id) => {
               if(this.botPlans.find((bot) => bot.id == id)){
                 let obj = this.botPlans.find((bot) => bot.id == id);
@@ -344,6 +357,45 @@ proceedToSubscribe() {
       }
     );
 }
+
+  showEnterpriceModel(){
+    this.isOpenEnterprice = !this.isOpenEnterprice;
+  }
+
+  showThankyouModal() {
+    this.isOpenEnterprice = false
+    this.isOpenThankyou = !this.isOpenThankyou
+  }
+  showPopupDailogue() {
+    this.isPopupVisible = true;
+  }
+
+  hidePopupDailogue() {
+    this.isPopupVisible = false;
+  }
+
+  closePopup(){
+    this.isOpenEnterprice = false;
+    this.isOpensuccessDialog = false;
+  }
+
+  sendEmailEnterPrisePlan(){
+    this.spinner.show();
+    this.rest_api.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
+      if(res.errorMessage !="User not present"){
+        this.isOpensuccessDialog = true;
+        this.isOpenEnterprice = false
+        this.isOpenThankyou = !this.isOpenThankyou
+      }
+        this.spinner.hide();
+    },err=>{
+      Swal.fire("Error","Failed to send","error")
+      this.spinner.hide();
+      this.isOpensuccessDialog = true;
+      this.isOpenEnterprice = false
+      this.isOpenThankyou = !this.isOpenThankyou
+    })
+  }
 
 
 }

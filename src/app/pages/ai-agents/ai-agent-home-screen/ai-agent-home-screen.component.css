@@ -1034,3 +1034,110 @@ input[type="radio"]:checked + .custom-radio::after {
   color: #1E90FF !important;
   text-decoration: underline !important;
 }
+
+/* New Modal Styles */
+
+.inner-enterprise-modal-sec {
+  width: 40%;
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.enterprise-section-modal-pop {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition-duration: 0.5s;
+  background: #00000081;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.enterprise-section-modal-pop.active-popup {
+  top: 0;
+  opacity: 1;
+}
+.enterprise-section-modal-pop.inactive-popup {
+  top: -100%;
+  opacity: 0;
+}
+button.enterprise-plan-bottom-stickier {
+  border: none;
+  background: #3199ff;
+  border-radius: 300px;
+  padding: 8px 15px !important;
+  position: fixed;
+  right: 90px;
+  bottom: 40px;
+}
+button.enterprise-plan-bottom-stickier p{
+  font-weight: 700;
+  color: #fff;
+}
+.middle-image-list-section {
+  gap: 20px;
+}
+
+.middle-image-list-section img {
+  max-width: 220px !important;
+}
+.bottom-contact-choose-section {
+  align-items: end !important;
+  margin-top: 20px;
+}
+.bottom-contact-choose-section .left-button-cancel , .bottom-contact-choose-section .right-button-contact-sales  {
+  width: 48%;
+}
+.bottom-contact-choose-section .left-button-cancel button{
+  background: #E6E6E6;
+  border-radius: 50px;
+  width: 100%;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+  height: 40px;
+}
+
+
+.bottom-contact-choose-section .right-button-contact-sales button{
+  background: linear-gradient(90deg, #3199FF 0%, #2ED0FD 83.46%);
+  border-radius: 40px;
+  padding: 8px 15px;
+  width: 100%;
+  height: 40px;
+}
+.bottom-contact-choose-section .right-button-contact-sales button p {
+  color: #fff !important;
+  font-weight: 600;
+
+}
+.right-lister-section ul li{
+  gap: 5px !important;
+}
+.right-lister-section ul {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+}
+.top-button-tooler p {
+  font-size: 10px;
+  text-align:left;
+}
+
+.enterprise-header-section-modal h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000 !important;
+  
+}
+
+.enterprise-header-section-modal h2 span {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #3199FF !important;
+  display: inline-block;
+  margin-left: 8px !important;
+}

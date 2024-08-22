@@ -127,4 +127,9 @@ export class PredefinedBotsService {
   addMoreSubAgents(body){
     return this.http.post("/subscriptionservice/v1/subscriptions/add-more-agents",body)
   }
+
+  sendEmailEntrepricePlan(userId:string){
+    let headers = new HttpHeaders({});
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+  }
 }
