@@ -46,12 +46,12 @@
                                             <div class="single-expiry-dates">
                                                 <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastExecution">Last run date: {{ agent.lastExecution |date:'MMM dd, y hh:mm' }}</p>
                                             </div>
-                                            <div class="single-expiry-dates">
+                                            <!-- <div class="single-expiry-dates">
                                                 <p class="inner-dates-sec text-left m-0">
                                                     <span *ngIf="!agent.isExpired">Expires: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
                                                     <span *ngIf="agent.isExpired" style="color: red;">Expired: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
                                                 </p>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- Add more details as needed -->
                                     </div>
