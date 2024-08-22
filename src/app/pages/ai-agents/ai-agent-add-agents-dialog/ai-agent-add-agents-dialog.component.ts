@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { RestApiService } from '../../services/rest-api.service';
-import { switchMap } from 'rxjs/operators';
 import { StripeService } from 'ngx-stripe';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
@@ -26,14 +24,18 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
 
   constructor(
     private spinner: LoaderService,
-    private rest_api_service: RestApiService,
-    private stripeService: StripeService,
     private toastService: ToasterService,
     private rest_api: PredefinedBotsService,
     private toastMessage: toastMessages
   ) { }
 
   ngOnInit(): void {
+    console.log(this.selectedAgent)
+
+  }
+
+  ngOnChanges(){
+    console.log(this.selectedAgent)
   }
   
   proceedToPay() {
@@ -54,37 +56,35 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
       });
     });
   
-    if (filteredPriceIds.length === 0) {
-      console.error('No price selected for the chosen interval.');
-      this.spinner.hide();
-      return;
-    }
-  
-    let req_body = {
-      //"price": filteredPriceIds,
-      "priceData": filteredPriceIds.map(price => ({
-        "price": price.id,
-        "quantity": price.quantity
-      })),
-      // "customerEmail": this.userEmail,
-      // "successUrl": environment.paymentSuccessURL,
-      // // "cancelUrl": environment.paymentFailuerURL,
-      // "paymentMethodId": this.selectedCard,
-    };
-    // if(this.isbillingInfoDisble){
-    //   req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=4"
-    // }else{
-    //   req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=2"
+    // if (filteredPriceIds.length === 0) {
+    //   console.error('No price selected for the chosen interval.');
+    //   this.spinner.hide();
+    //   return;
     // }
+  
+    // let req_body = {
+    //   //"price": filteredPriceIds,
+    //   "priceData": filteredPriceIds.map(price => ({
+    //     "price": price.id,
+    //     "quantity": price.quantity
+    //   })),
+
+    // };
+    let req_body = {
+      "userId":localStorage.getItem("ProfileuserId"),
+      "productId":this.selectedAgent.productId,
+      "priceId":this.selectedAgent.productId,
+      "quantity":this.agentCount
+      }
+      console.log("req_body",req_body)
+      return
+
     
-    this.rest_api_service.getCheckoutScreen(req_body).pipe(
-        switchMap((session: any) => {
-          this.spinner.hide();
-          return this.stripeService.redirectToCheckout({ sessionId: session.id });
-        })
-      ).subscribe(
+    this.rest_api.addMoreSubAgents(req_body).subscribe(
         res => {
           this.spinner.hide();
+          // this.toastService.showSuccess("Redirecting to payment gateway");
+          this.toastService.toastSuccess("Agent added successfully");
         },error => {
           this.spinner.hide();
           this.toastService.showError("Failed to redirect to payment gateway");
@@ -134,49 +134,7 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
     const basePrice = this.yearlyPricing ? 100 : 10;
     return (basePrice * this.agentCount).toFixed(2);
   }
-  // proceedToPay() {
-  //   console.log('Proceeding to payment...');
-  //   // Implement payment logic here
-  //   this.displayAddAgentDialog = false;
-  // }
-  
-  
-  
-  // getSubAgents() {
-  //   this.spinner.show();
-  //   let tenant_id = localStorage.getItem("tenantName");
-  //   this.rest_api.getSubAiAgent(this.product_id, tenant_id).subscribe((res: any) => {
-  //     this.agent_drop_list = res;
-  
-  //     const today = new Date();
-  //     const twoDaysBeforeToday = new Date(today.setDate(today.getDate() - 2));
-  
-  //     this.agent_drop_list.forEach(async agent => {
-  //       const shouldExpire = Math.random() < 0.3;
-  
-  //       if (shouldExpire) {
-  //         let randomDate = new Date();
-  //         randomDate.setDate(today.getDate() - Math.floor(Math.random() * 30));
-  //         agent.isExpired = true;
-  //         agent.expiryDate = twoDaysBeforeToday.toISOString();
-  //         // agent.lastRunDate = "July 31 2024";
-  //         const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
-  //         agent.lastRunDate = lastRunDate ? lastRunDate : null;
-  //         console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
-  //       } else {
-  //         // agent.lastRunDate =null;
-  //         const lastRunDate = await this.getSubAgentsLastExeDate(agent.agentId);
-  //         agent.lastRunDate = lastRunDate ? lastRunDate : null;
-  //         console.log("Agnet Id", agent.agentId,"Last Run Date: ",lastRunDate)
-  //       }
-  //     });
-  
-  //     this.spinner.hide();
-  //   }, err => {
-  //     this.spinner.hide();
-  //     this.toastService.showError(this.toastMessage.apierror);
-  //   });
-  // }
+
   onClose(): void {
     this.close.emit();
     this.agentCount = 0;

@@ -123,4 +123,8 @@ export class PredefinedBotsService {
   getCheckoutScreen(body){
     return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
   }
+
+  addMoreSubAgents(body){
+    return this.http.post("/subscriptionservice/v1/subscriptions/add-more-agents",body)
+  }
 }
