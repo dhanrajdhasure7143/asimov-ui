@@ -18,7 +18,7 @@
 }
 
 .form-group{
-    margin: 0px 3px 0px 60px !important;
+    /* margin: 0px 3px 0px 60px !important; */
 }
 
 .form-label {
@@ -48,11 +48,12 @@
 }
 
 .col-form-label {
-    margin-bottom: 20px;
+  /* font-size: 10px; */
+    /* margin-bottom: 20px; */
 }
 
 .col-form-label b{
-    font-size: 18px;
+    font-size: 10px;
 }
 
 .progress-container {
@@ -408,6 +409,10 @@
   padding: 1rem !important;
 }
 
+::ng-deep .custom-accordion {
+  padding-bottom: 2rem;
+}
+
 ::ng-deep .custom-accordion .p-accordion-header-text {
   flex: 1;
 }
@@ -422,4 +427,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.form-main{
+  overflow: auto;
+}
+
+.custom-accordion-main .accordion-item {
+  margin-bottom: 5px;
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+}
+
+.custom-accordion-main .accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.custom-accordion-main .accordion-content {
+  /* padding: 1rem; */
+  padding-bottom: 1.5rem;
+  background-color: #fff;
+  overflow: hidden;
+}
+.accordion-header span{
+  font-size: 22px;
+}
+
+.accordion-content-save{
+  padding-left: 1rem;
 }

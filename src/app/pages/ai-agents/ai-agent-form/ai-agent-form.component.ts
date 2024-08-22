@@ -13,7 +13,20 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 @Component({
   selector: 'app-ai-agent-form',
   templateUrl: './ai-agent-form.component.html',
-  styleUrls: ['./ai-agent-form.component.css']
+  styleUrls: ['./ai-agent-form.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        height: '*',
+        opacity: 1
+      })),
+      state('out', style({
+        height: '0px',
+        opacity: 0
+      })),
+      transition('in <=> out', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class AiAgentFormComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
@@ -57,6 +70,7 @@ export class AiAgentFormComponent implements OnInit {
   _agentName:any;
   subAgentName:any="Agent 01"
   isSubAgentNameEdit:boolean = false;
+  isExpanded:boolean = true;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -1053,6 +1067,10 @@ export class AiAgentFormComponent implements OnInit {
     // this.inplace.deactivate();
     this.isSubAgentNameEdit = false;
 
+  }
+
+  toggleItem() {
+    this.isExpanded = !this.isExpanded;
   }
 
 }
