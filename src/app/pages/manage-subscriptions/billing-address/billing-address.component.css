@@ -17,7 +17,7 @@
     height: 40px;
     background: white !important;
     box-shadow: none !important;
-    border-radius: 5px;
+    border-radius: 5px !important;
 }
 
 ::ng-deep .maindivfoprm .label-control, .modelprbody label {
@@ -27,8 +27,21 @@
 ::ng-deep .p-dropdown .p-dropdown-label {
     background: white !important;
     border: 0 none;
+    border-radius: 6px;
 }
 
+::ng-deep .maindivfoprm .p-dropdown{
+    border-radius: 5px !important;
+    border-color: #747272 !important;
+}
+
+::ng-deep .p-dropdown .p-dropdown-trigger {
+    background: white;
+    color: #6c757d;
+    width: 2.357rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 /* Added New styles for input fields along with icons */
 
 .input-icon-wrapper {

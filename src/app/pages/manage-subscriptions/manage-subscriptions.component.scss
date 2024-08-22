@@ -14,12 +14,12 @@
 ::ng-deep .invoice-tab .tabs_screen .p-tabview-nav-content {
   border: 1px solid #fff !important;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 0px !important;
   height: 50px;
   width: 100%;
 }
 ::ng-deep .main-content-body {
-  margin-top: 5px !important;
+  margin-top: 0px !important; //top css
 }
 
 ::ng-deep .main-content-body.tablist-cont {
@@ -39,4 +39,8 @@
 ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
   overflow-x: auto;
   height: calc(100vh - 190px);
+}
+
+:host ::ng-deep .main-content-body {
+  padding: 0px 0px 0px;
 }
