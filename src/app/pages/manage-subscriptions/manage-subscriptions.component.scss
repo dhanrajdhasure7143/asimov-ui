@@ -5,3 +5,37 @@
   font-size: 16px;
   padding-left: 12px;
 }
+
+// added new styles for table
+
+::ng-deep .tabs_screen .p-tabview .p-tabview-nav {
+  padding: 0px;
+}
+::ng-deep .invoice-tab .tabs_screen .p-tabview-nav-content {
+  border: 1px solid #fff !important;
+  background-color: #fff;
+  border-radius: 5px;
+  height: 50px;
+  width: 100%;
+}
+::ng-deep .main-content-body {
+  margin-top: 5px !important;
+}
+
+::ng-deep .main-content-body.tablist-cont {
+  background: whitesmoke;
+}
+
+::ng-deep .p-datatable {
+  background: white !important;
+  border-radius: 6px;
+}
+::ng-deep .maincont {
+  height: calc(100vh - 0px);
+  background: #f9f9f9;
+}
+
+::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
+  overflow-x: auto;
+  height: calc(100vh - 190px);
+}

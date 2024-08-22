@@ -1,18 +1,18 @@
 
 <div class="maincont">
   <div class="maincont-contentarea">
-    <div class="row main-content-head">
+    <!-- <div class="row main-content-head">
       <h3>
         <span class="title_text">Manage Subscriptions</span>
       </h3>
-    </div>
-    <div class="main-content-body tablist-cont">
+    </div> -->
+    <div class="main-content-body tablist-cont invoice-tab">
       <div id="" class="tabs_screen subscrip_tabs h-100">
         <p-tabView #tabView [(activeIndex)]="activeIndex" styleClass="tabview-custom" (onChange)="handleChange($event,tabView)"  >
           <p-tabPanel header="Overview">
             <ng-template pTemplate = "header">
               <!-- <i class="pi pi-eject icon-color tab_icons"></i> -->
-              <img src="../../../assets/images/agent/side-nav/active-manage.svg" alt="subscription">
+              <img src="../../../assets/images/agent/side-nav/active-manage.svg" alt="subscription" style="height: 24px;">
               <span class="tab_title">Subscription</span>
             </ng-template>
             <span *ngIf="check_tab == 0">
