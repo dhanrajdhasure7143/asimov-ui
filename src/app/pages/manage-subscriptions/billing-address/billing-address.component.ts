@@ -224,4 +224,10 @@ export class BillingAddressComponent implements OnInit {
       return false;
     }
   }
+
+  getSelectedCountryName(): string {
+    const selectedIsoCode = this.billingForm.get('country').value;
+    const selectedCountry = this.countryInfo.find(country => country.isoCode === selectedIsoCode);
+    return selectedCountry ? selectedCountry.name : 'Select Country';
+  }
 }

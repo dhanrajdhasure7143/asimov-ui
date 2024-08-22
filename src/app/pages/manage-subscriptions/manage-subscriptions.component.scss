@@ -24,6 +24,7 @@
 
 ::ng-deep .main-content-body.tablist-cont {
   background: whitesmoke;
+  height: calc(100vh - 65px);
 }
 
 ::ng-deep .p-datatable {

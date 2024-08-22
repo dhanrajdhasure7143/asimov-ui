@@ -1,10 +1,15 @@
 <div class="maindivfoprm billingformdiv">
     <form [formGroup]="billingForm" class="">
-        <div class="row">
+        <div class="row  row-gap col-md-12">
             <div class="form-group col-md-6 pl-0">
                 <label  class="label-control">Name<span class="star">*</span></label>
-                <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="name"
-                    placeholder="Enter Name" required>
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-user"></i>
+                    </span>
+                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" maxlength="51"
+                        formControlName="name" placeholder="Enter Name" required>
+                </div>
                 <span *ngIf="billingForm.get('name').invalid && billingForm.get('name').touched && !billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required"> 
                     Name Required 
                 </span>
@@ -31,7 +36,12 @@
             </div> -->
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control" for="approvers">Email<span class="star">*</span></label>
-                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email" [attr.disabled]="true">
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-envelope"></i>
+                    </span>
+                    <input pInputText type="text" class="input-with-icon email-input" [style]="{'width':'100%'}" formControlName="email" placeholder="Enter Email" [attr.disabled]="true">
+                </div>
                 <span
                     *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
                     class="required">Email Required</span>
@@ -41,8 +51,13 @@
 
             <div class="form-group col-md-6 pl-0">
                 <label  class="label-control" for="approvers">Address Line1<span class="star">*</span></label>
-                <input pInputText type="text" [style]="{'width':'100%'}" formControlName="addressLine1"
-                    placeholder="Enter Address Line 1">
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-map-marker"></i>
+                    </span>
+                    <input pInputText type="text" class="input-with-icon" [style]="{'width':'100%'}" formControlName="addressLine1"
+                        placeholder="Enter Address Line 1">
+                </div>
                 <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched && !billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
                     Address Line1 Required 
                 </span>
@@ -58,8 +73,13 @@
             </div>
             <div class="form-group col-md-6 pr-0">
                 <label  class="label-control">Address Line2 <span class="star">*</span></label>
-                <input pInputText [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
-                    placeholder="Enter Address Line 2">
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-map-marker"></i>
+                    </span>
+                    <input pInputText class="input-with-icon" [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
+                        placeholder="Enter Address Line 2">
+                </div>
                     <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched && !billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required"> 
                         Address Line2 Required 
                     </span>
@@ -73,9 +93,27 @@
 
             <div class="form-group col-md-6 pl-0">
                     <label  class="label-control" for="taskCategory">Country<span class="star">*</span></label>
-                    <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
+                    <div class="dropdown-icon-wrapper">
+                        <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false" emptyMessage="No Records Found"
+                            (onChange)="onChangeCountry($event.value)" [style]="{'width':'100%'}" placeholder="Select Country"
+                            optionLabel="name" optionValue="isoCode">
+                            <ng-template pTemplate="selectedItem">
+                                <div class="country-item-value">
+                                    <i class="pi pi-globe"></i>
+                                    <!-- <div>{{billingForm.get('country').value ? billingForm.get('country').value : 'Select Country'}}</div> -->
+                                    <div>{{getSelectedCountryName()}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-country pTemplate="item">
+                                <div class="country-item">
+                                    <div>{{country.name}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <!-- <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false"
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
-                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="isoCode"></p-dropdown>
+                        [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="isoCode"></p-dropdown> -->
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
                         class="required">Country Required</span>
                     <span class="required">{{errorMessage}}</span>
@@ -105,8 +143,13 @@
 
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control">City<span class="star">*</span></label>
-                <input type="text" pInputText [style]="{'width':'100%'}" maxlength="51" formControlName="city"
-                    placeholder="Enter City" required>
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-map-marker"></i>
+                    </span>
+                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" maxlength="51"
+                        formControlName="city" placeholder="Enter City" required>
+                </div>
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched && !billingForm.get('city').hasError('pattern') && !billingForm.controls['city'].hasError('maxlength')" class="required"> 
                     City Required 
                 </span>
@@ -120,8 +163,13 @@
 
             <div class="form-group col-md-3 pr-0">
                 <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
-                <input pInputText type="text" maxlength="6" [style]="{'width':'100%'}" formControlName="postalcode"
-                    placeholder="Enter Postal Code" (keypress)="numbersOnly($event)" required>
+                <div class="input-icon-wrapper">
+                    <span class="input-icon">
+                        <i class="pi pi-map-marker"></i>
+                    </span>
+                    <input pInputText type="text" class="input-with-icon" maxlength="6" [style]="{'width':'100%'}" formControlName="postalcode"
+                        placeholder="Enter Postal Code" (keypress)="numbersOnly($event)" required>
+                </div>
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Postal Code Required 
                 </span>

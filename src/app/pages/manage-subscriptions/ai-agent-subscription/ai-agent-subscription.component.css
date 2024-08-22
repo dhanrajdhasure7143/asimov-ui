@@ -24,7 +24,8 @@
 
 .scroll-container {
     overflow-y: auto;
-    height: 48vh;
+    /* height: 48vh; */
+    height: 65vh;
 }
 
 .accordion {
