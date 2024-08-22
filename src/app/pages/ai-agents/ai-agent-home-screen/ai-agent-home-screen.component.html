@@ -218,7 +218,75 @@
                     We are working on more AI Agents ...
                 </div>
             </div>
-            <!-- </div> -->
+        </div>
+        <button type='button' class="enterprise-plan-bottom-stickier" (click)="showEnterpriceModel()">
+            <p class="mb-0"> <img src="../../../../assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+        </button>
+    </div>
+
+    <div class="enterprise-section-modal-pop" [ngClass]="isOpenEnterprice ? 'active-popup' : 'inactive-popup'">
+        <div class="inner-enterprise-modal-sec">
+            <div class="relative-sectioned-modal-ener">
+                <div class="enterprise-header-section-modal">
+                    <h2>Enterprise Plan <span> Exclusive Pricing</span></h2>
+                </div>
+                <div class="middle-image-list-section d-flex align-items-center ">
+                    <div class="left-image-enterprise">
+                        <img src="../../../../assets/images/agent/ent-plan-svg.svg" alt="">
+                    </div>
+                    <div class="right-lister-section">
+                        <ul clsss="d-flex flex-column ">
+                            <li *ngFor="let feature of enterpriseFeatures" class="d-flex align-items-center gap-2">
+                                <div class="left-checker-list">
+                                    <img src="../../../../assets/images/agent/tick.svg" alt="">
+                                </div>
+                                <div class="right-list-text">
+                                    <p class="mb-0">{{ feature }}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bottom-contact-choose-section d-flex  justify-content-between">
+                    <div class="left-button-cancel">
+                        <button type="button" (click)="showEnterpriceModel()">May be Later</button>
+                    </div>
+                    <div class="right-button-contact-sales">
+                        <div class="top-button-tooler">
+                            <p class="mb-0 text-black">For Personalized Enterprise Level Pricing</p>
+                        </div>
+                        <button type="button" (click)="sendEmailEnterPrisePlan()" class="d-flex align-items-center justify-content-center">
+                            <div class="left-icon-spark">
+                                <img src="../../../../assets/images/agent/star-icon.svg" alt="">
+                            </div>
+                            <p class="mb-0">Contact Sales</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="enterprise-section-modal-pop" [ngClass]="isOpenThankyou ? 'active-popup' : 'inactive-popup'">
+        <div class="inner-enterprise-modal-sec">
+            <div class="relative-sectioned-modal-ener">
+                <div class="enterprise-header-section-modal">
+                    <h2 class="text-center">Thankyou for contacting us </h2>
+                </div>
+                <div class="inner-center-section-thankyou text-center">
+                    <img src="../../../../assets/images/agent/enterprise-email.png" height="200px" width="300px" alt="">
+                </div>
+                <div class="bottom-weve-sent-section">
+                    <p class="mb-0 text-center">We’ve sent you a mail <br> Our team will get back to you shortly</p>
+                </div>
+                <div class="bottom-contact-choose-section d-flex justify-content-center">
+                    <div class="right-button-contact-sales">
+                        <button type="button" (click)="showThankyouModal()" class="d-flex align-items-center justify-content-center">
+                            <p class="mb-0">Okay, Lets go</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
