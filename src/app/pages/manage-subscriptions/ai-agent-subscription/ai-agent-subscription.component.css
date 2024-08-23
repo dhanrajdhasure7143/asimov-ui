@@ -1,3 +1,7 @@
+*{
+  font-family: 'Roboto' sans-serif !important;
+}
+
 .subscription-table {
     width: 100%;
     margin: 0 auto;
@@ -6,7 +10,7 @@
 
 .table-header {
     display: flex;
-    background-color: #cfcdcd;
+    background-color: #fff;
     padding: 2px 10px;
     margin-bottom: 15px;
     font-weight: bold;
@@ -71,6 +75,11 @@
     flex: 1;
     padding: 10px;
     text-align: left;
+}
+
+.row-cell{
+  display: flex;
+  gap: 7px;
 }
 
 .sub-agent-header {
@@ -187,10 +196,10 @@
       cursor: pointer;
       position: relative;
     }
-  
+/*   
     input[type="checkbox"] {
       display: none; 
-    }
+    } */
   
     .custom-slider {
       position: relative;
@@ -232,8 +241,8 @@
   }
   
   .remaining-days {
-    color: #3199FF; 
-    font-size: 15px;
+    /* color: #3199FF;  */
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px; 
   }
@@ -253,8 +262,8 @@
   .date-format{
     font-size: 12px;
     font-weight: 500;
-    text-decoration: underline !important;
-    color: #001C47;
+    /* text-decoration: underline !important; */
+    color: #FF7E36;
   }
   
   .next-bill-est{
@@ -282,11 +291,12 @@
   }
 
   .icon {
+    transform: rotate(-90deg);
     transition: transform 0.5s ease;
   }
   
   .icon.expanded {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
   }
 
   .accordion-content p{
@@ -343,4 +353,31 @@
   background-color: #ddd;
 }
 
-  
+/* .sub-agent-header,
+.sub-agent-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+} */
+
+.is-expired{
+  color: black;
+  font-size: 16px;
+  padding: 0px 0px 10px 0px;
+  font-weight: 700 !important;
+}
+
+.is-expired span{
+  font-weight: 700 !important;
+}
+
+.inactive-row .row-cell {
+  color: #001c475e;
+}
+
+.renew-btn-expired{
+  font-size: 16px;
+  color: #3199FF;
+  text-decoration: underline !important;
+  font-weight: 500;;
+}

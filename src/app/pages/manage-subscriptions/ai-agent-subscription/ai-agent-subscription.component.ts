@@ -7,16 +7,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AiAgentSubscriptionComponent implements OnInit {
 
+  aiAgentColumns = [
+    { header: 'AI Agents', flex: 1.3, field: 'name', class: 'agent-parent-name', isCheckbox: false },
+    { header: 'No. of Agents', flex: 1, field: 'noOfAgents', class: '', isCheckbox: false },
+    { header: 'Next Bill Estimates', flex: 1, field: 'nextBillEstimate', class: 'next-bill-est', isCheckbox: false },
+    { header: 'Billing Date', flex: 1, field: 'billingDate', class: 'next-bill-est', isCheckbox: false },
+    { header: 'Expires On', flex: 1, field: 'expiresOn', class: 'next-bill-est', isCheckbox: false },
+    { header: 'Auto Renew', flex: 1, field: 'autoRenew', class: '', isCheckbox: false }
+  ];
+
+  subAgentColumns = [
+      { header: 'Ai Agent Name', flex: 1.5, field: 'name', class: '', isCheckbox: true },
+      { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false },
+      { header: 'Purchase On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false },
+      { header: 'Pricing', flex: 1, field: 'pricing', class: '', isCheckbox: false },
+      { header: 'Billing Cycle', flex: 1, field: 'billingCycle', class: '', isCheckbox: false }
+  ];
+
+  expiredAgentsList : any[]=[];
+  itemsPerPage = 4;
+  subscribedAgentsList : any[] = [];
+
   
   subscriptions = [
     {
       name: 'Marketing Agent',
-      noOfAgents: 5,
+      noOfAgents: '05',
       nextBillEstimate: 600,
       paymentDue: '2024-11-01',
       expanded: false,
       currentPage: 1,
       autoRenew:true,
+      billingDate:'2024-10-11',
+      expiresOn:'2025-08-20',
+      isExpired:false,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -29,12 +53,15 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
     {
       name: 'Development Agent',
-      noOfAgents: 5,
+      noOfAgents: '05',
       nextBillEstimate: 600,
       paymentDue: '2024-09-01',
       expanded: false,
       currentPage: 1,
-      autoRenew:true,
+      autoRenew:false,
+      billingDate:'2024-10-11',
+      expiresOn:'2025-08-20',
+      isExpired:false,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -45,12 +72,15 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
     {
       name: 'Recruitment Agent',
-      noOfAgents: 7,
+      noOfAgents: '07',
       nextBillEstimate: 350,
       paymentDue: '2024-12-01',
       expanded: false,
       currentPage: 1,
       autoRenew:false,
+      billingDate:'2024-10-11',
+      expiresOn:'2025-08-20',
+      isExpired:true,
       subAgents: [
         { name: 'Agent 01', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
@@ -59,12 +89,15 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
     {
       name: 'RFP Agent',
-      noOfAgents: 12,
+      noOfAgents: '12',
       nextBillEstimate: 600,
       paymentDue: '2024-08-25',
       expanded: false,
       currentPage: 1,
       autoRenew:true,
+      billingDate:'2024-10-11',
+      expiresOn:'2025-08-20',
+      isExpired:false,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -75,12 +108,15 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
     {
       name: 'Testing Agent',
-      noOfAgents: 12,
+      noOfAgents: '12',
       nextBillEstimate: 600,
       paymentDue: '2024-11-01',
       expanded: false,
       autoRenew:true,
       currentPage: 1,
+      billingDate:'2024-10-11',
+      expiresOn:'2025-08-20',
+      isExpired:true,
       subAgents: [
         { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
         { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
@@ -91,11 +127,12 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
   ];
 
-  itemsPerPage = 4;
-
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
+    this.subscribedAgentsList=this.subscriptions.filter(agent => !agent.isExpired);
+  }
 
   toggleAccordion(agent: any) {
     agent.expanded = !agent.expanded;
