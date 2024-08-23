@@ -1,79 +1,81 @@
-<div class="h-100 main-screen">
-    <div class="screen-wrapper">
-        <div class="top-section">
-            <div class="bot-info">
-                <div class="bot-header">
-                    <div class="row" style="margin-top: 10px !important;">
-                        <div class="bot-name col-6">{{agentName}} Agents</div>
-                        <div class="add-more-agents col-6" style="display: flex; justify-content: flex-end; gap: 10px; margin-inline-start: auto; align-items: center;">
-                            <button class="manage-subscription-btn" (click)="navigateManageSubscription()">Manage Subscription</button>  
-                            <button class="add-more-qty" (click)="showAddAgentDialog()">Add More Agents</button>
-                        </div>
-                        <div lass="bot-name col-6">
-                            <span class="agent-expire">Expires: {{agentExpire?? "NA" |date:'MMM dd, y'}}</span>
-                        </div>
-                    </div>
-                    <div class="h-100 main-screen">
-                        <div >
-                            <div *ngIf="showSkeleton" class="col-12">
-                                <div class="p-grid p-formgrid skeleton-box row">
-                                    <div class="p-field skeleton-card-box col-3" *ngFor="let _ of [1, 2, 3, 4, 5, 6,7,8]">
-                                      <div class="custom-skeleton">
-                                        <div class="skeleton-header">
-                                          <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
-                                          <p-skeleton width="7rem" height="1rem"></p-skeleton>
-                                          <p-skeleton width="2rem" height="2rem"></p-skeleton>
-                                        </div>
-                                        <p-skeleton width="100%" height="50px" styleClass="info-skeleton"></p-skeleton>
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="single-outer-agents-cards" *ngIf="!showSkeleton">
-                                <div class="card position-relative single-inner-agents-cards w-100" *ngFor="let agent of subAgentList">
-                                    <div class="card-content">
-                                        <div class="top-image-header-section-card">
-                                            <div class="bot-image">
-                                                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
-                                            </div>
-                                            <div class="agent-name-sec">
-                                                <h3 class="new-agent-heading-section" pTooltip="{{ agent.subAgentName }}" tooltipPosition="top">{{ truncateText(agent.subAgentName, 10) }}</h3>
-                                            </div>
-                                        </div>
-                                        <div class="expiry-date bottom-expires-section">
-                                            <div class="single-expiry-dates">
-                                                <p class="inner-dates-sec text-left m-0" *ngIf="agent.lastExecution">Last run date: {{ agent.lastExecution |date:'MMM dd, y hh:mm' }}</p>
-                                            </div>
-                                            <!-- <div class="single-expiry-dates">
-                                                <p class="inner-dates-sec text-left m-0">
-                                                    <span *ngIf="!agent.isExpired">Expires: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
-                                                    <span *ngIf="agent.isExpired" style="color: red;">Expired: {{ agent.expiryDate?? "NA" |date:'MMM dd, y' }}</span>
-                                                </p>
-                                            </div> -->
-                                        </div>
-                                        <!-- Add more details as needed -->
-                                    </div>
-                                    <div class="bottom-bin-section" *ngIf="agent.isExpired">
-                                        <button type="button" class="bin-outer-btn">
-                                            <img src="../../../../assets/images/agent/bin.svg" alt="">
-                                        </button>
-                                    </div>
-                                    <div class="top-right-view-renew-btn">
-                                        <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
-                                    </div>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- <div class="container-fluid py-4 h-100">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="h4 mb-0">{{agentName}}</h1>
+        <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y hh:mm'}}</p>
+      </div>
+      <button class="btn btn-primary" (click)="showAddAgentDialog()">+ Add More Agents</button>
     </div>
-</div>
+  
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let agent of subAgentList">
+        <div class="card agent-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center agent-info">
+                <img src="assets/images/mini_bot.svg" alt="Agent" class="agent-image me-2">
+                <h5 class="card-title mb-0 agent-name">{{agent.subAgentName}}</h5>
+              </div>
+              <button class="btn btn-sm btn-primary" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
+              <div class="top-right-view-renew-btn">
+                <button type="button" class="top-right-changable-btn" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'active-re' : 'active-vi'">{{agent.isExpired ? 'Renew' : 'View'}}</button>
+            </div>
+            </div>
+            <p class="card-text text-muted mb-0" *ngIf="agent.lastExecution">Last run date: {{agent.lastExecution|date:'MMM dd, y hh:mm'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
 
-    <p-confirmDialog 
+  <div class="container-fluid py-4 h-100 main-screen">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h4 mb-0">{{agentName}} Agent</h1>
+        <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y hh:mm'}}</p>
+      </div>
+      <button class="btn btn-primary rounded-pill card-view" (click)="showAddAgentDialog()">+ Add More Agents</button>
+    </div>
+  
+    <div class="row g-4" *ngIf="showSkeleton">
+      <div class="col-md-6 col-lg-3" *ngFor="let _ of [1,2,3,4]">
+        <div class="card agent-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center agent-info">
+                <p-skeleton shape="circle" size="30px" styleClass="me-2"></p-skeleton>
+                <p-skeleton width="100px" height="20px"></p-skeleton>
+              </div>
+              <p-skeleton width="60px" height="30px" styleClass="rounded-pill"></p-skeleton>
+            </div>
+            <p-skeleton width="80%" height="16px"></p-skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row g-4" *ngIf="!showSkeleton">
+      <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of subAgentList">
+        <div class="card agent-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center agent-info">
+                <img src="assets/images/mini_bot.svg" alt="Agent" class="agent-image me-2">
+                <h5 class="card-title mb-0 agent-name" [title]="agent.subAgentName">{{agent.subAgentName}}</h5>
+              </div>
+              <button class="btn btn-sm rounded-pill card-view" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'btn-danger' : 'btn-primary'">
+                {{agent.isExpired ? 'Renew' : 'View'}}
+              </button>
+            </div>
+            <p class="card-text text-muted mb-0" *ngIf="agent.lastExecution">Last run date: {{agent.lastExecution|date:'MMM dd, y hh:mm'}}</p>
+            <span class="badge rounded-pill card-new" *ngIf="!agent.lastExecution">New</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p-confirmDialog 
         [style]="{width: '30vw'}" 
         position="center" 
         [baseZIndex]="10000" 
