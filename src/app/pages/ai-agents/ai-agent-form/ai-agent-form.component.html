@@ -102,28 +102,56 @@
                                     <!-- <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label> -->
                                     <div class="">
                                         <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
-                                        <div>
-                                            <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
+                                        <div class="input-icon-wrapper">
+                                                <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
+                                                    <img src="../../../../assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                </span>
+                                                <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
+                                                optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
                                         </div>
-                
-                                        <input pInputText autocomplete="off" [attr.disabled]="field.preAttributeLable === 'Automation Agent Name' && isEdit ? true : null"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
+                                        <div class="input-icon-wrapper">
+                                            <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
+                                                <img src="../../../../assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                            </span>
+                                            <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
+                                                <i class="pi pi-globe"></i>
+                                            </span>
+                                            <span class="input-icon" *ngIf="field.preAttributeLable === 'UserName'">
+                                                <i class="pi pi-user"></i>
+                                            </span>
+                                            <input pInputText autocomplete="off" [attr.disabled]="field.preAttributeLable === 'Automation Agent Name' && isEdit ? true : null"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
+                                            [id]="field.preAttributeName" 
+                                            [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                        </div>
+
+                                        <div class="input-icon-wrapper">
+                                            <span class="input-icon" *ngIf="field.preAttributeType === 'password'">
+                                                <i class="pi pi-lock"></i><i class=""></i>
+                                            </span>
+                                            <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                         [id]="field.preAttributeName" 
                                         [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                        </div>
+                                        
                 
-                                        <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control" [placeholder]="field.placeholder" 
-                                        [id]="field.preAttributeName" 
-                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                
-                                        <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                        <div class="input-icon-wrapper">
+                                            <span class="input-icon-text-area" *ngIf="field.preAttributeType === 'textarea'">
+                                                <i class="pi pi-align-left"></i><i class=""></i>
+                                            </span>
+                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
                                             (keydown)="onKeydown($event,field)"></textarea>
+                                        </div>
                 
                                         <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
                 
-                                        <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                                        <div class="input-icon-wrapper">
+                                            <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
+                                                <i class="pi pi-envelope"></i>
+                                            </span>
+                                            <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                
+                                        </div>
                                         <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
                 
@@ -186,9 +214,13 @@
                                             </ng-template>
                                         </div>
                                         
-                                        
-                                        <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                                        <div class="input-icon-wrapper">
+                                            <span class="input-icon" *ngIf="field.preAttributeType === 'file'">
+                                                <i class="pi pi-upload"></i>
+                                            </span>
+                                            <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control input-with-icon hidden-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                          (change)="onFileSelected($event,field)" multiple>
+                                        </div>
                                          
                                          <ng-container *ngIf="field.preAttributeType === 'file'">
                                          <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">

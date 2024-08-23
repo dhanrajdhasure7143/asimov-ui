@@ -549,3 +549,60 @@
   margin-left: 13px !important;
   border-radius: 20px !important;
 }
+
+/* Input fields Icon styles */
+
+.input-icon-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.input-with-icon {
+  padding-left: 35px !important;
+  width: 100% !important;
+}
+
+.country-item-value {
+  display: flex;
+  align-items: center;
+}
+
+.country-item-value i {
+  margin-right: 0.5rem;
+  color: #6c757d;
+}
+
+:host ::ng-deep .p-inputtext:disabled {
+  opacity: 1 !important;
+  color: #000 !important;
+}
+
+.row-gap{
+  row-gap: 13px;
+}
+
+.email-input:disabled {
+  opacity: 1 !important;
+  color: #6c757d !important;
+  cursor: not-allowed;
+}
+.input-icon-text-area{
+  position: absolute;
+  left: 10px;
+  top: 15%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  color: #6c757d;
+  margin-left: 25px;
+}
