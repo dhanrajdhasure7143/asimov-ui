@@ -76,7 +76,7 @@
             </ng-template> -->
           <!-- </p-steps>           -->
 <div>
-    <div class="p-4">
+    <div class="p-2">
         <!-- <h2 class="text-2xl font-bold mb-4">Configuration</h2> -->
 
         <div class="custom-accordion-main">
@@ -333,12 +333,40 @@
                   </p-accordion>
                   <div class="">
                     <hr>
-                    <div class="accordion-content-save">
+                    <div class="accordion-content-save" *ngIf="!showProgress">
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
                         <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
                     </div>
+                    <div class="ai-action-container" *ngIf="showProgress">
+                        <div class="header">
+                          <span class="title"><i class="pi pi-rocket"></i> AI In Action (Stage: {{displayStage}})</span>
+                          <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
+                                  (click)="toggleProcess()"
+                                  [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
+                        </div>
+                        <div class="custom-steps">
+                            <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
+                            (click)="toggleProcess()"
+                            [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button>
+                          <div class="progress-bar" [style.width]="progressWidth"></div>
+
+                          <!-- <div class="step-indicators">
+                            <div class="step-dot" *ngFor="let item of items; let i = index" [ngClass]="getStepClass(i)">
+                              {{i + 1}}
+                            </div>
+                          </div> -->
+                          
+                          <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
+                                <div class="step-number" [ngClass]="{'completed': i < currentStage, 'active': i === currentStage}"  [ngClass]="getStepClass(i)">
+                                    {{i + 1}}
+                                </div>
+                            <div class="step-label">{{item.label}}</div>
+                            <div class="step-time">{{getStepTime(i)}}</div>
+                          </div>
+                        </div>
+                      </div>
                   </div>
               </div>
             </div>

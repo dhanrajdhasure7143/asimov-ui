@@ -71,6 +71,21 @@ export class AiAgentFormComponent implements OnInit {
   subAgentName:any="Agent 01"
   isSubAgentNameEdit:boolean = false;
   isExpanded:boolean = true;
+  currentStage: number = -1;
+  isRunning: boolean = false;
+  processInterval: any;
+  startTime: Date | null = null;
+  stepTimes: Date[] = [];
+  showProgress: boolean = false;
+  progressBarItems = [
+    { label: 'Agent Started' },
+    { label: 'Post Position' },
+    { label: 'View Position' },
+    { label: 'Source Profile' },
+    { label: 'Review Profile' },
+    { label: 'Rank Profile' },
+    { label: 'Completed' }
+  ];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -107,6 +122,7 @@ export class AiAgentFormComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.stopProcess();
   }
 
   fetchAllFields() {
@@ -486,7 +502,7 @@ export class AiAgentFormComponent implements OnInit {
       const agentId = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      this.goBackAgentHome();
+      // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(botName,"create")
     },err=>{
       this.spinner.hide();
@@ -716,6 +732,8 @@ export class AiAgentFormComponent implements OnInit {
     } else {
       this.botCreate('create');
     }
+    this.showProgress = true;
+    this.currentStage = 0;
   }
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
@@ -1071,6 +1089,70 @@ export class AiAgentFormComponent implements OnInit {
 
   toggleItem() {
     this.isExpanded = !this.isExpanded;
+  }
+  
+// prgress bar code methods for AI agents execution
+  get progressWidth(): string {
+    return `${(this.currentStage / (this.progressBarItems.length - 1)) * 80}%`;
+  }
+
+  get displayStage(): string {
+    return `${Math.max(0, this.currentStage + 1)}/${this.progressBarItems.length}`;
+  }
+
+  get completedWidth(): string {
+    return `${(Math.max(0, this.currentStage) / (this.progressBarItems.length - 1)) * 100}%`;
+  }
+
+  get currentWidth(): string {
+    if (this.currentStage < 0) return '0%';
+    return `${(1 / (this.progressBarItems.length - 1)) * 100}%`;
+  }
+
+  toggleProcess() {
+    if (this.isRunning) {
+      this.stopProcess();
+    } else {
+      this.startProcess();
+    }
+  }
+
+  startProcess() {
+    this.isRunning = true;
+    this.currentStage = 0;
+    this.startTime = new Date();
+    this.stepTimes = [this.startTime];
+    this.processInterval = setInterval(() => {
+      if (this.currentStage < this.progressBarItems.length - 1) {
+        this.currentStage++;
+        this.stepTimes.push(new Date());
+      } else {
+        this.stopProcess();
+      }
+    }, 2000); // Change stage every 2 seconds
+  }
+
+  stopProcess() {
+    this.isRunning = false;
+    clearInterval(this.processInterval);
+  }
+
+  getStepClass(index: number): string {
+    if (this.currentStage < 0) return '';
+    if (index < this.currentStage) return 'completed';
+    if (index === this.currentStage) return 'active';
+    return '';
+  }
+
+  getStepTime(index: number): string {
+    if (!this.stepTimes[index]) return '';
+    return this.stepTimes[index].toLocaleString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
   }
 
 }
