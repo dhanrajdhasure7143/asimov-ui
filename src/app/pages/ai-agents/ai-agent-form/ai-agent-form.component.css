@@ -606,3 +606,9 @@
   color: #6c757d;
   margin-left: 25px;
 }
+
+::ng-deep .p-dropdown .p-dropdown-label {
+  background: transparent;
+  border: 0 none;
+  margin-left: 25px;
+}
