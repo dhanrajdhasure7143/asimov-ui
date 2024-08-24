@@ -172,7 +172,75 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
   }
 
   proceedToPay() {
-    console.log('Proceeding to pay: $' + this.getTotalPrice().toFixed(2));
+      // this.spinner.show();
+    
+      let validPlans = this.selectedPlans.filter(plan => plan.quantity > 0);
+      console.log("selectedPlans",validPlans)
+      
+      // Extract the selectedTire values
+    let tireTypes = validPlans.map(plan => plan.selectedTire);
+    
+    // Check if both "Monthly" and "Yearly" are present
+    let hasMonthly = tireTypes.includes("Monthly");
+    let hasYearly = tireTypes.includes("Yearly");
+    
+    if (hasMonthly && hasYearly) {
+      this.toaster.showError("Please select all agents of the same interval type.");
+      this.spinner.hide();
+      return;
+    }
+    
+      // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
+      let filteredPriceIds = [];
+    
+      validPlans.forEach((element) => {
+        let selectedTire =element.selectedTire=== 'Monthly' ? 'month' : 'year'
+        element.priceCollection.forEach((price) => {
+          if (price.recurring.interval === selectedTire) {
+            let obj = {};
+            obj["id"] = price.id;
+            obj["quantity"] = element.quantity;
+            filteredPriceIds.push(obj);
+          }
+        });
+      });
+    
+    
+      if (filteredPriceIds.length === 0) {
+        // Handle the case when no price is selected for the chosen interval
+        console.error('No price selected for the chosen interval.');
+        this.spinner.hide();
+        return;
+      }
+      
+      localStorage.setItem('selectedPlans', JSON.stringify(validPlans));
+      localStorage.setItem('selectedInterval', this.selectedPlan);
+      let req_body = {
+        // "price": filteredPriceIds,
+        "priceData": filteredPriceIds.map(price => ({
+          "price": price.id,
+          "quantity": price.quantity
+        })),
+        "customerEmail": this.userEmail,
+        "successUrl": environment.paymentSuccessURL,
+        // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
+        "cancelUrl": environment.paymentFailuerURL
+      };
+      console.log("PLAN_ID's", req_body);
+      this.rest_api.getCheckoutScreen(req_body).pipe(
+          switchMap((session: any) => {
+          this.spinner.hide();
+            return this.stripeService.redirectToCheckout({ sessionId: session.id });
+          })
+        ).subscribe(
+          res => {
+            this.spinner.hide();
+          },error => {
+            this.spinner.hide();
+            console.error('Error during payment:', error);
+          }
+        );
+    
   }
 
   getTotalPrice(): number {
