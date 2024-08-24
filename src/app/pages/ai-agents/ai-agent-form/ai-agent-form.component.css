@@ -544,7 +544,7 @@
   text-align: center;
 }
 
-::ng-deep .p-button{
+::ng-deep .custom-steps .p-button{
   height: 25px !important;
   margin-left: 13px !important;
   border-radius: 20px !important;
