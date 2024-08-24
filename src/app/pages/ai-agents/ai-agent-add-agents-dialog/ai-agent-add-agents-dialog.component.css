@@ -83,38 +83,6 @@
     margin-bottom: 20px;
   }
   
-  .agent-count {
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-  }
-  
-  .agent-count button {
-    background-color: #e9ecef;
-    border: none;
-    color: #495057;
-    font-size: 18px;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .agent-count span {
-    margin: 0 16px;
-    font-size: 18px;
-    color: #495057;
-  }
-  
-  .agent-count span:last-child {
-    font-size: 14px;
-    color: #6c757d;
-    margin-left: 16px;
-  }
-  
   .dialog-footer {
     display: flex;
     justify-content: space-between;
@@ -202,3 +170,59 @@
 .popup-content .font-bold {
   font-weight: bold;
 }
+
+/* agent selection button styles */
+
+.square-btn-left{
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 30px;
+  border-radius: 5px 0px 0px 5px;
+  cursor: pointer;
+  background-color: #B1BBC6;
+  font-size: 22px;
+}
+
+.square-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  width: fit-content;
+}
+
+.agent-count {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.agent-label {
+  margin: 0 16px;
+  color: #495057;
+}
+
+.square-quantity {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.square-btn-right {
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 30px;
+  border-radius:0px 5px 5px 0px;
+  cursor: pointer;
+  background-color: #B1BBC6;
+  font-size: 22px;
+}
+
+/* agent selection button styles ends*/

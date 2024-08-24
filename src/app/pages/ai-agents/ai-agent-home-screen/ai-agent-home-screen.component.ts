@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
@@ -10,6 +10,7 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { AiAgentAddAgentsDialogComponent } from '../ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
 
 @Component({
   selector: 'app-ai-agent-home-screen',
@@ -17,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./ai-agent-home-screen.component.css']
 })
 export class AiAgentHomeScreenComponent implements OnInit {
+  @ViewChild('addAgentsDialog') addAgentsDialog: AiAgentAddAgentsDialogComponent;
 
   predefined_botsList: any[] = [];
   filteredBotsList: any[] = [];
@@ -149,9 +151,15 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
     this.displayAddAgentDialog = true;
   }
 
-  closeDialog() {
-    console.log("close")
+  onDialogHide() {
     this.displayAddAgentDialog = false;
+    if (this.addAgentsDialog) {
+      this.addAgentsDialog.onClose();
+    }
+  }
+  
+  closeDialogFromChild() {
+    this.onDialogHide();
   }
 
   decreaseAgentCount(agent: any) {

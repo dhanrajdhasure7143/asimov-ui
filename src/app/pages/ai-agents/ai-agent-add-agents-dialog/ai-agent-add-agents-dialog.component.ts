@@ -14,7 +14,8 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   @Input() selectedAgent: any;
   @Input() botName: string | undefined;
   @Output() agentAdded = new EventEmitter<string>();
-  @Output() close = new EventEmitter<void>();
+  // @Output() close = new EventEmitter<void>();
+  @Input() closeDialogCallback: () => void;
   displayAddAgentDialog: boolean = false;
   yearlyPricing: boolean = false;
   agentCount: number = 0;
@@ -82,7 +83,10 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
           this.spinner.hide();
           // this.toastService.showSuccess("Redirecting to payment gateway");
           this.toastService.toastSuccess("Agent added successfully");
-          this.onClose();
+          // this.onClose();
+          if (this.closeDialogCallback) {
+            this.closeDialogCallback();
+          }
         },error => {
           this.spinner.hide();
           this.toastService.showError("Failed to redirect to payment gateway");
@@ -133,8 +137,8 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
     return (basePrice * this.agentCount).toFixed(2);
   }
 
-  onClose(): void {
-    this.close.emit();
+  public onClose(): void {
+    // this.close.emit();
     this.agentCount = 0;
   }
 }
