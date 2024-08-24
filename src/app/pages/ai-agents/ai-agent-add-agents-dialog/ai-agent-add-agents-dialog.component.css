@@ -1,31 +1,11 @@
   /* Dialog Styles */
-  :host ::ng-deep .custom-dialog .p-dialog {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-  }
-  
-  :host ::ng-deep .p-dialog .p-dialog-content {
-    padding: 0 !important;
-  }
-  
-  :host ::ng-deep .p-dialog-content {
-    overflow-y: hidden;
-    flex-grow: 1;
-  }
-  
-  :host ::ng-deep .custom-dialog .p-dialog-content {
-    padding: 0;
-    border-radius: 12px;
-  }
+
   
   .dialog-header {
     display: flex;
     align-items: center;
-    /* padding: 16px 20px; */
     padding: 0px 10px;
     background-color: #f8f9fa;
-    /* border-bottom: 1px solid #e9ecef; */
     border-bottom: 1px solid #d4d7da;
   }
   
@@ -141,7 +121,6 @@
     align-items: center;
     padding: 10px 15px;
     background-color: whitesmoke;
-    /* height: 110px; */
   }
   
   .total-price h3 {
@@ -183,51 +162,10 @@
     color: #b1bbc6 !important;
   }
   
-  :host ::ng-deep .order-details-tooltip {
-    max-width: 250px;
-    background-color: white !important;
-    color: #333 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-  }
-  
-  :host ::ng-deep .order-details-tooltip .p-tooltip-arrow {
-    border-top-color: white !important;
-    filter: drop-shadow(0 -1px 0px #ccc);
-  }
-  
-  :host ::ng-deep .order-details-tooltip .p-tooltip-text {
-    background-color: transparent !important;
-    padding: 0 !important;
-  }
-  
-  :host ::ng-deep .order-details-tooltip .flex {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  :host ::ng-deep .order-details-tooltip .mb-2 {
-    margin-bottom: 0.5rem;
-  }
-  
-  :host ::ng-deep .order-details-tooltip .my-2 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  :host ::ng-deep .order-details-tooltip .font-bold {
-    font-weight: bold;
-  }
-  
-  :host ::ng-deep .order-details-tooltip hr {
-    border: none;
-    border-top: 1px solid #e2e8f0;
-  }
-
 .relative {
   position: relative;
   display: grid;
+  cursor: pointer;
 }
 
 .order-details-popup {
@@ -263,28 +201,4 @@
 
 .popup-content .font-bold {
   font-weight: bold;
-}
-
-.popup-arrow {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(345%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid white;
-}
-
-.popup-arrow::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -23%;
-  transform: translateX(-50%);
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  border-top: 11px solid #ccc;
-  z-index: -1;
 }
