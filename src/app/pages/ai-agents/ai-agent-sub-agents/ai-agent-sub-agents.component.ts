@@ -24,6 +24,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
   displayAddAgentDialog: boolean = false;
   showSkeleton:boolean = true;
   agentExpire: any;
+  botName:any;
   
   constructor(
     private router: Router,
@@ -38,7 +39,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
     private toastService: ToasterService,
   ) { 
     this.route.queryParams.subscribe(params => {
-      this.agentName = params['botName'] ? params['botName'] : null;
+      this.botName = params['botName'] ? params['botName'] : null;
       const productId = params['id'];
       if (productId) {
         this.product_id=productId

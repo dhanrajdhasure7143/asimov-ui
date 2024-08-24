@@ -203,7 +203,7 @@
 
 .agent-label {
   margin: 0 16px;
-  color: #495057;
+  color: #495057 !important;
 }
 
 .square-quantity {
