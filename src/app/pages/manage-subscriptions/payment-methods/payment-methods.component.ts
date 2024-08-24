@@ -27,6 +27,7 @@ export class PaymentMethodsComponent implements OnInit {
   error: string;
   showcarddetails:boolean=false;
   stripeCardValid: boolean = false;
+  isLoading: boolean = false;
   cardOptions: StripeCardElementOptions = {
     style: {
       base: {
@@ -152,6 +153,7 @@ public elementsOptions: StripeElementsOptions = {
   getAllPaymentmodes() {
     this.spinner.show();
     // this.api.listofPaymentModes().subscribe(response => {
+    this.isLoading = true;
     this.rest_api.getPaymentCards().subscribe((response:any) => {
         if(response.data.length > 0){
           this.paymentMode = response.data 
@@ -164,8 +166,10 @@ public elementsOptions: StripeElementsOptions = {
               return 0;
             });
       }
+      this.isLoading = false;
       this.spinner.hide();
     },err=>{  
+      this.isLoading = false;
       this.spinner.hide();
     });
   }
