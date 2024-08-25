@@ -4136,3 +4136,12 @@ padding: 0px 30px;}
   /* height: 65px !important; */
   height: 60px !important;
 }
+
+.sales-page-container {
+  display: block;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+  width: 100%;
+}
