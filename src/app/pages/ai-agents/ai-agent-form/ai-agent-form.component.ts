@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -7,14 +7,29 @@ import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Inplace } from "primeng/inplace";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-ai-agent-form',
   templateUrl: './ai-agent-form.component.html',
-  styleUrls: ['./ai-agent-form.component.css']
+  styleUrls: ['./ai-agent-form.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        height: '*',
+        opacity: 1
+      })),
+      state('out', style({
+        height: '0px',
+        opacity: 0
+      })),
+      transition('in <=> out', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class AiAgentFormComponent implements OnInit {
-
+  @ViewChild("inplace") inplace!: Inplace;
   processName:string;
   currentPage = 1;
   fieldsPerPage = 30;
@@ -52,6 +67,26 @@ export class AiAgentFormComponent implements OnInit {
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
+  _agentName:any;
+  subAgentName:any="Agent 01"
+  isSubAgentNameEdit:boolean = false;
+  isExpanded:boolean = true;
+  currentStage: number = -1;
+  isRunning: boolean = false;
+  processInterval: any;
+  startTime: Date | null = null;
+  stepTimes: Date[] = [];
+  showProgress: boolean = false;
+  progressBarItems = [
+    { label: 'Agent Started' },
+    { label: 'Post Position' },
+    { label: 'View Position' },
+    { label: 'Source Profile' },
+    { label: 'Review Profile' },
+    { label: 'Rank Profile' },
+    { label: 'Completed' }
+  ];
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -87,6 +122,7 @@ export class AiAgentFormComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.stopProcess();
   }
 
   fetchAllFields() {
@@ -122,7 +158,7 @@ export class AiAgentFormComponent implements OnInit {
       // this.formFields ={...res.data};
       // this.formFields={...{},...res.data};
       this.predefinedBot_name = res.predefinedBotName;
-      this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
+      this.processName = this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.generateDynamicForm();      
@@ -130,6 +166,10 @@ export class AiAgentFormComponent implements OnInit {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
     })
+    
+  }
+
+  onSave() {
     
   }
 
@@ -462,7 +502,7 @@ export class AiAgentFormComponent implements OnInit {
       const agentId = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      this.goBackAgentHome();
+      // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(botName,"create")
     },err=>{
       this.spinner.hide();
@@ -692,6 +732,8 @@ export class AiAgentFormComponent implements OnInit {
     } else {
       this.botCreate('create');
     }
+    this.showProgress = true;
+    this.currentStage = 0;
   }
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
@@ -928,7 +970,8 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
+    // this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {
@@ -1010,4 +1053,106 @@ export class AiAgentFormComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
+
+  inplaceActivate() {
+    this._agentName = this.processName
+  }
+  onClicksubAgentName() {
+    this.isSubAgentNameEdit = true;
+    this._agentName = this.subAgentName
+  }
+
+  Space(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+  }
+
+  updateDashboardName(){
+    this.inplace.deactivate();
+    this.spinner.show();
+    this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
+      this.toaster.showSuccess("Agent Name","update");
+      this.spinner.hide();
+      this.isSubAgentNameEdit = false;
+    }, err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    })
+  }
+
+  onDeactivate(){
+    // this.inplace.deactivate();
+    this.isSubAgentNameEdit = false;
+
+  }
+
+  toggleItem() {
+    this.isExpanded = !this.isExpanded;
+  }
+  
+// prgress bar code methods for AI agents execution
+  get progressWidth(): string {
+    return `${(this.currentStage / (this.progressBarItems.length - 1)) * 80}%`;
+  }
+
+  get displayStage(): string {
+    return `${Math.max(0, this.currentStage + 1)}/${this.progressBarItems.length}`;
+  }
+
+  get completedWidth(): string {
+    return `${(Math.max(0, this.currentStage) / (this.progressBarItems.length - 1)) * 100}%`;
+  }
+
+  get currentWidth(): string {
+    if (this.currentStage < 0) return '0%';
+    return `${(1 / (this.progressBarItems.length - 1)) * 100}%`;
+  }
+
+  toggleProcess() {
+    if (this.isRunning) {
+      this.stopProcess();
+    } else {
+      this.startProcess();
+    }
+  }
+
+  startProcess() {
+    this.isRunning = true;
+    this.currentStage = 0;
+    this.startTime = new Date();
+    this.stepTimes = [this.startTime];
+    this.processInterval = setInterval(() => {
+      if (this.currentStage < this.progressBarItems.length - 1) {
+        this.currentStage++;
+        this.stepTimes.push(new Date());
+      } else {
+        this.stopProcess();
+      }
+    }, 2000); // Change stage every 2 seconds
+  }
+
+  stopProcess() {
+    this.isRunning = false;
+    clearInterval(this.processInterval);
+  }
+
+  getStepClass(index: number): string {
+    if (this.currentStage < 0) return '';
+    if (index < this.currentStage) return 'completed';
+    if (index === this.currentStage) return 'active';
+    return '';
+  }
+
+  getStepTime(index: number): string {
+    if (!this.stepTimes[index]) return '';
+    return this.stepTimes[index].toLocaleString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
+  }
+
 }

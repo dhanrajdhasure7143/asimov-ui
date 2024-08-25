@@ -83,8 +83,9 @@ export class PredefinedBotsService {
     return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
   }
 
-  getAgentAttributeswithData(productid,id){
-    return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+  getAgentAttributeswithData(productid,subagentid){
+    // return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+    return this.http.get<any[]>(`/rpa-service/predefined/v2/get-agents-configuration?agentId=${subagentid}&productId=${productid}`)
   }
 
   updatePredefinedAttributesData(agentId,botId,body){
@@ -101,5 +102,39 @@ export class PredefinedBotsService {
 
   uploadAIAgentFilesUpdate(body:any){
     return this.http.get("platform-service/document/uploadAIAgentFilesUpdate",body)
+  }
+
+  getSubAiAgent(product_id){
+    // return this.http.get(`/subscriptionservice/v1/subscriptions/api/agents?productId=${product_id}&tenantId=${tenant_id}`)
+    return this.http.get(`/rpa-service/predefined/sub-agents/${product_id}`)
+  } 
+
+  subAgentLastExecution(id){
+    return this.http.get("/rpa-service/predefined/last-execution-date/"+id)
+  }
+
+  updateSubAgentName(subagentId,subAgentName){
+    return this.http.put(`/rpa-service/predefined/update-agent-name/${subagentId}?newName=${subAgentName}`,'')
+  }
+
+  getPlansList(){
+    return this.http.get("/subscriptionservice/v1/stripe/load-predefined-bots")
+  }
+
+  getCheckoutScreen(body){
+    return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
+  }
+
+  addMoreSubAgents(body){
+    return this.http.post("/subscriptionservice/v1/subscriptions/add-more-agents",body)
+  }
+
+  loadPredefinedBots(): Observable<any>{
+    return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
+  }
+  
+  sendEmailEntrepricePlan(userId:string){
+    let headers = new HttpHeaders({});
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
   }
 }

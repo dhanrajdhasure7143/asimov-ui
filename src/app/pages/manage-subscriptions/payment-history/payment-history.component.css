@@ -1,0 +1,7 @@
+:host ::ng-deep .payment-history-table .p-datatable th {
+    background: white !important;
+}
+
+:host ::ng-deep .payment-history-table .p-datatable .p-datatable-header {
+    background: #f9f9f9 !important;
+}

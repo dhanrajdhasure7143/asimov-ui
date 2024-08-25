@@ -49,7 +49,7 @@ export const environment = {
   isCustomerBots : false,
   environmentName: "staging",
   paymentSuccessURL: "https://eziap.staging.epsoftinc.com/#/pages/success",
-  paymentFailuerURL: "https://eziap.staging.epsoftinc.com/#/pages/subscriptions",
+  paymentFailuerURL: "https://eziap.staging.epsoftinc.com/#/pages/aiagent/home",
   stripeKey:"pk_test_51P0dsYGtSXyupRk8b6KzrZkX2YsNl0HOLhVeZYrL6S12RR4rZd9CGa8O7ckFJLh3kZ3foGrmVdkewcq8cyYTVecj00dG5Dqo2P",
   python_llm:"https://ezflowllm.staging.epsoftinc.com",
   ezaskUrl: "http://ezask.staging.epsoftinc.in",

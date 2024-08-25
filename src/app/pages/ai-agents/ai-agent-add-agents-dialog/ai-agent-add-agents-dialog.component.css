@@ -1,0 +1,228 @@
+  /* Dialog Styles */
+
+  
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #d4d7da;
+  }
+  
+  .dialog-bot-image {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  }
+  
+  .dialog-header h3 {
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 300;
+  }
+  
+  .dialog-content {
+    padding: 15px 15px;
+    background-color: whitesmoke;
+  }
+  
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .pricing-toggle span {
+    margin: 0 8px;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: #3B82F6;
+  }
+  
+  .price-display {
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #d9dadc;
+  }
+
+  .price-display h2 {
+    font-size: 32px;
+    /* color: #3B82F6; */
+    color: #3199ff;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    font-variant: proportional-nums;
+  }
+  
+  .price-display span {
+    font-size: 14px;
+    /* color: #6c757d; */
+    color: black;
+  }
+  
+  .agent-features {
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  .dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: whitesmoke;
+  }
+  
+  .total-price h3 {
+    font-size: 32px;
+    /* color: #1ec34c ; */
+    color: #3199ff ;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    font-variant: proportional-nums;
+  }
+  
+  .total-price span {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .proceed-button {
+    /* background: #1ec34c; */
+    background: #3199ff;
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 35px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .proceed-button.dull-green {
+    /* background: #90cca0 !important; */
+    background: #a7d0f9 !important;
+    color: #f9f9f9 !important; 
+    cursor: not-allowed !important;
+}
+
+.gray-text {
+    color: #b1bbc6 !important;
+  }
+  
+.relative {
+  position: relative;
+  display: grid;
+  cursor: pointer;
+}
+
+.order-details-popup {
+  position: absolute;
+  bottom: 100%;
+  left: -23%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+.popup-content {
+  font-size: 0.9em;
+}
+
+.popup-content .flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-content hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.popup-content .font-bold {
+  font-weight: bold;
+}
+
+/* agent selection button styles */
+
+.square-btn-left{
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 30px;
+  border-radius: 5px 0px 0px 5px;
+  cursor: pointer;
+  background-color: #B1BBC6;
+  font-size: 22px;
+}
+
+.square-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  width: fit-content;
+}
+
+.agent-count {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.agent-label {
+  margin: 0 16px;
+  color: #495057 !important;
+}
+
+.square-quantity {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.square-btn-right {
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 30px;
+  border-radius:0px 5px 5px 0px;
+  cursor: pointer;
+  background-color: #B1BBC6;
+  font-size: 22px;
+}
+
+/* agent selection button styles ends*/

@@ -1,0 +1,171 @@
+<div class="subscription-table">
+    <div class="table-header agent-table-headers">
+        <div *ngFor="let column of aiAgentColumns" class="header-cell" [style.flex]="column.flex">
+            {{ column.header }}
+        </div>
+    </div>
+
+    <div class="scroll-container">
+        <div *ngFor="let agent of subscribedAgentsList" class="accordion">
+            <div class="accordion-header" (click)="toggleAccordion(agent)">
+                <span>
+                    <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
+                </span>
+                <div class="header-cell agent-parent-name" [style.flex]="aiAgentColumns[0].flex">
+                    <img src="../../../../assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
+                    <span class="agent-name" [title]="agent.name">{{ agent.name }}</span>
+                </div>
+                <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
+                <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div>
+                <div class="header-cell next-bill-est">{{ agent.billingDate }}</div>
+                <div class="header-cell next-bill-est">{{ agent.expiresOn }}</div>
+
+                <div class="header-cell">
+                    <div class="custom-toggle">
+                        <label>
+                            <span class="custom-toggle-label">{{ agent.autoRenew ? 'Enabled' : 'Disabled'}}</span>
+                            <input type="checkbox" style="display: none;" [(ngModel)]="agent.autoRenew" />
+                            <span class="custom-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-content" *ngIf="agent.expanded">
+                <p class="">Subscribed Agents</p>
+                <div class="sub-agent-table">
+                    <div class="sub-agent-header">
+                        <div *ngFor="let column of subAgentColumns" class="header-cell" [style.flex]="column.flex">
+                            <!-- <ng-container *ngIf="column.isCheckbox">
+                                <input type="checkbox" (change)="selectAll(agent)" />
+                            </ng-container> -->
+                            {{ column.header }}
+                        </div>
+                    </div>
+
+                    <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row" [ngClass]="{'inactive-row': subAgent.status === 'Inactive'}">
+                        <div class="row-cell" style="flex:1.46">
+                            <input type="checkbox" [(ngModel)]="subAgent.selected" />
+                            {{ subAgent.name }}</div>
+                        <div class="row-cell">
+                            <span class="status-badge"
+                                [ngClass]="subAgent.status === 'Active' ? 'active-status' : 'inactive-status'">
+                                {{ subAgent.status }}
+                            </span>
+                        </div>
+                        <div class="row-cell">{{ subAgent.purchaseOn }}</div>
+                        <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">{{
+                            subAgent.pricing }}.00</div>
+                        <div class="row-cell">{{ subAgent.billingCycle }}</div>
+                        
+                    </div>
+                    <div class="pagination">
+                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)"
+                            [class.disabled]="agent.currentPage === 1">
+                            &lt;
+                        </span>
+
+                        <span class="page" *ngFor="let page of getPages(agent); let i = index"
+                            [class.active]="agent.currentPage === i + 1" (click)="setPage(agent, i + 1)">
+                            {{ i + 1 }}
+                        </span>
+
+                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)"
+                            [class.disabled]="agent.currentPage === getPages(agent).length">
+                            &gt;
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="is-expired" *ngIf="expiredAgentsList.length > 0">
+            <span class="fw-700">EXPIRED</span>
+        </div>
+
+        <div *ngFor="let agent of expiredAgentsList" class="accordion">
+            <div class="accordion-header" (click)="toggleAccordion(agent)">
+                <span>
+                    <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
+                </span>
+                <div class="header-cell agent-parent-name" [style.flex]="aiAgentColumns[0].flex">
+                    <img src="../../../../assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
+                    <span class="agent-name" [title]="agent.name">{{ agent.name }}</span>
+                </div>
+                <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
+                <!-- <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div> -->
+                <div class="header-cell next-bill-est"> - </div>
+                <!-- <div class="header-cell next-bill-est">{{ agent.billingDate }}</div> -->
+                <div class="header-cell next-bill-est"> - </div>
+                <div class="header-cell next-bill-est">
+                    <div class="remaining-days" >
+                        <span>Expired On</span>
+                    </div>
+                    <!-- <span class="date-format ">{{ agent.expiresOn }}</span> -->
+                    <span class="date-format ">{{ agent.expiresOn }}</span>
+                    <!-- {{ agent.expiresOn }} -->
+                </div>
+
+                
+
+                <div class="header-cell">
+                    <!-- <div class="custom-toggle">
+                        <label>
+                            <span class="custom-toggle-label">{{ agent.autoRenew ? 'Enabled' : 'Disabled'}}</span>
+                            <input type="checkbox" style="display: none;" [(ngModel)]="agent.autoRenew" />
+                            <span class="custom-slider"></span>
+                        </label>
+                    </div> -->
+                    <span class="renew-btn-expired">Renew</span>
+                </div>
+            </div>
+
+            <div class="accordion-content" *ngIf="agent.expanded">
+                <p class="">Subscribed Agents</p>
+                <div class="sub-agent-table">
+                    <div class="sub-agent-header">
+                        <div *ngFor="let column of subAgentColumns" class="header-cell" [style.flex]="column.flex">
+                            <!-- <ng-container *ngIf="column.isCheckbox">
+                                <input type="checkbox" (change)="selectAll(agent)" />
+                            </ng-container> -->
+                            {{ column.header }}
+                        </div>
+                    </div>
+
+                    <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row" [ngClass]="{'inactive-row': subAgent.status === 'Inactive'}">
+                        <div class="row-cell" style="flex:1.46">
+                            <input type="checkbox" [(ngModel)]="subAgent.selected" />
+                            {{ subAgent.name }}</div>
+                        <div class="row-cell">
+                            <span class="status-badge"
+                                [ngClass]="subAgent.status === 'Active' ? 'active-status' : 'inactive-status'">
+                                {{ subAgent.status }}
+                            </span>
+                        </div>
+                        <div class="row-cell">{{ subAgent.purchaseOn }}</div>
+                        <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">{{
+                            subAgent.pricing }}.00</div>
+                        <div class="row-cell">{{ subAgent.billingCycle }}</div>
+                        
+                    </div>
+                    <div class="pagination">
+                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)"
+                            [class.disabled]="agent.currentPage === 1">
+                            &lt;
+                        </span>
+
+                        <span class="page" *ngFor="let page of getPages(agent); let i = index"
+                            [class.active]="agent.currentPage === i + 1" (click)="setPage(agent, i + 1)">
+                            {{ i + 1 }}
+                        </span>
+
+                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)"
+                            [class.disabled]="agent.currentPage === getPages(agent).length">
+                            &gt;
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

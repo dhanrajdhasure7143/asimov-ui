@@ -1,0 +1,168 @@
+/* .agent-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .agent-image {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    background-color: #e6f3ff;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .agent-info {
+    flex: 1;
+    min-width: 0;
+    margin-right: 10px;
+  }
+  
+  .agent-name {
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .card-text {
+    font-size: 0.85rem;
+  }
+  
+  .btn-primary {
+    background-color: #39a7ff;
+    border-color: #39a7ff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2d86cc;
+    border-color: #2d86cc;
+  } */
+
+  .main-screen{
+    overflow: hidden;
+  }
+
+  .agent-card {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+  }
+  
+  .agent-image {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    background-color: #e6f3ff;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .agent-info {
+    flex: 1;
+    min-width: 0;
+    margin-right: 10px;
+  }
+  
+  .agent-name {
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .card-text {
+    font-size: 0.85rem;
+  }
+  
+  .btn-primary, .btn-danger {
+    border-radius: 20px;
+  }
+  
+  .row {
+    margin-bottom: 1.5rem;
+  }
+
+  .agent-main-card{
+    margin-bottom: 25px;
+  }
+  .badge.bg-success {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+  }
+  
+  
+  @media (min-width: 992px) {
+    .col-lg-3 {
+      flex: 0 0 auto;
+      width: 23%;
+      margin-right: 2%;
+    }
+    
+    .col-lg-3:nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+
+  .card-view{
+    color: #fff;
+  }
+  .card-new{
+    background-color: #a6eeb7;
+  }
+
+  .scrollable-content {
+    overflow-y: auto;
+    padding-right: 15px;
+  }
+  
+  .header-section {
+    flex-shrink: 0;
+  }
+    /* Dialog Styles */
+    :host ::ng-deep .p-dialog .p-dialog-content {
+      padding: 0 !important;
+    }
+  
+    :host ::ng-deep .p-dialog-content {
+      overflow-y: hidden;
+      flex-grow: 1;
+    }
+  
+    :host ::ng-deep .custom-dialog .p-dialog-content {
+      padding: 0;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  
+    .dialog-bot-image {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+    }
+  
+    .dialog-header h3 {
+      flex-grow: 1;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+    }
+  
+    .dialog-header {
+      display: flex;
+      align-items: center;
+    }
+  
+    :host ::ng-deep .p-dialog .p-dialog-header {
+      border-bottom: 1px solid lightgray;
+      background: #ffffff;
+      color: #495057;
+      padding: 0.7rem;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
+    /* Dialog Styles - Ended*/

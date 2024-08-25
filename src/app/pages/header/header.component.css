@@ -1,9 +1,12 @@
   .ep-header-white{
-    background-color: #098DE6 !important;
+    background-color: #F0F0F0 !important;
+    /* background-color: #d7d7d7 !important; */
     height: 55px;
     box-shadow: none !important;
     position: absolute;
     /* z-index: 1; */
+    /* border-bottom: 1px solid #f0f0f0; */
+    border-bottom: 1px solid #bdbdbd;
   }
 
   .txt-wh{
@@ -70,6 +73,7 @@
     font-weight: 400;
     display: block;
     font-size: 16px;
+    color: #000;
   }
   .header-userrole {
     font-size: 12px !important;
@@ -350,6 +354,7 @@ button.p-element.p-button.p-component.p-button-icon-only {
   margin-left: 10px;
   box-shadow: none;
   outline:none;
+  color: #000;
 }
 
 span.envname {

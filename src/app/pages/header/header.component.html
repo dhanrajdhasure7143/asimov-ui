@@ -1,14 +1,14 @@
 <mat-toolbar class="ep-header-white ep-header-new">
   <div class="header-logdiv">
-    <span>
+    <!-- <span>
       <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()"
         aria-label="Example icon-button with menu icon">
-        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false"
+        <img src="../../../assets/images/menu-line-black.svg" *ngIf="page_obj.sideBarOpen==false"
           [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}"  style="filter: brightness(100);" alt="">
-        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true"
+        <img src="../../../assets/images/menu-line-black.svg" *ngIf="page_obj.sideBarOpen==true"
           [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}"  style="filter: brightness(100);" alt="">
       </button>
-    </span>
+    </span> -->
     <span class="headerlogo" *ngIf="!isPredefinedBots">
       <!-- <img src="assets/images/EZFlow_Logo.svg" class="header-logo" alt="EZFlow Logo"> -->
       <img src="assets/images-n/common/headerimg/EZFlow-White-logo.svg" alt="EZFlow-Logo" class="header-logosize"/>
@@ -119,7 +119,7 @@
     <div class="txt-wh">
       <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span>
       <span class="header-rgttext" *ngIf="user_fName == null">-</span>
-      <span class="header-userrole">{{userRole}}</span>
+      <!-- <span class="header-userrole">{{userRole}}</span> -->
     </div>
     
     <span class="text-wh">

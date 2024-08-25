@@ -36,7 +36,7 @@ import {StepsModule} from 'primeng/steps';
     LoginComponent,
     RedirectionComponent,
     ApprovalsComponent,
-    SoApprovalComponent
+    SoApprovalComponent,
   ],
 
   imports: [

@@ -1,31 +1,56 @@
 <div class="paymentcontent_div">
         <div *ngIf='!error' class="col-md-12 pr-0 row">
-            <div class="col-3 form-group pl-0" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
+            <div class="col-sm-3 form-group pl-0" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
                 <div class="cardsBox">
-                    <img src="../../../assets/images/subscription/card.svg" alt="">
+                    <!-- <img src="../../../assets/images/subscription/card.svg" alt=""> -->
+                    <div class="card-image-container">
+                        <ng-container [ngSwitch]="cardData.cardBrand.toLowerCase()">
+                            <img *ngSwitchCase="'visa'" src="../../../../assets/images/agent/cards/visa-card.svg" alt="Visa" class="card-background">
+                            <img *ngSwitchCase="'mastercard'" src="../../../../assets/images/agent/cards/master-card.svg" alt="Mastercard" class="card-background">
+                            <img *ngSwitchCase="'discover'" src="../../../../assets/images/agent/cards/discover.svg" alt="Discover" class="card-background">
+                            <img *ngSwitchCase="'rupay'" src="../../../../assets/images/agent/cards/rupay-card.svg" alt="RuPay" class="card-background">
+                            <img *ngSwitchDefault src="../../../../assets/images/agent/cards/generic-card.svg" alt="Card" class="card-background">
+                        </ng-container>
+                        <div class="card-overlay">
+                            <div class="card-type">Credit</div>
+                            <div class="card-number">XXX XXXX XXXX {{cardData.cardLast4}}</div>
+                            <div class="card-holder">{{cardData.name | uppercase}} 
+                            <span class="expiryDate"> {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</span>
+                        </div>
+                        </div>
+                    </div>
                     <div class="cardbox_cont">
-                        <p id="">
+                        <label class="label-control" for="">Card number:</label>
+                        <p id="cardNum">
                             <b> XXXX-XXXX-XXXX-{{cardData.cardLast4}}</b>
                             <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
                         </p>
-                        <div><span>Card Type: </span> <span> <strong>  {{cardData.cardBrand|titlecase}}</strong></span></div>
                         <div>
                             <label class="label-control">Card Holder's Name :</label>
-                            <p class="cardholderName">
+                            <p class="">
                                 <b>{{cardData.name}}</b>
                             </p>
                         </div>
-                        <div>
-                            <label class="label-control">Expires : </label>
-                            <span>
-                                <b> {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b>
-                            </span>
+                        <div class="card-info-row">
+                            <div class="card-info-item">
+                                <label class="label-control">Card Type:</label>
+                                <p><b>{{cardData.cardBrand | titlecase}}</b></p>
+                            </div>
+                            <div class="card-info-item">
+                                <label class="label-control">Expires On:</label>
+                                <p><b>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b></p>
+                            </div>
                         </div>
-                        <div class="row justify-content-end">
-                            <button class="btn inactive-card" *ngIf='cardData.defaultSource === true' >Default</button>
-                            <button class="btn new-cancelbtn" *ngIf='!cardData.defaultSource' (click)="confrmDeleteCard(cardData)">Remove</button>
-                            <button class="btn bluebg-button" *ngIf='!cardData.defaultSource' (click)="setAsDefaultCard(cardData)">Make Default</button>
-                        </div>                        
+
+                        <div class="card-action-buttons">
+                            <button class="btn default-btn"  *ngIf='cardData.defaultSource === true'>
+                                <img src="../../../../assets/images/agent/check.png" alt=""> &nbsp; Default
+                            </button>
+                            <ng-container *ngIf='!cardData.defaultSource'>
+                                <button class="btn remove-btn" (click)="confrmDeleteCard(cardData)">Remove</button>
+                                <button class="btn make-default-btn" (click)="setAsDefaultCard(cardData)">Make Default</button>
+                            </ng-container>
+                        </div>
                     </div>                  
     
                     <!-- <span *ngIf='cardData.defaultSource === true' class="inactive-card">Default</span>
@@ -37,8 +62,8 @@
             </div>
 
 
-            <div class="col-3 form-group pl-0">
-                <div class="cardsBox add-new">
+            <div class="col-sm-3 form-group pl-0">
+                <div class="cardsBox add-new" *ngIf="!isLoading">
                     <img src="../../../../assets/images-n/common/AddCreditCard.svg" (click)="addNewCard()" alt="">
                 </div>                
             </div>

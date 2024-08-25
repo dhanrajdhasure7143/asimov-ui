@@ -723,8 +723,10 @@ foreignObject {
 
 #sidenav.menu-close .mat-list-item-content .menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
   right: 50%;
-  bottom: -10px;
-  transform: translate(10px, 0px);
+  /* bottom: -10px;
+  transform: translate(10px, 0px); */
+  bottom: -5px;
+  transform: translate(12px, 0px);
 }
 
 #sidenav.menu-close mat-list-item.mat-list-item {
@@ -2264,7 +2266,8 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans 3', sans-serif !important;
+  /* font-family: 'Source Sans 3', sans-serif !important; */
+  font-family: "Roboto", sans-serif !important;
   font-size: var(--main-fontsize);
   font-weight: var(--main-fontweight);
   color: var(--main-txtcolor) !important;
@@ -2294,7 +2297,8 @@ div {
   text-decoration: none !important;
   /* list-style: none; */
   color: inherit;
-  font-family:  'Source Sans 3', sans-serif;
+  /* font-family:  'Source Sans 3', sans-serif; */
+  font-family:  "Roboto", sans-serif;
   font-weight: 400;
 }
 .row {
@@ -2490,7 +2494,7 @@ input.p-inputtext {
 .p-tabview .p-tabview-nav {
   border: none !important;
   background: transparent !important;
-  height: 70px;
+  height: 50px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
@@ -2505,13 +2509,13 @@ input.p-inputtext {
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
-    border-width: 0 0 4px 0 !important;
+    border-width: 0 0 3px 0 !important;
     box-shadow: none !important;
     height: 100%;
     justify-content: center;
 }
 .tabs_screen .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  padding: 16px 20px 6px !important;
+  padding: 10px 20px 6px !important;
   margin-right: 25px !important;
 }
 .tabs_screen.config_tabs .p-tabview .p-tabview-nav li .p-tabview-nav-link {
@@ -2539,8 +2543,8 @@ cron-editor > div > div.card-header > ul > li > a.nav-link.active {
 .tabs_screen .p-tabview-nav-content {
   border: 1px solid var(--cards-bordercolor) !important;
   background-color: #fff;
-  border-radius: 6px;
-  height: 70px;
+  border-radius: 5px;
+  height: 50px;
   width: 100%;
 }
 span.tabscount {
@@ -3183,7 +3187,8 @@ textarea.p-inputtextarea {
 /* headercss start*/
 .p-avatar.p-avatar-circle {
   background-color: #fff !important;
-  color: var(--main-bluecolor) !important;
+  /* color: var(--main-bluecolor) !important; */
+  color: #000 !important;
   width: 2.6rem !important;
   height: 2.6rem !important;
   margin: 0px !important
@@ -4125,4 +4130,18 @@ padding: 0px 30px;}
 .sdk-approval-list .p-datatable-wrapper td:nth-child(4) span { /* for sdk-approval-list grid CSS*/
   width: 250px;
   display: block;
+}
+
+.mat-list-base .mat-list-item{
+  /* height: 65px !important; */
+  height: 60px !important;
+}
+
+.sales-page-container {
+  display: block;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+  width: 100%;
 }

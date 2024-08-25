@@ -5,7 +5,7 @@ import { AiAgentsRoutingModule } from './ai-agents-routing.module';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { AiAgentsComponent } from './ai-agents.component';
 import { AiAgentFormComponent } from './ai-agent-form/ai-agent-form.component';
-import { AiAgentListComponent } from './ai-agent-list/ai-agent-list.component';
+import { AiAgentHomeComponent } from './ai-agent-home/ai-agent-home.component';
 import { PredefinedBotsOrchestrationComponent } from './predefined-bots-orchestration/predefined-bots-orchestration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AiAgentSchedulerComponent } from './ai-agent-scheduler/ai-agent-scheduler.component';
@@ -23,6 +23,18 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { columnList } from 'src/app/shared/model/table_columns';
 import { AiAgentCronComponent } from './ai-agent-scheduler/ai-agent-cron/ai-agent-cron.component';
 import { AgentDetailsComponent } from './agent-details/agent-details.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
+import { AiAgentSubAgentsComponent } from './ai-agent-sub-agents/ai-agent-sub-agents.component';
+import { AiAgentAddAgentsDialogComponent } from './ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
+import { AiAgentHomeScreenComponent } from './ai-agent-home-screen/ai-agent-home-screen.component';
+import { AiAgentFormOldComponent } from './ai-agent-form-old/ai-agent-form-old.component';
+import { RecruitmentAiSalesPageComponent } from './agent-pages/recruitment-ai-sales-page';
+import { DevAiSalesPageComponent } from './agent-pages/dev-ai-sales-page';
+import { TestingAiSalesPageComponent } from './agent-pages/testing-ai-sales-page';
+import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
+import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
+import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
 
 
 
@@ -30,12 +42,22 @@ import { AgentDetailsComponent } from './agent-details/agent-details.component';
   declarations: [
     AiAgentsComponent,
     AiAgentFormComponent,
-    AiAgentListComponent,
+    AiAgentHomeComponent,
     PredefinedBotsOrchestrationComponent,
     AiAgentSchedulerComponent,
     AiAgentLogsComponent,
     AiAgentCronComponent,
-    AgentDetailsComponent
+    AgentDetailsComponent,
+    AiAgentSubAgentsComponent,
+    AiAgentAddAgentsDialogComponent,
+    AiAgentHomeScreenComponent,
+    AiAgentFormOldComponent,
+    RecruitmentAiSalesPageComponent,
+    DevAiSalesPageComponent,
+    TestingAiSalesPageComponent,
+    RfpAiSalesPageComponent,
+    CustomerBotAiSalesPageComponent,
+    MarketingAiSalesPageComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +72,8 @@ import { AgentDetailsComponent } from './agent-details/agent-details.component';
     NgxPaginationModule,
     NgbTimepickerModule,
     MatDatepickerModule,
-    SharedModule
+    SharedModule,
+    NgxStripeModule.forRoot(environment.stripeKey)
   ],
   providers: [toastMessages, BsModalRef, BsModalService, columnList, DatePipe]
 }) 

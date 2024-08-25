@@ -101,24 +101,62 @@
           </a>
         </div> -->
 
-        <a mat-list-item class="link" id="automate" (click)="hightlight('AI Agents',null)"
-        routerLink="/pages/aiagent/home" [matTooltip]=" !obj.sideBarOpen ? 'AI Agents' : ''"
-        matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+        <a mat-list-item class="link" id="AI_Agents" (click)="hightlight('AI_Agents',null)"
+        routerLink="/pages/aiagent/home">
         <span class="side-icon">
           <span class="active-img" id="eiap-home-icon-active">
-            <img src="../../../assets/images/Sidebar/Projects-Active.svg" alt="">
+            <img src="../../../assets/images/agent/side-nav/active-explore.svg" alt="">
+            <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-active">Explore</p>
           </span>
           <span class="hover-img" id="eiap-home-icon-white">
-            <img src="../../../assets/images/Sidebar/Projects-Hover.svg" alt="">
+            <img src="../../../assets/images/agent/side-nav/hover-explore.svg" alt="">
+            <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-hover">Explore</p>
           </span>
           <span class="default-img" id="eiap-home-icon-gray">
-            <img src="../../../assets/images/Sidebar/Projects-Normal.svg" alt="">
+            <img src="../../../assets/images/agent/side-nav/default-explore.svg" alt="">
+            <p *ngIf="!obj.sideBarOpen" class="side-nav-label">Explore</p>
           </span>
+          <!-- <div>Explore</div> -->
         </span>
-        <span class="side-menu-font" (click)="hightlight('AI Agents','null')">AI Agents</span>
+        <span class="side-menu-font" (click)="hightlight('AI_Agents','null')">Explore</span>
       </a>
+          <a mat-list-item class="link" id="subscription" (click)="hightlight('subscription',null)"
+            routerLink="/pages/subscriptions">
+            <span class="side-icon">
+              <span class="active-img" id="eiap-home-icon-active">
+                <img src="../../../assets/images/agent/side-nav/active-manage.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-active">Manage Subscription</p>
+              </span>
+              <span class="hover-img" id="eiap-home-icon-white">
+                <img src="../../../assets/images/agent/side-nav/hover-manage.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-hover">Manage Subscription</p>
+              </span>
+              <span class="default-img" id="eiap-home-icon-gray">
+                <img src="../../../assets/images/agent/side-nav/dafault-manage.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label">Manage Subscription</p>
+              </span>
+            </span>
+            <span class="side-menu-font">Manage Subscription</span>
+          </a>
+          <a mat-list-item class="link" id="quick_access" (click)="hightlight('quick_access',null)">
+            <span class="side-icon">
+              <span class="active-img" id="eiap-home-icon-active">
+                <img src="../../../assets/images/agent/side-nav/active-quickaccess.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-active">Quick Access</p>
+              </span>
+              <span class="hover-img" id="eiap-home-icon-white">
+                <img src="../../../assets/images/agent/side-nav/hover-quickaccess.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label side-nav-label-hover">Quick Access</p>
+              </span>
+              <span class="default-img" id="eiap-home-icon-gray">
+                <img src="../../../assets/images/agent/side-nav/default-quickaccess.svg" alt="">
+                <p *ngIf="!obj.sideBarOpen" class="side-nav-label">Quick Access</p>
+              </span>
+            </span>
+            <span class="side-menu-font">Quick Access</span>
+          </a>
 
-      <a mat-list-item class="link" id="automate" (click)="hightlight('Inbox',null)"
+      <!-- <a mat-list-item class="link" id="automate" (click)="hightlight('Inbox',null)"
         routerLink="/pages/aiagent/inbox" [matTooltip]=" !obj.sideBarOpen ? 'Inbox' : ''"
         matTooltipClass="sidebarTooltip" matTooltipPosition="right">
         <span class="side-icon">
@@ -133,7 +171,7 @@
           </span>
         </span>
         <span class="side-menu-font" (click)="hightlight('Inbox','null')">Inbox</span>
-      </a>
+      </a> -->
 
         <!-- <a mat-list-item *ngIf="isPredefinedBots && !agentOrcheDisabled" class="link orchimg" id='so' (click)="hightlight('so',null)"
           routerLink="/pages/aiagent/list" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
@@ -228,7 +266,7 @@
             </span>
             <span class="side-menu-font">User Management</span>
           </a> -->
-          <a mat-list-item class="link" id='subscriptions'
+          <!-- <a mat-list-item class="link" id='subscriptions'
           *ngIf="this.userRoles.includes('System Admin') && role =='Admin' && isSubscriptionModuleEnable" (click)="hightlight('subscriptions',null)" (click)="onClickSubscription()"
             [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
             matTooltipClass="sidebarTooltip" matTooltipPosition="right">
@@ -244,7 +282,7 @@
               </span>
             </span>
             <span  class="side-menu-font">Manage Subscriptions</span>
-          </a>
+          </a> -->
           <!-- <a mat-list-item  class="link" id="bps" (click)="hightlight('settings','expand_admin')"  >
       <span class="side-icon">
         <mat-icon>settings</mat-icon>

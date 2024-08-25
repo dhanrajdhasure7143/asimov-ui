@@ -7,9 +7,18 @@
                     <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }}</h3>
+                    <!-- <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br> -->
+                    <div (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+                      <ng-container *ngIf="!isHovered; else hyperlink">
+                        <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
+                      </ng-container>
+                      <ng-template #hyperlink>
+                        <a href="your-link-here" class="bot-name">{{ each.predefinedBotName }} Agent</a>
+                      </ng-template>
+                    </div>
+                    <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
                 </div>
-                
+                <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
                 <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                     <p class="bot-details">{{ each.details }}</p>
                 </div>
@@ -27,13 +36,13 @@
                
             <div *ngIf="showSkeleton">
                 <div class="p-grid p-formgrid skeleton-box">
-                    <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3]">
+                    <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3, 4, 5, 6]">
                       <div class="custom-skeleton">
                         <div class="skeleton-header">
                           <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
-                          <p-skeleton width="13rem" height="1.7rem"></p-skeleton>
+                          <p-skeleton width="13rem" height="1rem"></p-skeleton>
                         </div>
-                        <p-skeleton width="100%" height="100px" styleClass="info-skeleton"></p-skeleton>
+                        <p-skeleton width="100%" height="50px" styleClass="info-skeleton"></p-skeleton>
                         <div class="skeleton-footer">
                           <p-skeleton width="4rem" height="2rem"></p-skeleton>
                           <p-skeleton width="4rem" height="2rem"></p-skeleton>
@@ -44,28 +53,60 @@
             </div>                    
         </div>
     </div>
-
-    <h2 class="search-heading">Explore More AI Agents</h2>
+    <div class="sticky-explore-section">
+        <h2 class="search-heading">Explore More AI Agents</h2>
+        <!-- <div class="explore-more-container">
+            <h2 class="search-heading">Explore More AI Agents</h2>
+            <div class="total-section" *ngIf="getTotalSelectedAgents() > 0">
+                <button class="proceed-to-pay" (click)="proceedToPay()">
+                    Proceed to Pay: ${{ getTotalPrice().toFixed(2) }}
+                </button>
+            </div>
+        </div> -->
     <div class="search-container">
         <div class="search-bar-wrapper">
             <img src="../../../../assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
             <input type="text" placeholder="Find Your Agent..." [disabled]="unsubscribed_agents.length === 0" [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
         </div>
+        <div class="total-section" *ngIf="getTotalSelectedAgents() > 0">
+            <!-- <div class="total-price">
+                $ {{ getTotalPrice().toFixed(2) }}
+                <span class="price-details">Select no of agents to display pricing</span>
+              </div> -->
+            <span style="color: #3199ff; text-decoration: underline;"> order details </span>  &nbsp; &nbsp;
+            <button class="proceed-to-pay" (click)="proceedToPay()">
+              Proceed to Pay: ${{ getTotalPrice().toFixed(2) }}
+            </button>
+          </div>
+          <div *ngIf="getTotalSelectedAgents() === 0" class="proceed-to-pay-placeholder"></div>
     </div>
+<div class="scrollable-explore-content">
     <div class="grid-container">
-        <div *ngFor="let each of filteredBotsList" class="grid-item" [ngClass]="{'highlighted': searchTerm && each.predefinedBotName.toLowerCase().includes(searchTerm.toLowerCase())}" (click)="onclickBot3(each)">
+        <div *ngFor="let each of unsubscribed_agents" class="grid-item" [ngClass]="{'highlighted': searchTerm && each.predefinedBotName.toLowerCase().includes(searchTerm.toLowerCase())}">
             <div class="content">
                 <div class="top-section">
                     <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
-                    <h3 class="bot-name">{{ each.predefinedBotName }}</h3>
+                    <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
+                    <div class="agent-selection">
+                        <span class="select-agents" *ngIf="each.selectedCount === 0">Select no of Agents</span>
+                        <div class="selection-buttons">
+                            <button class="count-button" (click)="decreaseAgentCount(each)">-</button>
+                            <span>{{ each.selectedCount || 0 }}</span>
+                            <button class="count-button" (click)="increaseAgentCount(each)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing">
+                    <span class="price">$ 10.00</span>
+                    <span class="price-details">/month (Single Agent)</span> <span *ngIf="each.selectedCount === 1 || 2" class="pricing1">${{ getTotalPrice().toFixed(2) }}</span>
                 </div>
                 <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                     <p class="bot-details">{{ each.details }}</p>
                 </div>
 
-                <span *ngIf="each.details.length > 200" class="show-more-btn" (click)="toggleDetails($event,each, detailsWrapper)">
+                <span *ngIf="each.details.length > 200" class="show-more-btn" (click)="toggleDetails($event, each, detailsWrapper)">
                     {{ each.showMore ? 'Show Less' : 'Show More' }}
                 </span>
             </div>
@@ -74,13 +115,14 @@
             <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
             No Agent Found ...
         </div>
-        <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
+        <!-- <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
             <div>
                 <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                 We are working on more AI Agents ...
             </div> 
-        </div>
+        </div> -->
     </div>
+</div>
 </div>
 
 <div class="custom-modal" *ngIf="displayModal">
@@ -100,3 +142,7 @@
         </div>
     </div>
 </div>
+
+  <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'24vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
+    <app-ai-agent-add-agents-dialog [selectedAgent]="selectedAgent" (close)="closeDialog()"></app-ai-agent-add-agents-dialog>
+  </p-dialog>

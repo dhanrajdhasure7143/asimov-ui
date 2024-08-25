@@ -1,48 +1,203 @@
+/* Base styles */
 .paymentcontent_div {
-  height: calc(100vh - 220px);
+  height: calc(100vh - 130px);
   overflow: auto;
 }
+
 .cardsBox {
-  border: 1px solid #b5b5b5;
+  border: 1px solid #e0e0e0;
   background-color: #fff;
-  border-radius: 6px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   height: 100%;
+  transition: border-color 0.3s ease;
 }
+
+.cardsBox:hover {
+  border-color: #4AB0F5;
+}
+
 .cardsBox.add-new {
-  background-color: #fff;
-  text-align: center;
-  align-items: center;
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
+  text-align: center;
 }
-.cardsBox:hover {
-  border: 1px solid #4AB0F5;
+
+.card-image-container {
+  position: relative;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
 }
-.cardbox_cont {
-  padding: 15px;
-}
-.cardsBox img {
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-}
-.cardsBox p {
-  margin-bottom: 10px;
-}
-.cardholderName{
-  color:#098de6;
+  height: 100%;
+  object-fit: cover;
 }
 
-.inactive-card{
-    background-color:#757575;
-    color: #fff;
-} 
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
+}
 
-.errordiv{
+.cardbox_cont {
+  /* padding: 1rem; */
+  padding:0.8rem;
+}
+
+/* Typography */
+.card-type {
+  font-size: 1rem;
+}
+
+.card-number {
+  font-size: 1.125rem;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+}
+
+.card-holder {
+  font-size: 0.875rem;
+}
+
+.cardholderName {
+  color: #2196F3;
+}
+
+.cardNum, .card-info-item p {
+  font-size: 0.875rem;
+}
+
+/* Layout */
+.card-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.card-info-item {
+  flex: none !important;
+}
+
+.card-info-item:first-child {
+  margin-right: 0.5rem;
+}
+
+.card-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: -1rem;
+  height: 20px;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.default-btn, .inactive-card {
+  background-color: #e0e0e0;
+  color: #2196F3;
+}
+
+.default-btn img {
+  height: 15px;
+  margin-left: -9px;
+  margin-bottom: 1px;
+}
+
+.remove-btn {
+  background-color: #ff4444;
+  color: white;
+}
+
+.make-default-btn, .bluebg-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* Utility classes */
+.errordiv {
   text-align: center;
   color: #a5a5a5;
-  margin-top: 110px;
-  margin-bottom: 170px;
+  margin: 5rem 0;
+}
+
+/* Responsive grid */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.5rem;
+}
+.expiryDate{
+  float: right;
+}
+[class^="col-"] {
+  padding: 0.5rem;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 576px) {
+  .col-sm-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-sm-3 {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-sm-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .col-sm-3 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+/* Angular-specific styles */
+::ng-deep .label-control {
+  font-size: 0.75rem;
+}
+
+::ng-deep .buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0 -0.5rem;
 }

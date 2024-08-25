@@ -1899,18 +1899,6 @@ deleteMicroBot(microBotId: any) {
 deleteMicrobotFromList(microBotId: any) {
   return this.http.post(`/rpa-service/delete-microbot/${microBotId}`,"");
 }
-loadPredefinedBots(): Observable<any>{
-  return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
-}
-
-getCheckoutScreen(body){
-  return this.http.post("/subscriptionservice/v1/subscriptions/re-subscribe",body)
-}
-
-sendEmailEntrepricePlan(userId:string){
-  let headers = new HttpHeaders({});
-  return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
-}
 
 getBillingInfo(){
   // return this.http.get("/subscriptionservice/v1/billingContact/getCustomerDefaultPayment");
