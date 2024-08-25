@@ -224,7 +224,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
       padding: 1.5rem;
       border-radius: 10px;
       width: 300px;
