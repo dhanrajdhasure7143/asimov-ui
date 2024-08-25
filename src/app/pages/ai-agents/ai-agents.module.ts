@@ -29,6 +29,12 @@ import { AiAgentSubAgentsComponent } from './ai-agent-sub-agents/ai-agent-sub-ag
 import { AiAgentAddAgentsDialogComponent } from './ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
 import { AiAgentHomeScreenComponent } from './ai-agent-home-screen/ai-agent-home-screen.component';
 import { AiAgentFormOldComponent } from './ai-agent-form-old/ai-agent-form-old.component';
+import { RecruitmentAiSalesPageComponent } from './agent-pages/recruitment-ai-sales-page';
+import { DevAiSalesPageComponent } from './agent-pages/dev-ai-sales-page';
+import { TestingAiSalesPageComponent } from './agent-pages/testing-ai-sales-page';
+import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
+import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
+import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
 
 
 
@@ -46,6 +52,12 @@ import { AiAgentFormOldComponent } from './ai-agent-form-old/ai-agent-form-old.c
     AiAgentAddAgentsDialogComponent,
     AiAgentHomeScreenComponent,
     AiAgentFormOldComponent,
+    RecruitmentAiSalesPageComponent,
+    DevAiSalesPageComponent,
+    TestingAiSalesPageComponent,
+    RfpAiSalesPageComponent,
+    CustomerBotAiSalesPageComponent,
+    MarketingAiSalesPageComponent
   ],
   imports: [
     CommonModule,

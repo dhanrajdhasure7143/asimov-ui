@@ -10,6 +10,7 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { CryptoService } from '../../services/crypto.service';
 
 @Component({
   selector: 'app-ai-agent-home-screen',
@@ -53,7 +54,9 @@ export class AiAgentHomeScreenComponent implements OnInit {
     private toastMessage: toastMessages,
     private rest_api_service:RestApiService,
     private stripeService: StripeService,
-    private toastService: ToasterService,) {
+    private toastService: ToasterService,
+  private crypto: CryptoService
+) {
       this.userEmail = localStorage.getItem('ProfileuserId');
      }
 
@@ -463,6 +466,54 @@ proceedToSubscribe() {
       this.isOpenEnterprice = false
       this.isOpenThankyou = !this.isOpenThankyou
     })
+  }
+
+  navigateToPurchaseAgent(plan){
+    console.log("plan",plan)
+    let emailToken= this.crypto.encrypt(localStorage.getItem('ProfileuserId'));
+    if(plan.name =="Testing Agent"){
+    this.router.navigate(['/pages/aiagent/subscription/testing'], { queryParams: { token:emailToken,id:plan.id } });
+    }
+    if(plan.name =="RFP"){
+      this.router.navigate(['/pages/aiagent/subscription/rfp'], { queryParams: { token: emailToken,id:plan.id } });
+      }
+    if(plan.name =="Developer Agent"){
+      this.router.navigate(['/pages/aiagent/subscription/dev'], { queryParams: { token: emailToken,id:plan.id } });
+    }
+    if(plan.name =="Recruitment"){
+      this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
+    }
+    if(plan.name =="Customer Bot"){
+      this.router.navigate(['/pages/aiagent/subscription/chatbot'], { queryParams: { token: emailToken,id:plan.id } });
+    }
+    if(plan.name =="Marketing"){
+      this.router.navigate(['/pages/aiagent/subscription/marketing'], { queryParams: { token: emailToken,id:plan.id } });
+    }
+    // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+  }
+
+  getBotURL(item){
+    if(item.predefinedBotName == 'Recruitment'){
+      return 'https://epsoft.ai/pages/recruitment.html';
+    }
+    if(item.predefinedBotName == 'Marketing'){
+      return 'https://epsoft.ai/pages/marketing.html';
+    }
+    if(item.predefinedBotName == 'RFP'){
+      return 'https://epsoft.ai/pages/rfp.html';
+    }
+    if(item.predefinedBotName == 'Customer Support'){
+      return 'https://epsoft.ai/pages/customer-support.html';
+    }
+    if(item.predefinedBotName == 'Developer'){
+      return 'https://epsoft.ai/pages/developer.html';
+    }
+    if(item.predefinedBotName == 'Testing'){
+      return 'https://epsoft.ai/pages/testing.html';
+    }
+    
+    return 'https://epsoft.ai/pages/recruitment.html';
+
   }
 
 

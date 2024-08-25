@@ -175,7 +175,7 @@ export class AiAgentFormOldComponent implements OnInit {
 
   fetchAllFieldsToUpdateData() {
     // this.spinner.show();
-    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agent_id).subscribe((res:any)=>{
+    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agentId).subscribe((res:any)=>{
       const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
       res.attachments.forEach((attachment) => {
         const fieldName = keyMap[attachment.key];
@@ -469,8 +469,8 @@ export class AiAgentFormOldComponent implements OnInit {
       this.toaster.showError(this.toastMessages.apierror)
     })
   }else{
-    this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agent_id,req_body).subscribe(res=>{
-        const agentId = this.params.agent_id;
+    this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agentId,req_body).subscribe(res=>{
+        const agentId = this.params.agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
@@ -928,7 +928,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {

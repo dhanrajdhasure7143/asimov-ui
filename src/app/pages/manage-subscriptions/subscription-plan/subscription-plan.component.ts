@@ -9,6 +9,7 @@ import { StripeService } from 'ngx-stripe';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { PredefinedBotsService } from '../../services/predefined-bots.service';
 
 @Component({
   selector: 'app-subscription-plan',
@@ -60,6 +61,7 @@ export class SubscriptionPlanComponent implements OnInit {
     private formBuilder: FormBuilder,
     private stripeService: StripeService,
     private toastService: ToasterService,
+    private agent_service: PredefinedBotsService
     ) { }
 
   ngOnInit(): void {
@@ -125,7 +127,7 @@ export class SubscriptionPlanComponent implements OnInit {
   // }
 
   loadPredefinedBots() {
-    this.rest.loadPredefinedBots().subscribe((response: any) => {
+    this.agent_service.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
         this.getPaymentMethods();
         if (response) {
@@ -267,7 +269,7 @@ paymentPlan() {
     req_body["cancelUrl"]= environment.paymentFailuerURL+"?index=2"
   }
   
-  this.rest.getCheckoutScreen(req_body).pipe(
+  this.agent_service.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
         this.spinner.hide();
         return this.stripeService.redirectToCheckout({ sessionId: session.id });
@@ -286,7 +288,7 @@ paymentPlan() {
 
 sendEmailEnterPrisePlan(){
   this.spinner.show();
-  this.rest.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
+  this.agent_service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
     if(res.errorMessage !="User not present"){
     Swal.fire({
         title: 'Success!',

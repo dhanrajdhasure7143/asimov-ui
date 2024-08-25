@@ -29,7 +29,6 @@ import { ToastModule } from "primeng/toast";
 import { toastMessages } from './shared/model/toast_messages';
 import { SoApprovalComponent } from './so-approval/so-approval.component';
 import {StepsModule} from 'primeng/steps';
-import { RecruitmentAiSalesPageComponent } from './sales-pages/recruitment-ai-sales-page';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,6 @@ import { RecruitmentAiSalesPageComponent } from './sales-pages/recruitment-ai-sa
     RedirectionComponent,
     ApprovalsComponent,
     SoApprovalComponent,
-    RecruitmentAiSalesPageComponent,
   ],
 
   imports: [

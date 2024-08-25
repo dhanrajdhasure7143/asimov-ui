@@ -83,8 +83,9 @@ export class PredefinedBotsService {
     return this.http.get("/rpa-service/predefined/v2/ai-agent?productId=prod_PdiLNkF4ZbHkgj&botId=474")
   }
 
-  getAgentAttributeswithData(productid,id){
-    return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+  getAgentAttributeswithData(productid,subagentid){
+    // return this.http.get<any[]>(`/rpa-service/predefined/v2/ai-agent?productId=${productid}&botId=${id}`)
+    return this.http.get<any[]>(`/rpa-service/predefined/v2/get-agents-configuration?agentId=${subagentid}&productId=${productid}`)
   }
 
   updatePredefinedAttributesData(agentId,botId,body){
@@ -128,6 +129,10 @@ export class PredefinedBotsService {
     return this.http.post("/subscriptionservice/v1/subscriptions/add-more-agents",body)
   }
 
+  loadPredefinedBots(): Observable<any>{
+    return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
+  }
+  
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })

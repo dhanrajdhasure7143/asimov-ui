@@ -141,7 +141,18 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
 
   viewAgentDetails(agent: any) {
+    console.log("Agent Details", agent);
+    // return
+    if(agent.isConfigured){
+      this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "edit", id: agent.agentId, agentId : agent.subAgentId} });
+      // this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "edit", id: this.bot?.productId, agent_id:this.selected_drop_agent.predefinedOrchestrationBotId } });
+
+    }else{
       this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentId, agentId : agent.subAgentId} });
+
+    }
+    
+      // this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentId, agentId : agent.subAgentId} });
   } 
 
   navigateManageSubscription() {
