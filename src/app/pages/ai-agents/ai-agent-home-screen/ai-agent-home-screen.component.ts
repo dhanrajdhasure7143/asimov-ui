@@ -511,10 +511,10 @@ proceedToSubscribe() {
     if(item.predefinedBotName == 'Testing'){
       return 'https://epsoft.ai/pages/testing.html';
     }
-    
+
     return 'https://epsoft.ai/pages/recruitment.html';
 
-  }
+  } 
 
 
 }
