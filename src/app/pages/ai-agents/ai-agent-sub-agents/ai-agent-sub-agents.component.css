@@ -116,13 +116,13 @@
   }
 
   .scrollable-content {
-    position: absolute;
-    top: 85px;
-    bottom: 0;
     overflow-y: auto;
     padding-right: 15px;
   }
   
+  .header-section {
+    flex-shrink: 0;
+  }
     /* Dialog Styles */
     :host ::ng-deep .p-dialog .p-dialog-content {
       padding: 0 !important;
