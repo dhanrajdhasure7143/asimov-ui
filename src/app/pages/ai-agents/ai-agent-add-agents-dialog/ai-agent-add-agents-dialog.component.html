@@ -1,9 +1,9 @@
 
-<div class="dialog-header">
+<!-- <div class="dialog-header">
   <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
   <h3>Add {{ botName || selectedAgent?.predefinedBotName }} Agents</h3>
   <button class="close-button" (click)="onClose()">×</button>
-</div>
+</div> -->
 <div class="dialog-content">
   <!-- <div class="pricing-toggle">
         <span [class.active]="!yearlyPricing" (click)="yearlyPricing = false">Monthly</span>
@@ -15,10 +15,12 @@
     </h2>
     <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
     <div class="agent-count">
-      <button (click)="decrementAgentCount()" [disabled]="agentCount <= 0">-</button>
-      <span class="square-quantity">{{ agentCount }}</span>
-      <button (click)="incrementAgentCount()">+</button>
-      <span>Select no of Agents</span>
+      <div class="square-controls">
+        <button class="square-btn-left" (click)="decrementAgentCount()">-</button>
+        <span class="square-quantity">{{ agentCount }}</span>
+        <button class="square-btn-right" (click)="incrementAgentCount()">+</button>
+      </div>
+      <span class="agent-label">Select no of Agents</span>
     </div>
   </div>
 </div>
@@ -54,7 +56,6 @@
           <span style="font-weight: bold;">${{calculateTotalPrice()}}</span>
         </div>
       </div>
-      <div class="popup-arrow"></div>
     </div>
   
     <!-- <button [ngClass]="{'proceed-button': true, 'dull-green': agentCount === 0}" 

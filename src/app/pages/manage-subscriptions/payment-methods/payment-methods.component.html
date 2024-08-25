@@ -63,7 +63,7 @@
 
 
             <div class="col-sm-3 form-group pl-0">
-                <div class="cardsBox add-new">
+                <div class="cardsBox add-new" *ngIf="!isLoading">
                     <img src="../../../../assets/images-n/common/AddCreditCard.svg" (click)="addNewCard()" alt="">
                 </div>                
             </div>

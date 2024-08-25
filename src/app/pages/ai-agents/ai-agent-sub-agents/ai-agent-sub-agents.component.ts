@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
@@ -7,6 +7,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { ConfirmationService } from 'primeng/api';
 import { RestApiService } from '../../services/rest-api.service';
 import { StripeService } from 'ngx-stripe';
+import { AiAgentAddAgentsDialogComponent } from '../ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
 
 @Component({
   selector: 'app-ai-agent-sub-agents',
@@ -14,6 +15,7 @@ import { StripeService } from 'ngx-stripe';
   styleUrls: ['./ai-agent-sub-agents.component.css']
 })
 export class AiAgentSubAgentsComponent implements OnInit {
+  @ViewChild('addAgentsDialog') addAgentsDialog: AiAgentAddAgentsDialogComponent;
   product_id="";
   agentList: any[] = [];
   agentName: string='';
@@ -22,6 +24,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
   displayAddAgentDialog: boolean = false;
   showSkeleton:boolean = true;
   agentExpire: any;
+  botName:any;
   
   constructor(
     private router: Router,
@@ -36,7 +39,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
     private toastService: ToasterService,
   ) { 
     this.route.queryParams.subscribe(params => {
-      this.agentName = params['botName'] ? params['botName'] : null;
+      this.botName = params['botName'] ? params['botName'] : null;
       const productId = params['id'];
       if (productId) {
         this.product_id=productId
@@ -129,9 +132,16 @@ export class AiAgentSubAgentsComponent implements OnInit {
     this.displayAddAgentDialog = true;
   }
 
-  closeDialog() {
+  onDialogHide() {
     this.displayAddAgentDialog = false;
+    if (this.addAgentsDialog) {
+      this.addAgentsDialog.onClose();
+    }
     this.getSubAgents();
+  }
+  
+  closeDialogFromChild() {
+    this.onDialogHide();
   }
 
   handleRenewBtn(agent: any) {

@@ -23,8 +23,9 @@
 }
 
 ::ng-deep .main-content-body.tablist-cont {
-  background: whitesmoke;
-  height: calc(100vh - 65px);
+  // background: whitesmoke;
+  // height: calc(100vh - 65px);
+  height: calc(100vh - 55px);
 }
 
 ::ng-deep .p-datatable {
@@ -38,7 +39,8 @@
 
 ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
   overflow-x: auto;
-  height: calc(100vh - 190px);
+  // height: calc(100vh - 190px);
+  height: calc(100vh - 164px);
 }
 
 :host ::ng-deep .main-content-body {

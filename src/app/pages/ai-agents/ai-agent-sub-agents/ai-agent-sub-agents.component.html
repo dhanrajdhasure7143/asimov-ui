@@ -31,12 +31,12 @@
   <div class="container-fluid py-4 h-100 main-screen">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h1 class="h4 mb-0">{{agentName}} Agent</h1>
+        <h1 class="h4 mb-0">{{botName}} Agent</h1>
         <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y'}}</p>
       </div>
       <button class="btn btn-primary rounded-pill card-view" (click)="showAddAgentDialog()">+ Add More Agents</button>
     </div>
-  
+  <div class="scrollable-content">
     <div class="row g-4" *ngIf="showSkeleton">
       <div class="col-md-6 col-lg-3" *ngFor="let _ of [1,2,3,4]">
         <div class="card agent-card">
@@ -74,6 +74,7 @@
       </div>
     </div>
   </div>
+</div>
 
   <p-confirmDialog 
         [style]="{width: '30vw'}" 
@@ -82,6 +83,17 @@
         [closable]="false">
     </p-confirmDialog>
 
-    <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'27vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
+    <!-- <p-dialog [(visible)]="displayAddAgentDialog" [draggable]="true" [style]="{width: '40vw', height:'27vw'}" [modal]="true"[showHeader]="false" [closable]="true" styleClass="custom-dialog">
         <app-ai-agent-add-agents-dialog [botName]="agentName" [selectedAgent]="selectedAgent" (close)="closeDialog()"></app-ai-agent-add-agents-dialog>
+    </p-dialog> -->
+
+    <p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '40vw', height:'27vw'}" [modal]="true"
+      [showHeader]="true" [closable]="true" styleClass="custom-dialog" (onHide)="onDialogHide()">
+      <ng-template pTemplate="header">
+        <div class="dialog-header">
+          <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+          <h3>Add {{ selectedAgent?.predefinedBotName || '' }} Agents</h3>
+        </div>
+      </ng-template>
+      <app-ai-agent-add-agents-dialog #addAgentsDialog [selectedAgent]="selectedAgent" [closeDialogCallback]="closeDialogFromChild.bind(this)"></app-ai-agent-add-agents-dialog>
     </p-dialog>
