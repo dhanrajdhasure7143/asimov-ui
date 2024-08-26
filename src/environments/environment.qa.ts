@@ -50,8 +50,9 @@ export const environment = {
   isCustomerBots : true,
   environmentName: "QA",
       // Asimov-ui URl to redirect from stripe to application
-  paymentSuccessURL: "http://eziap.qa.epsoftinc.in/#/pages/success",
-  paymentFailuerURL: "http://eziap.qa.epsoftinc.in/#/",
+  paymentSuccessURL: "http://epsoftiap.internalqa.ai/#/pages/success",
+  paymentFailuerURL: "http://epsoftiap.internalqa.ai/#/",
+  cardCancelURL: "http://epsoftiap.internalqa.ai/#/pages/subscriptions?index=3",
   stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK",
   // python_llm:"http://ezflowllm.qa.epsoftinc.com",
   python_llm:"http://10.11.0.77:5006",

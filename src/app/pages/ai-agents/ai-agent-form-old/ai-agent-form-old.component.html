@@ -243,6 +243,8 @@
               <!-- <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button> -->
               <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
               <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update Bot</button>
+              <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="runAiAgent()" [disabled]="!isSaved">Run</button>
+
           </div>
         </div>
     </div>
