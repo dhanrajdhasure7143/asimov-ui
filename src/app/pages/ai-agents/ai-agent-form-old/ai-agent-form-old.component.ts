@@ -53,6 +53,8 @@ export class AiAgentFormOldComponent implements OnInit {
   fieldInputKey:any;
   capturedFileIds:any=[];
   isSaved:boolean = false;
+  agendIdCapture:any
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -380,7 +382,7 @@ export class AiAgentFormOldComponent implements OnInit {
         this.saveBot(req_body,botName,type)
       // })
       } else {
-        this.toaster.showInfo("Fill All fields")
+        // this.toaster.showInfo("Fill All fields")
       }
   }
 
@@ -461,6 +463,8 @@ export class AiAgentFormOldComponent implements OnInit {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentId = res.data[0].agentId;
+      this.agendIdCapture = res.data[0].agentId;
+      console.log("AGENT-ID", this.agendIdCapture);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
@@ -1015,7 +1019,9 @@ export class AiAgentFormOldComponent implements OnInit {
   }
   runAiAgent(){
     this.spinner.show()
-    this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+    // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+      console.log("AGENT-ID", this.agendIdCapture);
+    this.rest_service.startPredefinedBot(this.agendIdCapture).subscribe((res: any) => {
     this.spinner.hide();
     this.toaster.toastSuccess("Agent Execution Started")
     }, err => {
