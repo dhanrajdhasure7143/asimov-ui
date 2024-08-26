@@ -382,7 +382,7 @@ export class AiAgentFormOldComponent implements OnInit {
         this.saveBot(req_body,botName,type)
       // })
       } else {
-        // this.toaster.showInfo("Fill All fields")
+        this.toaster.showInfo("Fill All fields")
       }
   }
 
