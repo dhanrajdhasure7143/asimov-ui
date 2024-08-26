@@ -169,5 +169,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
       queryParams:{index:0}
     })
   }
-
+  deleteSubSgent(){
+    console.log("Sub Agent Delete");
+  }
 }
