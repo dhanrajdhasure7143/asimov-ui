@@ -241,12 +241,10 @@
               <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
               <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
               <!-- <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button> -->
-              <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid() || isSave">Save</button>
+              <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
               <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update Bot</button>
-              <button class="btn bluebg-button"  [disabled]="!isSave" (click)="runAiAgent()">
-                <!-- <i class="fas fa-play-circle" style="padding-right: 10px;"></i>  -->
-                Run
-            </button>
+              <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="runAiAgent()" [disabled]="!isSaved">Run</button>
+
           </div>
         </div>
     </div>

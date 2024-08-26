@@ -52,8 +52,7 @@ export class AiAgentFormOldComponent implements OnInit {
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
-  isSave:boolean =false;
-
+  isSaved:boolean = false;
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -64,7 +63,6 @@ export class AiAgentFormOldComponent implements OnInit {
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
-        console.log(this.params)
         this.predefinedBot_id= this.params.id
       })
     }
@@ -462,11 +460,10 @@ export class AiAgentFormOldComponent implements OnInit {
   saveBot(req_body,botName,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
-      this.isSave = true;
       const agentId = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      // this.goBackAgentHome(); // Temporaarly commented
+      this.goBackAgentHome();
       this.toaster.showSuccess(botName,"create")
     },err=>{
       this.spinner.hide();
@@ -477,7 +474,7 @@ export class AiAgentFormOldComponent implements OnInit {
         const agentId = this.params.agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      // this.goBackAgentHome(); // Temporaarly commented
+      this.goBackAgentHome();
       this.toaster.showSuccess(botName,"update")
     },err=>{
       this.spinner.hide();
@@ -500,6 +497,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
 
   onUpdateForm(){
+    this.isSaved = true
     if (this.predefinedBotsForm.valid) {
       console.log(this.selectedOption , this.predefinedBotsForm)
       if(this.predefinedBot_uuid =='Pred_RFP'){
@@ -658,7 +656,6 @@ export class AiAgentFormOldComponent implements OnInit {
 
           const uploadPromise = this.rest_service.agentFileUpload(formData).toPromise();
           uploadPromise.then((res: any) => {
-            this.isSave = true;
             // this.capturedFileIds = res.data.map((item: any) => item.id).join(',');
             const ids = res.data.map((item: any) => item.id);
             this.capturedFileIds.push(...ids);
@@ -691,6 +688,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
   
  createBot() {
+  this.isSaved = true;
     console.log(this.predefinedBotsForm.value);
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
       this.uploadFilesAndCreateBot('create');
@@ -933,7 +931,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
 
   goBackAgentHome(){
-    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
+    // this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {
@@ -1015,7 +1013,6 @@ export class AiAgentFormOldComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
-  
   runAiAgent(){
     this.spinner.show()
     this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
