@@ -64,6 +64,7 @@ export class AiAgentFormOldComponent implements OnInit {
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
+        console.log(this.params)
         this.predefinedBot_id= this.params.id
       })
     }
