@@ -71,8 +71,8 @@ public elementsOptions: StripeElementsOptions = {
 
   addNewCard(){
     let request_body = {
-      "successUrl":environment.paymentFailuerURL+"?index=3",
-      "cancelUrl":environment.paymentFailuerURL+"?index=3"
+      "successUrl":environment.cardCancelURL,
+      "cancelUrl":environment.cardCancelURL
     }
     this.spinner.show(); 
     this.rest_api.addNewCardURLGenerate(request_body).pipe(
