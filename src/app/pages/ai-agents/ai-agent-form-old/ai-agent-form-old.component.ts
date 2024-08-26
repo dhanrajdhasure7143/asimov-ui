@@ -52,6 +52,8 @@ export class AiAgentFormOldComponent implements OnInit {
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
+  isSave:boolean =false;
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,6 +64,7 @@ export class AiAgentFormOldComponent implements OnInit {
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
+        console.log(this.params)
         this.predefinedBot_id= this.params.id
       })
     }
@@ -459,10 +462,11 @@ export class AiAgentFormOldComponent implements OnInit {
   saveBot(req_body,botName,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
+      this.isSave = true;
       const agentId = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      this.goBackAgentHome();
+      // this.goBackAgentHome();
       this.toaster.showSuccess(botName,"create")
     },err=>{
       this.spinner.hide();
@@ -473,7 +477,7 @@ export class AiAgentFormOldComponent implements OnInit {
         const agentId = this.params.agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      this.goBackAgentHome();
+      // this.goBackAgentHome();
       this.toaster.showSuccess(botName,"update")
     },err=>{
       this.spinner.hide();
@@ -654,6 +658,7 @@ export class AiAgentFormOldComponent implements OnInit {
 
           const uploadPromise = this.rest_service.agentFileUpload(formData).toPromise();
           uploadPromise.then((res: any) => {
+            this.isSave = true;
             // this.capturedFileIds = res.data.map((item: any) => item.id).join(',');
             const ids = res.data.map((item: any) => item.id);
             this.capturedFileIds.push(...ids);
@@ -1009,5 +1014,15 @@ export class AiAgentFormOldComponent implements OnInit {
 
   loopTrackBy(index, term) {
     return index;
+  }
+  runAiAgent(){
+    this.spinner.show()
+    this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+    this.spinner.hide();
+    this.toaster.toastSuccess("Agent Execution Started")
+    }, err => {
+      this.spinner.hide();
+      // this.toaster.showError(this.toastMessage.apierror);
+    });
   }
 }
