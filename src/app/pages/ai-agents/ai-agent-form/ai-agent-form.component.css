@@ -716,11 +716,13 @@
   cursor: pointer;
   color: white;
   background: black;
+  margin-left: 10px;
 }
 
 .inprogress-heading{
   font-size: 20px;
   font-weight: 600;
+  margin-left: 10px;
 }
 
 .card-container::-webkit-scrollbar {
@@ -728,12 +730,12 @@
 }
 
 .card-container::-webkit-scrollbar-thumb {
-  background-color: transparent; 
+  background-color: transparent !important; 
   border-radius: 10px;
 }
 
 .card-container::-webkit-scrollbar-thumb:hover {
-  background-color: transparent; 
+  background-color: transparent !important; 
 }
 
 .card-container::-webkit-scrollbar-track {
@@ -797,4 +799,43 @@ input.p-inputtext {
     border: 1px solid gray;
     padding: 6px 35px;
     border-radius: 6px;
+}
+
+.pagination-dots-container {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-dots-container div {
+  width: 12px;
+  height: 10px;
+  background-color: #bbb;
+  border-radius: 25px;
+}
+
+.pagination-dots-container div.active-dot {
+  background-color: #3199FF;
+  width: 50px;
+  border-radius: 10px;
+}
+
+.no-agents-message {
+  height: 100px;
+  font-weight: 700 !important;
+  color: black;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  border: 2px solid skyblue;
+  background: #fff;
+}
+
+.no-agents-message span{
+  font-weight: 700;
+}
+
+.nav-btn[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  color: black;
 }

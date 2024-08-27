@@ -96,22 +96,18 @@ export class AiAgentFormComponent implements OnInit {
     { startDate: '2023-09-05', progress: 90 },
     { startDate: '2023-10-02', progress: 70 },
     { startDate: '2023-11-20', progress: 50 },
-    { startDate: '2023-12-08', progress: 80 },
-    { startDate: '2024-01-14', progress: 60 },
-    { startDate: '2024-02-25', progress: 90 },
-    { startDate: '2024-03-03', progress: 50 },
-    { startDate: '2024-04-10', progress: 70 },
-    { startDate: '2024-05-21', progress: 80 },
-    { startDate: '2024-06-18', progress: 60 },
-    { startDate: '2024-07-30', progress: 90 },
-    { startDate: '2024-08-05', progress: 70 },
-    { startDate: '2024-09-12', progress: 50 },
-    { startDate: '2024-10-24', progress: 80 },
-    { startDate: '2024-11-17', progress: 60 },
-    { startDate: '2024-12-29', progress: 90 },
+    { startDate: '2023-07-15', progress: 80 },
+    { startDate: '2023-08-10', progress: 60 },
+    { startDate: '2023-09-05', progress: 90 },
+    { startDate: '2023-10-02', progress: 70 },
+    { startDate: '2023-11-20', progress: 50 },
   ];
 
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
+  currentActivePage = 1;
+  itemsPerPageCount = 4;
+  totalNumberOfPages: number;
+  pageDotNumbers: number[];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -125,6 +121,9 @@ export class AiAgentFormComponent implements OnInit {
         this.params=params
         this.predefinedBot_id= this.params.id
       })
+
+      this.initializePaginationDots()
+      this.initializePagination()
     }
 
   ngOnInit(): void {
@@ -142,6 +141,8 @@ export class AiAgentFormComponent implements OnInit {
       this.fetchAllFieldsToUpdateData();
       this.isEdit = true;
     }
+
+    this.initializePagination();
   }
 
   ngOnDestroy(): void {
@@ -1186,23 +1187,59 @@ export class AiAgentFormComponent implements OnInit {
     });
   }
 
+  initializePaginationDots() {
+    const totalAgentsCount = this.inProgressAgents.length;
+    this.totalNumberOfPages = Math.ceil(totalAgentsCount / this.itemsPerPageCount);
+    this.pageDotNumbers = Array.from({ length: this.totalNumberOfPages }, (_, index) => index + 1);
+  }
+
+  initializePagination() {
+    const totalAgentsCount = this.inProgressAgents.length;
+    this.totalNumberOfPages = Math.ceil(totalAgentsCount / this.itemsPerPageCount);
+    this.pageDotNumbers = Array.from({ length: this.totalNumberOfPages }, (_, index) => index + 1);
+  }
+
+  navigateToPage(pageNumber: number) {
+    this.currentActivePage = pageNumber;
+    this.scrollToPage(pageNumber);
+  }
+
+  scrollToPage(pageNumber: number) {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      const pageWidth = container.clientWidth;
+      container.scrollTo({
+        left: (pageNumber - 1) * pageWidth,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   scrollLeft() {
     if (this.cardContainer) {
       const container = this.cardContainer.nativeElement;
-      container.scrollBy({
-        left: -container.clientWidth,
-        behavior: 'smooth'
-      });
+      const containerWidth = container.clientWidth;
+      const newScrollPosition = container.scrollLeft - containerWidth;
+      const newPageNumber = Math.max(1, Math.floor(newScrollPosition / containerWidth) + 1);
+      this.currentActivePage = newPageNumber;
+      this.scrollToPage(newPageNumber);
     }
   }
 
   scrollRight() {
     if (this.cardContainer) {
       const container = this.cardContainer.nativeElement;
-      container.scrollBy({
-        left: container.clientWidth,
-        behavior: 'smooth'
-      });
+      const containerWidth = container.clientWidth;
+      const newScrollPosition = container.scrollLeft + containerWidth;
+      const newPageNumber = Math.min(this.totalNumberOfPages, Math.ceil(newScrollPosition / containerWidth) + 1);
+      this.currentActivePage = newPageNumber;
+      this.scrollToPage(newPageNumber);
     }
+
   }
+
+  handlePageDotClick(pageNumber: number) {
+    this.currentActivePage = pageNumber;
+  }
+
 }

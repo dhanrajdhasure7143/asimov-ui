@@ -476,13 +476,13 @@
       <!-- In-Progress Agents Section -->
     <div class="container">
         <div class="row align-items-center mb-3 mb-10">
-            <div class="col-md-6">
-                <i class="pi pi-sparkles" style="font-size: 1rem"></i>
-                <h4 class="inprogress-heading">In-Progress Agents</h4>
+            <div class="col-md-6 d-flex align-items-center justify-content-left">
+                <img src="../../../../assets/images/agent/rocket-icon.svg" alt="" height="20px" width="20px">
+                <span class="inprogress-heading">In-Progress Agents</span>
             </div>
             <div class="col-md-6 text-right">
-                <button class="nav-btn" (click)="scrollLeft()">&#60;</button>
-                <button class="nav-btn" (click)="scrollRight()">&#62;</button>
+                <button class="nav-btn" (click)="scrollLeft()" [disabled]="currentActivePage === 1">&#60;</button>
+                <button class="nav-btn" (click)="scrollRight()" [disabled]="currentActivePage === totalNumberOfPages">&#62;</button>
             </div>
         </div>
         <div class="row">
@@ -509,6 +509,18 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="inProgressAgents.length === 0" class="no-agents-message d-flex align-items-center justify-content-center">
+                    <span>No In-Progress Agents</span>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="pagination-dots-container d-flex align-items-center justify-content-center" style="margin: 5px 15px !important;">
+                <ng-container *ngIf="totalNumberOfPages > 1">
+                    <div *ngFor="let pageDot of pageDotNumbers" 
+                         [class.active-dot]="currentActivePage === pageDot" 
+                         ></div>
+                </ng-container>
             </div>
         </div>
     </div>
