@@ -695,6 +695,11 @@ export class AiAgentFormComponent implements OnInit {
     const selectedFiles = event.target.files;
     this.selectedFiles[field.preAttributeName] = selectedFiles;
     console.log("Selected files for " + field.preAttributeName, selectedFiles);
+
+    const selectedFile = event.target.files[0];
+    const fileName = selectedFile.name;
+    const fileNameElement = document.querySelector('.custom-file-name');
+    fileNameElement.textContent = fileName;
   }
 
   uploadFilesAndCreateBot(action: string) {

@@ -53,7 +53,7 @@
 }
 
 .col-form-label b{
-    font-size: 10px;
+    /* font-size: 10px; */
     font-weight: 500;
 }
 
@@ -738,4 +738,63 @@
 
 .card-container::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.custom-file-upload-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed skyblue;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  /* max-width: 300px; */
+  cursor: pointer;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.custom-upload-icon {
+  font-size: 24px; 
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.custom-hidden-file-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+input.p-inputtext {
+  border-radius: 8px !important;
+}
+
+.radio-custom-design{
+  display: flex !important;
+  gap: 25px !important;
+}
+
+.radio-custom-box{
+  display: inline-block;
+    border: 1px solid gray;
+    padding: 6px 35px;
+    border-radius: 6px;
 }

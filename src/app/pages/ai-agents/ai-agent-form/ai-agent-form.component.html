@@ -32,7 +32,8 @@
                     </ng-template>
                 </p-inplace> -->
 
-                <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3>
+                <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
+                <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="../../../../assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
                 <div *ngIf="isSubAgentNameEdit">
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
@@ -138,7 +139,10 @@
                                             <span class="input-icon-text-area" *ngIf="field.preAttributeType === 'textarea'">
                                                 <i class="pi pi-align-left"></i><i class=""></i>
                                             </span>
-                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                            <!-- <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
+                                            (keydown)="onKeydown($event,field)"></textarea> -->
+                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
                                             (keydown)="onKeydown($event,field)"></textarea>
                                         </div>
@@ -160,8 +164,8 @@
                                                 <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
                                             </label>
                                         </div> -->
-                                        <div *ngIf="field.preAttributeType === 'radio'">
-                                            <div class="form-check" *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                        <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
+                                            <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
                                                     (change)="onRadioChange(option.value,option)"> {{ option.label }}
@@ -214,12 +218,26 @@
                                             </ng-template>
                                         </div>
                                         
-                                        <div class="input-icon-wrapper">
+                                         <!-- <div class="input-icon-wrapper">
                                             <span class="input-icon" *ngIf="field.preAttributeType === 'file'">
                                                 <i class="pi pi-upload"></i>
                                             </span>
                                             <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control input-with-icon hidden-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                          (change)="onFileSelected($event,field)" multiple>
+                                        </div> -->
+                                        <div class="custom-file-upload-wrapper" *ngIf="field.preAttributeType === 'file'">
+                                            <label class="custom-file-upload" [for]="field.preAttributeName">
+                                                <span class="custom-upload-icon">
+                                                    <i class="pi pi-upload" style="font-size: 20px;"></i>
+                                                </span>
+                                                <input #fileInput *ngIf="field.preAttributeType === 'file'" type="file" class="custom-hidden-file-input"
+                                                [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="onFileSelected($event, field)"
+                                                multiple>
+                                                <span class="custom-file-name">
+                                                    No file choosen
+                                                </span>
+                                           
+                                            </label>
                                         </div>
                                          
                                          <ng-container *ngIf="field.preAttributeType === 'file'">
@@ -239,14 +257,14 @@
                                           </div>
                                         </ng-container>
                 
-                                        <div style="width: 70%;" *ngIf="field.isValidateRequired">
+                                        <div style="width: 100%;" *ngIf="field.isValidateRequired">
                                             <div>
                                                 <!-- <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i> -->
                                                 <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader && validate_errorMessage.length>0">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>
                                                 <span class="text-success" *ngIf="!isJobDescrption_error && validate_errorMessage.length>0 && !job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
                                                 <span class="text-danger" *ngIf="job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
                                             </div>
-                                            <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
+                                            <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button mr-0" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
                                             <button *ngIf="!isJobDescrptionValid && isValidateLoader" type="button" class="btn bluebg-button" style="float: right;" >
                                                 <i  class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
                                             </button>
