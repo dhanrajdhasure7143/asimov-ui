@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -86,6 +86,32 @@ export class AiAgentFormComponent implements OnInit {
     { label: 'Rank Profile' },
     { label: 'Completed' }
   ];
+
+  // Agent in Progress
+  inProgressAgents = [
+    { startDate: '2023-05-22', progress: 50 },
+    { startDate: '2023-06-01', progress: 70 },
+    { startDate: '2023-07-15', progress: 80 },
+    { startDate: '2023-08-10', progress: 60 },
+    { startDate: '2023-09-05', progress: 90 },
+    { startDate: '2023-10-02', progress: 70 },
+    { startDate: '2023-11-20', progress: 50 },
+    { startDate: '2023-12-08', progress: 80 },
+    { startDate: '2024-01-14', progress: 60 },
+    { startDate: '2024-02-25', progress: 90 },
+    { startDate: '2024-03-03', progress: 50 },
+    { startDate: '2024-04-10', progress: 70 },
+    { startDate: '2024-05-21', progress: 80 },
+    { startDate: '2024-06-18', progress: 60 },
+    { startDate: '2024-07-30', progress: 90 },
+    { startDate: '2024-08-05', progress: 70 },
+    { startDate: '2024-09-12', progress: 50 },
+    { startDate: '2024-10-24', progress: 80 },
+    { startDate: '2024-11-17', progress: 60 },
+    { startDate: '2024-12-29', progress: 90 },
+  ];
+
+  @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -1155,4 +1181,23 @@ export class AiAgentFormComponent implements OnInit {
     });
   }
 
+  scrollLeft() {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      container.scrollBy({
+        left: -container.clientWidth,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  scrollRight() {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      container.scrollBy({
+        left: container.clientWidth,
+        behavior: 'smooth'
+      });
+    }
+  }
 }
