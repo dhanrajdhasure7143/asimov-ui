@@ -1097,8 +1097,8 @@ button.enterprise-plan-bottom-stickier {
   border-radius: 300px;
   padding: 8px 15px !important;
   position: fixed;
-  right: 90px;
-  bottom: 40px;
+  right: 30px;
+  bottom: 25px;
 }
 button.enterprise-plan-bottom-stickier p{
   font-weight: 700;

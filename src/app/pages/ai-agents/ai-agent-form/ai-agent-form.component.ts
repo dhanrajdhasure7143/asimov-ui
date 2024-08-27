@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
@@ -9,6 +9,12 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from "primeng/inplace";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+// AI agent Execution Progress Bar Type two Starts
+interface AgentExecution {
+  status: 'not_started' | 'running' | 'failed' | 'completed';
+  currentStage: number;
+}
+// AI agent Execution Progress Bar Type two ends
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -77,15 +83,23 @@ export class AiAgentFormComponent implements OnInit {
   startTime: Date | null = null;
   stepTimes: Date[] = [];
   showProgress: boolean = false;
+  agendIdCapture:any;
   progressBarItems = [
-    { label: 'Agent Started' },
-    { label: 'Post Position' },
-    { label: 'View Position' },
-    { label: 'Source Profile' },
-    { label: 'Review Profile' },
-    { label: 'Rank Profile' },
+    { label: 'Intiated' },
+    { label: 'Agent In Progress' },
+    { label: 'Generating Output' },
     { label: 'Completed' }
   ];
+
+  // AI agents progress bar type two code starts
+  stages: any[] = [
+    { label: 'Initiated' },
+    { label: 'Agent In Progress' },
+    { label: 'Generating Output' },
+    { label: 'Completed' }
+  ];
+  agentExecutions: AgentExecution[] = [];
+  // AI agents progress bar type two code ends
 
   // Agent in Progress
   inProgressAgents = [
@@ -115,7 +129,10 @@ export class AiAgentFormComponent implements OnInit {
     private rest_service : PredefinedBotsService,
     private toaster: ToasterService,
     private toastMessages: toastMessages,
-    private spinner : LoaderService
+    private spinner : LoaderService,
+    private confirmationService: ConfirmationService,
+    private toastMessage:toastMessages
+
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
@@ -124,6 +141,7 @@ export class AiAgentFormComponent implements OnInit {
 
       this.initializePaginationDots()
       this.initializePagination()
+      this.initializeSubAgentPagination();
     }
 
   ngOnInit(): void {
@@ -143,8 +161,59 @@ export class AiAgentFormComponent implements OnInit {
     }
 
     this.initializePagination();
+    this.addNewExecution();
   }
 
+   // AI agents progress bar type two methods code starts
+  addNewExecution() {
+    this.agentExecutions.push({
+      status: 'not_started',
+      currentStage: 0
+    });
+  }
+
+  toggleExecution(index: number) {
+    const execution = this.agentExecutions[index];
+    if (execution.status === 'running') {
+      this.stopExecution(index);
+    } else {
+      this.startExecution(index);
+    }
+  }
+  startExecution(index: number) {
+    const execution = this.agentExecutions[index];
+    execution.status = 'running';
+    execution.currentStage = 0;
+    this.simulateProgress(index);
+  }
+
+  stopExecution(index: number) {
+    const execution = this.agentExecutions[index];
+    execution.status = 'failed';
+    // Add any cleanup or API calls needed when stopping the process
+  }
+
+  simulateProgress(index: number) {
+    const execution = this.agentExecutions[index];
+    if (execution.currentStage < this.stages.length - 1 && execution.status === 'running') {
+      setTimeout(() => {
+        execution.currentStage++;
+        // Simulate a random failure
+        if (Math.random() < 0.2) {
+          execution.status = 'failed';
+        } else if (execution.currentStage === this.stages.length - 1) {
+          execution.status = 'completed';
+        } else {
+          this.simulateProgress(index);
+        }
+      }, 2000);
+    }
+  }
+
+  getProgressWidth(execution: AgentExecution): string {
+    return `${(execution.currentStage / (this.stages.length - 1)) * 100}%`;
+  }
+ // AI agents progress bar type two code ends
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -527,6 +596,7 @@ export class AiAgentFormComponent implements OnInit {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentId = res.data[0].agentId;
+      this.agendIdCapture = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -1123,7 +1193,7 @@ export class AiAgentFormComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
   
-// prgress bar code methods for AI agents execution
+// prgress bar code methods for AI agents execution Starts
   get progressWidth(): string {
     return `${(this.currentStage / (this.progressBarItems.length - 1)) * 80}%`;
   }
@@ -1141,14 +1211,43 @@ export class AiAgentFormComponent implements OnInit {
     return `${(1 / (this.progressBarItems.length - 1)) * 100}%`;
   }
 
-  toggleProcess() {
-    if (this.isRunning) {
-      this.stopProcess();
-    } else {
-      this.startProcess();
-    }
-  }
+  // toggleProcess() {
+  //   if (this.isRunning) {
+  //     this.stopProcess();
+  //   } else {
+  //     this.startProcess();
+  //     // this.runAiAgent();
+  //   }
+  // }
 
+  startAiAgent() {
+    this.confirmationService.confirm({
+      message: "Do you want to start this agent? This can't be undo.",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show()
+        // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+          console.log("AGENT-ID", this.agendIdCapture);
+        this.rest_service.startPredefinedBot(this.agendIdCapture).subscribe((res: any) => {
+        this.spinner.hide();
+        this.toaster.toastSuccess("Agent Execution Started")
+        }, err => {
+          this.spinner.hide();
+          this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
+          // this.toaster.showError(this.toastMessage.apierror);
+        });
+        this.startProcess();
+      },
+      reject: (type) => { }
+    });
+  }
   startProcess() {
     this.isRunning = true;
     this.currentStage = 0;
@@ -1186,6 +1285,13 @@ export class AiAgentFormComponent implements OnInit {
       hour12: true 
     });
   }
+
+  createBot1(){
+    this.showProgress = true;
+    this.currentStage = 0;
+  }
+
+  // prgress bar code methods for AI agents execution Ends
 
   initializePaginationDots() {
     const totalAgentsCount = this.inProgressAgents.length;
@@ -1241,5 +1347,92 @@ export class AiAgentFormComponent implements OnInit {
   handlePageDotClick(pageNumber: number) {
     this.currentActivePage = pageNumber;
   }
+// Agent History Data Starts
+subAgentHistory = [
+  { date: '26 May 2024 9:00 PM', stage: 'Completed', information: 'The operation has been completed successfully, and all processes have completed.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'The operation has failed, and all processes are incomplete.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Started', information: 'The operation has started successfully and will move to the next stage - Post Position.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
+  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
+  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'The operation has failed after reaching the final stage.' },
+];
 
+// Pagination related variables
+subAgentCurrentPage = 1;
+subAgentItemsPerPage = 10;
+subAgentTotalPagesArray: number[] = [];
+
+// Initialize pagination for sub-agent history
+initializeSubAgentPagination() {
+  // const totalPages = Math.ceil(this.subAgentHistory.length / this.subAgentItemsPerPage);
+  // this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  this.updateFilteredData();
+}
+
+subAgentGoToPage(page: number | string) {
+  if (page === 'prev' && this.subAgentCurrentPage > 1) {
+    this.subAgentCurrentPage--;
+  } else if (page === 'next' && this.subAgentCurrentPage < this.subAgentTotalPagesArray.length) {
+    this.subAgentCurrentPage++;
+  } else if (typeof page === 'number') {
+    this.subAgentCurrentPage = page;
+  }
+}
+
+scrollSubAgentLeft() {
+  if (this.subAgentCurrentPage > 1) {
+    this.subAgentGoToPage('prev');
+  }
+}
+
+scrollSubAgentRight() {
+  if (this.subAgentCurrentPage < this.subAgentTotalPagesArray.length) {
+    this.subAgentGoToPage('next');
+  }
+}
+
+updateFilteredData() {
+  const totalPages = Math.ceil(this.filteredSubAgentHistory.length / this.subAgentItemsPerPage);
+  this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+}
+
+getSubAgentPaginatedData() {
+  const startIndex = (this.subAgentCurrentPage - 1) * this.subAgentItemsPerPage;
+  const endIndex = startIndex + this.subAgentItemsPerPage;
+  return this.filteredSubAgentHistory.slice(startIndex, endIndex);
+}
+
+searchQuery: string = '';
+
+// Filter records based on search query
+get filteredSubAgentHistory() {
+if (!this.searchQuery) {
+  return this.subAgentHistory;
+}
+const queryDate = new Date(this.searchQuery);
+return this.subAgentHistory.filter(record => {
+  const recordDate = new Date(record.date);
+  return recordDate.toDateString() === queryDate.toDateString();
+});
+}
+
+// Method to handle search input change
+onSearchChange(event: Event) {
+const input = event.target as HTMLInputElement;
+this.searchQuery = input.value;
+this.subAgentCurrentPage = 1; // Reset to first page when searching
+this.updateFilteredData();
+}
+// Agent History Data Ends
 }

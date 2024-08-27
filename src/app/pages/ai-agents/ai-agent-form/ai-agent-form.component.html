@@ -84,7 +84,7 @@
             <div class="accordion-item">
               <div class="accordion-header" (click)="toggleItem()">
                 <span>Configuration</span>
-                <i [ngClass]="{'pi pi-angle-right': !isExpanded, 'pi pi-angle-down': isExpanded}"></i>
+                <i class="pi" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
               </div>
               <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
 
@@ -386,37 +386,67 @@
                     <div class="accordion-content-save" *ngIf="!showProgress">
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
-                        <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
+                        <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button> -->
+                        <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button>
                         <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
                     </div>
+
+                    <!-- AI agent Execution Progress Bar Starts-->
+
                     <div class="ai-action-container" *ngIf="showProgress">
                         <div class="header">
-                          <span class="title"><i class="pi pi-rocket"></i> AI In Action (Stage: {{displayStage}})</span>
-                          <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
-                                  (click)="toggleProcess()"
-                                  [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
+                            <span class="title">
+                                <span>
+                                    <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                                </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> </span>
+                    
                         </div>
                         <div class="custom-steps">
-                            <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
-                            (click)="toggleProcess()"
-                            [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button>
-                          <div class="progress-bar" [style.width]="progressWidth"></div>
-
-                          <!-- <div class="step-indicators">
-                            <div class="step-dot" *ngFor="let item of items; let i = index" [ngClass]="getStepClass(i)">
-                              {{i + 1}}
+                            <!-- If need start stop button toggle for AI agent execution enable below commented button code -->
+                            <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" (click)="toggleProcess()"
+                                [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
+                            <button pButton label="Start" (click)="startAiAgent()"></button>
+                            <div class="progress-bar" [style.width]="progressWidth"></div>
+                    
+                            <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
+                                <!-- <div class="step-number" [ngClass]="{'completed': i < currentStage, 'active': i === currentStage}"  [ngClass]="getStepClass(i)">
+                                                        {{i + 1}}
+                                                    </div> -->
+                                <div class="step-label">{{item.label}}</div>
+                                <!-- If need step time enable below code -->
+                                <!-- <div class="step-time">{{getStepTime(i)}}</div> -->
                             </div>
-                          </div> -->
-                          
-                          <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
-                                <div class="step-number" [ngClass]="{'completed': i < currentStage, 'active': i === currentStage}"  [ngClass]="getStepClass(i)">
-                                    {{i + 1}}
-                                </div>
-                            <div class="step-label">{{item.label}}</div>
-                            <div class="step-time">{{getStepTime(i)}}</div>
+                        </div>
+                    </div>
+
+                    <!-- AI agent Execution Progress Bar Starts-->
+                    
+                    <!-- ---------------------------------------------------------------------------------------------------------- -->
+
+                    <!-- AI agent Execution Progress Bar Type two Starts-->
+
+                    <!-- <div class="ai-action-container" *ngFor="let execution of agentExecutions; let i = index">
+                        <div class="header">
+                          <span class="title">
+                            <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                            AI In Action
+                          </span>
+                          <span style="font-size: 14px; color: #6c757d;">(Stage: {{execution.currentStage}}/{{stages.length}})</span>
+                        </div>
+                        <div class="custom-steps">
+                            <button pButton label="Start" (click)="toggleExecution(i)"></button>
+                          <div class="progress-bar">
+                            <div class="progress-fill" 
+                                 [style.width]="getProgressWidth(execution)"
+                                 [ngClass]="{'bg-green': execution.status === 'running' || execution.status === 'completed', 
+                                             'bg-red': execution.status === 'failed'}"></div>
                           </div>
                         </div>
-                      </div>
+                        <div class="stage-labels">
+                          <div *ngFor="let stage of stages" class="stage-label">{{stage.label}}</div>
+                        </div>
+                      </div> -->
+                      <!-- AI agent Execution Progress Bar Type two Ends-->
                   </div>
               </div>
             </div>
@@ -487,7 +517,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card-wrapper">
+                <div class="row card-wrapper">
                     <div class="card-container" #cardContainer>
                         <div *ngFor="let agent of inProgressAgents" class="custom-card">
                             <div class="card-body">
@@ -524,4 +554,64 @@
             </div>
         </div>
     </div>
+     
+    <!-- Sub Agent History starts-->
+    <div class="subagents-history-container">
+        <div class="d-flex align-items-center justify-content-between mb-2"
+            style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
+            <!-- Tabs -->
+            <div class="tabs-container d-flex" style="gap:10px">
+                <div class="tab">History</div>
+                <div class="tab">Uploaded Data</div>
+            </div>
+   
+            <!-- Search, Filter, Download buttons -->
+            <div class="controls-container">
+                <input type="text" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
+                <button class="filter-btn">Filter</button>
+                <button class="download-btn">Download</button>
+            </div>
+        </div>
+   
+        <!-- Sub-agent History Table -->
+        <table class="subagent-history-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Stage</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of getSubAgentPaginatedData(); let i = index">
+                    <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>
+                        <span
+                            [ngClass]="{'stage-completed': record.stage === 'Completed', 'stage-failed': record.stage === 'Failed'}">
+                            {{ record.stage }}
+                        </span>
+                    </td>
+                    <td>{{ record.information }}</td>
+                </tr>
+            </tbody>
+        </table>
+   
+        <!-- Pagination Controls -->
+        <div class="pagination-controls">
+            <button (click)="scrollSubAgentLeft()" [disabled]="subAgentCurrentPage === 1">&#60;</button>
+            <span *ngFor="let page of subAgentTotalPagesArray" (click)="subAgentGoToPage(page)"
+                [class.active]="page === subAgentCurrentPage">
+                {{ page }}
+            </span>
+            <button (click)="scrollSubAgentRight()"
+                [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;</button>
+        </div>
+    </div>
+ 
+        <!-- Sub Agent History Ends-->         
 </div>
+
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+[closable]="false"></p-confirmDialog>
