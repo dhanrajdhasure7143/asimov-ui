@@ -496,6 +496,8 @@ proceedToSubscribe() {
     }
     if(plan.name =="Marketing"){
       this.router.navigate(['/pages/aiagent/subscription/marketing'], { queryParams: { token: emailToken,id:plan.id } });
+    }else{
+      this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
     }
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
   }
