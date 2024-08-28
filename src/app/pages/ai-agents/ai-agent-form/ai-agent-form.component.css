@@ -1221,7 +1221,7 @@ input.p-inputtext {
 .accordion-header {
   background: #fff !important;
 }
-.p-accordion-tab a.p-accordion-header-link {
+::ng-deep .p-accordion-tab a.p-accordion-header-link {
   background: #f4f4ff !important;
   margin-bottom: 15px !important;
   box-shadow: none !important;
