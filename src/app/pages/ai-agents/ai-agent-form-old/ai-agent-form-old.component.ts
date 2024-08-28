@@ -53,7 +53,7 @@ export class AiAgentFormOldComponent implements OnInit {
   fieldInputKey:any;
   capturedFileIds:any=[];
   isSaved:boolean = false;
-  agendIdCapture:any
+  agentUUIDCapture:any
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -462,10 +462,10 @@ export class AiAgentFormOldComponent implements OnInit {
   saveBot(req_body,botName,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
-      const agentId = res.data[0].agentId;
-      this.agendIdCapture = res.data[0].agentId;
-      console.log("AGENT-ID", this.agendIdCapture);
-        this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      const agentUUID = res.data[0].agentUUID;
+      this.agentUUIDCapture = res.data[0].agentUUID;
+      console.log("AGENT-ID", this.agentUUIDCapture);
+        this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
       this.toaster.showSuccess(botName,"create")
@@ -1020,8 +1020,8 @@ export class AiAgentFormOldComponent implements OnInit {
   runAiAgent(){
     this.spinner.show()
     // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-      console.log("AGENT-ID", this.agendIdCapture);
-    this.rest_service.startPredefinedBot(this.agendIdCapture).subscribe((res: any) => {
+      console.log("AGENT-ID", this.agentUUIDCapture);
+    this.rest_service.startPredefinedBot(this.agentUUIDCapture).subscribe((res: any) => {
     this.spinner.hide();
     this.toaster.toastSuccess("Agent Execution Started")
     }, err => {
