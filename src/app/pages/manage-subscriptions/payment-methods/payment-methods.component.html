@@ -9,7 +9,7 @@
                             <img *ngSwitchCase="'mastercard'" src="../../../../assets/images/agent/cards/master-card.svg" alt="Mastercard" class="card-background">
                             <img *ngSwitchCase="'discover'" src="../../../../assets/images/agent/cards/discover.svg" alt="Discover" class="card-background">
                             <img *ngSwitchCase="'rupay'" src="../../../../assets/images/agent/cards/rupay-card.svg" alt="RuPay" class="card-background">
-                            <img *ngSwitchDefault src="../../../../assets/images/agent/cards/generic-card.svg" alt="Card" class="card-background">
+                            <img *ngSwitchDefault src="../../../../assets/images/agent/cards/default-card.svg" alt="Card" class="card-background">
                         </ng-container>
                         <div class="card-overlay">
                             <div class="card-type">Credit</div>
@@ -47,8 +47,10 @@
                                 <img src="../../../../assets/images/agent/check.png" alt=""> &nbsp; Default
                             </button>
                             <ng-container *ngIf='!cardData.defaultSource'>
-                                <button class="btn remove-btn" (click)="confrmDeleteCard(cardData)">Remove</button>
-                                <button class="btn make-default-btn" (click)="setAsDefaultCard(cardData)">Make Default</button>
+                                <button class="btn remove-btn" (click)="confrmDeleteCard(cardData)">
+                                    <img src="../../../../assets/images/agent/delete_icon_red.svg" alt="">
+                                </button>
+                                <button class="btn make-default-btn" (click)="setAsDefaultCard(cardData)">Set as Default</button>
                             </ng-container>
                         </div>
                     </div>                  
@@ -64,7 +66,7 @@
 
             <div class="col-sm-3 form-group pl-0">
                 <div class="cardsBox add-new" *ngIf="!isLoading">
-                    <img src="../../../../assets/images-n/common/AddCreditCard.svg" (click)="addNewCard()" alt="">
+                    <img src="../../../../assets/images/agent/cards/add-new-card.svg" (click)="addNewCard()" alt="">
                 </div>                
             </div>
         </div>

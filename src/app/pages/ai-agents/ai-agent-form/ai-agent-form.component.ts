@@ -78,6 +78,7 @@ export class AiAgentFormComponent implements OnInit {
   stepTimes: Date[] = [];
   showProgress: boolean = false;
   agentUUIDCapture:any;
+  configurationOverlay:boolean = false;
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -1408,4 +1409,10 @@ mapResponseToTableData(data: any[]): any[] {
 }
 
 // Agent History Data Ends
+getDisabledForm(){
+  this.configurationOverlay = true
+  this.rest_service.getDisabledFields().subscribe((res:any)=>{
+    console.log("GET-DISABLE-FIELDS", res);
+  })
+}
 }
