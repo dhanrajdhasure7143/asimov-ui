@@ -36,7 +36,7 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   }
 
   ngOnChanges(){
-    console.log("this.selectedAgent",this.selectedAgent)
+    // console.log("this.selectedAgent",this.selectedAgent)
   }
   
   proceedToPay() {

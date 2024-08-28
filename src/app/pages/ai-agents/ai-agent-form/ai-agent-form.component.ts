@@ -77,7 +77,7 @@ export class AiAgentFormComponent implements OnInit {
   startTime: Date | null = null;
   stepTimes: Date[] = [];
   showProgress: boolean = false;
-  agendIdCapture:any;
+  agentUUIDCapture:any;
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -246,7 +246,7 @@ export class AiAgentFormComponent implements OnInit {
 
   fetchAllFieldsToUpdateData() {
     // this.spinner.show();
-    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agent_id).subscribe((res:any)=>{
+    this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agentId).subscribe((res:any)=>{
       const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
       res.attachments.forEach((attachment) => {
         const fieldName = keyMap[attachment.key];
@@ -530,9 +530,9 @@ export class AiAgentFormComponent implements OnInit {
   saveBot(req_body,botName,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
-      const agentId = res.data[0].agentId;
-      this.agendIdCapture = res.data[0].agentId;
-        this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      const agentUUID = res.data[0].agentUUID;
+      this.agentUUIDCapture = res.data[0].agentUUID;
+        this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(botName,"create")
@@ -764,6 +764,8 @@ export class AiAgentFormComponent implements OnInit {
   
  createBot() {
     console.log(this.predefinedBotsForm.value);
+    this.showProgress = true;
+    this.currentStage = 0;
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
       this.uploadFilesAndCreateBot('create');
     } else {
@@ -1169,8 +1171,8 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          console.log("AGENT-ID", this.agendIdCapture);
-        this.rest_service.startPredefinedBot(this.agendIdCapture).subscribe((res: any) => {
+          console.log("AGENT-ID", this.agentUUIDCapture);
+        this.rest_service.startPredefinedBot(this.agentUUIDCapture).subscribe((res: any) => {
         this.spinner.hide();
         this.toaster.toastSuccess("Agent Execution Started")
         }, err => {
