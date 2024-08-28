@@ -9,12 +9,6 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from "primeng/inplace";
 import { trigger, state, style, animate, transition } from '@angular/animations';
-// AI agent Execution Progress Bar Type two Starts
-interface AgentExecution {
-  status: 'not_started' | 'running' | 'failed' | 'completed';
-  currentStage: number;
-}
-// AI agent Execution Progress Bar Type two ends
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -91,15 +85,6 @@ export class AiAgentFormComponent implements OnInit {
     { label: 'Completed' }
   ];
 
-  // AI agents progress bar type two code starts
-  stages: any[] = [
-    { label: 'Initiated' },
-    { label: 'Agent In Progress' },
-    { label: 'Generating Output' },
-    { label: 'Completed' }
-  ];
-  agentExecutions: AgentExecution[] = [];
-  // AI agents progress bar type two code ends
 
   // Agent in Progress
   inProgressAgents = [
@@ -161,60 +146,9 @@ export class AiAgentFormComponent implements OnInit {
     }
 
     this.initializePagination();
-    this.addNewExecution();
     this.getSubAgentHistoryLogs();
   }
 
-   // AI agents progress bar type two methods code starts
-  addNewExecution() {
-    this.agentExecutions.push({
-      status: 'not_started',
-      currentStage: 0
-    });
-  }
-
-  toggleExecution(index: number) {
-    const execution = this.agentExecutions[index];
-    if (execution.status === 'running') {
-      this.stopExecution(index);
-    } else {
-      this.startExecution(index);
-    }
-  }
-  startExecution(index: number) {
-    const execution = this.agentExecutions[index];
-    execution.status = 'running';
-    execution.currentStage = 0;
-    this.simulateProgress(index);
-  }
-
-  stopExecution(index: number) {
-    const execution = this.agentExecutions[index];
-    execution.status = 'failed';
-    // Add any cleanup or API calls needed when stopping the process
-  }
-
-  simulateProgress(index: number) {
-    const execution = this.agentExecutions[index];
-    if (execution.currentStage < this.stages.length - 1 && execution.status === 'running') {
-      setTimeout(() => {
-        execution.currentStage++;
-        // Simulate a random failure
-        if (Math.random() < 0.2) {
-          execution.status = 'failed';
-        } else if (execution.currentStage === this.stages.length - 1) {
-          execution.status = 'completed';
-        } else {
-          this.simulateProgress(index);
-        }
-      }, 2000);
-    }
-  }
-
-  getProgressWidth(execution: AgentExecution): string {
-    return `${(execution.currentStage / (this.stages.length - 1)) * 100}%`;
-  }
- // AI agents progress bar type two code ends
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

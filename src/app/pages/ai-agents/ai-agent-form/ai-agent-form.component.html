@@ -420,35 +420,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- AI agent Execution Progress Bar Starts-->
-                    
-                    <!-- ---------------------------------------------------------------------------------------------------------- -->
-
-                    <!-- AI agent Execution Progress Bar Type two Starts-->
-
-                    <!-- <div class="ai-action-container" *ngFor="let execution of agentExecutions; let i = index">
-                        <div class="header">
-                          <span class="title">
-                            <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
-                            AI In Action
-                          </span>
-                          <span style="font-size: 14px; color: #6c757d;">(Stage: {{execution.currentStage}}/{{stages.length}})</span>
-                        </div>
-                        <div class="custom-steps">
-                            <button pButton label="Start" (click)="toggleExecution(i)"></button>
-                          <div class="progress-bar">
-                            <div class="progress-fill" 
-                                 [style.width]="getProgressWidth(execution)"
-                                 [ngClass]="{'bg-green': execution.status === 'running' || execution.status === 'completed', 
-                                             'bg-red': execution.status === 'failed'}"></div>
-                          </div>
-                        </div>
-                        <div class="stage-labels">
-                          <div *ngFor="let stage of stages" class="stage-label">{{stage.label}}</div>
-                        </div>
-                      </div> -->
-                      <!-- AI agent Execution Progress Bar Type two Ends-->
+                   
                   </div>
               </div>
             </div>

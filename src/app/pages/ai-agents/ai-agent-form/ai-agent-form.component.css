@@ -845,37 +845,7 @@ input.p-inputtext {
   cursor: not-allowed;
   opacity: 0.6;
   color: black;
-}
-/* AI agent Execution Progress Bar Type two Starts  styles*/
-
-/* .progress-bar {
-  flex-grow: 1;
-  height: 30px;
-  background-color: #e9ecef;
-  border-radius: 15px;
-  margin-left: 10px;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress-fill {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: width 0.3s ease;
-}
-
-.bg-green {
-  background-color: #69FF59;
-}
-
-.bg-red {
-  background-color: #FF5E59;
-} */
-
-/* AI agent Execution Progress Bar Type two styles Ends */
- 
+} 
  
 /* Sub-Agent History Starts */
 .subagents-history-container {
