@@ -93,7 +93,8 @@ export class PredefinedBotsService {
   }
 
   captureAgentIdandfileIds(agentId: any, body){
-    return this.http.post(`/platform-service/document/updateAIAgentIdToDocs/${agentId}`, body)
+    // return this.http.post(`/platform-service/document/updateAIAgentIdToDocs/${agentId}`, body)
+    return this.http.post(`/platform-service/document/updateAgentUuidForDocument/${agentId}`, body)
   }
 
   checkAiAgentName(agent_name){
