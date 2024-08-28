@@ -80,7 +80,7 @@
                 <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
                   Expired {{agent.expiryDate|date:'dd-MM-yyyy'}}
                 </p>
-                <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isConfigured">
+                <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
                   Try a simple task to see it in action
                 </p>
               </div>
