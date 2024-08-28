@@ -356,7 +356,7 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
                 let isMonthlySubscribed=false;
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
-                let features = data ? JSON.parse(data) : [];
+                // let features = data ? JSON.parse(data) : [];
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
