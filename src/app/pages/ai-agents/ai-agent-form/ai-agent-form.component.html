@@ -405,7 +405,9 @@
                             <!-- If need start stop button toggle for AI agent execution enable below commented button code -->
                             <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" (click)="toggleProcess()"
                                 [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
-                            <button pButton label="Start" (click)="startAiAgent()"></button>
+                                <button class="start_botton" pButton label="Start" (click)="startAiAgent()">
+                                    <img src="../../../../assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
+                                </button>
                             <div class="progress-bar" [style.width]="progressWidth"></div>
                     
                             <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
