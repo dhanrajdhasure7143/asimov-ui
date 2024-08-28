@@ -60,17 +60,45 @@
       <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of subAgentList">
         <div class="card agent-card">
           <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2" style="padding: 3px 5px;">
               <div class="d-flex align-items-center agent-info">
                 <img src="assets/images/mini_bot.svg" alt="Agent" class="agent-image me-2">
                 <h5 class="card-title mb-0 agent-name" [title]="agent.subAgentName">{{agent.subAgentName}}</h5>
               </div>
-              <button class="btn btn-sm rounded-pill card-view" (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)" [ngClass]="agent.isExpired ? 'btn-danger' : 'btn-primary'">
-                {{agent.isExpired ? 'Renew' : 'View'}}
+              <button class="button-top delete-button" style="margin: 5px;">
+                <span>
+                  <img *ngIf="!agent.isExpired" src="../../../../assets/images/agent/delete_icon_gray.svg" alt="" (click)="deleteSubSgent()">
+                  <img *ngIf="agent.isExpired" src="../../../../assets/images/agent/delete_icon_red.svg" alt="" (click)="deleteSubSgent()">
+                </span>
               </button>
             </div>
-            <p class="card-text text-muted mb-0" *ngIf="agent.lastExecution">Last run date: {{agent.lastExecution|date:'MMM dd, y hh:mm'}}</p>
-            <span class="badge rounded-pill card-new" *ngIf="!agent.lastExecution">New</span>
+            <div class="footer">
+              <div class="text-content">
+                <p style="width: 148px;" class="badge1 text-muted" *ngIf="agent.lastExecution">
+                  Last run date: {{agent.lastExecution|date:'dd-MM-yyyy'}}
+                </p>
+                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
+                  Expired {{agent.expiryDate|date:'dd-MM-yyyy'}}
+                </p>
+                <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
+                  Try a simple task to see it in action
+                </p>
+              </div>
+              <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->
+
+              <!-- <button class="cardBtn btn btn-sm rounded-pill card-view"
+                [ngClass]="{'btn-danger': agent.isConfigured && agent.isExpired, 'btn-primary': !agent.isConfigured || (agent.isConfigured && !agent.isExpired)}"
+                (click)="agent.isConfigured ? (agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)) : viewAgentDetails(agent)">
+                {{ agent.isConfigured ? (agent.isExpired ? 'Renew' : 'View') : 'Start Now!' }}
+              </button> -->
+
+                <button *ngIf="!agent.isExpired" class="cardBtn btn btn-sm rounded-pill card-view"
+                  [ngClass]="{'btn-primary': !agent.isConfigured || (agent.isConfigured && !agent.isExpired), 'btn-danger': agent.isConfigured && agent.isExpired}"
+                  (click)="viewAgentDetails(agent)">
+                  {{ agent.isConfigured ? 'View' : 'Start Now!' }}
+                </button>
+
+            </div>
           </div>
         </div>
       </div>

@@ -32,7 +32,8 @@
                     </ng-template>
                 </p-inplace> -->
 
-                <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3>
+                <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
+                <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="../../../../assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
                 <div *ngIf="isSubAgentNameEdit">
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
@@ -83,7 +84,7 @@
             <div class="accordion-item">
               <div class="accordion-header" (click)="toggleItem()">
                 <span>Configuration</span>
-                <i [ngClass]="{'pi pi-angle-right': !isExpanded, 'pi pi-angle-down': isExpanded}"></i>
+                <i class="pi" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
               </div>
               <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
 
@@ -138,7 +139,10 @@
                                             <span class="input-icon-text-area" *ngIf="field.preAttributeType === 'textarea'">
                                                 <i class="pi pi-align-left"></i><i class=""></i>
                                             </span>
-                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                            <!-- <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
+                                            (keydown)="onKeydown($event,field)"></textarea> -->
+                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
                                             (keydown)="onKeydown($event,field)"></textarea>
                                         </div>
@@ -160,8 +164,8 @@
                                                 <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option" [value]="option" [formControlName]="field.preAttributeName"> {{ option }}
                                             </label>
                                         </div> -->
-                                        <div *ngIf="field.preAttributeType === 'radio'">
-                                            <div class="form-check" *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                        <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
+                                            <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
                                                     (change)="onRadioChange(option.value,option)"> {{ option.label }}
@@ -214,12 +218,26 @@
                                             </ng-template>
                                         </div>
                                         
-                                        <div class="input-icon-wrapper">
+                                         <!-- <div class="input-icon-wrapper">
                                             <span class="input-icon" *ngIf="field.preAttributeType === 'file'">
                                                 <i class="pi pi-upload"></i>
                                             </span>
                                             <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control input-with-icon hidden-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                          (change)="onFileSelected($event,field)" multiple>
+                                        </div> -->
+                                        <div class="custom-file-upload-wrapper" *ngIf="field.preAttributeType === 'file'">
+                                            <label class="custom-file-upload" [for]="field.preAttributeName">
+                                                <span class="custom-upload-icon">
+                                                    <i class="pi pi-upload" style="font-size: 20px;"></i>
+                                                </span>
+                                                <input #fileInput *ngIf="field.preAttributeType === 'file'" type="file" class="custom-hidden-file-input"
+                                                [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (change)="onFileSelected($event, field)"
+                                                multiple>
+                                                <span class="custom-file-name">
+                                                    No file choosen
+                                                </span>
+                                           
+                                            </label>
                                         </div>
                                          
                                          <ng-container *ngIf="field.preAttributeType === 'file'">
@@ -239,14 +257,14 @@
                                           </div>
                                         </ng-container>
                 
-                                        <div style="width: 70%;" *ngIf="field.isValidateRequired">
+                                        <div style="width: 100%;" *ngIf="field.isValidateRequired">
                                             <div>
                                                 <!-- <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i> -->
                                                 <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader && validate_errorMessage.length>0">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>
                                                 <span class="text-success" *ngIf="!isJobDescrption_error && validate_errorMessage.length>0 && !job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
                                                 <span class="text-danger" *ngIf="job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
                                             </div>
-                                            <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
+                                            <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button mr-0" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
                                             <button *ngIf="!isJobDescrptionValid && isValidateLoader" type="button" class="btn bluebg-button" style="float: right;" >
                                                 <i  class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
                                             </button>
@@ -368,37 +386,41 @@
                     <div class="accordion-content-save" *ngIf="!showProgress">
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
-                        <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
+                        <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button> -->
+                        <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button>
                         <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
                     </div>
+
+                    <!-- AI agent Execution Progress Bar Starts-->
+
                     <div class="ai-action-container" *ngIf="showProgress">
                         <div class="header">
-                          <span class="title"><i class="pi pi-rocket"></i> AI In Action (Stage: {{displayStage}})</span>
-                          <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
-                                  (click)="toggleProcess()"
-                                  [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
+                            <span class="title">
+                                <span>
+                                    <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                                </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> </span>
+                    
                         </div>
                         <div class="custom-steps">
-                            <button pButton [label]="isRunning ? 'Stop' : 'Start'" 
-                            (click)="toggleProcess()"
-                            [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button>
-                          <div class="progress-bar" [style.width]="progressWidth"></div>
-
-                          <!-- <div class="step-indicators">
-                            <div class="step-dot" *ngFor="let item of items; let i = index" [ngClass]="getStepClass(i)">
-                              {{i + 1}}
+                            <!-- If need start stop button toggle for AI agent execution enable below commented button code -->
+                            <!-- <button pButton [label]="isRunning ? 'Stop' : 'Start'" (click)="toggleProcess()"
+                                [ngClass]="{'p-button-danger': isRunning, 'p-button-primary': !isRunning}"></button> -->
+                                <button class="start_botton" pButton label="Start" (click)="startAiAgent()">
+                                    <img src="../../../../assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
+                                </button>
+                            <div class="progress-bar" [style.width]="progressWidth"></div>
+                    
+                            <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
+                                <!-- <div class="step-number" [ngClass]="{'completed': i < currentStage, 'active': i === currentStage}"  [ngClass]="getStepClass(i)">
+                                                        {{i + 1}}
+                                                    </div> -->
+                                <div class="step-label">{{item.label}}</div>
+                                <!-- If need step time enable below code -->
+                                <!-- <div class="step-time">{{getStepTime(i)}}</div> -->
                             </div>
-                          </div> -->
-                          
-                          <div class="step-container" *ngFor="let item of progressBarItems; let i = index">
-                                <div class="step-number" [ngClass]="{'completed': i < currentStage, 'active': i === currentStage}"  [ngClass]="getStepClass(i)">
-                                    {{i + 1}}
-                                </div>
-                            <div class="step-label">{{item.label}}</div>
-                            <div class="step-time">{{getStepTime(i)}}</div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
+                   
                   </div>
               </div>
             </div>
@@ -454,4 +476,138 @@
           </div>
         </app-split-overlay>
       </div> -->
+
+      <!-- In-Progress Agents Section -->
+    <div class="container">
+        <div class="row align-items-center mb-3 mb-10">
+            <div class="col-md-6 d-flex align-items-center justify-content-left">
+                <img src="../../../../assets/images/agent/rocket-icon.svg" alt="" height="20px" width="20px">
+                <span class="inprogress-heading">In-Progress Agents</span>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="nav-btn" (click)="scrollLeft()" [disabled]="currentActivePage === 1">&#60;</button>
+                <button class="nav-btn" (click)="scrollRight()" [disabled]="currentActivePage === totalNumberOfPages">&#62;</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row card-wrapper">
+                    <div class="card-container" #cardContainer>
+                        <div *ngFor="let agent of inProgressAgents" class="custom-card">
+                            <div class="card-body">
+                                <!-- Agent Start Date and Eye Icon -->
+                                <div class="agent-card-header">
+                                    <span>Agent Start Date: <span class="start-date">{{ agent.startDate }}</span> </span>
+                                    <i class="pi pi-eye eye-icon"></i>
+                                </div>
+                                <!-- Agent In Progress and Stop Button -->
+                                <div class="card-content">
+                                    <span class="progress-text">Agent In Progress</span>
+                                    <button class="stop-btn">Stop Agent</button>
+                                </div>
+                                <!-- Progress Bar -->
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="inProgressAgents.length === 0" class="no-agents-message d-flex align-items-center justify-content-center">
+                    <span>No In-Progress Agents</span>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="pagination-dots-container d-flex align-items-center justify-content-center" style="margin: 5px 15px !important;">
+                <ng-container *ngIf="totalNumberOfPages > 1">
+                    <div *ngFor="let pageDot of pageDotNumbers" 
+                         [class.active-dot]="currentActivePage === pageDot" 
+                         ></div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+     
+    <!-- Sub Agent History starts-->
+    <div class="subagents-history-container">
+        <div class="d-flex align-items-center justify-content-between mb-2"
+            style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
+            <!-- Tabs -->
+            <div class="tabs-container d-flex" style="gap:10px">
+                <div class="tab">History</div>
+                <div class="tab">Uploaded Data</div>
+            </div>
+   
+            <!-- Search, Filter, Download buttons -->
+            <div class="controls-container">
+                <input type="date" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
+                <button class="filter-btn" (click)="toggleFilterPopup()">Filter</button>
+                <button class="download-btn">Download</button>
+            </div>
+            
+            <div *ngIf="isFilterPopupVisible" class="filter-popup">
+                <div class="filter-popup-content">
+                    <label for="stage">Stage:</label>
+                    <select id="stage" [(ngModel)]="filterStage">
+                        <option value="">All</option>
+                        <option *ngFor="let stage of availableStages" [value]="stage">{{ stage }}</option>
+                    </select>
+            
+                    <label for="sortOrder">Sort Order:</label>
+                    <select id="sortOrder" [(ngModel)]="sortOrder">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+            
+                    <button class="apply-filter-btn" (click)="applyFilter()">Apply Filter</button>
+                    <button class="close-popup-btn" (click)="toggleFilterPopup()">Close</button>
+                </div>
+            </div>
+              
+        </div>
+   
+        <!-- Sub-agent History Table -->
+        <table class="subagent-history-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Stage</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of getSubAgentPaginatedData(); let i = index">
+                    <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
+                    <td>{{ record.date | date:'MMM d, y HH:mm:ss' }}</td>
+                    <td>
+                        <span
+                            [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed'}">
+                            {{ record.stage }}
+                        </span>
+                    </td>
+                    <td>{{ record.information }}</td>
+                </tr>
+            </tbody>
+        </table>
+          
+   
+        <!-- Pagination Controls -->
+        <div class="pagination-controls">
+            <button (click)="subAgentGoToPage(1)" [disabled]="subAgentCurrentPage === 1">&#60;&#60;</button>&nbsp;
+            <button (click)="scrollSubAgentLeft()" [disabled]="subAgentCurrentPage === 1">&#60;</button>
+            <span *ngFor="let page of subAgentTotalPagesArray" (click)="subAgentGoToPage(page)"
+                [class.active]="page === subAgentCurrentPage">
+                {{ page }}
+            </span>
+            <button (click)="scrollSubAgentRight()" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;</button>&nbsp;
+            <button (click)="subAgentGoToPage(subAgentTotalPagesArray.length)" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;&#62;</button>
+        </div>
+    </div>
+ 
+        <!-- Sub Agent History Ends-->         
 </div>
+
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+[closable]="false"></p-confirmDialog>

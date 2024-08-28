@@ -93,7 +93,8 @@ export class PredefinedBotsService {
   }
 
   captureAgentIdandfileIds(agentId: any, body){
-    return this.http.post(`/platform-service/document/updateAIAgentIdToDocs/${agentId}`, body)
+    // return this.http.post(`/platform-service/document/updateAIAgentIdToDocs/${agentId}`, body)
+    return this.http.post(`/platform-service/document/updateAgentUuidForDocument/${agentId}`, body)
   }
 
   checkAiAgentName(agent_name){
@@ -136,5 +137,9 @@ export class PredefinedBotsService {
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+  }
+
+  getSubAgentHistoryLogs(productId,agent_id){
+    return this.http.get(`/rpa-service/predefined/v2/ai-subagent-logs/${productId}/${agent_id}`)
   }
 }

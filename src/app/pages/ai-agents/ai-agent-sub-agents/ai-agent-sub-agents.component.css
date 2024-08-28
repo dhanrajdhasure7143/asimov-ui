@@ -48,6 +48,7 @@
   .agent-card {
     border-radius: 10px;
     border: 1px solid #ccc;
+    height:106px;
     /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
   }
   
@@ -73,6 +74,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    margin-left: 5px;
   }
   
   .card-text {
@@ -110,9 +112,6 @@
 
   .card-view{
     color: #fff;
-  }
-  .card-new{
-    background-color: #a6eeb7;
   }
 
   .scrollable-content {
@@ -166,3 +165,62 @@
       border-top-left-radius: 10px;
     }
     /* Dialog Styles - Ended*/
+      
+    :host ::ng-deep .card-body {
+      padding: 0.5rem 0.5rem;
+      overflow-y: hidden !important;
+      overflow-x: hidden !important;
+    }
+    
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start; 
+      padding: 7px 3px;
+    }
+    
+    .text-content {
+      flex: 1;
+      margin-right: 10px;
+      max-width: calc(100% - 100px);
+    }
+    
+    .badge1 {
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+    
+    .text-muted {
+      color: #6c757d;
+    }
+    
+    .text-danger {
+      color: #dc3545;
+    }
+    
+    .card-new {
+      color: #6c757d;
+    }
+    
+    .cardBtn {
+      font-size: 12px;
+      white-space: nowrap;
+      align-self: flex-start;
+      width: 75px;
+    }
+    
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    .btn-danger {
+      background-color: #FF8E43;
+      color: white;
+    }
+
+    .button-top span img{
+      height: 20px;
+    }

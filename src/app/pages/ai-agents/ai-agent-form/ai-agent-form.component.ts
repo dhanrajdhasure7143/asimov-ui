@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
@@ -77,15 +77,36 @@ export class AiAgentFormComponent implements OnInit {
   startTime: Date | null = null;
   stepTimes: Date[] = [];
   showProgress: boolean = false;
+  agendIdCapture:any;
   progressBarItems = [
-    { label: 'Agent Started' },
-    { label: 'Post Position' },
-    { label: 'View Position' },
-    { label: 'Source Profile' },
-    { label: 'Review Profile' },
-    { label: 'Rank Profile' },
+    { label: 'Intiated' },
+    { label: 'Agent In Progress' },
+    { label: 'Generating Output' },
     { label: 'Completed' }
   ];
+
+
+  // Agent in Progress
+  inProgressAgents = [
+    { startDate: '2023-05-22', progress: 50 },
+    { startDate: '2023-06-01', progress: 70 },
+    { startDate: '2023-07-15', progress: 80 },
+    { startDate: '2023-08-10', progress: 60 },
+    { startDate: '2023-09-05', progress: 90 },
+    { startDate: '2023-10-02', progress: 70 },
+    { startDate: '2023-11-20', progress: 50 },
+    { startDate: '2023-07-15', progress: 80 },
+    { startDate: '2023-08-10', progress: 60 },
+    { startDate: '2023-09-05', progress: 90 },
+    { startDate: '2023-10-02', progress: 70 },
+    { startDate: '2023-11-20', progress: 50 },
+  ];
+
+  @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
+  currentActivePage = 1;
+  itemsPerPageCount = 4;
+  totalNumberOfPages: number;
+  pageDotNumbers: number[];
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -93,12 +114,19 @@ export class AiAgentFormComponent implements OnInit {
     private rest_service : PredefinedBotsService,
     private toaster: ToasterService,
     private toastMessages: toastMessages,
-    private spinner : LoaderService
+    private spinner : LoaderService,
+    private confirmationService: ConfirmationService,
+    private toastMessage:toastMessages
+
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
         this.predefinedBot_id= this.params.id
       })
+
+      this.initializePaginationDots()
+      this.initializePagination()
+      this.initializeSubAgentPagination();
     }
 
   ngOnInit(): void {
@@ -116,6 +144,9 @@ export class AiAgentFormComponent implements OnInit {
       this.fetchAllFieldsToUpdateData();
       this.isEdit = true;
     }
+
+    this.initializePagination();
+    this.getSubAgentHistoryLogs();
   }
 
   ngOnDestroy(): void {
@@ -500,6 +531,7 @@ export class AiAgentFormComponent implements OnInit {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentId = res.data[0].agentId;
+      this.agendIdCapture = res.data[0].agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -669,6 +701,11 @@ export class AiAgentFormComponent implements OnInit {
     const selectedFiles = event.target.files;
     this.selectedFiles[field.preAttributeName] = selectedFiles;
     console.log("Selected files for " + field.preAttributeName, selectedFiles);
+
+    const selectedFile = event.target.files[0];
+    const fileName = selectedFile.name;
+    const fileNameElement = document.querySelector('.custom-file-name');
+    fileNameElement.textContent = fileName;
   }
 
   uploadFilesAndCreateBot(action: string) {
@@ -1091,7 +1128,7 @@ export class AiAgentFormComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
   
-// prgress bar code methods for AI agents execution
+// prgress bar code methods for AI agents execution Starts
   get progressWidth(): string {
     return `${(this.currentStage / (this.progressBarItems.length - 1)) * 80}%`;
   }
@@ -1109,14 +1146,43 @@ export class AiAgentFormComponent implements OnInit {
     return `${(1 / (this.progressBarItems.length - 1)) * 100}%`;
   }
 
-  toggleProcess() {
-    if (this.isRunning) {
-      this.stopProcess();
-    } else {
-      this.startProcess();
-    }
-  }
+  // toggleProcess() {
+  //   if (this.isRunning) {
+  //     this.stopProcess();
+  //   } else {
+  //     this.startProcess();
+  //     // this.runAiAgent();
+  //   }
+  // }
 
+  startAiAgent() {
+    this.confirmationService.confirm({
+      message: "Do you want to start this agent? This can't be undo.",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show()
+        // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+          console.log("AGENT-ID", this.agendIdCapture);
+        this.rest_service.startPredefinedBot(this.agendIdCapture).subscribe((res: any) => {
+        this.spinner.hide();
+        this.toaster.toastSuccess("Agent Execution Started")
+        }, err => {
+          this.spinner.hide();
+          this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
+          // this.toaster.showError(this.toastMessage.apierror);
+        });
+        this.startProcess();
+      },
+      reject: (type) => { }
+    });
+  }
   startProcess() {
     this.isRunning = true;
     this.currentStage = 0;
@@ -1155,4 +1221,189 @@ export class AiAgentFormComponent implements OnInit {
     });
   }
 
+  createBot1(){
+    this.showProgress = true;
+    this.currentStage = 0;
+  }
+
+  // prgress bar code methods for AI agents execution Ends
+
+  initializePaginationDots() {
+    const totalAgentsCount = this.inProgressAgents.length;
+    this.totalNumberOfPages = Math.ceil(totalAgentsCount / this.itemsPerPageCount);
+    this.pageDotNumbers = Array.from({ length: this.totalNumberOfPages }, (_, index) => index + 1);
+  }
+
+  initializePagination() {
+    const totalAgentsCount = this.inProgressAgents.length;
+    this.totalNumberOfPages = Math.ceil(totalAgentsCount / this.itemsPerPageCount);
+    this.pageDotNumbers = Array.from({ length: this.totalNumberOfPages }, (_, index) => index + 1);
+  }
+
+  navigateToPage(pageNumber: number) {
+    this.currentActivePage = pageNumber;
+    this.scrollToPage(pageNumber);
+  }
+
+  scrollToPage(pageNumber: number) {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      const pageWidth = container.clientWidth;
+      container.scrollTo({
+        left: (pageNumber - 1) * pageWidth,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  scrollLeft() {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      const containerWidth = container.clientWidth;
+      const newScrollPosition = container.scrollLeft - containerWidth;
+      const newPageNumber = Math.max(1, Math.floor(newScrollPosition / containerWidth) + 1);
+      this.currentActivePage = newPageNumber;
+      this.scrollToPage(newPageNumber);
+    }
+  }
+
+  scrollRight() {
+    if (this.cardContainer) {
+      const container = this.cardContainer.nativeElement;
+      const containerWidth = container.clientWidth;
+      const newScrollPosition = container.scrollLeft + containerWidth;
+      const newPageNumber = Math.min(this.totalNumberOfPages, Math.ceil(newScrollPosition / containerWidth) + 1);
+      this.currentActivePage = newPageNumber;
+      this.scrollToPage(newPageNumber);
+    }
+
+  }
+
+  handlePageDotClick(pageNumber: number) {
+    this.currentActivePage = pageNumber;
+  }
+// Agent History Data Starts
+subAgentHistory = [];
+
+// Pagination related variables
+subAgentCurrentPage = 1;
+subAgentItemsPerPage = 4;
+subAgentTotalPagesArray: number[] = [];
+
+initializeSubAgentPagination() {
+  this.updateFilteredData();
+}
+
+subAgentGoToPage(page: number | string) {
+  if (page === 'prev' && this.subAgentCurrentPage > 1) {
+    this.subAgentCurrentPage--;
+  } else if (page === 'next' && this.subAgentCurrentPage < this.subAgentTotalPagesArray.length) {
+    this.subAgentCurrentPage++;
+  } else if (typeof page === 'number') {
+    this.subAgentCurrentPage = page;
+  }
+  this.updateFilteredData();
+}
+
+scrollSubAgentLeft() {
+  if (this.subAgentCurrentPage > 1) {
+    this.subAgentGoToPage('prev');
+  }
+}
+
+scrollSubAgentRight() {
+  if (this.subAgentCurrentPage < this.subAgentTotalPagesArray.length) {
+    this.subAgentGoToPage('next');
+  }
+}
+
+updateFilteredData() {
+  const totalPages = Math.ceil(this.filteredSubAgentHistory.length / this.subAgentItemsPerPage);
+  this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+}
+
+getSubAgentPaginatedData() {
+  const startIndex = (this.subAgentCurrentPage - 1) * this.subAgentItemsPerPage;
+  const endIndex = startIndex + this.subAgentItemsPerPage;
+  return this.filteredSubAgentHistory.slice(startIndex, endIndex);
+}
+
+searchQuery: string = '';
+isFilterPopupVisible = false;
+availableStages = ['Success', 'Failed', 'Running'];
+filterStage: string = '';
+sortOrder: string = '';
+
+toggleFilterPopup() {
+  this.isFilterPopupVisible = !this.isFilterPopupVisible;
+}
+
+applyFilter() {
+  this.subAgentCurrentPage = 1;
+  this.updateFilteredData();
+  this.toggleFilterPopup();
+}
+
+get filteredSubAgentHistory() {
+  let filteredData = this.subAgentHistory;
+
+  // Date filtering
+  if (this.searchQuery) {
+    const queryDate = new Date(this.searchQuery);
+    filteredData = filteredData.filter(record => {
+      const recordDate = new Date(record.date);
+      return recordDate.toDateString() === queryDate.toDateString();
+    });
+  }
+
+  // Stage filtering
+  if (this.filterStage) {
+    filteredData = filteredData.filter(record => record.stage === this.filterStage);
+  }
+
+  // Sorting
+  filteredData = filteredData.sort((a, b) => {
+    if (this.sortOrder) {
+      if (this.sortOrder === 'asc') {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+    }
+  });
+
+  return filteredData;
+}
+
+onSearchChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  this.searchQuery = input.value;
+  this.subAgentCurrentPage = 1;
+  this.updateFilteredData();
+}
+
+getSubAgentHistoryLogs() {
+  this.spinner.show();
+  this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+    .subscribe((res: any) => {
+      this.subAgentHistory = this.mapResponseToTableData(res.data);
+      this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
+      console.log("History Data is Here ", this.subAgentHistory);
+      this.initializeSubAgentPagination();
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    });
+}
+
+mapResponseToTableData(data: any[]): any[] {
+  return data.map((item, index) => ({
+    date: item.startTS,
+    stage: item.status,
+    information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
+  }));
+}
+
+// Agent History Data Ends
 }
