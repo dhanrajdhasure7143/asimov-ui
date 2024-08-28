@@ -146,5 +146,10 @@ export class PredefinedBotsService {
   getSubAgentFiles(productId,agent_uuid){
     return this.http.get(`/platform-service/document/fetchPredefinedSubAgentFiles/${productId}/${agent_uuid}`)
   }
-
+  
+// getDisabledFields(agentUUID,predefinedRunId,productId){
+  getDisabledFields(){
+    // return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id? agentUUID=${agentUUID}& predefinedRunId=${predefinedRunId}& productId=${productId}`)
+    return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id?agentUUID=b7c94e44-c578-4528-895e-b7e94893cf63&predefinedRunId=2&productId=prod_QbWqFiBJb6rMpb`)
+  }
 }
