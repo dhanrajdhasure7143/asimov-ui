@@ -665,7 +665,7 @@ foreignObject {
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
-   z-index: 0 !important;
+   /* z-index: 0 !important; */
 }
 
 #sidenav.menu-open {
@@ -2348,7 +2348,8 @@ height:10px;
 
 .maincont {
   width: 100%;
-  height: calc(100vh - 55px);
+  /* height: calc(100vh - 55px); */
+  height: calc(100vh - 0px);
   background: var(--main-bgcolor);
   overflow: hidden;
 }
@@ -3249,7 +3250,7 @@ textarea.p-inputtextarea {
   padding-left: 60px !important;
   z-index: 1000;
   left: 0;
-  top: 55px;
+  top: 0px;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -4144,4 +4145,20 @@ padding: 0px 30px;}
   scroll-behavior: smooth;
   position: relative;
   width: 100%;
+}
+
+.p-overlaypanel{
+  border-radius: 10px !important;
+  margin-left: 10px !important;
+  width: 20% !important;
+}
+.user-profile .p-avatar.p-avatar-circle{
+  background-color: #2196F3 !important;
+}
+.main-header-grid{
+  padding: 15px;
+}
+.main-header{
+  font-size: 18px;
+  font-weight: 600px;
 }

@@ -2,9 +2,9 @@
     <h2 class="grid-heading">AI Agents</h2>
     <div class="grid-container">
         <div *ngFor="let each of predefined_botsList" class="grid-item">
-            <div class="content">
+            <div class="content" (click)="onclickBot(each)">
                 <div class="top-section">
-                    <div class="bot-image" (click)="onclickBot(each)">
+                    <div class="bot-image">
                         <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
                     <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
@@ -44,13 +44,14 @@
                         <div class="custom-skeleton">
                             <div class="skeleton-header">
                                 <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
-                                <p-skeleton width="13rem" height="1rem"></p-skeleton>
+                                <p-skeleton width="12rem" height="1rem"></p-skeleton>
+                                <p-skeleton width="2rem" height="1rem"></p-skeleton>
                             </div>
                             <p-skeleton width="100%" height="50px" styleClass="info-skeleton"></p-skeleton>
-                            <div class="skeleton-footer">
+                            <!-- <div class="skeleton-footer">
                                 <p-skeleton width="4rem" height="2rem"></p-skeleton>
                                 <p-skeleton width="4rem" height="2rem"></p-skeleton>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -226,6 +227,7 @@
             <p class="mb-0"> <img src="../../../../assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
         </button>
     </div>
+</div>
 
     <div class="enterprise-section-modal-pop" [ngClass]="isOpenEnterprice ? 'active-popup' : 'inactive-popup'">
         <div class="inner-enterprise-modal-sec">

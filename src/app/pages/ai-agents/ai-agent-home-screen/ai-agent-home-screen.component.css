@@ -619,7 +619,7 @@ hr {
 
 /* ----------------------------------- New styles */
 .sticky-explore-section {
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 10;
   /* padding: 20px 0; */
