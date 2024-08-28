@@ -492,13 +492,17 @@
 .progress-bar {
   position: absolute;
   /* top: 30px; */
-  top: 22px;
+  top: 25px;
   /* left: 0; */
   left: 143px;
   height: 4px;
   /* background-color: #4caf50; */
   background-color: #2bda8e;
   transition: width 0.3s ease;
+}
+
+.start_botton{
+  padding: 14px 14px 15px 10px;
 }
 
 .step-container {
@@ -1037,3 +1041,5 @@ input.p-inputtext {
  
  
 /* Sub-Agent History Ends */
+
+
