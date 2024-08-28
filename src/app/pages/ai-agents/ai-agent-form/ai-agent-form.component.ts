@@ -70,7 +70,7 @@ export class AiAgentFormComponent implements OnInit {
   _agentName:any;
   subAgentName:any="Agent 01"
   isSubAgentNameEdit:boolean = false;
-  isExpanded:boolean = true;
+  isExpanded:boolean = false;
   currentStage: number = -1;
   isRunning: boolean = false;
   processInterval: any;
@@ -148,6 +148,8 @@ export class AiAgentFormComponent implements OnInit {
 
     this.initializePagination();
     this.getSubAgentHistoryLogs();
+    this.getSubAgentFileHistoryLogs();
+    this.initializeSubAgentFilePagination()
   }
 
   ngOnDestroy(): void {
@@ -273,7 +275,7 @@ export class AiAgentFormComponent implements OnInit {
     );
       this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
       this.predefinedBot_name = res.predefinedBotName;
-      this.processName = "Automate your "+ this.predefinedBot_name +" Agent"
+      this.processName =this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.predefinedBotsForm.get('isScheduleBot').setValue(this.predefinedBot_schedulerRequired)
@@ -1290,7 +1292,7 @@ subAgentHistory = [];
 
 // Pagination related variables
 subAgentCurrentPage = 1;
-subAgentItemsPerPage = 4;
+subAgentItemsPerPage = 8;
 subAgentTotalPagesArray: number[] = [];
 
 initializeSubAgentPagination() {
@@ -1335,6 +1337,7 @@ searchQuery: string = '';
 isFilterPopupVisible = false;
 availableStages = ['Success', 'Failed', 'Running'];
 filterStage: string = '';
+dummyFilterStage: string = ''
 sortOrder: string = '';
 
 toggleFilterPopup() {
@@ -1415,4 +1418,156 @@ getDisabledForm(){
     console.log("GET-DISABLE-FIELDS", res);
   })
 }
+handleStages(stage){
+  this.filterStage = '';
+  this.dummyFilterStage = '';
+  this.isFilterPopupVisible = false
+  this.sortOrder = stage;
+}
+
+handleStageOption(stage){
+  this.sortOrder = '';
+  this.isFilterPopupVisible = false;
+  this.dummyFilterStage = stage
+  this.filterStage = stage;
+}
+
+
+activeTabMode: string ='history';
+
+handleHistoryTab (hist) {
+  this.activeTabMode = hist
+  if (hist === 'files') {
+    this.getSubAgentFileHistoryLogs();  // Fetch files if the tab is "Files"
+}
+}
+
+// Agent History Data Ends
+
+
+  // Agent Files Tab
+  subAgentFileHistory = [];
+  subAgentFileCurrentPage = 1;
+  subAgentFileItemsPerPage = 8;
+  subAgentFileTotalPagesArray: number[] = [];
+  searchFileQuery: string = '';
+
+  initializeSubAgentFilePagination() {
+    this.updateFileFilteredData();
+  }
+
+  subAgentFileGoToPage(page: number | string) {
+    if (page === 'prev' && this.subAgentFileCurrentPage > 1) {
+      this.subAgentFileCurrentPage--;
+    } else if (page === 'next' && this.subAgentFileCurrentPage < this.subAgentFileTotalPagesArray.length) {
+      this.subAgentFileCurrentPage++;
+    } else if (typeof page === 'number') {
+      this.subAgentFileCurrentPage = page;
+    }
+    this.updateFileFilteredData();
+  }
+
+  scrollSubAgentFileLeft() {
+    if (this.subAgentFileCurrentPage > 1) {
+      this.subAgentFileGoToPage('prev');
+    }
+  }
+
+  scrollSubAgentFileRight() {
+    if (this.subAgentFileCurrentPage < this.subAgentFileTotalPagesArray.length) {
+      this.subAgentFileGoToPage('next');
+    }
+  }
+
+  updateFileFilteredData() {
+    const totalPages = Math.ceil(this.filteredSubAgentFileHistory.length / this.subAgentFileItemsPerPage);
+    this.subAgentFileTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  getSubAgentFilePaginatedData() {
+    const startIndex = (this.subAgentFileCurrentPage - 1) * this.subAgentFileItemsPerPage;
+    const endIndex = startIndex + this.subAgentFileItemsPerPage;
+    return this.filteredSubAgentFileHistory.slice(startIndex, endIndex);
+  }
+
+  get filteredSubAgentFileHistory() {
+    if (!this.searchFileQuery) {
+      return this.subAgentFileHistory;
+    }
+    return this.subAgentFileHistory.filter(record =>
+      record.originalFileName.toLowerCase().includes(this.searchFileQuery.toLowerCase())
+    );
+  }
+
+  onFileSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchFileQuery = input.value;
+    this.subAgentFileCurrentPage = 1;
+    this.updateFileFilteredData();
+  }
+
+  getSubAgentFileHistoryLogs() {
+    this.spinner.show();
+    // this.rest_service.getSubAgentFiles(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+    this.rest_service.getSubAgentFiles("Pred_RFP", "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+      .subscribe((res: any) => {
+        // this.subAgentFileHistory = res.data;
+        this.subAgentFileHistory = [
+          {
+            "id": 33,
+            "predefinedAgentUUID": "Pred_RFP",
+            "fileNameWithUUID": "4978d889-6b74-4b41-9044-d9dd8df9d959_onboard_doc 2 (1).pdf",
+            "fileSize": 197671,
+            "uploadedBy": "tyon.tristan@frontbridges.com",
+            "uploadedDate": "2024-08-26T12:05:37.798",
+            "dataType": "pdf",
+            "filePath": "predefined/RFP",
+            "originalFileName": "onboard_doc 2 (1).pdf",
+            "productId": "prod_QbY7q8db8Hj3XC",
+            "aiagentId": 5,
+            "inputKey": "RFPMainBot_78630_Download Jackrabbit File_fileName"
+          },
+          {
+            "id": 34,
+            "predefinedAgentUUID": "Pred_RFP",
+            "fileNameWithUUID": "2a103602-e9d2-4341-908f-0ac52bc77594_template_docs 2.docx",
+            "fileSize": 37246,
+            "uploadedBy": "tyon.tristan@frontbridges.com",
+            "uploadedDate": "2024-08-26T12:05:38.818",
+            "dataType": "docx",
+            "filePath": "predefined/RFP",
+            "originalFileName": "template_docs 2.docx",
+            "productId": "prod_QbY7q8db8Hj3XC",
+            "aiagentId": 5,
+            "inputKey": "RFPMainBot_78641_Download Jackrabbit File_fileName"
+          }
+        ];
+
+        this.subAgentFileHistory = [...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory]
+
+        console.log("File Data is Here ", this.subAgentFileHistory);
+        this.initializeSubAgentFilePagination();
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessages.apierror);
+      });
+  }
+
+  downloadFile(file) {
+      
+  }
+
+  convertToMB(bytes: number): string {
+    const mb = bytes / (1024 * 1024);
+    return mb.toFixed(2) + ' MB';
+  }
+
+  removeFileExtension(fileName: string): string {
+    const lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex === -1) {
+        return fileName;
+    }
+    return fileName.substring(0, lastDotIndex);
+  }
 }

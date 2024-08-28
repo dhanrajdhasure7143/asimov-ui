@@ -937,6 +937,9 @@ export class AiAgentFormOldComponent implements OnInit {
   goBackAgentHome(){
     // this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
   }
+  goBackAgent(){
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.predefinedBot_id } });
+  }
 
   onRadioChangeUpdateFlow(value: string,option_item) {
     console.log(value,option_item)
