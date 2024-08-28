@@ -567,10 +567,30 @@
    
             <!-- Search, Filter, Download buttons -->
             <div class="controls-container">
-                <input type="text" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
-                <button class="filter-btn">Filter</button>
+                <input type="date" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
+                <button class="filter-btn" (click)="toggleFilterPopup()">Filter</button>
                 <button class="download-btn">Download</button>
             </div>
+            
+            <div *ngIf="isFilterPopupVisible" class="filter-popup">
+                <div class="filter-popup-content">
+                    <label for="stage">Stage:</label>
+                    <select id="stage" [(ngModel)]="filterStage">
+                        <option value="">All</option>
+                        <option *ngFor="let stage of availableStages" [value]="stage">{{ stage }}</option>
+                    </select>
+            
+                    <label for="sortOrder">Sort Order:</label>
+                    <select id="sortOrder" [(ngModel)]="sortOrder">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+            
+                    <button class="apply-filter-btn" (click)="applyFilter()">Apply Filter</button>
+                    <button class="close-popup-btn" (click)="toggleFilterPopup()">Close</button>
+                </div>
+            </div>
+              
         </div>
    
         <!-- Sub-agent History Table -->
@@ -586,10 +606,10 @@
             <tbody>
                 <tr *ngFor="let record of getSubAgentPaginatedData(); let i = index">
                     <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
-                    <td>{{ record.date }}</td>
+                    <td>{{ record.date | date:'MMM d, y HH:mm:ss' }}</td>
                     <td>
                         <span
-                            [ngClass]="{'stage-completed': record.stage === 'Completed', 'stage-failed': record.stage === 'Failed'}">
+                            [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed'}">
                             {{ record.stage }}
                         </span>
                     </td>
@@ -597,16 +617,18 @@
                 </tr>
             </tbody>
         </table>
+          
    
         <!-- Pagination Controls -->
         <div class="pagination-controls">
+            <button (click)="subAgentGoToPage(1)" [disabled]="subAgentCurrentPage === 1">&#60;&#60;</button>&nbsp;
             <button (click)="scrollSubAgentLeft()" [disabled]="subAgentCurrentPage === 1">&#60;</button>
             <span *ngFor="let page of subAgentTotalPagesArray" (click)="subAgentGoToPage(page)"
                 [class.active]="page === subAgentCurrentPage">
                 {{ page }}
             </span>
-            <button (click)="scrollSubAgentRight()"
-                [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;</button>
+            <button (click)="scrollSubAgentRight()" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;</button>&nbsp;
+            <button (click)="subAgentGoToPage(subAgentTotalPagesArray.length)" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">&#62;&#62;</button>
         </div>
     </div>
  

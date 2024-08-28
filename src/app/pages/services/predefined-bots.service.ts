@@ -137,4 +137,8 @@ export class PredefinedBotsService {
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
   }
+
+  getSubAgentHistoryLogs(productId,agent_id){
+    return this.http.get(`/rpa-service/predefined/v2/ai-subagent-logs/${productId}/${agent_id}`)
+  }
 }

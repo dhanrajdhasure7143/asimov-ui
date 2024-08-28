@@ -162,6 +162,7 @@ export class AiAgentFormComponent implements OnInit {
 
     this.initializePagination();
     this.addNewExecution();
+    this.getSubAgentHistoryLogs();
   }
 
    // AI agents progress bar type two methods code starts
@@ -1348,35 +1349,14 @@ export class AiAgentFormComponent implements OnInit {
     this.currentActivePage = pageNumber;
   }
 // Agent History Data Starts
-subAgentHistory = [
-  { date: '26 May 2024 9:00 PM', stage: 'Completed', information: 'The operation has been completed successfully, and all processes have completed.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'The operation has failed, and all processes are incomplete.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Started', information: 'The operation has started successfully and will move to the next stage - Post Position.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Reviewed', information: 'The operation has entered the Reviewed stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'Execution failed. The task did not complete as expected, issues were detected.' },
-  { date: '26 May 2024 9:00 PM', stage: 'Source Profile', information: 'The operation has reached the Source Profile stage and will move to the next stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Ranked', information: 'The operation has reached the Ranked stage and will move to the next stage.' },
-  { date: '27 May 2024 9:00 PM', stage: 'Failed', information: 'The operation has failed after reaching the final stage.' },
-];
+subAgentHistory = [];
 
 // Pagination related variables
 subAgentCurrentPage = 1;
-subAgentItemsPerPage = 10;
+subAgentItemsPerPage = 4;
 subAgentTotalPagesArray: number[] = [];
 
-// Initialize pagination for sub-agent history
 initializeSubAgentPagination() {
-  // const totalPages = Math.ceil(this.subAgentHistory.length / this.subAgentItemsPerPage);
-  // this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
-
   this.updateFilteredData();
 }
 
@@ -1388,6 +1368,7 @@ subAgentGoToPage(page: number | string) {
   } else if (typeof page === 'number') {
     this.subAgentCurrentPage = page;
   }
+  this.updateFilteredData();
 }
 
 scrollSubAgentLeft() {
@@ -1414,25 +1395,81 @@ getSubAgentPaginatedData() {
 }
 
 searchQuery: string = '';
+isFilterPopupVisible = false;
+availableStages = ['Success', 'Failed', 'Running'];
+filterStage: string = '';
+sortOrder: string = '';
 
-// Filter records based on search query
+toggleFilterPopup() {
+  this.isFilterPopupVisible = !this.isFilterPopupVisible;
+}
+
+applyFilter() {
+  this.subAgentCurrentPage = 1;
+  this.updateFilteredData();
+  this.toggleFilterPopup();
+}
+
 get filteredSubAgentHistory() {
-if (!this.searchQuery) {
-  return this.subAgentHistory;
-}
-const queryDate = new Date(this.searchQuery);
-return this.subAgentHistory.filter(record => {
-  const recordDate = new Date(record.date);
-  return recordDate.toDateString() === queryDate.toDateString();
-});
+  let filteredData = this.subAgentHistory;
+
+  // Date filtering
+  if (this.searchQuery) {
+    const queryDate = new Date(this.searchQuery);
+    filteredData = filteredData.filter(record => {
+      const recordDate = new Date(record.date);
+      return recordDate.toDateString() === queryDate.toDateString();
+    });
+  }
+
+  // Stage filtering
+  if (this.filterStage) {
+    filteredData = filteredData.filter(record => record.stage === this.filterStage);
+  }
+
+  // Sorting
+  filteredData = filteredData.sort((a, b) => {
+    if (this.sortOrder) {
+      if (this.sortOrder === 'asc') {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+    }
+  });
+
+  return filteredData;
 }
 
-// Method to handle search input change
 onSearchChange(event: Event) {
-const input = event.target as HTMLInputElement;
-this.searchQuery = input.value;
-this.subAgentCurrentPage = 1; // Reset to first page when searching
-this.updateFilteredData();
+  const input = event.target as HTMLInputElement;
+  this.searchQuery = input.value;
+  this.subAgentCurrentPage = 1;
+  this.updateFilteredData();
 }
+
+getSubAgentHistoryLogs() {
+  this.spinner.show();
+  this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+    .subscribe((res: any) => {
+      this.subAgentHistory = this.mapResponseToTableData(res.data);
+      this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
+      console.log("History Data is Here ", this.subAgentHistory);
+      this.initializeSubAgentPagination();
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    });
+}
+
+mapResponseToTableData(data: any[]): any[] {
+  return data.map((item, index) => ({
+    date: item.startTS,
+    stage: item.status,
+    information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
+  }));
+}
+
 // Agent History Data Ends
 }

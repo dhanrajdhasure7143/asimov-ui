@@ -880,7 +880,7 @@ input.p-inputtext {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 15px 2px #3199FF26;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
  
 .tabs-container {
@@ -991,35 +991,39 @@ input.p-inputtext {
   align-items: center;
   margin-top: 20px;
 }
- 
+
 .pagination-controls button {
-  color: white;
   border: none;
-  padding: 5px 10px;
+  background: none; 
+  color: black;
   cursor: pointer;
   margin: 0 5px;
-  border-radius: 3px;
-  border-top: 1px solid #E6E6E6;
-  padding-top: 10px;
+  font-size: 20px; 
 }
- 
+
 .pagination-controls button:disabled {
   cursor: not-allowed;
+  /* opacity: 0.6; */
+  background: none !important;
 }
- 
+
 .pagination-controls span {
   margin: 0 5px;
-  padding: 5px 10px;
+  padding: 0px 11px;
   cursor: pointer;
-  border-radius: 3px;
-  color: #007bff;
+  border: 2px solid #e2e2e2;
+  border-radius: 4px;
+  color: black;
+  text-align: center;
+  display: inline-block;
 }
- 
+
 .pagination-controls span.active {
   font-weight: bold;
-  background-color: skyblue;
-  border-radius: 50%;
-  padding: 5px 10px;
+  background-color: rgb(39, 182, 238);
+  color: white;
+  border: 2px solid rgb(39, 182, 238);
+  border-radius: 4px;
 }
  
 .subagent-history-table thead tr{
@@ -1035,5 +1039,34 @@ input.p-inputtext {
   height: 37px !important;
 }
  
+.filter-popup {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-popup-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-popup-content label {
+  margin-bottom: 5px;
+}
+
+.filter-popup-content select {
+  margin-bottom: 15px;
+}
+
+.apply-filter-btn,
+.close-popup-btn {
+  margin-top: 10px;
+}
+
  
 /* Sub-Agent History Ends */
