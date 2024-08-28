@@ -4,7 +4,7 @@
             <!-- <button class="back-button" (click)="goBackAgentHome()">
                 &larr;
             </button> -->
-            <label id="popup_title" (click)="goBackAgentHome()">
+            <label id="popup_title" (click)="goBackAgent()">
                 <a class="imageBox">
                     <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
                     <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
@@ -238,12 +238,13 @@
                 </div>
             </div>
             <div class="form-buttons mt-3 text-right fixed-bottom mr-3 mb-3">
-              <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button>
+              <button type="button" class="btn new-cancelbtn" (click)="goBackAgent()" *ngIf="currentPage === 1">Cancel</button>
               <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button>
               <!-- <button type="button" class="btn bluebg-button" (click)="nextPage()" *ngIf="!isLastPage">Next</button> -->
               <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
               <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update Bot</button>
               <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="runAiAgent()" [disabled]="!isSaved">Run</button>
+              <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="runAiAgent()" >Run</button>
 
           </div>
         </div>
