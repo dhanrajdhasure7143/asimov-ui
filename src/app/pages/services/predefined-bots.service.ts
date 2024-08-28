@@ -142,4 +142,9 @@ export class PredefinedBotsService {
   getSubAgentHistoryLogs(productId,agent_id){
     return this.http.get(`/rpa-service/predefined/v2/ai-subagent-logs/${productId}/${agent_id}`)
   }
+
+  getSubAgentFiles(productId,agent_uuid){
+    return this.http.get(`/platform-service/document/fetchPredefinedSubAgentFiles/${productId}/${agent_uuid}`)
+  }
+
 }
