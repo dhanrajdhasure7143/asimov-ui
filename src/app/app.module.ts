@@ -16,7 +16,6 @@ import { environment } from '../environments/environment';
 import { GlobalScript } from './shared/global-script';
 import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './helpers/loader-interceptor.service';
-import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { UserIdleModule } from 'angular-user-idle';
 import { RedirectionComponent } from './rediraction/redirection.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -70,8 +69,6 @@ import {StepsModule} from 'primeng/steps';
       },
     
     }),
-
-    BackButtonDisableModule.forRoot(),
     UserIdleModule.forRoot({idle: 7200, timeout: 1, ping: 1740}),
     NgxSpinnerModule,
     MentionModule,

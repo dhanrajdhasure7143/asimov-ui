@@ -380,3 +380,91 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .side-nav-label-hover{
   color: #fff;
 }
+.user-profile{
+  // padding-left: 10px;
+  // margin-top: 5px;
+  cursor: pointer;
+  padding: 10px 12px 10px 13px;
+}
+.user-profile-circle{
+  background-color: #2196F3 !important;
+}
+
+.avatar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 42%;
+  margin-bottom: 8px;
+}
+
+:host ::ng-deep .p-overlaypanel {
+  width: 250px;
+}
+
+.user-info {
+  padding: 16px;
+  // display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e1e1e1;
+  text-align: center;
+}
+
+.user-details {
+  margin-left: 16px;
+}
+
+.user-details h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.user-details p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.menu-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-items li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.menu-items li a:hover {
+  background-color: #f1f1f1;
+}
+
+.menu-items li a i {
+  margin-right: 8px;
+}
+
+.logout {
+  color: #e74c3c !important;
+}
+.user-details h3{
+  font-weight: 700;
+}

@@ -160,7 +160,7 @@
 }
 
 .pagination .page.active {
-    background-color: rgb(74, 184, 228);
+    background-color: #098de6;
     color: white;
 }
 
@@ -176,7 +176,7 @@
 }
 
 .action-btn {
-    color: #3199FF;
+    color: #098de6;
 }
 
 .custom-toggle {
@@ -227,7 +227,7 @@
     }
   
     input:checked + .custom-slider {
-      background-color: rgb(10, 175, 241);
+      background-color: #098de6;
     }
   
     input:checked + .custom-slider::before {
@@ -258,7 +258,7 @@
   }
   
   .default-color {
-    color: #3199FF; 
+    color: #098de6; 
   }
   
   .date-format{
@@ -316,7 +316,7 @@
   
   .active-status {
     background-color: rgba(49, 153, 255, 0.1); 
-    color: #3199FF;
+    color: #098de6;
   }
   
   .inactive-status {
@@ -342,7 +342,7 @@
 }
 
 .page.active {
-  background-color: #3199FF;
+  background-color: #098de6;
   color: #fff;
 }
 
@@ -379,7 +379,7 @@
 
 .renew-btn-expired{
   font-size: 16px;
-  color: #3199FF;
+  color: #098de6;
   text-decoration: underline !important;
   font-weight: 500;;
 }

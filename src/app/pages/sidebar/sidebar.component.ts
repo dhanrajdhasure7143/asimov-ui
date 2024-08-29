@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {PagesComponent} from '../pages.component'
 import * as $ from 'jquery';
 import { DataTransferService } from "./../../pages/services/data-transfer.service";
 import { RestApiService } from "./../services/rest-api.service"
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-sidebar',
@@ -38,10 +39,65 @@ export class SidebarComponent implements OnInit {
   isSubscriptionModuleEnable:boolean = false;
   isPredefinedBots:boolean = true;
   workspacedsiabled:boolean = false
-  agentOrcheDisabled:boolean = false
+  agentOrcheDisabled:boolean = false;
+  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  firstName:string;
+  lastName:string;
+  userName :string='';
+  userEmail:string=''
+  user_firstletter:string;
+  ismyAccount:boolean = false;
+  isPassword:boolean = false;
 
-  constructor(public obj:PagesComponent, private dt:DataTransferService,
-    private rest_service: RestApiService,private router:Router,) { }
+  constructor(public obj:PagesComponent, 
+    private dt:DataTransferService,
+    private rest_service: RestApiService,
+    private router:Router,
+    private route : ActivatedRoute
+  ) {
+      this.route.queryParams.subscribe(params => {
+        if (params['accessToken']) {
+          var acToken = params['accessToken']
+          var refToken = params['refreshToken']
+          this.firstName = params['firstName']
+          this.lastName = params['lastName']
+          let ProfileuserId = params['ProfileuserId']
+          let tenantName = params['tenantName']
+          var authKey = params['authKey']
+          var ipadd = params['userIp']
+          var loginType = params['loginType'];
+
+          if (acToken && refToken) {
+            var accessToken = atob(acToken);
+            var refreshToken = atob(refToken);
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem("masterTenant", tenantName);
+            localStorage.setItem("firstName", this.firstName);
+            localStorage.setItem("lastName", this.lastName);
+            localStorage.setItem("ProfileuserId", ProfileuserId);
+            localStorage.setItem("tenantName", tenantName);
+            localStorage.setItem("authKey", authKey);
+            var ipp = atob(ipadd)
+            localStorage.setItem('ipAddress', ipp);
+          }
+          if (loginType) {
+            var officeUser = atob(loginType);
+            localStorage.setItem("officeUser", officeUser);
+          }
+        }
+      });
+        let tenantId=localStorage.getItem("tenantName")
+        let masterTenant=localStorage.getItem("masterTenant")
+        this.rest_service.getNewAccessTokenByTenantId(tenantId,masterTenant).subscribe(resp => {
+          let newAccessToken:any = resp;
+          localStorage.setItem('accessToken', newAccessToken.accessToken);
+        });
+        setTimeout(() => {
+          this.getUserDetails();
+        }, 500);
+
+     }
 
   ngOnInit() {
     //this.disable();
@@ -224,4 +280,41 @@ navigateToDashBoard(){
         }
       })
 }
+  openUserMenu(event){
+    this.overlayPanel.toggle(event);
+    this.getUserDetails();
+  }
+  getUserDetails(){
+    this.user_firstletter = localStorage.getItem('firstName').charAt(0).toUpperCase()+localStorage.getItem('lastName').charAt(0).toUpperCase();
+    this.userName = localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName');
+    this.userEmail = localStorage.getItem('ProfileuserId');
+  }
+
+  closeFormOverlay(event?) {
+    this.ismyAccount = false;
+    this.isPassword = false;
+  }
+
+  myAccount() {
+    this.ismyAccount = true;
+    this.overlayPanel.hide();
+  }
+
+  changepassword() {
+    this.isPassword = true;
+    this.overlayPanel.hide();
+  }
+
+  logout() {
+    // this.logintype = localStorage.getItem('userRole');
+    // clearTimeout(this.stopnotificationsapicall)
+    localStorage.clear();
+    sessionStorage.clear();
+    // if (this.logintype == 'User') {
+    //   window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + this.config.socialLoginRedirectURL
+    // }
+
+    // var input = btoa("Signout")
+    this.router.navigate(['/redirect']);
+  }
 }

@@ -2,6 +2,11 @@
   <div class="nav-main subcriptionExpiry" [class.disabled]="isSideMenuDisabled">
     <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
+        <div class="user-profile">
+          <p-avatar [label]="user_firstletter" [style]="{'border':'1px solid gray','font-size':'1.3rem','background-color':'#2196F3'}" 
+          styleClass="p-mr-2 user-profile-circle" (click)="openUserMenu($event)" size="xlarge" shape="circle"></p-avatar>
+          <!-- <p-avatar label="SR" styleClass="mr-2" size="large" [style]="{'background-color':'#2196F3', 'color': '#ffffff','font-size':'1.3rem'}" shape="circle"></p-avatar> -->
+        </div>
         <!-- <span *ngIf="isCopilotEnable && !isPredefinedBots" >
           <a mat-list-item class="link" [ngClass]="_selectedModule=='eiap-home' && isCopilotEnable ?'active':'' " id="eiap-home" (click)="hightlight('eiap-home',null)"
             routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Copilot' : ''"
@@ -399,3 +404,48 @@
     </div>
   
   </div> -->
+
+
+<p-overlayPanel #overlayPanel>
+  <ng-template pTemplate>
+    <div class="user-info">
+      <div class="avatar">{{user_firstletter}}</div>
+      <div class="user-details">
+        <h3>{{userName}}</h3>
+        <p>{{userEmail}}</p>
+      </div>
+    </div>
+    <ul class="menu-items">
+      <li><a (click)="myAccount()"><i class="pi pi-user"></i> My Account</a></li>
+      <li><a (click)="changepassword()"><i class="pi pi-lock"></i> Change Password</a></li>
+      <li><a class="logout" (click)="logout()"><i class="pi pi-sign-out"></i> Logout</a></li>
+    </ul>
+  </ng-template>
+</p-overlayPanel>
+
+<div *ngIf="ismyAccount">
+  <app-split-overlay (closeOverlay)="closeFormOverlay($event)">
+    <div class="">
+    <div class="create-header">
+      <h3> My Account </h3>
+  </div>
+    </div>
+  <app-myaccount (valueChange)='closeFormOverlay($event)'></app-myaccount>
+</app-split-overlay>
+</div>
+
+<div *ngIf="isPassword">
+  <app-split-overlay (closeOverlay)="closeFormOverlay()">
+    <div class="">
+    <div class="create-header">
+      <h3> Change Password </h3>
+  </div>
+    </div>
+  <app-change-password (valueChange)='closeFormOverlay($event)'></app-change-password>
+</app-split-overlay>
+</div>
+
+<!-- <p-sidebar [(visible)]="isPassword" position="right" [baseZIndex]="10000">
+
+  <app-change-password (valueChange)='closeFormOverlay($event)'></app-change-password>
+</p-sidebar> -->

@@ -35,11 +35,10 @@ import { environment } from 'src/environments/environment';
     overflow: hidden;
   }
   .main{
-    height: calc(100% - 55px);
+    height: calc(100% - 0px);
     background-color: #f9f9f9 !important;
     z-index: 1;
     position: relative;
-    top: 55px;
   }
 
   .eiap-main{

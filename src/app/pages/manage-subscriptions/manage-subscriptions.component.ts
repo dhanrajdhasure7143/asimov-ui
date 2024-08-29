@@ -40,7 +40,7 @@ export class ManageSubscriptionsComponent implements OnInit {
     });}
 
   ngOnInit(): void {
-    this.getBillingIfStatus();
+    // this.getBillingIfStatus();
     this.userRoles = localStorage.getItem("userRole")
   }
 

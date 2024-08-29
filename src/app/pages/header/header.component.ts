@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
+  templateUrl: './headernew.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {

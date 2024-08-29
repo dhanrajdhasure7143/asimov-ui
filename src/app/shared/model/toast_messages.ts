@@ -135,4 +135,5 @@ export class toastMessages{
   public delete_waring="Do you want to delete this? This can't be undone.";
   public import_waring="Please ensure that you are importing it into the appropriate tenant?"
   public jd_error="Please fill Job descrption."
+  public autoRenewUpdated= "Auto Renewal updated successfully!";
 }
