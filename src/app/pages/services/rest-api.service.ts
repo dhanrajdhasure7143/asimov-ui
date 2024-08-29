@@ -5,6 +5,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 import { IpServiceService } from '../../services/ip-service.service';
+import { environment } from 'src/environments/environment';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -1113,7 +1114,8 @@ getvaluechainprocess(id)
     return this.http.get<any>('/processintelligence/v1/processgraph/categories')
   }
   changePassword(pswdbody:any): Observable<any>{
-    return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
+    let isAiAgents= environment.product =='AiAgents' ? true : false;
+    return this.http.post<any>('/api/user/passwordChange?aiAgent='+isAiAgents, pswdbody,httpOptions)
   }
 
   deleteSelectedProcessID(request_body:any): Observable<any>{
