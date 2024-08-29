@@ -32,10 +32,10 @@
   background: white !important;
   border-radius: 6px;
 }
-// ::ng-deep .maincont {
-//   height: calc(100vh - 0px);
-//   background: #f9f9f9;
-// }
+.maincont-subscription {
+  height: calc(100vh - 0px);
+  background: #f9f9f9;
+}
 
 ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
   overflow-x: auto;
