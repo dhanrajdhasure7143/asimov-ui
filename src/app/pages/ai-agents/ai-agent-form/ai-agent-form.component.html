@@ -1,37 +1,14 @@
-<div class="h-100 form-main">
+<div class="container-fluid  d-flex flex-column h-100 main-screen">
+    <div class="main-header-grid">
+        <div class="main-header-title">AI Agents</div>
+    </div>
+    <div class="scrollable-content flex-grow-1">
     <div class="form-flow predefined-bots">
-        <div class="p-name">
-            <!-- <button class="back-button" (click)="goBackAgentHome()">
-                &larr;
-            </button> -->
-            <!-- <label id="popup_title" (click)="goBackAgentHome()">
-                <a class="imageBox">
-                    <img class="default-arrow" src="./../../../../assets/images-n/projects/backarrow-default.svg" alt="">
-                    <img class="hover-arrow" src="./../../../../assets/images-n/projects/backarrow-hover.svg" alt=""> 
-                </a>
-            </label> -->
-            <h4> <span class="title_text">{{processName}}</span></h4>
-        </div>
         <div class="agent-item">
             <div class="agent-icon">
               <img src="../../../../assets/images/mini_bot.svg" alt="Robot Icon">
             </div>
             <div class="agent-info">
-                <!-- <p-inplace #inplace (onActivate)="inplaceActivate()" class="dashboard-name">
-                    <ng-template pTemplate="display">
-                        <h4 *ngIf="processName">{{ processName }}</h4>
-                        <h3>{{ subAgentName }} <span class="edit-icon">✎</span></h3>
-                    </ng-template>
-                    <ng-template pTemplate="content">
-                        <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
-                            [(ngModel)]="_agentName" (keydown)="Space($event)" />
-                        <span class="editfields">
-                            <i class="pi pi-check" *ngIf="_agentName" (click)="updateDashboardName()"></i>
-                            <i class="pi pi-times " (click)="onDeactivate()"></i>
-                        </span>
-                    </ng-template>
-                </p-inplace> -->
-
                 <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
                 <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="../../../../assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
                 <div *ngIf="isSubAgentNameEdit">
@@ -693,6 +670,7 @@
             </button>
         </div>
     </div>
+</div>
  
         <!-- Sub Agent History Ends-->         
 </div>

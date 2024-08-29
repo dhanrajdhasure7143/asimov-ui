@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { PredefinedBotsService } from '../../services/predefined-bots.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-ai-agent-subscription',
@@ -127,7 +132,13 @@ export class AiAgentSubscriptionComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(
+    private rest_api: PredefinedBotsService,
+    private spinner : LoaderService,
+    private toastService: ToasterService,
+    private toastMessages: toastMessages,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit(): void {
     this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
@@ -178,6 +189,55 @@ export class AiAgentSubscriptionComponent implements OnInit {
       return 'less-than-30';
     }
     return 'default-color';
+  }
+
+  onChangeAutoRenew(event,agent) {
+    console.log('Auto Renew changed', event, agent);
+    let user_email = localStorage.getItem('ProfileuserId');
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to update the auto renew status?',
+      accept: () => {
+      this.spinner.show();
+      this.rest_api.updateAutoRenew(user_email, agent.name, agent.autoRenew).subscribe((res) => {
+        console.log('Auto Renew updated successfully', res);
+        this.toastService.toastSuccess(this.toastMessages.autoRenewUpdated);
+        this.spinner.hide();
+      }, (err) => {
+        console.error('Error updating auto renew', err);
+        this.toastService.showError(this.toastMessages.apierror);
+        this.spinner.hide();
+      });
+      },
+      reject: () => {
+        agent.autoRenew = !agent.autoRenew;
+      }
+    });
+    this.rest_api.updateAutoRenew(user_email,agent.name, agent.autoRenew).subscribe((res) => {
+      console.log('Auto Renew updated successfully', res);
+    }, (err) => {
+      console.error('Error updating auto renew', err);
+    });
+  }
+
+  renewAgent(agent) {
+    console.log('Renewing agent', agent);
+    let req_body = {
+      "userId": localStorage.getItem('ProfileuserId'),
+      "productId": "prod_QbY7q8db8Hj3XC",
+      "agentIds": [
+        "a59319d7-058c-42e2-87ef-db8fdf2d653a"   
+      ]
+    }
+    this.spinner.show();
+    this.rest_api.renewSubAgent(req_body).subscribe((res) => {
+      console.log('Agent renewed successfully', res);
+      // this.toastService.toastSuccess();
+      this.spinner.hide();
+    }, (err) => {
+      console.error('Error renewing agent', err);
+      this.toastService.showError(this.toastMessages.apierror);
+      this.spinner.hide();
+    });
   }
 
 }

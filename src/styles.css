@@ -4157,8 +4157,13 @@ padding: 0px 30px;}
 }
 .main-header-grid{
   padding: 15px;
+  font-weight: 600 !important;
 }
-.main-header{
+.main-header-title{
   font-size: 18px;
-  font-weight: 600px;
+  font-weight: 600px !important;
+}
+.scrollable-content {
+  overflow-y: auto;
+  max-height: 90vh;
 }

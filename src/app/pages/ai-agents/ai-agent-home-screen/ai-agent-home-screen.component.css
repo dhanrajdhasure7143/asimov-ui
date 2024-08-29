@@ -603,7 +603,7 @@ hr {
   /* Dialog Styles - Ended*/
 
   .add-agents {
-    color: #1E90FF; 
+    color: #098de6; 
     cursor: pointer;
     transition: color 0.3s ease;
     font-weight: 500;
@@ -692,7 +692,7 @@ hr {
 .price {
   font-size: 24px;
   font-weight: bold;
-  color: #3199ff;
+  color: #098de6;
 }
 
 .price-details {
@@ -963,12 +963,12 @@ hr {
 }
 
 input[type="radio"]:checked + .custom-radio {
-  background-color: #098DE6;
-  border-color: #098DE6;
+  background-color: #098de6;
+  border-color: #098de6;
 }
 
 input[type="radio"]:checked + .custom-radio::before {
-  background-color: #098DE6; 
+  background-color: #098de6; 
 }
 
 input[type="radio"]:checked + .custom-radio::after {
@@ -1093,7 +1093,7 @@ input[type="radio"]:checked + .custom-radio::after {
 }
 button.enterprise-plan-bottom-stickier {
   border: none;
-  background: #3199ff;
+  background: #098de6;
   border-radius: 300px;
   padding: 8px 15px !important;
   position: fixed;
@@ -1171,4 +1171,7 @@ button.enterprise-plan-bottom-stickier p{
 .purchase-btn{
   font-size: 12px;
   color: #fff;
+}
+.main-header-title{
+  font-weight: 600;
 }

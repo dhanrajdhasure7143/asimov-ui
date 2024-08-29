@@ -70,7 +70,7 @@ export class AiAgentFormComponent implements OnInit {
   _agentName:any;
   subAgentName:any="Agent 01"
   isSubAgentNameEdit:boolean = false;
-  isExpanded:boolean = false;
+  isExpanded:boolean = true;
   currentStage: number = -1;
   isRunning: boolean = false;
   processInterval: any;

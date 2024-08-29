@@ -24,7 +24,7 @@
                     <div class="custom-toggle">
                         <label>
                             <span class="custom-toggle-label">{{ agent.autoRenew ? 'Enabled' : 'Disabled'}}</span>
-                            <input type="checkbox" style="display: none;" [(ngModel)]="agent.autoRenew" />
+                            <input type="checkbox" style="display: none;" [(ngModel)]="agent.autoRenew" (change)="onChangeAutoRenew($event,agent)"/>
                             <span class="custom-slider"></span>
                         </label>
                     </div>
@@ -169,3 +169,6 @@
         </div>
     </div>
 </div>
+
+<p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
+[closable]="false"></p-confirmDialog>

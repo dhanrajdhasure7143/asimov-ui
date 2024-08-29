@@ -152,4 +152,17 @@ export class PredefinedBotsService {
     // return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id? agentUUID=${agentUUID}& predefinedRunId=${predefinedRunId}& productId=${productId}`)
     return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id?agentUUID=b7c94e44-c578-4528-895e-b7e94893cf63&predefinedRunId=2&productId=prod_QbWqFiBJb6rMpb`)
   }
+
+  updateAutoRenew(email,productId,autoRenew){
+    return this.http.put(`/subscriptionservice/v1/subscriptions/update-auto-renewal-status?userId=${email}&productId=${productId}&enableAutoRenewal=${autoRenew}`,'')
+    
+  }
+
+  getSubAgentDetails(productId,agentId){
+    return this.http.get(`/rpa-service/predefined/v2/ai-subagent-details/${productId}/${agentId}`)
+  }
+
+  renewSubAgent(body){
+    return this.http.post(`/subscriptionservice/v1/subscriptions/renew-selected-agents`,body)
+  }
 }

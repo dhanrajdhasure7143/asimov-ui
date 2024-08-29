@@ -352,7 +352,7 @@
   
   .edit-icon {
     font-size: 14px;
-    color: #007bff;
+    color: #098de6;
     margin-left: 5px;
     cursor: pointer;
   }
@@ -477,7 +477,7 @@
   overflow: hidden;
 }
 .accordion-header span{
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .accordion-content-save{
@@ -695,7 +695,7 @@
   height: 20px;
   width: 15px;
   height: 3px;
-  color: #11b0dc;
+  color: #098de6;
 }
 
 .card-content {
@@ -723,7 +723,7 @@
 
 .progress-bar-container {
   /* background-color: #e9ecef; */
-  background-color: #69FF59;
+  background-color: #55b04b;
   border-radius: 5px;
   height: 10px;
   margin-top: 15px;
@@ -845,7 +845,7 @@ input.p-inputtext {
 }
 
 .pagination-dots-container div.active-dot {
-  background-color: #3199FF;
+  background-color: #098de6;
   width: 36px;
   border-radius: 10px;
 }
@@ -873,12 +873,12 @@ input.p-inputtext {
  
 /* Sub-Agent History Starts */
 .subagents-history-container {
-  padding: 20px;
-  margin:0px 30px;
+  padding: 15px;
+  margin:0px 18px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 15px 2px #3199FF26;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 }
  
 .tabs-container {
@@ -908,7 +908,7 @@ input.p-inputtext {
 }
 .bottom-tab-mover-after {
   height: 3px;
-  background: #007bff;
+  background: #098de6;
   border-radius: 30px;
   position: absolute;
   bottom: -5px;
@@ -939,7 +939,7 @@ input.p-inputtext {
  
 .download-btn {
   padding: 8px 15px;
-  background-color: #007bff;
+  background-color: #098de6;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -960,7 +960,7 @@ input.p-inputtext {
 }
  
 .download-btn {
-  background-color: #3199FFE5;
+  background-color: #098de6;
   color: #fff;
   padding: 9px 25px;
 }
@@ -1056,9 +1056,9 @@ input.p-inputtext {
 
 .pagination-controls span.active {
   font-weight: bold;
-  background-color: rgb(39, 182, 238);
+  background-color: #098de6;
   color: white;
-  border: 2px solid rgb(39, 182, 238);
+  border: 2px solid #098de6;
   border-radius: 4px;
 }
  
@@ -1207,7 +1207,7 @@ input.p-inputtext {
 
 .edit-text {
   font-size: 18px !important;
-  color: #3199FF !important;
+  color: #098de6 !important;
   margin-left: 5px !important;
   display: flex;
   align-items: center;
@@ -1243,4 +1243,7 @@ input.p-inputtext {
 ::ng-deep .p-accordion-header .custom-header span {
   font-weight: 600 !important;
   font-size: 18px !important  ;
+}
+.main-header-title{
+  font-weight: 600;
 }
