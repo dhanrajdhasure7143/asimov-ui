@@ -233,7 +233,7 @@
     text-align: center; 
     content: "Choose File" ; 
     display: inline-block; 
-    background: #098de6;
+    background: #3199FF;
      border-radius: 6px; 
      padding: 2px 8px; outline: none; 
      color: white; white-space: nowrap;
@@ -247,7 +247,7 @@
 .back-button {
     background: none;
     border: none;
-    color: #098de6;
+    color: #3199FF;
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;

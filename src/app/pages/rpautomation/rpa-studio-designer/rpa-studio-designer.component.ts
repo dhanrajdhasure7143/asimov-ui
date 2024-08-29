@@ -84,7 +84,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     // this.getPredefinedBots();
     setTimeout(() => {
     this.getAllEnvironments();
-    }, 1000);
+    }, 2000);
   }
 
   getToolsetItems()

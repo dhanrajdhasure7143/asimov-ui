@@ -75,7 +75,9 @@
     width: 0; 
     height: 100%;
     transition: width 0.6s ease;
+    border: 1px solid gray;
   }
+
   
   /* .progress-cap {
     position: absolute;
@@ -193,7 +195,7 @@
     overflow-x: hidden;  /* Enable vertical scrolling */
     padding: 0 15px;   /* Optional: Padding for better content spacing */
     overflow-y: auto;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .fixed-bottom {
@@ -240,7 +242,7 @@
     text-align: center; 
     content: "Choose File" ; 
     display: inline-block; 
-    background: #098de6;
+    background: #3199FF;
      border-radius: 6px; 
      padding: 2px 8px; outline: none; 
      color: white; white-space: nowrap;
@@ -254,7 +256,7 @@
 .back-button {
     background: none;
     border: none;
-    color: #098de6;
+    color: #3199FF;
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
@@ -352,7 +354,7 @@
   
   .edit-icon {
     font-size: 14px;
-    color: #098de6;
+    color: #3199FF;
     margin-left: 5px;
     cursor: pointer;
   }
@@ -696,7 +698,7 @@
   height: 20px;
   width: 15px;
   height: 3px;
-  color: #098de6;
+  color: #3199FF;
 }
 
 .card-content {
@@ -729,13 +731,6 @@
   height: 10px;
   margin-top: 15px;
   margin-bottom: 10px;
-}
-
-.progress-bar {
-  height: 20px !important;
-  background-color: #69FF59;
-  ;
-  border-radius: 15px;
 }
 
 .nav-btn {
@@ -846,7 +841,7 @@ input.p-inputtext {
 }
 
 .pagination-dots-container div.active-dot {
-  background-color: #098de6;
+  background-color: #3199FF;
   width: 36px;
   border-radius: 10px;
 }
@@ -909,7 +904,7 @@ input.p-inputtext {
 }
 .bottom-tab-mover-after {
   height: 3px;
-  background: #098de6;
+  background: #3199FF;
   border-radius: 30px;
   position: absolute;
   bottom: -5px;
@@ -940,7 +935,7 @@ input.p-inputtext {
  
 .download-btn {
   padding: 8px 15px;
-  background-color: #098de6;
+  background-color: #3199FF;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -961,7 +956,7 @@ input.p-inputtext {
 }
  
 .download-btn {
-  background-color: #098de6;
+  background-color: #3199FF;
   color: #fff;
   padding: 9px 25px;
 }
@@ -1057,9 +1052,9 @@ input.p-inputtext {
 
 .pagination-controls span.active {
   font-weight: bold;
-  background-color: #098de6;
+  background-color: #3199FF;
   color: white;
-  border: 2px solid #098de6;
+  border: 2px solid #3199FF;
   border-radius: 4px;
 }
  
@@ -1232,8 +1227,8 @@ input.p-inputtext {
 }
 
 .edit-text {
-  font-size: 18px !important;
-  color: #098de6 !important;
+  font-size: 12px !important;
+  color: #3199FF !important;
   margin-left: 5px !important;
   display: flex;
   align-items: center;
@@ -1241,7 +1236,7 @@ input.p-inputtext {
 
 .edit-text .pi-pencil {
   margin-right: 10px !important;
-  font-size: 18px !important;
+  font-size: 12px !important;
 }
 
 .accordion-header {
@@ -1249,7 +1244,7 @@ input.p-inputtext {
 }
 ::ng-deep .p-accordion-tab a.p-accordion-header-link {
   background: #f4f4ff !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 10px !important;
   box-shadow: none !important;
 
 }
@@ -1272,4 +1267,49 @@ input.p-inputtext {
 }
 .main-header-title{
   font-weight: 600;
+}
+
+
+
+
+ .progress-container-new {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* max-width: 800px; */
+  margin: 20px auto;
+}
+.bar-container {
+  flex-grow: 1;
+}
+.progress-bar-new {
+  display: flex;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.stage {
+  flex-grow: 1;
+  transition: background-color 0.3s;
+}
+.stage.active {
+  background-color: #55b04b;
+}
+.stage.failure {
+  background-color: #e74c3c;
+}
+.stage-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.stage-label {
+  font-size: 12px;
+  color: #7f8c8d;
+  text-align: center;
+  flex-basis: 25%;
+}
+.success{
+  background-color: #55b04b;
 }
