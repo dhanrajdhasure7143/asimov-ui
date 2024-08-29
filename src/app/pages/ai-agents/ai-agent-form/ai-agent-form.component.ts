@@ -9,6 +9,7 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from "primeng/inplace";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AiAgentConfigOverlayComponent } from '../ai-agent-config-overlay/ai-agent-config-overlay.component';
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -30,6 +31,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class AiAgentFormComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild('aiAgentsConfig') aiAgentsConfig: AiAgentConfigOverlayComponent;
   processName:string;
   currentPage = 1;
   fieldsPerPage = 30;
@@ -1569,5 +1571,10 @@ handleHistoryTab (hist) {
         return fileName;
     }
     return fileName.substring(0, lastDotIndex);
+  }
+
+  viewOverlayForm(){
+    this.configurationOverlay = true
+    this.aiAgentsConfig.getData();
   }
 }

@@ -480,7 +480,7 @@
                                 <!-- Agent Start Date and Eye Icon -->
                                 <div class="agent-card-header">
                                     <span>Agent Start Date: <span class="start-date">{{ agent.startDate }}</span> </span>
-                                    <i class="pi pi-eye eye-icon" (click)="getDisabledForm()"></i>
+                                    <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm()"></i>
                                 </div>
                                 <!-- Agent In Progress and Stop Button -->
                                 <div class="card-content">
@@ -674,6 +674,14 @@
  
         <!-- Sub Agent History Ends-->         
 </div>
+
+<p-dialog header="Configuration" [modal]="true" [(visible)]="configurationOverlay" [style]="{width: '70vw'}">
+    <div class="h-100">
+        <div class="h-100">
+          <app-ai-agent-config-overlay #aiAgentsConfig ></app-ai-agent-config-overlay>
+        </div>
+      </div>
+</p-dialog>
 
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
