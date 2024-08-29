@@ -97,7 +97,7 @@ export class FormBuilderComponent implements OnInit {
         this.isdisabled=null
       }
       else{
-        this.isdisabled=true
+        this.isdisabled=null
       }
   }
   getfields(event){

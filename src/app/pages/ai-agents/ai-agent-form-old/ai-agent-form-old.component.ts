@@ -61,7 +61,8 @@ export class AiAgentFormOldComponent implements OnInit {
     private rest_service : PredefinedBotsService,
     private toaster: ToasterService,
     private toastMessages: toastMessages,
-    private spinner : LoaderService
+    private spinner : LoaderService,
+    private toastMessage: toastMessages
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
@@ -1020,16 +1021,16 @@ export class AiAgentFormOldComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
+
   runAiAgent(){
     this.spinner.show()
-    // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
       console.log("AGENT-ID", this.agentUUIDCapture);
     this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
     this.spinner.hide();
     this.toaster.toastSuccess("Agent Execution Started")
     }, err => {
       this.spinner.hide();
-      // this.toaster.showError(this.toastMessage.apierror);
+      this.toaster.showError(this.toastMessage.apierror);
     });
   }
 }

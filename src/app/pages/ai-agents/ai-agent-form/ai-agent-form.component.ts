@@ -108,6 +108,14 @@ export class AiAgentFormComponent implements OnInit {
   itemsPerPageCount = 4;
   totalNumberOfPages: number;
   pageDotNumbers: number[];
+  status: string = 'Agent In Progress';
+  stages = [
+    { name: 'Initiated', status: 'success' },
+    { name: 'Agent In Progress', status: 'failure' },
+    { name: 'Generating Output', status: 'pending' },
+    { name: 'Completed', status: 'pending' }
+  ];
+  currentStage_new = -1;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -129,6 +137,8 @@ export class AiAgentFormComponent implements OnInit {
       this.initializePagination()
       this.initializeSubAgentPagination();
     }
+
+
 
   ngOnInit(): void {
     this.spinner.show();
@@ -167,8 +177,8 @@ export class AiAgentFormComponent implements OnInit {
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
-      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
-      this.formFields.push(obj);
+      // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
+      // this.formFields.push(obj);
       res.data.forEach(item => {
         if (item.preAttributeType === 'file') {
           this.fieldInputKey[item.preAttributeName] = item.preAttributeName;
@@ -194,7 +204,8 @@ export class AiAgentFormComponent implements OnInit {
       this.predefinedBot_name = res.predefinedBotName;
       this.processName = this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
-      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.predefinedBot_schedulerRequired = false
       this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
@@ -259,9 +270,9 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
-      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
-                  preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
-      this.formFields.push(obj);
+      // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
+      //             preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
+      // this.formFields.push(obj);
       // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
       this.formFields.push(...res.data
         .filter(item => !item.duplicate)
@@ -277,7 +288,8 @@ export class AiAgentFormComponent implements OnInit {
       this.predefinedBot_name = res.predefinedBotName;
       this.processName =this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
-      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.predefinedBot_schedulerRequired = false
       this.predefinedBotsForm.get('isScheduleBot').setValue(this.predefinedBot_schedulerRequired)
       if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
       // this.generateDynamicForm();
@@ -416,7 +428,8 @@ export class AiAgentFormComponent implements OnInit {
         // console.log("test", res)
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -472,7 +485,8 @@ export class AiAgentFormComponent implements OnInit {
             req_body.fields[e] = JSON.stringify(this.jobDescription.response)
           })
         req_body.fields[this.jobDescription.fieldName] = JSON.stringify(this.jobDescription.response)
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -510,7 +524,8 @@ export class AiAgentFormComponent implements OnInit {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -1117,6 +1132,7 @@ export class AiAgentFormComponent implements OnInit {
       this.toaster.showSuccess("Agent Name","update");
       this.spinner.hide();
       this.isSubAgentNameEdit = false;
+      this.subAgentName = this._agentName;
     }, err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
@@ -1162,7 +1178,7 @@ export class AiAgentFormComponent implements OnInit {
 
   startAiAgent() {
     this.confirmationService.confirm({
-      message: "Do you want to start this agent? This can't be undo.",
+      message: "Do you want to start this agent? ",
       header: "Are you sure?",
       acceptLabel: "Yes",
       rejectLabel: "No",
@@ -1174,10 +1190,16 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          console.log("AGENT-ID", this.agentUUIDCapture);
-        this.rest_service.startPredefinedBot(this.agentUUIDCapture).subscribe((res: any) => {
+          
+        this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
         this.spinner.hide();
-        this.toaster.toastSuccess("Agent Execution Started")
+        this.toaster.toastSuccess("Agent Execution Started");
+        this.stages = [
+          { name: 'Initiated', status: 'success' },
+          { name: 'Agent In Progress', status: 'success' },
+          { name: 'Generating Output', status: 'failure' },
+          { name: 'Completed', status: 'pending' }
+        ];
         }, err => {
           this.spinner.hide();
           this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
