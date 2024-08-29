@@ -91,23 +91,24 @@ export class AiAgentFormComponent implements OnInit {
     { label: 'Generating Output' },
     { label: 'Completed' }
   ];
+  inProgressAgents:any[]=[];
 
 
   // Agent in Progress
-  inProgressAgents = [
-    { startDate: '2023-05-22', progress: 50 },
-    { startDate: '2023-06-01', progress: 70 },
-    { startDate: '2023-07-15', progress: 80 },
-    { startDate: '2023-08-10', progress: 60 },
-    { startDate: '2023-09-05', progress: 90 },
-    { startDate: '2023-10-02', progress: 70 },
-    { startDate: '2023-11-20', progress: 50 },
-    { startDate: '2023-07-15', progress: 80 },
-    { startDate: '2023-08-10', progress: 60 },
-    { startDate: '2023-09-05', progress: 90 },
-    { startDate: '2023-10-02', progress: 70 },
-    { startDate: '2023-11-20', progress: 50 },
-  ];
+  // inProgressAgents = [
+  //   { startDate: '2023-05-22', progress: 50 },
+  //   { startDate: '2023-06-01', progress: 70 },
+  //   { startDate: '2023-07-15', progress: 80 },
+  //   { startDate: '2023-08-10', progress: 60 },
+  //   { startDate: '2023-09-05', progress: 90 },
+  //   { startDate: '2023-10-02', progress: 70 },
+  //   { startDate: '2023-11-20', progress: 50 },
+  //   { startDate: '2023-07-15', progress: 80 },
+  //   { startDate: '2023-08-10', progress: 60 },
+  //   { startDate: '2023-09-05', progress: 90 },
+  //   { startDate: '2023-10-02', progress: 70 },
+  //   { startDate: '2023-11-20', progress: 50 },
+  // ];
 
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
   currentActivePage = 1;
@@ -185,6 +186,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isEdit = false;
     }else{
       this.fetchAllFieldsToUpdateData();
+      this.getSubAgentsInprogressList();
       this.isEdit = true;
     }
 
@@ -1745,6 +1747,19 @@ handleHistoryTab (hist) {
     }
     console.log("EXCEL STARTED ");
 
+  }
+
+  getSubAgentsInprogressList() {
+    this.spinner.show();
+    this.rest_service.getSubAgentsInprogressList(this.params.agentId)
+      .subscribe((res: any) => {
+        this.inProgressAgents = res.data;
+        this.initializePaginationDots();
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessages.apierror);
+      });
   }
 
 }

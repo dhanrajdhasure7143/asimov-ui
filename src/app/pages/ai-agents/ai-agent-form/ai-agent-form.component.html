@@ -649,7 +649,7 @@
       </div> -->
 
     <!-- In-Progress Agents Section -->
-    <div class="container">
+    <div class="container" *ngIf="inProgressAgents.length > 0">
         <div class="row align-items-center mb-3 mb-10">
             <div class="col-md-6 d-flex align-items-center justify-content-left">
                 <img src="../../../../assets/images/agent/rocket-icon.svg" alt="" height="20px" width="20px">
@@ -668,7 +668,7 @@
                             <div class="card-body">
                                 <!-- Agent Start Date and Eye Icon -->
                                 <div class="agent-card-header">
-                                    <span>Agent Start Date: <span class="start-date">{{ agent.startDate }}</span> </span>
+                                    <span>Agent Start Date: <span class="start-date">{{ agent.startTS|date:'MMM dd, y hh:mm' }}</span> </span>
                                     <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm()"></i>
                                 </div>
                                 <!-- Agent In Progress and Stop Button -->

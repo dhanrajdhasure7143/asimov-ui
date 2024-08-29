@@ -167,4 +167,8 @@ export class PredefinedBotsService {
   renewSubAgent(body){
     return this.http.post(`/subscriptionservice/v1/subscriptions/renew-selected-agents`,body)
   }
+
+  getSubAgentsInprogressList(subAgentId){
+    return this.http.get(`/rpa-service/predefined/in-progress-agents/${subAgentId}`)
+  }
 }
