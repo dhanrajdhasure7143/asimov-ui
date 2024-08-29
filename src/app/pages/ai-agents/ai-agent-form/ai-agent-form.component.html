@@ -459,7 +459,7 @@
         </app-split-overlay>
       </div> -->
 
-      <!-- In-Progress Agents Section -->
+    <!-- In-Progress Agents Section -->
     <div class="container">
         <div class="row align-items-center mb-3 mb-10">
             <div class="col-md-6 d-flex align-items-center justify-content-left">
@@ -517,65 +517,68 @@
             style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
-                <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history" style="margin-right: 8px; font-size: 1.1rem;"></i>History</button>
-                <button class="tab-button-inner" (click)="handleHistoryTab('files')"><i class="pi pi-paperclip" style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Data</button>
+                <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
+                        style="margin-right: 8px; font-size: 1.1rem;"></i>History</button>
+                <button class="tab-button-inner" (click)="handleHistoryTab('files')"><i class="pi pi-paperclip"
+                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Data</button>
                 <div class="bottom-tab-mover-after" [ngClass]="activeTabMode === 'history' ? 'history-tab' : 'files-tab'">
-
+    
                 </div>
             </div>
-   
+    
             <!-- Search, Filter, Download buttons -->
             <div class="controls-container" *ngIf="activeTabMode === 'history'">
                 <input type="date" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
-                <div class="filter-button-main-section" [ngClass]="isFilterPopupVisible ? 'artive' : 'in-artive'" >
-                    <button class="filter-btn" (click)="toggleFilterPopup()"><i class="pi pi-filter" style="margin-right: 5px;"></i> Filter</button>
-                    <div [ngClass]="isFilterPopupVisible ? 'active' : 'in-active'"  class="filter-popup-handler">
+                <div class="filter-button-main-section" [ngClass]="isFilterPopupVisible ? 'artive' : 'in-artive'">
+                    <button [disabled]="getSubAgentPaginatedData().length===0" class="filter-btn"
+                        (click)="toggleFilterPopup()"><i class="pi pi-filter" style="margin-right: 5px;"></i>
+                        Filter</button>
+                    <div [ngClass]="isFilterPopupVisible ? 'active' : 'in-active'" class="filter-popup-handler">
                         <div class="filter-popup-content">
-                            <div class="inner-checkboxes-sorting" >
-                                <button [ngClass]="sortOrder === 'asc' ? 'activer' : ''" class="single-checkbox-sorter" (click)="handleStages('asc')">
+                            <div class="inner-checkboxes-sorting">
+                                <button [ngClass]="sortOrder === 'asc' ? 'activer' : ''" class="single-checkbox-sorter"
+                                    (click)="handleStages('asc')">
                                     <div class="right-checkbox-sort">
                                         <p class="checker-text">Sort A-Z</p>
                                     </div>
                                 </button>
-                                <button [ngClass]="sortOrder === 'desc' ? 'activer' : ''" class="single-checkbox-sorter" (click)="handleStages('desc')">
+                                <button [ngClass]="sortOrder === 'desc' ? 'activer' : ''" class="single-checkbox-sorter"
+                                    (click)="handleStages('desc')">
                                     <div class="right-checkbox-sort">
                                         <p class="checker-text">Sort Z-A</p>
                                     </div>
                                 </button>
-                                <button class="single-checkbox-sorter" *ngFor="let stage of availableStages" [ngClass]="dummyFilterStage === stage ? 'activer' : ''" (click)="handleStageOption(stage)">
+                                <button class="single-checkbox-sorter" *ngFor="let stage of availableStages"
+                                    [ngClass]="dummyFilterStage === stage ? 'activer' : ''"
+                                    (click)="handleStageOption(stage)">
                                     <div class="right-checkbox-sort">
                                         <p class="checker-text">{{stage}}</p>
                                     </div>
                                 </button>
                             </div>
-                            <!-- <label for="stage">Stage:</label>
-                            <select id="stage" [(ngModel)]="filterStage">
-                                <option value="">All</option>
-                                <option *ngFor="let stage of availableStages" [value]="stage">{{ stage }}</option>
-                            </select>
-                    
-                            <label for="sortOrder">Sort Order:</label>
-                            <select id="sortOrder" [(ngModel)]="sortOrder">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                    
-                            <button class="apply-filter-btn" (click)="applyFilter()">Apply Filter</button>
-                            <button class="close-popup-btn" (click)="toggleFilterPopup()">Close</button> -->
                         </div>
                     </div>
                 </div>
-                <button class="download-btn"><i class="pi pi-download" style="color: #fff; margin-right: 5px;"></i> Download</button>
-            </div>     
-            
+                <button class="download-btn" [disabled]="this.subAgentHistory.length===0"
+                    (click)="downloadSubAgentHistoryAsExcel()"><i class="pi pi-download"
+                        style="color: #fff; margin-right: 5px;"></i> Download</button>
+            </div>
+    
             <!-- Search, Filter, Download buttons -->
             <div class="controls-container" *ngIf="activeTabMode === 'files'">
-                <input type="text" placeholder="Search by File Name" class="search-bar" (input)="onFileSearchChange($event)">
-                <button class="download-btn"><i class="pi pi-download" style="color: #fff; margin-right: 5px;"></i> Download</button>
-                <button class="download-btn" style="background-color:red"><i class="pi pi-trash" style="color: #fff; margin-right: 5px;"></i> Delete</button>
+                <input [disabled]="getSubAgentFilePaginatedData().length === 0" type="text"
+                    placeholder="Search by File Name" class="search-bar" (input)="onFileSearchChange($event)">
+                <button class="download-btn" (click)="subAgentFileDownloadSelectedFiles()"
+                    [disabled]="!subAgentFileHasSelectedFiles()">
+                    <i class="pi pi-download" style="color: #fff; margin-right: 5px;"></i> Download
+                </button>
+                <button class="download-btn" style="background-color:red" (click)="subAgentFileDeleteSelectedFiles()"
+                    [disabled]="!subAgentFileHasSelectedFiles()">
+                    <i class="pi pi-trash" style="color: #fff; margin-right: 5px;"></i> Delete
+                </button>
             </div>
         </div>
-   
+    
         <!-- Sub-agent History Table -->
         <table class="subagent-history-table" *ngIf="activeTabMode === 'history'">
             <thead>
@@ -587,6 +590,14 @@
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="getSubAgentPaginatedData().length === 0">
+                    <td colspan="4" style="text-align: center; padding: 20px;">
+                        <div class="no-data-found">
+                            <img src="../../../../assets/images/agent/no-data-found.svg" alt="">
+                            No data found
+                        </div>
+                    </td>
+                </tr>
                 <tr *ngFor="let record of getSubAgentPaginatedData(); let i = index">
                     <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
                     <td>{{ record.date | date:'MMM d, y HH:mm:ss' }}</td>
@@ -600,36 +611,50 @@
                 </tr>
             </tbody>
         </table>
-
+    
         <!-- Sub-agent Files Table -->
         <table class="subagent-history-table" *ngIf="activeTabMode === 'files'">
             <thead>
                 <tr>
-                    <th>S.No</th>
+                    <th><input type="checkbox" class="files-input-icon" (change)="subAgentFileToggleSelectAll($event)"></th>
                     <th>File Name</th>
-                    <th>File Type</th>
-                    <th>File Size</th>
-                    <th>Uploaded Date</th>
-                    
-                    <!-- <th>Action</th> -->
+                    <th>
+                        File Type
+                        <i class="pi pi-sort-alt" (click)="subAgentFileSortBy('dataType')"></i>
+                    </th>
+                    <th>
+                        File Size
+                        <i class="pi pi-sort-alt" (click)="subAgentFileSortBy('fileSize')"></i>
+                    </th>
+                    <th>
+                        Uploaded Date
+                        <i class="pi pi-sort-alt" (click)="subAgentFileSortBy('uploadedDate')"></i>
+                    </th>
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="getSubAgentFilePaginatedData().length === 0">
+                    <td colspan="5" style="text-align: center; padding: 20px;">
+                        <div class="no-data-found">
+                            <img src="../../../../assets/images/agent/no-data-found.svg" alt="">
+                            No data found
+                        </div>
+                    </td>
+                </tr>
+    
                 <tr *ngFor="let file of getSubAgentFilePaginatedData(); let i = index">
-                    <td style="font-size: 15px !important;">{{ (subAgentFileCurrentPage - 1) * subAgentFileItemsPerPage + i + 1 }}</td>
-                    <td><i class="pi pi-file" style="color: rgb(245, 211, 39); margin-right:10px"></i> {{ removeFileExtension(file.originalFileName) }}</td>
+                    <td><input type="checkbox" class="files-input-icon-row" [(ngModel)]="file.selected"></td>
+                    <td><i class="pi pi-file" style="color: rgb(245, 211, 39); margin-right:10px"></i> {{
+                        removeFileExtension(file.originalFileName) }}</td>
                     <td>{{ file.dataType }}</td>
                     <td>{{ convertToMB(file.fileSize) }}</td>
                     <td>{{ file.uploadedDate | date:'MMM d, y HH:mm:ss' }}</td>
-                    
-                    <!-- <td>
-                        <button (click)="downloadFile(file)">Download</button>
-                    </td> -->
                 </tr>
             </tbody>
         </table>
-          
-   
+    
+    
+    
         <!-- Pagination Controls -->
         <div class="pagination-controls" *ngIf="activeTabMode === 'history'">
             <button (click)="subAgentGoToPage(1)" [disabled]="subAgentCurrentPage === 1">
@@ -645,11 +670,12 @@
             <button (click)="scrollSubAgentRight()" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">
                 <i class="pi pi-angle-right"></i>
             </button>&nbsp;
-            <button (click)="subAgentGoToPage(subAgentTotalPagesArray.length)" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">
+            <button (click)="subAgentGoToPage(subAgentTotalPagesArray.length)"
+                [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">
                 <i class="pi pi-angle-double-right"></i>
             </button>
-        </div>    
-        
+        </div>
+    
         <!-- Pagination Controls -->
         <div class="pagination-controls" *ngIf="activeTabMode === 'files'">
             <button (click)="subAgentFileGoToPage(1)" [disabled]="subAgentFileCurrentPage === 1">
@@ -662,10 +688,12 @@
                 [class.active]="page === subAgentFileCurrentPage">
                 {{ page }}
             </span>
-            <button (click)="scrollSubAgentFileRight()" [disabled]="subAgentFileCurrentPage === subAgentFileTotalPagesArray.length">
+            <button (click)="scrollSubAgentFileRight()"
+                [disabled]="subAgentFileCurrentPage === subAgentFileTotalPagesArray.length">
                 <i class="pi pi-angle-right"></i>
             </button>&nbsp;
-            <button (click)="subAgentFileGoToPage(subAgentFileTotalPagesArray.length)" [disabled]="subAgentFileCurrentPage === subAgentFileTotalPagesArray.length">
+            <button (click)="subAgentFileGoToPage(subAgentFileTotalPagesArray.length)"
+                [disabled]="subAgentFileCurrentPage === subAgentFileTotalPagesArray.length">
                 <i class="pi pi-angle-double-right"></i>
             </button>
         </div>

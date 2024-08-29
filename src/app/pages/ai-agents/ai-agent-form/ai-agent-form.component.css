@@ -655,8 +655,9 @@
 .card-container {
   display: flex;
   transition: transform 0.3s ease;
-  overflow-x: auto;
+  overflow-x: hidden;
   scroll-behavior: smooth;
+  margin-bottom: 8px;
 }
 
 .custom-card {
@@ -984,7 +985,7 @@ input.p-inputtext {
 }
  
 .subagent-history-table td {
-  font-size: 14px;
+  font-size: 16px;
   color: #495057;
 }
  
@@ -1172,11 +1173,36 @@ input.p-inputtext {
 .filter-button-main-section.in-artive {
   overflow: hidden;
 } */
+
+.files-input-icon{
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.files-input-icon-row{
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.no-data-found{
+  padding: 30px 0px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 30px;
+}
+
+.no-data-found img{
+  height: 80px;
+  width: 80px;
+}
  
 /* Sub-Agent History Ends */
 
 .p-datatable .p-datatable-header, th{
-  font-size: 16px !important;
+  font-size: 17px !important;
 }
 .configuration-header-with-ico i {
   font-size: 22px !important;
