@@ -25,7 +25,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     checkErrorCodes(err, reqUrl?){
         var _self = this;
-        return
         if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
             // if(err.error.errorMessage){
                 this.authenticationService.logout();
