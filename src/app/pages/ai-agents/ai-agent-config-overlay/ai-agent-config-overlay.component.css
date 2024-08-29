@@ -75,9 +75,7 @@
     width: 0; 
     height: 100%;
     transition: width 0.6s ease;
-    border: 1px solid gray;
   }
-
   
   /* .progress-cap {
     position: absolute;
@@ -195,7 +193,7 @@
     overflow-x: hidden;  /* Enable vertical scrolling */
     padding: 0 15px;   /* Optional: Padding for better content spacing */
     overflow-y: auto;
-    /* margin-top: 20px; */
+    margin-top: 20px;
 }
 
 .fixed-bottom {
@@ -242,7 +240,7 @@
     text-align: center; 
     content: "Choose File" ; 
     display: inline-block; 
-    background: #3199FF;
+    background: #098de6;
      border-radius: 6px; 
      padding: 2px 8px; outline: none; 
      color: white; white-space: nowrap;
@@ -256,7 +254,7 @@
 .back-button {
     background: none;
     border: none;
-    color: #3199FF;
+    color: #098de6;
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
@@ -354,7 +352,7 @@
   
   .edit-icon {
     font-size: 14px;
-    color: #3199FF;
+    color: #007bff;
     margin-left: 5px;
     cursor: pointer;
   }
@@ -376,7 +374,6 @@
     margin-bottom: 20px;
     cursor: pointer;
     user-select: none;
-    padding: 0px 20px
   }
   
   /* ... (rest of the CSS remains the same) ... */
@@ -480,7 +477,7 @@
   overflow: hidden;
 }
 .accordion-header span{
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .accordion-content-save{
@@ -658,9 +655,8 @@
 .card-container {
   display: flex;
   transition: transform 0.3s ease;
-  overflow-x: hidden;
+  overflow-x: auto;
   scroll-behavior: smooth;
-  margin-bottom: 8px;
 }
 
 .custom-card {
@@ -699,7 +695,7 @@
   height: 20px;
   width: 15px;
   height: 3px;
-  color: #3199FF;
+  color: #11b0dc;
 }
 
 .card-content {
@@ -727,11 +723,18 @@
 
 .progress-bar-container {
   /* background-color: #e9ecef; */
-  background-color: #55b04b;
+  background-color: #69FF59;
   border-radius: 5px;
   height: 10px;
   margin-top: 15px;
   margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 20px !important;
+  background-color: #69FF59;
+  ;
+  border-radius: 15px;
 }
 
 .nav-btn {
@@ -870,12 +873,12 @@ input.p-inputtext {
  
 /* Sub-Agent History Starts */
 .subagents-history-container {
-  padding: 15px;
-  margin:0px 18px;
+  padding: 20px;
+  margin:0px 30px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 15px 2px #3199FF26;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
 }
  
 .tabs-container {
@@ -905,7 +908,7 @@ input.p-inputtext {
 }
 .bottom-tab-mover-after {
   height: 3px;
-  background: #3199FF;
+  background: #007bff;
   border-radius: 30px;
   position: absolute;
   bottom: -5px;
@@ -936,7 +939,7 @@ input.p-inputtext {
  
 .download-btn {
   padding: 8px 15px;
-  background-color: #3199FF;
+  background-color: #007bff;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -957,7 +960,7 @@ input.p-inputtext {
 }
  
 .download-btn {
-  background-color: #3199FF;
+  background-color: #3199FFE5;
   color: #fff;
   padding: 9px 25px;
 }
@@ -981,7 +984,7 @@ input.p-inputtext {
 }
  
 .subagent-history-table td {
-  font-size: 16px;
+  font-size: 14px;
   color: #495057;
 }
  
@@ -1053,9 +1056,9 @@ input.p-inputtext {
 
 .pagination-controls span.active {
   font-weight: bold;
-  background-color: #3199FF;
+  background-color: rgb(39, 182, 238);
   color: white;
-  border: 2px solid #3199FF;
+  border: 2px solid rgb(39, 182, 238);
   border-radius: 4px;
 }
  
@@ -1169,36 +1172,11 @@ input.p-inputtext {
 .filter-button-main-section.in-artive {
   overflow: hidden;
 } */
-
-.files-input-icon{
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.files-input-icon-row{
-  width: 16px !important;
-  height: 16px !important;
-}
-
-.no-data-found{
-  padding: 30px 0px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-weight: 600;
-  gap: 30px;
-}
-
-.no-data-found img{
-  height: 80px;
-  width: 80px;
-}
  
 /* Sub-Agent History Ends */
 
 .p-datatable .p-datatable-header, th{
-  font-size: 17px !important;
+  font-size: 16px !important;
 }
 .configuration-header-with-ico i {
   font-size: 22px !important;
@@ -1228,7 +1206,7 @@ input.p-inputtext {
 }
 
 .edit-text {
-  font-size: 12px !important;
+  font-size: 18px !important;
   color: #3199FF !important;
   margin-left: 5px !important;
   display: flex;
@@ -1237,7 +1215,7 @@ input.p-inputtext {
 
 .edit-text .pi-pencil {
   margin-right: 10px !important;
-  font-size: 12px !important;
+  font-size: 18px !important;
 }
 
 .accordion-header {
@@ -1245,7 +1223,7 @@ input.p-inputtext {
 }
 ::ng-deep .p-accordion-tab a.p-accordion-header-link {
   background: #f4f4ff !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 15px !important;
   box-shadow: none !important;
 
 }
@@ -1265,52 +1243,4 @@ input.p-inputtext {
 ::ng-deep .p-accordion-header .custom-header span {
   font-weight: 600 !important;
   font-size: 18px !important  ;
-}
-.main-header-title{
-  font-weight: 600;
-}
-
-
-
-
- .progress-container-new {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  /* max-width: 800px; */
-  margin: 20px;
-}
-.bar-container {
-  flex-grow: 1;
-}
-.progress-bar-new {
-  display: flex;
-  height: 22px;
-  background-color: #e0e0e0;
-  border-radius: 15px;
-  overflow: hidden;
-}
-.stage {
-  flex-grow: 1;
-  transition: background-color 0.3s;
-}
-.stage.active {
-  background-color: #55b04b;
-}
-.stage.failure {
-  background-color: #e74c3c;
-}
-.stage-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-}
-.stage-label {
-  font-size: 12px;
-  color: #7f8c8d;
-  text-align: center;
-  flex-basis: 25%;
-}
-.success{
-  background-color: #55b04b;
 }

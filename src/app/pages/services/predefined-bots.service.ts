@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -136,7 +137,8 @@ export class PredefinedBotsService {
   
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
-    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+    let isAiAgents= environment.product =='AiAgents' ? true : false;
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId+'?aiAgent='+isAiAgents,{ headers:headers,observe: 'response' })
   }
 
   getSubAgentHistoryLogs(productId,agent_id){

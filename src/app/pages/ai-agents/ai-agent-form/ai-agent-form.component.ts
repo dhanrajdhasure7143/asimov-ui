@@ -9,6 +9,11 @@ import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Inplace } from "primeng/inplace";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AiAgentConfigOverlayComponent } from '../ai-agent-config-overlay/ai-agent-config-overlay.component';
+import * as JSZip from "jszip";
+import * as FileSaver from "file-saver";
+import { saveAs } from "file-saver";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -30,6 +35,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class AiAgentFormComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild('aiAgentsConfig') aiAgentsConfig: AiAgentConfigOverlayComponent;
   processName:string;
   currentPage = 1;
   fieldsPerPage = 30;
@@ -108,6 +114,40 @@ export class AiAgentFormComponent implements OnInit {
   itemsPerPageCount = 4;
   totalNumberOfPages: number;
   pageDotNumbers: number[];
+  status: string = 'Agent In Progress';
+  stages = [
+    { name: 'Initiated', status: 'success' },
+    { name: 'Agent In Progress', status: 'failure' },
+    { name: 'Generating Output', status: 'pending' },
+    { name: 'Completed', status: 'pending' }
+  ];
+  currentStage_new = -1;
+
+  // Agent History Data Starts
+  subAgentHistory = [];
+
+  // Pagination related variables
+  subAgentCurrentPage = 1;
+  subAgentItemsPerPage = 8;
+  subAgentTotalPagesArray: number[] = [];
+  searchQuery: string = '';
+  isFilterPopupVisible = false;
+  availableStages = ['Success', 'Failed', 'Running'];
+  filterStage: string = '';
+  dummyFilterStage: string = ''
+  sortOrder: string = '';
+  historyToDownload=[]
+  activeTabMode: string ='history';
+  // Agent History Data Ends
+
+  // Agent Files Tab
+  subAgentFileHistory = [];
+  subAgentFileCurrentPage = 1;
+  subAgentFileItemsPerPage = 8;
+  subAgentFileTotalPagesArray: number[] = [];
+  searchFileQuery: string = '';
+  subAgentFileSortColumn: string = '';
+  subAgentFileSortDirection: number = 1;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -130,6 +170,8 @@ export class AiAgentFormComponent implements OnInit {
       this.initializeSubAgentPagination();
     }
 
+
+
   ngOnInit(): void {
     this.spinner.show();
     this.predefinedBotsForm = this.fb.group({
@@ -150,6 +192,9 @@ export class AiAgentFormComponent implements OnInit {
     this.getSubAgentHistoryLogs();
     this.getSubAgentFileHistoryLogs();
     this.initializeSubAgentFilePagination()
+
+    console.log(this.predefinedBot_name,"Name of the Bot.....")
+    console.log(this.processName,"---------------veqrverve")
   }
 
   ngOnDestroy(): void {
@@ -167,8 +212,8 @@ export class AiAgentFormComponent implements OnInit {
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
-      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
-      this.formFields.push(obj);
+      // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
+      // this.formFields.push(obj);
       res.data.forEach(item => {
         if (item.preAttributeType === 'file') {
           this.fieldInputKey[item.preAttributeName] = item.preAttributeName;
@@ -194,7 +239,8 @@ export class AiAgentFormComponent implements OnInit {
       this.predefinedBot_name = res.predefinedBotName;
       this.processName = this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
-      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.predefinedBot_schedulerRequired = false
       this.generateDynamicForm();      
     },err=>{
       this.spinner.hide();
@@ -259,9 +305,9 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
-      let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
-                  preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
-      this.formFields.push(obj);
+      // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
+      //             preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
+      // this.formFields.push(obj);
       // this.formFields.push(...res.data.filter(item=>  !item.duplicate))
       this.formFields.push(...res.data
         .filter(item => !item.duplicate)
@@ -277,7 +323,8 @@ export class AiAgentFormComponent implements OnInit {
       this.predefinedBot_name = res.predefinedBotName;
       this.processName =this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
-      this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
+      this.predefinedBot_schedulerRequired = false
       this.predefinedBotsForm.get('isScheduleBot').setValue(this.predefinedBot_schedulerRequired)
       if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
       // this.generateDynamicForm();
@@ -416,7 +463,8 @@ export class AiAgentFormComponent implements OnInit {
         // console.log("test", res)
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -472,7 +520,8 @@ export class AiAgentFormComponent implements OnInit {
             req_body.fields[e] = JSON.stringify(this.jobDescription.response)
           })
         req_body.fields[this.jobDescription.fieldName] = JSON.stringify(this.jobDescription.response)
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -510,7 +559,8 @@ export class AiAgentFormComponent implements OnInit {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
-        req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
+        req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -1117,6 +1167,7 @@ export class AiAgentFormComponent implements OnInit {
       this.toaster.showSuccess("Agent Name","update");
       this.spinner.hide();
       this.isSubAgentNameEdit = false;
+      this.subAgentName = this._agentName;
     }, err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
@@ -1162,7 +1213,7 @@ export class AiAgentFormComponent implements OnInit {
 
   startAiAgent() {
     this.confirmationService.confirm({
-      message: "Do you want to start this agent? This can't be undo.",
+      message: "Do you want to start this agent? ",
       header: "Are you sure?",
       acceptLabel: "Yes",
       rejectLabel: "No",
@@ -1174,10 +1225,16 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          console.log("AGENT-ID", this.agentUUIDCapture);
-        this.rest_service.startPredefinedBot(this.agentUUIDCapture).subscribe((res: any) => {
+          
+        this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
         this.spinner.hide();
-        this.toaster.toastSuccess("Agent Execution Started")
+        this.toaster.toastSuccess("Agent Execution Started");
+        this.stages = [
+          { name: 'Initiated', status: 'success' },
+          { name: 'Agent In Progress', status: 'success' },
+          { name: 'Generating Output', status: 'failure' },
+          { name: 'Completed', status: 'pending' }
+        ];
         }, err => {
           this.spinner.hide();
           this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
@@ -1287,13 +1344,6 @@ export class AiAgentFormComponent implements OnInit {
   handlePageDotClick(pageNumber: number) {
     this.currentActivePage = pageNumber;
   }
-// Agent History Data Starts
-subAgentHistory = [];
-
-// Pagination related variables
-subAgentCurrentPage = 1;
-subAgentItemsPerPage = 8;
-subAgentTotalPagesArray: number[] = [];
 
 initializeSubAgentPagination() {
   this.updateFilteredData();
@@ -1332,13 +1382,6 @@ getSubAgentPaginatedData() {
   const endIndex = startIndex + this.subAgentItemsPerPage;
   return this.filteredSubAgentHistory.slice(startIndex, endIndex);
 }
-
-searchQuery: string = '';
-isFilterPopupVisible = false;
-availableStages = ['Success', 'Failed', 'Running'];
-filterStage: string = '';
-dummyFilterStage: string = ''
-sortOrder: string = '';
 
 toggleFilterPopup() {
   this.isFilterPopupVisible = !this.isFilterPopupVisible;
@@ -1390,11 +1433,12 @@ onSearchChange(event: Event) {
 
 getSubAgentHistoryLogs() {
   this.spinner.show();
-  this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+  // this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+  this.rest_service.getSubAgentHistoryLogs(this.params.id, this.params.agentId)
     .subscribe((res: any) => {
+      this.historyToDownload=res.data
       this.subAgentHistory = this.mapResponseToTableData(res.data);
       this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
-      console.log("History Data is Here ", this.subAgentHistory);
       this.initializeSubAgentPagination();
       this.spinner.hide();
     }, err => {
@@ -1433,24 +1477,14 @@ handleStageOption(stage){
 }
 
 
-activeTabMode: string ='history';
-
 handleHistoryTab (hist) {
   this.activeTabMode = hist
   if (hist === 'files') {
-    this.getSubAgentFileHistoryLogs();  // Fetch files if the tab is "Files"
+    this.getSubAgentFileHistoryLogs();
+  }else{
+    this.getSubAgentHistoryLogs()
+  }
 }
-}
-
-// Agent History Data Ends
-
-
-  // Agent Files Tab
-  subAgentFileHistory = [];
-  subAgentFileCurrentPage = 1;
-  subAgentFileItemsPerPage = 8;
-  subAgentFileTotalPagesArray: number[] = [];
-  searchFileQuery: string = '';
 
   initializeSubAgentFilePagination() {
     this.updateFileFilteredData();
@@ -1508,54 +1542,17 @@ handleHistoryTab (hist) {
 
   getSubAgentFileHistoryLogs() {
     this.spinner.show();
-    // this.rest_service.getSubAgentFiles(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
-    this.rest_service.getSubAgentFiles("Pred_RFP", "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
+    this.rest_service.getSubAgentFiles(this.params.id, this.params.agentId)
+    // this.rest_service.getSubAgentFiles("Pred_RFP", "7c3d4e5d-f6ec-49d0-b086-20d7e29e96fd")
       .subscribe((res: any) => {
-        // this.subAgentFileHistory = res.data;
-        this.subAgentFileHistory = [
-          {
-            "id": 33,
-            "predefinedAgentUUID": "Pred_RFP",
-            "fileNameWithUUID": "4978d889-6b74-4b41-9044-d9dd8df9d959_onboard_doc 2 (1).pdf",
-            "fileSize": 197671,
-            "uploadedBy": "tyon.tristan@frontbridges.com",
-            "uploadedDate": "2024-08-26T12:05:37.798",
-            "dataType": "pdf",
-            "filePath": "predefined/RFP",
-            "originalFileName": "onboard_doc 2 (1).pdf",
-            "productId": "prod_QbY7q8db8Hj3XC",
-            "aiagentId": 5,
-            "inputKey": "RFPMainBot_78630_Download Jackrabbit File_fileName"
-          },
-          {
-            "id": 34,
-            "predefinedAgentUUID": "Pred_RFP",
-            "fileNameWithUUID": "2a103602-e9d2-4341-908f-0ac52bc77594_template_docs 2.docx",
-            "fileSize": 37246,
-            "uploadedBy": "tyon.tristan@frontbridges.com",
-            "uploadedDate": "2024-08-26T12:05:38.818",
-            "dataType": "docx",
-            "filePath": "predefined/RFP",
-            "originalFileName": "template_docs 2.docx",
-            "productId": "prod_QbY7q8db8Hj3XC",
-            "aiagentId": 5,
-            "inputKey": "RFPMainBot_78641_Download Jackrabbit File_fileName"
-          }
-        ];
-
-        this.subAgentFileHistory = [...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory]
-
-        console.log("File Data is Here ", this.subAgentFileHistory);
+        this.subAgentFileHistory = res.data;
+        // this.subAgentFileHistory = [...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory, ...this.subAgentFileHistory]
         this.initializeSubAgentFilePagination();
         this.spinner.hide();
       }, err => {
         this.spinner.hide();
         this.toaster.showError(this.toastMessages.apierror);
       });
-  }
-
-  downloadFile(file) {
-      
   }
 
   convertToMB(bytes: number): string {
@@ -1570,4 +1567,184 @@ handleHistoryTab (hist) {
     }
     return fileName.substring(0, lastDotIndex);
   }
+
+  viewOverlayForm(){
+    this.configurationOverlay = true
+    this.aiAgentsConfig.getData();
+  }
+
+  subAgentFileSortBy(column: string) {
+    if (this.subAgentFileSortColumn === column) {
+      this.subAgentFileSortDirection = -this.subAgentFileSortDirection;
+    } else {
+      this.subAgentFileSortColumn = column;
+      this.subAgentFileSortDirection = 1;
+    }
+
+    this.subAgentFileHistory.sort((a, b) => {
+      let valueA = a[column];
+      let valueB = b[column];
+
+      if (typeof valueA === 'string') {
+        valueA = valueA.toLowerCase();
+        valueB = valueB.toLowerCase();
+      }
+
+      if (valueA < valueB) {
+        return -1 * this.subAgentFileSortDirection;
+      } else if (valueA > valueB) {
+        return 1 * this.subAgentFileSortDirection;
+      } else {
+        return 0;
+      }
+    });
+
+    this.updateFileFilteredData();
+  }
+
+  subAgentFileToggleSelectAll(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.subAgentFileHistory.forEach(file => file.selected = isChecked);
+    const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+    console.log("selectedFiles :",selectedFiles);
+  }
+
+  subAgentFileHasSelectedFiles(): boolean {
+    return this.subAgentFileHistory.some(file => file.selected);
+  }
+
+
+  subAgentFileDownloadSelectedFiles() {
+    const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+
+    if (selectedFiles.length >= 1) {
+      this.spinner.show();
+      this.rest_service.downloadAgentFiles(selectedFiles).subscribe(
+        (response: any) => {
+          if (response.code == 4200) {
+            const resp_data = response.data;
+            const currentDate = new Date().toISOString().split('T')[0];
+
+            if (resp_data.length > 0) {
+              if (resp_data.length == 1) {
+                const fileName = resp_data[0].fileName;
+                const fileData = resp_data[0].downloadedFile;
+                const link = document.createElement("a");
+                const extension = fileName.split('.').pop();
+
+                link.download = fileName;
+                link.href =
+                  extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                    ? `data:image/${extension};base64,${fileData}`
+                    : `data:application/${extension};base64,${fileData}`;
+
+                link.click();
+                this.toaster.toastSuccess(`Files downloaded successfully.`);
+              } else {
+                const zip = new JSZip();
+                const fileNames = new Set();
+
+                resp_data.forEach((value) => {
+                  let fileName = value.fileName;
+                  const fileData = value.downloadedFile;
+                  const extension = fileName.split('.').pop();
+                  const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                  let counter = 1;
+
+                  while (fileNames.has(fileName)) {
+                    fileName = `${baseName}_${counter}.${extension}`;
+                    counter++;
+                  }
+                  fileNames.add(fileName);
+                  zip.file(fileName, fileData, { base64: true });
+                });
+
+                zip.generateAsync({ type: "blob" }).then((content) => {
+                  const saveFileName = `AI_Agent_Files_${currentDate}.zip`;
+                  FileSaver.saveAs(content, saveFileName);
+                });
+                this.toaster.toastSuccess(`Files downloaded successfully.`);
+                this.subAgentFileHistory.forEach(file => file.selected = false);
+              }
+            } else {
+              this.toaster.showError("Error downloading files.");
+            }
+          } else {
+            this.toaster.showError("Error downloading files.");
+          }
+          this.spinner.hide();
+        },
+        (error) => {
+          this.toaster.showError("Error");
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.toaster.showWarn("Please select the files.");
+    }
+  }
+
+  subAgentFileDeleteSelectedFiles() {
+    const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+
+    if (selectedFiles.length >= 1) {
+      this.spinner.show();
+      this.rest_service.deleteAgentFIles(selectedFiles).subscribe(
+        (res: any) => {
+          this.getSubAgentFileHistoryLogs();
+          this.subAgentFileHistory.forEach(file => file.selected = false);
+          this.spinner.hide();
+          this.toaster.toastSuccess("Files deleted successfully.");
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessages.apierror);
+        }
+      );
+    } else {
+      this.toaster.showWarn("Please select the files.");
+    }
+  }
+
+
+  downloadSubAgentHistoryAsExcel() {
+    const historyData = this.historyToDownload;
+    console.log("EXCEL STARTED ");
+
+    if (!historyData || historyData.length === 0) {
+      this.toaster.showWarn("No data available to download.");
+      return;
+    }
+
+    try {
+      const headers = ['Agent ID', 'Agent Run ID', 'Agent Name', 'Start Time', 'End Time', 'Status'];
+
+      const worksheetData = [
+        headers,
+        ...historyData.map(record => [
+          record.agentId,
+          record.agentRunId,
+          record.agentName,
+          record.startTS,
+          record.endTS,
+          record.status
+        ])
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'History');
+
+      const fileName = `${this.subAgentHistory[0].agentName}_History_${new Date().toISOString().split('T')[0]}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+
+      this.toaster.toastSuccess(" Agent History downloaded successfully.");
+
+    } catch (error) {
+      this.toaster.showError("Error downloading history.");
+    }
+    console.log("EXCEL STARTED ");
+
+  }
+
 }

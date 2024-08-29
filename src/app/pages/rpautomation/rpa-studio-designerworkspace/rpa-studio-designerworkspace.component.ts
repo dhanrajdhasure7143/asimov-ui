@@ -281,8 +281,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.loadnodes();
       this.getAllVersions();
       this.executionMode=this.finalbot.executionMode=="v1"?true:false;
+      this.getAllEnvironments()
     }
-    this.getSelectedEnvironments();
+    // this.getSelectedEnvironments();
     //this.getCategories();
     this.validateBotNodes();
     this.route.queryParams.subscribe(res=>{
@@ -292,6 +293,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       else this.isNavigateCopilot = false
     })
   }
+
+  getAllEnvironments(){
+    this.rest.listEnvironments().subscribe((response:any)=>{
+      if(response.errorMessage==undefined){
+        this.environmentsList=response;
+        this.getSelectedEnvironments();
+      }
+      else{
+        this.toastService.showError(response.errorMessage);
+      }
+    });
+}
 
   getSelectedEnvironments() {
     setTimeout(()=>{
