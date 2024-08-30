@@ -132,8 +132,13 @@
   margin-bottom: 1px;
 }
 
+.remove-btn{
+  margin-right: auto !important;
+}
+
 .remove-btn img{
   height: 18px;
+  cursor: pointer;
 }
 
 .make-default-btn, .bluebg-button {
@@ -157,9 +162,9 @@
 .expiryDate{
   float: right;
 }
-[class^="col-"] {
+/* [class^="col-"] {
   padding: 0.5rem;
-}
+} */
 
 /* Responsive breakpoints */
 @media (min-width: 576px) {
