@@ -725,13 +725,15 @@
     color: #FA7E39;
 }
 
-.progress-bar-container {
+.inprogress-progress-bar-container {
   /* background-color: #e9ecef; */
   background-color: #55b04b;
   border-radius: 5px;
   height: 10px;
   margin-top: 15px;
   margin-bottom: 10px;
+  position: relative;
+  z-index: 100
 }
 
 .nav-btn {
@@ -1316,4 +1318,14 @@ input.p-inputtext {
 }
 .common-form{
   border-bottom: 1px solid #dee2e6 !important;
+}
+  
+.inprogress-progress-bar-inner {
+  border-radius: 5px;
+  height: 10px;
+  position: relative;
+  z-index: 0;
+  top: 25px;
+  border: 1px solid #dee2e6;
+  background-color: #e9ecef;
 }

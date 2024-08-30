@@ -145,10 +145,10 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
   handleRenewBtn(agent: any) {
     this.confirmationService.confirm({
-      message: "Do you want to renew this agent? ",
-      header: "Are you sure?",
-      acceptLabel: "Yes",
-      rejectLabel: "No",
+      message: "Would you like to renew this agent? The amount will be deducted, and the renewal will continue with the current billing cycle.",
+      header: "Renew Agent",
+      acceptLabel: "Yes, Renew",
+      rejectLabel: "No, Cancel",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -168,7 +168,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
           console.log('Agent renewed successfully', res);
           if(res.code == 4200){
             this.spinner.hide();
-            this.toastService.showSuccess("Agnent renewed successfully", 'response');
+            this.toastService.showSuccess("The agent has been successfully renewed!",'response');
           }else{
             this.spinner.hide();
             this.toastService.showError(this.toastMessage.apierror);
@@ -192,7 +192,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
       // this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "edit", id: this.bot?.productId, agent_id:this.selected_drop_agent.predefinedOrchestrationBotId } });
 
     }else{
-      this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentId, agentId : agent.subAgentId} });
+      this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "create", id: agent.agentId, agentId : agent.subAgentId,agentName:agent.subAgentName} });
 
     }
     
@@ -206,9 +206,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
   }
   deleteSubSgent(agent:any){
     this.confirmationService.confirm({
-      message: "Do you want to delete this agent? ",
-      header: "Are you sure?",
-      acceptLabel: "Yes",
+      message: "Are you sure you want to delete this agent?",
+      header: "Confirm Deletion",
+      acceptLabel: "Yes, Delete",
       rejectLabel: "No",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',

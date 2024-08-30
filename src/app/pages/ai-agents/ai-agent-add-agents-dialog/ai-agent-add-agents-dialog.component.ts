@@ -4,6 +4,7 @@ import { StripeService } from 'ngx-stripe';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-ai-agent-add-agents-dialog',
@@ -27,7 +28,8 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
     private spinner: LoaderService,
     private toastService: ToasterService,
     private rest_api: PredefinedBotsService,
-    private toastMessage: toastMessages
+    private toastMessage: toastMessages,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   }
   
   proceedToPay() {
-    this.spinner.show();
+    
     // const agentName = this.selectedAgent?.predefinedBotName;
     // this.agentAdded.emit(agentName);
     this.displayAddAgentDialog = false;
@@ -63,36 +65,47 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
     //   return;
     // }
   
-    // let req_body = {
-    //   //"price": filteredPriceIds,
-    //   "priceData": filteredPriceIds.map(price => ({
-    //     "price": price.id,
-    //     "quantity": price.quantity
-    //   })),
-
-    // };
+  
     let req_body = {
       "userId":localStorage.getItem("ProfileuserId"),
       "productId":this.selectedAgent.productId,
       "quantity":this.agentCount
       }
 
-    
-    this.rest_api.addMoreSubAgents(req_body).subscribe(
-        res => {
-          this.spinner.hide();
-          // this.toastService.showSuccess("Redirecting to payment gateway");
-          this.toastService.toastSuccess("Agent added successfully");
-          // this.onClose();
-          if (this.closeDialogCallback) {
-            this.closeDialogCallback();
-          }
-        },error => {
-          this.spinner.hide();
-          this.toastService.showError("Failed to redirect to payment gateway");
-          console.error('Error during payment:', error);
-        }
-      );
+      this.confirmationService.confirm({
+        message: "Are you sure you want to add more agents? The amount will be deducted, and the addition will continue with the current billing cycle.",
+        header: "Confirm Addition",
+        acceptLabel: "Yes, Add Agents",
+        rejectLabel: "No, Cancel",
+        rejectButtonStyleClass: 'btn reset-btn',
+        acceptButtonStyleClass: 'btn bluebg-button',
+        defaultFocus: 'none',
+        rejectIcon: 'null',
+        acceptIcon: 'null',
+        accept: () => {
+          this.spinner.show();
+
+          console.log("resrstage", "Agent Deleted Successfully");
+          this.rest_api.addMoreSubAgents(req_body).subscribe(
+            res => {
+              // this.toastService.showSuccess("Redirecting to payment gateway");
+              this.toastService.toastSuccess("Agent added successfully");
+              // this.onClose();
+              if (this.closeDialogCallback) {
+                this.closeDialogCallback();
+              }
+              this.spinner.hide();
+
+            },error => {
+              this.spinner.hide();
+              this.toastService.showError("Failed to redirect to payment gateway");
+              console.error('Error during payment:', error);
+            }
+          );
+        },
+        reject: (type) => { }
+      });
+ 
   }
   
   

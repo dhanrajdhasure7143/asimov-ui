@@ -851,7 +851,7 @@
                                 <!-- Agent Start Date and Eye Icon -->
                                 <div class="agent-card-header">
                                     <span>Agent Start Date: <span class="start-date">{{ agent.startTS|date:'MMM dd, y hh:mm' }}</span> </span>
-                                    <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm()"></i>
+                                    <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm(agent)"></i>
                                 </div>
                                 <!-- Agent In Progress and Stop Button -->
                                 <div class="card-content">
@@ -859,9 +859,11 @@
                                     <button class="stop-btn">Stop Agent</button>
                                 </div>
                                 <!-- Progress Bar -->
-                                <div class="progress-bar-container" [style.width]="agent.percentage" title="{{agent.percentage}}">
-                                    <div class="progress-bar"></div>
-                                </div>
+                                 <div class="inprogress-progress-bar-inner"> </div>
+                                    <div class="inprogress-progress-bar-container" [style.width]="agent.percentage" [pTooltip]="agent.percentage" tooltipPosition="bottom">
+                                        <!-- <div class="progress-bar"></div> -->
+                                    </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -891,7 +893,7 @@
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
                         style="margin-right: 8px; font-size: 1.1rem;"></i>History</button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('files')"><i class="pi pi-paperclip"
-                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Data</button>
+                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Files</button>
                 <div class="bottom-tab-mover-after" [ngClass]="activeTabMode === 'history' ? 'history-tab' : 'files-tab'">
     
                 </div>
@@ -971,7 +973,7 @@
                 </tr>
                 <tr *ngFor="let record of getSubAgentHistoryPaginatedData(); let i = index">
                     <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
-                    <td>{{ record.date | date:'MMM d, y HH:mm:ss' }}</td>
+                    <td>{{ record.date | date:'MMM d, y HH:mm' }}</td>
                     <td>
                         <span
                             [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed', 'stage-running': record.stage === 'Running'}">

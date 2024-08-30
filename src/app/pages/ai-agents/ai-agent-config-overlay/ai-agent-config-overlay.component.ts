@@ -87,7 +87,7 @@ export class AiAgentConfigOverlayComponent implements OnInit {
 
   ngOnInit(): void {
     this.predefinedBotsForm = this.fb.group({});
-    this.getData();
+    // this.getData();
 
   }
 
@@ -384,10 +384,11 @@ export class AiAgentConfigOverlayComponent implements OnInit {
 //     this.setupFormControls()
 //   })
 // }
-getData() {
-  this.rest_service.getDisabledFields().subscribe((res: any) => {
+getData(productId,subAgentId,runId) {
+  console.log('GET-DISABLE-FIELDS',productId,subAgentId,runId);
+  this.rest_service.getDisabledFields(productId,subAgentId,runId).subscribe((res: any) => {
     console.log('GET-DISABLE-FIELDS', res);
-    this.disabledFormFields = res.data;
+    this.disabledFormFields = res.data.data;
     this.createFormControls();
   });
 }
