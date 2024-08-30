@@ -149,6 +149,7 @@ export class AiAgentFormComponent implements OnInit {
   searchFileQuery: string = '';
   subAgentFileSortColumn: string = '';
   subAgentFileSortDirection: number = 1;
+  isCommonForm:boolean = true;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -210,7 +211,8 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
-      this.subAgentName = res.aiAgentName
+      this.subAgentName = res.aiAgentName;
+      this.isCommonForm = res.formType === 'common'? true : false;
       this.fieldInputKey = {};
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
@@ -306,7 +308,8 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
-      this.subAgentName = res.aiAgentName
+      this.subAgentName = res.aiAgentName;
+      this.isCommonForm = res.formType === 'common'? true : false;
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
@@ -468,6 +471,7 @@ export class AiAgentFormComponent implements OnInit {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         req_body["automationName"] = this.subAgentName
+        req_body["agentUUID"] = this.params.agentId
         // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
@@ -528,6 +532,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
@@ -567,6 +572,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
@@ -1163,7 +1169,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   updateDashboardName(){
-    this.inplace.deactivate();
+    // this.inplace.deactivate();
     this.spinner.show();
     this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");

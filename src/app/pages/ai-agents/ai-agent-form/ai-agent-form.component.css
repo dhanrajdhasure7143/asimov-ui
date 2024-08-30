@@ -193,7 +193,7 @@
     /* min-height: 65vh; */
     /* max-height: 60vh; */
     overflow-x: hidden;  /* Enable vertical scrolling */
-    padding: 0 15px;   /* Optional: Padding for better content spacing */
+    padding: 10px 15px;   /* Optional: Padding for better content spacing */
     overflow-y: auto;
     /* margin-top: 20px; */
 }
@@ -1313,4 +1313,7 @@ input.p-inputtext {
 }
 .success{
   background-color: #55b04b;
+}
+.common-form{
+  border-bottom: 1px solid #dee2e6 !important;
 }
