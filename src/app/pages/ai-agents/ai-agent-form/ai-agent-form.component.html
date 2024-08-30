@@ -1034,9 +1034,14 @@
             <button (click)="scrollSubAgentLeft()" [disabled]="subAgentCurrentPage === 1">
                 <i class="pi pi-angle-left"></i>
             </button>
-            <span *ngFor="let page of subAgentTotalPagesArray" (click)="subAgentGoToPage(page)"
-                [class.active]="page === subAgentCurrentPage">
-                {{ page }}
+            <span *ngIf="subAgentCurrentPage > 1" (click)="subAgentGoToPage(subAgentCurrentPage - 1)">
+                {{ subAgentCurrentPage - 1 }}
+            </span>
+
+            <span class="active">{{ subAgentCurrentPage }}</span>
+
+            <span *ngIf="subAgentCurrentPage < subAgentTotalPagesArray.length - 1" (click)="subAgentGoToPage(subAgentCurrentPage + 1)">
+                {{ subAgentCurrentPage + 1 }}
             </span>
             <button (click)="scrollSubAgentRight()" [disabled]="subAgentCurrentPage === subAgentTotalPagesArray.length">
                 <i class="pi pi-angle-right"></i>
@@ -1055,9 +1060,14 @@
             <button (click)="scrollSubAgentFileLeft()" [disabled]="subAgentFileCurrentPage === 1">
                 <i class="pi pi-angle-left"></i>
             </button>
-            <span *ngFor="let page of subAgentFileTotalPagesArray" (click)="subAgentFileGoToPage(page)"
-                [class.active]="page === subAgentFileCurrentPage">
-                {{ page }}
+            <span *ngIf="subAgentFileCurrentPage > 1" (click)="subAgentFileGoToPage(subAgentFileCurrentPage - 1)">
+                {{ subAgentFileCurrentPage - 1 }}
+            </span>
+
+            <span class="active">{{ subAgentFileCurrentPage }}</span>
+
+            <span *ngIf="subAgentFileCurrentPage < subAgentFileTotalPagesArray.length - 1" (click)="subAgentFileGoToPage(subAgentFileCurrentPage + 1)">
+                {{ subAgentFileCurrentPage + 1 }}
             </span>
             <button (click)="scrollSubAgentFileRight()"
                 [disabled]="subAgentFileCurrentPage === subAgentFileTotalPagesArray.length">

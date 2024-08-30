@@ -17,6 +17,7 @@
   border-radius: 0px !important;
   height: 50px;
   width: 100%;
+  margin-top: 35px !important;
 }
 ::ng-deep .main-content-body {
   margin-top: 0px !important; //top css
@@ -34,7 +35,7 @@
 }
 .maincont-subscription {
   height: calc(100vh - 0px);
-  background: #f9f9f9;
+  background: #fff !important;
 }
 
 ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
