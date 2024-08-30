@@ -74,7 +74,7 @@ export class AiAgentFormComponent implements OnInit {
   fieldInputKey:any;
   capturedFileIds:any=[];
   _agentName:any;
-  subAgentName:any="Agent 01"
+  subAgentName:any;
   isSubAgentNameEdit:boolean = false;
   isExpanded:boolean = true;
   currentStage: number = -1;
@@ -210,6 +210,7 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
+      this.subAgentName = res.aiAgentName
       this.fieldInputKey = {};
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
@@ -305,6 +306,7 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
+      this.subAgentName = res.aiAgentName
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
@@ -1379,7 +1381,7 @@ updateFilteredData() {
   this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 }
 
-getSubAgentPaginatedData() {
+getSubAgentHistoryPaginatedData() {
   const startIndex = (this.subAgentCurrentPage - 1) * this.subAgentItemsPerPage;
   const endIndex = startIndex + this.subAgentItemsPerPage;
   return this.filteredSubAgentHistory.slice(startIndex, endIndex);
@@ -1753,7 +1755,7 @@ handleHistoryTab (hist) {
     this.spinner.show();
     this.rest_service.getSubAgentsInprogressList(this.params.agentId)
       .subscribe((res: any) => {
-        this.inProgressAgents = res.data;
+        // this.inProgressAgents = res.data;
         this.initializePaginationDots();
         this.spinner.hide();
       }, err => {

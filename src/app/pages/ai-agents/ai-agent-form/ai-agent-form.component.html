@@ -719,7 +719,7 @@
             <div class="controls-container" *ngIf="activeTabMode === 'history'">
                 <input type="date" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
                 <div class="filter-button-main-section" [ngClass]="isFilterPopupVisible ? 'artive' : 'in-artive'">
-                    <button [disabled]="getSubAgentPaginatedData().length===0" class="filter-btn"
+                    <button [disabled]="getSubAgentHistoryPaginatedData().length===0" class="filter-btn"
                         (click)="toggleFilterPopup()"><i class="pi pi-filter" style="margin-right: 5px;"></i>
                         Filter</button>
                     <div [ngClass]="isFilterPopupVisible ? 'active' : 'in-active'" class="filter-popup-handler">
@@ -779,7 +779,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngIf="getSubAgentPaginatedData().length === 0">
+                <tr *ngIf="getSubAgentHistoryPaginatedData().length === 0">
                     <td colspan="4" style="text-align: center; padding: 20px;">
                         <div class="no-data-found">
                             <img src="../../../../assets/images/agent/no-data-found.svg" alt="">
@@ -787,7 +787,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr *ngFor="let record of getSubAgentPaginatedData(); let i = index">
+                <tr *ngFor="let record of getSubAgentHistoryPaginatedData(); let i = index">
                     <td>{{ (subAgentCurrentPage - 1) * subAgentItemsPerPage + i + 1 }}</td>
                     <td>{{ record.date | date:'MMM d, y HH:mm:ss' }}</td>
                     <td>
@@ -845,7 +845,7 @@
     
     
         <!-- Pagination Controls -->
-        <div class="pagination-controls" *ngIf="activeTabMode === 'history'">
+        <div class="pagination-controls" *ngIf="activeTabMode === 'history' && getSubAgentHistoryPaginatedData().length > 0">
             <button (click)="subAgentGoToPage(1)" [disabled]="subAgentCurrentPage === 1">
                 <i class="pi pi-angle-double-left"></i>
             </button>&nbsp;
@@ -866,7 +866,7 @@
         </div>
     
         <!-- Pagination Controls -->
-        <div class="pagination-controls" *ngIf="activeTabMode === 'files'">
+        <div class="pagination-controls" *ngIf="activeTabMode === 'files' && getSubAgentFilePaginatedData().length > 0">
             <button (click)="subAgentFileGoToPage(1)" [disabled]="subAgentFileCurrentPage === 1">
                 <i class="pi pi-angle-double-left"></i>
             </button>&nbsp;

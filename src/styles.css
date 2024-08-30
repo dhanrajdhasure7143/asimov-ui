@@ -4167,3 +4167,6 @@ padding: 0px 30px;}
   overflow-y: auto;
   max-height: 90vh;
 }
+.accordion-content .p-accordion .p-accordion-content{
+  border: none !important;
+}
