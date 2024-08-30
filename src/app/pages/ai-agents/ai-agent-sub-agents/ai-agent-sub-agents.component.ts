@@ -188,7 +188,32 @@ export class AiAgentSubAgentsComponent implements OnInit {
       queryParams:{index:0}
     })
   }
-  deleteSubSgent(){
-    console.log("Sub Agent Delete");
+  deleteSubSgent(agent:any){
+    const agentUUID = 
+    this.confirmationService.confirm({
+      message: "Do you want to delete this agent? ",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        console.log("resrstage", "Agent Deleted Successfully");
+        // this.spinner.show()
+        // this.rest_api.deleteSubAgentById(agent.agentId).subscribe((res: any) => {
+        //   console.log("resrstage",res);
+        // this.spinner.hide();
+        // this.toaster.toastSuccess("Agent Deleted Successfully");
+        // this.getSubAgents();
+        // }, err => {
+        //   this.spinner.hide();
+        //   this.toaster.showError(this.toastMessage.apierror);
+        // });
+      },
+      reject: (type) => { }
+    });
   }
 }

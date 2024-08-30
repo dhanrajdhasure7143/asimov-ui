@@ -171,4 +171,12 @@ export class PredefinedBotsService {
   getSubAgentsInprogressList(subAgentId){
     return this.http.get(`/rpa-service/predefined/in-progress-agents/${subAgentId}`)
   }
+
+  getAgentStagesInfo(agentUUID){
+    return this.http.get(`rpa-service/predefined/agent-stages-info/${agentUUID}`)
+  }
+
+  deleteSubAgentById(id){
+    return this.http.get(`rpa-service/predefined/delete-sub-agent/${id}`)
+  }
 }

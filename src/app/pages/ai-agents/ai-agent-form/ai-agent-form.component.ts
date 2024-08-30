@@ -821,8 +821,6 @@ export class AiAgentFormComponent implements OnInit {
   
  createBot() {
     console.log(this.predefinedBotsForm.value);
-    this.showProgress = true;
-    this.currentStage = 0;
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
       this.uploadFilesAndCreateBot('create');
     } else {
@@ -1231,23 +1229,41 @@ export class AiAgentFormComponent implements OnInit {
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
           
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+          console.log("resrstage",res);
         this.spinner.hide();
         this.toaster.toastSuccess("Agent Execution Started");
-        this.stages = [
-          { name: 'Initiated', status: 'success' },
-          { name: 'Agent In Progress', status: 'success' },
-          { name: 'Generating Output', status: 'failure' },
-          { name: 'Completed', status: 'pending' }
-        ];
+        // this.stages = [
+        //   { name: 'Initiated', status: 'success' },
+        //   { name: 'Agent In Progress', status: 'success' },
+        //   { name: 'Generating Output', status: 'failure' },
+        //   { name: 'Completed', status: 'pending' }
+        // ];
+        this.getAgentStages();
         }, err => {
           this.spinner.hide();
-          this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
-          // this.toaster.showError(this.toastMessage.apierror);
+          this.toaster.showError(this.toastMessage.apierror);
         });
         this.startProcess();
       },
       reject: (type) => { }
     });
+  }
+
+  getAgentStages() {
+    const intervalTime = 2000; 
+    const agentUUID = this.params.agentId
+    const intervalId = setInterval(() => {
+      this.rest_service.getAgentStagesInfo(agentUUID).subscribe((stagesInfo: any) => {
+        this.stages = stagesInfo;
+        if (stagesInfo.some(stage => stage.status === 'Completed')) {
+          clearInterval(intervalId);
+          this.toaster.toastSuccess("Agent Execution Completed");
+        }
+      }, err => {
+        clearInterval(intervalId);
+        this.toaster.showError("Error fetching agent stages info");
+      });
+    }, intervalTime);
   }
   startProcess() {
     this.isRunning = true;
