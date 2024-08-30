@@ -144,25 +144,41 @@ export class AiAgentSubAgentsComponent implements OnInit {
   }
 
   handleRenewBtn(agent: any) {
-    this.selectedAgent = agent;
-    console.log("RENEW", this.selectedAgent);
-    console.log('Renewing agent', agent);
-    let req_body = {
-      "userId": localStorage.getItem('ProfileuserId'),
-      "productId": "prod_QbY7q8db8Hj3XC",
-      "agentIds": [
-      "a59319d7-058c-42e2-87ef-db8fdf2d653a"   
-      ]
-    }
-    this.spinner.show();
-    this.rest_api.renewSubAgent(req_body).subscribe((res) => {
-      console.log('Agent renewed successfully', res);
-      // this.toastService.toastSuccess();
-      this.spinner.hide();
-    }, (err) => {
-      console.error('Error renewing agent', err);
-      // this.toastService.showError(this.toastMessages.apierror);
-      this.spinner.hide();
+    this.confirmationService.confirm({
+      message: "Do you want to renew this agent? ",
+      header: "Are you sure?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.selectedAgent = agent;
+        console.log("RENEW", this.selectedAgent);
+        console.log('Renewing agent', agent);
+        let req_body = {
+          "userId": localStorage.getItem('ProfileuserId'),
+          "productId": this.product_id,
+          "agentIds": [agent.subAgentId]
+        }
+        this.spinner.show();
+        this.rest_api.renewSubAgent(req_body).subscribe((res:any) => {
+          console.log('Agent renewed successfully', res);
+          if(res.code == 4200){
+            this.spinner.hide();
+            this.toastService.showSuccess("Agnent renewed successfully", 'response');
+          }else{
+            this.spinner.hide();
+            this.toastService.showError(this.toastMessage.apierror);
+          }
+        }, (err) => {
+          this.spinner.hide();
+          this.toastService.showError(this.toastMessage.apierror);
+        });
+      },
+      reject: (type) => { }
     });
     // this.displayAddAgentDialog = true;
   }
@@ -189,7 +205,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
     })
   }
   deleteSubSgent(agent:any){
-    const agentUUID = 
     this.confirmationService.confirm({
       message: "Do you want to delete this agent? ",
       header: "Are you sure?",
@@ -203,7 +218,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
       accept: () => {
         console.log("resrstage", "Agent Deleted Successfully");
         // this.spinner.show()
-        // this.rest_api.deleteSubAgentById(agent.agentId).subscribe((res: any) => {
+        // this.rest_api.deleteSubAgentById(agent.subAgentId).subscribe((res: any) => {
         //   console.log("resrstage",res);
         // this.spinner.hide();
         // this.toaster.toastSuccess("Agent Deleted Successfully");

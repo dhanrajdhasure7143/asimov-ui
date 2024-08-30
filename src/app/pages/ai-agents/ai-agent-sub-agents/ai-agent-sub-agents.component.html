@@ -67,7 +67,7 @@
               </div>
               <button class="button-top delete-button" style="margin: 5px;">
                 <span>
-                  <img *ngIf="!agent.isExpired" src="../../../../assets/images/agent/delete_icon_gray.svg" alt="" (click)="deleteSubSgent(agent)">
+                  <!-- <img *ngIf="!agent.isExpired" src="../../../../assets/images/agent/delete_icon_gray.svg" alt="" (click)="deleteSubSgent(agent)"> -->
                   <img *ngIf="agent.isExpired" src="../../../../assets/images/agent/delete_icon_red.svg" alt="" (click)="deleteSubSgent(agent)">
                 </span>
               </button>
@@ -120,7 +120,7 @@
     </p-dialog> -->
 
     <p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '40vw'}" [modal]="true"
-      [showHeader]="true" [closable]="true" styleClass="custom-dialog" (onHide)="onDialogHide()">
+      [showHeader]="true" [closable]="true" class="custom-dialog" (onHide)="onDialogHide()">
       <ng-template pTemplate="header">
         <div class="dialog-header">
           <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
