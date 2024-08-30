@@ -212,11 +212,6 @@ export class AiAgentSubscriptionComponent implements OnInit {
         agent.autoRenew = !agent.autoRenew;
       }
     });
-    this.rest_api.updateAutoRenew(user_email,agent.name, agent.autoRenew).subscribe((res) => {
-      console.log('Auto Renew updated successfully', res);
-    }, (err) => {
-      console.error('Error updating auto renew', err);
-    });
   }
 
   renewAgent(agent) {

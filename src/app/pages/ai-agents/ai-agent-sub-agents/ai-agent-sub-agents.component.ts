@@ -145,7 +145,26 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
   handleRenewBtn(agent: any) {
     this.selectedAgent = agent;
-    this.displayAddAgentDialog = true;
+    console.log("RENEW", this.selectedAgent);
+    console.log('Renewing agent', agent);
+    let req_body = {
+      "userId": localStorage.getItem('ProfileuserId'),
+      "productId": "prod_QbY7q8db8Hj3XC",
+      "agentIds": [
+      "a59319d7-058c-42e2-87ef-db8fdf2d653a"   
+      ]
+    }
+    this.spinner.show();
+    this.rest_api.renewSubAgent(req_body).subscribe((res) => {
+      console.log('Agent renewed successfully', res);
+      // this.toastService.toastSuccess();
+      this.spinner.hide();
+    }, (err) => {
+      console.error('Error renewing agent', err);
+      // this.toastService.showError(this.toastMessages.apierror);
+      this.spinner.hide();
+    });
+    // this.displayAddAgentDialog = true;
   }
 
 
