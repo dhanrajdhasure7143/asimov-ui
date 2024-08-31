@@ -18,8 +18,10 @@
                 <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
                 <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div>
                 <div class="header-cell next-bill-est">{{ agent.billingDate  | date:'MMM d, y'}}</div>
-                <div class="header-cell next-bill-est">{{ agent.expiresOn | date:'MMM d, y' }}</div>
-
+                <div class="header-cell next-bill-est">
+                    {{ agent.autoRenew ? '-' : (agent.expiresOn | date:'MMM d, y') }}
+                </div>
+                  
                 <div class="header-cell">
                     <div class="custom-toggle">
                         <label>
@@ -32,20 +34,16 @@
             </div>
 
             <div class="accordion-content" *ngIf="agent.expanded">
-                <!-- <p class="">Subscribed Agents</p> -->
                 <div class="sub-agent-actions">
                     <span class="">Subscribed Agents</span>
                     <div class="action-buttons">
-                        <!-- Show "Delete" icon only if there are selected inactive sub-agents -->
-                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="subagentDelete(agent)"></i>
-
-                        <!-- Show "Renew All" button only if there are selected inactive sub-agents -->
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button" (click)="subagentRenewAll(agent)">
+                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent,'INACTIVE')"></i>
+                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button"
+                            (click)="handleRenewal('bulk', agent, getSelectedSubAgentsByStatus(agent, 'INACTIVE'))">
                             Renew All
                         </button>
                         
-                        <!-- Show "Cancel Subscription" button only if there are selected active sub-agents -->
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 0" class="cancel-all-button" (click)="subagentCancelAll(agent)">
+                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 0" class="cancel-all-button" (click)="subagentCancelAllSubscription(agent)">
                             Cancel Subscription
                         </button>
                     </div>                    
@@ -61,38 +59,47 @@
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
                         <div class="row-cell sub-agent-row-header" style="flex:1.46">
-                            <!-- Updated checkbox logic to handle selection -->
                             <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" />
                             {{ subAgent.subAgentName }}
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'">
+                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center; text-transform: lowercase;">
                                 {{ subAgent.status }}
                             </span>
-                        </div>
+                        </div>                                              
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
                         <div class="row-cell" style="font-weight: 500; color: #3199FF; font-size: 15px;">{{ subAgent.pricing }}.00</div>
-                        <!-- <div class="row-cell">{{ subAgent.lastUsed }}</div> -->
                         <div class="row-cell">
+                            {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
+                        </div>
+                        <div class="row-cell">
+                        
                             <button *ngIf="subAgent.status === 'INACTIVE'" class="action-button renew-button"
-                                (click)="subagentRenew(agent, subAgent)" style="color:#3199FF !important">Renew</button>
+                                (click)="handleRenewal('individual', agent, subAgent)" style="color:#3199FF !important">
+                                Renew
+                            </button>
+                        
                             <button *ngIf="subAgent.status === 'ACTIVE'" class="action-button cancel-button"
-                                (click)="subagentCancel(agent, subAgent)">Cancel</button>
+                                (click)="subagentCancelSubscription(agent.productId, subAgent)">Cancel</button>
                         </div>
                     </div>
                     <div class="pagination">
-                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)"
-                            [class.disabled]="agent.currentPage === 1">
+                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)" 
+                              [class.disabled]="agent.currentPage === 1">
                             &lt;
                         </span>
-
-                        <span class="page" *ngFor="let page of getPages(agent); let i = index"
-                            [class.active]="agent.currentPage === i + 1" (click)="setPage(agent, i + 1)">
-                            {{ i + 1 }}
-                        </span>
-
-                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)"
-                            [class.disabled]="agent.currentPage === getPages(agent).length">
+                    
+                        <ng-container *ngFor="let page of getPages(agent); let i = index">
+                            <span *ngIf="i + 1 >= agent.currentPage - 1 && i + 1 <= agent.currentPage + 1" 
+                                  class="page" 
+                                  [class.active]="agent.currentPage === i + 1" 
+                                  (click)="setPage(agent, i + 1)">
+                                {{ i + 1 }}
+                            </span>
+                        </ng-container>
+                    
+                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)" 
+                              [class.disabled]="agent.currentPage === getPages(agent).length">
                             &gt;
                         </span>
                     </div>
@@ -114,20 +121,16 @@
                     <span class="agent-name" [title]="agent.name">{{ agent.agentName }}</span>
                 </div>
                 <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
-                <!-- <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div> -->
                 <div class="header-cell next-bill-est"> - </div>
-                <!-- <div class="header-cell next-bill-est">{{ agent.billingDate }}</div> -->
                 <div class="header-cell next-bill-est"> - </div>
                 <div class="header-cell next-bill-est">
                     <div class="remaining-days" >
                         <span>Expired On</span>
                     </div>
-                    <!-- <span class="date-format ">{{ agent.expiresOn }}</span> -->
-                    <span class="date-format ">{{ agent.expiresOn }}</span>
-                    <!-- {{ agent.expiresOn }} -->
+                    <span class="date-format ">{{ agent.expiresOn | date:'MMM d, y'}}</span>
                 </div>
                 <div class="header-cell">
-                    <span class="renew-btn-expired">Renew</span>
+                    <span class="renew-btn-expired" (click)="handleRenewal('bulk', agent, agent.subAgents)">Renew</span>
                 </div>
             </div>
 
@@ -135,9 +138,12 @@
                 <div class="sub-agent-actions">
                     <span class="">Subscribed Agents</span>
                     <div class="action-buttons">
-                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="expiredSubagentDelete(agent)"></i>
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button" (click)="expiredSubagentRenewAll(agent)">Renew All</button>
-                        <!-- <button *ngIf="getSelectedSubAgentsByStatus(agent, 'Inactive').length > 0" class="delete-all-button" (click)="expiredSubagentDelete(agent)">Delete All</button> -->
+                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent,'EXPIRED')"></i>
+
+                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button"
+                            (click)="handleRenewal('bulk', agent, getSelectedSubAgentsByStatus(agent, 'INACTIVE'))">
+                            Renew All
+                        </button>
                     </div>                    
                 </div>
                 <div class="sub-agent-table">
@@ -146,8 +152,7 @@
                             <input type="checkbox" (change)="selectAll(agent, $event.target.checked)" />
                         </div>
 
-                        <div *ngFor="let column of subAgentColumns" class="header-cell" [ngClass]="column.class" [style.flex]="column.flex">
-                            <!-- <input type="checkbox" *ngIf="column.isExpiredTab && column.isCheckbox" (change)="selectAll(agent, $event.target.checked)" /> -->
+                        <div *ngFor="let column of subAgentColumns" class="header-cell agent-name-expired-cell" [ngClass]="column.class" [style.flex]="column.flex">
                             {{ column.header }}
                         </div>
                     </div>
@@ -161,7 +166,7 @@
                             {{ subAgent.subAgentName }}
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge inactive-status">
+                            <span class="status-badge inactive-status" style="text-transform: lowercase;">
                                 {{ subAgent.status }}
                             </span>
                         </div>
@@ -169,27 +174,35 @@
                         <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">
                             {{ subAgent.pricing }}.00
                         </div>
-                        <!-- <div class="row-cell">{{ subAgent.billingCycle }}</div> -->
                         <div class="row-cell">
-                            <span class="renew-btn-expired" (click)="expiredSubagentRenew(agent, subAgent)">Renew</span>
+                            {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
+                        </div>
+                        <div class="row-cell">
+                            <span class="renew-btn-expired" (click)="handleRenewal('individual', agent, subAgent)">
+                                Renew
+                            </span>
                         </div>
                     </div>
                     <div class="pagination">
-                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)"
-                            [class.disabled]="agent.currentPage === 1">
+                        <span class="page" (click)="setPage(agent, agent.currentPage - 1)" 
+                              [class.disabled]="agent.currentPage === 1">
                             &lt;
                         </span>
-
-                        <span class="page" *ngFor="let page of getPages(agent); let i = index"
-                            [class.active]="agent.currentPage === i + 1" (click)="setPage(agent, i + 1)">
-                            {{ i + 1 }}
-                        </span>
-
-                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)"
-                            [class.disabled]="agent.currentPage === getPages(agent).length">
+                    
+                        <ng-container *ngFor="let page of getPages(agent); let i = index">
+                            <span *ngIf="i + 1 >= agent.currentPage - 1 && i + 1 <= agent.currentPage + 1" 
+                                  class="page" 
+                                  [class.active]="agent.currentPage === i + 1" 
+                                  (click)="setPage(agent, i + 1)">
+                                {{ i + 1 }}
+                            </span>
+                        </ng-container>
+                    
+                        <span class="page" (click)="setPage(agent, agent.currentPage + 1)" 
+                              [class.disabled]="agent.currentPage === getPages(agent).length">
                             &gt;
                         </span>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>

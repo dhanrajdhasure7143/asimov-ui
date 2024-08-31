@@ -597,7 +597,7 @@ export class AiAgentFormComponent implements OnInit {
         this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
-      this.toaster.showSuccess(botName,"create")
+      this.toaster.showSuccess(this.subAgentName,"save")
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -608,7 +608,7 @@ export class AiAgentFormComponent implements OnInit {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
-      this.toaster.showSuccess(botName,"update")
+      this.toaster.showSuccess(this.subAgentName,"update")
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -1232,7 +1232,6 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
           console.log("resrstage",res);
         this.spinner.hide();
@@ -1259,7 +1258,7 @@ export class AiAgentFormComponent implements OnInit {
     const agentUUID = this.params.agentId
     this.getStagesInterval = setInterval(() => {
       this.rest_service.getAgentStagesInfo(agentUUID).subscribe((stagesInfo: any) => {
-        this.stages = stagesInfo;
+        this.stages = stagesInfo.stages;
         if (stagesInfo.some(stage => stage.status === 'Completed')) {
           clearInterval(this.getStagesInterval);
           this.toaster.toastSuccess("Agent Execution Completed");
