@@ -94,7 +94,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
 
   fetchAllFields() {
-    this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
       this.fieldInputKey = {};

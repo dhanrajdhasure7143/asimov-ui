@@ -208,11 +208,11 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   fetchAllFields() {
-    this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
-      // this.subAgentName = res.aiAgentName;
-      this.subAgentName = this.params.agentName;
+      this.subAgentName = res.aiAgentName;
+      // this.subAgentName = this.params.agentName;
 
       this.isCommonForm = res.formType === 'common'? true : false;
       this.fieldInputKey = {};

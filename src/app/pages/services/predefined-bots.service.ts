@@ -10,8 +10,8 @@ export class PredefinedBotsService {
 
   constructor(private http : HttpClient) { }
 
-  getPredefinedBotAttributesList(id){
-    return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}`)
+  getPredefinedBotAttributesList(id, subAgentId){
+    return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}/${subAgentId}`)
   }
 
   getPredefinedBotsList(){
