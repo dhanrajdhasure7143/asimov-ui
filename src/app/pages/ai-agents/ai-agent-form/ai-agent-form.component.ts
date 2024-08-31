@@ -85,7 +85,6 @@ export class AiAgentFormComponent implements OnInit {
   showProgress: boolean = false;
   agentUUIDCapture:any;
   configurationOverlay:boolean = false;
-  isStartButtonDisabled = false;
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -598,7 +597,7 @@ export class AiAgentFormComponent implements OnInit {
         this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
-      this.toaster.showSuccess(botName,"create")
+      this.toaster.showSuccess(this.subAgentName,"save")
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -609,7 +608,7 @@ export class AiAgentFormComponent implements OnInit {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.goBackAgentHome();
-      this.toaster.showSuccess(botName,"update")
+      this.toaster.showSuccess(this.subAgentName,"update")
     },err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror)
@@ -1233,11 +1232,9 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-        this.isStartButtonDisabled = true;
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
           console.log("resrstage",res);
         this.spinner.hide();
-        this.isStartButtonDisabled = false;
         if(res.errorCode)
         if(res.errorCode == 3054){
           this.toaster.showError("You've reached today's limit. Please try again tomorrow. Thank you for your understanding!");
@@ -1249,7 +1246,6 @@ export class AiAgentFormComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           this.toaster.showError(this.toastMessage.apierror);
-          this.isStartButtonDisabled = false;
         });
         this.startProcess();
       },
