@@ -85,6 +85,7 @@ export class AiAgentFormComponent implements OnInit {
   showProgress: boolean = false;
   agentUUIDCapture:any;
   configurationOverlay:boolean = false;
+  isStartButtonDisabled = false;
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -1232,10 +1233,11 @@ export class AiAgentFormComponent implements OnInit {
       accept: () => {
         this.spinner.show()
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          
+        this.isStartButtonDisabled = true;
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
           console.log("resrstage",res);
         this.spinner.hide();
+        this.isStartButtonDisabled = false;
         if(res.errorCode)
         if(res.errorCode == 3054){
           this.toaster.showError("You've reached today's limit. Please try again tomorrow. Thank you for your understanding!");
@@ -1247,6 +1249,7 @@ export class AiAgentFormComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           this.toaster.showError(this.toastMessage.apierror);
+          this.isStartButtonDisabled = false;
         });
         this.startProcess();
       },
