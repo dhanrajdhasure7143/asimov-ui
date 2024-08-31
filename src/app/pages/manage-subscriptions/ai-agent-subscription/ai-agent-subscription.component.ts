@@ -26,7 +26,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
     { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Purchase On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Pricing', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
-    // { header: 'Last Used', flex: 1, field: 'lastUsed', class: '', isCheckbox: false , isExpiredTab: false },
+    { header: 'Last Used', flex: 1, field: 'lastUsed', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Action', flex: 1, field: 'action', class: '', isCheckbox: false , isExpiredTab: false }
   ];
 
@@ -219,7 +219,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         this.spinner.show();
         this.rest_api.cancelSubAgentsSubscription(body).subscribe(
           (res: any) => {
-            this.toastService.showSuccess('Success', 'Cancelled Subscription.');
+            this.toastService.showSuccess(this.toastMessages.cancelSubscription,'response');
             this.spinner.hide();
             this.getSubscribedAgentsList();
           },
@@ -244,7 +244,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
     }
   
     this.confirmationService.confirm({
-      message: `Are you sure you want to delete all selected ${status.toLowerCase()} sub-agents for ${agent.name}?`,
+      message: `Are you sure you want to delete?`,
       header: "Delete Sub-Agent",
       acceptLabel: "Yes, Delete",
       rejectLabel: "No, Cancel",
@@ -257,7 +257,8 @@ export class AiAgentSubscriptionComponent implements OnInit {
         selectedSubAgents.forEach(subAgent => {
           console.log('Deleting sub-agent', subAgent);
         });
-        this.toastService.showSuccess('Success', `Deleted all selected ${status.toLowerCase()} agents for ${agent.name}`);
+
+        this.toastService.showSuccess(this.toastMessages.userDelete,"Success");
       },
     });
   }
@@ -266,7 +267,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
     this.confirmationService.confirm({
       message: "Are you sure you want to Renew Subscription ? ",
-      header: 'Renew',
+      header: 'Renew Subscription',
       acceptLabel: 'Yes, Renew',
       rejectLabel: 'No, Cancel',
       rejectButtonStyleClass: 'btn reset-btn',
@@ -290,7 +291,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         this.spinner.show();
         this.rest_api.renewSubAgent(req_body).subscribe(
           (res) => {
-            this.toastService.showSuccess('Success', 'Renewed successfully.');
+            this.toastService.showSuccess(this.toastMessages.renewedSuccess,'response');
             this.spinner.hide();
             this.getSubscribedAgentsList();
           },

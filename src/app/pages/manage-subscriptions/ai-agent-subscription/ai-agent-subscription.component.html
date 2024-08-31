@@ -18,8 +18,10 @@
                 <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
                 <div class="header-cell next-bill-est">USD {{ agent.nextBillEstimate }}</div>
                 <div class="header-cell next-bill-est">{{ agent.billingDate  | date:'MMM d, y'}}</div>
-                <div class="header-cell next-bill-est">{{ agent.expiresOn | date:'MMM d, y' }}</div>
-
+                <div class="header-cell next-bill-est">
+                    {{ agent.autoRenew ? '-' : (agent.expiresOn | date:'MMM d, y') }}
+                </div>
+                  
                 <div class="header-cell">
                     <div class="custom-toggle">
                         <label>
@@ -67,6 +69,9 @@
                         </div>                                              
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
                         <div class="row-cell" style="font-weight: 500; color: #3199FF; font-size: 15px;">{{ subAgent.pricing }}.00</div>
+                        <div class="row-cell">
+                            {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
+                        </div>
                         <div class="row-cell">
                         
                             <button *ngIf="subAgent.status === 'INACTIVE'" class="action-button renew-button"
@@ -168,6 +173,9 @@
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
                         <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">
                             {{ subAgent.pricing }}.00
+                        </div>
+                        <div class="row-cell">
+                            {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
                         </div>
                         <div class="row-cell">
                             <span class="renew-btn-expired" (click)="handleRenewal('individual', agent, subAgent)">

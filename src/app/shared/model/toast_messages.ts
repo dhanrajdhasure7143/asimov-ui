@@ -136,4 +136,5 @@ export class toastMessages{
   public import_waring="Please ensure that you are importing it into the appropriate tenant?"
   public jd_error="Please fill Job descrption."
   public autoRenewUpdated= "Auto Renewal updated successfully!";
+  public renewedSuccess= "Agent Renewed successfully!";
 }
