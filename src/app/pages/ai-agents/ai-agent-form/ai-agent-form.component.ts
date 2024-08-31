@@ -1258,7 +1258,7 @@ export class AiAgentFormComponent implements OnInit {
     const agentUUID = this.params.agentId
     this.getStagesInterval = setInterval(() => {
       this.rest_service.getAgentStagesInfo(agentUUID).subscribe((stagesInfo: any) => {
-        this.stages = stagesInfo;
+        this.stages = stagesInfo.stages;
         if (stagesInfo.some(stage => stage.status === 'Completed')) {
           clearInterval(this.getStagesInterval);
           this.toaster.toastSuccess("Agent Execution Completed");

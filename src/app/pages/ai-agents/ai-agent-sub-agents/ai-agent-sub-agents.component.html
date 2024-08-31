@@ -87,12 +87,17 @@
               </div>
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->
 
-              <button class="cardBtn btn btn-sm rounded-pill card-view"
+              <!-- <button class="cardBtn btn btn-sm rounded-pill card-view"
                 [ngClass]="{'btn-danger': agent.isConfigured && agent.isExpired, 'btn-primary': !agent.isConfigured || (agent.isConfigured && !agent.isExpired)}"
                 (click)="agent.isConfigured ? (agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)) : viewAgentDetails(agent)">
                 {{ agent.isConfigured ? (agent.isExpired ? 'Renew' : 'View') : 'Start Now!' }}
+              </button> -->
+              <button class="cardBtn btn btn-sm rounded-pill card-view"
+                [ngClass]="{'btn-danger': agent.isExpired, 'btn-primary': !agent.isExpired}"
+                (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)">
+                {{ agent.isExpired ? 'Renew' : (agent.isConfigured ? 'View' : 'Start Now!') }}
               </button>
-              
+
               <!-- Please enable  below commented button line if dont need renew button funtionality in sub agents cards -->
 
                 <!-- <button *ngIf="!agent.isExpired" class="cardBtn btn btn-sm rounded-pill card-view"
