@@ -74,7 +74,7 @@ export class AiAgentFormComponent implements OnInit {
   fieldInputKey:any;
   capturedFileIds:any=[];
   _agentName:any;
-  subAgentName:any="Agent 01"
+  subAgentName:any;
   isSubAgentNameEdit:boolean = false;
   isExpanded:boolean = true;
   currentStage: number = -1;
@@ -92,6 +92,7 @@ export class AiAgentFormComponent implements OnInit {
     { label: 'Completed' }
   ];
   inProgressAgents:any[]=[];
+  getStagesInterval: any;
 
 
   // Agent in Progress
@@ -116,12 +117,7 @@ export class AiAgentFormComponent implements OnInit {
   totalNumberOfPages: number;
   pageDotNumbers: number[];
   status: string = 'Agent In Progress';
-  stages = [
-    { name: 'Initiated', status: 'success' },
-    { name: 'Agent In Progress', status: 'failure' },
-    { name: 'Generating Output', status: 'pending' },
-    { name: 'Completed', status: 'pending' }
-  ];
+  stages = [];
   currentStage_new = -1;
 
   // Agent History Data Starts
@@ -149,6 +145,7 @@ export class AiAgentFormComponent implements OnInit {
   searchFileQuery: string = '';
   subAgentFileSortColumn: string = '';
   subAgentFileSortDirection: number = 1;
+  isCommonForm:boolean = true;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -164,6 +161,9 @@ export class AiAgentFormComponent implements OnInit {
       this.route.queryParams.subscribe(params=>{
         this.params=params
         this.predefinedBot_id= this.params.id
+        if(this.params.type == "create"){
+          this.subAgentName = this.params.agentName;
+        }
       })
 
       this.initializePaginationDots()
@@ -203,13 +203,18 @@ export class AiAgentFormComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    clearInterval(this.getStagesInterval);
     this.stopProcess();
   }
 
   fetchAllFields() {
-    this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
+      this.subAgentName = res.aiAgentName;
+      // this.subAgentName = this.params.agentName;
+
+      this.isCommonForm = res.formType === 'common'? true : false;
       this.fieldInputKey = {};
       console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
@@ -305,6 +310,8 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
+      this.subAgentName = res.aiAgentName;
+      this.isCommonForm = res.formType === 'common'? true : false;
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
@@ -466,6 +473,7 @@ export class AiAgentFormComponent implements OnInit {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         req_body["automationName"] = this.subAgentName
+        req_body["agentUUID"] = this.params.agentId
         // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
@@ -526,6 +534,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
@@ -565,6 +574,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["automationName"] = this.subAgentName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
@@ -819,8 +829,6 @@ export class AiAgentFormComponent implements OnInit {
   
  createBot() {
     console.log(this.predefinedBotsForm.value);
-    this.showProgress = true;
-    this.currentStage = 0;
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
       this.uploadFilesAndCreateBot('create');
     } else {
@@ -1163,7 +1171,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   updateDashboardName(){
-    this.inplace.deactivate();
+    // this.inplace.deactivate();
     this.spinner.show();
     this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");
@@ -1215,10 +1223,10 @@ export class AiAgentFormComponent implements OnInit {
 
   startAiAgent() {
     this.confirmationService.confirm({
-      message: "Do you want to start this agent? ",
-      header: "Are you sure?",
-      acceptLabel: "Yes",
-      rejectLabel: "No",
+      message: "Ready to get started? Launching this agent will begin the process. ",
+      header: "Ready to Go?",
+      acceptLabel: "Let's Do It!",
+      rejectLabel: "Not Now",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -1229,23 +1237,41 @@ export class AiAgentFormComponent implements OnInit {
         // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
           
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+          console.log("resrstage",res);
         this.spinner.hide();
-        this.toaster.toastSuccess("Agent Execution Started");
-        this.stages = [
-          { name: 'Initiated', status: 'success' },
-          { name: 'Agent In Progress', status: 'success' },
-          { name: 'Generating Output', status: 'failure' },
-          { name: 'Completed', status: 'pending' }
-        ];
+        if(res.errorCode)
+        if(res.errorCode == 3054){
+          this.toaster.showError("You've reached today's limit. Please try again tomorrow. Thank you for your understanding!");
+          return;
+        }
+        this.toaster.toastSuccess("Success! The agent has started executing.");
+          this.getAgentStages();
+        
         }, err => {
           this.spinner.hide();
-          this.toaster.toastSuccess("Agent Execution Started") //temporarly keeping this
-          // this.toaster.showError(this.toastMessage.apierror);
+          this.toaster.showError(this.toastMessage.apierror);
         });
         this.startProcess();
       },
       reject: (type) => { }
     });
+  }
+
+  getAgentStages() {
+    const intervalTime = 6000; 
+    const agentUUID = this.params.agentId
+    this.getStagesInterval = setInterval(() => {
+      this.rest_service.getAgentStagesInfo(agentUUID).subscribe((stagesInfo: any) => {
+        this.stages = stagesInfo;
+        if (stagesInfo.some(stage => stage.status === 'Completed')) {
+          clearInterval(this.getStagesInterval);
+          this.toaster.toastSuccess("Agent Execution Completed");
+        }
+      }, err => {
+        // clearInterval(intervalId);
+        this.toaster.showError("Error fetching agent stages info");
+      });
+    }, intervalTime);
   }
   startProcess() {
     this.isRunning = true;
@@ -1379,7 +1405,7 @@ updateFilteredData() {
   this.subAgentTotalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 }
 
-getSubAgentPaginatedData() {
+getSubAgentHistoryPaginatedData() {
   const startIndex = (this.subAgentCurrentPage - 1) * this.subAgentItemsPerPage;
   const endIndex = startIndex + this.subAgentItemsPerPage;
   return this.filteredSubAgentHistory.slice(startIndex, endIndex);
@@ -1438,9 +1464,10 @@ getSubAgentHistoryLogs() {
   // this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
   this.rest_service.getSubAgentHistoryLogs(this.params.id, this.params.agentId)
     .subscribe((res: any) => {
-      this.historyToDownload=res.data
+      this.historyToDownload=res.data.reverse();
       this.subAgentHistory = this.mapResponseToTableData(res.data);
-      this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
+      // this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
+      this.subAgentHistory = [...this.subAgentHistory]
       this.initializeSubAgentPagination();
       this.spinner.hide();
     }, err => {
@@ -1453,17 +1480,11 @@ mapResponseToTableData(data: any[]): any[] {
   return data.map((item, index) => ({
     date: item.startTS,
     stage: item.status,
-    information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
+    // information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
+    information: item.description,
   }));
 }
 
-// Agent History Data Ends
-getDisabledForm(){
-  this.configurationOverlay = true
-  this.rest_service.getDisabledFields().subscribe((res:any)=>{
-    console.log("GET-DISABLE-FIELDS", res);
-  })
-}
 handleStages(stage){
   this.filterStage = '';
   this.dummyFilterStage = '';
@@ -1570,9 +1591,10 @@ handleHistoryTab (hist) {
     return fileName.substring(0, lastDotIndex);
   }
 
-  viewOverlayForm(){
+  viewOverlayForm(inprogressAgent){
+    console.log("inprogressAgent",inprogressAgent)
     this.configurationOverlay = true
-    this.aiAgentsConfig.getData();
+    this.aiAgentsConfig.getData(this.params.id,this.params.agentId,inprogressAgent.predefinedRunId);
   }
 
   subAgentFileSortBy(column: string) {
@@ -1753,7 +1775,13 @@ handleHistoryTab (hist) {
     this.spinner.show();
     this.rest_service.getSubAgentsInprogressList(this.params.agentId)
       .subscribe((res: any) => {
-        this.inProgressAgents = res.data;
+        let data = res.data.reverse();
+        data.forEach((item: any) => {
+          item.percentage = item.percentage+"%"
+        })
+        this.inProgressAgents = data;
+        console.log("inProgressAgents", this.inProgressAgents);
+        // this.inProgressAgents = res.data.reverse();
         this.initializePaginationDots();
         this.spinner.hide();
       }, err => {

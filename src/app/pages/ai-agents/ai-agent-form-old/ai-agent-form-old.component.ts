@@ -94,7 +94,7 @@ export class AiAgentFormOldComponent implements OnInit {
   }
 
   fetchAllFields() {
-    this.rest_service.getPredefinedBotAttributesList(this.params.id).subscribe((res:any)=>{
+    this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
       this.fieldInputKey = {};
@@ -349,6 +349,7 @@ export class AiAgentFormOldComponent implements OnInit {
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
         this.filePathValues.forEach(element => {
@@ -405,6 +406,7 @@ export class AiAgentFormOldComponent implements OnInit {
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
@@ -443,6 +445,7 @@ export class AiAgentFormOldComponent implements OnInit {
         req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
+        req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)

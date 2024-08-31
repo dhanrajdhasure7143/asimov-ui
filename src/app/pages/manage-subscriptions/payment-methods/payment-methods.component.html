@@ -47,9 +47,9 @@
                                 <img src="../../../../assets/images/agent/check.png" alt=""> &nbsp; Default
                             </button>
                             <ng-container *ngIf='!cardData.defaultSource'>
-                                <button class="btn remove-btn" (click)="confrmDeleteCard(cardData)">
+                                <span class="remove-btn" (click)="confrmDeleteCard(cardData)">
                                     <img src="../../../../assets/images/agent/delete_icon_red.svg" alt="">
-                                </button>
+                                </span>
                                 <button class="btn make-default-btn" (click)="setAsDefaultCard(cardData)">Set as Default</button>
                             </ng-container>
                         </div>

@@ -10,8 +10,8 @@ export class PredefinedBotsService {
 
   constructor(private http : HttpClient) { }
 
-  getPredefinedBotAttributesList(id){
-    return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}`)
+  getPredefinedBotAttributesList(id, subAgentId){
+    return this.http.get<any[]>(`/rpa-service/predefined/fetch-predefind-meta-attribute/${id}/${subAgentId}`)
   }
 
   getPredefinedBotsList(){
@@ -143,16 +143,18 @@ export class PredefinedBotsService {
 
   getSubAgentHistoryLogs(productId,agent_id){
     return this.http.get(`/rpa-service/predefined/v2/ai-subagent-logs/${productId}/${agent_id}`)
+    // return this.http.get(`/rpa-service/predefined/v2/predefinedbot-logs//${agent_id}`)
   }
 
   getSubAgentFiles(productId,agent_uuid){
-    return this.http.get(`/platform-service/document/fetchPredefinedSubAgentFiles/${productId}/${agent_uuid}`)
+    // return this.http.get(`/platform-service/document/fetchPredefinedSubAgentFiles/${productId}/${agent_uuid}`)
+    return this.http.get(`/platform-service/document/fetchAIAgentFilesByAIAgentId/${agent_uuid}`)
   }
   
 // getDisabledFields(agentUUID,predefinedRunId,productId){
-  getDisabledFields(){
-    // return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id? agentUUID=${agentUUID}& predefinedRunId=${predefinedRunId}& productId=${productId}`)
-    return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id?agentUUID=b7c94e44-c578-4528-895e-b7e94893cf63&predefinedRunId=2&productId=prod_QbWqFiBJb6rMpb`)
+  getDisabledFields(productId,subAgentId,runId){
+    return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id?agentUUID=${subAgentId}&predefinedRunId=${runId}&productId=${productId}`)
+    // return this.http.get(`/rpa-service/predefined/fetch-configuration-by-run-id?agentUUID=b7c94e44-c578-4528-895e-b7e94893cf63&predefinedRunId=2&productId=prod_QbWqFiBJb6rMpb`)
   }
 
   updateAutoRenew(email,productId,autoRenew){
@@ -170,5 +172,21 @@ export class PredefinedBotsService {
 
   getSubAgentsInprogressList(subAgentId){
     return this.http.get(`/rpa-service/predefined/in-progress-agents/${subAgentId}`)
+  }
+
+  getAgentStagesInfo(agentUUID){
+    return this.http.get(`rpa-service/predefined/agent-stages-info/${agentUUID}`)
+  }
+
+  deleteSubAgentById(id){
+    return this.http.get(`rpa-service/predefined/delete-sub-agent/${id}`)
+  }
+
+  getSubscribedAgentsList(){
+    return this.http.get(`/rpa-service/predefined/subscribed-agents/`)
+  }
+
+  cancelSubAgentsSubscription(body){
+    return this.http.put(`/subscriptionservice/v1/subscriptions/cancel-agents`,body)  
   }
 }

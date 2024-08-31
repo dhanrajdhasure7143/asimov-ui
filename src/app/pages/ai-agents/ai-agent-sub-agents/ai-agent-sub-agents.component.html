@@ -67,15 +67,16 @@
               </div>
               <button class="button-top delete-button" style="margin: 5px;">
                 <span>
-                  <img *ngIf="!agent.isExpired" src="../../../../assets/images/agent/delete_icon_gray.svg" alt="" (click)="deleteSubSgent()">
-                  <img *ngIf="agent.isExpired" src="../../../../assets/images/agent/delete_icon_red.svg" alt="" (click)="deleteSubSgent()">
+                  <!-- <img *ngIf="!agent.isExpired" src="../../../../assets/images/agent/delete_icon_gray.svg" alt="" (click)="deleteSubSgent(agent)"> -->
+                  <img *ngIf="agent.isExpired" src="../../../../assets/images/agent/delete_icon_red.svg" alt="" (click)="deleteSubSgent(agent)">
                 </span>
               </button>
             </div>
             <div class="footer">
               <div class="text-content">
                 <p style="width: 148px;" class="badge1 text-muted" *ngIf="agent.lastExecution">
-                  Last run date: {{agent.lastExecution|date:'dd-MM-yyyy'}}
+                  Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}}
+                  <!-- Last run: {{agent.lastExecution|date:'MMM dd, y hh:mm'}} -->
                 </p>
                 <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
                   Expired {{agent.expiryDate|date:'dd-MM-yyyy'}}
@@ -86,17 +87,19 @@
               </div>
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->
 
-              <!-- <button class="cardBtn btn btn-sm rounded-pill card-view"
+              <button class="cardBtn btn btn-sm rounded-pill card-view"
                 [ngClass]="{'btn-danger': agent.isConfigured && agent.isExpired, 'btn-primary': !agent.isConfigured || (agent.isConfigured && !agent.isExpired)}"
                 (click)="agent.isConfigured ? (agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)) : viewAgentDetails(agent)">
                 {{ agent.isConfigured ? (agent.isExpired ? 'Renew' : 'View') : 'Start Now!' }}
-              </button> -->
+              </button>
+              
+              <!-- Please enable  below commented button line if dont need renew button funtionality in sub agents cards -->
 
-                <button *ngIf="!agent.isExpired" class="cardBtn btn btn-sm rounded-pill card-view"
+                <!-- <button *ngIf="!agent.isExpired" class="cardBtn btn btn-sm rounded-pill card-view"
                   [ngClass]="{'btn-primary': !agent.isConfigured || (agent.isConfigured && !agent.isExpired), 'btn-danger': agent.isConfigured && agent.isExpired}"
                   (click)="viewAgentDetails(agent)">
                   {{ agent.isConfigured ? 'View' : 'Start Now!' }}
-                </button>
+                </button> -->
 
             </div>
           </div>
@@ -118,7 +121,7 @@
     </p-dialog> -->
 
     <p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '40vw'}" [modal]="true"
-      [showHeader]="true" [closable]="true" styleClass="custom-dialog" (onHide)="onDialogHide()">
+      [showHeader]="true" [closable]="true" class="custom-dialog" (onHide)="onDialogHide()">
       <ng-template pTemplate="header">
         <div class="dialog-header">
           <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">

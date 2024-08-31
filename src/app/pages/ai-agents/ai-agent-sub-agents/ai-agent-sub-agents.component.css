@@ -118,11 +118,11 @@
     flex-shrink: 0;
   }
     /* Dialog Styles */
-    :host ::ng-deep .p-dialog .p-dialog-content {
+    :host ::ng-deep .custom-dialog .p-dialog .p-dialog-content {
       padding: 0 !important;
     }
   
-    :host ::ng-deep .p-dialog-content {
+    :host ::ng-deep .custom-dialog .p-dialog-content {
       overflow-y: hidden;
       flex-grow: 1;
     }
@@ -151,7 +151,7 @@
       align-items: center;
     }
   
-    :host ::ng-deep .p-dialog .p-dialog-header {
+    :host ::ng-deep .custom-dialog .p-dialog .p-dialog-header {
       border-bottom: 1px solid lightgray;
       background: #ffffff;
       color: #495057;

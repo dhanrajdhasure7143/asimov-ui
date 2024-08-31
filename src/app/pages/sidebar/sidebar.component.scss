@@ -400,12 +400,12 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .avatar {
   width: 40px;
   height: 40px;
-  background-color: #3498db;
+  background-color: #001C47;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
+  color: #fff;
   font-size: 18px;
   font-weight: bold;
   margin-left: 42%;
@@ -463,7 +463,7 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 }
 
 .logout {
-  color: #e74c3c !important;
+  color: #EE4124 !important;
 }
 .user-details h3{
   font-weight: 700;

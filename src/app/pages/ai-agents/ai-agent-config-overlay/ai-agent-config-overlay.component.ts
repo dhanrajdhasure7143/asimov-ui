@@ -53,14 +53,13 @@ export class AiAgentConfigOverlayComponent implements OnInit {
   schedulerValue:any;
   fieldInputKey:any;
   capturedFileIds:any=[];
-  disabledFormFields=[];
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
     { label: 'Generating Output' },
     { label: 'Completed' }
   ];
-
+  disabledFormFields: any[] = [];
 
 
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
@@ -87,20 +86,8 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.predefinedBotsForm = this.fb.group({
-      fields: this.fb.group({}),
-      isScheduleBot: [false],
-      schedule: [{value: '', disabled: true}],
-      scheduleTime:[{value: '', disabled: true}]
-    });
-    if(this.params.type == "create"){
-      this.fetchAllFields();
-      this.isEdit = false;
-    }else{
-      this.fetchAllFieldsToUpdateData();
-      this.isEdit = true;
-    }
+    this.predefinedBotsForm = this.fb.group({});
+    // this.getData();
 
   }
 
@@ -216,9 +203,9 @@ export class AiAgentConfigOverlayComponent implements OnInit {
 
 
 
-  loopTrackBy(index, term) {
-    return index;
-  }
+  // loopTrackBy(index, term) {
+  //   return index;
+  // }
   get currentPageFields() {
     const startIndex = (this.currentPage - 1) * this.fieldsPerPage;
     const endIndex = startIndex + this.fieldsPerPage;
@@ -389,13 +376,51 @@ export class AiAgentConfigOverlayComponent implements OnInit {
       this.formFields.find(item=>item.preAttributeName == each && item.preAttributeType == value).visibility =true
     })
   }
-  
-getData(){
-  this.rest_service.getDisabledFields().subscribe((res:any)=>{
-    console.log("GET-DISABLE-FIELDS", res);
-    this.disabledFormFields = res.data
 
-  })
+// getData(){
+//   this.rest_service.getDisabledFields().subscribe((res:any)=>{
+//     console.log("GET-DISABLE-FIELDS", res);
+//     this.disabledFields = res.data;
+//     this.setupFormControls()
+//   })
+// }
+getData(productId,subAgentId,runId) {
+  console.log('GET-DISABLE-FIELDS',productId,subAgentId,runId);
+  this.rest_service.getDisabledFields(productId,subAgentId,runId).subscribe((res: any) => {
+    console.log('GET-DISABLE-FIELDS', res);
+    this.disabledFormFields = res.data.data;
+    this.createFormControls();
+  });
+}
+
+createFormControls() {
+  const formControls = {};
+  this.disabledFormFields.forEach((field: any) => {
+    let value = field.preAttributeValue;
+
+    // Handle checkbox
+    if (field.preAttributeType === 'checkbox') {
+      value = field.preAttributeValue === 'true';
+    }
+
+    // Handle radio and dropdown
+    if (field.preAttributeType === 'radio' || field.preAttributeType === 'dropdown') {
+      value = field.preAttributeValue || '';
+    }
+
+    const control = this.fb.control(
+      { value: value, disabled: true },
+      field.attributeRequired ? Validators.required : null
+    );
+    formControls[field.preAttributeName] = control;
+  });
+
+  this.predefinedBotsForm = this.fb.group(formControls);
+  console.log('Form value after initialization:', this.predefinedBotsForm.value);
+}
+// Function to track by unique identifier to optimize ngFor
+loopTrackBy(index: number, field: any): number {
+  return field.id;
 }
 
 

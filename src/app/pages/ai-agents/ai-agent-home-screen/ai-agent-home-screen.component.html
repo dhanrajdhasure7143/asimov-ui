@@ -333,3 +333,10 @@
     </ng-template>
     <app-ai-agent-add-agents-dialog #addAgentsDialog [selectedAgent]="selectedAgent" [closeDialogCallback]="closeDialogFromChild.bind(this)"> </app-ai-agent-add-agents-dialog>
 </p-dialog>
+
+<p-confirmDialog 
+[style]="{width: '30vw'}" 
+position="center" 
+[baseZIndex]="10000" 
+[closable]="false">
+</p-confirmDialog>
