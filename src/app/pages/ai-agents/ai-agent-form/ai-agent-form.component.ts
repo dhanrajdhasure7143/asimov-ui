@@ -161,9 +161,6 @@ export class AiAgentFormComponent implements OnInit {
       this.route.queryParams.subscribe(params=>{
         this.params=params
         this.predefinedBot_id= this.params.id
-        if(this.params.type == "create"){
-          this.subAgentName = this.params.agentName;
-        }
       })
 
       this.initializePaginationDots()
@@ -211,7 +208,7 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
-      this.subAgentName = res.aiAgentName;
+      this.subAgentName = res.subAgentName;
       // this.subAgentName = this.params.agentName;
 
       this.isCommonForm = res.formType === 'common'? true : false;
@@ -310,7 +307,7 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
-      this.subAgentName = res.aiAgentName;
+      this.subAgentName = res.subAgentName;
       this.isCommonForm = res.formType === 'common'? true : false;
       console.log("Form Attributes: ", res.data)
       this.spinner.hide();
