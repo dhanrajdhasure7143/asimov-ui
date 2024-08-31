@@ -181,4 +181,12 @@ export class PredefinedBotsService {
   deleteSubAgentById(id){
     return this.http.get(`rpa-service/predefined/delete-sub-agent/${id}`)
   }
+
+  getSubscribedAgentsList(){
+    return this.http.get(`/rpa-service/predefined/subscribed-agents/`)
+  }
+
+  cancelSubAgentsSubscription(body){
+    return this.http.put(`/subscriptionservice/v1/subscriptions/cancel-agents`,body)  
+  }
 }

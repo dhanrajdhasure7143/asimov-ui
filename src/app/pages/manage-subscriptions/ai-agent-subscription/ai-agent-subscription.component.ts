@@ -35,105 +35,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   subscribedAgentsList : any[] = [];
   selectedAgentType: 'Active' | 'Expired' | null = null;
 
-  // subscriptions =[]
-
-  subscriptions = [
-    {
-      name: 'Recruitment Agent',
-      noOfAgents: '05',
-      nextBillEstimate: 600,
-      paymentDue: '2024-11-01',
-      expanded: false,
-      currentPage: 1,
-      autoRenew:true,
-      billingDate:'2024-10-11',
-      expiresOn:'2025-08-20',
-      isExpired:false,
-      subAgents: [
-        { name: 'Software developer', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'AI Engineer', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Junior Support Engineer', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
-        { name: 'SDE - II', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 05', status: 'Active', expiryOn: '2025-06-01', purchaseOn: '2024-06-01', pricing: '$17', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 06', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 07', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' }
-      ]
-    },
-    {
-      name: 'Development Agent',
-      noOfAgents: '05',
-      nextBillEstimate: 600,
-      paymentDue: '2024-09-01',
-      expanded: false,
-      currentPage: 1,
-      autoRenew:false,
-      billingDate:'2024-10-11',
-      expiresOn:'2025-08-20',
-      isExpired:false,
-      subAgents: [
-        { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 03', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
-        { name: 'Agent 04', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 05', status: 'Active', expiryOn: '2025-06-01', purchaseOn: '2024-06-01', pricing: '$17', autoRenew: true, billingCycle: 'Monthly' }
-      ]
-    },
-    {
-      name: 'Recruitment Agent',
-      noOfAgents: '07',
-      nextBillEstimate: 350,
-      paymentDue: '2024-12-01',
-      expanded: false,
-      currentPage: 1,
-      autoRenew:false,
-      billingDate:'2024-10-11',
-      expiresOn:'2025-08-20',
-      isExpired:true,
-      subAgents: [
-        { name: 'Agent 01', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
-        { name: 'Agent 02', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Sub Agent Zeta', status: 'Active', expiryOn: '2025-07-01', purchaseOn: '2024-07-01', pricing: '$19', autoRenew: true, billingCycle: 'Monthly' }
-      ]
-    },
-    {
-      name: 'RFP Agent',
-      noOfAgents: '12',
-      nextBillEstimate: 600,
-      paymentDue: '2024-08-25',
-      expanded: false,
-      currentPage: 1,
-      autoRenew:true,
-      billingDate:'2024-10-11',
-      expiresOn:'2025-08-20',
-      isExpired:false,
-      subAgents: [
-        { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 03', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
-        { name: 'Agent 04', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 05', status: 'Active', expiryOn: '2025-06-01', purchaseOn: '2024-06-01', pricing: '$17', autoRenew: true, billingCycle: 'Monthly' }
-      ]
-    },
-    {
-      name: 'Testing Agent',
-      noOfAgents: '12',
-      nextBillEstimate: 600,
-      paymentDue: '2024-11-01',
-      expanded: false,
-      autoRenew:true,
-      currentPage: 1,
-      billingDate:'2024-10-11',
-      expiresOn:'2025-08-20',
-      isExpired:true,
-      subAgents: [
-        { name: 'Agent 01', status: 'Active', expiryOn: '2025-03-01', purchaseOn: '2024-03-01', pricing: '$18', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 02', status: 'Active', expiryOn: '2025-04-01', purchaseOn: '2024-04-01', pricing: '$20', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 03', status: 'Inactive', expiryOn: '2024-08-01', purchaseOn: '2023-08-01', pricing: '$13', autoRenew: false, billingCycle: 'Yearly' },
-        { name: 'Agent 04', status: 'Active', expiryOn: '2025-05-01', purchaseOn: '2024-05-01', pricing: '$11', autoRenew: true, billingCycle: 'Monthly' },
-        { name: 'Agent 05', status: 'Active', expiryOn: '2025-06-01', purchaseOn: '2024-06-01', pricing: '$17', autoRenew: true, billingCycle: 'Monthly' }
-      ]
-    },
-  ];
+  subscriptions =[]
 
   constructor(
     private rest_api: PredefinedBotsService,
@@ -144,10 +46,10 @@ export class AiAgentSubscriptionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getSubscribedAgentsList()
+    this.getSubscribedAgentsList()
 
-    this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
-      this.subscribedAgentsList=this.subscriptions.filter(agent => !agent.isExpired);
+    // this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
+    //   this.subscribedAgentsList=this.subscriptions.filter(agent => !agent.isExpired);
   }
 
   toggleAccordion(agent: any) {
@@ -321,10 +223,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   }
 
 
-
-  // Expired Agents logic 
   expiredSubagentRenew(agent: any, subAgent: any) {
-    // Add your renewal logic here
     console.log('Renewing sub-agent', subAgent);
     this.toastService.showSuccess('Success', `Renewed sub-agent ${subAgent.name} for ${agent.name}`);
   }
@@ -346,7 +245,6 @@ export class AiAgentSubscriptionComponent implements OnInit {
       return;
     }
     selectedSubAgents.forEach(subAgent => {
-      // Add your delete logic here
       console.log('Deleting sub-agent', subAgent);
     });
     this.toastService.showSuccess('Success', `Deleted all selected inactive agents for ${agent.name}`);
@@ -359,19 +257,25 @@ export class AiAgentSubscriptionComponent implements OnInit {
 }
 
   getSubscribedAgentsList() {
-    // this.spinner.show();
-    // this.rest_api.getSubscribedAgentsList().subscribe((res :any) => {
-    //   console.log('Agent Subscription List', res);
-    //   // this.toastService.toastSuccess();
-    //   this.subscriptions=res
-    //   this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
-    //   this.subscribedAgentsList=this.subscriptions.filter(agent => !agent.isExpired);
-    //   this.spinner.hide();
-    // }, (err) => {
-    //   console.error('Error renewing agent', err);
-    //   this.toastService.showError(this.toastMessages.apierror);
-    //   this.spinner.hide();
-    // });
+    this.spinner.show();
+    this.rest_api.getSubscribedAgentsList().subscribe((res: any) => {
+      console.log('Agent Subscription List', res);
+
+      this.subscriptions = res.map((agent: any) => ({
+        ...agent,
+        expanded: false,
+        currentPage: 1
+      }));
+
+      this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
+      this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.isExpired);
+
+      this.spinner.hide();
+    }, (err) => {
+      console.error('Error renewing agent', err);
+      this.toastService.showError(this.toastMessages.apierror);
+      this.spinner.hide();
+    });
   }
 
 }
