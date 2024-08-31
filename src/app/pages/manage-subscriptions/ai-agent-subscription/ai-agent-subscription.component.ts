@@ -103,12 +103,19 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   onChangeAutoRenew(event,agent) {
     console.log('Auto Renew changed', event, agent);
+    let message = ""
+    if(!agent.autoRenew){
+      message = "Are you sure you want to disable auto-renewal? Your subscription will not renew automatically at the end of the current billing cycle, and you will lose access to your agents."
+    }else{
+      message = "Would you like to update your auto-renewal status? If enabled, your subscription will automatically renew at the end of the current billing cycle, and the amount will be deducted accordingly.";
+    }
+      
     let user_email = localStorage.getItem('ProfileuserId');
     this.confirmationService.confirm({
-      message: 'Are you sure you want to update the auto renew status?',
-      header: "Auto Renew",
-      acceptLabel: "Yes, Renew",
-      rejectLabel: "Close",
+      message: message,
+      header: "Update Auto-Renewal",
+      acceptLabel: "Yes, Update",
+      rejectLabel: "No, Cancel",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -146,7 +153,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
     } else if (this.selectedAgentType !== subAgent.status) {
       if (selectedStatuses.length > 0) {
         subAgent.selected = false;
-        this.toastService.showWarn("Please select one type (either Active or Expired).");
+        this.toastService.showWarn("Please select either 'Active' or 'Inactive'.");
         (event.target as HTMLInputElement).checked = false;
       }
     } else {
@@ -209,7 +216,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   cancelAiAgentSubscription(productId: string, subAgents: any | any[]) {
     this.confirmationService.confirm({
-      message: `Are you sure you want to cancel Subscription ?`,
+      message: "Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to your agents after the current billing cycle ends.",
       header: "Cancel Subscription",
       acceptLabel: "Yes, Cancel",
       rejectLabel: "No, Keep",

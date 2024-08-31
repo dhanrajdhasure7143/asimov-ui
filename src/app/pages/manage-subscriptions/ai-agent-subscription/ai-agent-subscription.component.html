@@ -38,12 +38,12 @@
                     <span class="">Subscribed Agents</span>
                     <div class="action-buttons">
                         <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent)"></i>
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button"
+                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 1" class="renew-all-button"
                             (click)="handleRenewal('bulk', agent, getSelectedSubAgentsByStatus(agent, 'INACTIVE'))">
                             Renew All
                         </button>
                         
-                        <button *ngIf="!agent.autoRenew && getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 0" class="cancel-all-button" (click)="subagentCancelAllSubscription(agent)">
+                        <button *ngIf="agent.autoRenew && getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 1" class="cancel-all-button" (click)="subagentCancelAllSubscription(agent)">
                             Cancel Subscription
                         </button>
                     </div>                    
@@ -59,7 +59,7 @@
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
                         <div class="row-cell sub-agent-row-header" style="flex:1.46">
-                            <input type="checkbox" [disabled]="subAgent.status === 'ACTIVE'" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" />
+                            <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" />
                             {{ subAgent.subAgentName }}
                         </div>
                         <div class="row-cell">
@@ -79,10 +79,10 @@
                                 Renew
                             </button>
                         
-                            <!-- <button *ngIf="subAgent.status === 'ACTIVE'" class="action-button cancel-button"
-                                (click)="subagentCancelSubscription(agent.productId, subAgent)">Cancel</button> -->
+                            <button *ngIf="subAgent.status === 'ACTIVE' && agent.autoRenew" class="action-button cancel-button"
+                                (click)="subagentCancelSubscription(agent.productId, subAgent)">Cancel</button>
 
-                            <button *ngIf="subAgent.status === 'ACTIVE'" class="action-button cancel-button">-</button>
+                            <button *ngIf="subAgent.status === 'ACTIVE' && !agent.autoRenew" class="action-button cancel-button">-</button>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                     <div class="action-buttons">
                         <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent)"></i>
 
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="renew-all-button"
+                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 1" class="renew-all-button"
                             (click)="handleRenewal('bulk', agent, getSelectedSubAgentsByStatus(agent, 'INACTIVE'))">
                             Renew All
                         </button>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
                         <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">
-                            {{ subAgent.pricing }}.00
+                            {{ subAgent.pricing }}
                         </div>
                         <div class="row-cell">
                             {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
