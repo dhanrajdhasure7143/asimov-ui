@@ -89,7 +89,7 @@ export class PredefinedBotsService {
     return this.http.get<any[]>(`/rpa-service/predefined/v2/get-agents-configuration?agentId=${subagentid}&productId=${productid}`)
   }
 
-  updatePredefinedAttributesData(agentId,botId,body){
+  updatePredefinedAttributesData(botId,body){
     return this.http.post(`/rpa-service/predefined/v2/ai-agent-update/${botId}`,body)
   }
 

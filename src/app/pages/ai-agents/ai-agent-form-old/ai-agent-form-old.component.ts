@@ -478,7 +478,7 @@ export class AiAgentFormOldComponent implements OnInit {
       this.toaster.showError(this.toastMessages.apierror)
     })
   }else{
-    this.rest_service.updatePredefinedAttributesData(this.predefinedBot_id,this.params.agentId,req_body).subscribe(res=>{
+    this.rest_service.updatePredefinedAttributesData(this.params.agentId,req_body).subscribe(res=>{
         const agentId = this.params.agentId;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
