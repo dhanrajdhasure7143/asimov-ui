@@ -178,8 +178,8 @@ export class PredefinedBotsService {
     return this.http.get(`/rpa-service/predefined/agent-stages-info/${agentUUID}`)
   }
 
-  deleteSubAgentById(id){
-    return this.http.get(`/rpa-service/predefined/delete-sub-agent/${id}`)
+  deleteSubAgentById(body){
+    return this.http.post(`/subscriptionservice/v1/subscriptions/delete-agent`,body)
   }
 
   getSubscribedAgentsList(){
