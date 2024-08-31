@@ -169,6 +169,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
           if(res.code == 4200){
             this.spinner.hide();
             this.toastService.showSuccess("The agent has been successfully renewed!",'response');
+            this.getSubAgents()
           }else{
             this.spinner.hide();
             this.toastService.showError(this.toastMessage.apierror);
