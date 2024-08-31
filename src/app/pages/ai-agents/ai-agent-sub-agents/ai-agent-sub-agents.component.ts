@@ -217,17 +217,25 @@ export class AiAgentSubAgentsComponent implements OnInit {
       rejectIcon: 'null',
       acceptIcon: 'null',
       accept: () => {
-        console.log("resrstage", "Agent Deleted Successfully");
-        // this.spinner.show()
-        // this.rest_api.deleteSubAgentById(agent.subAgentId).subscribe((res: any) => {
-        //   console.log("resrstage",res);
-        // this.spinner.hide();
-        // this.toaster.toastSuccess("Agent Deleted Successfully");
-        // this.getSubAgents();
-        // }, err => {
-        //   this.spinner.hide();
-        //   this.toaster.showError(this.toastMessage.apierror);
-        // });
+        let req_body = {
+          "userId": localStorage.getItem('ProfileuserId'),
+          "productId": this.product_id,
+          "agentIds": [agent.subAgentId]
+        }
+        this.spinner.show()
+        this.rest_api.deleteSubAgentById(req_body).subscribe((res: any) => {
+          if(res.code == 4200){
+            this.spinner.hide();
+            this.toaster.showSuccess("Agent Deleted Successfully", 'response');
+            this.getSubAgents();
+          }else{
+            this.spinner.hide();
+            this.toaster.showError(this.toastMessage.deleteError)
+          }
+        }, err => {
+          this.spinner.hide();
+          this.toaster.showError(this.toastMessage.apierror);
+        });
       },
       reject: (type) => { }
     });
