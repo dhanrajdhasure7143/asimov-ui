@@ -22,7 +22,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   ];
 
   subAgentColumns = [
-    { header: 'Ai Agent Name', flex: 1.5, field: 'name', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
+    { header: 'Ai Agent Name', flex: 1.5, field: 'subAgentName', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
     { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Purchase On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Pricing', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
@@ -36,6 +36,8 @@ export class AiAgentSubscriptionComponent implements OnInit {
   selectedAgentType: 'ACTIVE' | 'INACTIVE' | null = null;
 
   subscriptions =[]
+  expandedAgents: { [key: string]: boolean } = {};
+  currentPageState: { [key: string]: number } = {};
 
   constructor(
     private rest_api: PredefinedBotsService,
@@ -47,15 +49,18 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubscribedAgentsList()
-
-    // this.expiredAgentsList=this.subscriptions.filter(agent => agent.isExpired);
-    //   this.subscribedAgentsList=this.subscriptions.filter(agent => !agent.isExpired);
   }
 
   toggleAccordion(agent: any) {
     agent.expanded = !agent.expanded;
+    this.expandedAgents[agent.productId] = agent.expanded;
+    localStorage.setItem('expandedAgents', JSON.stringify(this.expandedAgents));
   }
 
+  getttingPageState(){
+    this.expandedAgents = JSON.parse(localStorage.getItem('expandedAgents') || '{}');
+    this.currentPageState = JSON.parse(localStorage.getItem('currentPageState') || '{}');
+  }
 
   getSubAgentsForPage(agent: any): any[] {
     const startIndex = (agent.currentPage - 1) * this.itemsPerPage;
@@ -74,6 +79,8 @@ export class AiAgentSubscriptionComponent implements OnInit {
     }
   
     agent.currentPage = pageNumber;
+    this.currentPageState[agent.productId] = pageNumber;
+    localStorage.setItem('currentPageState', JSON.stringify(this.currentPageState));
   }
 
   getRemainingDays(paymentDue: string): number {
@@ -99,6 +106,14 @@ export class AiAgentSubscriptionComponent implements OnInit {
     let user_email = localStorage.getItem('ProfileuserId');
     this.confirmationService.confirm({
       message: 'Are you sure you want to update the auto renew status?',
+      header: "Auto Renew",
+      acceptLabel: "Yes, Renew",
+      rejectLabel: "Close",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
       accept: () => {
       this.spinner.show();
       this.rest_api.updateAutoRenew(user_email, agent.name, agent.autoRenew).subscribe((res) => {
@@ -174,11 +189,12 @@ export class AiAgentSubscriptionComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getSubscribedAgentsList().subscribe((res: any) => {
       console.log('Agent Subscription List', res);
+      this.getttingPageState()
 
       this.subscriptions = res.map((agent: any) => ({
         ...agent,
-        expanded: false,
-        currentPage: 1
+        expanded: this.expandedAgents[agent.productId] || false,
+        currentPage: this.currentPageState[agent.productId] || 1
       }));
 
       this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
@@ -186,7 +202,6 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
       this.spinner.hide();
     }, (err) => {
-      console.error('Error renewing agent', err);
       this.toastService.showError(this.toastMessages.apierror);
       this.spinner.hide();
     });
@@ -235,16 +250,25 @@ export class AiAgentSubscriptionComponent implements OnInit {
     });
   }
 
-  deleteAiAgentSubAgents(agent: any, status: string) {
-    const selectedSubAgents = this.getSelectedSubAgentsByStatus(agent, status);
+  deleteAiAgentSubAgents(agent: any) {
+    const { productId, subAgents } = agent;
   
-    if (selectedSubAgents.length === 0) {
+    const agentIds = subAgents
+      .filter((subAgent: any) => subAgent.selected)
+      .map((subAgent: any) => subAgent.agentUUID);
+  
+    if (agentIds.length === 0) {
       this.toastService.showWarn('No sub-agents selected for deletion.');
       return;
     }
+    const body = {
+      userId: localStorage.getItem('ProfileuserId'),
+      productId: productId,
+      agentIds: agentIds
+    };
   
     this.confirmationService.confirm({
-      message: `Are you sure you want to delete?`,
+      message: `Are you sure you want to delete these sub-agents?`,
       header: "Delete Sub-Agent",
       acceptLabel: "Yes, Delete",
       rejectLabel: "No, Cancel",
@@ -254,14 +278,22 @@ export class AiAgentSubscriptionComponent implements OnInit {
       rejectIcon: 'null',
       acceptIcon: 'null',
       accept: () => {
-        selectedSubAgents.forEach(subAgent => {
-          console.log('Deleting sub-agent', subAgent);
-        });
-
-        this.toastService.showSuccess(this.toastMessages.userDelete,"Success");
+        this.rest_api.deleteSubAgentById(body).subscribe(
+          (res) => {
+            this.toastService.showSuccess(this.toastMessages.TaskDelete,'response');
+            this.spinner.hide();
+            this.getSubscribedAgentsList();
+          },
+          (err) => {
+            console.error('Error renewing agent', err);
+            this.toastService.showError(this.toastMessages.apierror);
+            this.spinner.hide();
+          }
+        );
       },
     });
   }
+  
   
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
