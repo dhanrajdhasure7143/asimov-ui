@@ -33,7 +33,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   expiredAgentsList : any[]=[];
   itemsPerPage = 4;
   subscribedAgentsList : any[] = [];
-  selectedAgentType: 'Active' | 'Expired' | null = null;
+  selectedAgentType: 'ACTIVE' | 'INACTIVE' | null = null;
 
   subscriptions =[]
 
@@ -117,29 +117,6 @@ export class AiAgentSubscriptionComponent implements OnInit {
     });
   }
 
-  renewAgent(agent) {
-    console.log('Renewing agent', agent);
-    let req_body = {
-      "userId": localStorage.getItem('ProfileuserId'),
-      "productId": "prod_QbY7q8db8Hj3XC",
-      "agentIds": [
-        "a59319d7-058c-42e2-87ef-db8fdf2d653a"   
-      ]
-    }
-
-    // to be send multiple agentId's
-    this.spinner.show();
-    this.rest_api.renewSubAgent(req_body).subscribe((res) => {
-      console.log('Agent renewed successfully', res);
-      // this.toastService.toastSuccess();
-      this.spinner.hide();
-    }, (err) => {
-      console.error('Error renewing agent', err);
-      this.toastService.showError(this.toastMessages.apierror);
-      this.spinner.hide();
-    });
-  }
-
   subagentSelect(event: Event, subAgent: any, agent: any) {
     const isSelected = subAgent.selected;
     const selectedStatuses = agent.subAgents.filter((a: any) => a.selected).map((a: any) => a.status);
@@ -160,101 +137,38 @@ export class AiAgentSubscriptionComponent implements OnInit {
     } else {
       subAgent.selected = !isSelected;
     }
-  }
+  }  
 
-  subagentRenew(agent: any, subAgent: any) {
-    console.log('Renewing', subAgent, 'for agent', agent);
-    this.toastService.showSuccess('Success',`Renewed ${subAgent.name}`)
-
-  }
-
-  subagentCancel(agent: any, subAgent: any) {
-    console.log('Cancelling', subAgent, 'for agent', agent);
-    this.toastService.showSuccess('Success',`Cancelled ${subAgent.name}`)
+  subagentCancelSubscription(agent: any, subAgent: any) {
+    this.cancelAiAgentSubscription(agent,subAgent);
   }
 
   getSubAgentsByStatus(agent: any, status: string): any[] {
     return agent.subAgents.filter((subAgent: any) => subAgent.status === status);
   }
+ 
 
-  subagentRenewAll(agent: any) {
-    const selectedInactiveSubAgents = this.getSelectedSubAgentsByStatus(agent, 'Inactive');
-
-    if (selectedInactiveSubAgents.length === 0) {
-      this.toastService.showWarn('No sub-agents selected for renewal.');
-      return;
-    }
-
-    selectedInactiveSubAgents.forEach(subAgent => this.subagentRenew(agent, subAgent));
-    this.toastService.showSuccess('Success', `Renewed all selected inactive agents for ${agent.name}`);
-  }
-
-  subagentCancelAll(agent: any) {
-    const selectedActiveSubAgents = this.getSelectedSubAgentsByStatus(agent, 'Active');
-
+  subagentCancelAllSubscription(agent: any) {
+    const selectedActiveSubAgents = this.getSelectedSubAgentsByStatus(agent, 'ACTIVE');
+  
     if (selectedActiveSubAgents.length === 0) {
       this.toastService.showWarn('No sub-agents selected for cancellation.');
       return;
     }
-
-    selectedActiveSubAgents.forEach(subAgent => this.subagentCancel(agent, subAgent));
-    this.toastService.showSuccess('Success', `Cancelled all selected active agents for ${agent.name}`);
+  
+    selectedActiveSubAgents.forEach(subAgent => this.subagentCancelSubscription(agent, subAgent));
+    this.cancelAiAgentSubscription(agent.productId,selectedActiveSubAgents);
   }
-
-
-  subagentDelete(agent: any) {
-    const selectedInactiveSubAgents = this.getSelectedSubAgentsByStatus(agent, 'Inactive');
-
-    if (selectedInactiveSubAgents.length === 0) {
-      this.toastService.showWarn('No sub-agents selected for deletion.');
-      return;
-    }
-
-    // selectedInactiveSubAgents.forEach(subAgent => {
-    //   console.log('Deleting sub-agent', subAgent);
-    // });
-
-    this.toastService.showSuccess('Success', `Deleted all selected inactive agents for ${agent.name}`);
-  }
-
-
+  
   getSelectedSubAgentsByStatus(agent: any, status: string): any[] {
     return agent.subAgents.filter((subAgent: any) => subAgent.status === status && subAgent.selected);
-  }
-
-
-  expiredSubagentRenew(agent: any, subAgent: any) {
-    console.log('Renewing sub-agent', subAgent);
-    this.toastService.showSuccess('Success', `Renewed sub-agent ${subAgent.name} for ${agent.name}`);
-  }
-
-  expiredSubagentRenewAll(agent: any) {
-    const selectedSubAgents = this.getSelectedSubAgentsByStatus(agent, 'Inactive');
-    if (selectedSubAgents.length === 0) {
-      this.toastService.showWarn('No sub-agents selected for renewal.');
-      return;
-    }
-    selectedSubAgents.forEach(subAgent => this.expiredSubagentRenew(agent, subAgent));
-    this.toastService.showSuccess('Success', `Renewed all selected inactive agents for ${agent.name}`);
-  }
-
-  expiredSubagentDelete(agent: any) {
-    const selectedSubAgents = this.getSelectedSubAgentsByStatus(agent, 'Inactive');
-    if (selectedSubAgents.length === 0) {
-      this.toastService.showWarn('No sub-agents selected for deletion.');
-      return;
-    }
-    selectedSubAgents.forEach(subAgent => {
-      console.log('Deleting sub-agent', subAgent);
-    });
-    this.toastService.showSuccess('Success', `Deleted all selected inactive agents for ${agent.name}`);
   }
 
   selectAll(agent: any, checked: boolean) {
     agent.subAgents.forEach((subAgent: any) => {
         subAgent.selected = checked;
     });
-}
+  }
 
   getSubscribedAgentsList() {
     this.spinner.show();
@@ -268,13 +182,125 @@ export class AiAgentSubscriptionComponent implements OnInit {
       }));
 
       this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
-      this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.isExpired);
+      this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
 
       this.spinner.hide();
     }, (err) => {
       console.error('Error renewing agent', err);
       this.toastService.showError(this.toastMessages.apierror);
       this.spinner.hide();
+    });
+  }
+
+  cancelAiAgentSubscription(productId: string, subAgents: any | any[]) {
+    this.confirmationService.confirm({
+      message: `Are you sure you want to cancel Subscription ?`,
+      header: "Cancel Subscription",
+      acceptLabel: "Yes, Cancel",
+      rejectLabel: "No, Keep",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        const agentIds = Array.isArray(subAgents) 
+          ? subAgents.map((subAgent: any) => subAgent.agentUUID) 
+          : [subAgents.agentUUID];
+        
+        const body = {
+          userId: localStorage.getItem('ProfileuserId'),
+          productId: productId,
+          agentIds: agentIds
+        };
+
+        console.log("Product ID :", productId , "UUID's :",agentIds  )
+  
+        this.spinner.show();
+        this.rest_api.cancelSubAgentsSubscription(body).subscribe(
+          (res: any) => {
+            this.toastService.showSuccess('Success', 'Cancelled Subscription.');
+            this.spinner.hide();
+            this.getSubscribedAgentsList();
+          },
+          (err) => {
+            this.toastService.showError(this.toastMessages.apierror);
+            this.spinner.hide();
+          }
+        );
+      },
+      reject: () => {
+        console.log('Cancellation cancelled');
+      }
+    });
+  }
+
+  deleteAiAgentSubAgents(agent: any, status: string) {
+    const selectedSubAgents = this.getSelectedSubAgentsByStatus(agent, status);
+  
+    if (selectedSubAgents.length === 0) {
+      this.toastService.showWarn('No sub-agents selected for deletion.');
+      return;
+    }
+  
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete all selected ${status.toLowerCase()} sub-agents for ${agent.name}?`,
+      header: "Delete Sub-Agent",
+      acceptLabel: "Yes, Delete",
+      rejectLabel: "No, Cancel",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        selectedSubAgents.forEach(subAgent => {
+          console.log('Deleting sub-agent', subAgent);
+        });
+        this.toastService.showSuccess('Success', `Deleted all selected ${status.toLowerCase()} agents for ${agent.name}`);
+      },
+    });
+  }
+  
+
+  handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
+    this.confirmationService.confirm({
+      message: "Are you sure you want to Renew Subscription ? ",
+      header: 'Renew',
+      acceptLabel: 'Yes, Renew',
+      rejectLabel: 'No, Cancel',
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        const agentIds = actionType === 'bulk'
+          ? subAgents.map(subAgent => subAgent.agentUUID)
+          : [subAgents.agentUUID];
+        
+        const req_body = {
+          userId: localStorage.getItem('ProfileuserId'),
+          productId: agent.productId,
+          agentIds: agentIds
+        };
+
+        console.log("RENEWAL INFORMATION: ", agent.productId, "UUID's :", agentIds)
+  
+        this.spinner.show();
+        this.rest_api.renewSubAgent(req_body).subscribe(
+          (res) => {
+            this.toastService.showSuccess('Success', 'Renewed successfully.');
+            this.spinner.hide();
+            this.getSubscribedAgentsList();
+          },
+          (err) => {
+            console.error('Error renewing agent', err);
+            this.toastService.showError(this.toastMessages.apierror);
+            this.spinner.hide();
+          }
+        );
+      },
     });
   }
 
