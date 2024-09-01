@@ -8,7 +8,7 @@
                 <div class="content" (click)="onclickBot(each)">
                     <div class="top-section">
                         <div class="bot-image">
-                            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                            <img src="assets/images/mini_bot.svg" alt="mini_bot">
                         </div>
                         <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
 
@@ -65,7 +65,7 @@
             <h2 class="search-heading">Explore More AI Agents</h2>
             <div class="search-container">
                 <div class="search-bar-wrapper">
-                    <img src="../../../../assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
+                    <img src="assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
                     <input type="text" placeholder="Find Your Agent..." [disabled]="unfilteredAgentsList.length === 0"
                         [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
                 </div>
@@ -110,7 +110,7 @@
                             <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 10px;">
                                 <div class="d-flex align-items-center">
                                     <div class="bot-image">
-                                        <img src="../../../../assets/images/agent/bot-image-svg.svg" alt="Agent Image"
+                                        <img src="assets/images/agent/bot-image-svg.svg" alt="Agent Image"
                                             height="30px" width="30px">
                                     </div>
                                     <div class="agent-names" style="margin-left: 10px;">
@@ -216,18 +216,18 @@
                 </div>
 
                 <div *ngIf="unsubscribed_agents.length == 0" class="centered-message">
-                    <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                    <img src="assets/images/mini_bot.svg" alt="mini_bot">
                     No Agent Found
                 </div>
                 <div *ngIf="unfilteredAgentsList.length === 0" class="centered-message">
                     <div>
-                        <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                        <img src="assets/images/mini_bot.svg" alt="mini_bot">
                         We are working on more AI Agents ...
                     </div>
                 </div>
             </div>
             <button type='button' class="enterprise-plan-bottom-stickier" (click)="showEnterpriceModel()">
-                <p class="mb-0"> <img src="../../../../assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+                <p class="mb-0"> <img src="assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
             </button>
         </div>
     </div>
@@ -241,13 +241,13 @@
                 </div>
                 <div class="middle-image-list-section d-flex align-items-center ">
                     <div class="left-image-enterprise">
-                        <img src="../../../../assets/images/agent/ent-plan-svg.svg" alt="">
+                        <img src="assets/images/agent/ent-plan-svg.svg" alt="">
                     </div>
                     <div class="right-lister-section">
                         <ul clsss="d-flex flex-column ">
                             <li *ngFor="let feature of enterpriseFeatures" class="d-flex align-items-center gap-2">
                                 <div class="left-checker-list">
-                                    <img src="../../../../assets/images/agent/tick.svg" alt="">
+                                    <img src="assets/images/agent/tick.svg" alt="">
                                 </div>
                                 <div class="right-list-text">
                                     <p class="mb-0">{{ feature }}</p>
@@ -266,7 +266,7 @@
                         </div>
                         <button type="button" (click)="sendEmailEnterPrisePlan()" class="d-flex align-items-center justify-content-center">
                             <div class="left-icon-spark">
-                                <img src="../../../../assets/images/agent/star-icon.svg" alt="">
+                                <img src="assets/images/agent/star-icon.svg" alt="">
                             </div>
                             <p class="mb-0">Contact Sales</p>
                         </button>
@@ -283,7 +283,7 @@
                     <h2 class="text-center">Thankyou for contacting us </h2>
                 </div>
                 <div class="inner-center-section-thankyou text-center">
-                    <img src="../../../../assets/images/agent/enterprise-email.png" height="200px" width="300px" alt="">
+                    <img src="assets/images/agent/enterprise-email.png" height="200px" width="300px" alt="">
                 </div>
                 <div class="bottom-weve-sent-section">
                     <p class="mb-0 text-center">We’ve sent you a mail <br> Our team will get back to you shortly</p>
@@ -303,7 +303,7 @@
         <div class="custom-modal-content">
             <div class="top-section-model">
                 <div class="model-img">
-                    <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                    <img src="assets/images/mini_bot.svg" alt="mini_bot">
                 </div>
                 <h3 class="bot-name-model">{{ selectedBot?.predefinedBotName }}</h3>
             </div>
