@@ -5,3 +5,12 @@
 :host ::ng-deep .payment-history-table .p-datatable .p-datatable-header {
     background: white !important;
 }
+
+:host ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
+    overflow-x: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px 2px #3199FF26;
+    margin-bottom: 10px;
+    border: 1px solid #E0E0E0;
+}

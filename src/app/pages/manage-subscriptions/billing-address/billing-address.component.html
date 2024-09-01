@@ -208,7 +208,10 @@
                      *ngIf="billingForm.controls['phoneNumber'].hasError('pattern') || billingForm.controls['phoneNumber'].hasError('maxlength') "
                     class="required">Phone number should be 10 digits</span>
             </div> -->
-            
+            <div class="row justify-content-end">
+                <!-- <button (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button> -->
+                <button (click)="saveBillingInfo()" [disabled] ="!billingForm.valid" type="button" class="btn btn-primary">update</button>
+            </div>
         </div>
         <!-- <div>
             <p-button *ngIf="!editButton" [disabled]="billingForm.invalid" class="float-right" label="Save"
@@ -216,10 +219,7 @@
             <p-button *ngIf="editButton" [disabled]="billingForm.invalid" class="float-right" label="Update"
                 (onClick)="saveBillingInfo()"></p-button>
         </div> -->
-        <div class="row justify-content-end">
-            <!-- <button (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button> -->
-            <button (click)="saveBillingInfo()" [disabled] ="!billingForm.valid" type="button" class="btn btn-primary">update</button>
-        </div>
+       
     </form>
     
 </div>
