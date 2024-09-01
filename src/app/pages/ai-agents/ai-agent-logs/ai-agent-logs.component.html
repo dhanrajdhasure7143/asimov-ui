@@ -131,7 +131,7 @@
                            <span *ngIf="col.ColumnName=='bot_status' || col.ColumnName=='runStatus' || col.ColumnName=='status'">
                              <span>
                                <span *ngIf="logs[col.ColumnName]=='Running'">
-                                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                                 <img src="assets/images/RPA/DotSpin.gif" class="testplus">
                                </span>
                                <span class="statusbadge_nc" *ngIf="logs[col.ColumnName]!='Running'"  [ngStyle]="{'background-color':getColor(logs[col.ColumnName])}"></span>
                                  {{logs[col.ColumnName]}}&nbsp;&nbsp;&nbsp;
@@ -154,7 +154,7 @@
            </div>
          <div class="logs-container" *ngIf="logsLoading==true">
            <div class="logs-loader">
-             <img src="../../../../assets/images/EZFlow_Loader.gif" alt="">
+             <img src="assets/images/EZFlow_Loader.gif" alt="">
            </div>
          </div>
      </div>

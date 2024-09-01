@@ -6,11 +6,11 @@
     <div class="form-flow predefined-bots">
         <div class="agent-item">
             <div class="agent-icon">
-              <img src="../../../../assets/images/mini_bot.svg" alt="Robot Icon">
+              <img src="assets/images/mini_bot.svg" alt="Robot Icon">
             </div>
             <div class="agent-info">
                 <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
-                <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="../../../../assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
+                <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
                 <div *ngIf="isSubAgentNameEdit">
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
@@ -45,7 +45,7 @@
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span class="edit-text"><img src="../../../../assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{params.type == "create"? 'Add':'Edit'}} Configuration</span>
+                    <span class="edit-text"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{params.type == "create"? 'Add':'Edit'}} Configuration</span>
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
                 </div>
               </div>
@@ -59,14 +59,14 @@
                                     <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                                     <div class="input-icon-wrapper">
                                             <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
-                                                <img src="../../../../assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                             </span>
                                             <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'100%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
                                             optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
                                     </div>
                                     <div class="input-icon-wrapper">
                                         <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
-                                            <img src="../../../../assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                            <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                         </span>
                                         <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
                                             <i class="pi pi-globe"></i>
@@ -271,14 +271,14 @@
                                             <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                                             <div class="input-icon-wrapper">
                                                     <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
-                                                        <img src="../../../../assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                        <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                     </span>
                                                     <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'100%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
                                                     optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
                                             </div>
                                             <div class="input-icon-wrapper">
                                                 <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
-                                                    <img src="../../../../assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                    <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                 </span>
                                                 <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
                                                     <i class="pi pi-globe"></i>
@@ -543,14 +543,14 @@
                                                 <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                                                 <div class="input-icon-wrapper">
                                                         <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
-                                                            <img src="../../../../assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                            <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                         </span>
                                                         <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'100%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
                                                         optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
                                                 </div>
                                                 <div class="input-icon-wrapper">
                                                     <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
-                                                        <img src="../../../../assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                        <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                     </span>
                                                     <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
                                                         <i class="pi pi-globe"></i>
@@ -754,14 +754,14 @@
                 <div class="header">
                   <span class="title">
                     <span>
-                      <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                      <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
                   </span>
                 </div>
                 <div class="progress-container-new">
                   <button class="rounded-pill" style="height: 30px;" pButton label="Start" 
                           (click)="startAiAgent()" [disabled]="isProcessing">
-                    <img src="../../../../assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
+                    <img src="assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
                   </button>
                   <div class="bar-container">
                     <div class="progress-bar-new">
@@ -836,7 +836,7 @@
     <div class="container" *ngIf="inProgressAgents.length > 0">
         <div class="row align-items-center mb-3 mb-10">
             <div class="col-md-6 d-flex align-items-center justify-content-left">
-                <img src="../../../../assets/images/agent/rocket-icon.svg" alt="" height="20px" width="20px">
+                <img src="assets/images/agent/rocket-icon.svg" alt="" height="20px" width="20px">
                 <span class="inprogress-heading">In-Progress Agents</span>
             </div>
             <div class="col-md-6 text-right">
@@ -968,7 +968,7 @@
                 <tr *ngIf="getSubAgentHistoryPaginatedData().length === 0">
                     <td colspan="4" style="text-align: center; padding: 20px;">
                         <div class="no-data-found">
-                            <img src="../../../../assets/images/agent/no-data-found.svg" alt="">
+                            <img src="assets/images/agent/no-data-found.svg" alt="">
                             No data found
                         </div>
                     </td>
@@ -1011,7 +1011,7 @@
                 <tr *ngIf="getSubAgentFilePaginatedData().length === 0">
                     <td colspan="5" style="text-align: center; padding: 20px;">
                         <div class="no-data-found">
-                            <img src="../../../../assets/images/agent/no-data-found.svg" alt="">
+                            <img src="assets/images/agent/no-data-found.svg" alt="">
                             No data found
                         </div>
                     </td>

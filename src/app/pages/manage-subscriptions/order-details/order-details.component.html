@@ -58,14 +58,14 @@
           <div class="newinntalx">
 
             <a (click)="subscriptiondata(orders,subscriptiontemplate)" matTooltip="View Subscription">
-              <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
+              <img src="assets/images/Projects/eye-show.svg" class="testplus default-img">
             </a>
             <button class="subsc" *ngIf="orders.status=='Active'" (click)="selecteddata(orders)"
               matTooltip="Cancel Subscription">
-              <img src="../../../../../assets/images/unsubscribe.svg">
+              <img src="assets/images/unsubscribe.svg">
             </button>
             <button class="subsc" *ngIf="orders.status!='Active'">
-              <img src="../../../../../assets/images/unsubscribe.svg" class="icon-disabled">
+              <img src="assets/images/unsubscribe.svg" class="icon-disabled">
             </button>
           </div>
         </td>
@@ -90,7 +90,7 @@
   <div class="modal-header modelprhead">
     <h4 class="modal-title pull-left">Subscription Details</h4>
     <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
-          <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+          <span aria-hidden="true"><img src="assets/images/Projects/circle-close.svg" alt=""></span>
         </button> -->
   </div>
 
