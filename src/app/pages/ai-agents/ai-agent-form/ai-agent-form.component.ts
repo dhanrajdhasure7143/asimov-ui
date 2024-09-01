@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
@@ -14,6 +14,7 @@ import * as JSZip from "jszip";
 import * as FileSaver from "file-saver";
 import { saveAs } from "file-saver";
 import * as XLSX from 'xlsx';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -117,8 +118,18 @@ export class AiAgentFormComponent implements OnInit {
   totalNumberOfPages: number;
   pageDotNumbers: number[];
   status: string = 'Agent In Progress';
-  stages = [];
-  currentStage_new = -1;
+  stages: any[] = [
+    { name: "Initiated", status: "pending" },
+    { name: "Agent In Progress", status: "pending" },
+    { name: "Generating Output", status: "pending" },
+    { name: "Completed", status: "pending" }
+  ];
+  currentStageIndex: number = -1;
+  completedStages: number = -1;
+  private stageSubscription: Subscription;
+  isProcessing: boolean = false;
+  stageFailed: boolean = false;
+  agentStarted: boolean = false;
 
   // Agent History Data Starts
   subAgentHistory = [];
@@ -202,6 +213,7 @@ export class AiAgentFormComponent implements OnInit {
     }
     clearInterval(this.getStagesInterval);
     this.stopProcess();
+    this.stopTracking();
   }
 
   fetchAllFields() {
@@ -1192,22 +1204,6 @@ export class AiAgentFormComponent implements OnInit {
   }
   
 // prgress bar code methods for AI agents execution Starts
-  get progressWidth(): string {
-    return `${(this.currentStage / (this.progressBarItems.length - 1)) * 80}%`;
-  }
-
-  get displayStage(): string {
-    return `${Math.max(0, this.currentStage + 1)}/${this.progressBarItems.length}`;
-  }
-
-  get completedWidth(): string {
-    return `${(Math.max(0, this.currentStage) / (this.progressBarItems.length - 1)) * 100}%`;
-  }
-
-  get currentWidth(): string {
-    if (this.currentStage < 0) return '0%';
-    return `${(1 / (this.progressBarItems.length - 1)) * 100}%`;
-  }
 
   // toggleProcess() {
   //   if (this.isRunning) {
@@ -1220,7 +1216,7 @@ export class AiAgentFormComponent implements OnInit {
 
   startAiAgent() {
     this.confirmationService.confirm({
-      message: "Ready to get started? Launching this agent will begin the process. ",
+      message: "Ready to get started? Launching this agent will begin the process.",
       header: "Ready to Go?",
       acceptLabel: "Let's Do It!",
       rejectLabel: "Not Now",
@@ -1230,86 +1226,104 @@ export class AiAgentFormComponent implements OnInit {
       rejectIcon: 'null',
       acceptIcon: 'null',
       accept: () => {
-        this.spinner.show()
-        // this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-        this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
-          console.log("resrstage",res);
-        this.spinner.hide();
-        if(res.errorCode)
-        if(res.errorCode == 3054){
-          this.toaster.showError("You've reached today's limit. Please try again tomorrow. Thank you for your understanding!");
-          return;
-        }
-        this.toaster.toastSuccess("Success! The agent has started executing.");
-          this.getAgentStages();
-        
-        }, err => {
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessage.apierror);
-        });
-        this.startProcess();
+        this.spinner.show();
+        this.isProcessing = true;
+        this.currentStageIndex = 0;
+        this.completedStages = -1;
+        this.stageFailed = false;
+        this.agentStarted = false;  // Reset agent started flag
+        this.stages.forEach(stage => stage.status = 'pending');
+        this.rest_service.startPredefinedBot(this.params.agentId).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            if (res.errorCode == 3054) {
+              this.toaster.showError("You've reached today's limit. Please try again tomorrow.");
+              this.isProcessing = false;
+              return;
+            }
+            this.toaster.toastSuccess("Success! The agent has started executing.");
+            this.showProgress = true;
+            this.agentStarted = true;  // Set agent started flag to true
+            setTimeout(() => {
+              this.startTracking();
+            }, 5000);
+          },
+          err => {
+            this.spinner.hide();
+            this.isProcessing = false;
+            this.toaster.showError(this.toastMessage.apierror);
+          }
+        );
       },
-      reject: (type) => { }
+      reject: () => {}
     });
   }
 
-  getAgentStages() {
-    const intervalTime = 6000; 
-    const agentUUID = this.params.agentId
-    this.getStagesInterval = setInterval(() => {
-      this.rest_service.getAgentStagesInfo(agentUUID).subscribe((stagesInfo: any) => {
-        this.stages = stagesInfo.stages;
-        if (stagesInfo.some(stage => stage.status === 'Completed')) {
-          clearInterval(this.getStagesInterval);
-          this.toaster.toastSuccess("Agent Execution Completed");
-        }
-      }, err => {
-        // clearInterval(intervalId);
-        this.toaster.showError("Error fetching agent stages info");
+  startTracking() {
+    this.checkCurrentStage(); // Immediate first check
+    this.stageSubscription = timer(6000, 6000)
+      .pipe(
+        takeWhile(() => this.isProcessing && !this.stageFailed && this.currentStageIndex < this.stages.length)
+      )
+      .subscribe(() => {
+        this.checkCurrentStage();
       });
-    }, intervalTime);
   }
-  startProcess() {
-    this.isRunning = true;
-    this.currentStage = 0;
-    this.startTime = new Date();
-    this.stepTimes = [this.startTime];
-    this.processInterval = setInterval(() => {
-      if (this.currentStage < this.progressBarItems.length - 1) {
-        this.currentStage++;
-        this.stepTimes.push(new Date());
-      } else {
-        this.stopProcess();
+
+  checkCurrentStage() {
+    this.rest_service.getAgentStagesInfo(this.params.agentId).subscribe(
+      (response: any) => {
+        if (response && response.stages && response.stages.length > this.currentStageIndex) {
+          const currentStageStatus = response.stages[this.currentStageIndex].status;
+          this.updateCurrentStage(currentStageStatus);
+        }
+      },
+      err => {
+        console.error("Error fetching agent stages info:", err);
       }
-    }, 2000); // Change stage every 2 seconds
+    );
   }
+
+  updateCurrentStage(status: string) {
+    if (this.agentStarted) {  // Only update stages if agent has started
+      switch (status) {
+        case 'success':
+          this.stages[this.currentStageIndex].status = 'success';
+          this.completedStages++;
+          this.currentStageIndex++;
+          if (this.currentStageIndex >= this.stages.length) {
+            this.stopTracking();
+            this.toaster.toastSuccess("Agent Execution Completed Successfully!");
+          }
+          break;
+        case 'failure':
+          this.stages[this.currentStageIndex].status = 'failure';
+          this.completedStages++;
+          this.stageFailed = true;
+          this.stopTracking();
+          this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
+          break;
+        // For 'running' or 'pending', we do nothing and continue tracking
+      }
+    }
+  }
+
+  stopTracking() {
+    if (this.stageSubscription) {
+      this.stageSubscription.unsubscribe();
+    }
+    this.isProcessing = false;
+  }
+
+  get displayStage(): string {
+    if (!this.agentStarted) return '0/4';
+    return `${this.completedStages + 1}/${this.stages.length}`;
+  }
+
 
   stopProcess() {
     this.isRunning = false;
     clearInterval(this.processInterval);
-  }
-
-  getStepClass(index: number): string {
-    if (this.currentStage < 0) return '';
-    if (index < this.currentStage) return 'completed';
-    if (index === this.currentStage) return 'active';
-    return '';
-  }
-
-  getStepTime(index: number): string {
-    if (!this.stepTimes[index]) return '';
-    return this.stepTimes[index].toLocaleString('en-US', { 
-      month: 'short', 
-      day: 'numeric', 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: true 
-    });
-  }
-
-  createBot1(){
-    this.showProgress = true;
-    this.currentStage = 0;
   }
 
   // prgress bar code methods for AI agents execution Ends

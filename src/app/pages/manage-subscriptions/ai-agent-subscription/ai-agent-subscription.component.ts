@@ -123,7 +123,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       acceptIcon: 'null',
       accept: () => {
       this.spinner.show();
-      this.rest_api.updateAutoRenew(user_email, agent.name, agent.autoRenew).subscribe((res) => {
+      this.rest_api.updateAutoRenew(user_email, agent.productId, agent.autoRenew).subscribe((res) => {
         console.log('Auto Renew updated successfully', res);
         this.toastService.toastSuccess(this.toastMessages.autoRenewUpdated);
         this.spinner.hide();

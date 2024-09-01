@@ -599,7 +599,7 @@
 
 .input-with-icon {
   padding-left: 35px !important;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .country-item-value {

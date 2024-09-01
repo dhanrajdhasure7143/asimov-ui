@@ -1,6 +1,6 @@
 /* Base styles */
 .paymentcontent_div {
-  height: calc(100vh - 130px);
+  height: calc(100vh - 0px);
   overflow: auto;
 }
 

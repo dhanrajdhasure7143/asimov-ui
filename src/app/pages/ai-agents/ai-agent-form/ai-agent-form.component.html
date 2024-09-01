@@ -750,34 +750,36 @@
               </div>
             </div>
              <!-- AI agent Execution Progress Bar Starts-->
-            <div *ngIf="showProgress || params.type=='edit'">
+             <div *ngIf="showProgress || params.type=='edit'">
                 <div class="header">
-                    <span class="title">
-                        <span>
-                            <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
-                        </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
-                    </span>
+                  <span class="title">
+                    <span>
+                      <img src="../../../../assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                    </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
+                  </span>
                 </div>
                 <div class="progress-container-new">
-                    <button class="rounded-pill" style="height: 30px;" pButton label="Start" (click)="startAiAgent()">
-                        <img src="../../../../assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
-                    </button>
-                    <div class="bar-container">
-                        <div class="progress-bar-new">
-                            <div *ngFor="let stage of stages; let i = index" class="stage" [ngClass]="{
-                                       'active': i <= currentStage,
-                                       'success': stage.status === 'success',
-                                       'failure': stage.status === 'failure'
-                                     }">
-                            </div>
-                        </div>
+                  <button class="rounded-pill" style="height: 30px;" pButton label="Start" 
+                          (click)="startAiAgent()" [disabled]="isProcessing">
+                    <img src="../../../../assets/images/agent/Vector.svg" alt="" style="margin-right: 5px;">
+                  </button>
+                  <div class="bar-container">
+                    <div class="progress-bar-new">
+                      <div *ngFor="let stage of stages; let i = index" class="stage" 
+                           [ngClass]="{
+                             'success': stage.status === 'success',
+                             'failure': stage.status === 'failure'
+                           }">
+                      </div>
+                    </div>
+                    <div *ngIf="agentStarted">
                         <div class="stage-labels">
-                            <div *ngFor="let stage of stages" class="stage-label">{{ stage.name }}</div>
+                          <div *ngFor="let stage of stages" class="stage-label">{{ stage.name }}</div>
                         </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-          </div>
+              </div>
         
       </div>
 </div>
