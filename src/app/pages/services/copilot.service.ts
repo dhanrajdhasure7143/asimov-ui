@@ -74,8 +74,8 @@ getCustomerBots(tenantId:any){
   return this.http.get(environment.asquare+"/admin/v1/customer-support-bot/byTenantId/"+`${tenantId}`, {headers:this.getHeaders()})
 }
 
-saveCustomerBot(body:any){
-  return this.http.post(environment.asquare+"/admin/v1/customer-support-bot", body, {headers:this.getHeaders()})
+saveCustomerBot(userId,tenantID){
+  return this.http.post(environment.asquare+`/admin/v1/customer-support-bot?tenantId=`+tenantID+`&userId=`+userId, {headers:this.getHeadersForCreateBot()})
 }
 
 getPredefinedModels(tenantName:any){
@@ -115,4 +115,9 @@ getTrainedModel(formData){
   trainUploads(formData) {
     return this.http.post(environment.python_llm + "/train-uploads", formData)
   }
+
+  getHeadersForCreateBot(){
+    let headers =  new HttpHeaders({'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey})
+     return headers
+   }
 }

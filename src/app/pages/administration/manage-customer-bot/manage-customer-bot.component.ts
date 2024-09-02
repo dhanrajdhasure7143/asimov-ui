@@ -285,7 +285,11 @@ export class ManageCustomerBotComponent implements OnInit {
         "deleted": this.manageBotForm.value.deleted,
         "fileName": this.uploadFiles()
       }
-      this.rest_api.saveCustomerBot(req_body).subscribe((res: any) => {
+
+      const tenantId = localStorage.getItem('tenantName');
+      const userId = localStorage.getItem('ProfileuserId');
+
+      this.rest_api.saveCustomerBot(userId,tenantId).subscribe((res: any) => {
         let response = res;
         let bot_Name = req_body.customerSupportBotName;
       
