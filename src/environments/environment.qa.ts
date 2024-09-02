@@ -44,10 +44,10 @@ export const environment = {
   ipcTenant: "c5611383-58c1-4677-839c-a337c9fb102c",
   isChatEnable : true,
   isProcessLogsEnable: true,
-  isCopilotEnable : true,
+  isCopilotEnable : false,
   isSubscrptionEnabled : true,
   isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
-  isCustomerBots : true,
+  isCustomerBots : false,
   environmentName: "QA",
       // Asimov-ui URl to redirect from stripe to application
   paymentSuccessURL: "http://epsoftiap.internalqa.ai/#/pages/success",

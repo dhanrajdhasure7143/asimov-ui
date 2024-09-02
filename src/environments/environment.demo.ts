@@ -42,7 +42,7 @@ export const environment = {
   ipcTenant: "014bb3a8-a15e-436f-b6fc-f245121d4f20",
   isChatEnable : true,
   isProcessLogsEnable: true,
-  isCopilotEnable : true,
+  isCopilotEnable : false,
   isSubscrptionEnabled : true,
   isSubscriptionModuleEnable:false, // this boolen to enable subscription module in side bar
   isCustomerBots : false,
