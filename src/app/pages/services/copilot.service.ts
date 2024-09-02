@@ -75,7 +75,10 @@ getCustomerBots(tenantId:any){
 }
 
 saveCustomerBot(body:any){
-  return this.http.post(environment.asquare+"/admin/v1/customer-support-bot", body, {headers:this.getHeaders()})
+  const tenantId = localStorage.getItem("tenantName");
+  const ProfileuserId = localStorage.getItem("ProfileuserId");
+  // return this.http.post(environment.asquare+"/admin/v1/customer-support-bot", body,{headers:this.getHeaders()});
+  return this.http.post(environment.asquare+"/admin/v1/customer-support-bot?tenantId="+tenantId+"&userId="+ProfileuserId, body,{headers:this.getHeaderCustomerSupportBot()})
 }
 
 getPredefinedModels(tenantName:any){
@@ -107,6 +110,11 @@ getTrainedModel(formData){
     return this.http.get(environment.asquare + "/admin/v1/customer-support-bot/check-bot?botName=" + botname + "&tenantId=" + localStorage.getItem('tenantName'), { headers: this.getHeaders()});
   }
   getHeaders(){
+    let token=localStorage.getItem('accessToken');
+    let headers =  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey})
+     return headers
+   }
+   getHeaderCustomerSupportBot(){
     let token=localStorage.getItem('accessToken');
     let headers =  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': this.ipAddress,'timezone':this.timezone,'authKey': this.encryptedaKey})
      return headers
