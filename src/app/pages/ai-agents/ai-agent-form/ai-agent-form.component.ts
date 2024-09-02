@@ -575,7 +575,7 @@ export class AiAgentFormComponent implements OnInit {
 
   botCreate(type){
     if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
+      // this.spinner.show();
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
@@ -585,6 +585,18 @@ export class AiAgentFormComponent implements OnInit {
         req_body["productId"] = this.predefinedBot_id
         req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
+        if(this.predefinedBot_uuid == 'pred_CustomerSupport'){
+            const keys = Object.keys(req_body.fields);
+            const tenantIdKey = keys.find(key => key.includes('_TenantId'));
+            const userIdKey = keys.find(key => key.includes('_UserId'));
+            if (tenantIdKey) {
+              req_body.fields[tenantIdKey] = localStorage.getItem('tenantName');
+            }
+            if (userIdKey) {
+              req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
+            }
+          // .includes('CustomerSupport_dropdown') ? 'Yes' : 'No';
+        }
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){

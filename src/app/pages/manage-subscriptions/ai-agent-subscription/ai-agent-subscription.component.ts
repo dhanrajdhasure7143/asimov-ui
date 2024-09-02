@@ -288,7 +288,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       accept: () => {
         this.rest_api.deleteSubAgentById(body).subscribe(
           (res) => {
-            this.toastService.showSuccess(this.toastMessages.TaskDelete,'response');
+            this.toastService.showSuccess(this.toastMessages.agentDelete,'response');
             this.spinner.hide();
             this.getSubscribedAgentsList();
           },
