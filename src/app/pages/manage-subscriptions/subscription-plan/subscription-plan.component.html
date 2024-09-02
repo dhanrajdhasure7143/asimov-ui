@@ -72,7 +72,7 @@
                                             style="display: flex; justify-content: center; align-items: center;  cursor: pointer; height: 50px; width: 50px; line-height: 10px; margin: 0;" 
                                             [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}"
                                             >
-                                            <img src="./../../../../assets/Micro_bot_new.png" alt="" width="30px" height="40px">
+                                            <img src="assets/Micro_bot_new.png" alt="" width="30px" height="40px">
                                         </div>
                                         </div>
                                       </div>
@@ -83,7 +83,7 @@
                                                 <div class="plan-details">
                                                     <div class="circle text-center" (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" 
                                                         [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}">
-                                                        <img src="./../../../../assets/Micro_bot_new.png" alt="" width="40px" height="40px">
+                                                        <img src="assets/Micro_bot_new.png" alt="" width="40px" height="40px">
                                                     </div>
                                                     <div class="label-control text-center"> {{plan.name}} </div>
                                                     <div class="price-details">
@@ -234,5 +234,5 @@
 </p-dialog>
 </div>
 <ngx-spinner bdColor="#bebcbc66" type="">
-    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+    <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
   </ngx-spinner>

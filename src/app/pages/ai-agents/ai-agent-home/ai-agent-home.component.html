@@ -5,7 +5,7 @@
             <div class="content">
                 <div class="top-section">
                     <div class="bot-image">
-                        <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                        <img src="assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
                     <!-- <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3> <br> -->
                     <div (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
@@ -30,7 +30,7 @@
         </div>
         <div *ngIf="predefined_botsList.length ===0" class="centered-message">
             <div *ngIf="!showSkeleton">
-                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                <img src="assets/images/mini_bot.svg" alt="mini_bot">
                 No Agent Found ... Please Subscribe to the Agents
             </div>
                
@@ -65,7 +65,7 @@
         </div> -->
     <div class="search-container">
         <div class="search-bar-wrapper">
-            <img src="../../../../assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
+            <img src="assets/images/agent_search.svg" alt="mini_bot" class="search-icon">
             <input type="text" placeholder="Find Your Agent..." [disabled]="unsubscribed_agents.length === 0" [(ngModel)]="searchTerm" (input)="onSearch()" class="search-bar">
         </div>
         <div class="total-section" *ngIf="getTotalSelectedAgents() > 0">
@@ -86,7 +86,7 @@
             <div class="content">
                 <div class="top-section">
                     <div class="bot-image">
-                        <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                        <img src="assets/images/mini_bot.svg" alt="mini_bot">
                     </div>
                     <h3 class="bot-name">{{ each.predefinedBotName }} Agent</h3>
                     <div class="agent-selection">
@@ -112,7 +112,7 @@
             </div>
         </div>
         <div *ngIf="unsubscribed_agents.length >=1 && filteredBotsList.length === 0" class="centered-message">
-            <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+            <img src="assets/images/mini_bot.svg" alt="mini_bot">
             No Agent Found ...
         </div>
         <!-- <div *ngIf="unsubscribed_agents.length === 0" class="centered-message">
@@ -129,7 +129,7 @@
     <div class="custom-modal-content">
         <div class="top-section-model">
             <div class="model-img">
-                <img src="../../../../assets/images/mini_bot.svg" alt="mini_bot">
+                <img src="assets/images/mini_bot.svg" alt="mini_bot">
             </div>
             <h3 class="bot-name-model">{{ selectedBot?.predefinedBotName }}</h3>
         </div>

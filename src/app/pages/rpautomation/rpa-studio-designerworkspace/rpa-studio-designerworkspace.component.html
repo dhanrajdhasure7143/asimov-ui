@@ -16,7 +16,7 @@
               }">
               <!--Node close button-->
               <span *ngIf="node.name != 'START' && node.name != 'STOP' && !belongsToSavedGroup(node.id) && !node.isMicroBotNode " class="node-delete" (click)="deletenode(node)">
-                <!-- <img src="../../../../assets/images/RPA/close-circle-fill.svg" alt="" /> -->
+                <!-- <img src="assets/images/RPA/close-circle-fill.svg" alt="" /> -->
                 <i class="ri-close-circle-fill"></i>
               </span>
               <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
@@ -63,7 +63,7 @@
                 'border-color': !group.collapsed ? group.color : 'black',
                 'border-style': !group.collapsed?'dotted':'',
                 'border-radius': group.collapsed?'0.2em':'',
-                'background-image': group.collapsed ? 'url(' + (group.isMicroBot ? '/assets/images-n/Micro-bot.png' : '/assets/images/RPA/dragarea.png') + ')' : ''
+                'background-image': group.collapsed ? 'url(' + (group.isMicroBot ? 'assets/images-n/Micro-bot.png' : 'assets/images/RPA/dragarea.png') + ')' : ''
               }" class="groupElement" (mouseenter)="group.showPublishButton = group.collapsed" (mouseleave)="group.showPublishButton = false" 
               [pTooltip]="group.collapsed ? group.description:''">
               <!-- <div class="resize-handle-top" mwlResizeHandle [resizeEdges]="{ top: true }"></div>
@@ -128,7 +128,7 @@
           </ng-container>
           <!--Show bot Image when no nodes in designer-->
           <div *ngIf="nodes.length == 0 && groupsData.length == 0" class="dragactionsdiv">
-            <img src="../../../../assets/images/RPA/dragarea.png" alt="" />
+            <img src="assets/images/RPA/dragarea.png" alt="" />
             <span>Drag an action here...</span>
           </div>
       </div>
@@ -205,7 +205,7 @@
         </h4>
         <button (click)="closeoutputbox(); modalRef.hide()" class="close pull-right">
           <span>
-            <img src="../../../../assets/images/Projects/circle-close.svg" alt="" />
+            <img src="assets/images/Projects/circle-close.svg" alt="" />
           </span>
         </button>
       </div>
@@ -270,7 +270,7 @@
         <div class="col-md-12">
           <a [href]="Image" download data-placement="bottom" tooltip="Download"
             style="float: right; margin-bottom: 5px">
-            <img src="../../../../assets/images/Projects/Download.svg" class="testplus" alt="" />
+            <img src="assets/images/Projects/Download.svg" class="testplus" alt="" />
           </a>
           <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
                          <i class="fa fa-arrow-left" aria-hidden="true"></i> back
@@ -322,7 +322,7 @@
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
       <span class="rpa-modal-close" (click)="close_record_play()"><img
-          src="../../../../assets/images/RPA/icon_latest/close.svg" alt="" /></span>
+          src="assets/images/RPA/icon_latest/close.svg" alt="" /></span>
       <h4>Web Automation - Record and Play</h4>
     </div>
     <div class="modal-body">
@@ -374,7 +374,7 @@
     <div class="h-100">
       <div class="create-header">
         <!-- <span class="rpa-modal-close" (click)="closeScheduler()"
-          ><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""
+          ><img src="assets/images/RPA/icon_latest/close.svg" alt=""
         /></span> -->
         <h3>Scheduler</h3>
       </div>

@@ -79,9 +79,9 @@
                                 <span *ngIf='col.userProfile' class="prjlastupdateprofile">{{rowData[col.userProfileKey]|userLetters:users_list|uppercase}}</span>
                                 <span *ngIf="col.multi">
                                     <span *ngIf="col.multiOptions[1] == 'priority'" class="prjgridpriority" [pTooltip]="rowData[col.multiOptions[1]]" tooltipPosition="top">
-                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Low'" src="../../../assets/images-n/projects/lowpriority_new.svg" alt="Low Priority">
-                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Medium'" src="../../../assets/images-n/projects/mediumpriority_new.svg" alt="Medium Priority">
-                                        <img *ngIf="rowData[col.multiOptions[1]] === 'High'" src="../../../assets/images-n/projects/highpriority_new.svg" alt="High Priority">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Low'" src="assets/images-n/projects/lowpriority_new.svg" alt="Low Priority">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'Medium'" src="assets/images-n/projects/mediumpriority_new.svg" alt="Medium Priority">
+                                        <img *ngIf="rowData[col.multiOptions[1]] === 'High'" src="assets/images-n/projects/highpriority_new.svg" alt="High Priority">
                                     </span>
                                     <span class="prjlastupdatename" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
                                             <span *ngIf="col.status_icon" class="statusbadge_nc" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
@@ -96,25 +96,25 @@
                                     <span *ngIf="col.ColumnName == 'connectionLogo'|| col.ColumnName == 'actionLogo'"><img [src]="'data:image/png;base64,'+rowData[col.ColumnName]" style="height:25px;" alt="img"></span>
                                     <span *ngIf="col.ColumnName != 'connectionLogo' && col.ColumnName!='actionLogo'" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="left" [tooltipDisabled]="!col.showTooltip">
                                         <!-- <span *ngIf="(rowData['status']=='Running' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
-                                            <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus" alt="">
+                                            <img src="assets/images/RPA/DotSpin.gif" class="testplus" alt="">
                                         </span>
                                         <span *ngIf="((rowData['status']=='Success' || rowData['status']=='Started' || rowData['status']=='Completed' || rowData['status']=='Approved'))&& col.ColumnName == 'status'"
                                             [pTooltip]="rowData['status']" class="text-primary">
-                                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
+                                            <img src="assets/images/RPA/icon_latest/Success.svg" class="testplus" alt="">
                                         </span>
                                         <span *ngIf="(rowData['status']=='Failure' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
-                                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
+                                            <img src="assets/images/RPA/icon_latest/close-red.svg" class="testplus" alt="">
                                         </span>
                                         <span *ngIf="(rowData['status']=='Paused' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
-                                            <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" alt="" class="testpause"></span>
+                                            <img src="assets/images/RPA/icon_latest/pause-circle-fill.svg" alt="" class="testpause"></span>
                                         <span *ngIf="(rowData['status']=='New' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']">
-                                            <img src="../../../../assets/images/RPA/userobot.png" class="testplus" alt="">
+                                            <img src="assets/images/RPA/userobot.png" class="testplus" alt="">
                                         </span>
                                         <span *ngIf="(rowData['status']=='Pending' && col.ColumnName == 'status' )" class="text-primary" [pTooltip]="rowData['status']"  [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">
                                             <i class="fa fa-clock"></i>&nbsp;
                                         </span>
                                         <span *ngIf="(rowData['status']=='Stopped' && col.ColumnName == 'status')" [pTooltip]="rowData['status']" tooltipPosition="top">
-                                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
+                                            <img src="assets/images/RPA/icon_latest/stop.svg" class="testplus" alt="">
                                         </span> -->
                                         <span *ngIf="screenTable == 'taskList'&& col.ColumnName !='status'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{col.filterType=='date' ?(screenTable=='taskList'?(rowData[col.ColumnName]|date:'MMM dd, y'):(rowData[col.ColumnName]|date:'MMM dd, y H:mm')):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-' )}} </span>
                                         <span *ngIf="screenTable == 'taskList' && col.ColumnName =='status'">
@@ -179,55 +179,55 @@
                         <div class="newinntalx">
                         <span *ngIf="screenTable =='taskList'" class="taskList-table-actions">
                                 <!-- <a [ngClass]="rowData['taskCategory'] != 'Analysis' ? '' : 'noopenworkspace'" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
-                                    <img src="../../../assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
+                                    <img src="assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
+                                    <img src="assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
                                 </a> -->
                                 <a *ngIf= "rowData['taskCategory'] == 'Analysis'" class="noopenworkspace">
-                                    <img src="../../../assets/images-n/gridicons/workspace-hide.svg" alt="Open Workspace">
+                                    <img src="assets/images-n/gridicons/workspace-hide.svg" alt="Open Workspace">
                                 </a>
                                 <a *ngIf="rowData['taskCategory'] != 'Analysis'" class="" (click)="openWorkSpace(rowData)" pTooltip="Open Workspace" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
-                                    <img src="../../../assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
+                                    <img src="assets/images-n/gridicons/workspace-default.svg" alt="Open Workspace" class="default-icon">
+                                    <img src="assets/images-n/gridicons/workspace-hover.svg" alt="Open Workspace" class="hover-icon">
                                 </a>
                         </span>
                     <span *ngIf="screenTable !='actionsTable'" >
                         <span *ngIf="show_view_btn" (click)="viewDetailsbyId(rowData)">
                             <a class="" [pTooltip]="screenTable === 'taskList' ? 'View/Edit' : 'View'" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/view-default.svg" alt="View" class="testplus default-icon">
-                                <img src="../../../assets/images-n/gridicons/view-hover.svg" alt="View" class="testplus hover-icon">
+                                <img src="assets/images-n/gridicons/view-default.svg" alt="View" class="testplus default-icon">
+                                <img src="assets/images-n/gridicons/view-hover.svg" alt="View" class="testplus hover-icon">
                             </a>
                         </span>
                         <span *ngIf='rowData[col.kafkaConFail] == "Y" && show_retry_btn' (click)="onRetryGraphGenerate(rowData)">
-                            <img src="../../../assets/images-n/gridicons/refresh-default.svg" alt="Refresh" class="testplus default-icon" >
-                            <img src="../../../../assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
+                            <img src="assets/images-n/gridicons/refresh-default.svg" alt="Refresh" class="testplus default-icon" >
+                            <img src="assets/images/PI/refresh-blue.svg" alt="Refresh" class="testplus hover-icon" >
                         </span>
                         <span *ngIf="show_edit_btn" class="editButton">
                             <span *ngIf="screenTable == 'customerSupportBots'">
                             <a (click)="openEzAsk_Chat(rowData)" *ngIf="(this.loggedUserRole.includes('System Admin'))" pTooltip="Open EzAsk" tooltipPosition="top">
                                 <!-- <i class="pi pi-external-link" style="color: #708090"></i> -->
-                                <img src="../../../assets/images-n/gridicons/external-link-default.svg" alt="Edit" class="default-icon">
-                                <img src="../../../assets/images-n/gridicons/external-link-hover.svg" alt="Edit" class="hover-icon">
+                                <img src="assets/images-n/gridicons/external-link-default.svg" alt="Edit" class="default-icon">
+                                <img src="assets/images-n/gridicons/external-link-hover.svg" alt="Edit" class="hover-icon">
                             </a>
                             <a *ngIf="!(this.loggedUserRole.includes('System Admin'))"  class="disbtn">
                                 <!-- <i class="pi pi-external-link" style="color: #708090"></i> -->
-                                <img src="../../../assets/images-n/gridicons/external-link-default.svg" alt="Edit">
+                                <img src="assets/images-n/gridicons/external-link-default.svg" alt="Edit">
                             </a>
                             </span>
                             <a *ngIf="!isdisabled_edit && !(screenTable == 'sdkApprovalList' && (rowData['status'] == 'Approved' || rowData['status'] == 'Rejected')) && !(screenTable == 'SDK_taskList' && rowData['status'] == 'Rejected')" (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                <img src="assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                <img src="assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                             </a>
                             <a *ngIf="isdisabled_edit && screenTable != 'sdkApprovalList' && screenTable != 'SDK_taskList'" class="disbtn">
-                            <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                            <img src='assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </a>
                             <a *ngIf="(screenTable == 'sdkApprovalList' && (rowData['status'] == 'Approved' || rowData['status'] == 'Rejected')) || (screenTable == 'SDK_taskList' && rowData['status'] == 'Rejected')" class="disbtn">
-                                <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                                <img src='assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                             </a>
                         </span>
                         <span *ngIf="show_download_btn"  >
                             <a  (click)="downloadRow(rowData)" pTooltip="Download" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/download-default.svg" alt="download" class="default-icon testplus">
-                                <img src="../../../assets/images-n/gridicons/download-hover.svg" alt="download" class="hover-icon testplus">
+                                <img src="assets/images-n/gridicons/download-default.svg" alt="download" class="default-icon testplus">
+                                <img src="assets/images-n/gridicons/download-hover.svg" alt="download" class="hover-icon testplus">
                             </a>
                         </span>
 
@@ -235,16 +235,16 @@
                             <ng-container *ngFor="let action of ['approve', 'reject']">
                               <button *ngIf="(action === 'approve' ? show_approve_btn : show_reject_btn) && loggedUserRole.includes('Process Analyst')" class="undobtn">
                                 <span class="disbtn">
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
                                 </span>
                               </button>
                               <button *ngIf="(action === 'approve' ? show_approve_btn : show_reject_btn) && !loggedUserRole.includes('Process Analyst')" class="undobtn">
                                 <span *ngIf="rowData['status'] != 'Approved' && rowData['status'] != 'Rejected'" (click)="action === 'approve' ? getapproved(rowData) : getRejected(rowData)" pTooltip="{{ action | titlecase }}" tooltipPosition="top">
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
                                 </span>
                                 <span *ngIf="rowData['status'] == 'Approved' || rowData['status'] == 'Rejected'" class="disbtn">
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
                                 </span>
                               </button>
                             </ng-container>
@@ -254,11 +254,11 @@
                             <ng-container *ngFor="let action of ['approve', 'reject']">
                               <button *ngIf="action === 'approve' ? show_approve_btn : show_reject_btn" class="undobtn">
                                 <span *ngIf="rowData['status'] != 'Approved' && rowData['status'] != 'Rejected'" (click)="action === 'approve' ? getapproved(rowData) : getRejected(rowData)" pTooltip="{{ action | titlecase }}" tooltipPosition="top">
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-default.svg" class="testplus default-icon" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-hover.svg" class="testplus hover-icon" alt=""/>
                                 </span>
                                 <span *ngIf="rowData['status'] == 'Approved' || rowData['status'] == 'Rejected'" class="disbtn">
-                                  <img src="../../../assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
+                                  <img src="assets/images-n/gridicons/{{ action }}-disabled.svg" class="testplus" alt=""/>
                                 </span>
                               </button>
                             </ng-container>
@@ -267,49 +267,49 @@
 
                         <!-- <button *ngIf="show_approve_btn" class="undobtn">
                             <span *ngIf="rowData['status'] !='Approved' && rowData['status'] !='Rejected'" (click)="getapproved(rowData)" pTooltip="Approve" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
-                                <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
+                                <img src="assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                <img src="assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/>
                             </span>
                             <span *ngIf="rowData['status'] =='Approved' || rowData['status'] =='Rejected'" class="disbtn">
-                                <img src="../../../assets/images-n/gridicons/approve-disabled.svg" class="testplus" alt=""/>
+                                <img src="assets/images-n/gridicons/approve-disabled.svg" class="testplus" alt=""/>
                             </span>                            
                         </button>
                         <button *ngIf="show_reject_btn" class="undobtn">
                             <span *ngIf="rowData['status'] !='Approved' && rowData['status'] !='Rejected'" (click)="getRejected(rowData)" pTooltip="Reject"  tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
-                                <img src="../../../assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
+                                <img src="assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                                <img src="assets/images-n/gridicons/reject-hover.svg" class="testplus hover-icon" alt=""/>
                             </span>
                             <span *ngIf="rowData['status'] =='Approved' || rowData['status'] =='Rejected'" class="disbtn">
-                                <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
+                                <img src="assets/images-n/gridicons/reject-disabled.svg" class="testplus" alt=""/>
                             </span>                               
                         </button> -->
 
                         <span *ngIf="show_delete_btn">
                             <a *ngIf="!isdisabled_delete" (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
-                                <img src="../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
+                                <img src="assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
+                                <img src="assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
                             </a>
                             <a *ngIf="isdisabled_delete"  class="disbtn">
-                                <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
+                                <img src='assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                             </a>
                         </span>
 
                         <span *ngIf="show_run_btn">
                             <a (click)="onRunRow(rowData)" pTooltip="Run" tooltipPosition="top">
-                                <img src="../../../../assets/images-n/gridicons/startbot-default.svg" class="testplus default-icon" alt="Start">
-                                <img src="../../../../assets/images-n/gridicons/startbot-hover.svg" class="testplus  hover-icon" alt="Start">
+                                <img src="assets/images-n/gridicons/startbot-default.svg" class="testplus default-icon" alt="Start">
+                                <img src="assets/images-n/gridicons/startbot-hover.svg" class="testplus  hover-icon" alt="Start">
                             </a>
                         </span>
                         <span *ngIf="show_stop_btn">
                             <a (click)="onStopRow(rowData)" pTooltip="Stop" tooltipPosition="top">
-                                <img src="../../../assets/images-n/gridicons/stopbot-default.svg" class="testplus default-icon" alt="Stop">
-                                <img src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="Stop">
+                                <img src="assets/images-n/gridicons/stopbot-default.svg" class="testplus default-icon" alt="Stop">
+                                <img src="assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="Stop">
                             </a>
                         </span>
                         <span *ngIf="show_view_logs">
                             <a (click)="onViewLogs(rowData)" pTooltip="View logs" tooltipPosition="top">
-                                <img src="../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus" alt="View logs">
-                                <!-- <img style="color: #098de6;" src="../../../assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="View logs"> -->
+                                <img src="assets/images/RPA/icon_latest/View Logs.svg" class="testplus" alt="View logs">
+                                <!-- <img style="color: #098de6;" src="assets/images-n/gridicons/stopbot-hover.svg" class="testplus hover-icon" alt="View logs"> -->
                             </a>
                         </span>
                     </span>
@@ -317,20 +317,20 @@
                             <span *ngIf="screenTable=='users_screen'">
                                 <span *ngIf="loggedInUser==rowData['email']" class="editButton">
                                     <a class="disbtn">
-                                        <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
+                                        <img src='assets/images/RPA/icon_latest/edit-dis.svg' alt="dis_edit" class="testplus">
                                     </a>
                                     <a class="disbtn">
-                                        <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
+                                        <img src='assets/images/RPA/icon_latest/delete-dis.svg' alt="dis_delete" class="testplus">
                                     </a>
                                 </span>
                                 <span class="editButton" *ngIf="loggedInUser != rowData['email']" >
                                     <a  (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
-                                        <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                        <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                        <img src="assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                        <img src="assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                     </a>
                                     <a (click)="deleteRow(rowData)" pTooltip="Delete" tooltipPosition="top">
-                                        <img src="../../../assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
-                                        <img src="../../../assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
+                                        <img src="assets/images-n/gridicons/delete-default.svg" class="testplus default-icon" alt="delete">
+                                        <img src="assets/images-n/gridicons/delete-hover.svg" class="testplus hover-icon" alt="delete">
                                     </a>
                                 </span>
                             </span>
@@ -338,47 +338,47 @@
                             <span *ngIf="screenTable =='actionsTable'">
                                 <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                                 <a class="" (click)="viewDetailsbyId(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                    <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                    <img src="assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                    <img src="assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </a>
                                 <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
-                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
+                                    <img src="assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
                                 <!-- <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
-                                    <img src="../../../../../assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
+                                    <img src="assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                 </a>
                                 <a (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
-                                    <img src='../../../assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
-                                    <img src='../../../assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
+                                    <img src='assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
+                                    <img src='assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
                                 </a> -->
                             </span>
 
                             <span *ngIf="screenTable =='connectionsList'">
                                 <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                                 <a class="" (click)="editRowBy_Id(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Edit" tooltipPosition="top">
-                                    <img src="../../../assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                    <img src="../../../assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                    <img src="assets/images-n/gridicons/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                    <img src="assets/images-n/gridicons/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                 </a>
                                 <a *ngIf="!(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))"  class="disbtn">
-                                    <img src="../../../../assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
+                                    <img src="assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus">
                                 </a>
                                 <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete" tooltipPosition="top">
-                                    <img src='../../../assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
-                                    <img src='../../../assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
+                                    <img src='assets/images-n/gridicons/delete-default.svg' alt="edit"class="testplus default-icon">
+                                    <img src='assets/images-n/gridicons/delete-hover.svg' alt="edit"class="testplus hover-icon">
                                 </span> -->
                             </span>
                             <!-- <span (click)="deleteRow(rowData)" *ngIf="(this.loggedUserRole.includes('Process Owner') || this.loggedUserRole.includes('RPA Developer'))" pTooltip="Delete4" tooltipPosition="top">
-                                <img src='../../../assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
+                                <img src='assets/images-n/common/delete-blue.svg' alt="edit"class="testplus default-icon">
                             </span> -->
                             <span *ngIf="screenTable =='aprovalList'">
                                 <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'" [style]="{'marginRight':'30px'}" (click)="getapproved(rowData)"pTooltip="Approve" tooltipPosition="top">
-                                    <!-- <img src="../../../assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
-                                    <img src="../../../assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/> -->
+                                    <!-- <img src="assets/images-n/gridicons/approve-default.svg" class="testplus default-icon" alt=""/>
+                                    <img src="assets/images-n/gridicons/approve-hover.svg" class="testplus hover-icon" alt=""/> -->
                                     <i class="pi pi-check text-success  approveOrReject"></i>
                                   </button>
                                   <button [class]="(rowData['status']=='Approved' || rowData['status']=='Rejected')?'undobtn':'undobtn'"(click)="getRejected(rowData)"pTooltip="Reject"  tooltipPosition="top">
-                                        <!-- <img src="../../../assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
-                                        <img src="../../../assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/> -->
+                                        <!-- <img src="assets/images-n/gridicons/reject-default.svg" class="testplus default-icon" alt=""/>
+                                        <img src="assets/images-n/gridicons/reject-disabled.svg" class="testplus hover-icon" alt=""/> -->
                                         <i class="pi pi-times text-danger   approveOrReject"></i>
                                   
                                     </button>
@@ -388,12 +388,12 @@
                         <!-- [hidden]="!(rowData.id == selectedItem.id)" -->
                         <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && loggedInUser==rowData['owner'])
                         || (this.userRoles.includes('System Admin'))" pTooltip="Delete" tooltipPosition="top">
-                            <img src="../../../assets/images-n/gridicons/delete-default.svg" alt="Delete" class="testplus default-icon">
-                            <img src="../../../assets/images-n/gridicons/delete-hover.svg" alt="Delete" class="testplus hover-icon">
+                            <img src="assets/images-n/gridicons/delete-default.svg" alt="Delete" class="testplus default-icon">
+                            <img src="assets/images-n/gridicons/delete-hover.svg" alt="Delete" class="testplus hover-icon">
                     </a>
                 </span>
                         <span *ngIf="screenTable=='subscrption_overview'" class="option-btn">
-                            <!-- <img src="./../../../../assets/images-n/projects/menudots.png" alt="Actions" (click)="onManageClick($event)"> -->
+                            <!-- <img src="assets/images-n/projects/menudots.png" alt="Actions" (click)="onManageClick($event)"> -->
                             <i class="pi pi-ellipsis-h" (click)="onManageClick($event)"></i>
                             <p-overlayPanel styleClass="overview-items" #op>
                                 <ng-template pTemplate>
