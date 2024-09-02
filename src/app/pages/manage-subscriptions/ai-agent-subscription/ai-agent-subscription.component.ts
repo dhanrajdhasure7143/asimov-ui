@@ -128,6 +128,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         console.log('Auto Renew updated successfully', res);
         this.toastService.toastSuccess(this.toastMessages.autoRenewUpdated);
         this.spinner.hide();
+        this.getSubscribedAgentsList();
       }, (err) => {
         console.error('Error updating auto renew', err);
         this.toastService.showError(this.toastMessages.apierror);
