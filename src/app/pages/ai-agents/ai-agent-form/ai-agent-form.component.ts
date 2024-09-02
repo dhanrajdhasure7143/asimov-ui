@@ -315,7 +315,19 @@ export class AiAgentFormComponent implements OnInit {
       const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
       res.attachments.forEach((attachment) => {
         const fieldName = keyMap[attachment.key];
-        this.attachmentMap[fieldName] = [...(this.attachmentMap[fieldName] || []), ...attachment.attList.map((att) => ({ key: fieldName, originalFileName: att.originalFileName, attachmentId: att.id }))];
+        // this.attachmentMap[fieldName] = [...(this.attachmentMap[fieldName] || []), ...attachment.attList.map((att) => ({ key: fieldName, originalFileName: att.originalFileName, attachmentId: att.id }))];
+          // this.attachmentMap[fieldName] = [...(this.attachmentMap[fieldName] || []), ...attachment.attList.map((att) => ({ key: fieldName, originalFileName: att.originalFileName, attachmentId: att.id }))];
+          this.attachmentMap[fieldName] = [
+            ...(this.attachmentMap[fieldName] || []),
+            ...attachment.attList.map((att) => ({
+              ...att,  // Spread existing properties from `att`
+              key: fieldName,  // Add your custom properties
+              originalFileName: att.originalFileName,  // Ensure custom mapping if needed
+              attachmentId: att.id
+            }))
+          ];
+          
+          console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
@@ -1159,14 +1171,12 @@ export class AiAgentFormComponent implements OnInit {
     );
     return null;
   }
-
-  deleteAttachment(attachmentId: any) {
-
+  deleteAttachment(attachment: any) {
+    this.subAgentFileDeleteSelectedFiles(attachment);
   }
 
-  downloadAttachment(attachmentId: any) {
-    console.log("downloadAttachment", attachmentId);
-
+  downloadAttachment(attachment: any) {
+    this.subAgentFileDownloadSelectedFiles(attachment)
   }
 
   getAttachements(key){
@@ -1660,98 +1670,148 @@ handleHistoryTab (hist) {
   }
 
 
-  subAgentFileDownloadSelectedFiles() {
-    const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+  subAgentFileDownloadSelectedFiles(input: string | object) {
+    let selectedFiles: any[];
+
+    if (typeof input === 'string') {
+        if (input === 'Files') {
+            selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+        }
+    } else if (typeof input === 'object') {
+        selectedFiles = [input];
+    } else {
+        this.toaster.showWarn("Please select the files.");
+        return;
+    }
 
     if (selectedFiles.length >= 1) {
-      this.spinner.show();
-      this.rest_service.downloadAgentFiles(selectedFiles).subscribe(
-        (response: any) => {
-          if (response.code == 4200) {
-            const resp_data = response.data;
-            const currentDate = new Date().toISOString().split('T')[0];
+        this.confirmationService.confirm({
+            message: `Are you sure you want to download file(s)?`,
+            header: "Download Files",
+            acceptLabel: "Yes, Download",
+            rejectLabel: "No, Cancel",
+            rejectButtonStyleClass: 'btn reset-btn',
+            acceptButtonStyleClass: 'btn bluebg-button',
+            defaultFocus: 'none',
+            rejectIcon: 'null',
+            acceptIcon: 'null',
+            accept: () => {
+                this.spinner.show();
+                this.rest_service.downloadAgentFiles(selectedFiles).subscribe(
+                    (response: any) => {
+                        if (response.code == 4200) {
+                            const resp_data = response.data;
+                            const currentDate = new Date().toISOString().split('T')[0];
 
-            if (resp_data.length > 0) {
-              if (resp_data.length == 1) {
-                const fileName = resp_data[0].fileName;
-                const fileData = resp_data[0].downloadedFile;
-                const link = document.createElement("a");
-                const extension = fileName.split('.').pop();
+                            if (resp_data.length > 0) {
+                                if (resp_data.length == 1) {
+                                    const fileName = resp_data[0].fileName;
+                                    const fileData = resp_data[0].downloadedFile;
+                                    const link = document.createElement("a");
+                                    const extension = fileName.split('.').pop();
 
-                link.download = fileName;
-                link.href =
-                  extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-                    ? `data:image/${extension};base64,${fileData}`
-                    : `data:application/${extension};base64,${fileData}`;
+                                    link.download = fileName;
+                                    link.href =
+                                        extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+                                            ? `data:image/${extension};base64,${fileData}`
+                                            : `data:application/${extension};base64,${fileData}`;
 
-                link.click();
-                this.toaster.toastSuccess(`Files downloaded successfully.`);
-              } else {
-                const zip = new JSZip();
-                const fileNames = new Set();
+                                    link.click();
+                                    this.toaster.toastSuccess(`Files downloaded successfully.`);
+                                } else {
+                                    const zip = new JSZip();
+                                    const fileNames = new Set();
 
-                resp_data.forEach((value) => {
-                  let fileName = value.fileName;
-                  const fileData = value.downloadedFile;
-                  const extension = fileName.split('.').pop();
-                  const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-                  let counter = 1;
+                                    resp_data.forEach((value) => {
+                                        let fileName = value.fileName;
+                                        const fileData = value.downloadedFile;
+                                        const extension = fileName.split('.').pop();
+                                        const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                                        let counter = 1;
 
-                  while (fileNames.has(fileName)) {
-                    fileName = `${baseName}_${counter}.${extension}`;
-                    counter++;
-                  }
-                  fileNames.add(fileName);
-                  zip.file(fileName, fileData, { base64: true });
-                });
+                                        while (fileNames.has(fileName)) {
+                                            fileName = `${baseName}_${counter}.${extension}`;
+                                            counter++;
+                                        }
+                                        fileNames.add(fileName);
+                                        zip.file(fileName, fileData, { base64: true });
+                                    });
 
-                zip.generateAsync({ type: "blob" }).then((content) => {
-                  const saveFileName = `AI_Agent_Files_${currentDate}.zip`;
-                  FileSaver.saveAs(content, saveFileName);
-                });
-                this.toaster.toastSuccess(`Files downloaded successfully.`);
-                this.subAgentFileHistory.forEach(file => file.selected = false);
-              }
-            } else {
-              this.toaster.showError("Error downloading files.");
+                                    zip.generateAsync({ type: "blob" }).then((content) => {
+                                        const saveFileName = `AI_Agent_Files_${currentDate}.zip`;
+                                        FileSaver.saveAs(content, saveFileName);
+                                    });
+                                    this.toaster.toastSuccess(`Files downloaded successfully.`);
+                                    this.subAgentFileHistory.forEach(file => file.selected = false);
+                                }
+                            } else {
+                                this.toaster.showError("Error downloading files.");
+                            }
+                        } else {
+                            this.toaster.showError("Error downloading files.");
+                        }
+                        this.spinner.hide();
+                    },
+                    (error) => {
+                        this.toaster.showError("Error");
+                        this.spinner.hide();
+                    }
+                );
+            },
+            reject: () => {
             }
-          } else {
-            this.toaster.showError("Error downloading files.");
-          }
-          this.spinner.hide();
-        },
-        (error) => {
-          this.toaster.showError("Error");
-          this.spinner.hide();
-        }
-      );
+        });
     } else {
-      this.toaster.showWarn("Please select the files.");
+        this.toaster.showWarn("Please select the files.");
     }
-  }
+}
 
-  subAgentFileDeleteSelectedFiles() {
-    const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+
+  subAgentFileDeleteSelectedFiles(input?: string | object) {
+    let selectedFiles: any[];
+
+    if (typeof input === 'string' && input === 'Files') {
+        selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
+    } else if (typeof input === 'object') {
+        selectedFiles = [input];
+    } else {
+        this.toaster.showWarn("Please select the files.");
+        return;
+    }
 
     if (selectedFiles.length >= 1) {
-      this.spinner.show();
-      this.rest_service.deleteAgentFIles(selectedFiles).subscribe(
-        (res: any) => {
-          this.getSubAgentFileHistoryLogs();
-          this.subAgentFileHistory.forEach(file => file.selected = false);
-          this.spinner.hide();
-          this.toaster.toastSuccess("Files deleted successfully.");
-        },
-        (err) => {
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror);
-        }
-      );
+        this.confirmationService.confirm({
+            message: `Are you sure you want to delete file(s)?`,
+            header: "Delete Files",
+            acceptLabel: "Yes, Delete",
+            rejectLabel: "No, Cancel",
+            rejectButtonStyleClass: 'btn reset-btn',
+            acceptButtonStyleClass: 'btn bluebg-button',
+            defaultFocus: 'none',
+            rejectIcon: 'null',
+            acceptIcon: 'null',
+            accept: () => {
+                this.spinner.show();
+                this.rest_service.deleteAgentFIles(selectedFiles).subscribe(
+                    (res: any) => {
+                        this.getSubAgentFileHistoryLogs();
+                        this.subAgentFileHistory.forEach(file => file.selected = false);
+                        this.spinner.hide();
+                        this.toaster.toastSuccess("Files deleted successfully.");
+                    },
+                    (err) => {
+                        this.spinner.hide();
+                        this.toaster.showError(this.toastMessages.apierror);
+                    }
+                );
+            },
+            reject: () => {
+            }
+        });
     } else {
-      this.toaster.showWarn("Please select the files.");
+        this.toaster.showWarn("Please select the files.");
     }
-  }
-
+}
 
   downloadSubAgentHistoryAsExcel() {
     const historyData = this.historyToDownload;

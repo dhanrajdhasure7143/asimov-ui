@@ -245,7 +245,7 @@
           </a> -->
         </div>
 
-        <mat-list-item *ngIf="this.userRoles.includes('System Admin')"
+        <mat-list-item *ngIf="isCustomerBots"
           (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}"
           id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">

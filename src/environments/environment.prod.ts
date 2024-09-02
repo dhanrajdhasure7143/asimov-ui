@@ -43,8 +43,9 @@ export const environment = {
   isSubscriptionModuleEnable:false, // this boolen to enable subscription module in side bar
   isCustomerBots : false,
   environmentName: "PROD",
-  paymentSuccessURL: "https://ezflow.epsoftinc.com/#/pages/subscriptions/paymentmethod",
-  paymentFailuerURL: "https://ezflow.epsoftinc.com/#/pages/aiagent/home",
+  paymentSuccessURL: "http://epsoftiap.internal.ai/#/pages/success",
+  paymentFailuerURL: "http://epsoftiap.internal.ai/#/",
+  cardCancelURL: "http://epsoftiap.internal.ai/#/pages/subscriptions?index=3",
   stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo",
   python_llm:"https://ezflowllm.epsoftinc.com",
   ezaskUrl: "http://ezask.epsoftinc.in",

@@ -172,22 +172,25 @@
                                     <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                     (change)="onFileSelected($event,field)" multiple>
                          
-                         <ng-container *ngIf="field.preAttributeType === 'file'">
-                                <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
-                                    <div>
-                                        <i class="pi pi-file" style="font-size: 0.9rem"></i> &nbsp;
-                                        <span>{{ attachment.originalFileName}}</span> &nbsp;
-                                        <span class="attachment-btns">
-                                            <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment.attachmentId)">
-                                                <i class="pi pi-download" style="font-size: 0.9rem"></i>
-                                            </button> 
-                                            <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment.attachmentId)">
-                                                    <i class="pi pi-times" style="font-size: 0.9rem"></i>
-                                            </button>
-                                        </span>
+                                    <ng-container *ngIf="field.preAttributeType === 'file'">
+                                        <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
+                                            <div>
+                                                <span>
+                                                    <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
+                                                    <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                </span>
+                                            </div>
+                                            <span class="attachment-btns">
+                                                <button class="download-button" pTooltip="Download" tooltipPosition="top"
+                                                    (click)="downloadAttachment(attachment)">
+                                                    <i class="pi pi-download" style="font-size: 1.5rem"></i>
+                                                </button>
+                                                <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
+                                                    <i class="pi pi-trash" style="font-size: 1.5rem; color:rgb(243, 128, 82)(244, 72, 72) !important"></i>
+                                                </button>
+                                            </span>
                                         </div>
-                                    </div>
-                                </ng-container>
+                                    </ng-container>
             
                                     <div style="width: 100%;" *ngIf="field.isValidateRequired">
                                         <div>
@@ -412,11 +415,11 @@
                                                 <i class="pi pi-file" style="font-size: 0.9rem"></i> &nbsp;
                                                 <span>{{ attachment.originalFileName}}</span> &nbsp;
                                                 <span class="attachment-btns">
-                                                    <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment.attachmentId)">
+                                                    <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment)">
                                                         <i class="pi pi-download" style="font-size: 0.9rem"></i>
                                                     </button> 
-                                                    <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment.attachmentId)">
-                                                            <i class="pi pi-times" style="font-size: 0.9rem"></i>
+                                                    <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
+                                                            <i class="pi pi-trash" style="font-size: 0.9rem"></i>
                                                     </button>
                                                 </span>
                                                 </div>
@@ -659,11 +662,11 @@
                                                     <i class="pi pi-file" style="font-size: 0.9rem"></i> &nbsp;
                                                     <span>{{ attachment.originalFileName}}</span> &nbsp;
                                                     <span class="attachment-btns">
-                                                        <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment.attachmentId)">
+                                                        <button class="download-button"  pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment)">
                                                             <i class="pi pi-download" style="font-size: 0.9rem"></i>
                                                         </button> 
-                                                        <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment.attachmentId)">
-                                                                <i class="pi pi-times" style="font-size: 0.9rem"></i>
+                                                        <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
+                                                                <i class="pi pi-trash" style="font-size: 0.9rem"></i>
                                                         </button>
                                                     </span>
                                                     </div>
@@ -941,13 +944,13 @@
     
             <!-- Search, Filter, Download buttons -->
             <div class="controls-container" *ngIf="activeTabMode === 'files'">
-                <input [disabled]="getSubAgentFilePaginatedData().length === 0" type="text"
+                <input type="text"
                     placeholder="Search by File Name" class="search-bar" (input)="onFileSearchChange($event)">
-                <button class="download-btn" (click)="subAgentFileDownloadSelectedFiles()"
+                <button class="download-btn" (click)="subAgentFileDownloadSelectedFiles('Files')"
                     [disabled]="!subAgentFileHasSelectedFiles()">
                     <i class="pi pi-download" style="color: #fff; margin-right: 5px;"></i> Download
                 </button>
-                <button class="download-btn" style="background-color:red" (click)="subAgentFileDeleteSelectedFiles()"
+                <button class="download-btn" style="background-color:red" (click)="subAgentFileDeleteSelectedFiles('Files')"
                     [disabled]="!subAgentFileHasSelectedFiles()">
                     <i class="pi pi-trash" style="color: #fff; margin-right: 5px;"></i> Delete
                 </button>
@@ -1012,7 +1015,7 @@
                     <td colspan="5" style="text-align: center; padding: 20px;">
                         <div class="no-data-found">
                             <img src="assets/images/agent/no-data-found.svg" alt="">
-                            No data found
+                            No Files found
                         </div>
                     </td>
                 </tr>
