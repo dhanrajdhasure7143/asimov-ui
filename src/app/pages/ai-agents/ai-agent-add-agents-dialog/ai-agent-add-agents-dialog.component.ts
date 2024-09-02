@@ -91,9 +91,9 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
               // this.toastService.showSuccess("Redirecting to payment gateway");
               this.toastService.toastSuccess("Agent added successfully");
               // this.onClose();
-              if (this.closeDialogCallback) {
+              // if (this.closeDialogCallback) {
                 this.closeDialogCallback();
-              }
+              // }
               this.spinner.hide();
 
             },error => {

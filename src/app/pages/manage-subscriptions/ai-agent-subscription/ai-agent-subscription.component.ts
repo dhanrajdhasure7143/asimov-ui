@@ -25,6 +25,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
     { header: 'Ai Agent Name', flex: 1.5, field: 'subAgentName', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
     { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Purchase On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
+    { header: 'Expiry Date', flex: 1, field: 'expiryOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Pricing', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Last Used', flex: 1, field: 'lastUsed', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Action', flex: 1, field: 'action', class: '', isCheckbox: false , isExpiredTab: false }

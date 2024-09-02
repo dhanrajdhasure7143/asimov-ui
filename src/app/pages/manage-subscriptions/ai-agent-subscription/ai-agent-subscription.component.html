@@ -68,6 +68,10 @@
                             </span>
                         </div>                                              
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
+
+                        <!-- Expiry Date -->
+                        <div class="row-cell">{{ subAgent.expiryOn ? (subAgent.expiryOn | date:'MMM d, y ') : '-' }}</div>
+
                         <div class="row-cell" style="font-weight: 500; color: #3199FF; font-size: 15px;">{{ subAgent.pricing }}.00</div>
                         <div class="row-cell">
                             {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
@@ -175,6 +179,9 @@
                             </span>
                         </div>
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
+                        <!-- Expiry Date -->
+                        <div class="row-cell">{{ subAgent.expiryOn ? (subAgent.expiryOn | date:'MMM d, y ') : '-' }}</div>
+
                         <div class="row-cell" style="font-weight: 500; color: #70adeb; font-size: 15px;">
                             {{ subAgent.pricing }}
                         </div>
