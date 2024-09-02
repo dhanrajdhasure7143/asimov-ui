@@ -575,7 +575,7 @@ export class AiAgentFormComponent implements OnInit {
 
   botCreate(type){
     if (this.predefinedBotsForm.valid) {
-      // this.spinner.show();
+      this.spinner.show();
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
