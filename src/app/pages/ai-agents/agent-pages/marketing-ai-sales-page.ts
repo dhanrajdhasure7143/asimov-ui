@@ -17,24 +17,16 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
-              <h1>Source Smarter To Hire Faster</h1>
-              <p>Match the right talent 5X faster, automate outreach and collaborate on candidates</p>
+              <h1>Boost Your Marketing Efficiency by 5X</h1>
+              <p>Automate outreach, Streamline collaboration, and watch your team thrive.</p>
               <ul>
                 <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
               </ul>
             </div>
             <div class="hero-pricing">
               <div class="pricing-controls">
-                <div class="agents">
-                  <label>Select no of Agents</label>
-                  <div class="counter">
-                    <button (click)="decrementAgents()">-</button>
-                    <span>{{ agentsQuantity }}</span>
-                    <button (click)="incrementAgents()">+</button>
-                  </div>
-                </div>
-                
-                <div class="billing-cycle">
+
+              <div class="billing-cycle">
                   <span [class.active]="!isYearly">Monthly</span>
                   <label class="switch">
                     <input type="checkbox" [(ngModel)]="isYearly">
@@ -43,8 +35,22 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
                   <span [class.active]="isYearly">Yearly</span>
                 </div>
               </div>
-              
-              <button class="btn pay-button" (click)="proceedToPay()">Proceed To Pay</button>
+
+                <div class="agents">
+                  <label>Select no of Agents</label>
+                  <div class='d-flex'>
+                    <div class="counter">
+                      <button (click)="decrementAgents()">-</button>
+                      <span>{{ agentsQuantity }}</span>
+                      <button (click)="incrementAgents()">+</button>
+                    </div> 
+                    <div class='prc-btn'>
+                      <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
+                    </div>
+                  </div>
+
+                </div>
+                
             </div>
           </div>
         </div>
@@ -53,7 +59,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       <div class="section">
         <div class="container">
           <h2 class="section-title">Key Features</h2>
-          <p class="section-description">The Recruitment AI Agent is designed to revolutionize the hiring process by automating and enhancing various recruitment tasks. This intelligent tool ensures that you find the perfect candidates quickly and efficiently, transforming the way you manage recruitment.</p>
+          <p class="section-description">The Marketing AI Agent combines the power of generative AI and Robotic  Process Automation (RPA) to automate and enhance your marketing efforts.  This sophisticated tool ensures your marketing activities are  efficient, effective, and tailored to your target audience.</p>
           <div class="grid">
             <div class="card" *ngFor="let feature of keyFeatures">
               <div class="card-image">
@@ -71,9 +77,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       <div class="section benefits">
         <div class="container">
           <h2 class="section-title1">Benefits</h2>
-          <div class="grid">
+          <div class="grid-benefits">
             <div class="card icon-card" *ngFor="let benefit of benefits">
-              <div class="icon-placeholder">
+              <div class="icon-placeholder icon-placeholder-benefits">
                 <img [src]="benefit.icon" [alt]="benefit.title">
               </div>
               <h3>{{ benefit.title }}</h3>
@@ -85,7 +91,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 
       <div class="section how-it-works">
         <div class="container">
-          <h2 class="section-title">How Does Our RFP AI Agent Work?</h2>
+          <h2 class="section-title">How Does Our Recruitment AI Agent Work?</h2>
           <div class="grid">
             <div class="card icon-card" *ngFor="let step of workingSteps">
               <div class="icon-placeholder">
@@ -124,14 +130,13 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('/assets/images/agent/sales/Rectangle 2667.png');
+      background-image: url('/assets/images/agent/sales/marketing-head.png');
       background-size: cover;
       background-position: center;
       color: white;
       padding: 70px 0;
     }
     .agents {
-        display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-left: 6px;
@@ -224,10 +229,10 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #FFFFFF33;
       padding: 1.5rem;
       border-radius: 10px;
-      width: 300px;
+      width: 375px;
     }
     .pricing-controls {
       margin-bottom: 1rem;
@@ -243,7 +248,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
     .billing-cycle {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .billing-cycle span {
       color: white;
@@ -289,7 +294,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
     .btn {
       background-color: #3199ff;
       color: white;
-      padding: 12px 24px;
+      padding: 5px 13px;
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
@@ -299,6 +304,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
     }
     .pay-button {
       text-align: center;
+      float: right;
     }
     .section {
       padding: 100px 0;
@@ -333,6 +339,12 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       gap: 20px;
       margin-bottom: -45px;
     }
+    .grid-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: -45px;
+    }
     .card {
       background-color: white;
       border-radius: 14px;
@@ -354,6 +366,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      min-height: 171px;
     }
     .card h3 {
       margin-bottom: 10px;
@@ -377,6 +390,9 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       justify-content: center;
       margin: 0 auto 20px;
     }
+    .icon-placeholder-benefits{
+      margin: 0 auto 0px !important;
+      }
     .icon-placeholder img {
       max-width: 100%;
       max-height: 100%;
@@ -399,85 +415,93 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       font-size: 2.5em;
       margin-bottom: 30px;
     }
+    .prc-btn{
+      margin-left: 15%
+    }
   `]
 })
 export class MarketingAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
-    isYearly: boolean = false;
+    isYearly: boolean = true;
     selectedAgentId:any;
 
-  heroFeatures = [
-    'Automated Candidate Sourcing',
-    'Smart Resume Screening',
-    'AI Powered Candidate Matching',
-    'Seamless Integration with HR Systems'
-  ];
-
-  keyFeatures = [
-    {
-      image:"assets/images/agent/sales/content 1.png",
-      title: 'Accurate Job Descriptions',
-      description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
-    },
-    {
-      image:"assets/images/agent/sales/content 2.png",
-      title: 'Candidate Sourcing',
-      description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
-    },
-    {
-      image:"assets/images/agent/sales/content 3.png",
-      title: 'Matching Percentage',
-      description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
-    },
-    {
-      image:"assets/images/agent/sales/content 4.png",
-      title: 'Automated Job Posting',
-      description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
-    }
-  ];
-
-  benefits = [
-    {
-      icon: 'assets/images/agent/sales/time-efficiency.svg',
-      title: 'Time Efficiency',
-      description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
-    },
-    {
-      icon: 'assets/images/agent/sales/improved-qulity.svg',
-      title: 'Improved Quality',
-      description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
-    },
-    {
-      icon: 'assets/images/agent/sales/decision-making.svg',
-      title: 'Enhanced Decision-Making',
-      description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
-    },
-    {
-      icon: 'assets/images/agent/sales/streamline-process.svg',
-      title: 'Streamlined Processes',
-      description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
-    }
-  ];
-
-  workingSteps = [
-    {
-      icon: 'assets/images/agent/sales/bell-icon.svg',
-      title: 'Subscribe Easily',
-      description: 'Start with a simple subscription process — no hidden fees or complexities.'
-    },
-    {
-      icon: 'assets/images/agent/sales/preferences.svg',
-      title: 'Set Your Preferences',
-      description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
-    },
-    {
-      icon: 'assets/images/agent/sales/automate.svg',
-      title: 'Automate',
-      description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
-    }
-  ];
+    heroFeatures = [
+      'Dynamic Campaign Management',
+      'Instant Analytics',
+      'Tailored Marketing Solution',
+      'Seamless Platform Integration',
+    ];
+  
+    keyFeatures = [
+      {
+        image:"assets/images/agent/sales/marketing-content 1.png",
+        title: 'Content Creation',
+        description: 'Generates high-quality text and images tailored to your brand, ensuring a consistent voice and audience engagement.'
+      },
+      {
+        image:"assets/images/agent/sales/marketing-content 2.png",
+        title: 'Automated Promotion',
+        description: 'Seamlessly distributes content across platforms, expanding reach and boosting visibility with minimal effort.'
+      },
+      {
+        image:"assets/images/agent/sales/marketing-content 3.png",
+        title: 'Sentiment Analysis',
+        description: 'Monitors customer reactions in real-time, refining strategies for better resonance and effectiveness.'
+      },
+      {
+        image:"assets/images/agent/sales/marketing-content 4.png",
+        title: 'A/B Testing',
+        description: 'Optimizes content by testing different versions, improving the impact of your marketing campaigns.'
+      }
+    ];
+  
+    benefits = [
+      {
+        icon: 'assets/images/agent/sales/marketing-effeiciency.svg',
+        title: 'Efficiency',
+        description: 'Automates content creation and promotion, freeing your team for strategic planning and high-value tasks.'
+      },
+      {
+        icon: 'assets/images/agent/sales/marketing-quality.svg',
+        title: 'Quality',
+        description: 'Produces engaging content that drives attention, builds brand loyalty, and increases conversions.'
+      },
+      {
+        icon: 'assets/images/agent/sales/marketing-reach.svg',
+        title: 'Reach',
+        description: 'Maximizes exposure by effortlessly promoting content across multiple platforms, attracting a larger audience.'
+      },
+      {
+        icon: 'assets/images/agent/sales/marketing-insights.svg',
+        title: 'Insights',
+        description: 'Provides valuable data on customer sentiments and campaign performance for informed, personalized strategies.'
+      },
+      {
+        icon: 'assets/images/agent/sales/marketing-optimization.svg',
+        title: 'Optimization',
+        description: 'Continuously refines marketing efforts through A/B testing and real-time feedback for sustained effectiveness.'
+      }
+    ];
+  
+    workingSteps = [
+      {
+        icon: 'assets/images/agent/sales/bell-icon.svg',
+        title: 'Subscribe Easily',
+        description: 'Start with a simple subscription process — no hidden fees or complexities.'
+      },
+      {
+        icon: 'assets/images/agent/sales/preferences.svg',
+        title: 'Set Your Preferences',
+        description: 'Customize the AI Agent’s interactions, optimizations, and communications to match your specific needs.'
+      },
+      {
+        icon: 'assets/images/agent/sales/automate.svg',
+        title: 'Automate',
+        description: 'Relax as our AI Agent autonomously handles your manual marketing activities pipeline.'
+      }
+    ];
 
   constructor(private route : ActivatedRoute,
     private crypto: CryptoService,
