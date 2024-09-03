@@ -1,32 +1,32 @@
 <form [formGroup]="predefinedBotsForm">
   <div>
-    <label for="">AI Action*</label>
-    <div formArrayName="aiActions">
-      <div *ngFor="let action of aiActions; let i = index">
-        <label>
+    <div class="form-group full-width">
+      <label>AI Action*</label>
+      <div formArrayName="aiActions" class="checkbox-group">
+        <div *ngFor="let action of aiActions; let i = index" class="checkbox-item">
           <input type="checkbox" [formControlName]="i" disabled>
-          {{ action.label }}
-        </label>
+          <label>{{ action.label }}</label>
+        </div>
       </div>
     </div>
-  </div>
-
-  <ng-container *ngFor="let action of aiActions; let i = index">
-    <ng-container *ngIf="predefinedBotsForm.get('aiActions').value[i]">
-      <ng-container *ngFor="let field of getAssociatedFields(i)">
-        <div class="form-group">
-          <label>{{ field.preAttributeLable }}*</label>
-          <ng-container [ngSwitch]="field.preAttributeType">
-            <input *ngSwitchCase="'text'" type="text" [value]="getFieldValue(field.preAttributeName)" disabled>
-            <input *ngSwitchCase="'file'" type="file" [value]="getFieldValue(field.preAttributeName)" disabled>
-            <!-- Add more cases for other field types as needed -->
-            <div *ngSwitchCase="'file'" class="file-input-wrapper">
-              <!-- <button class="file-input-button" disabled>Choose File</button> -->
-              <span class="file-name">{{ getFieldValue(field.preAttributeName) }}</span>
+    <div class="form-container">
+      <ng-container *ngFor="let action of aiActions; let i = index">
+        <ng-container *ngIf="isActionChecked(i)">
+          <ng-container *ngFor="let field of getAssociatedFields(i)">
+            <div class="form-group" *ngIf="hasFieldValue(field)">
+              <label>{{ field.preAttributeLable }}*</label>
+              <ng-container [ngSwitch]="field.preAttributeType">
+                <input *ngSwitchCase="'text'" type="text" [value]="getFieldValue(field)" disabled>
+                <div *ngSwitchCase="'file'" class="file-input-wrapper">
+                  <!-- <input type="file" [value]="getFieldValue(field.preAttributeName)" disabled> -->
+                  <span class="file-name">{{ getAttachmentName(field.preAttributeName) }}</span>
+                </div>
+                <!-- Add more cases for other field types as needed -->
+              </ng-container>
             </div>
           </ng-container>
-        </div>
+        </ng-container>
       </ng-container>
-    </ng-container>
-  </ng-container>
+    </div>
+  </div>
 </form>

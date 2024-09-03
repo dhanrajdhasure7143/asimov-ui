@@ -40,12 +40,12 @@ export class AiAgentConfigOverlayComponent implements OnInit {
   }
 
   getData(productId: string, subAgentId: string, runId: string) {
-    this.spinner.show()
+    this.spinner.show();
     this.rest_service.getDisabledFields(productId, subAgentId, runId).subscribe((res: any) => {
       this.formFields = res.data.data;
       this.attachments = this.processAttachments(res.data.attachments);
       this.createFormControls();
-      this.spinner.hide()
+      this.spinner.hide();
     });
   }
 
@@ -66,20 +66,30 @@ export class AiAgentConfigOverlayComponent implements OnInit {
       const aiActionsFormArray = this.predefinedBotsForm.get('aiActions') as FormArray;
 
       this.aiActions.forEach(action => {
-        aiActionsFormArray.push(this.fb.control({ value: true, disabled: true }));
+        const isChecked = this.isActionFieldsPopulated(action);
+        aiActionsFormArray.push(this.fb.control({ value: isChecked, disabled: true }));
       });
     }
   }
 
-  getFieldValue(fieldName: string): string {
-    const field = this.formFields.find(f => f.preAttributeName === fieldName);
-    if (field) {
-      if (field.preAttributeType === 'file') {
-        return this.attachments[fieldName] || 'No file chosen';
-      }
-      return field.preAttributeValue || '';
-    }
-    return '';
+  isActionFieldsPopulated(action: any): boolean {
+    const fieldNames = JSON.parse(action.field.replace(/'/g, '"'));
+    return fieldNames.some(fieldName => {
+      const field = this.formFields.find(f => f.preAttributeName === fieldName);
+      return this.hasFieldValue(field);
+    });
+  }
+
+  isActionChecked(index: number): boolean {
+    return this.predefinedBotsForm.get('aiActions').value[index];
+  }
+
+  getFieldValue(field: any): string {
+    return field.preAttributeValue || '';
+  }
+
+  getAttachmentName(fieldName: string): string {
+    return this.attachments[fieldName] || 'No file chosen';
   }
 
   getAssociatedFields(actionIndex: number): any[] {
@@ -88,4 +98,10 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     return this.formFields.filter(field => fieldNames.includes(field.preAttributeName));
   }
 
+  hasFieldValue(field: any): boolean {
+    if (field.preAttributeType === 'file') {
+      return this.getAttachmentName(field.preAttributeName) !== 'No file chosen';
+    }
+    return !!this.getFieldValue(field);
+  }
 }
