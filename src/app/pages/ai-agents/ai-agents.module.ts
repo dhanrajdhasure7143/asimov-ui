@@ -36,6 +36,7 @@ import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
 import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
 import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
 import { AiAgentConfigOverlayComponent } from './ai-agent-config-overlay/ai-agent-config-overlay.component';
+import { AiAgentMarketingComponent } from './form/ai-agent-marketing/ai-agent-marketing.component';
 
 
 
@@ -59,7 +60,8 @@ import { AiAgentConfigOverlayComponent } from './ai-agent-config-overlay/ai-agen
     RfpAiSalesPageComponent,
     CustomerBotAiSalesPageComponent,
     MarketingAiSalesPageComponent,
-    AiAgentConfigOverlayComponent
+    AiAgentConfigOverlayComponent,
+    AiAgentMarketingComponent
   ],
   imports: [
     CommonModule,
