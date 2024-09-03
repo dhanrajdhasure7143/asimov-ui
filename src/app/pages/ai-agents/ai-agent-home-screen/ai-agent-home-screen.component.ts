@@ -48,6 +48,7 @@ export class AiAgentHomeScreenComponent implements OnInit {
   userEmail : any;
   enterPrise_plan:any={};
   enterpriseFeatures = [];
+  isAddedAgentsPopup = false;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -156,6 +157,7 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
 
   onDialogHide() {
     this.displayAddAgentDialog = false;
+    this.isAddedAgentsPopup = true;
     if (this.addAgentsDialog) {
       this.addAgentsDialog.onClose();
     }
@@ -445,6 +447,14 @@ proceedToSubscribe() {
     this.isOpenEnterprice = false
     this.isOpenThankyou = !this.isOpenThankyou
   }
+
+  popUpHider (value) {
+    this.isAddedAgentsPopup = false;
+    if (value === 'Navigate') {
+      this.onclickBot(this.selectedAgent);
+    }
+  }
+  
   showPopupDailogue() {
     this.isPopupVisible = true;
   }
