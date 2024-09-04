@@ -24,6 +24,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
   displayAddAgentDialog: boolean = false;
   showSkeleton:boolean = true;
   agentExpire: any;
+  searchTerm:string;
+  filterAgentsList:any;
+  isAsscending: boolean = false;
   
   constructor(
     private router: Router,
@@ -75,6 +78,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
     // let tenant_id = localStorage.getItem("tenantName");
     this.rest_api.getSubAiAgent(this.product_id).subscribe((res: any) => {
       this.subAgentList = res.data;
+      this.filterAgentsList = res.data;
       if(res.code == 4200){
         this.agentExpire = res.expiryDate;
         // this.agentName = res.agentName;
@@ -239,5 +243,32 @@ export class AiAgentSubAgentsComponent implements OnInit {
       },
       reject: (type) => { }
     });
+  }
+
+  sortAgents(){
+    this.isAsscending = !this.isAsscending;
+    this.filterAgentsList.sort((a, b) => {
+      const nameA = a.subAgentName.toUpperCase();
+      const nameB = b.subAgentName.toUpperCase();
+      if (nameA < nameB) {
+      return -1;
+      }
+      if (nameA > nameB) {
+      return 1;
+      }
+      return 0;
+    });
+  }
+
+  descendingOrder(){
+    this.filterAgentsList.reverse();
+    this.isAsscending = !this.isAsscending;
+  }
+
+  filterAgents(){
+    if(this.searchTerm == ""){
+      this.filterAgentsList = this.subAgentList;
+    }else{
+      this.filterAgentsList = this.subAgentList.filter(agent => agent.subAgentName.toLowerCase().includes(this.searchTerm.toLowerCase()));}
   }
 }

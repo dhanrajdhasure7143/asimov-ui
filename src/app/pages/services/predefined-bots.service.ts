@@ -189,4 +189,8 @@ export class PredefinedBotsService {
   cancelSubAgentsSubscription(body){
     return this.http.put(`/subscriptionservice/v1/subscriptions/cancel-agents`,body)  
   }
+
+  updateUserDetails(userId){
+    return this.http.post(`/api/user/v2/registration-continue?userId=${userId}`,{})
+  } 
 }

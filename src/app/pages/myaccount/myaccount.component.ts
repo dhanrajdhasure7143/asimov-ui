@@ -51,6 +51,7 @@ export class MyaccountComponent implements OnInit {
     // this.loader.show();
     this.userDetails();
     this.countryInfo = countries.Countries;
+    console.log(this.countryInfo)
   }
 
   updateAccount() {
@@ -85,9 +86,11 @@ export class MyaccountComponent implements OnInit {
     this.useremail = localStorage.getItem("ProfileuserId");
     this.api.getUserDetails(this.useremail).subscribe((data) => {
       this.formOne = data;
+      this.formOne.country = this.formOne.country.toLowerCase();
+      console.log(this.formOne)
       this.dt.userDetails(data);
-      this.getAllStates();
-      this.gatAllCities();
+      // this.getAllStates();
+      // this.gatAllCities();
       this.isRefresh = !this.isRefresh;
       this.show = true;
       for (var i = 0; i < this.countryInfo.length; i++) {

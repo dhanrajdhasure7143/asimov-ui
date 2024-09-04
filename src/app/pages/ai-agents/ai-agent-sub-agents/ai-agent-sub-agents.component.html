@@ -35,6 +35,24 @@
           <div class="main-header-title">{{agentName}} Agent</div>
           <!-- <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y'}}</p> -->
         </div>
+        <div class="search-sort-section">
+          <div class="search-field position-relative">
+            <input type="text" class="form-control rounded-pill search-input" placeholder="Search" [(ngModel)]="searchTerm" (ngModelChange)="filterAgents()">
+            <img src="assets/images/agent/sales/search-icon.svg" class="search-icon-img" alt="">
+          </div>
+          <button class="btn btn-primary rounded-pill sort-button" (click)="sortAgents()" *ngIf="!isAsscending">
+            <p class="m-0">Sort A-Z</p>
+            <div class="icon-section">
+              <img src="assets/images/agent/sales/sorter.svg" alt="">
+            </div>
+          </button>
+          <button class="btn btn-primary rounded-pill sort-button"(click)="descendingOrder()" *ngIf="isAsscending">
+            <p class="m-0">Sort Z-A</p>
+            <div class="icon-section">
+              <img src="assets/images/agent/sales/sorter.svg" alt="">
+            </div>
+          </button>
+        </div>
         <button class="btn btn-primary rounded-pill card-view" (click)="showAddAgentDialog()">+ Add More Agents</button>
       </div>
     </div>
@@ -57,7 +75,7 @@
     </div>
   
     <div class="row g-4" *ngIf="!showSkeleton">
-      <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of subAgentList">
+      <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of filterAgentsList">
         <div class="card agent-card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2" style="padding: 3px 5px;">

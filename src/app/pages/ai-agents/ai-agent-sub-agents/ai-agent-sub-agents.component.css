@@ -232,3 +232,33 @@
     .g-4{
       padding-top: 5px;
     }
+
+
+    /* Search Sort Section */
+    .search-sort-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+    }
+    .search-sort-section  input{
+      padding-left: 36px !important;
+    }
+    .search-sort-section button.sort-button {
+      background: none !important;
+      border: 1px solid #000 !important;
+      color: #000000 !important;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 33%;
+      opacity: 0.8;
+    }
+    .search-icon-img {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+  }
+  .search-field {
+    width: 65%;
+  }
