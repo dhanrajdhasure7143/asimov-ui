@@ -1,6 +1,13 @@
 <div class="container-fluid  d-flex flex-column h-100 main-screen">
     <div class="main-header-grid">
-        <div class="main-header-title"> {{predefinedBot_name}} Agent</div>
+        <div class="main-header-title"> 
+            <label id="popup_title" (click)="backToSubAgent()">
+                <a class="imageBox">
+                    <img class="default-arrow" src="assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                </a>
+            </label>
+            {{predefinedBot_name}} Agent</div>
     </div>
     <div class="scrollable-content flex-grow-1">
     <div class="form-flow predefined-bots">
@@ -15,7 +22,7 @@
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
                         <span class="editfields">
-                            <i class="pi pi-check" *ngIf="_agentName" (click)="updateDashboardName()"></i>
+                            <i class="pi pi-check" *ngIf="_agentName" (click)="updateSubAgentName()"></i>
                             <i class="pi pi-times " (click)="onDeactivate()"></i>
                         </span>
                 </div>
@@ -62,7 +69,7 @@
                                                 <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                             </span>
                                             <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
+                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
                                     </div>
                                     <div class="input-icon-wrapper">
                                         <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -219,7 +226,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            </div>
+                        </div>
                         </div>
                         <div>
                             <div class="form-group row" *ngIf="predefinedBot_schedulerRequired && !isEdit">
@@ -267,8 +274,8 @@
                         <ng-template pTemplate="content">
                             <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                                 <div formGroupName="fields" class="row">
-                                <div *ngFor="let field of currentPageFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
-                                    <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
+                                <ng-container *ngFor="let field of currentPageFields; trackBy:loopTrackBy" >
+                                    <div *ngIf="field.visibility && field.specification !='SPECIFIC'" class="form-group" [ngClass]="{'col-6': field.visibility}">
                                         <!-- <label [for]="field.name" class="col-md-4 col-form-label"><b>{{ field.preAttributeLable }} <span class="required" *ngIf="field.attributeRequired">*</span></b></label> -->
                                         <div class="">
                                             <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
@@ -277,7 +284,7 @@
                                                         <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                     </span>
                                                     <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                                    optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
+                                                    optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
                                             </div>
                                             <div class="input-icon-wrapper">
                                                 <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -459,8 +466,8 @@
                                                 <div *ngIf="predefinedBotsForm.get(field.preAttributeName).errors?.pattern">Invalid format.</div>
                                             </div> -->
                                         </div>
-                                    </ng-container>
-                                </div>
+                                    </div>
+                                </ng-container>
                             </div>
                                 
                             
@@ -540,8 +547,8 @@
                             <ng-template pTemplate="content">
                                 <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                                     <div formGroupName="fields" class="row">
-                                    <div *ngFor="let field of currentPageFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
-                                        <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
+                                    <ng-container *ngFor="let field of currentPageFields; trackBy:loopTrackBy" >
+                                        <div *ngIf="field.visibility && field.specification =='SPECIFIC'" class="form-group" [ngClass]="{'col-6': field.visibility}">
                                             <div class="">
                                                 <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                                                 <div class="input-icon-wrapper">
@@ -549,7 +556,7 @@
                                                             <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                         </span>
                                                         <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [style]="{'width':'70%','border-radius':'8px'}" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                                        optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)"></p-dropdown>
+                                                        optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
                                                 </div>
                                                 <div class="input-icon-wrapper">
                                                     <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -699,8 +706,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </ng-container>
-                                    </div>
+                                        </div>
+                                    </ng-container>
                                 </div>
                                     <div>
                                         <div class="form-group row" *ngIf="predefinedBot_schedulerRequired && !isEdit">

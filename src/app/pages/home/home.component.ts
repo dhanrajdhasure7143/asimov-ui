@@ -5,6 +5,7 @@ import { PagesHints } from '../model/pages.model';
 import { RestApiService } from '../services/rest-api.service';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services';
+import { PredefinedBotsService } from '../services/predefined-bots.service';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class HomeComponent implements OnInit {
     private dt:DataTransferService, 
     private rest_api: RestApiService, 
     private route: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private rest_api_service: PredefinedBotsService 
     ) 
     {
       this.route.queryParams.subscribe(params => {
@@ -62,7 +64,18 @@ export class HomeComponent implements OnInit {
       }
     
     // this.getAllPlans();
-    this.screenNavigation();
+    // this.screenNavigation();
+    let userMail = localStorage.getItem('ProfileuserId');
+    this.rest_api_service.updateUserDetails(userMail).subscribe((res:any)=>{
+      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
+    },err=>{
+      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
+    })
+
+
+
+
+    
 
     // this.rest_api.getUserRole(2).subscribe(res=>{
     // this.userRole=res.message;

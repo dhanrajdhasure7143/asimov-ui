@@ -35,6 +35,24 @@
           <div class="main-header-title">{{agentName}} Agent</div>
           <!-- <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y'}}</p> -->
         </div>
+        <div class="search-sort-section">
+          <div class="search-field position-relative">
+            <input type="text" class="form-control rounded-pill search-input" placeholder="Search" [(ngModel)]="searchTerm" (ngModelChange)="filterAgents()">
+            <img src="assets/images/agent/sales/search-icon.svg" class="search-icon-img" alt="">
+          </div>
+          <!-- <button class="btn btn-primary rounded-pill sort-button" (click)="sortAgents()" *ngIf="!isAscending">
+            <p class="m-0">Sort A-Z</p>
+            <div class="icon-section">
+              <img src="assets/images/agent/sales/sorter.svg" alt="">
+            </div>
+          </button>
+          <button class="btn btn-primary rounded-pill sort-button"(click)="descendingOrder()" *ngIf="isAscending">
+            <p class="m-0">Sort Z-A</p>
+            <div class="icon-section">
+              <img src="assets/images/agent/sales/sorter.svg" alt="">
+            </div>
+          </button> -->
+        </div>
         <button class="btn btn-primary rounded-pill card-view" (click)="showAddAgentDialog()">+ Add More Agents</button>
       </div>
     </div>
@@ -57,7 +75,7 @@
     </div>
   
     <div class="row g-4" *ngIf="!showSkeleton">
-      <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of subAgentList">
+      <div class="col-md-6 col-lg-3 agent-main-card" *ngFor="let agent of filterAgentsList">
         <div class="card agent-card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2" style="padding: 3px 5px;">
@@ -78,11 +96,14 @@
                   Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}}
                   <!-- Last run: {{agent.lastExecution|date:'MMM dd, y hh:mm'}} -->
                 </p>
-                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
-                  Expired {{agent.expiryDate|date:'dd-MM-yyyy'}}
-                </p>
                 <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
                   Try a simple task to see it in action
+                </p>
+                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
+                  Expired: {{agent.expiryDate|date:'dd-MM-yyyy'}}
+                </p>
+                <p style="width: 148px;" class="badge1" *ngIf="!agent.isExpired && agent.expiryDate">
+                 <strong> Expires on: {{agent.expiryDate|date:'dd-MM-yyyy'}} </strong>
                 </p>
               </div>
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->

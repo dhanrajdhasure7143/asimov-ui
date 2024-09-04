@@ -44,7 +44,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
                 </div>
               </div>
               
-              <button class="btn pay-button" (click)="proceedToPay()">Proceed To Pay</button>
+              <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
             </div>
           </div>
         </div>
@@ -131,7 +131,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       padding: 70px 0;
     }
     .agents {
-        display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-left: 6px;
@@ -224,10 +223,10 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #FFFFFF33;
       padding: 1.5rem;
       border-radius: 10px;
-      width: 300px;
+      width: 375px;
     }
     .pricing-controls {
       margin-bottom: 1rem;
@@ -243,7 +242,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
     .billing-cycle {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .billing-cycle span {
       color: white;
@@ -299,6 +298,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
     }
     .pay-button {
       text-align: center;
+      float: right;
     }
     .section {
       padding: 100px 0;
@@ -354,6 +354,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      min-height: 171px;
     }
     .card h3 {
       margin-bottom: 10px;
@@ -405,7 +406,7 @@ export class RecruitmentAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
-    isYearly: boolean = false;
+    isYearly: boolean = true;
     selectedAgentId:any;
 
   heroFeatures = [

@@ -1201,10 +1201,11 @@ export class AiAgentFormComponent implements OnInit {
     }
   }
 
-  updateDashboardName(){
+  updateSubAgentName(){
     // this.inplace.deactivate();
     this.spinner.show();
-    this.rest_service.updateSubAgentName(this.params.agentId,this._agentName).subscribe(res=>{
+    let isEdit = this.params.type == "create" ? true: false;
+    this.rest_service.updateSubAgentName(isEdit,this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");
       this.spinner.hide();
       this.isSubAgentNameEdit = false;
@@ -1870,6 +1871,10 @@ handleHistoryTab (hist) {
         this.spinner.hide();
         this.toaster.showError(this.toastMessages.apierror);
       });
+  }
+
+  backToSubAgent() {
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.params.id, botName: this.predefinedBot_name } });
   }
 
 }

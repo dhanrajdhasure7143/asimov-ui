@@ -193,7 +193,7 @@
     overflow-x: hidden;  /* Enable vertical scrolling */
     padding: 0 15px;   /* Optional: Padding for better content spacing */
     overflow-y: auto;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .fixed-bottom {
@@ -1250,22 +1250,53 @@ input.p-inputtext {
 
 /* Config overlay form new CSS */
 
-.form-group {
-  margin-bottom: 15px;
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 20px;
 }
 
-label {
+.form-group {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 250px;
+}
+
+.form-group label {
   display: block;
   margin-bottom: 5px;
 }
 
-input[type="text"], input[type="file"] {
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group .file-input-wrapper {
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  background-color: #f9f9f9;
 }
 
-input[type="checkbox"] {
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.file-name {
+  margin-left: 10px;
+  /* font-style: italic; */
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0px 20px;;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
   margin-right: 5px;
 }

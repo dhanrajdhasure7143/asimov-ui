@@ -1162,6 +1162,13 @@ button.enterprise-plan-bottom-stickier p{
   
 }
 
+.enterprise-header-section-modal .add-agents-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000 !important;
+  
+}
+
 .enterprise-header-section-modal h2 span {
   font-size: 14px !important;
   font-weight: 400 !important;
