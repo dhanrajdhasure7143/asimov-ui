@@ -40,18 +40,18 @@
             <input type="text" class="form-control rounded-pill search-input" placeholder="Search" [(ngModel)]="searchTerm" (ngModelChange)="filterAgents()">
             <img src="assets/images/agent/sales/search-icon.svg" class="search-icon-img" alt="">
           </div>
-          <button class="btn btn-primary rounded-pill sort-button" (click)="sortAgents()" *ngIf="!isAsscending">
+          <!-- <button class="btn btn-primary rounded-pill sort-button" (click)="sortAgents()" *ngIf="!isAscending">
             <p class="m-0">Sort A-Z</p>
             <div class="icon-section">
               <img src="assets/images/agent/sales/sorter.svg" alt="">
             </div>
           </button>
-          <button class="btn btn-primary rounded-pill sort-button"(click)="descendingOrder()" *ngIf="isAsscending">
+          <button class="btn btn-primary rounded-pill sort-button"(click)="descendingOrder()" *ngIf="isAscending">
             <p class="m-0">Sort Z-A</p>
             <div class="icon-section">
               <img src="assets/images/agent/sales/sorter.svg" alt="">
             </div>
-          </button>
+          </button> -->
         </div>
         <button class="btn btn-primary rounded-pill card-view" (click)="showAddAgentDialog()">+ Add More Agents</button>
       </div>
@@ -103,7 +103,7 @@
                   Expired: {{agent.expiryDate|date:'dd-MM-yyyy'}}
                 </p>
                 <p style="width: 148px;" class="badge1" *ngIf="!agent.isExpired && agent.expiryDate">
-                  Expiry: {{agent.expiryDate|date:'dd-MM-yyyy'}}
+                 <strong> Expires on: {{agent.expiryDate|date:'dd-MM-yyyy'}} </strong>
                 </p>
               </div>
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->

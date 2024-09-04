@@ -26,7 +26,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
   agentExpire: any;
   searchTerm:string;
   filterAgentsList:any;
-  isAsscending: boolean = false;
+  isAscending: boolean = false;
   
   constructor(
     private router: Router,
@@ -245,24 +245,51 @@ export class AiAgentSubAgentsComponent implements OnInit {
     });
   }
 
-  sortAgents(){
-    this.isAsscending = !this.isAsscending;
+  // sortAgents(){
+  //   this.isAscending = !this.isAscending;
+  //   this.filterAgentsList.sort((a, b) => {
+  //     const nameA = a.subAgentName.toUpperCase();
+  //     const nameB = b.subAgentName.toUpperCase();
+  //     if (nameA < nameB) {
+  //     return -1;
+  //     }
+  //     if (nameA > nameB) {
+  //     return 1;
+  //     }
+  //     return 0;
+  //   });
+  // }
+
+  sortAgents() {
+    this.isAscending = !this.isAscending;
+    
     this.filterAgentsList.sort((a, b) => {
       const nameA = a.subAgentName.toUpperCase();
       const nameB = b.subAgentName.toUpperCase();
-      if (nameA < nameB) {
-      return -1;
+      
+      // Extract numeric part if it exists
+      const numA = parseInt(nameA.match(/\d+/)?.[0] || '0');
+      const numB = parseInt(nameB.match(/\d+/)?.[0] || '0');
+      
+      if (numA !== numB) {
+        // If numeric parts are different, sort by number
+        return this.isAscending ? numA - numB : numB - numA;
+      } else {
+        // If numeric parts are the same or don't exist, sort alphabetically
+        if (nameA < nameB) {
+          return this.isAscending ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return this.isAscending ? 1 : -1;
+        }
+        return 0;
       }
-      if (nameA > nameB) {
-      return 1;
-      }
-      return 0;
     });
   }
 
   descendingOrder(){
     this.filterAgentsList.reverse();
-    this.isAsscending = !this.isAsscending;
+    this.isAscending = !this.isAscending;
   }
 
   filterAgents(){
