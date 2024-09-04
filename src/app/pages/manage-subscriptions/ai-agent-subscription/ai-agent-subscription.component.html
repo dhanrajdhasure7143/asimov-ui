@@ -44,9 +44,9 @@
                             Renew All
                         </button>
                         
-                        <button *ngIf="agent.autoRenew && getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 1" class="cancel-all-button" (click)="subagentCancelAllSubscription(agent)">
+                        <!-- <button *ngIf="agent.autoRenew && getSelectedSubAgentsByStatus(agent, 'ACTIVE').length > 1" class="cancel-all-button" (click)="subagentCancelAllSubscription(agent)">
                             Cancel Subscription
-                        </button>
+                        </button> -->
                     </div>                    
                 </div>
 
@@ -60,7 +60,7 @@
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
                         <div class="row-cell sub-agent-row-header" style="flex:1.46">
-                            <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" />
+                            <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" [disabled]="!agent.autoRenew || (agent.autoRenew && !subAgent.expiryDate)" />
                             {{ subAgent.subAgentName }}
                         </div>
                         <div class="row-cell">
@@ -71,9 +71,9 @@
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
 
                         <!-- Expiry Date -->
-                        <div class="row-cell">{{ subAgent.expiryOn ? (subAgent.expiryOn | date:'MMM d, y ') : '-' }}</div>
+                        <div class="row-cell">{{ subAgent.expiryDate ? (subAgent.expiryDate | date:'MMM d, y ') : '-' }}</div>
 
-                        <div class="row-cell" style="font-weight: 500; color: #3199FF; font-size: 15px;">{{ subAgent.pricing }}.00</div>
+                        <div class="row-cell" style="font-weight: 500; color: #3199FF; font-size: 15px;">{{ subAgent.pricing }}</div>
                         <div class="row-cell">
                             {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
                         </div>
@@ -85,7 +85,7 @@
                             </button>
                         
                             <button *ngIf="subAgent.status === 'ACTIVE' && agent.autoRenew" class="action-button cancel-button"
-                                (click)="subagentCancelSubscription(agent.productId, subAgent)">Cancel</button>
+                                (click)="subagentCancelSubscription(agent.productId, subAgent)" pTooltip="Cancel Subscription" tooltipPosition="right">Cancel</button>
 
                             <button *ngIf="subAgent.status === 'ACTIVE' && !agent.autoRenew" class="action-button cancel-button">-</button>
                         </div>

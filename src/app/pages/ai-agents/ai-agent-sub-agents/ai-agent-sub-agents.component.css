@@ -48,10 +48,17 @@
   .agent-card {
     border-radius: 10px;
     border: 1px solid #ccc;
-    height:106px;
+    height: 100% !important;
+    /* height:106px; */
     /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
   }
   
+  .agent-card .card-body {
+    padding: 12px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
   .agent-image {
     width: 35px;
     height: 35px;
@@ -170,7 +177,7 @@
     .footer {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; 
+      align-items: end; 
       padding: 7px 3px;
     }
     
@@ -202,7 +209,7 @@
     .cardBtn {
       font-size: 12px;
       white-space: nowrap;
-      align-self: flex-start;
+      align-self: end;
       width: 75px;
     }
     

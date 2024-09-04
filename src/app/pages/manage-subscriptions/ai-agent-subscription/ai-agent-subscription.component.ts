@@ -14,7 +14,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   aiAgentColumns = [
     { header: 'AI Agents', flex: 2, field: 'name', class: 'agent-parent-name', isCheckbox: false },
-    { header: 'No. of Agents', flex: 1, field: 'noOfAgents', class: '', isCheckbox: false },
+    { header: 'No of Active Agents', flex: 1, field: 'noOfAgents', class: '', isCheckbox: false },
     { header: 'Next Bill Estimates', flex: 1, field: 'nextBillEstimate', class: 'next-bill-est', isCheckbox: false },
     { header: 'Billing Date', flex: 1, field: 'billingDate', class: 'next-bill-est', isCheckbox: false },
     { header: 'Expires On', flex: 1, field: 'expiresOn', class: 'next-bill-est', isCheckbox: false },

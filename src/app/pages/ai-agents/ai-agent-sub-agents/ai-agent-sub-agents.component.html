@@ -78,11 +78,14 @@
                   Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}}
                   <!-- Last run: {{agent.lastExecution|date:'MMM dd, y hh:mm'}} -->
                 </p>
-                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
-                  Expired {{agent.expiryDate|date:'dd-MM-yyyy'}}
-                </p>
                 <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
                   Try a simple task to see it in action
+                </p>
+                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
+                  Expired: {{agent.expiryDate|date:'dd-MM-yyyy'}}
+                </p>
+                <p style="width: 148px;" class="badge1" *ngIf="!agent.isExpired && agent.expiryDate">
+                  Expiry: {{agent.expiryDate|date:'dd-MM-yyyy'}}
                 </p>
               </div>
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->

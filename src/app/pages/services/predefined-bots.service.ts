@@ -115,8 +115,8 @@ export class PredefinedBotsService {
     return this.http.get("/rpa-service/predefined/last-execution-date/"+id)
   }
 
-  updateSubAgentName(subagentId,subAgentName){
-    return this.http.put(`/rpa-service/predefined/update-agent-name/${subagentId}?newName=${subAgentName}`,'')
+  updateSubAgentName(isConfigured,subagentId,subAgentName){
+    return this.http.put(`/rpa-service/predefined/update-agent-name/${subagentId}?newName=${subAgentName}&isConfig=${isConfigured}`,'')
   }
 
   getPlansList(){
