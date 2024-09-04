@@ -193,4 +193,8 @@ export class PredefinedBotsService {
   updateUserDetails(userId){
     return this.http.post(`/api/user/v2/registration-continue?userId=${userId}`,{})
   } 
+  
+  contactUs(body){
+    return this.http.post('/api/user/support-team-mail',body)
+  }
 }

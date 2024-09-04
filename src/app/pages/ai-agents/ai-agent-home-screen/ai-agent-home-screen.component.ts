@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { CryptoService } from '../../services/crypto.service';
 import { AiAgentAddAgentsDialogComponent } from '../ai-agent-add-agents-dialog/ai-agent-add-agents-dialog.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ai-agent-home-screen',
@@ -49,6 +50,8 @@ export class AiAgentHomeScreenComponent implements OnInit {
   enterPrise_plan:any={};
   enterpriseFeatures = [];
   isAddedAgentsPopup = false;
+  showContactUs: boolean = false;
+  contactForm: FormGroup;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -58,14 +61,20 @@ export class AiAgentHomeScreenComponent implements OnInit {
     private rest_api_service:RestApiService,
     private stripeService: StripeService,
     private toastService: ToasterService,
-  private crypto: CryptoService
+    private crypto: CryptoService,
+    private fb: FormBuilder,
 ) {
       this.userEmail = localStorage.getItem('ProfileuserId');
      }
 
   ngOnInit(): void {
     this.getPredefinedBotsList();
-    
+    this.contactForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userEmail: ['', [Validators.required]],
+      message: ['', Validators.required]
+    });
   }
 
   getPredefinedBotsList() {
@@ -541,6 +550,28 @@ proceedToSubscribe() {
     return 'https://epsoft.ai/pages/recruitment.html';
 
   } 
+  showDialog() {
+    this.showContactUs = true;
+  }
 
+  resetForm() {
+    this.contactForm.reset()
+  }
 
+  contactUs() {
+    this.spinner.show();
+      const payload = this.contactForm.value;
+      this.rest_api.contactUs(payload).subscribe((response: any) => {
+        this.spinner.hide();
+        if (response.code == 4200) {
+          this.toastService.showSuccess(this.toastMessage.contactUsSuccess, 'response')
+          this.showContactUs = false;
+        } else {
+          this.toastService.showError(this.toastMessage.contactUsError)
+        }
+      }, error => {
+        this.spinner.hide();
+        this.toastService.showError(this.toastMessage.apierror)
+      });
+  }
 }
