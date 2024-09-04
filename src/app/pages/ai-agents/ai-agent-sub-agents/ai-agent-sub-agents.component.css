@@ -260,5 +260,6 @@
       left: 10px;
   }
   .search-field {
-    width: 65%;
+    width: 95% !important;
+    /* margin-left: 40% !important; */
   }
