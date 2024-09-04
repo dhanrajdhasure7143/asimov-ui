@@ -1872,4 +1872,8 @@ handleHistoryTab (hist) {
       });
   }
 
+  backToSubAgent() {
+    this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.params.id, botName: this.predefinedBot_name } });
+  }
+
 }

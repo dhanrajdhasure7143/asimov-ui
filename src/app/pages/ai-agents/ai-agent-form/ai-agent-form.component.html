@@ -1,6 +1,13 @@
 <div class="container-fluid  d-flex flex-column h-100 main-screen">
     <div class="main-header-grid">
-        <div class="main-header-title"> {{predefinedBot_name}} Agent</div>
+        <div class="main-header-title"> 
+            <label id="popup_title" (click)="backToSubAgent()">
+                <a class="imageBox">
+                    <img class="default-arrow" src="assets/images-n/projects/backarrow-default.svg" alt="">
+                    <img class="hover-arrow" src="assets/images-n/projects/backarrow-hover.svg" alt=""> 
+                </a>
+            </label>
+            {{predefinedBot_name}} Agent</div>
     </div>
     <div class="scrollable-content flex-grow-1">
     <div class="form-flow predefined-bots">
