@@ -368,7 +368,6 @@
 <!-- <button pButton type="button" label="Contact Us" icon="pi pi-envelope" (click)="showDialog()">Contact Us</button> -->
 
 <p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
-    <hr>
     <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
         <div class="p-fluid">
             <div class="p-field-container">

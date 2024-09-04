@@ -1206,3 +1206,7 @@ input[type="radio"]:checked + .custom-radio::after {
 :host ::ng-deep .p-dialog .p-dialog-content{
   border-radius: 0px 0px 3px 3px;
 }
+
+:host ::ng-deep  .p-dialog .p-dialog-header {
+  border-bottom: 1px solid lightgray;
+}
