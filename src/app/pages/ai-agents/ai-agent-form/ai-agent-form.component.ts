@@ -656,6 +656,8 @@ export class AiAgentFormComponent implements OnInit {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentUUID = res.data[0].agentUUID;
+      this.isConfigered = true;
+      this.showProgress = true;
         this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -667,9 +669,10 @@ export class AiAgentFormComponent implements OnInit {
   }else{
     this.rest_service.updatePredefinedAttributesData(this.params.agentId,req_body).subscribe(res=>{
         const agentId = this.params.agentId;
+        this.isConfigered = true;
+        this.showProgress = true;
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
-      this.goBackAgentHome();
       this.toaster.showSuccess(this.subAgentName,"update")
     },err=>{
       this.spinner.hide();
@@ -832,6 +835,16 @@ export class AiAgentFormComponent implements OnInit {
     fileNameElement.textContent = fileName;
   }
 
+  createBot() {
+    console.log(this.predefinedBotsForm.value);
+    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
+      this.uploadFilesAndCreateBot('create');
+    } else {
+      this.botCreate('create');
+    }
+    this.currentStage = 0;
+  }
+
   uploadFilesAndCreateBot(action: string) {
     this.spinner.show();
     const fileKeys = Object.keys(this.selectedFiles);
@@ -886,16 +899,6 @@ export class AiAgentFormComponent implements OnInit {
     uploadNextFile();
   }
   
- createBot() {
-    console.log(this.predefinedBotsForm.value);
-    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
-      this.uploadFilesAndCreateBot('create');
-    } else {
-      this.botCreate('create');
-    }
-    this.showProgress = true;
-    this.currentStage = 0;
-  }
   onRadioChange(value: string,option_item) {
     console.log(value,option_item)
     this.selectedOption = option_item
@@ -947,7 +950,6 @@ export class AiAgentFormComponent implements OnInit {
         this.checkedOptions.splice(index, 1);
       }
     }
-    console.log(this.checkedOptions);
 
 
     if (Array.isArray(array)) {
@@ -970,7 +972,7 @@ export class AiAgentFormComponent implements OnInit {
             this.clearValidators(element);
           }
         });
-        // let arrayList = this.getArrayValues(option.disableFields)
+         // let arrayList = this.getArrayValues(option.disableFields)
         // arrayList.forEach(element1 => {
         //   const field1 = this.formFields.find(item => item.preAttributeName === element1);
         //   if (field1) {
@@ -983,20 +985,39 @@ export class AiAgentFormComponent implements OnInit {
     }
   }
 
-  onDropdownChange(event: any,options:any) {
-    console.log(event,options)
+  async onDropdownChange(event: any,options:any) {
+    await this.visibilityHide(options);
     const selectedValue = event.value;
     const selectedObject = options.find(option => option.value === selectedValue);
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
     const array = JSON.parse(validJsonStr);
     if (Array.isArray(array))
+    this.updateFieldVisibility(array, true);
+  }
+
+  visibilityHide(options){
+    options.forEach(each => {;
+      const validJsonStr = each.field.replace(/'/g, '"');
+      const array = JSON.parse(validJsonStr);
+      if (Array.isArray(array))
+      this.updateFieldVisibility(array, false);
+    })
+  }
+
+  updateFieldVisibility(array, value) {
     array.forEach((element: any) => {
       const field = this.formFields.find(item => item.preAttributeName === element);
       if (field) {
-        field.visibility = true;
+        field.visibility = value;
+        field.attributeRequired =value;
+        if(value){  
+          this.updateValidators(element)
+        }else{
+          this.clearValidators(element);
+          this.fieldRest(element);
+        }
       }
     })
-    // Add your custom logic here
   }
 
   getArrayValues(option){
@@ -1019,6 +1040,10 @@ export class AiAgentFormComponent implements OnInit {
   clearValidators(item){
     this.predefinedBotsForm.get("fields."+item).clearValidators(); 
     this.predefinedBotsForm.get("fields."+item).updateValueAndValidity();
+  }
+
+  fieldRest(item){
+    this.predefinedBotsForm.get("fields."+item).reset();
   }
 
   generateDynamicFormUpdate(){

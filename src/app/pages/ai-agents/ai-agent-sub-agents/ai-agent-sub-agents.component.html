@@ -56,7 +56,7 @@
         </div> 
       </div>
     </div>
-  <div class="scrollable-content flex-grow-1"  [ngClass]="{'centerd': filterAgentsList.length === 0}">
+  <div class="scrollable-content flex-grow-1"  [ngClass]="{'centerd': filterAgentsList?.length === 0}">
     <div class="row g-4" *ngIf="showSkeleton">
       <div class="col-md-6 col-lg-3" *ngFor="let _ of [1,2,3,4]">
         <div class="card agent-card">
@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <div class="col-md-12 " *ngIf="filterAgentsList.length ===0" >
+      <div class="col-md-12 " *ngIf="filterAgentsList?.length ===0" >
         <div class="p-4 no-data-found">
           <img src="assets/images/mini_bot.svg" alt="Agent" class="agent-image-empty me-2">
           No Agent Found...

@@ -751,19 +751,19 @@
                     </p-accordion>
                 </ng-container>
                   <div class="">
-                    <hr *ngIf="!showProgress">
-                    <div class="accordion-content-save" *ngIf="!showProgress">
+                    <hr>
+                    <div class="accordion-content-save" >
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
-                        <button *ngIf="params.type=='create'  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
+                        <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
-                        <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
+                        <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
                     </div>
                   </div>
               </div>
             </div>
              <!-- AI agent Execution Progress Bar Starts-->
-             <div *ngIf="showProgress || params.type=='edit'">
+             <div *ngIf="showProgress || isConfigered">
                 <div class="header">
                   <span class="title">
                     <span>
