@@ -1,0 +1,201 @@
+.marketing-form-container {
+    /* max-width: 600px; */
+    /* margin: auto; */
+    padding: 8px 0px 0px 0px;
+    /* border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9; */
+  }
+  
+  .platform-selection {
+    display: flex !important;
+    margin-bottom: 20px;
+  }
+  
+  .platform-selection label {
+    margin-right: 10px;
+  }
+  
+  .platform-selection i {
+    margin-right: 5px;
+    font-size: 1.2em;
+  }
+  
+  /* .credentials-section {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+  } */
+  :host ::ng-deep .form-fields {
+    margin-bottom: 5px !important;
+}
+  .prompt-type {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  .prompt-description {
+    margin-bottom: 20px;
+  }
+  
+  .prompt-description textarea {
+    width: 100%;
+    height: 100px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  
+  /* .scrollable-content {
+    max-height: 220px;
+    overflow-y: auto;
+  } */
+
+
+
+/* ----------------------------------------- */
+
+  .form-fields {
+    display: flex;
+    /* flex-wrap: wrap; */
+  }
+  
+  .form-fields > div {
+    flex-basis: 50%; /* adjust the width of each field */
+    margin: 10px; /* add some margin between fields */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px; /* add some space between label and input */
+  }
+  :host ::ng-deep .prompt-type .radio-label{
+    display: block;
+    margin-bottom: 5px;
+    border: 1px solid gray;
+    height: 30px;
+    border-radius: 20px;
+    padding: 4px 10px;
+    width: 10rem;
+  }
+  input[type="text"] {
+    width: 100%; /* make the input field take up the full width */
+    padding: 10px; /* add some padding to the input field */
+    border: 1px solid #ccc; /* add a border to the input field */
+    border-radius: 5px; /* add some rounded corners to the input field */
+  }
+
+.inline-flex {
+    display: inline-flex;
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.px-1 {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+:host ::ng-deep .p-multiselect {
+    width: 280px !important ;
+    
+}
+:host ::ng-deep .p-multiselect .p-multiselect-panel {
+    height: auto !important;
+}
+
+.genetared-output{
+    height: 270px;
+    max-height: 270px;
+    background-color:#EBF5FF;
+    border-radius: 6px;
+}
+
+/* ----------------------------------------- */
+
+.prompt-description {
+    display: flex;
+    gap: 20px;
+}
+
+.prompt-type-selection {
+    margin-bottom: 20px;
+}
+
+.prompt-type {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.generated-output {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.generated-output h4 {
+    margin-bottom: 15px;
+}
+
+.generated-output h4 small {
+    font-size: 0.7em;
+    color: #6c757d;
+}
+
+.output-content {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.generated-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.output-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-outline-primary.accepted {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+@media (max-width: 767.98px) {
+    .prompt-description {
+        flex-direction: column;
+    }
+}
