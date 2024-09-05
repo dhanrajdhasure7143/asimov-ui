@@ -50,9 +50,6 @@ export class AiAgentHomeScreenComponent implements OnInit {
   enterPrise_plan:any={};
   enterpriseFeatures = [];
   isAddedAgentsPopup = false;
-  showContactUs: boolean = false;
-  contactForm: FormGroup;
-  messageTooShort: boolean = true;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -70,12 +67,6 @@ export class AiAgentHomeScreenComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPredefinedBotsList();
-    this.contactForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      userEmail: [''],
-      message: ['', Validators.required]
-    });
   }
 
   getPredefinedBotsList() {
@@ -551,40 +542,5 @@ proceedToSubscribe() {
     return 'https://epsoft.ai/pages/recruitment.html';
 
   } 
-  showDialog() {
-    this.showContactUs = true;
-  }
 
-  resetForm() {
-    this.contactForm.reset()
-  }
-
-  contactUs() {
-    const firstName = localStorage.getItem('firstName');
-    const lastName = localStorage.getItem('lastName');
-    const userEmail = localStorage.getItem('ProfileuserId');
-    this.contactForm.patchValue({
-      firstName: firstName,
-      lastName: lastName,
-      userEmail: userEmail
-    });
-    this.spinner.show();
-      const payload = this.contactForm.value;
-      this.rest_api.contactUs(payload).subscribe((response: any) => {
-        this.spinner.hide();
-        if (response.code == 4200) {
-          this.toastService.showSuccess(this.toastMessage.contactUsSuccess, 'response')
-          this.showContactUs = false;
-        } else {
-          this.toastService.showError(this.toastMessage.contactUsError)
-        }
-      }, error => {
-        this.spinner.hide();
-        this.toastService.showError(this.toastMessage.apierror)
-      });
-  }
-  onMessageInput() {
-    const message = this.contactForm.get('message').value || '';
-    this.messageTooShort = message.length < 150;
-  }
 }

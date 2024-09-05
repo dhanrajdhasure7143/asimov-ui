@@ -6,6 +6,11 @@ import { RestApiService } from "./../services/rest-api.service"
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { PredefinedBotsService } from '../services/predefined-bots.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -48,12 +53,20 @@ export class SidebarComponent implements OnInit {
   user_firstletter:string;
   ismyAccount:boolean = false;
   isPassword:boolean = false;
+  showContactUs:boolean = false;
+  contactForm: FormGroup;
+  messageTooShort: boolean = true;
 
   constructor(public obj:PagesComponent, 
     private dt:DataTransferService,
     private rest_service: RestApiService,
     private router:Router,
-    private route : ActivatedRoute
+    private route : ActivatedRoute,
+    private fb: FormBuilder,
+    private toastService: ToasterService,
+    private toastMessage :toastMessages,
+    private spinner : LoaderService,
+    private rest_api: PredefinedBotsService
   ) {
       this.route.queryParams.subscribe(params => {
         if (params['accessToken']) {
@@ -140,6 +153,13 @@ export class SidebarComponent implements OnInit {
   // this.getUserScreenList();
   this.isCopilotEnable = environment.isCopilotEnable
   this.isCustomerBots = environment.isCustomerBots
+
+  this.contactForm = this.fb.group({
+    firstName: [''],
+    lastName: [''],
+    userEmail: [''],
+    message: ['', Validators.required]
+  });
 
   }
   getCookie(cname) {
@@ -316,5 +336,43 @@ navigateToDashBoard(){
 
     // var input = btoa("Signout")
     this.router.navigate(['/redirect']);
+  }
+
+  showContactSupport(){
+    this.showContactUs = true;
+  }
+
+  contactUs() {
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
+    const userEmail = localStorage.getItem('ProfileuserId');
+    this.contactForm.patchValue({
+      firstName: firstName,
+      lastName: lastName,
+      userEmail: userEmail
+    });
+    this.spinner.show();
+      const payload = this.contactForm.value;
+      this.rest_api.contactUs(payload).subscribe((response: any) => {
+        this.spinner.hide();
+        if (response.code == 4200) {
+          this.toastService.showSuccess(this.toastMessage.contactUsSuccess, 'response')
+          this.showContactUs = false;
+        } else {
+          this.toastService.showError(this.toastMessage.contactUsError)
+        }
+      }, error => {
+        this.spinner.hide();
+        this.toastService.showError(this.toastMessage.apierror)
+      });
+  }
+
+  onMessageInput() {
+    const message = this.contactForm.get('message').value || '';
+    this.messageTooShort = message.length < 150;
+  }
+
+  resetForm() {
+    this.contactForm.reset()
   }
 }
