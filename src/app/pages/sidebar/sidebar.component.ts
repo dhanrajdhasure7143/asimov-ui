@@ -338,7 +338,7 @@ navigateToDashBoard(){
     this.router.navigate(['/redirect']);
   }
 
-  showDialog() {
+  showContactSupport() {
     this.showContactUs = true;
     this.messageTooShort = true;
   }

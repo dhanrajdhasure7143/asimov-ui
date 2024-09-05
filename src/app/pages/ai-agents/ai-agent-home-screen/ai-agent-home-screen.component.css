@@ -1186,38 +1186,7 @@ input[type="radio"]:checked + .custom-radio::after {
   color: #fff;
 }
 
-.left-button {
-  left: 70px;
-}
 
 .right-button {
   right: 30px;
-}
-
-.p-field-container {
-  display: flex;
-  gap: 2rem;
-}
-
-.p-field {
-  flex: 1;
-  margin-top: 8px;
-}
-:host ::ng-deep .p-dialog .p-dialog-content{
-  border-radius: 0px 0px 3px 3px;
-}
-
-:host ::ng-deep  .p-dialog .p-dialog-header {
-  border-bottom: 1px solid lightgray;
-}
-
-:host ::ng-deep .submit-button{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.btn {
-  margin-left: auto;
 }
