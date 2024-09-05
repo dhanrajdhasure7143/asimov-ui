@@ -468,3 +468,22 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .user-details h3{
   font-weight: 700;
 }
+
+:host ::ng-deep .p-dialog .p-dialog-content{
+  border-radius: 0px 0px 3px 3px;
+}
+
+:host ::ng-deep  .p-dialog .p-dialog-header {
+  border-bottom: 1px solid lightgray;
+}
+
+:host ::ng-deep .submit-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn {
+  margin-left: auto;
+}

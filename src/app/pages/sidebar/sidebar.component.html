@@ -418,6 +418,7 @@
     <ul class="menu-items">
       <li><a (click)="myAccount()"><i class="pi pi-user"></i> My Account</a></li>
       <li><a (click)="changepassword()"><i class="pi pi-lock"></i> Change Password</a></li>
+      <li><a (click)="showContactSupport()"><i class="pi pi-envelope"></i> Contact Support</a></li>
       <li><a class="logout" (click)="logout()"><i class="pi pi-sign-out"></i> Logout</a></li>
     </ul>
   </ng-template>
@@ -449,3 +450,21 @@
 
   <app-change-password (valueChange)='closeFormOverlay($event)'></app-change-password>
 </p-sidebar> -->
+
+<p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
+  <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
+      <div class="p-fluid">
+          <b>If you have any questions or concerns? Send us a message, and our team will assist you with your needs.</b>
+          <div class="p-field">
+              <label for="message">What can we help you with?</label>
+              <textarea pInputTextarea id="message" id="message" (input)="onMessageInput()" formControlName="message" rows="6"></textarea>
+          </div>
+      </div>
+          <div class="submit-button">
+              <div *ngIf="messageTooShort" class="error-message">
+                  Please enter at least 150 characters to ask your query.
+              </div>
+              <button class="btn bluebg-button" style="margin-right: 0px !important;" icon="pi pi-check" [disabled]="contactForm.invalid || messageTooShort">Submit</button>
+          </div>
+  </form>
+</p-dialog>

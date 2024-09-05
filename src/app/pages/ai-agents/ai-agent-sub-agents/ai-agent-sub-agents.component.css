@@ -239,6 +239,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      justify-content: center;
 
     }
     .search-sort-section  input{
@@ -263,3 +264,39 @@
     width: 95% !important;
     /* margin-left: 40% !important; */
   }
+
+.search-input{
+  height: 36px !important;
+  font-weight: 500;
+  /* font-size: 16px; */
+}
+
+.search-sort-section button{
+  width: 230px !important;
+  height: 37px !important;
+}
+
+.no-data-found{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-image-empty{
+  width: 35px;
+  height: 60px;
+  min-width: 60px;
+  background-color: #e6f3ff;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.centerd {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
