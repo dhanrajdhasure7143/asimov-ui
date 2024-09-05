@@ -138,4 +138,6 @@ export class toastMessages{
   public autoRenewUpdated= "Auto Renewal updated successfully!";
   public renewedSuccess= "Agent Renewed successfully!";
   public agentDelete = "Agent Deleted successfully!";
+  public contactUsSuccess = "Your query has been submitted successfully! Thank you, our team will contact you shortly."
+  public contactUsError = "Failed to submit your query. Please try again later."
 }

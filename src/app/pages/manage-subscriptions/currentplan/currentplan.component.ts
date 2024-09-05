@@ -68,7 +68,7 @@ export class CurrentplanComponent implements OnInit {
     this.currentplanname = localStorage.getItem("currentplan");
     this.getCurrentPlan();
     //this.getAllPlans();
-    this.expiryInfo();
+    // this.expiryInfo();
   }
 
   getCurrentPlan() {

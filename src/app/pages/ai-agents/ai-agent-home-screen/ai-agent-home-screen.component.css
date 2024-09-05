@@ -1091,19 +1091,7 @@ input[type="radio"]:checked + .custom-radio::after {
   top: -100%;
   opacity: 0;
 }
-button.enterprise-plan-bottom-stickier {
-  border: none;
-  background: #3199FF;
-  border-radius: 300px;
-  padding: 8px 15px !important;
-  position: fixed;
-  right: 30px;
-  bottom: 25px;
-}
-button.enterprise-plan-bottom-stickier p{
-  font-weight: 700;
-  color: #fff;
-}
+
 .middle-image-list-section {
   gap: 20px;
 }
@@ -1182,4 +1170,54 @@ button.enterprise-plan-bottom-stickier p{
 }
 .main-header-title{
   font-weight: 600;
+}
+
+.button-common {
+  border: none;
+  background: #3199FF;
+  border-radius: 300px;
+  padding: 8px 15px !important;
+  position: fixed;
+  bottom: 25px;
+}
+
+.button-common p {
+  font-weight: 700;
+  color: #fff;
+}
+
+.left-button {
+  left: 70px;
+}
+
+.right-button {
+  right: 30px;
+}
+
+.p-field-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.p-field {
+  flex: 1;
+  margin-top: 8px;
+}
+:host ::ng-deep .p-dialog .p-dialog-content{
+  border-radius: 0px 0px 3px 3px;
+}
+
+:host ::ng-deep  .p-dialog .p-dialog-header {
+  border-bottom: 1px solid lightgray;
+}
+
+:host ::ng-deep .submit-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn {
+  margin-left: auto;
 }

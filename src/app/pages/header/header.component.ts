@@ -124,7 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.newAccessToken = resp;
         localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       });
-    this.getexpiryInfo();
+    // this.getexpiryInfo();
   }
 
   ngOnInit() {
@@ -145,10 +145,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataTransfer.logged_userData.subscribe(res=>{
       if(res){
         this.addUserName(res);
-        this.getAllUsers(res.tenantID)
+        // this.getAllUsers(res.tenantID)
       }
     });
-    this.getTenantLists();
+    // this.getTenantLists();
     this.navigationTenantName = localStorage.getItem("tenantSwitchName")
     this.isChatEnable = environment.isChatEnable? environment.isChatEnable : false;
   }

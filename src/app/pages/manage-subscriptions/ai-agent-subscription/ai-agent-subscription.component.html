@@ -16,8 +16,8 @@
                     <span class="agent-name" [title]="agent.name">{{ agent.agentName }}</span>
                 </div>
                 <div class="header-cell" style="color:#3199FF; font-size: 22px;">{{ agent.noOfAgents }}</div>
-                <div class="header-cell next-bill-est"><span *ngIf="agent.nextBillEstimate =='$null'">-</span>
-                    <span *ngIf="agent.nextBillEstimate !='$null'"> USD {{ agent.nextBillEstimate }}</span></div>
+                <div class="header-cell next-bill-est"><span *ngIf="!agent.autoRenew">-</span>
+                    <span *ngIf="agent.autoRenew"> USD {{ agent.nextBillEstimate }}</span></div>
                 <div class="header-cell next-bill-est">{{agent.billingDate? (agent.billingDate  | date:'MMM d, y'):'-'}}</div>
                 <div class="header-cell next-bill-est">
                     {{ agent.autoRenew ? '-' : (agent.expiresOn ? (agent.expiresOn | date:'MMM d, y'):'-') }}

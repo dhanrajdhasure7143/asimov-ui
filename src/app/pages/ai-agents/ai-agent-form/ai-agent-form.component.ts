@@ -84,7 +84,6 @@ export class AiAgentFormComponent implements OnInit {
   startTime: Date | null = null;
   stepTimes: Date[] = [];
   showProgress: boolean = false;
-  agentUUIDCapture:any;
   configurationOverlay:boolean = false;
   progressBarItems = [
     { label: 'Intiated' },
@@ -94,6 +93,7 @@ export class AiAgentFormComponent implements OnInit {
   ];
   inProgressAgents:any[]=[];
   getStagesInterval: any;
+  isConfigered:boolean = false;
 
 
   // Agent in Progress
@@ -145,7 +145,7 @@ export class AiAgentFormComponent implements OnInit {
   dummyFilterStage: string = ''
   sortOrder: string = '';
   historyToDownload=[]
-  activeTabMode: string ='history';
+  activeTabMode: string ='';
   // Agent History Data Ends
 
   // Agent Files Tab
@@ -171,7 +171,8 @@ export class AiAgentFormComponent implements OnInit {
     ) {
       this.route.queryParams.subscribe(params=>{
         this.params=params
-        this.predefinedBot_id= this.params.id
+        this.predefinedBot_id= this.params.id;
+        this.getSubAgentConfigStatus();
       })
 
       this.initializePaginationDots()
@@ -189,22 +190,35 @@ export class AiAgentFormComponent implements OnInit {
       schedule: [{value: '', disabled: true}],
       scheduleTime:[{value: '', disabled: true}]
     });
-    if(this.params.type == "create"){
-      this.fetchAllFields();
-      this.isEdit = false;
-    }else{
-      this.fetchAllFieldsToUpdateData();
+    // if(this.params.type == "create"){
+      
+    // }else{
+      
+    // }
+  }
+
+  getSubAgentConfigStatus(){
+    this.spinner.show();
+    this.rest_service.getSubAgentConfigStatus(this.params.agentId).subscribe((res: any) => {
+      console.log("isConfigered-------------------",res);
+      this.isConfigered = res.isConfigured;
+      console.log("isConfigered",this.isConfigered);  
+      if(this.isConfigered){
+        this.initializePagination();
+        this.getSubAgentHistoryLogs();
+        this.getSubAgentFileHistoryLogs();
+        this.initializeSubAgentFilePagination();
+        this.fetchAllFieldsToUpdateData();
       this.getSubAgentsInprogressList();
       this.isEdit = true;
-    }
-
-    this.initializePagination();
-    this.getSubAgentHistoryLogs();
-    this.getSubAgentFileHistoryLogs();
-    this.initializeSubAgentFilePagination()
-
-    console.log(this.predefinedBot_name,"Name of the Bot.....")
-    console.log(this.processName,"---------------veqrverve")
+      }else{
+        this.fetchAllFields();
+        this.isEdit = false;
+      }
+      // this.isConfigered = res.data;
+    }, err => {
+      this.toaster.showError(this.toastMessages.apierror);
+    });
   }
 
   ngOnDestroy(): void {
@@ -220,6 +234,11 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
+      if(this.agent_uuid =='pred_CustomerSupport'){
+        this.activeTabMode = 'content';
+      }else{
+        this.activeTabMode = 'history';
+      }
       this.subAgentName = res.subAgentName;
       // this.subAgentName = this.params.agentName;
 
@@ -331,6 +350,11 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
+      if(this.agent_uuid =='pred_CustomerSupport'){
+        this.activeTabMode = 'content';
+      }else{
+        this.activeTabMode = 'history';
+      }
       this.subAgentName = res.subAgentName;
       this.isCommonForm = res.formType === 'common'? true : false;
       console.log("Form Attributes: ", res.data)
@@ -629,7 +653,6 @@ export class AiAgentFormComponent implements OnInit {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentUUID = res.data[0].agentUUID;
-      this.agentUUIDCapture = res.data[0].agentUUID;
         this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -1204,8 +1227,7 @@ export class AiAgentFormComponent implements OnInit {
   updateSubAgentName(){
     // this.inplace.deactivate();
     this.spinner.show();
-    let isEdit = this.params.type == "create" ? true: false;
-    this.rest_service.updateSubAgentName(isEdit,this.params.agentId,this._agentName).subscribe(res=>{
+    this.rest_service.updateSubAgentName(!this.isConfigered,this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");
       this.spinner.hide();
       this.isSubAgentNameEdit = false;
