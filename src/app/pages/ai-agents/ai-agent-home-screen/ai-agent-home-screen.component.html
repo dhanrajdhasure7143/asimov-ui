@@ -226,9 +226,14 @@
                     </div>
                 </div>
             </div>
-            <button type='button' class="enterprise-plan-bottom-stickier" (click)="showEnterpriceModel()">
-                <p class="mb-0"> <img src="assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
-            </button>
+            <div class="button-container">
+                <button type='button' class="button-common left-button" (click)="showDialog()">
+                    <p class="mb-0"> <i class="pi pi-envelope"> </i> &nbsp; Contact Us</p>
+                </button>
+                <button type='button' class="button-common right-button" (click)="showEnterpriceModel()">
+                    <p class="mb-0"> <img src="assets/images/agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -357,6 +362,36 @@
         </div>
     </ng-template>
     <app-ai-agent-add-agents-dialog #addAgentsDialog [selectedAgent]="selectedAgent" [closeDialogCallback]="closeDialogFromChild.bind(this)"> </app-ai-agent-add-agents-dialog>
+</p-dialog>
+
+<!-- your-component.component.html -->
+<!-- <button pButton type="button" label="Contact Us" icon="pi pi-envelope" (click)="showDialog()">Contact Us</button> -->
+
+<p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
+    <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
+        <div class="p-fluid">
+            <div class="p-field-container">
+                <div class="p-field">
+                    <label for="firstName">First Name</label>
+                    <input pInputText id="firstName" formControlName="firstName">
+                </div>
+                <div class="p-field">
+                    <label for="lastName">Last Name</label>
+                    <input pInputText id="lastName" formControlName="lastName">
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="userEmail">Email</label>
+                <input pInputText id="userEmail" formControlName="userEmail">
+            </div>
+            <div class="p-field">
+                <label for="message">What can we help you with?</label>
+                <textarea pInputTextarea id="message" formControlName="message" rows="3"></textarea>
+            </div>
+        </div>
+            
+        <button class="btn bluebg-button" icon="pi pi-check" [disabled]="contactForm.invalid">Submit</button>
+    </form>
 </p-dialog>
 
 <p-confirmDialog 

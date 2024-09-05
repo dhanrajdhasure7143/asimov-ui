@@ -197,4 +197,8 @@ export class PredefinedBotsService {
   getSubAgentConfigStatus(subagentId){
     return this.http.get(`/rpa-service/predefined/is-configuration/${subagentId}`)
   }
+  
+  contactUs(body){
+    return this.http.post('/api/user/support-team-mail',body)
+  }
 }
