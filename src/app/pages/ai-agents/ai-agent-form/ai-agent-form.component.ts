@@ -85,6 +85,8 @@ export class AiAgentFormComponent implements OnInit {
   stepTimes: Date[] = [];
   showProgress: boolean = false;
   configurationOverlay:boolean = false;
+  isMarketingAgent: boolean = false;
+
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -172,6 +174,7 @@ export class AiAgentFormComponent implements OnInit {
       this.route.queryParams.subscribe(params=>{
         this.params=params
         this.predefinedBot_id= this.params.id;
+        this.isMarketingAgent = this.predefinedBot_id === "prod_QbWqFiBJb6rMpb";
         this.getSubAgentConfigStatus();
       })
 

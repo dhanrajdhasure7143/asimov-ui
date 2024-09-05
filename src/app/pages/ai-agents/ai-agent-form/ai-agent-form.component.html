@@ -57,7 +57,10 @@
                 </div>
               </div>
               <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
-                <ng-container *ngIf="isCommonForm">
+                <div *ngIf="isMarketingAgent">
+                    <app-ai-agent-marketing></app-ai-agent-marketing>
+                </div>
+                <ng-container *ngIf="isCommonForm  && !isMarketingAgent">
                     <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                         <div formGroupName="fields" class="row">
                             <div *ngFor="let field of currentPageFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
@@ -752,7 +755,7 @@
                     <div class="accordion-content-save" *ngIf="!showProgress">
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
-                        <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
+                        <button *ngIf="params.type=='create'  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
                         <button *ngIf="params.type=='edit'" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
                     </div>
