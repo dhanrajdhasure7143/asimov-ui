@@ -52,6 +52,7 @@ export class AiAgentHomeScreenComponent implements OnInit {
   isAddedAgentsPopup = false;
   showContactUs: boolean = false;
   contactForm: FormGroup;
+  messageTooShort: boolean = true;
 
   constructor(private router: Router,
     private spinner: LoaderService,
@@ -581,5 +582,9 @@ proceedToSubscribe() {
         this.spinner.hide();
         this.toastService.showError(this.toastMessage.apierror)
       });
+  }
+  onMessageInput() {
+    const message = this.contactForm.get('message').value || '';
+    this.messageTooShort = message.length < 150;
   }
 }
