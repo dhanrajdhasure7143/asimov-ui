@@ -341,6 +341,7 @@ navigateToDashBoard(){
   showContactSupport() {
     this.showContactUs = true;
     this.messageTooShort = true;
+    this.overlayPanel.hide();
   }
 
   contactUs() {
