@@ -1210,3 +1210,9 @@ input[type="radio"]:checked + .custom-radio::after {
 :host ::ng-deep  .p-dialog .p-dialog-header {
   border-bottom: 1px solid lightgray;
 }
+
+:host ::ng-deep .submit-button{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

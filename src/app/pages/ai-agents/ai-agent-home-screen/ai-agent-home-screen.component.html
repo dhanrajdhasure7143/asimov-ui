@@ -370,7 +370,7 @@
 <p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
     <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
         <div class="p-fluid">
-            <div class="p-field-container">
+            <!-- <div class="p-field-container">
                 <div class="p-field">
                     <label for="firstName">First Name</label>
                     <input pInputText id="firstName" formControlName="firstName">
@@ -379,18 +379,20 @@
                     <label for="lastName">Last Name</label>
                     <input pInputText id="lastName" formControlName="lastName">
                 </div>
-            </div>
-            <div class="p-field">
+            </div> -->
+            <!-- <div class="p-field">
                 <label for="userEmail">Email</label>
                 <input pInputText id="userEmail" formControlName="userEmail">
-            </div>
+            </div> -->
+            <b>If you have any questions or concerns? Send us a message, and our team will assist you with your needs.</b>
             <div class="p-field">
                 <label for="message">What can we help you with?</label>
-                <textarea pInputTextarea id="message" formControlName="message" rows="3"></textarea>
+                <textarea pInputTextarea id="message" formControlName="message" rows="6"></textarea>
             </div>
         </div>
-            
-        <button class="btn bluebg-button" icon="pi pi-check" [disabled]="contactForm.invalid">Submit</button>
+            <div class="submit-button">
+                <button class="btn bluebg-button" style="margin-right: 0px !important;" icon="pi pi-check" [disabled]="contactForm.invalid">Submit</button>
+            </div>
     </form>
 </p-dialog>
 

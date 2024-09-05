@@ -70,9 +70,9 @@ export class AiAgentHomeScreenComponent implements OnInit {
   ngOnInit(): void {
     this.getPredefinedBotsList();
     this.contactForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userEmail: ['', [Validators.required]],
+      firstName: [''],
+      lastName: [''],
+      userEmail: [''],
       message: ['', Validators.required]
     });
   }
@@ -559,6 +559,14 @@ proceedToSubscribe() {
   }
 
   contactUs() {
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
+    const userEmail = localStorage.getItem('ProfileuserId');
+    this.contactForm.patchValue({
+      firstName: firstName,
+      lastName: lastName,
+      userEmail: userEmail
+    });
     this.spinner.show();
       const payload = this.contactForm.value;
       this.rest_api.contactUs(payload).subscribe((response: any) => {
