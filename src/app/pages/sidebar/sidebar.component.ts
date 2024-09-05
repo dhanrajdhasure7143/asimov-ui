@@ -107,7 +107,7 @@ export class SidebarComponent implements OnInit {
       document.cookie = "card_enabled=true";
     }
 
-    this.getexpiryInfo();
+    // this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
     });
@@ -136,7 +136,7 @@ export class SidebarComponent implements OnInit {
     setTimeout(() => {
       // this.userRoles = localStorage.getItem("userRole")
     }, 200);
-  this.getAllPlans();
+  // this.getAllPlans();
   // this.getUserScreenList();
   this.isCopilotEnable = environment.isCopilotEnable
   this.isCustomerBots = environment.isCustomerBots

@@ -193,4 +193,8 @@ export class PredefinedBotsService {
   updateUserDetails(userId){
     return this.http.post(`/api/user/v2/registration-continue?userId=${userId}`,{})
   } 
+
+  getSubAgentConfigStatus(subagentId){
+    return this.http.get(`/rpa-service/predefined/is-configuration/${subagentId}`)
+  }
 }

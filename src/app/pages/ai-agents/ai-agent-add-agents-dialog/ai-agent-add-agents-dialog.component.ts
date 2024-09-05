@@ -98,7 +98,7 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
 
             },error => {
               this.spinner.hide();
-              this.toastService.showError("Failed to redirect to payment gateway");
+              this.toastService.showError(this.toastMessage.apierror);
               console.error('Error during payment:', error);
             }
           );

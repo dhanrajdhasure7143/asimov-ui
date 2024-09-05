@@ -52,7 +52,7 @@
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span class="edit-text"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{params.type == "create"? 'Add':'Edit'}} Configuration</span>
+                    <span class="edit-text"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
                 </div>
               </div>
@@ -902,13 +902,23 @@
             style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
+                <button *ngIf="agent_uuid =='pred_CustomerSupport'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                    style="margin-right: 8px; font-size: 1.1rem;"></i>Content
+                    <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
+                </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
-                        style="margin-right: 8px; font-size: 1.1rem;"></i>History</button>
+                        style="margin-right: 8px; font-size: 1.1rem;"></i>History
+                        <div [ngClass]="{'active-tab' :activeTabMode === 'history'}"></div>
+                    </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('files')"><i class="pi pi-paperclip"
-                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Files</button>
-                <div class="bottom-tab-mover-after" [ngClass]="activeTabMode === 'history' ? 'history-tab' : 'files-tab'">
+                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Files
+                        <div [ngClass]="{'active-tab' :activeTabMode === 'files'}"></div>
+                </button>
+                <!-- <div class="bottom-tab-mover-after" [ngClass]="{'history-tab' :activeTabMode === 'history', 'files-tab':activeTabMode === 'files'}">
     
-                </div>
+                </div> -->
+            </div>
+            <div class="controls-container" *ngIf="activeTabMode === 'content'">
             </div>
     
             <!-- Search, Filter, Download buttons -->
@@ -962,6 +972,10 @@
                     <i class="pi pi-trash" style="color: #fff; margin-right: 5px;"></i> Delete
                 </button>
             </div>
+        </div>
+
+        <div class="subagent-history-table" *ngIf="activeTabMode === 'content'">
+Content
         </div>
     
         <!-- Sub-agent History Table -->

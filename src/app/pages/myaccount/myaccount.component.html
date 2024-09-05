@@ -1,6 +1,11 @@
 <div class="createform-overlay">
         <form autocomplete="off" #updateUser="ngForm" (ngSubmit)="updateAccount()">
             <div class="row">
+                <div class="form-group col-md-12 pl-0">
+                    <label class="label-control" for="email">Email<span class="star">*</span></label>
+                    <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="formOne.userId"
+                        pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled />
+                </div>
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="firstName">First Name<span class="star">*</span></label>
                     <input type="text" name="firstName" #firstName="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
@@ -23,11 +28,6 @@
                      </span>
                 </div>
 
-                <div class="form-group col-md-6 pl-0">
-                    <label class="label-control" for="email">Email<span class="star">*</span></label>
-                    <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="formOne.userId"
-                        pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled />
-                </div>
                 <!-- <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="jobTitle">Job Title<span class="star">*</span></label>
                     <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control" pattern="^[A-Za-z][A-Za-z\s]*$"
@@ -39,14 +39,14 @@
                      </span>
                     
                 </div> -->
-                <div class="form-group col-md-6 pr-0">
+                <!-- <div class="form-group col-md-6 pr-0">
                     <label class="label-control" for="company">Company<span class="star">*</span></label>
                     <input type="text" name="company" #company="ngModel" class="form-control"
                         [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly
                         disabled />
                     <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )"
                         class='required'> Company is required </span>
-                </div>
+                </div> -->
                 <div class="form-group col-md-6 pl-0">
                     <label class="label-control" for="country">Country<span class="star">*</span></label>
                     <!-- <select id="country" name='country' class="form-control" (change)='onChangeCountry(formOne.country)'

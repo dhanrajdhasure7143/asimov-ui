@@ -946,6 +946,7 @@ input.p-inputtext {
   width: 79px;
   left: 0;
 }
+
 .bottom-tab-mover-after.files-tab {
   width: 162px;
   left: 106px;
@@ -1359,4 +1360,13 @@ input.p-inputtext {
   top: 25px;
   border: 1px solid #dee2e6;
   background-color: #e9ecef;
+}
+
+.active-tab{
+  top: 10px;
+  height: 3px;
+  margin-top: 0px;
+  position: relative;
+  background: #3199FF;
+  border-radius: 30px;
 }
