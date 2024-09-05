@@ -553,6 +553,7 @@ proceedToSubscribe() {
   } 
   showDialog() {
     this.showContactUs = true;
+    this.messageTooShort = true;
   }
 
   resetForm() {
