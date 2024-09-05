@@ -145,7 +145,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataTransfer.logged_userData.subscribe(res=>{
       if(res){
         this.addUserName(res);
-        // this.getAllUsers(res.tenantID)
+        this.getAllUsers(res.tenantID)
       }
     });
     // this.getTenantLists();
