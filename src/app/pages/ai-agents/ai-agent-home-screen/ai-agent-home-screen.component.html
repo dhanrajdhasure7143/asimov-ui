@@ -215,11 +215,11 @@
                     </div>
                 </div>
 
-                <div *ngIf="unsubscribed_agents.length == 0" class="centered-message">
+                <div *ngIf="unsubscribed_agents?.length == 0" class="centered-message">
                     <img src="assets/images/mini_bot.svg" alt="mini_bot">
                     No Agent Found
                 </div>
-                <div *ngIf="unfilteredAgentsList.length === 0" class="centered-message">
+                <div *ngIf="unfilteredAgentsList?.length === 0 && predefined_botsList?.length >=1" class="centered-message">
                     <div>
                         <img src="assets/images/mini_bot.svg" alt="mini_bot">
                         We are working on more AI Agents ...
