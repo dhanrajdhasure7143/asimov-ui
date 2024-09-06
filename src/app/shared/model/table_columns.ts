@@ -187,12 +187,12 @@ export class columnList{
       ];
 
       public invoice_column=[
-        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,width:"flex: 0 0 15rem"},
+        {ColumnName: "invoiceNumber",DisplayName: "Invoice Number",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         // {ColumnName: "subscriptionId",DisplayName: "Subscription Id",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,width:"flex: 0 0 23rem"},
-        {ColumnName: "productName",DisplayName: "Agent",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,width:"flex: 0 0 23rem"},
-        {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true,width:"flex: 0 0 10rem"},
-        {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true,width:"flex: 0 0 16rem"},
-        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: false,ShowFilter:false,dropdownList:['Paid','Voided'],status_icon:true,width:"flex: 0 0 12rem"},
+        {ColumnName: "productName",DisplayName: "Agent",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: false,ShowFilter:false,dropdownList:['Paid','Voided'],status_icon:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
 

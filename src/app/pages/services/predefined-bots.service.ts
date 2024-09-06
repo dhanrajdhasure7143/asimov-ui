@@ -201,4 +201,8 @@ export class PredefinedBotsService {
   contactUs(body){
     return this.http.post('/api/user/support-team-mail',body)
   }
+
+  getSubAgentContent(subAgentId){
+    return this.http.get(`/platform-service/inbox/agent/${subAgentId}`)
+  }
 }

@@ -35,6 +35,10 @@
     font-weight: bold;
     /* color: skyblue; */
 }
+.agent-header-name{
+  flex: 1 1 14% !important;
+  padding-left: 83px !important;
+}
 
 .scroll-container {
     overflow-y: auto;
@@ -280,6 +284,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    /* align-items: center !important; */
+  }
+
+  .sub-agent-header{
     align-items: center !important;
   }
   
