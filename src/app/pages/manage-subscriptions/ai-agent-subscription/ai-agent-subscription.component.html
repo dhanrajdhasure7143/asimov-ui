@@ -39,8 +39,8 @@
                     <span class="">Subscribed Agents</span>
                     <div class="action-buttons">
                         <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent)"></i>
-                        <button *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 1" class="renew-all-button"
-                            (click)="handleRenewal('bulk', agent, getSelectedSubAgentsByStatus(agent, 'INACTIVE'))">
+                        <button *ngIf="getSelectedSubAgents(agent).length > 0" class="renew-all-button"
+                            (click)="handleRenewal('bulk', agent, getSelectedSubAgents(agent))">
                             Renew All
                         </button>
                         
@@ -78,16 +78,17 @@
                             {{ subAgent.lastExecution ? (subAgent.lastExecution | date:'MMM d, y') : '-' }}
                         </div>
                         <div class="row-cell">
+                            <span *ngIf="agent.autoRenew">
                         
-                            <button *ngIf="subAgent.status === 'INACTIVE'" class="action-button renew-button"
+                            <button *ngIf="subAgent.status === 'INACTIVE' || subAgent.expiryDate" class="action-button renew-button"
                                 (click)="handleRenewal('individual', agent, subAgent)" style="color:#3199FF !important">
                                 Renew
                             </button>
                         
-                            <button *ngIf="subAgent.status === 'ACTIVE' && agent.autoRenew" class="action-button cancel-button"
+                            <button *ngIf="subAgent.status === 'ACTIVE' && agent.autoRenew && !subAgent.expiryDate" class="action-button cancel-button"
                                 (click)="subagentCancelSubscription(agent.productId, subAgent)" pTooltip="Cancel Subscription" tooltipPosition="right">Cancel</button>
-
-                            <button *ngIf="subAgent.status === 'ACTIVE' && !agent.autoRenew" class="action-button cancel-button">-</button>
+                            </span>
+                            <button *ngIf="!agent.autoRenew" class="action-button cancel-button">-</button>
                         </div>
                     </div>
                 </div>

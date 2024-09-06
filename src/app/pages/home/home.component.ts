@@ -64,18 +64,8 @@ export class HomeComponent implements OnInit {
       }
     
     // this.getAllPlans();
-    // this.screenNavigation();
-    let userMail = localStorage.getItem('ProfileuserId');
-    this.rest_api_service.updateUserDetails(userMail).subscribe((res:any)=>{
-      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
-    },err=>{
-      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
-    })
-
-
-
-
-    
+    this.screenNavigation();
+      
 
     // this.rest_api.getUserRole(2).subscribe(res=>{
     // this.userRole=res.message;
@@ -182,6 +172,23 @@ onClickLogout(){
 
   screenNavigation(){
     this.tenantId = localStorage.getItem('tenantName');
+
+    this.rest_api.getUserStatus({userId:localStorage.getItem("ProfileuserId")}).subscribe((userStatus_response:any)=>{
+      this.userStatus = userStatus_response
+      if(this.userStatus.current_registration_screen == "completed"){
+        this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
+      }else{
+        let userMail = localStorage.getItem('ProfileuserId');
+    this.rest_api_service.updateUserDetails(userMail).subscribe((res:any)=>{
+      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
+    },err=>{
+      this.router.navigate(["/pages/aiagent/home"], {queryParams:this._params});
+    })
+        // this.router.navigate(["/pages/userDetails"], {queryParams:this._params});
+      }
+    })
+
+    return
     this.rest_api.getUserStatus({userId:localStorage.getItem("ProfileuserId")}).subscribe((userStatus_response:any)=>{
       this.userStatus = userStatus_response
     this.rest_api.getUserRole(2).subscribe(res=>{
