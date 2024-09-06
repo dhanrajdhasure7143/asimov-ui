@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AiAgentFormComponent } from '../../ai-agent-form/ai-agent-form.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 interface Platform {
   name: string;
   icon: string;
@@ -16,7 +17,11 @@ export class AiAgentMarketingComponent implements OnInit {
   marketingForm: FormGroup;
   selectedPlatforms: Platform[] = [];
   generatedImageUrl: string | null = null;
-  generatedText: string | null = null;
+  // generatedText: string | null = null;
+  generatedText: { caption: string; hashtag: string } = {
+    caption: '',
+    hashtag: ''
+  };
   isGenerated: boolean = false;
   regenerateCount: number = 0;
   isAccepted: boolean = false;
@@ -27,8 +32,8 @@ export class AiAgentMarketingComponent implements OnInit {
     // { name: 'Twitter', icon: 'fab fa-twitter' },
     // { name: 'LinkedIn', icon: 'fab fa-linkedin' }
   ];
-
-  constructor(private fb: FormBuilder) {
+  private apiToken = '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';
+  constructor(private fb: FormBuilder,private http: HttpClient) {
     this.marketingForm = this.fb.group({
       linkedInPageId: [''],
       linkedInToken: [''],
@@ -119,18 +124,21 @@ export class AiAgentMarketingComponent implements OnInit {
   // }
   generateText(): void {
     // Simulating text generation
-    setTimeout(() => {
-      this.generatedText = "This is a sample generated text for your marketing campaign. It showcases the power of AI in creating engaging content for various social media platforms.";
-      // Replace with actual text generation logic
-    }, 1000);
+    // setTimeout(() => {
+    //   this.generatedText = "This is a sample generated text for your marketing campaign. It showcases the power of AI in creating engaging content for various social media platforms.";
+    //   // Replace with actual text generation logic
+    // }, 1000);
+    if (this.regenerateCount < 3) {
+      this.regenerateCount++;
+      this.hitGenerateCaptionAPI();
+    }
+
   }
   generateImage(): void {
-    // This is where you would call your image generation service
-    // For now, we'll just simulate it with a timeout
-    setTimeout(() => {
-      this.generatedImageUrl = '../../../../../assets/images/agent/Marketing Image.svg';
-      // You should replace this with the actual URL of the generated image
-    }, 2000); // Simulating a 2-second delay for image generation
+    if (this.regenerateCount < 3) {
+      this.regenerateCount++;
+      this.hitGenerateCaptionAPI();
+    }
   }
 
   
@@ -138,7 +146,51 @@ export class AiAgentMarketingComponent implements OnInit {
     if (this.regenerateCount < 3) {
       this.regenerateCount++;
       this.generateImage();
+      this.hitGenerateCaptionAPI();
     }
+  }
+  hitGenerateCaptionAPI(): void {
+    if (this.regenerateCount < 3) {
+      this.regenerateCount++;
+  
+      const formData = new FormData();
+      formData.append('prompt', 'A dog'); // Replace with dynamic prompt if needed
+  
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer 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',
+      });
+  
+      this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
+          next: (response: any) => {
+            console.log('Response received:', response);
+            // Correctly format caption and hashtag without removing emojis or symbols
+            const caption = this.cleanUpString(response.caption);
+            const hashtag = this.cleanUpString(response.hashtag);
+  
+            console.log('Caption:', caption);
+            console.log('Hashtag:', hashtag);
+            // this.generatedText += `${caption} ${hashtag}`;
+            this.generatedText = {
+              caption: response.caption,
+              hashtag: response.hashtag
+            };
+            
+            // Call the next step after processing the response
+            this.generateImage();
+          },
+          error: (error) => {
+            console.error('Error generating image:', error);
+          }
+        });
+    }
+  }
+  
+  // Helper function to clean up unnecessary escaped characters without removing emojis
+  cleanUpString(str: string): string {
+    return str
+      .replace(/\\"/g, '"')       // Removes escaped quotes
+      .replace(/^"(.*)"$/, '$1')  // Removes starting and ending quotes if they exist
+      .replace(/\\u([\dA-F]{4})/gi, (match, grp) => String.fromCharCode(parseInt(grp, 16))); // Decodes Unicode for emojis
   }
   acceptGenerated(): void {
     console.log('Content accepted:', this.generatedImageUrl || this.generatedText);

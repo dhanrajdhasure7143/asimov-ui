@@ -1370,3 +1370,7 @@ input.p-inputtext {
   background: #3199FF;
   border-radius: 30px;
 }
+
+:host ::ng-deep .p-button {
+  border: transparent !important;
+}
