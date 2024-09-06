@@ -188,6 +188,10 @@ export class AiAgentSubscriptionComponent implements OnInit {
     return agent.subAgents.filter((subAgent: any) => subAgent.status === status && subAgent.selected);
   }
 
+  getSelectedSubAgents(agent: any): any[] {
+    return agent.subAgents.filter((subAgent: any) => subAgent.selected);
+  }
+
   selectAll(agent: any, checked: boolean) {
     agent.subAgents.forEach((subAgent: any) => {
         subAgent.selected = checked;
