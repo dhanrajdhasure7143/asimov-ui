@@ -451,7 +451,7 @@
   <app-change-password (valueChange)='closeFormOverlay($event)'></app-change-password>
 </p-sidebar> -->
 
-<p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
+<p-dialog header="Contact Support" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
   <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
       <div class="p-fluid">
           <b>If you have any questions or concerns? Send us a message, and our team will assist you with your needs.</b>

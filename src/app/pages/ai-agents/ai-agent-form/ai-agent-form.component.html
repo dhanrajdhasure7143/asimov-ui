@@ -26,7 +26,7 @@
                             <i class="pi pi-times " (click)="onDeactivate()"></i>
                         </span>
                 </div>
-              <p *ngIf="params.type == 'create'">Not configured yet</p>
+              <p *ngIf="!isConfigered">Not configured yet</p>
             </div>
           </div>
 
@@ -757,7 +757,8 @@
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
                         <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="createBot()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
-                        <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button>
+                        <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
+                        <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid">Update</button>
                     </div>
                   </div>
               </div>

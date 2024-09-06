@@ -1,140 +1,171 @@
 <div class="container-fluid  d-flex flex-column h-100 main-screen">
     <div class="marketing-form-container">
-    <form [formGroup]="marketingForm">
-      <!-- Platform Selection with Icons -->
-
-      <b>Select Platforms:</b>
-      <div class="platform-selection">
-        <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Plotform"
-            optionLabel="name" display="chip" [showHeader]="false" [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="togglePlatformFields()">
-            <!-- Template for displaying selected items -->
-            <ng-template let-value pTemplate="selectedItems">
-                <ng-container *ngIf="value && value.length > 0">
-                    <div *ngFor="let option of value" class="p-multiselect-token">
+      <ng-container>
+        <p-accordion [multiple]="true" styleClass="custom-accordion">
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="custom-header">
+                <span>Initial Setup</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <!-- Platform Selection with Icons -->
+              <b>Select Platforms:</b>
+              <div class="platform-selection" [formGroup]="marketingForm">
+                <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Plotform"
+                optionLabel="name" display="chip" [showHeader]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="togglePlatformFields()">
+                  <!-- Template for displaying selected items -->
+                  <ng-template let-value pTemplate="selectedItems">
+                    <ng-container *ngIf="value && value.length > 0">
+                      <div *ngFor="let option of value" class="p-multiselect-token">
                         <i [ngClass]="option.icon" style="margin-right: 8px; font-size: 18px;"></i>
                         <span class="p-multiselect-token-label">{{ option.name }}</span>
-                    </div>
-                </ng-container>
-                <div *ngIf="!value || value.length === 0">Select Social Media Plotform</div>
-            </ng-template>
-            <!-- Template for displaying items in the dropdown -->
-            <ng-template let-platform pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                    <i [ngClass]="platform.icon" style="margin-right: 8px; font-size: 18px;"></i>
-                    <div>{{ platform.name }}</div>
-                </div>
-            </ng-template>
-        </p-multiSelect>
-      </div>
-    <div class="scrollable-content">
-           
-        <!-- Facebook Credentials -->
-        <div *ngIf="isPlatformSelected('Facebook')" class="credentials-section">
-            <b>Facebook Credentials</b>
-         <div class="form-fields">
-                 <div>
-                 <label>Page ID <span class="required">*</span></label>
-                 <input type="text" formControlName="facebookPageId">
-                 <div *ngIf="marketingForm.get('facebookPageId')?.invalid && marketingForm.get('facebookPageId')?.touched">
-                     <small class="required">Facebook Page ID is required</small>
-                 </div>
-                 </div>
-                 <div>
-                 <label>Access Token <span class="required">*</span></label>
-                 <input type="text" formControlName="facebookToken">
-                 <div *ngIf="marketingForm.get('facebookToken')?.invalid && marketingForm.get('facebookToken')?.touched">
-                     <small class="required">Facebook Access Token is required</small>
-                 </div>
-                 </div>
-             </div>
-         </div>
+                      </div>
+                    </ng-container>
+                    <div *ngIf="!value || value.length === 0">Select Social Media Plotform</div>
+                  </ng-template>
 
-            <!-- Instagram Credentials -->
-            <div *ngIf="isPlatformSelected('Instagram')" class="credentials-section">
-                <b>Instagram Credentials</b>
-            <div class="form-fields">
-                    <div>
-                    <label>Page ID <span class="required">*</span></label>
-                    <input type="text" formControlName="instagramPageId">
-                    <div *ngIf="marketingForm.get('instagramPageId')?.invalid && marketingForm.get('instagramPageId')?.touched">
-                        <small class="required">Instagram Page ID is required</small>
+                  <!-- Template for displaying items in the dropdown -->
+                  <ng-template let-platform pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                      <i [ngClass]="platform.icon" style="margin-right: 8px; font-size: 18px;">
+                      </i>
+                      <div>{{ platform.name }}</div>
                     </div>
+                  </ng-template>
+                </p-multiSelect>
+              </div>
+              <div class="scrollable-content">
+
+                <!-- Facebook Credentials -->
+                <div *ngIf="isPlatformSelected('Facebook')" class="credentials-section">
+                  <b> Facebook Credentials </b>
+                  <div class="form-fields">
+                    <div>
+                      <label> Page ID <span class="required">*</span> </label>
+                      <input type="text" formControlName="facebookPageId">
+                      <div *ngIf="marketingForm.get('facebookPageId')?.invalid && marketingForm.get('facebookPageId')?.touched">
+                        <small class="required"> Facebook Page ID is required</small>
+                      </div>
                     </div>
                     <div>
-                    <label>Access Token <span class="required">*</span></label>
-                    <input type="text" formControlName="instagramToken">
-                    <div *ngIf="marketingForm.get('instagramToken')?.invalid && marketingForm.get('instagramToken')?.touched">
+                      <label> Access Token <span class="required">* </span> </label>
+                      <input type="text" formControlName="facebookToken">
+                      <div *ngIf="marketingForm.get('facebookToken')?.invalid && marketingForm.get('facebookToken')?.touched">
+                        <small class="required">
+                          Facebook Access Token is required
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Instagram Credentials -->
+                <div *ngIf="isPlatformSelected('Instagram')" class="credentials-section">
+                  <b> Instagram Credentials </b>
+                  <div class="form-fields">
+                    <div>
+                      <label> Page ID <span class="required">*</span></label>
+                      <input type="text" formControlName="instagramPageId">
+                      <div *ngIf="marketingForm.get('instagramPageId')?.invalid && marketingForm.get('instagramPageId')?.touched">
+                        <small class="required"> Instagram Page ID is required </small>
+                      </div>
+                    </div>
+                    <div>
+                      <label> Access Token <span class="required">*</span></label>
+                      <input type="text" formControlName="instagramToken">
+                      <div *ngIf="marketingForm.get('instagramToken')?.invalid && marketingForm.get('instagramToken')?.touched">
                         <small class="required">Instagram Access Token is required</small>
+                      </div>
                     </div>
-                    </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="row prompt-description">
-            <div class="col-md-6">
-                <div class="prompt-type-selection">
-                    <b>Select Prompt Type:</b>
+              </div>
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </ng-container>
+      <ng-container>
+        <p-accordion [multiple]="true" styleClass="custom-accordion">
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="custom-header">
+                <span> Agent Information </span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <div class="row prompt-description" [formGroup]="marketingForm">
+                <div class="col-md-6">
+                  <div class="prompt-type-selection">
+                    <b> Select Prompt Type: </b>
                     <div class="prompt-type">
-                        <label class="radio-label">
-                            <input type="radio" value="image" formControlName="promptType"> Image Prompt
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" value="text" formControlName="promptType"> Text Prompt
-                        </label>
+                      <label class="radio-label">
+                        <input type="radio" value="image" formControlName="promptType"> Image Prompt
+                      </label>
+                      <label class="radio-label">
+                        <input type="radio" value="text" formControlName="promptType"> Text Prompt
+                      </label>
                     </div>
-                </div>
-                <div style="padding: 0px !important;">
-                    <b>{{marketingForm.get('promptType').value === 'image' ? 'Describe Your Image' : 'Enter Your Message'}}</b>
-                    <textarea class="form-control data" formControlName="promptDescription" rows="10" style="resize: none;"
-                        placeholder="Enter Prompt Description"></textarea>
+                  </div>
+                  <div style="padding: 0px !important;">
+                    <b>{{marketingForm.get('promptType').value === 'image' ? 'Describe Your Image' : 'Enter Your Message'}} </b>
+                    <textarea class="form-control data" formControlName="promptDescription"
+                        rows="10" style="resize: none;" placeholder="Enter Prompt Description">
+                    </textarea>
                     <div class="form-buttons" *ngIf="!isGenerated">
-                        <button class="btn bluebg-button" type="button" (click)="clearForm()">Clear</button>
-                        <button class="btn bluebg-button" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid">
-                            <img src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">Generate
-                        </button>
+                      <button class="btn bluebg-button" type="button" (click)="clearForm()">
+                        Clear
+                      </button>
+                      <button class="btn bluebg-button" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid">
+                        <img src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
+                        Generate
+                      </button>
                     </div>
                     <div class="form-buttons" *ngIf="isGenerated">
-                        <button *ngIf="marketingForm.get('promptType').value === 'image'" 
-                                class="btn btn-secondary" 
-                                type="button" 
-                                (click)="regenerateImage()" 
-                                [disabled]="regenerateCount >= 3">
-                            <i class="fas fa-redo"></i>  &nbsp; Re-Generate ({{ regenerateCount }}/3)
-                        </button>
-                        <button class="btn btn-primary" type="button" (click)="acceptGenerated()">
-                            <i class="fas fa-check"></i> Accept
-                        </button>
+                      <button *ngIf="marketingForm.get('promptType').value === 'image'" class="btn btn-secondary"
+                      type="button" (click)="regenerateImage()" [disabled]="regenerateCount >= 3">
+                        <i class="fas fa-redo">
+                        </i>
+                        &nbsp; Re-Generate ({{ regenerateCount }}/3)
+                      </button>
+                      <button class="btn btn-primary" type="button" (click)="acceptGenerated()">
+                        <i class="fas fa-check"> </i> Accept
+                      </button>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-md d-flex flex-column generated-output">
-                <h4>AI Generated {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}} 
-                    <small>({{3 - regenerateCount}} Prompts Remaining)</small>
-                </h4>
-                <div class="flex-grow-1 output-content">
+
+                <div class="col-md d-flex flex-column generated-output">
+                  <h4> AI Generated {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}}
+                    <small> ({{3 - regenerateCount}} Prompts Remaining) </small>
+                  </h4>
+                  <div class="flex-grow-1 output-content">
                     <!-- Generated Image Display -->
                     <div *ngIf="generatedImageUrl" class="generated-image-container">
-                        <img [src]="generatedImageUrl" alt="Generated Marketing Image" class="generated-image">
+                      <img [src]="generatedImageUrl" alt="Generated Marketing Image" class="generated-image">
                     </div>
-                
                     <!-- Generated Text Display -->
                     <div *ngIf="generatedText" class="generated-text-container">
-                        <p>{{ generatedText }}</p>
+                      <!-- <p> {{ generatedText }} </p> -->
+                      <p>{{ generatedText.caption }}</p>
+                      <p>{{ generatedText.hashtag }}</p>
+                      
                     </div>
-                </div>
-                <div class="output-actions" *ngIf="isGenerated">
-                    <button class="btn btn-outline-primary" [class.accepted]="isAccepted" (click)="toggleAccepted()">
-                        <i class="fas" [ngClass]="isAccepted ? 'fa-check' : 'fa-check-circle'"></i> 
-                        {{ isAccepted ? 'Accepted' : 'Accept' }}
-                    </button>
+                  </div>
+                  <div class="output-actions" *ngIf="isGenerated">
+                    <button class="btn btn-outline-primary" [class.accepted]="isAccepted"
+                    (click)="toggleAccepted()">
+                      <i class="fas" [ngClass]="isAccepted ? 'fa-check' : 'fa-check-circle'">
+                      </i> {{ isAccepted ? 'Accepted' : 'Accept' }} </button>
                     <button class="btn btn-outline-secondary" (click)="regenerateContent()">
-                        <i class="fas fa-sync-alt"></i>
+                      <i class="fas fa-sync-alt"> </i>
                     </button>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </form>
+              </div>
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </ng-container>
+    </div>
   </div>
-</div>

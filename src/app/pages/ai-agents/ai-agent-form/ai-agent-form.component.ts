@@ -207,11 +207,11 @@ export class AiAgentFormComponent implements OnInit {
       this.isConfigered = res.isConfigured;
       console.log("isConfigered",this.isConfigered);  
       if(this.isConfigered){
+        this.fetchAllFieldsToUpdateData();
         this.initializePagination();
         this.getSubAgentHistoryLogs();
         this.getSubAgentFileHistoryLogs();
         this.initializeSubAgentFilePagination();
-        this.fetchAllFieldsToUpdateData();
       this.getSubAgentsInprogressList();
       this.isEdit = true;
       }else{
@@ -626,8 +626,8 @@ export class AiAgentFormComponent implements OnInit {
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         if(this.predefinedBot_uuid == 'pred_CustomerSupport'){
             const keys = Object.keys(req_body.fields);
-            const tenantIdKey = keys.find(key => key.includes('_TenantId'));
-            const userIdKey = keys.find(key => key.includes('_UserId'));
+            const tenantIdKey = keys.find(key => key.includes('tennantId'));
+            const userIdKey = keys.find(key => key.includes('UserId'));
             if (tenantIdKey) {
               req_body.fields[tenantIdKey] = localStorage.getItem('tenantName');
             }
@@ -655,10 +655,11 @@ export class AiAgentFormComponent implements OnInit {
   saveBot(req_body,botName,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
-      const agentUUID = res.data[0].agentUUID;
+      const agentId = this.params.agentId;
       this.isConfigered = true;
       this.showProgress = true;
-        this.captureAgentIdAndFileIds(agentUUID, this.capturedFileIds);
+      console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(this.subAgentName,"save")
@@ -671,6 +672,7 @@ export class AiAgentFormComponent implements OnInit {
         const agentId = this.params.agentId;
         this.isConfigered = true;
         this.showProgress = true;
+        console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.toaster.showSuccess(this.subAgentName,"update")
@@ -705,7 +707,17 @@ export class AiAgentFormComponent implements OnInit {
         this.botCreate('update');
       }
     } else {
+      console.log(this.predefinedBotsForm)
       console.log('Form is not valid!');
+      Object.keys(this.predefinedBotsForm.controls.fields['controls']).forEach(field => {
+        const control = this.predefinedBotsForm.controls.fields.get(field);
+  
+        if (control && control.invalid) {
+          // Log the control's name and its errors
+          console.log(`Control ${field} is invalid. Errors: `, control.errors);
+        }
+      });
+      this.toaster.showInfo("Please fill required fields");
     }
   }
 
@@ -1092,7 +1104,8 @@ export class AiAgentFormComponent implements OnInit {
             if(field.preAttributeType == "file"){
               fieldsGroup[field.preAttributeName] = [''];
             }else{
-              fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
+              field.attributeRequired ? fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required] : fieldsGroup[field.preAttributeName] = [field.preAttributeValue];
+              // fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
             }
             // field.preAttributeType != "file" ? fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required] : fieldsGroup[field.preAttributeName] = ['', Validators.required];
             // fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required];
@@ -1340,6 +1353,7 @@ export class AiAgentFormComponent implements OnInit {
       )
       .subscribe(() => {
         this.checkCurrentStage();
+        this.getSubAgentConent();
       });
   }
 
@@ -1925,6 +1939,15 @@ handleHistoryTab (hist) {
 
   backToSubAgent() {
     this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.params.id, botName: this.predefinedBot_name } });
+  }
+
+  getSubAgentConent(){
+    this.rest_service.getSubAgentContent(this.params.agentId).subscribe((res: any) => {
+      console.log("res",res)
+      // this.subAgentContent = res.data;
+    } , err => {  
+      // this.toaster.showError(this.toastMessages.apierror);
+     });
   }
 
 }
