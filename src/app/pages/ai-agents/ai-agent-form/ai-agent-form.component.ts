@@ -7,7 +7,6 @@ import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { toastMessages } from 'src/app/shared/model/toast_messages';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { Inplace } from "primeng/inplace";
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AiAgentConfigOverlayComponent } from '../ai-agent-config-overlay/ai-agent-config-overlay.component';
 import * as JSZip from "jszip";
@@ -35,18 +34,12 @@ import { takeWhile } from 'rxjs/operators';
   ]
 })
 export class AiAgentFormComponent implements OnInit {
-  @ViewChild("inplace") inplace!: Inplace;
   @ViewChild('aiAgentsConfig') aiAgentsConfig: AiAgentConfigOverlayComponent;
-  processName:string;
-  currentPage = 1;
-  fieldsPerPage = 30;
   formFields = [];
   predefinedBotsForm: FormGroup;
   pages: number[] = [];
   nodes: number[] = [];
-  isShowForm:boolean=false;
   items: MenuItem[]=[];
-  activeIndex: number = undefined;
   params:any={};
   scheduleOverlayFlag: Boolean = false;
   schedulerComponentInput: any;
@@ -97,7 +90,7 @@ export class AiAgentFormComponent implements OnInit {
   getStagesInterval: any;
   isConfigered:boolean = false;
 
-
+  
   // Agent in Progress
   // inProgressAgents = [
   //   { startDate: '2023-05-22', progress: 50 },
@@ -113,7 +106,6 @@ export class AiAgentFormComponent implements OnInit {
   //   { startDate: '2023-10-02', progress: 70 },
   //   { startDate: '2023-11-20', progress: 50 },
   // ];
-
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
   currentActivePage = 1;
   itemsPerPageCount = 4;
@@ -193,11 +185,6 @@ export class AiAgentFormComponent implements OnInit {
       schedule: [{value: '', disabled: true}],
       scheduleTime:[{value: '', disabled: true}]
     });
-    // if(this.params.type == "create"){
-      
-    // }else{
-      
-    // }
   }
 
   getSubAgentConfigStatus(){
@@ -205,14 +192,14 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getSubAgentConfigStatus(this.params.agentId).subscribe((res: any) => {
       console.log("isConfigered-------------------",res);
       this.isConfigered = res.isConfigured;
-      console.log("isConfigered",this.isConfigered);  
+      // console.log("isConfigered",this.isConfigered);  
       if(this.isConfigered){
-        this.fetchAllFieldsToUpdateData();
+        this.fetchAllFieldsWithValue();
         this.initializePagination();
         this.getSubAgentHistoryLogs();
         this.getSubAgentFileHistoryLogs();
         this.initializeSubAgentFilePagination();
-      this.getSubAgentsInprogressList();
+        this.getSubAgentsInprogressList();
       this.isEdit = true;
       }else{
         this.fetchAllFields();
@@ -247,7 +234,7 @@ export class AiAgentFormComponent implements OnInit {
 
       this.isCommonForm = res.formType === 'common'? true : false;
       this.fieldInputKey = {};
-      console.log("Form Attributes: ", res.data)
+      // console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", preAttributeType: "text", visibility: true }
@@ -275,7 +262,6 @@ export class AiAgentFormComponent implements OnInit {
       // this.formFields ={...res.data};
       // this.formFields={...{},...res.data};
       this.predefinedBot_name = res.predefinedBotName;
-      this.processName = this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.predefinedBot_schedulerRequired = false
@@ -287,51 +273,41 @@ export class AiAgentFormComponent implements OnInit {
     
   }
 
-  onSave() {
-    
-  }
-
   generateDynamicForm(){
     const fieldsGroup = {};
     this.formFields.forEach(field => {
-      console.log("field",field)
-      if(field.attributeRequired){
-        if(field.preAttributeType == "checkbox"){
-          fieldsGroup[field.preAttributeName] = [false, Validators.required];
-        }else{
+      if(field.preAttributeType === "checkbox") {
+        const checkboxGroup = this.fb.group({});
+        field.options.forEach(option => {
+          checkboxGroup.addControl(option.value, this.fb.control(false));
+        });
+        fieldsGroup[field.preAttributeName] = checkboxGroup;
+        // if (field.attributeRequired) {
+        //   // Add a custom validator to ensure at least one checkbox is checked
+        //   fieldsGroup[field.preAttributeName] = [checkboxGroup, [this.checkboxGroupRequiredValidator()]];
+        // } else {
+        //   fieldsGroup[field.preAttributeName] = checkboxGroup;
+        // }
+      } else {
+        // Handle other types of form controls
+        if (field.attributeRequired) {
           fieldsGroup[field.preAttributeName] = ["", Validators.required];
+        } else {
+          fieldsGroup[field.preAttributeName] = [""];
         }
-      }else{
-        if(field.preAttributeType == "checkbox"){
-          fieldsGroup[field.preAttributeName] = [false];
-        }else{
-          fieldsGroup[field.preAttributeName] = [''];
-        }
-      }
-
-      // Condition to add a method to check the Agent Name is present or not.
-      if (field.preAttributeType === 'text' && field.preAttributeLable === 'Automation Agent Name' && !this.isEdit) {
-        fieldsGroup[field.preAttributeName] = ["", [this.agentNameCheck.bind(this)]];
+        // if (field.preAttributeType === 'text' && field.preAttributeLable === 'Automation Agent Name' && !this.isEdit) {
+        //   fieldsGroup[field.preAttributeName] = ["", [this.agentNameCheck.bind(this)]];
+        // }
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    console.log("predefinedBotsForm",this.predefinedBotsForm)
-    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    //   this.pages.forEach(element => {
-    //     let obj ={label:" ",command: () => { this.goToPage(element)}}
-    //       this.items.push(obj)
-    //   }); 
-    // setTimeout(() => {
-
-    //   this.activeIndex = 0 
-    // }, 200);
+    console.log("predefinedBotsForm",this.predefinedBotsForm.value)
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
       });
   }
 
-  fetchAllFieldsToUpdateData() {
+  fetchAllFieldsWithValue() {
     // this.spinner.show();
     this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agentId).subscribe((res:any)=>{
       const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
@@ -349,7 +325,15 @@ export class AiAgentFormComponent implements OnInit {
             }))
           ];
           
-          console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
+          // console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
+      });
+
+      this.fieldInputKey = {};
+
+      res.data.forEach(item => {
+        if (item.preAttributeType === 'file') {
+          this.fieldInputKey[item.preAttributeName] = item.preAttributeName;
+        }
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
@@ -378,13 +362,11 @@ export class AiAgentFormComponent implements OnInit {
     );
       this.duplicateAttributes.push(...res.data.filter(item=>  item.duplicate))
       this.predefinedBot_name = res.predefinedBotName;
-      this.processName =this.predefinedBot_name +" Agent"
       this.predefinedBot_uuid = res.predefinedBotUUID
       // this.predefinedBot_schedulerRequired = res.isSchedulerRequired
       this.predefinedBot_schedulerRequired = false
       this.predefinedBotsForm.get('isScheduleBot').setValue(this.predefinedBot_schedulerRequired)
       if(this.predefinedBot_schedulerRequired) this.schedulerValue = res.schedule
-      // this.generateDynamicForm();
       this.generateDynamicFormUpdate();
       if (this.predefinedBot_schedulerRequired) {
         this.predefinedBotsForm.get("scheduleTime").setValue(this.convertSchedule(this.schedulerValue,true))
@@ -396,78 +378,12 @@ export class AiAgentFormComponent implements OnInit {
     // }); 
     // this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
 
-    // const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    // this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    // this.pages.forEach(element => {
-    //   let obj ={label:" ",command: () => { this.goToPage(element)}}
-    //     this.items.push(obj)
-    // });
-
     // this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
     //       this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
     //     });
       })
   }
 
-  calculateNodes(): void {
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    // this.nodes = Array.from({ length: totalPages }, (_, index) => index * 100 / (totalPages - 1));
-  }
-
-
-  calculatePages(): void {
-    const totalPages = Math.ceil(this.formFields.length / this.fieldsPerPage);
-    this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-
-  goToPage(num: number) {
-    this.currentPage = num;
-    this.activeIndex = num - 1;
-  }
-
-  nextPage() {
-    console.log(this.formFields)
-    // console.log(this.currentPage,this.predefinedBot_name,this.isJobDescrption_error)
-    if(!this.isJobDescrptionValid && this.predefinedBot_name =="Recruitment" && this.currentPage ==1 ){
-      this.toaster.showError(this.toastMessages.jd_error)
-      return
-    }
-
-    if (this.currentPage < this.pages.length) {
-      this.currentPage++;
-      this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
-    }
-  }
-  
-  previousPage() {
-    console.log(this.currentPage)
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.activeIndex = this.currentPage - 1;  // Ensure activeIndex is updated
-    }
-  }
-
-  goBack() {
-    console.log(this.currentPage)
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.activeIndex = this.currentPage - 1;
-    }
-  }
-
-  get currentPageFields() {
-    const startIndex = (this.currentPage - 1) * this.fieldsPerPage;
-    const endIndex = startIndex + this.fieldsPerPage;
-    return this.formFields.slice(startIndex, endIndex);
-  }
-
-  get isLastPage(): boolean {
-    return this.currentPage === this.pages.length;
-  }
-
-  get progress(): number {
-    return (this.currentPage / this.pages.length) * 100;
-  }
 
   goBackList(){
     // if(this.params.type == "create"){
@@ -480,18 +396,6 @@ export class AiAgentFormComponent implements OnInit {
     this.router.navigate(['/pages/aiagent/details'],{ queryParams: { id: this.predefinedBot_id } });
   }
 
-  navigateForm(){
-    this.isShowForm=!this.isShowForm;
-  }
-
-  updateProgress() {
-    if (this.activeIndex < this.items.length - 1) {
-      this.activeIndex++;
-    } else {
-      this.activeIndex = 0; // Reset or stop as needed
-    }
-  }
-
   openScheduler() {
     this.scheduleOverlayFlag = true;
   }
@@ -500,19 +404,8 @@ export class AiAgentFormComponent implements OnInit {
     this.scheduleOverlayFlag = event;
   }
 
-  // createBot() {
-  //   console.log(this.selectedOption , this.predefinedBotsForm)
-  //   if(this.predefinedBot_uuid =='Pred_RFP'){
-  //     this.rfpbotCreate('create')
-  //   }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-  //     this.recruitmentbotCreate('create');
-  //   }else{
-  //     this.botCreate('create');
-  //   }
-  // }
-
-  rfpbotCreate(type){
-    if (this.predefinedBotsForm.valid) {
+  rfpAgentCreate(type){
+    // if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       // const formData = new FormData();
       // formData.append('filePath', this.selectedFiles[0]);
@@ -522,7 +415,6 @@ export class AiAgentFormComponent implements OnInit {
         let req_body = this.predefinedBotsForm.value;
         req_body["automationName"] = this.subAgentName
         req_body["agentUUID"] = this.params.agentId
-        // req_body["automationName"] = this.predefinedBotsForm.value.fields.botName
         req_body["predefinedBotType"] = this.predefinedBot_name
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
@@ -530,18 +422,18 @@ export class AiAgentFormComponent implements OnInit {
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
-        this.formFields.forEach(e => {
-          if (e.preAttributeName === 'RFP_dropdown') {
-            e.options.forEach(item => {
-              const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
-                (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
-              if (key) {
-                const [fieldName, fieldValue] = key.split(':');
-                req_body.fields[fieldName] = fieldValue;
-              }
-            });
-          }
-        });
+        // this.formFields.forEach(e => {
+        //   if (e.preAttributeName === 'RFP_dropdown') {
+        //     e.options.forEach(item => {
+        //       const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
+        //         (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
+        //       if (key) {
+        //         const [fieldName, fieldValue] = key.split(':');
+        //         req_body.fields[fieldName] = fieldValue;
+        //       }
+        //     });
+        //   }
+        // });
 
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
@@ -556,16 +448,15 @@ export class AiAgentFormComponent implements OnInit {
           });
         }
         console.log('req_body------:', req_body);
-        this.saveBot(req_body,botName,type)
+        this.saveAgentApi(req_body,type)
       // })
-      } else {
-        this.toaster.showInfo("Fill All fields")
-      }
+      // } else {
+      //   this.toaster.showInfo("Fill All fields")
+      // }
   }
 
-  recruitmentbotCreate(type){
+  recruitmentAgentCreate(type){
     if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
       if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
         this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
         // this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
@@ -606,15 +497,14 @@ export class AiAgentFormComponent implements OnInit {
           })
         }
         console.log('req_body---:', req_body);
-        this.saveBot(req_body,botName,type)
+        this.saveAgentApi(req_body,type)
       } else {
         this.toaster.showInfo("Fill All fields")
       }
   }
 
-  botCreate(type){
-    if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
+  generatePayloadToSaveUpdateAgent(type){
+    // if (this.predefinedBotsForm.valid) {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
@@ -645,21 +535,23 @@ export class AiAgentFormComponent implements OnInit {
             }
           })
         }
-        this.saveBot(req_body,botName,type)
+        this.saveAgentApi(req_body,type)
         console.log('req_body---:', req_body);
-      } else {
-        this.toaster.showInfo("Fill All fields")
-      }
+      // } else {
+      //   this.toaster.showInfo("Fill All fields")
+      // }
   }
 
-  saveBot(req_body,botName,type) {
+  saveAgentApi(req_body,type) {
     if(type == "create"){
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentId = this.params.agentId;
       this.isConfigered = true;
       this.showProgress = true;
-      console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+      // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+      if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      }
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(this.subAgentName,"save")
@@ -672,7 +564,7 @@ export class AiAgentFormComponent implements OnInit {
         const agentId = this.params.agentId;
         this.isConfigered = true;
         this.showProgress = true;
-        console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.toaster.showSuccess(this.subAgentName,"update")
@@ -696,29 +588,91 @@ export class AiAgentFormComponent implements OnInit {
     });
   }
 
-  onUpdateForm(){
-    if (this.predefinedBotsForm.valid) {
-      console.log(this.selectedOption , this.predefinedBotsForm)
-      if(this.predefinedBot_uuid =='Pred_RFP'){
-        this.rfpbotCreate('update')
-      }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-        this.recruitmentbotCreate('update');
+
+
+  initiateUpdateAgent(){
+    // if (this.predefinedBotsForm.valid) {
+    //   console.log(this.selectedOption , this.predefinedBotsForm)
+    //   if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+    //     this.uploadFilesAndCreateBot('update')
+    //   }else{
+    //     this.botCreate('update');
+    //   }
+    // } else {
+    //   console.log(this.predefinedBotsForm.controls.fields['controls'])
+    //   console.log('Form is not valid!',this.attachmentMap);
+    //   this.toaster.showInfo("Please fill required fields");
+    // }
+    if(this.validateForm() && this.validateFormForTypeFileFields()){
+      this.spinner.show();
+      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+        this.uploadFilesAndSaveAgent('update')
       }else{
-        this.botCreate('update');
+        this.generatePayloadToSaveUpdateAgent('update');
       }
     } else {
-      console.log(this.predefinedBotsForm)
-      console.log('Form is not valid!');
-      Object.keys(this.predefinedBotsForm.controls.fields['controls']).forEach(field => {
-        const control = this.predefinedBotsForm.controls.fields.get(field);
-  
-        if (control && control.invalid) {
-          // Log the control's name and its errors
-          console.log(`Control ${field} is invalid. Errors: `, control.errors);
-        }
-      });
       this.toaster.showInfo("Please fill required fields");
     }
+  }
+
+  validateForm(){
+    let isValid = true;
+    Object.keys(this.predefinedBotsForm.controls.fields['controls']).forEach(field => {
+      const control = this.predefinedBotsForm.controls.fields.get(field);
+      if (control && control.invalid) {
+       let selectedField = this.formFields.find(item => item.preAttributeName === field);
+       if(selectedField.preAttributeType != "file" && selectedField.attributeRequired){
+        // this.toaster.showInfo("Please fill required fields");
+        isValid = false;
+       }
+      }
+    });
+    return isValid
+  }
+
+  validateFormForTypeFileFields() {
+    let isValid = true;
+    // console.log(this.predefinedBotsForm.controls.fields.value)
+    let emptyInputs = this.getEmptyFileTypeFields(this.formFields,this.predefinedBotsForm.controls.fields.value)
+    console.log("emptyInputs",emptyInputs)
+    emptyInputs.forEach(element => {
+    const attachments = this.attachmentMap[element] ? this.attachmentMap[element]:[];
+    // console.log("element",element)
+    // console.log("attachments",attachments)
+      if (attachments.length == 0)    isValid = false;
+    })
+
+    return isValid
+
+    // Find all form fields where preAttributeType == 'file'
+    const fileFields = this.formFields.filter(field => field.preAttributeType === 'file');
+    console.log('File type fields:', fileFields);
+    // console.log('File type fields11111111:', this.attachmentMap);
+    fileFields.forEach(fileField => {
+      if(fileField.attributeRequired){
+        // console.log('File type field attributeRequired:', fileField);
+      const attachments = this.attachmentMap[fileField.preAttributeName];
+      if (attachments && attachments.length > 0) {
+        // console.log(`Attachments found for ${fileField.preAttributeName}:`, attachments);
+        isValid = true;
+      } else {
+        // console.log(`No attachments found for ${fileField.preAttributeName}`);
+        isValid = false;
+      }
+    }
+    });
+  
+    return isValid;
+  }
+
+  getEmptyFileTypeFields(fields, data) {
+    const emptyFileFields = [];
+    fields.forEach(field => {
+      if (field.preAttributeType === 'file' && field.attributeRequired && data[field.preAttributeName] === "") {
+        emptyFileFields.push(field.preAttributeName);
+      }
+    });
+    return emptyFileFields;
   }
 
   readEmitValue(data){
@@ -809,33 +763,6 @@ export class AiAgentFormComponent implements OnInit {
   }
   }
 
-  // onFileSelected(event: any,field) {
-  //   this.selectedFiles = event.target.files;
-  //   console.log(this.selectedFiles)
-  //   this.selectedOption = field
-  //   console.log("this.selectedOption",this.selectedOption)
-  //   // if(this.predefinedBot_uuid =='Pred_RFP'){
-  //     const formData = new FormData();
-  //     // this.selectedFiles.forEach(e=>{
-  //     //   formData.append('filePath', e);
-  //     // })
-
-  //     for (let i = 0; i < this.selectedFiles.length; i++) {
-  //       formData.append("file", this.selectedFiles[i]);
-  //     }
-  //     formData.append("filePath", this.predefinedBot_name);
-  //     formData.append("predefinedAgentUUID", this.predefinedBot_uuid );
-  //     formData.append("productId", this.predefinedBot_id);
-
-  //     this.rest_service.rfpFileUpload(formData).subscribe((res:any)=>{
-  //       console.log("res",res)
-  //       let obj = {filePath:res.fileName,
-  //         attributName:field.preAttributeName
-  //         }
-  //       this.filePathValues.push(obj)
-  //     })
-  //   // }
-  // }
   onFileSelected(event: any, field: any) {
     const selectedFiles = event.target.files;
     this.selectedFiles[field.preAttributeName] = selectedFiles;
@@ -844,21 +771,22 @@ export class AiAgentFormComponent implements OnInit {
     const selectedFile = event.target.files[0];
     const fileName = selectedFile.name;
     const fileNameElement = document.querySelector('.custom-file-name');
+    if(fileNameElement)
     fileNameElement.textContent = fileName;
   }
 
-  createBot() {
-    console.log(this.predefinedBotsForm.value);
+  initiateSaveAgent() {
+    this.spinner.show();
+    console.log("predefinedBotsForm.value",this.predefinedBotsForm.value)
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
-      this.uploadFilesAndCreateBot('create');
+      this.uploadFilesAndSaveAgent('create');
     } else {
-      this.botCreate('create');
+      this.generatePayloadToSaveUpdateAgent('create');
     }
     this.currentStage = 0;
   }
 
-  uploadFilesAndCreateBot(action: string) {
-    this.spinner.show();
+  uploadFilesAndSaveAgent(action: string) {
     const fileKeys = Object.keys(this.selectedFiles);
     const totalKeys = fileKeys.length;
     let currentIndex = 0;
@@ -902,9 +830,9 @@ export class AiAgentFormComponent implements OnInit {
         }
       } else {
         if (this.predefinedBot_uuid === 'Pred_RFP') {
-          this.rfpbotCreate(action);
+          this.rfpAgentCreate(action);
         } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
-          this.recruitmentbotCreate(action);
+          this.recruitmentAgentCreate(action);
         }
       }
     };
@@ -936,15 +864,14 @@ export class AiAgentFormComponent implements OnInit {
     this.validate_errorMessage=[];
   }
 
-  onCheckboxChange(event, option:any,type:any) {
+  onCheckboxChange(event, option:any,field) {
     let checkbox:any
     let checkValue:any
-    if(type == "onchange"){
         checkbox = event.target as HTMLInputElement;
         checkValue = checkbox.checked;
-    }else{
-      checkValue = event;
-    }
+        console.log(this.predefinedBotsForm.get('fields.' + field.preAttributeName))
+      this.predefinedBotsForm.get('fields.' + field.preAttributeName).get(option.value).setValue(checkbox.checked);
+    
     const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
     let array;
@@ -984,15 +911,7 @@ export class AiAgentFormComponent implements OnInit {
             this.clearValidators(element);
           }
         });
-         // let arrayList = this.getArrayValues(option.disableFields)
-        // arrayList.forEach(element1 => {
-        //   const field1 = this.formFields.find(item => item.preAttributeName === element1);
-        //   if (field1) {
-        //     field1.visibility = false;
-        //   }
-        // });
-        // const index = formArray.controls.findIndex(x => x.value === label);
-        // formArray.removeAt(index);
+
       }
     }
   }
@@ -1064,24 +983,32 @@ export class AiAgentFormComponent implements OnInit {
     this.formFields.forEach(field => {
       // if(field.attributeRequired){
         if(field.preAttributeType === "checkbox"){
-          if(field.options.length ==0 || field.options == null){
-            fieldsGroup[field.preAttributeName] = [field.preAttributeValue]
-          }else{
+            const checkboxGroup = this.fb.group({});
+            const checkboxValues = this.parseCheckboxValues(field.preAttributeValue || "{}");
             field.options.forEach(option => {
-            let array = this.getArrayValues(option.field);
-            if (array.length > 0) {
-              console.log("array", array);
-              const filteredFields = this.formFields.find(field => field.preAttributeName === array[0]);
-              if (filteredFields.preAttributeValue) {
-                  fieldsGroup[option.value] = [true, Validators.required];
-                // this.onCheckboxChange(true, option, "onUpdate");
-                this.onCheckboxChangeOnUpdate(true, option);
-              } else {
-                fieldsGroup[option.value] = [false, Validators.required];
-              }
-            }
+              const isChecked = checkboxValues[option.value] || false;
+              if(isChecked) this.onCheckboxChangeOnUpdate(true, option);
+              checkboxGroup.addControl(option.value, this.fb.control(isChecked));
             });
-          }
+            fieldsGroup[field.preAttributeName] = checkboxGroup;
+          // if(field.options.length ==0 || field.options == null){
+          //   fieldsGroup[field.preAttributeName] = [field.preAttributeValue]
+          // }else{
+          //   field.options.forEach(option => {
+          //   let array = this.getArrayValues(option.field);
+          //   if (array.length > 0) {
+          //     console.log("array", array);
+          //     const filteredFields = this.formFields.find(field => field.preAttributeName === array[0]);
+          //     if (filteredFields.preAttributeValue) {
+          //         fieldsGroup[option.value] = [true, Validators.required];
+          //       // this.onCheckboxChange(true, option, "onUpdate");
+          //       this.onCheckboxChangeOnUpdate(true, option);
+          //     } else {
+          //       fieldsGroup[option.value] = [false, Validators.required];
+          //     }
+          //   }
+          //   });
+          // }
           }else if(field.preAttributeType == "radio"){
             fieldsGroup[field.preAttributeName] = [field.preAttributeValue, Validators.required]
             this.onRadioChangeUpdateFlow(field.preAttributeValue , field.options.find(option => option.value == field.preAttributeValue))
@@ -1115,11 +1042,23 @@ export class AiAgentFormComponent implements OnInit {
       // }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    console.log("predefinedBotsForm",this.predefinedBotsForm)
+    console.log("predefinedBotsForm",this.predefinedBotsForm.value)
 
   //   this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
   //     this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
   // });
+  }
+
+  parseCheckboxValues(preAttributeValue: string): { [key: string]: boolean } {
+    const result = {};
+    // Remove curly braces and split into key-value pairs
+    const keyValuePairs = preAttributeValue.replace(/[{}]/g, "").split(",");
+    keyValuePairs.forEach(pair => {
+      const [key, value] = pair.split("=");
+      // Trim and convert the value to boolean
+      result[key.trim()] = value.trim() === "true";
+    });
+    return result;
   }
 
   onCheckboxChangeOnUpdate(event, option:any) {
@@ -1185,11 +1124,11 @@ export class AiAgentFormComponent implements OnInit {
 
   isFormValidAndJobDescriptionValid(): boolean {
     const isFormValid = this.predefinedBotsForm.valid;
-    const jobDescriptionField = this.currentPageFields.find(field => field.preAttributeLable === 'Job Description');
+    // const jobDescriptionField = this.currentPageFields.find(field => field.preAttributeLable === 'Job Description');
 
-    if (jobDescriptionField && jobDescriptionField.isValidateRequired) {
-      return isFormValid && this.isJobDescrptionValid;
-    }
+    // if (jobDescriptionField && jobDescriptionField.isValidateRequired) {
+    //   return isFormValid && this.isJobDescrptionValid;
+    // }
     return isFormValid;
   }
   
@@ -1236,6 +1175,8 @@ export class AiAgentFormComponent implements OnInit {
     return null;
   }
   deleteAttachment(attachment: any) {
+    console.log("attachmentMap",this.attachmentMap[attachment.inputKey],attachment);
+
     this.subAgentFileDeleteSelectedFiles(attachment);
   }
 
@@ -1251,9 +1192,6 @@ export class AiAgentFormComponent implements OnInit {
     return index;
   }
 
-  inplaceActivate() {
-    this._agentName = this.processName
-  }
   onClicksubAgentName() {
     this.isSubAgentNameEdit = true;
     this._agentName = this.subAgentName
@@ -1266,7 +1204,6 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   updateSubAgentName(){
-    // this.inplace.deactivate();
     this.spinner.show();
     this.rest_service.updateSubAgentName(!this.isConfigered,this.params.agentId,this._agentName).subscribe(res=>{
       this.toaster.showSuccess("Agent Name","update");
@@ -1280,7 +1217,6 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   onDeactivate(){
-    // this.inplace.deactivate();
     this.isSubAgentNameEdit = false;
 
   }
@@ -1860,9 +1796,12 @@ handleHistoryTab (hist) {
                 this.rest_service.deleteAgentFIles(selectedFiles).subscribe(
                     (res: any) => {
                         this.getSubAgentFileHistoryLogs();
-                        this.subAgentFileHistory.forEach(file => file.selected = false);
+                        this.subAgentFileHistory.forEach(file => file.selected = false);                       
                         this.spinner.hide();
                         this.toaster.toastSuccess("Files deleted successfully.");
+                        if (typeof input === 'object') {
+                          this.removeFilesFromForm(input);
+                        }
                     },
                     (err) => {
                         this.spinner.hide();
@@ -1876,6 +1815,14 @@ handleHistoryTab (hist) {
     } else {
         this.toaster.showWarn("Please select the files.");
     }
+}
+
+removeFilesFromForm(deletedFile:any){
+  this.attachmentMap[deletedFile.inputKey].forEach(file=>{
+    if(file.fileNameWithUUID == deletedFile.fileNameWithUUID){
+      this.attachmentMap[deletedFile.inputKey].splice(this.attachmentMap[deletedFile.inputKey].indexOf(file),1);
+    }
+  }) 
 }
 
   downloadSubAgentHistoryAsExcel() {
@@ -1948,6 +1895,18 @@ handleHistoryTab (hist) {
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
      });
+  }
+
+  checkboxGroupRequiredValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const group = control as FormGroup;
+      const isChecked = Object.values(group.controls).some(ctrl => ctrl.value === true);
+      return isChecked ? null : { checkboxGroupRequired: true };
+    };
+  }
+
+  resetForm(){
+    this.predefinedBotsForm.reset();
   }
 
 }

@@ -205,4 +205,8 @@ export class PredefinedBotsService {
   getSubAgentContent(subAgentId){
     return this.http.get(`/platform-service/inbox/agent/${subAgentId}`)
   }
+
+  getPriceBillingCycle(productId,tenantId){
+    return this.http.get(`/subscriptionservice/v1/subscriptions/get-price-billingcycle?productId=${productId}&tenantId=${tenantId}`)
+  }
 }

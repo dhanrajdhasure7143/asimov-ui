@@ -199,3 +199,15 @@
         flex-direction: column;
     }
 }
+
+.generated-image-container {
+  width: 100%;
+  max-width: 500px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.generated-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

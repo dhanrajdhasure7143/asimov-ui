@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 @Component({
   selector: 'app-recruitment-ai-sales-page',
@@ -506,7 +508,9 @@ export class CustomerBotAiSalesPageComponent {
               private spinner :LoaderService,
               private router: Router,
               private stripeService: StripeService,
-              private messageService: MessageService
+              private messageService: MessageService,
+              private toaster: ToasterService,
+              private toastMessages: toastMessages
 ) { 
     this.route.queryParams.subscribe(data => {
         console.log("queryParams",data);
@@ -619,6 +623,7 @@ loadPredefinedBots() {
           this.spinner.hide();
         },error => {
           this.spinner.hide();
+          this.toaster.showError(this.toastMessages.apierror);
           console.error('Error during payment:', error);
         }
       );

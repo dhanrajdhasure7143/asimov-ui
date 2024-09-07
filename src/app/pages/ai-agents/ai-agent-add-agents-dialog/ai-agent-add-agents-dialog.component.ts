@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { StripeService } from 'ngx-stripe';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
@@ -23,6 +23,9 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   selectedPlans:any=[];
   selectedPlan: string = 'Monthly';
   showOrderDetails: boolean = false;
+  billingCycle:any;
+  price:any;
+  isLoading: boolean = true; 
 
   constructor(
     private spinner: LoaderService,
@@ -37,8 +40,11 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
 
   }
 
-  ngOnChanges(){
+  ngOnChanges(changes: SimpleChanges){
     // console.log("this.selectedAgent",this.selectedAgent)
+    if (changes['selectedAgent'] && changes['selectedAgent'].currentValue) {
+      this.getBillingCyclePrice();
+    }
   }
   
   proceedToPay() {
@@ -145,13 +151,42 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
     }
   }
 
-  calculateTotalPrice(): string {
-    const basePrice = this.yearlyPricing ? 100 : 10;
-    return (basePrice * this.agentCount).toFixed(2);
+  calculateTotalPrice(): string | null {
+    if (this.price) {
+      const basePrice = parseFloat(this.price.replace('$', ''));
+      const totalPrice = basePrice * this.agentCount;
+      return totalPrice.toFixed(2);
+    }
+    return null;
   }
 
   public onClose(): void {
     // this.close.emit();
     this.agentCount = 0;
   }
+
+  getBillingCyclePrice() {
+    this.isLoading = true;
+    const tenantId = localStorage.getItem("masterTenant");
+    if (this.selectedAgent && this.selectedAgent.productId) {
+      const productId = this.selectedAgent.productId;
+      this.rest_api.getPriceBillingCycle(productId, tenantId).subscribe((res: any) => {
+        console.log("getPriceBillingCycle", res);
+        if (res && res.data) {
+          this.billingCycle = res.data.billingCycle;
+          this.price = res.data.price;
+          this.price = this.price.replace('$', '$ '); 
+          this.price += '0';
+        } else {
+          this.toastService.showError(this.toastMessage.apierror);
+        }
+        this.isLoading = false;
+      }, err => {
+        this.toastService.showError(this.toastMessage.apierror);
+      });
+    } else {
+      console.error("selectedAgent or productId is undefined");
+    }
+  }
+  
 }
