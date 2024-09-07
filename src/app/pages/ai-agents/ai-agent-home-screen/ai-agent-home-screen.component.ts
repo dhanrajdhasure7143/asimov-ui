@@ -489,6 +489,7 @@ proceedToSubscribe() {
 
   navigateToPurchaseAgent(plan){
     console.log("plan",plan)
+    
     let emailToken= this.crypto.encrypt(localStorage.getItem('ProfileuserId'));
 
     if(plan.name =="RFP"){
@@ -516,7 +517,8 @@ proceedToSubscribe() {
       return
     }
 
-    this.router.navigate(['/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
+    this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
+
   }
 
   getBotURL(item){
