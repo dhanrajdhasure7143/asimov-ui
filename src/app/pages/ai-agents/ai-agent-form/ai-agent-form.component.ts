@@ -351,6 +351,14 @@ export class AiAgentFormComponent implements OnInit {
           
           console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
       });
+
+      this.fieldInputKey = {};
+
+      res.data.forEach(item => {
+        if (item.preAttributeType === 'file') {
+          this.fieldInputKey[item.preAttributeName] = item.preAttributeName;
+        }
+      });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
       if(this.agent_uuid =='pred_CustomerSupport'){
@@ -512,7 +520,7 @@ export class AiAgentFormComponent implements OnInit {
   // }
 
   rfpbotCreate(type){
-    if (this.predefinedBotsForm.valid) {
+    // if (this.predefinedBotsForm.valid) {
       this.spinner.show();
       // const formData = new FormData();
       // formData.append('filePath', this.selectedFiles[0]);
@@ -558,14 +566,13 @@ export class AiAgentFormComponent implements OnInit {
         console.log('req_body------:', req_body);
         this.saveBot(req_body,botName,type)
       // })
-      } else {
-        this.toaster.showInfo("Fill All fields")
-      }
+      // } else {
+      //   this.toaster.showInfo("Fill All fields")
+      // }
   }
 
   recruitmentbotCreate(type){
     if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
       if(this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)){
         this.jobDescription.response["inputJobDescrption"]= this.jobDescription.data
         // this.predefinedBotsForm.get("fields."+this.jobDescription.fieldName)?.setValue(JSON.stringify(this.jobDescription.response))    
@@ -613,8 +620,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   botCreate(type){
-    if (this.predefinedBotsForm.valid) {
-      this.spinner.show();
+    // if (this.predefinedBotsForm.valid) {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
         
@@ -647,9 +653,9 @@ export class AiAgentFormComponent implements OnInit {
         }
         this.saveBot(req_body,botName,type)
         console.log('req_body---:', req_body);
-      } else {
-        this.toaster.showInfo("Fill All fields")
-      }
+      // } else {
+      //   this.toaster.showInfo("Fill All fields")
+      // }
   }
 
   saveBot(req_body,botName,type) {
@@ -658,8 +664,10 @@ export class AiAgentFormComponent implements OnInit {
       const agentId = this.params.agentId;
       this.isConfigered = true;
       this.showProgress = true;
-      console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+      // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+      if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      }
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
       this.toaster.showSuccess(this.subAgentName,"save")
@@ -672,7 +680,7 @@ export class AiAgentFormComponent implements OnInit {
         const agentId = this.params.agentId;
         this.isConfigered = true;
         this.showProgress = true;
-        console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
       this.toaster.showSuccess(this.subAgentName,"update")
@@ -696,29 +704,93 @@ export class AiAgentFormComponent implements OnInit {
     });
   }
 
+
+
   onUpdateForm(){
-    if (this.predefinedBotsForm.valid) {
-      console.log(this.selectedOption , this.predefinedBotsForm)
-      if(this.predefinedBot_uuid =='Pred_RFP'){
-        this.rfpbotCreate('update')
-      }else if(this.predefinedBot_uuid =='Pred_Recruitment'){
-        this.recruitmentbotCreate('update');
+    // if (this.predefinedBotsForm.valid) {
+    //   console.log(this.selectedOption , this.predefinedBotsForm)
+    //   if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+    //     this.uploadFilesAndCreateBot('update')
+    //   }else{
+    //     this.botCreate('update');
+    //   }
+    // } else {
+    //   console.log(this.predefinedBotsForm.controls.fields['controls'])
+    //   console.log('Form is not valid!',this.attachmentMap);
+    //   this.toaster.showInfo("Please fill required fields");
+    // }
+    console.log(this.validateForm())
+    console.log(this.validateFormForTypeFileFields())
+    if(this.validateForm() && this.validateFormForTypeFileFields()){
+      this.spinner.show();
+      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+        this.uploadFilesAndCreateBot('update')
       }else{
         this.botCreate('update');
       }
     } else {
-      console.log(this.predefinedBotsForm)
-      console.log('Form is not valid!');
-      Object.keys(this.predefinedBotsForm.controls.fields['controls']).forEach(field => {
-        const control = this.predefinedBotsForm.controls.fields.get(field);
-  
-        if (control && control.invalid) {
-          // Log the control's name and its errors
-          console.log(`Control ${field} is invalid. Errors: `, control.errors);
-        }
-      });
       this.toaster.showInfo("Please fill required fields");
     }
+  }
+
+  validateForm(){
+    let isValid = true;
+    Object.keys(this.predefinedBotsForm.controls.fields['controls']).forEach(field => {
+      const control = this.predefinedBotsForm.controls.fields.get(field);
+      if (control && control.invalid) {
+       let selectedField = this.formFields.find(item => item.preAttributeName === field);
+       if(selectedField.preAttributeType != "file" && selectedField.attributeRequired){
+        // this.toaster.showInfo("Please fill required fields");
+        isValid = false;
+       }
+      }
+    });
+    return isValid
+  }
+
+  validateFormForTypeFileFields() {
+    let isValid = true;
+    // console.log(this.predefinedBotsForm.controls.fields.value)
+    let emptyInputs = this.getEmptyFileTypeFields(this.formFields,this.predefinedBotsForm.controls.fields.value)
+    console.log("emptyInputs",emptyInputs)
+    emptyInputs.forEach(element => {
+    const attachments = this.attachmentMap[element] ? this.attachmentMap[element]:[];
+    // console.log("element",element)
+    // console.log("attachments",attachments)
+      if (attachments.length == 0)    isValid = false;
+    })
+
+    return isValid
+
+    // Find all form fields where preAttributeType == 'file'
+    const fileFields = this.formFields.filter(field => field.preAttributeType === 'file');
+    console.log('File type fields:', fileFields);
+    // console.log('File type fields11111111:', this.attachmentMap);
+    fileFields.forEach(fileField => {
+      if(fileField.attributeRequired){
+        // console.log('File type field attributeRequired:', fileField);
+      const attachments = this.attachmentMap[fileField.preAttributeName];
+      if (attachments && attachments.length > 0) {
+        // console.log(`Attachments found for ${fileField.preAttributeName}:`, attachments);
+        isValid = true;
+      } else {
+        // console.log(`No attachments found for ${fileField.preAttributeName}`);
+        isValid = false;
+      }
+    }
+    });
+  
+    return isValid;
+  }
+
+  getEmptyFileTypeFields(fields, data) {
+    const emptyFileFields = [];
+    fields.forEach(field => {
+      if (field.preAttributeType === 'file' && field.attributeRequired && data[field.preAttributeName] === "") {
+        emptyFileFields.push(field.preAttributeName);
+      }
+    });
+    return emptyFileFields;
   }
 
   readEmitValue(data){
@@ -858,7 +930,6 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   uploadFilesAndCreateBot(action: string) {
-    this.spinner.show();
     const fileKeys = Object.keys(this.selectedFiles);
     const totalKeys = fileKeys.length;
     let currentIndex = 0;
@@ -1236,6 +1307,8 @@ export class AiAgentFormComponent implements OnInit {
     return null;
   }
   deleteAttachment(attachment: any) {
+    console.log("attachmentMap",this.attachmentMap[attachment.inputKey],attachment);
+
     this.subAgentFileDeleteSelectedFiles(attachment);
   }
 
@@ -1860,9 +1933,12 @@ handleHistoryTab (hist) {
                 this.rest_service.deleteAgentFIles(selectedFiles).subscribe(
                     (res: any) => {
                         this.getSubAgentFileHistoryLogs();
-                        this.subAgentFileHistory.forEach(file => file.selected = false);
+                        this.subAgentFileHistory.forEach(file => file.selected = false);                       
                         this.spinner.hide();
                         this.toaster.toastSuccess("Files deleted successfully.");
+                        if (typeof input === 'object') {
+                          this.removeFilesFromForm(input);
+                        }
                     },
                     (err) => {
                         this.spinner.hide();
@@ -1876,6 +1952,14 @@ handleHistoryTab (hist) {
     } else {
         this.toaster.showWarn("Please select the files.");
     }
+}
+
+removeFilesFromForm(deletedFile:any){
+  this.attachmentMap[deletedFile.inputKey].forEach(file=>{
+    if(file.fileNameWithUUID == deletedFile.fileNameWithUUID){
+      this.attachmentMap[deletedFile.inputKey].splice(this.attachmentMap[deletedFile.inputKey].indexOf(file),1);
+    }
+  }) 
 }
 
   downloadSubAgentHistoryAsExcel() {
