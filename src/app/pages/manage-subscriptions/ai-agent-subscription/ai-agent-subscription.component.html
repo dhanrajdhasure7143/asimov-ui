@@ -1,6 +1,6 @@
 <div class="subscription-table">
     <div class="table-header agent-table-headers">
-        <div *ngFor="let column of aiAgentColumns" class="header-cell" [style.flex]="column.flex">
+        <div *ngFor="let column of aiAgentColumns" class="header-cell" [ngClass]="column.header =='AI Agents'?'agent-header-name':''" [style.flex]="column.flex">
             {{ column.header }}
         </div>
     </div>
@@ -52,7 +52,7 @@
 
                 <div class="sub-agent-table">
                     <div class="sub-agent-header">
-                        <div *ngFor="let column of subAgentColumns" class="header-cell" [ngClass]="column.class" [style.flex]="column.flex">
+                        <div *ngFor="let column of subAgentColumns" class="header-cell sub-agent-header" [ngClass]="column.class" [style.flex]="column.flex">
                             {{ column.header }}
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                             <input type="checkbox" (change)="selectAll(agent, $event.target.checked)" />
                         </div>
 
-                        <div *ngFor="let column of subAgentColumns" class="header-cell agent-name-expired-cell" [style.flex]="column.flex"  [class.display-block-important]="column.field === 'subAgentName'">
+                        <div *ngFor="let column of subAgentColumns" class="header-cell agent-name-expired-cell sub-agent-header" [style.flex]="column.flex"  [class.display-block-important]="column.field === 'subAgentName'">
                             {{ column.header }}
                         </div>
                     </div>
