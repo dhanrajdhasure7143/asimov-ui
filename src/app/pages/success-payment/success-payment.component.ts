@@ -10,7 +10,7 @@ import { RestApiService } from '../services/rest-api.service';
   styleUrls: ['./success-payment.component.css']
 })
 export class SuccessPaymentComponent implements OnInit {
-  public countdown: number = 10;
+  public countdown: number = 5;
   public session_id: string;
   constructor(
     private router: Router,
