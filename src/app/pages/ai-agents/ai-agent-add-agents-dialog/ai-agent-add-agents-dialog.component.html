@@ -11,7 +11,9 @@
         <span [class.active]="yearlyPricing" (click)="yearlyPricing = true">Yearly</span>
       </div> -->
   <div class="price-display">
-    <h2>$ {{ yearlyPricing ? '100.00' : '10.00' }}<span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span>
+    <h2 *ngIf="!isLoading; else loadingSkeleton">
+      <!-- $ {{ yearlyPricing ? '100.00' : '10.00' }}<span>/{{ yearlyPricing ? 'year' : 'month' }} (Single Agent)</span> -->
+       {{ price }}<span>/{{ billingCycle }} (Single Agent)</span>
     </h2>
     <p class="agent-features">Resource Optimization, Parallel Processing and User Role Based Access Controls</p>
     <div class="agent-count">
@@ -70,3 +72,8 @@
   </div>
 
 </div>
+
+<ng-template #loadingSkeleton>
+  <div class="skeleton skeleton-text"></div>
+  <div class="skeleton skeleton-text-small"></div>
+</ng-template>

@@ -226,3 +226,31 @@
 }
 
 /* agent selection button styles ends*/
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-text {
+  width: 100px;
+  height: 20px;
+}
+
+.skeleton-text-small {
+  width: 80px;
+  height: 14px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
