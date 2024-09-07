@@ -350,5 +350,11 @@ export class AiAgentSubscriptionComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    console.log('Destroying component');
+    localStorage.removeItem('expandedAgents');
+    localStorage.removeItem('currentPageState');
+  }
+
 }
 
