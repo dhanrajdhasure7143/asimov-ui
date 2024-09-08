@@ -1,4 +1,4 @@
-import { Component, forwardRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Inject, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AiAgentFormComponent } from '../../ai-agent-form/ai-agent-form.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -15,12 +15,12 @@ interface Platform {
   styleUrls: ['./ai-agent-marketing.component.css']
 })
 export class AiAgentMarketingComponent implements OnInit {
-  @ViewChild('agentSave') agentSave: AiAgentFormComponent;
   @Input() subAgentName!: string;
   @Input() agentUUID!: string;
   @Input() predefinedBotType!: string;
   @Input() productId!: string;
-  @Input() type!: string;
+  @Input() isConfigered: boolean= false;
+  @Input() marketingfieldValues: any;
 
   marketingForm: FormGroup;
   selectedPlatforms: Platform[] = [];
@@ -32,7 +32,8 @@ export class AiAgentMarketingComponent implements OnInit {
   isGenerated: boolean = false;
   regenerateCount: number = 0;
   isAccepted: boolean = false;
-
+  isMarketingAgent = true;
+  
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
     { name: 'Instagram', icon: 'fab fa-instagram' },
@@ -64,8 +65,69 @@ export class AiAgentMarketingComponent implements OnInit {
     //     this.togglePlatformFields();
     //   });
     // });
+    console.log("marketingfieldValues",this.marketingfieldValues);
+    
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['marketingfieldValues']) {
+      this.updateFormValues();
+    }
   }
 
+  updateFormValues() {
+    if (this.marketingfieldValues) {
+      this.marketingForm.patchValue({
+        facebookPageId: this.marketingfieldValues.facebookPageId,
+        facebookToken: this.marketingfieldValues.facebookToken,
+        instagramPageId: this.marketingfieldValues.instagramPageId,
+        instagramToken: this.marketingfieldValues.instagramToken,
+        promptType: this.marketingfieldValues.promptType,
+        promptDescription: this.marketingfieldValues.promptDescription
+      });
+
+      // Handle selectedPlatforms
+      this.selectedPlatforms = [];
+      if (this.marketingfieldValues.selectedPlatforms) {
+        let selectedPlatformNames: string[];
+        try {
+          selectedPlatformNames = JSON.parse(this.marketingfieldValues.selectedPlatforms);
+        } catch (e) {
+          selectedPlatformNames = this.marketingfieldValues.selectedPlatforms.replace(/[\[\]]/g, '').split(',').map(p => p.trim());
+        }
+        
+        this.selectedPlatforms = this.platforms.filter(p => selectedPlatformNames.includes(p.name));
+      } else {
+        // If no platforms are explicitly selected, infer from the presence of data
+        if (this.marketingfieldValues.facebookPageId || this.marketingfieldValues.facebookToken) {
+          this.selectedPlatforms.push(this.platforms.find(p => p.name === 'Facebook'));
+        }
+        if (this.marketingfieldValues.instagramPageId || this.marketingfieldValues.instagramToken) {
+          this.selectedPlatforms.push(this.platforms.find(p => p.name === 'Instagram'));
+        }
+      }
+
+      // Handle generated content
+      this.generatedImageUrl = this.marketingfieldValues.generatedImageUrl || '';
+      if (this.marketingfieldValues.generatedText) {
+        const generatedTextObj = this.parseGeneratedText(this.marketingfieldValues.generatedText);
+        this.generatedText = {
+          caption: generatedTextObj.caption || '',
+          hashtag: generatedTextObj.hashtag || ''
+        };
+      }
+      this.isGenerated = !!this.generatedImageUrl || !!this.generatedText.caption;
+      this.togglePlatformFields();
+    }
+  }
+
+  parseGeneratedText(text: string): any {
+    return text.replace('{', '').replace('}', '').split(',').reduce((obj, part) => {
+      const [key, value] = part.split('=');
+      obj[key.trim()] = value.trim();
+      return obj;
+    }, {});
+  }
+  
   togglePlatformFields(): void {
     const allPlatforms = ['LinkedIn', 'Facebook', 'Twitter', 'Instagram'];
     allPlatforms.forEach(platform => {
@@ -131,7 +193,7 @@ export class AiAgentMarketingComponent implements OnInit {
         this.isAccepted = true;
       }
       console.log('Request Body:', requestBody);
-      const type = this.type ? 'create' : 'edit';
+      const type = this.isConfigered ? 'update' : 'create';
       this.parentComponent.saveAgentApi(requestBody,type);
       this.spinner.hide();
     } else {

@@ -79,6 +79,7 @@ export class AiAgentFormComponent implements OnInit {
   showProgress: boolean = false;
   configurationOverlay:boolean = false;
   isMarketingAgent: boolean = false;
+  marketingfieldValues:any;
 
   progressBarItems = [
     { label: 'Intiated' },
@@ -342,6 +343,9 @@ export class AiAgentFormComponent implements OnInit {
         this.activeTabMode = 'content';
       }else{
         this.activeTabMode = 'history';
+      }
+      if (this.agent_uuid === 'Pred_Marketing') {
+        this.marketingfieldValues = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeValue }), {});
       }
       this.subAgentName = res.subAgentName;
       this.isCommonForm = res.formType === 'common'? true : false;

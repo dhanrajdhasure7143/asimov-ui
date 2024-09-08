@@ -54,7 +54,8 @@
                     [agentUUID]="params.agentId"
                     [predefinedBotType]="predefinedBot_name"
                     [productId]="params.id"
-                    [type]="params.type">
+                    [isConfigered]="isConfigered"
+                    [marketingfieldValues]="marketingfieldValues">
                 </app-ai-agent-marketing>
                 </div>
                 <ng-container *ngIf="isCommonForm  && !isMarketingAgent">
@@ -694,7 +695,7 @@
                         <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateSaveAgent()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
-                        <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
+                        <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
                     </div>
                   </div>
               </div>

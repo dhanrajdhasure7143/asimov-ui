@@ -116,10 +116,10 @@
                         rows="8" style="resize: none;" placeholder="Enter Prompt Description">
                     </textarea>
                     <div class="form-buttons" *ngIf="!isGenerated">
-                      <button class="btn bluebg-button rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid">
+                      <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid">
                         Clear
                       </button>
-                      <button class="btn bluebg-button rounded-pill" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid">
+                      <button class="btn btn-primary rounded-pill" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid">
                         <img src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
                         Generate
                       </button>
@@ -132,13 +132,13 @@
                         &nbsp; Re-Generate ({{ regenerateCount }}/3)
                       </button>
                       <button class="btn btn-primary rounded-pill" type="button" (click)="acceptGenerated()" [disabled]="isAccepted">
-                        <i class="fas fa-check"> </i> Accept
+                        <i class="pi pi-check-circle"> </i> &nbsp; Accept
                       </button>
                     </div>
                   </div>
                 </div>
 
-                <div *ngIf="isGenerated" class="col-md d-flex flex-column generated-output">
+                <div  class="col-md d-flex flex-column generated-output">
                   <b> AI Generated {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}}
                     <small> ({{3 - regenerateCount}} Prompts Remaining) </small>
                   </b>
