@@ -152,6 +152,10 @@ export class AiAgentFormComponent implements OnInit {
   subAgentFileSortDirection: number = 1;
   isCommonForm:boolean = true;
 
+  inboxContent: any []= [];
+  selectedInBoxContent: any={};
+  selectedContentIndex: number = 0;
+  
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -226,7 +230,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
-        this.getSubAgentConent();
+        this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -341,7 +345,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
-        this.getSubAgentConent();
+        this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -1329,7 +1333,6 @@ export class AiAgentFormComponent implements OnInit {
       )
       .subscribe(() => {
         this.checkCurrentStage();
-        this.getSubAgentConent();
       });
   }
 
@@ -1356,7 +1359,8 @@ export class AiAgentFormComponent implements OnInit {
           this.currentStageIndex++;
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
-            this.toaster.toastSuccess("Agent Execution Completed Successfully!");
+            this.getInboxConent();
+            // this.toaster.toastSuccess("Agent Execution Successfully!");
           }
           break;
         case 'failure':
@@ -1537,7 +1541,7 @@ getSubAgentHistoryLogs() {
   // this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
   this.rest_service.getSubAgentHistoryLogs(this.params.id, this.params.agentId)
     .subscribe((res: any) => {
-      this.historyToDownload=res.data.reverse();
+      this.historyToDownload=res.data;
       this.subAgentHistory = this.mapResponseToTableData(res.data);
       // this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
       this.subAgentHistory = [...this.subAgentHistory]
@@ -1578,6 +1582,8 @@ handleHistoryTab (hist) {
   this.activeTabMode = hist
   if (hist === 'files') {
     this.getSubAgentFileHistoryLogs();
+  }else if(hist === 'content'){
+    this.getInboxConent();
   }else{
     this.getSubAgentHistoryLogs()
   }
@@ -1929,10 +1935,17 @@ removeFilesFromForm(deletedFile:any){
     this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.params.id, botName: this.predefinedBot_name } });
   }
 
-  getSubAgentConent(){
-    this.rest_service.getSubAgentContent(this.params.agentId).subscribe((res: any) => {
+  getInboxConent(){
+    this.rest_service.getInboxConent(this.params.agentId).subscribe((res: any) => {
       console.log("res",res)
       // this.subAgentContent = res.data;
+      if(res && res.data && res.data.length > 0){
+        this.inboxContent = res.data
+        this.inboxContent.forEach(element => {
+          element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+        });
+        this.selectedInBoxContent = this.inboxContent[0];
+      }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
      });
@@ -1948,6 +1961,38 @@ removeFilesFromForm(deletedFile:any){
 
   resetForm(){
     this.predefinedBotsForm.reset();
+  }
+
+  downloadEmailAttachment(attachment:any){
+    this.spinner.show();
+    let req_body = ["Customer_Support/408d2454-67c4-4178-88d0-1468498e04e8_ChatbotIntegrationInstructions.docx"]
+    this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
+      console.log("res",res);
+      this.spinner.hide();
+      if(res && res.length > 0){
+      const fileName = attachment.fileName;
+      const fileData = res[0];
+      const link = document.createElement("a");
+      const extension = fileName.split('.').pop();
+      link.download = fileName;
+      link.href =
+          extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+              ? `data:image/${extension};base64,${fileData}`
+              : `data:application/${extension};base64,${fileData}`;
+
+      link.click();
+      this.toaster.toastSuccess(`Files downloaded successfully.`);
+      }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    })
+
+  }
+  selectInboxOut(item,index){
+    this.selectedInBoxContent = item;
+    this.selectedContentIndex = index;
   }
 
 }
