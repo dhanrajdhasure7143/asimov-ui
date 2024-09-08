@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AiAgentFormComponent } from '../../ai-agent-form/ai-agent-form.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { PredefinedBotsService } from 'src/app/pages/services/predefined-bots.service';
 interface Platform {
   name: string;
   icon: string;
@@ -33,20 +35,20 @@ export class AiAgentMarketingComponent implements OnInit {
     // { name: 'LinkedIn', icon: 'fab fa-linkedin' }
   ];
   private apiToken = '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';
-  constructor(private fb: FormBuilder,private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private toastService:ToasterService,
+    private rest_api: PredefinedBotsService,
+    @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent
+  ) {
     this.marketingForm = this.fb.group({
-      linkedInPageId: [''],
-      linkedInToken: [''],
-      facebookPageId: [''],
-      facebookToken: [''],
-      twitterPageId: [''],
-      twitterToken: [''],
-      instagramPageId: [''],
-      instagramToken: [''],
-      promptType: ['image'],
-      promptDescription: [''],
-      imagePrompt: [''],
-      textPrompt: ['']
+      facebookPageId: ['', Validators.required],
+      facebookToken: ['', Validators.required],
+      instagramPageId: ['', Validators.required],
+      instagramToken: ['', Validators.required],
+      promptType: ['', Validators.required],
+      promptDescription: ['', Validators.required],
     });
   }
 
@@ -71,8 +73,8 @@ export class AiAgentMarketingComponent implements OnInit {
       } else {
         pageIdControl?.clearValidators();
         tokenControl?.clearValidators();
-        pageIdControl?.setValue('');
-        tokenControl?.setValue('');
+        pageIdControl?.reset();
+        tokenControl?.reset();
       }
       
       pageIdControl?.updateValueAndValidity();
@@ -84,150 +86,6 @@ export class AiAgentMarketingComponent implements OnInit {
     return this.selectedPlatforms.some(p => p.name === platformName);
   }
 
-  // Temporarly commented Starts
-  // onSubmit(): void {
-  //   if (this.marketingForm.valid) {
-  //     const promptType = this.marketingForm.get('promptType').value;
-  //     if (promptType === 'image') {
-  //       this.generateImage();
-  //     } else {
-  //       this.generateText();
-  //     }
-  //     this.isGenerated = true;
-  //   } else {
-  //     console.error('Form is invalid');
-  //   }
-  // }
-
-  // onSubmit(): void {
-  //   if (this.marketingForm.valid) {
-  //     const promptType = this.marketingForm.get('promptType')?.value;
-
-  //     if (promptType === 'image') {
-  //       this.generateImage();
-  //     } else if (promptType === 'text') {
-  //       this.generateText();
-  //     }
-
-  //     this.isGenerated = true;
-  //   } else {
-  //     console.error('Form is invalid');
-  //   }
-  // }
-
-  // generateText(): void {
-  //   if (this.regenerateCount < 3) {
-  //     this.regenerateCount++;
-  //     this.hitGenerateCaptionAPI();
-  //   }
-
-  // }
-  // generateImage(): void {
-  //   if (this.regenerateCount < 3) {
-  //     this.regenerateCount++;
-  //     this.hitGenerateCaptionAPI();
-  //   }
-  // }
-
-  
-  // regenerateImage(): void {
-  //   if (this.regenerateCount < 3) {
-  //     this.regenerateCount++;
-  //     this.generateImage();
-  //     this.hitGenerateCaptionAPI();
-  //   }
-  // }
-  // hitGenerateCaptionAPI(): void {
-  //   if (this.regenerateCount < 3) {
-  //     this.regenerateCount++;
-  //  // Get dynamic description from the form
-  //  const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog'; // Default to 'A dog' if empty
-  //  const formData = new FormData();
-  //  formData.append('prompt', promptDescription);
-  //     const headers = new HttpHeaders({
-  //       'Authorization': 'Bearer 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',
-  //     });
-
-  //     this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
-  //         next: (response: any) => {
-  //           console.log('Response received:', response);
-  //           // Correctly format caption and hashtag without removing emojis or symbols
-  //           const caption = this.cleanUpString(response.caption);
-  //           const hashtag = this.cleanUpString(response.hashtag);
-  
-  //           console.log('Caption:', caption);
-  //           console.log('Hashtag:', hashtag);
-  //           // this.generatedText += `${caption} ${hashtag}`;
-  //           this.generatedText = {
-  //             caption: response.caption,
-  //             hashtag: response.hashtag
-  //           };
-            
-  //           // Call the next step after processing the response
-  //           this.generateImage();
-  //         },
-  //         error: (error) => {
-  //           console.error('Error generating image:', error);
-  //         }
-  //       });
-  //   }
-  // }
-  // hitGenerateCaptionAPI(): void {
-  //   const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog'; // Default to 'A dog' if empty
-  //   const formData = new FormData();
-  //   formData.append('prompt', promptDescription);
-
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${this.apiToken}`
-  //   });
-
-  //   this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Caption Response:', response);
-  //       const caption = this.cleanUpString(response.caption);
-  //       const hashtag = this.cleanUpString(response.hashtag);
-
-  //       this.generatedText = {
-  //         caption,
-  //         hashtag
-  //       };
-  //     },
-  //     error: (error) => {
-  //       console.error('Error generating text:', error);
-  //     }
-  //   });
-  // }
-
-  // Method to hit "generate-image" API
-  // hitGenerateImageAPI(): void {
-  //   const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog'; // Default to 'A dog' if empty
-  //   const formData = new FormData();
-  //   formData.append('prompt', promptDescription);
-
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${this.apiToken}`
-  //   });
-
-  //   this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Image Response:', response);
-  //       this.generatedImageUrl = response.imageUrl; // Adjust according to response structure
-  //     },
-  //     error: (error) => {
-  //       console.error('Error generating image:', error);
-  //     }
-  //   });
-  // }
-  // Helper function to clean up unnecessary escaped characters without removing emojis
-
-   // regenerateContent(): void {
-  //   if (this.marketingForm.get('promptType').value === 'image') {
-  //     this.regenerateImage();
-  //   } else {
-  //     this.generateText();
-  //   }
-  // }
-  // Temporarly commented Starts Ends
 
   cleanUpString(str: string): string {
     return str
@@ -236,12 +94,40 @@ export class AiAgentMarketingComponent implements OnInit {
       .replace(/\\u([\dA-F]{4})/gi, (match, grp) => String.fromCharCode(parseInt(grp, 16)));
   }
 
+  // acceptGenerated(): void {
+  //   console.log('Content accepted:', this.generatedImageUrl || this.generatedText);
+  //   // this.isGenerated = false;
+  //   this.isAccepted = true;
+  //   // Here you might want to save the generated content or trigger further processing
+  // }
   acceptGenerated(): void {
+    console.log('acceptGenerated called in AiAgentMarketingComponent');
     console.log('Content accepted:', this.generatedImageUrl || this.generatedText);
-    this.isGenerated = false;
-    // Here you might want to save the generated content or trigger further processing
-  }
 
+    if (this.marketingForm.valid) {
+      const formData = this.marketingForm.value;
+
+      // Include selected platforms in form data
+      formData.selectedPlatforms = this.selectedPlatforms.map(p => p.name);
+
+      // Include generated image URL or text in form data
+      if (this.generatedImageUrl) {
+        formData.generatedImageUrl = this.generatedImageUrl;
+        this.isAccepted = true;
+      }
+      if (this.generatedText.caption || this.generatedText.hashtag) {
+        formData.generatedText = this.generatedText;
+        this.isAccepted = true;
+      }
+
+      console.log('FORMDATA:', formData);
+      // this.parentComponent.saveAgentApi(formData);
+    } else {
+      console.error('Form is invalid');
+      this.toastService.showError('Please fill out the form correctly before submitting.');
+    }
+  }
+  
   clearForm(): void {
     this.marketingForm.reset({
       promptType: 'image'
@@ -257,21 +143,21 @@ export class AiAgentMarketingComponent implements OnInit {
     this.isAccepted = !this.isAccepted;
   }
 
-  regenerateContent(): void {
-    const promptType = this.marketingForm.get('promptType')?.value;
-    const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog';
+  // regenerateContent(): void {
+  //   const promptType = this.marketingForm.get('promptType')?.value;
+  //   const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog';
   
-    if (promptType === 'text') {
-      this.generateText(promptDescription);
-    } else if (promptType === 'image') {
-      this.generateImage(promptDescription);
-    }
-  }
+  //   if (promptType === 'text') {
+  //     this.generateText(promptDescription);
+  //   } else if (promptType === 'image') {
+  //     this.generateImage(promptDescription);
+  //   }
+  // }
 
   onSubmit(): void {
     if (this.marketingForm.valid) {
       const promptType = this.marketingForm.get('promptType')?.value;
-      const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog';
+      const promptDescription = this.marketingForm.get('promptDescription')?.value;
   
       if (promptType === 'text') {
         this.generateText(promptDescription);

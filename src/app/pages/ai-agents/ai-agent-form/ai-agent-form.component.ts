@@ -166,7 +166,6 @@ export class AiAgentFormComponent implements OnInit {
       this.route.queryParams.subscribe(params=>{
         this.params=params
         this.predefinedBot_id= this.params.id;
-        this.isMarketingAgent = this.predefinedBot_id === "prod_QbWqFiBJb6rMpb";
         this.getSubAgentConfigStatus();
       })
 
@@ -224,6 +223,7 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
+      this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
       }else{
@@ -337,6 +337,7 @@ export class AiAgentFormComponent implements OnInit {
       });
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
+      this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
       }else{
@@ -609,7 +610,7 @@ export class AiAgentFormComponent implements OnInit {
     // }
     if(this.validateForm() && this.validateFormForTypeFileFields()){
       this.spinner.show();
-      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport'){
         this.uploadFilesAndSaveAgent('update')
       }else{
         this.generatePayloadToSaveUpdateAgent('update');
@@ -838,7 +839,7 @@ export class AiAgentFormComponent implements OnInit {
         } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
           this.recruitmentAgentCreate(action);
         }else if(this.predefinedBot_uuid === 'pred_CustomerSupport'){
-          this.generatePayloadToSaveUpdateAgent('create');
+          this.generatePayloadToSaveUpdateAgent(action);
         }
       }
     };
