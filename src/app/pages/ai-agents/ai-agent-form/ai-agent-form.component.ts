@@ -226,6 +226,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
+        this.getSubAgentConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -340,6 +341,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
+        this.getSubAgentConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -420,21 +422,38 @@ export class AiAgentFormComponent implements OnInit {
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
+        console.log("this.attachmentMap.",this.attachmentMap)
+        console.log("this.filePathValuesthis.",this.filePathValues)
+        
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
-        // this.formFields.forEach(e => {
-        //   if (e.preAttributeName === 'RFP_dropdown') {
-        //     e.options.forEach(item => {
-        //       const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
-        //         (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
-        //       if (key) {
-        //         const [fieldName, fieldValue] = key.split(':');
-        //         req_body.fields[fieldName] = fieldValue;
-        //       }
-        //     });
-        //   }
-        // });
+        const allKeys = Object.keys(this.attachmentMap);
+        console.log("allKeys",allKeys)
+        allKeys.forEach(key => {
+          let filePath = '';
+          const attachments = this.attachmentMap[key];
+          attachments.forEach((att, index) => {
+            filePath += att.filePath + '/' + att.fileNameWithUUID;
+            if (index < attachments.length - 1) {
+              filePath += ',';
+            }
+          });
+          // Push the generated filePath into the paths array
+          req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
+        });
+        this.formFields.forEach(e => {
+          if (e.preAttributeName === 'RFP_dropdown') {
+            e.options.forEach(item => {
+              const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
+                (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
+              if (key) {
+                const [fieldName, fieldValue] = key.split(':');
+                req_body.fields[fieldName] = fieldValue;
+              }
+            });
+          }
+        });
 
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
@@ -529,6 +548,20 @@ export class AiAgentFormComponent implements OnInit {
           this.filePathValues.forEach(element => {
             req_body.fields[element.attributName] = element.filePath
           });
+          const allKeys = Object.keys(this.attachmentMap);
+
+        allKeys.forEach(key => {
+          let filePath = '';
+          const attachments = this.attachmentMap[key];
+          attachments.forEach((att, index) => {
+            filePath += att.filePath + '/' + att.fileNameWithUUID;
+            if (index < attachments.length - 1) {
+              filePath += ',';
+            }
+          });
+          // Push the generated filePath into the paths array
+          req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
+        });
         }
         console.log("Manikanta--- > "+req_body);
         delete req_body.fields.botName
@@ -1522,6 +1555,7 @@ mapResponseToTableData(data: any[]): any[] {
     stage: item.status,
     // information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
     information: item.description,
+    errorMsg: item.errorLog?item.errorLog:"",
   }));
 }
 
