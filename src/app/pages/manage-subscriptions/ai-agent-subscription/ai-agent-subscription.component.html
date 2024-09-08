@@ -38,7 +38,7 @@
                 <div class="sub-agent-actions">
                     <span class="">Subscribed Agents</span>
                     <div class="action-buttons">
-                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 0" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent)"></i>
+                        <i *ngIf="getSelectedSubAgentsByStatus(agent, 'INACTIVE').length > 1" class="pi pi-trash delete-icon" (click)="deleteAiAgentSubAgents(agent)"></i>
                         <button *ngIf="getSelectedSubAgents(agent).length > 0" class="renew-all-button"
                             (click)="handleRenewal('bulk', agent, getSelectedSubAgents(agent))">
                             Renew All
