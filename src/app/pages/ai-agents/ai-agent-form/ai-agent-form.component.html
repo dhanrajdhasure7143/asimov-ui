@@ -76,8 +76,9 @@
                                         <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
                                             <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                         </span> -->
-                                        <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
-                                            <i class="pi pi-globe"></i>
+                                        <span class="input-icon">
+                                            <i class="pi pi-globe" *ngIf="field.preAttributeLable === 'Ceipal URL'"></i>
+                                            <i class="pi pi-comment" *ngIf="field.preAttributeLable.includes('message')"></i>
                                         </span>
                                         <span class="input-icon" *ngIf="field.preAttributeLable === 'UserName' || field.preAttributeLable.includes('mail')">
                                             <i class="pi pi-user"></i>
@@ -866,7 +867,7 @@
             <div class="controls-container" *ngIf="activeTabMode === 'history'">
                 <input type="date" placeholder="Search by Date" class="search-bar" (input)="onSearchChange($event)">
                 <div class="filter-button-main-section" [ngClass]="isFilterPopupVisible ? 'artive' : 'in-artive'">
-                    <button [disabled]="getSubAgentHistoryPaginatedData().length===0" class="filter-btn"
+                    <button class="filter-btn"
                         (click)="toggleFilterPopup()"><i class="pi pi-filter" style="margin-right: 5px;"></i>
                         Filter</button>
                     <div [ngClass]="isFilterPopupVisible ? 'active' : 'in-active'" class="filter-popup-handler">
@@ -915,8 +916,58 @@
             </div>
         </div>
 
-        <div class="subagent-history-table" *ngIf="activeTabMode === 'content'">
-Content
+        <div class="subagent-history-table row" *ngIf="activeTabMode === 'content'">
+            <ng-container *ngIf="inboxContent.length>0; else noItems">
+                <div class="col-md-3 inbox-list">
+                    <div class="inbox-item" [ngClass]="selectedContentIndex == i?'active':''" *ngFor="let item of inboxContent; let i = index" (click)="selectInboxOut(item,i)">
+                        <div><strong> Outcome</strong></div>
+                        <div><Strong>Execution Date: </Strong>{{item.createdTimestamp| date:'MMM d, y'}}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                <div><strong>Attachments:</strong></div>
+                <div class="attachments">
+                    <!-- <h3 >Attachments: 
+                        <span>
+                            <img src="../../../../assets/images/agent/download-icon.svg"  pTooltip="Download All" tooltipPosition="top" alt="Download icon">
+                        </span>
+                    </h3> -->
+                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                        <div>
+                            <i class="pi pi-file"></i>
+                        <span>{{ attachment.fileName }}</span>
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                            <i class="fa fa-download"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <ng-container>
+                    <div class="attachment " *ngFor="let attachment of inboxContent.attachments; trackBy:loopTrackBy">
+                        <div>
+                            <span>
+                                <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
+                                <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.name}}</span> &nbsp;
+                            </span>
+                        </div>
+                        <span class="attachment-btns">
+                            <button class="download-button" pTooltip="Download" tooltipPosition="top"
+                                (click)="downloadAttachment(attachment)">
+                                <i class="pi pi-download" style="font-size: 1.5rem"></i>
+                            </button>
+                        </span>
+                    </div>
+                </ng-container> -->
+
+                <div class="email-body" [innerHTML]="selectedInBoxContent.body"></div>
+                </div>
+            </ng-container>
+            <ng-template #noItems>
+                <div class="no-data-found no-items">
+                    <img src="assets/images/agent/no-data-found.svg" alt="">
+                    No data found
+                </div>
+            </ng-template>
         </div>
     
         <!-- Sub-agent History Table -->
@@ -947,7 +998,7 @@ Content
                             {{ record.stage }}
                         </span>
                     </td>
-                    <td>{{ record.information }}</td>
+                    <td>{{record.stage=='Failed' ? record.errorMsg : record.information }}</td>
                 </tr>
             </tbody>
         </table>

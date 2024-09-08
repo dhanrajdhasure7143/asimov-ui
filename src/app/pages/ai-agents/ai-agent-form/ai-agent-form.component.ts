@@ -153,6 +153,10 @@ export class AiAgentFormComponent implements OnInit {
   subAgentFileSortDirection: number = 1;
   isCommonForm:boolean = true;
 
+  inboxContent: any []= [];
+  selectedInBoxContent: any={};
+  selectedContentIndex: number = 0;
+  
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -227,6 +231,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
+        this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -341,6 +346,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
         this.activeTabMode = 'content';
+        this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
       }
@@ -424,21 +430,38 @@ export class AiAgentFormComponent implements OnInit {
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
+        console.log("this.attachmentMap.",this.attachmentMap)
+        console.log("this.filePathValuesthis.",this.filePathValues)
+        
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
-        // this.formFields.forEach(e => {
-        //   if (e.preAttributeName === 'RFP_dropdown') {
-        //     e.options.forEach(item => {
-        //       const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
-        //         (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
-        //       if (key) {
-        //         const [fieldName, fieldValue] = key.split(':');
-        //         req_body.fields[fieldName] = fieldValue;
-        //       }
-        //     });
-        //   }
-        // });
+        const allKeys = Object.keys(this.attachmentMap);
+        console.log("allKeys",allKeys)
+        allKeys.forEach(key => {
+          let filePath = '';
+          const attachments = this.attachmentMap[key];
+          attachments.forEach((att, index) => {
+            filePath += att.filePath + '/' + att.fileNameWithUUID;
+            if (index < attachments.length - 1) {
+              filePath += ',';
+            }
+          });
+          // Push the generated filePath into the paths array
+          req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
+        });
+        this.formFields.forEach(e => {
+          if (e.preAttributeName === 'RFP_dropdown') {
+            e.options.forEach(item => {
+              const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
+                (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
+              if (key) {
+                const [fieldName, fieldValue] = key.split(':');
+                req_body.fields[fieldName] = fieldValue;
+              }
+            });
+          }
+        });
 
         delete req_body.fields.botName
         if(this.duplicateAttributes.length >0){
@@ -521,7 +544,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         if(this.predefinedBot_uuid == 'pred_CustomerSupport'){
             const keys = Object.keys(req_body.fields);
-            const tenantIdKey = keys.find(key => key.includes('tennantId'));
+            const tenantIdKey = keys.find(key => key.includes('TenantId'));
             const userIdKey = keys.find(key => key.includes('UserId'));
             if (tenantIdKey) {
               req_body.fields[tenantIdKey] = localStorage.getItem('tenantName');
@@ -530,7 +553,25 @@ export class AiAgentFormComponent implements OnInit {
               req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
             }
           // .includes('CustomerSupport_dropdown') ? 'Yes' : 'No';
+          this.filePathValues.forEach(element => {
+            req_body.fields[element.attributName] = element.filePath
+          });
+          const allKeys = Object.keys(this.attachmentMap);
+
+        allKeys.forEach(key => {
+          let filePath = '';
+          const attachments = this.attachmentMap[key];
+          attachments.forEach((att, index) => {
+            filePath += att.filePath + '/' + att.fileNameWithUUID;
+            if (index < attachments.length - 1) {
+              filePath += ',';
+            }
+          });
+          // Push the generated filePath into the paths array
+          req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
+        });
         }
+        console.log("Manikanta--- > "+req_body);
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
@@ -610,7 +651,7 @@ export class AiAgentFormComponent implements OnInit {
     // }
     if(this.validateForm() && this.validateFormForTypeFileFields()){
       this.spinner.show();
-      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment'){
+      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport'){
         this.uploadFilesAndSaveAgent('update')
       }else{
         this.generatePayloadToSaveUpdateAgent('update');
@@ -783,7 +824,7 @@ export class AiAgentFormComponent implements OnInit {
   initiateSaveAgent() {
     this.spinner.show();
     console.log("predefinedBotsForm.value",this.predefinedBotsForm.value)
-    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
+    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport') {
       this.uploadFilesAndSaveAgent('create');
     } else {
       this.generatePayloadToSaveUpdateAgent('create');
@@ -838,6 +879,8 @@ export class AiAgentFormComponent implements OnInit {
           this.rfpAgentCreate(action);
         } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
           this.recruitmentAgentCreate(action);
+        }else if(this.predefinedBot_uuid === 'pred_CustomerSupport'){
+          this.generatePayloadToSaveUpdateAgent(action);
         }
       }
     };
@@ -1294,7 +1337,6 @@ export class AiAgentFormComponent implements OnInit {
       )
       .subscribe(() => {
         this.checkCurrentStage();
-        this.getSubAgentConent();
       });
   }
 
@@ -1321,7 +1363,8 @@ export class AiAgentFormComponent implements OnInit {
           this.currentStageIndex++;
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
-            this.toaster.toastSuccess("Agent Execution Completed Successfully!");
+            this.getInboxConent();
+            // this.toaster.toastSuccess("Agent Execution Successfully!");
           }
           break;
         case 'failure':
@@ -1502,7 +1545,7 @@ getSubAgentHistoryLogs() {
   // this.rest_service.getSubAgentHistoryLogs(this.params.id, "a8e1f0cb-c8b1-4760-af8c-8a6a1507a2f4")
   this.rest_service.getSubAgentHistoryLogs(this.params.id, this.params.agentId)
     .subscribe((res: any) => {
-      this.historyToDownload=res.data.reverse();
+      this.historyToDownload=res.data;
       this.subAgentHistory = this.mapResponseToTableData(res.data);
       // this.subAgentHistory = [...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory,...this.subAgentHistory]
       this.subAgentHistory = [...this.subAgentHistory]
@@ -1520,6 +1563,7 @@ mapResponseToTableData(data: any[]): any[] {
     stage: item.status,
     // information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
     information: item.description,
+    errorMsg: item.errorLog?item.errorLog:"",
   }));
 }
 
@@ -1542,6 +1586,8 @@ handleHistoryTab (hist) {
   this.activeTabMode = hist
   if (hist === 'files') {
     this.getSubAgentFileHistoryLogs();
+  }else if(hist === 'content'){
+    this.getInboxConent();
   }else{
     this.getSubAgentHistoryLogs()
   }
@@ -1893,10 +1939,17 @@ removeFilesFromForm(deletedFile:any){
     this.router.navigate(['/pages/aiagent/sub-agents'],{ queryParams: { id: this.params.id, botName: this.predefinedBot_name } });
   }
 
-  getSubAgentConent(){
-    this.rest_service.getSubAgentContent(this.params.agentId).subscribe((res: any) => {
+  getInboxConent(){
+    this.rest_service.getInboxConent(this.params.agentId).subscribe((res: any) => {
       console.log("res",res)
       // this.subAgentContent = res.data;
+      if(res && res.data && res.data.length > 0){
+        this.inboxContent = res.data
+        this.inboxContent.forEach(element => {
+          element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+        });
+        this.selectedInBoxContent = this.inboxContent[0];
+      }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
      });
@@ -1912,6 +1965,38 @@ removeFilesFromForm(deletedFile:any){
 
   resetForm(){
     this.predefinedBotsForm.reset();
+  }
+
+  downloadEmailAttachment(attachment:any){
+    this.spinner.show();
+    let req_body = ["Customer_Support/408d2454-67c4-4178-88d0-1468498e04e8_ChatbotIntegrationInstructions.docx"]
+    this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
+      console.log("res",res);
+      this.spinner.hide();
+      if(res && res.length > 0){
+      const fileName = attachment.fileName;
+      const fileData = res[0];
+      const link = document.createElement("a");
+      const extension = fileName.split('.').pop();
+      link.download = fileName;
+      link.href =
+          extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+              ? `data:image/${extension};base64,${fileData}`
+              : `data:application/${extension};base64,${fileData}`;
+
+      link.click();
+      this.toaster.toastSuccess(`Files downloaded successfully.`);
+      }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    })
+
+  }
+  selectInboxOut(item,index){
+    this.selectedInBoxContent = item;
+    this.selectedContentIndex = index;
   }
 
 }

@@ -203,7 +203,7 @@ export class PredefinedBotsService {
     return this.http.post('/api/user/support-team-mail',body)
   }
 
-  getSubAgentContent(subAgentId){
+  getInboxConent(subAgentId){
     return this.http.get(`/platform-service/inbox/agent/${subAgentId}`)
   }
 
@@ -229,5 +229,9 @@ export class PredefinedBotsService {
       'Authorization': `Bearer ${this.apiToken}`
     });
     return this.http.post(`http://10.11.0.67:5006/generate-caption`, formData, { headers });
+  }
+  
+  downloadCustomerSupportFiles(body){
+    return this.http.post(`/platform-service/document/downloadFile`,body)
   }
 }
