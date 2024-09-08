@@ -940,7 +940,7 @@ Content
                             {{ record.stage }}
                         </span>
                     </td>
-                    <td>{{ record.information }}</td>
+                    <td>{{record.stage=='Failed' ? record.errorMsg : record.information }}</td>
                 </tr>
             </tbody>
         </table>
