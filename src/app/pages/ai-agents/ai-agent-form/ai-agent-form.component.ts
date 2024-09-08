@@ -516,7 +516,7 @@ export class AiAgentFormComponent implements OnInit {
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         if(this.predefinedBot_uuid == 'pred_CustomerSupport'){
             const keys = Object.keys(req_body.fields);
-            const tenantIdKey = keys.find(key => key.includes('tennantId'));
+            const tenantIdKey = keys.find(key => key.includes('TenantId'));
             const userIdKey = keys.find(key => key.includes('UserId'));
             if (tenantIdKey) {
               req_body.fields[tenantIdKey] = localStorage.getItem('tenantName');
@@ -525,7 +525,11 @@ export class AiAgentFormComponent implements OnInit {
               req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
             }
           // .includes('CustomerSupport_dropdown') ? 'Yes' : 'No';
+          this.filePathValues.forEach(element => {
+            req_body.fields[element.attributName] = element.filePath
+          });
         }
+        console.log("Manikanta--- > "+req_body);
         delete req_body.fields.botName
         console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
@@ -778,7 +782,7 @@ export class AiAgentFormComponent implements OnInit {
   initiateSaveAgent() {
     this.spinner.show();
     console.log("predefinedBotsForm.value",this.predefinedBotsForm.value)
-    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment') {
+    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport') {
       this.uploadFilesAndSaveAgent('create');
     } else {
       this.generatePayloadToSaveUpdateAgent('create');
@@ -833,6 +837,8 @@ export class AiAgentFormComponent implements OnInit {
           this.rfpAgentCreate(action);
         } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
           this.recruitmentAgentCreate(action);
+        }else if(this.predefinedBot_uuid === 'pred_CustomerSupport'){
+          this.generatePayloadToSaveUpdateAgent('create');
         }
       }
     };
