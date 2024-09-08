@@ -202,11 +202,15 @@ export class PredefinedBotsService {
     return this.http.post('/api/user/support-team-mail',body)
   }
 
-  getSubAgentContent(subAgentId){
+  getInboxConent(subAgentId){
     return this.http.get(`/platform-service/inbox/agent/${subAgentId}`)
   }
 
   getPriceBillingCycle(productId,tenantId){
     return this.http.get(`/subscriptionservice/v1/subscriptions/get-price-billingcycle?productId=${productId}&tenantId=${tenantId}`)
+  }
+
+  downloadCustomerSupportFiles(body){
+    return this.http.post(`/platform-service/document/downloadFile`,body)
   }
 }
