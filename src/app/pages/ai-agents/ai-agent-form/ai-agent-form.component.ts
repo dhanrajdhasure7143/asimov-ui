@@ -1909,4 +1909,25 @@ removeFilesFromForm(deletedFile:any){
     this.predefinedBotsForm.reset();
   }
 
+  testMethod(payload:any) {
+    console.log('Test method called in AiAgentFormComponent',payload);
+    // if(type == "create"){
+      this.rest_service.savePredefinedAttributesData(payload).subscribe((res:any)=>{
+        const agentId = this.params.agentId;
+        this.isConfigered = true;
+        this.showProgress = true;
+        // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        // if(this.capturedFileIds.length > 0) {
+        //   this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+        // }
+        this.spinner.hide();
+        // this.goBackAgentHome(); // temporarly commented this line
+        this.toaster.showSuccess(this.subAgentName,"save")
+      },err=>{
+        this.spinner.hide();
+        this.toaster.showError(this.toastMessages.apierror)
+      })
+  // }
+}
+
 }
