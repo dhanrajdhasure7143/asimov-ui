@@ -49,7 +49,13 @@
               </div>
               <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
                 <div *ngIf="isMarketingAgent">
-                    <app-ai-agent-marketing></app-ai-agent-marketing>
+                <app-ai-agent-marketing 
+                    [subAgentName]="subAgentName"
+                    [agentUUID]="params.agentId"
+                    [predefinedBotType]="predefinedBot_name"
+                    [productId]="params.id"
+                    [type]="params.type">
+                </app-ai-agent-marketing>
                 </div>
                 <ng-container *ngIf="isCommonForm  && !isMarketingAgent">
                     <div class="form-container col-12" [formGroup]="predefinedBotsForm">
