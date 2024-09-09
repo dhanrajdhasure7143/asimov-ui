@@ -317,6 +317,7 @@ export class AiAgentFormComponent implements OnInit {
     // this.spinner.show();
     this.rest_service.getAgentAttributeswithData(this.params.id,this.params.agentId).subscribe((res:any)=>{
       const keyMap = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeName }), {});
+      this.attachmentMap = [];
       res.attachments.forEach((attachment) => {
         const fieldName = keyMap[attachment.key];
         // this.attachmentMap[fieldName] = [...(this.attachmentMap[fieldName] || []), ...attachment.attList.map((att) => ({ key: fieldName, originalFileName: att.originalFileName, attachmentId: att.id }))];
@@ -333,6 +334,7 @@ export class AiAgentFormComponent implements OnInit {
           
           // console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
       });
+      this.formFields=[];
 
       this.fieldInputKey = {};
 
@@ -432,7 +434,7 @@ export class AiAgentFormComponent implements OnInit {
         // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
         console.log("this.attachmentMap.",this.attachmentMap)
         console.log("this.filePathValuesthis.",this.filePathValues)
-        
+                
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
@@ -627,6 +629,9 @@ export class AiAgentFormComponent implements OnInit {
     };
     this.rest_service.captureAgentIdandfileIds(agentId, payload).subscribe(res => {
       console.log("Captured agent ID and file IDs:", res);
+      this.fetchAllFieldsWithValue();
+      this.filePathValues = [];
+      this.capturedFileIds = [];
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
@@ -1987,7 +1992,7 @@ removeFilesFromForm(deletedFile:any){
 
   downloadEmailAttachment(attachment:any){
     this.spinner.show();
-    let req_body = ["Customer_Support/408d2454-67c4-4178-88d0-1468498e04e8_ChatbotIntegrationInstructions.docx"]
+    let req_body = ["predefined/Customer Support/Instruction Document.docx"]
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
       console.log("res",res);
       this.spinner.hide();

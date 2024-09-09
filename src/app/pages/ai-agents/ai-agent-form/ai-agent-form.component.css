@@ -238,9 +238,9 @@
   color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   margin-right: 10px;
-  align-items: end;
+  align-items: center;
   justify-content: flex-end;
 }
 
