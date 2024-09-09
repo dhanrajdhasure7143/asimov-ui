@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PredefinedBotsService {
+  private apiToken = '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';
 
   constructor(private http : HttpClient) { }
 
@@ -210,6 +211,26 @@ export class PredefinedBotsService {
     return this.http.get(`/subscriptionservice/v1/subscriptions/get-price-billingcycle?productId=${productId}&tenantId=${tenantId}`)
   }
 
+  // Text and Image generate API's for marketing Agent
+  
+  generateImageAPI(prompt: string) {
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.apiToken}`
+    });
+    return this.http.post(`http://10.11.0.67:5006/generate-image`, formData, { headers });
+  }
+
+  generateCaptionAPI(prompt: string) {
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.apiToken}`
+    });
+    return this.http.post(`http://10.11.0.67:5006/generate-caption`, formData, { headers });
+  }
+  
   downloadCustomerSupportFiles(body){
     return this.http.post(`/platform-service/document/downloadFile`,body)
   }

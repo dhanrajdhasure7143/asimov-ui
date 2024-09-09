@@ -1,10 +1,5 @@
 .marketing-form-container {
-    /* max-width: 600px; */
-    /* margin: auto; */
     padding: 8px 0px 0px 0px;
-    /* border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9; */
   }
   
   .platform-selection {
@@ -35,16 +30,8 @@
     margin-bottom: 20px;
   }
   
-  /* .prompt-description textarea {
-    width: 100%;
-    height: 100px;
-  } */
-  
-  .form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 15px;
-  }
+
+
   
   /* .scrollable-content {
     max-height: 220px;
@@ -61,8 +48,8 @@
   }
   
   .form-fields > div {
-    flex-basis: 50%; /* adjust the width of each field */
-    margin: 10px; /* add some margin between fields */
+    flex-basis: 50%;
+    margin: 10px;
   }
   
   label {
@@ -81,11 +68,12 @@
     border-radius: 18px;
     /* background-color: white; */
   }
+
   input[type="text"] {
-    width: 100%; /* make the input field take up the full width */
-    padding: 10px; /* add some padding to the input field */
-    border: 1px solid #ccc; /* add a border to the input field */
-    border-radius: 5px; /* add some rounded corners to the input field */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
   }
 
 .inline-flex {
@@ -145,6 +133,10 @@
     margin-top: 15px;
 }
 
+.form-buttons button{
+  color: white !important;
+}
+
 .generated-output {
     background-color: #f8f9fa;
     border-radius: 5px;
@@ -162,11 +154,16 @@
 }
 
 .output-content {
-    background-color: white;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    padding: 15px;
-    overflow-y: auto;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 15px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.output-content::-webkit-scrollbar {
+  display: none; 
 }
 
 .generated-image {
