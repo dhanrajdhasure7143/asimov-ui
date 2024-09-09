@@ -1583,6 +1583,20 @@ handleStageOption(stage){
 
 
 handleHistoryTab (hist) {
+  this.filterStage = '';
+  this.dummyFilterStage = '';
+  this.sortOrder = '';
+  this.searchQuery = '';
+  this.subAgentCurrentPage = 1;
+  this.updateFilteredData();
+
+  this.subAgentFileCurrentPage = 1;
+  this.subAgentFileItemsPerPage = 8;
+  this.searchFileQuery = '';
+  this.subAgentFileSortColumn = '';
+  this.subAgentFileSortDirection = 1;
+
+
   this.activeTabMode = hist
   if (hist === 'files') {
     this.getSubAgentFileHistoryLogs();
@@ -1886,17 +1900,21 @@ removeFilesFromForm(deletedFile:any){
     }
 
     try {
-      const headers = ['Agent ID', 'Agent Run ID', 'Agent Name', 'Start Time', 'End Time', 'Status'];
+      const headers = ['Agent Name', 'Agent ID', 'Agent Run ID', 'Start Time', 'End Time', 'Status','Information'];
+
+      const formatDate = (dateString: string) =>
+        new Date(dateString).toLocaleString('en-GB', { hour12: false });
 
       const worksheetData = [
         headers,
         ...historyData.map(record => [
+          record.agentName,
           record.agentId,
           record.agentRunId,
-          record.agentName,
-          record.startTS,
-          record.endTS,
-          record.status
+          formatDate(record.startTS),
+          formatDate(record.endTS),
+          record.status,
+          record.description
         ])
       ];
 
@@ -1904,7 +1922,7 @@ removeFilesFromForm(deletedFile:any){
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'History');
 
-      const fileName = `${this.subAgentHistory[0].agentName}_History_${new Date().toISOString().split('T')[0]}.xlsx`;
+      const fileName = `${this.subAgentName}_History_${new Date().toISOString().split('T')[0]}.xlsx`;
       XLSX.writeFile(wb, fileName);
 
       this.toaster.toastSuccess(" Agent History downloaded successfully.");
