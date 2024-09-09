@@ -267,7 +267,7 @@ export class AiAgentMarketingComponent implements OnInit {
     //   hashtag: '#StaticHashtag'
     // };
     // return
-
+    this.isLoading = true;
     const formData = new FormData();
     formData.append('prompt', prompt);
     const headers = new HttpHeaders({
