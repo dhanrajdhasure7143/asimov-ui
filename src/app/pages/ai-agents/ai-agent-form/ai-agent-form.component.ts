@@ -1316,6 +1316,16 @@ export class AiAgentFormComponent implements OnInit {
               this.isProcessing = false;
               return;
             }
+            if(res.errorCode == 3009){
+              this.toaster.showError("Failed to Start Agent. Please try again later.");
+              this.isProcessing = false;
+              return;
+            }
+            if(res.status =='error'){
+              this.toaster.showError("Failed to Start Agent. Please try again later.");
+              this.isProcessing = false;
+              return;
+            }
             this.toaster.toastSuccess("Success! The agent has started executing.");
             this.showProgress = true;
             this.agentStarted = true;  // Set agent started flag to true
