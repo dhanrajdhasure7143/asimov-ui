@@ -1987,7 +1987,7 @@ removeFilesFromForm(deletedFile:any){
 
   downloadEmailAttachment(attachment:any){
     this.spinner.show();
-    let req_body = ["Customer_Support/408d2454-67c4-4178-88d0-1468498e04e8_ChatbotIntegrationInstructions.docx"]
+    let req_body = ["predefined/Customer Support/Instruction Document.docx"]
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
       console.log("res",res);
       this.spinner.hide();
