@@ -33,6 +33,7 @@ export class AiAgentMarketingComponent implements OnInit {
   regenerateCount: number = 0;
   isAccepted: boolean = false;
   isMarketingAgent = true;
+  isLoading: boolean = false;
   
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
@@ -239,7 +240,7 @@ export class AiAgentMarketingComponent implements OnInit {
         this.generateImage(promptDescription);
       }
   
-      this.isGenerated = true;
+      // this.isGenerated = true;
     } else {
       console.error('Form is invalid');
     }
@@ -281,6 +282,8 @@ export class AiAgentMarketingComponent implements OnInit {
           caption: this.cleanUpString(response.caption),
           hashtag: this.cleanUpString(response.hashtag)
         };
+        this.isLoading = false;
+        this.isGenerated = true;
       },
       error: (error) => {
         console.error('Error generating text:', error);
@@ -292,7 +295,7 @@ export class AiAgentMarketingComponent implements OnInit {
   hitGenerateImageAPI(prompt: string): void {
     // this.generatedImageUrl = 'https://via.placeholder.com/150';
     // return
-
+    this.isLoading = true;
     const formData = new FormData();
     formData.append('prompt', prompt);
     const headers = new HttpHeaders({
@@ -305,15 +308,19 @@ export class AiAgentMarketingComponent implements OnInit {
         console.log('Image Response:', response);
         if (response.image) {
           this.generatedImageUrl = 'data:image/png;base64,' + response.image;
+          this.isLoading = false;
+          this.isGenerated = true;
         } 
         // else if (response.url) {
         //   this.generatedImageUrl = response.url;
         // } 
         else {
+          this.isLoading = false;
           this.toastService.showError('Unexpected image response format')
         }
       },
       error: (error) => {
+        this.isLoading = false;
         this.toastService.showError('Error generating image')
       }
     });
