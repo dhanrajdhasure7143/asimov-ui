@@ -116,22 +116,24 @@
                         rows="8" style="resize: none;" placeholder="Enter Prompt Description">
                     </textarea>
                     <div class="form-buttons" *ngIf="!isGenerated">
-                      <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid">
+                      <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid || isLoading">
                         Clear
                       </button>
-                      <button class="btn btn-primary rounded-pill" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid">
-                        <img src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
-                        Generate
+                      <button class="btn btn-primary rounded-pill" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid || isLoading">
+                        <img *ngIf="!isLoading" src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
+                        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> &nbsp;
+                        <span *ngIf="!isLoading">Generate</span>
+                        <span *ngIf="isLoading">Generating...</span>
                       </button>
                     </div>
                     <div class="form-buttons" *ngIf="isGenerated">
                       <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'" class="btn btn-secondary rounded-pill" (click)="onSubmit()"
-                      type="button" [disabled]="regenerateCount >= 3 || isAccepted">
-                        <i class="fas fa-redo">
-                        </i>
+                      type="button" [disabled]="regenerateCount >= 3 || isAccepted || isLoading">
+                        <i class="fas fa-redo" *ngIf="!isLoading"></i>
+                        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
                         &nbsp; Re-Generate ({{ regenerateCount }}/3)
                       </button>
-                      <button class="btn btn-primary rounded-pill" type="button" (click)="acceptGenerated()" [disabled]="isAccepted">
+                      <button class="btn btn-primary rounded-pill" type="button" (click)="acceptGenerated()" [disabled]="isAccepted || isLoading">
                         <i class="pi pi-check-circle"> </i> &nbsp; Accept
                       </button>
                     </div>
@@ -139,7 +141,7 @@
                 </div>
 
                 <div  class="col-md d-flex flex-column generated-output">
-                  <b> AI Generated {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}}
+                  <b *ngIf="isGenerated"> AI Generated {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}}
                     <small> ({{3 - regenerateCount}} Prompts Remaining) </small>
                   </b>
                   <div class="flex-grow-1 output-content scrollable-content">
@@ -153,6 +155,9 @@
                       <p>{{ generatedText.caption }}</p>
                       <p>{{ generatedText.hashtag }}</p>
                       
+                    </div>
+                    <div *ngIf="isLoading" class="loader-container">
+                      <span class="loader"></span>
                     </div>
                   </div>
                     <span class="output-actions" *ngIf="isAccepted">
