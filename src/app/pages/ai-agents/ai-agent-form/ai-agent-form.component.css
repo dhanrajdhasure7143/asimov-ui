@@ -174,8 +174,15 @@
     height: 40px !important;
 }
 
-.custom-file-input {padding-left: 5px !important;}
-.custom-file-input::-webkit-file-upload-button { visibility: hidden;}
+.custom-file-input {
+  padding-left: 5px !important;
+  z-index: 0 !important;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
 .custom-file-input::before { 
     text-align: center; 
     content: "Choose File" ; 

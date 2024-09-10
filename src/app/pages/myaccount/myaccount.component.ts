@@ -60,21 +60,27 @@ export class MyaccountComponent implements OnInit {
     let reqObj = { enc: encrypt };
     this.api.updateUser(reqObj).subscribe(
       (data) => {
-      this.confirmationService.confirm({
-        header:'Success',
-        message:'User details updated successfully!',
-        rejectVisible:false,
-        acceptLabel:'Ok',
-        acceptButtonStyleClass:'',
-        acceptIcon:'none',
-        accept:()=>{
-          this.loader.hide();
-          this.valueChange.emit(this.isFormOverlay)
-          this.addDepartment = false;
-          // this.getAllDepartments();
-          this.userDetails();
-        }
-      })
+      this.valueChange.emit(this.isFormOverlay)
+      this.addDepartment = false;
+      this.toastService.toastSuccess("User details updated successfully!");
+      this.loader.hide();
+      // this.getAllDepartments();
+      this.userDetails();
+      // this.confirmationService.confirm({
+      //   header:'Success',
+      //   message:'User details updated successfully!',
+      //   rejectVisible:false,
+      //   acceptLabel:'Ok',
+      //   acceptButtonStyleClass:'',
+      //   acceptIcon:'none',
+      //   accept:()=>{
+      //     this.loader.hide();
+      //     this.valueChange.emit(this.isFormOverlay)
+      //     this.addDepartment = false;
+      //     // this.getAllDepartments();
+      //     this.userDetails();
+      //   }
+      // })
       },(err) => {
         this.loader.hide();
         this.toastService.showError('Please try again!')
