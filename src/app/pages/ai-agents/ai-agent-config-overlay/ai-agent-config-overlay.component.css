@@ -639,7 +639,7 @@
 ::ng-deep .p-dropdown .p-dropdown-label {
   background: transparent;
   border: 0 none;
-  margin-left: 25px;
+  /* margin-left: 25px; */
 }
 
 /* Agent In-Progress */
