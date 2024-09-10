@@ -1379,6 +1379,7 @@ export class AiAgentFormComponent implements OnInit {
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
             this.getInboxConent();
+            this.getSubAgentHistoryLogs();
             // this.toaster.toastSuccess("Agent Execution Successfully!");
           }
           break;
@@ -1387,6 +1388,7 @@ export class AiAgentFormComponent implements OnInit {
           this.completedStages++;
           this.stageFailed = true;
           this.stopTracking();
+          this.getSubAgentHistoryLogs();
           this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
           break;
         // For 'running' or 'pending', we do nothing and continue tracking
