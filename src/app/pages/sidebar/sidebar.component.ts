@@ -369,17 +369,23 @@ navigateToDashBoard(){
       });
   }
 
-  onMessageInput() {
-    const message = this.contactForm.get('message').value || '';
-    this.messageTooShort = message.length < 150;
-  }
-
   resetForm() {
     this.contactForm.reset()
   }
 
-  Space(event: any) {
-    if (event.target.selectionStart === 0 && event.code === "Space") {
+  onMessageInput(event: any) {
+    // Show Short Message indication
+    const message = this.contactForm.get('message').value || '';
+    this.messageTooShort = message.length < 150;
+
+    const inputValue = event.target.value;
+    const cursorPosition = event.target.selectionStart;
+    // Prevent space as the first character
+    if (cursorPosition === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+    // Prevent multiple spaces between words
+    if (event.code === "Space" && inputValue[cursorPosition - 1] === ' ') {
       event.preventDefault();
     }
   }
