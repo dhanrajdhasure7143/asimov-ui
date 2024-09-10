@@ -49,7 +49,7 @@
   
   .form-fields > div {
     flex-basis: 50%;
-    margin: 10px;
+    margin: 10px 0px;
   }
   
   label {
@@ -69,10 +69,9 @@
     /* background-color: white; */
   }
 
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+  input.p-inputtext{
+    height: 40px;
+    width: 92%;
     border-radius: 5px;
   }
 
@@ -96,7 +95,8 @@
 }
 :host ::ng-deep .p-multiselect {
     width: 280px !important ;
-    
+    border-radius: 5px;
+    padding: 0.20rem;
 }
 :host ::ng-deep .p-multiselect .p-multiselect-panel {
     height: auto !important;

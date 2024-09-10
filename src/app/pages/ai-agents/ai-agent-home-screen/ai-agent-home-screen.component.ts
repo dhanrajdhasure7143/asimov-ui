@@ -493,31 +493,31 @@ proceedToSubscribe() {
     let emailToken= this.crypto.encrypt(localStorage.getItem('ProfileuserId'));
 
     if(plan.name =="RFP"){
-      this.router.navigate(['/pages/aiagent/subscription/rfp'], { queryParams: { token: emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/rfp'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
       }
     if(plan.name =="Developer Agent"){
-      this.router.navigate(['/pages/aiagent/subscription/dev'], { queryParams: { token: emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/dev'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
     if(plan.name =="Recruitment"){
-      this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
     if(plan.name == "Customer Support"){
-      this.router.navigate(['/pages/aiagent/subscription/chatbot'], { queryParams: { token: emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/chatbot'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
     if(plan.name =="Testing Agent"){
-      this.router.navigate(['/pages/aiagent/subscription/testing'], { queryParams: { token:emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/testing'], { queryParams: { token:emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
     if(plan.name =="Marketing"){
-      this.router.navigate(['/pages/aiagent/subscription/marketing'], { queryParams: { token: emailToken,id:plan.id } });
+      this.router.navigate(['/pages/aiagent/subscription/marketing'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
 
-    this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken,id:plan.id } });
+    this.router.navigate(['/pages/aiagent/subscription/recruitment'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
 
   }
 

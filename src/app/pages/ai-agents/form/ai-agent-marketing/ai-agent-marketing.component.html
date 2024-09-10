@@ -40,19 +40,19 @@
                 <div class="">
   
                   <!-- Facebook Credentials -->
-                  <div *ngIf="isPlatformSelected('Facebook')" class="credentials-section">
+                  <div *ngIf="isPlatformSelected('Facebook')" class="credentials-section" style="margin-top: 15px;">
                     <b> Facebook Credentials </b>
                     <div class="form-fields">
                       <div>
                         <label> Page ID <span class="required">*</span> </label>
-                        <input type="text" formControlName="facebookPageId">
+                        <input pInputText type="text" formControlName="facebookPageId">
                         <div *ngIf="marketingForm.get('facebookPageId')?.invalid && marketingForm.get('facebookPageId')?.touched">
                           <small class="required"> Facebook Page ID is required</small>
                         </div>
                       </div>
                       <div>
                         <label> Access Token <span class="required">* </span> </label>
-                        <input type="text" formControlName="facebookToken">
+                        <input pInputText type="text" formControlName="facebookToken">
                         <div *ngIf="marketingForm.get('facebookToken')?.invalid && marketingForm.get('facebookToken')?.touched">
                           <small class="required">
                             Facebook Access Token is required
@@ -68,14 +68,14 @@
                     <div class="form-fields">
                       <div>
                         <label> Page ID <span class="required">*</span></label>
-                        <input type="text" formControlName="instagramPageId">
+                        <input pInputText type="text" formControlName="instagramPageId">
                         <div *ngIf="marketingForm.get('instagramPageId')?.invalid && marketingForm.get('instagramPageId')?.touched">
                           <small class="required"> Instagram Page ID is required </small>
                         </div>
                       </div>
                       <div>
                         <label> Access Token <span class="required">*</span></label>
-                        <input type="text" formControlName="instagramToken">
+                        <input pInputText pInputTexttype="text" formControlName="instagramToken">
                         <div *ngIf="marketingForm.get('instagramToken')?.invalid && marketingForm.get('instagramToken')?.touched">
                           <small class="required">Instagram Access Token is required</small>
                         </div>

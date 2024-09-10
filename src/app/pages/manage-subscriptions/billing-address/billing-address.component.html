@@ -7,7 +7,7 @@
                     <span class="input-icon">
                         <i class="pi pi-user"></i>
                     </span>
-                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" maxlength="51"
+                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" maxlength="51" (keydown)="onMessageInput($event)"
                         formControlName="name" placeholder="Enter Name" required>
                 </div>
                 <span *ngIf="billingForm.get('name').invalid && billingForm.get('name').touched && !billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required"> 
@@ -16,9 +16,9 @@
                 <span *ngIf="billingForm.controls['name'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
                 </span>
-                <span *ngIf="billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required">Only space
-                    between words are allowed & Numbers are not allowed.
-                </span>
+                <!-- <span *ngIf="billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required">
+                    Only space between words are allowed
+                </span> -->
             </div>
             <!-- <div class="form-group col-md-6 pr-0">
                 <label  class="label-control" for="taskCategory">Last Name<span class="star">*</span></label>
@@ -62,7 +62,7 @@
                     Address Line1 Required 
                 </span>
                 <span *ngIf="billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
-                    Maximum of 50 characters
+                    Maximum of 100 characters
                 </span>
                 <span *ngIf="billingForm.get('addressLine1').hasError('pattern')" class="required">
                     Special characters not allowed except(,.-/) and Space between words are allowed
@@ -72,7 +72,7 @@
                 </span> -->
             </div>
             <div class="form-group col-md-6 pr-0">
-                <label  class="label-control">Address Line2 <span class="star">*</span></label>
+                <label  class="label-control">Address Line2 </label>
                 <div class="input-icon-wrapper">
                     <span class="input-icon">
                         <i class="pi pi-map-marker"></i>
@@ -80,15 +80,15 @@
                     <input pInputText class="input-with-icon" [style]="{'width':'100%'}" type="text" formControlName="addressLine2"
                         placeholder="Enter Address Line 2">
                 </div>
-                    <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched && !billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required"> 
+                    <!-- <span *ngIf="billingForm.get('addressLine2').invalid && billingForm.get('addressLine2').touched && !billingForm.get('addressLine2').hasError('pattern') && !billingForm.controls['addressLine2'].hasError('maxlength')" class="required"> 
                         Address Line2 Required 
-                    </span>
+                    </span> -->
                     <span *ngIf="billingForm.controls['addressLine2'].hasError('maxlength')" class="required">
-                        Maximum of 50 characters
+                        Maximum of 100 characters
                     </span>
-                    <span *ngIf="billingForm.get('addressLine2').hasError('pattern')" class="required">
+                    <!-- <span *ngIf="billingForm.get('addressLine2').hasError('pattern')" class="required">
                             Special characters not allowed except(,.-/) and Space between words are allowed
-                    </span>
+                    </span> -->
             </div>
 
             <div class="form-group col-md-6 pl-0">
@@ -210,7 +210,7 @@
             </div> -->
             <div class="row justify-content-end">
                 <!-- <button (click)="saveBillingInfo()" class="btn bluebg-button">{{editButton?'Update':'Save'}}</button> -->
-                <button (click)="saveBillingInfo()" [disabled] ="!billingForm.valid" type="button" class="btn bluebg-button">update</button>
+                <button (click)="saveBillingInfo()" [disabled] ="!billingForm.valid" type="button" class="btn bluebg-button">Update</button>
             </div>
         </div>
         <!-- <div>

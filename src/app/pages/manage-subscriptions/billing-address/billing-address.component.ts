@@ -50,8 +50,8 @@ export class BillingAddressComponent implements OnInit {
       postalcode: ["", Validators.compose([Validators.required, Validators.maxLength(6), Validators.pattern('^[0-9]+$')])],
       // addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
       // addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9,./-]+( [a-zA-Z0-9,./-]+)*$'), Validators.maxLength(50)])],
-      addressLine1: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      addressLine2: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      addressLine1: ["", Validators.compose([Validators.required, Validators.maxLength(100)])],
+      addressLine2: ["", Validators.compose([Validators.maxLength(100)])],
       // phoneNumber: ["", Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])],
       email: ["", Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"), Validators.maxLength(50)])],
     });
@@ -229,5 +229,18 @@ export class BillingAddressComponent implements OnInit {
     const selectedIsoCode = this.billingForm.get('country').value;
     const selectedCountry = this.countryInfo.find(country => country.isoCode === selectedIsoCode);
     return selectedCountry ? selectedCountry.name : 'Select Country';
+  }
+
+  onMessageInput(event: any) {
+    const inputValue = event.target.value;
+    const cursorPosition = event.target.selectionStart;
+    // Prevent space as the first character
+    if (cursorPosition === 0 && event.code === "Space") {
+      event.preventDefault();
+    }
+    // Prevent multiple spaces between words
+    // if (event.code === "Space" && inputValue[cursorPosition - 1] === ' ') {
+    //   event.preventDefault();
+    // }
   }
 }
