@@ -232,8 +232,7 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
-        // this.activeTabMode = 'content';
-        this.activeTabMode = 'history';
+        this.activeTabMode = 'content';
 
         this.getInboxConent();
       }else{
@@ -351,8 +350,7 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
-        // this.activeTabMode = 'content';
-        this.activeTabMode = 'history';
+        this.activeTabMode = 'content';
         this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
