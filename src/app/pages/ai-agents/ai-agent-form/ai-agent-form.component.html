@@ -273,9 +273,9 @@
                             <ng-container>
                                 <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                                     <div formGroupName="fields" class="row">
-                                        <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
-                                            <ng-container *ngIf="field.visibility">
-                                            <div class="">
+                                        <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
+                                            <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
+                                            <div class="" class="form-group" [ngClass]="{'col-6': field.visibility}">
                                                 <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
                                                 <div class="input-icon-wrapper">
                                                         <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
@@ -434,8 +434,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </ng-container>
                                         </ng-container>
-                                    </div>
                                     </div>
                                     <div>
                                         <div class="form-group row" *ngIf="predefinedBot_schedulerRequired && !isEdit">
@@ -484,169 +484,169 @@
                                 <ng-container >
                                     <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                                         <div formGroupName="fields" class="row">
-                                            <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
-                                                <ng-container *ngIf="field.visibility">
-                                                <div class="">
-                                                    <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
-                                                    <div class="input-icon-wrapper">
-                                                            <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
-                                                                <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                            <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
+                                                <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
+                                                    <div class=""  class="form-group" [ngClass]="{'col-6': field.visibility}">
+                                                        <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                                        <div class="input-icon-wrapper">
+                                                                <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
+                                                                    <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
+                                                                </span> -->
+                                                                <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
+                                                                optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
+                                                        </div>
+                                                        <div class="input-icon-wrapper">
+                                                            <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
+                                                                <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                             </span> -->
-                                                            <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
-                                                    </div>
-                                                    <div class="input-icon-wrapper">
-                                                        <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
-                                                            <img src="assets/images/agent/agent-name.svg" style="height: 13px; margin-bottom: 5px;" alt="">
-                                                        </span> -->
-                                                        <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
-                                                            <i class="pi pi-globe"></i>
-                                                        </span>
-                                                        <span class="input-icon" *ngIf="field.preAttributeLable === 'UserName' || field.preAttributeLable.includes('mail')">
-                                                            <i class="pi pi-user"></i>
-                                                        </span> -->
-                                                        <input pInputText autocomplete="off"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
+                                                            <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Ceipal URL'">
+                                                                <i class="pi pi-globe"></i>
+                                                            </span>
+                                                            <span class="input-icon" *ngIf="field.preAttributeLable === 'UserName' || field.preAttributeLable.includes('mail')">
+                                                                <i class="pi pi-user"></i>
+                                                            </span> -->
+                                                            <input pInputText autocomplete="off"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
+                                                            [id]="field.preAttributeName" 
+                                                            [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                        </div>
+                            
+                                                        <div class="input-icon-wrapper">
+                                                            <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'password'">
+                                                                <i class="pi pi-lock"></i><i class=""></i>
+                                                            </span> -->
+                                                            <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                                         [id]="field.preAttributeName" 
                                                         [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                                                    </div>
-                        
-                                                    <div class="input-icon-wrapper">
-                                                        <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'password'">
-                                                            <i class="pi pi-lock"></i><i class=""></i>
-                                                        </span> -->
-                                                        <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
-                                                    [id]="field.preAttributeName" 
-                                                    [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                                                    </div>
-                                                    
-                            
-                                                    <div class="input-icon-wrapper">
-                                                        <!-- <span class="input-icon-text-area" *ngIf="field.preAttributeType === 'textarea'">
-                                                            <i class="pi pi-align-left"></i><i class=""></i>
-                                                        </span> -->
-                        
-                                                        <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
-                                                        [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
-                                                        (keydown)="onKeydown($event,field)"></textarea>
-                                                    </div>
-                            
-                                                    <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
-                            
-                                                    <div class="input-icon-wrapper">
-                                                        <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
-                                                            <i class="pi pi-envelope"></i>
-                                                        </span> -->
-                                                        <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                        [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                                                    </div>
-                                                    <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                        [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
-                            
-                                                    <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
-                                                        <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
-                                                            <label class="form-check-label">
-                                                                <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
-                                                                (change)="onRadioChange(option.value,option)"> {{ option.label }}
-                                                            </label>
                                                         </div>
-                                                    </div>
+                                                        
+                                
+                                                        <div class="input-icon-wrapper">
+                                                            <!-- <span class="input-icon-text-area" *ngIf="field.preAttributeType === 'textarea'">
+                                                                <i class="pi pi-align-left"></i><i class=""></i>
+                                                            </span> -->
                             
-                            
-                                                    <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
-                                                        <!-- <ng-container *ngIf="field.options.length >0; else noOptions"> -->
-                                                            <ng-container [formGroupName]="field.preAttributeName">
-                                                                <div *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                                            <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
+                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
+                                                            (keydown)="onKeydown($event,field)"></textarea>
+                                                        </div>
+                                
+                                                        <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
+                                
+                                                        <div class="input-icon-wrapper">
+                                                            <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
+                                                                <i class="pi pi-envelope"></i>
+                                                            </span> -->
+                                                            <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                        </div>
+                                                        <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                
+                                                        <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
+                                                            <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                                                 <label class="form-check-label">
-                                                                        <input type="checkbox"
-                                                                        type="checkbox" 
-                                                                        class="form-check-input" 
-                                                                        [id]="option.value"
-                                                                        [formControlName]="option.value"
-                                                                        (change)="onCheckboxChange($event, option,field)">
-                                                                    {{ option.label }}
-                                                                </label>
-                                                                </div>
-                                                            </ng-container>
-                                                        <!-- </ng-container>
-                                                        <ng-template #noOptions>
-                                                            <div>
-                                                                <label class="form-check-label">
-                                                                        <input type="checkbox"
-                                                                        class="form-check-input" 
-                                                                        [id]="field.preAttributeName" 
-                                                                        [formControlName]="field.preAttributeName">
-                                                                    {{ field.placeholder }}
+                                                                    <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
+                                                                    (change)="onRadioChange(option.value,option)"> {{ option.label }}
                                                                 </label>
                                                             </div>
-                                                        </ng-template> -->
-                                                    </div>
-                
-                                                    <!-- <div class="file-input-container" *ngIf="field.preAttributeType === 'file'">
-                                                        <input 
-                                                          type="file" 
-                                                          class="file-input" 
-                                                          [id]="field.preAttributeName" 
-                                                          [formControlName]="field.preAttributeName"
-                                                          (change)="onFileSelected($event, field)" 
-                                                          multiple
-                                                          #fileInput
-                                                        >
-                                                        <label [for]="field.preAttributeName" class="file-label">Upload {{field.preAttributeLable}}</label>
-                                                        <button type="button" class="choose-files-button" (click)="fileInput.click()">Choose files</button>
-                                                      </div> -->
-                                                      
-                        
-                                                    <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                    (change)="onFileSelected($event,field)" multiple>
-                                         
-                                                    <ng-container *ngIf="field.preAttributeType === 'file'">
-                                                        <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
-                                                            <div>
-                                                                <span>
-                                                                    <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
-                                                                    <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                        </div>
+                                
+                                
+                                                        <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
+                                                            <!-- <ng-container *ngIf="field.options.length >0; else noOptions"> -->
+                                                                <ng-container [formGroupName]="field.preAttributeName">
+                                                                    <div *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                                                    <label class="form-check-label">
+                                                                            <input type="checkbox"
+                                                                            type="checkbox" 
+                                                                            class="form-check-input" 
+                                                                            [id]="option.value"
+                                                                            [formControlName]="option.value"
+                                                                            (change)="onCheckboxChange($event, option,field)">
+                                                                        {{ option.label }}
+                                                                    </label>
+                                                                    </div>
+                                                                </ng-container>
+                                                            <!-- </ng-container>
+                                                            <ng-template #noOptions>
+                                                                <div>
+                                                                    <label class="form-check-label">
+                                                                            <input type="checkbox"
+                                                                            class="form-check-input" 
+                                                                            [id]="field.preAttributeName" 
+                                                                            [formControlName]="field.preAttributeName">
+                                                                        {{ field.placeholder }}
+                                                                    </label>
+                                                                </div>
+                                                            </ng-template> -->
+                                                        </div>
+                    
+                                                        <!-- <div class="file-input-container" *ngIf="field.preAttributeType === 'file'">
+                                                            <input 
+                                                            type="file" 
+                                                            class="file-input" 
+                                                            [id]="field.preAttributeName" 
+                                                            [formControlName]="field.preAttributeName"
+                                                            (change)="onFileSelected($event, field)" 
+                                                            multiple
+                                                            #fileInput
+                                                            >
+                                                            <label [for]="field.preAttributeName" class="file-label">Upload {{field.preAttributeLable}}</label>
+                                                            <button type="button" class="choose-files-button" (click)="fileInput.click()">Choose files</button>
+                                                        </div> -->
+                                                        
+                            
+                                                        <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
+                                                        (change)="onFileSelected($event,field)" multiple>
+                                            
+                                                        <ng-container *ngIf="field.preAttributeType === 'file'">
+                                                            <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
+                                                                <div>
+                                                                    <span>
+                                                                        <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
+                                                                        <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                                    </span>
+                                                                </div>
+                                                                <span class="attachment-btns">
+                                                                    <button class="download-button" pTooltip="Download" tooltipPosition="top"
+                                                                        (click)="downloadAttachment(attachment)">
+                                                                        <i class="pi pi-download" style="font-size: 1.5rem"></i>
+                                                                    </button>
+                                                                    <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
+                                                                        <i class="pi pi-trash" style="font-size: 1.5rem; color:rgb(243, 128, 82)(244, 72, 72) !important"></i>
+                                                                    </button>
                                                                 </span>
                                                             </div>
-                                                            <span class="attachment-btns">
-                                                                <button class="download-button" pTooltip="Download" tooltipPosition="top"
-                                                                    (click)="downloadAttachment(attachment)">
-                                                                    <i class="pi pi-download" style="font-size: 1.5rem"></i>
-                                                                </button>
-                                                                <button pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
-                                                                    <i class="pi pi-trash" style="font-size: 1.5rem; color:rgb(243, 128, 82)(244, 72, 72) !important"></i>
-                                                                </button>
-                                                            </span>
+                                                        </ng-container>
+                                
+                                                        <div style="width: 100%;" *ngIf="field.isValidateRequired">
+                                                            <div>
+                                                                <!-- <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i> -->
+                                                                <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader && validate_errorMessage.length>0">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>
+                                                                <span class="text-success" *ngIf="!isJobDescrption_error && validate_errorMessage.length>0 && !job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
+                                                                <span class="text-danger" *ngIf="job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
+                                                            </div>
+                                                            <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button mr-0" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
+                                                            <button *ngIf="!isJobDescrptionValid && isValidateLoader" type="button" class="btn bluebg-button" style="float: right;" >
+                                                                <i  class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+                                                            </button>
                                                         </div>
-                                                    </ng-container>
-                            
-                                                    <div style="width: 100%;" *ngIf="field.isValidateRequired">
-                                                        <div>
-                                                            <!-- <i *ngIf="isValidateLoader" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i> -->
-                                                            <span class="text-danger" *ngIf="isJobDescrption_error && !isValidateLoader && validate_errorMessage.length>0">Missing fields in Job description : {{validate_errorMessage.join(', ')}}</span>
-                                                            <span class="text-success" *ngIf="!isJobDescrption_error && validate_errorMessage.length>0 && !job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
-                                                            <span class="text-danger" *ngIf="job_Descrption_error">{{validate_errorMessage.join(', ')}}</span>
-                                                        </div>
-                                                        <button *ngIf="!isJobDescrptionValid && !isValidateLoader" [disabled]="isValidateDisabled(field)" type="button" class="btn bluebg-button mr-0" style="float: right;" (click)="validateJobDescription(field)" >Validate</button>
-                                                        <button *ngIf="!isJobDescrptionValid && isValidateLoader" type="button" class="btn bluebg-button" style="float: right;" >
-                                                            <i  class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-                                                        </button>
-                                                    </div>
-                            
-                            
-                                                    <!-- Update error messages to display preAttributeLable -->
-                                                        <div *ngIf="field.preAttributeType != 'checkbox'">
-                                                        <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
-                                                            <!-- <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.nameTaken">{{ field.preAttributeLable }} is already taken.</div> -->
-                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
-                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
-                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
-                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.maxlength">{{ field.preAttributeLable }} can't be longer than {{ field.maxNumber }} characters.</div>
-                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.pattern">{{ field.preAttributeLable }} has an invalid format.</div>
+                                
+                                
+                                                        <!-- Update error messages to display preAttributeLable -->
+                                                            <div *ngIf="field.preAttributeType != 'checkbox'">
+                                                            <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).invalid && (predefinedBotsForm.get('fields.' + field.preAttributeName).dirty || predefinedBotsForm.get('fields.' + field.preAttributeName).touched)" class="text-danger">
+                                                                <!-- <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.nameTaken">{{ field.preAttributeLable }} is already taken.</div> -->
+                                                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.required">{{ field.preAttributeLable }} is required.</div>
+                                                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.email">{{ field.preAttributeLable }} has an invalid email format.</div>
+                                                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.minlength">{{ field.preAttributeLable }} must be at least {{ field.minNumber }} characters.</div>
+                                                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.maxlength">{{ field.preAttributeLable }} can't be longer than {{ field.maxNumber }} characters.</div>
+                                                                <div *ngIf="predefinedBotsForm.get('fields.' + field.preAttributeName).errors?.pattern">{{ field.preAttributeLable }} has an invalid format.</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </ng-container>
                                             </ng-container>
-                                        </div>
                                         </div>
                                         <div>
                                             <div class="form-group row" *ngIf="predefinedBot_schedulerRequired && !isEdit">

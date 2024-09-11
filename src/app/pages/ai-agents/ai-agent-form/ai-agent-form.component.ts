@@ -1396,7 +1396,9 @@ export class AiAgentFormComponent implements OnInit {
           this.stageFailed = true;
           this.stopTracking();
           this.getSubAgentHistoryLogs();
-          this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
+          // this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
+          this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`);
+
           break;
         // For 'running' or 'pending', we do nothing and continue tracking
       }
