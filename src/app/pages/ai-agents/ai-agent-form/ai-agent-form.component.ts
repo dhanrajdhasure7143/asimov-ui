@@ -1259,7 +1259,8 @@ export class AiAgentFormComponent implements OnInit {
   updateSubAgentName(){
     this.spinner.show();
     this.rest_service.updateSubAgentName(!this.isConfigered,this.params.agentId,this._agentName).subscribe(res=>{
-      this.toaster.showSuccess("Agent Name","update");
+      // this.toaster.showSuccess("Agent Name","update");
+      this.toaster.toastSuccess("The agent's name has been  updated successfully!");
       this.spinner.hide();
       this.isSubAgentNameEdit = false;
       this.subAgentName = this._agentName;
@@ -1291,10 +1292,10 @@ export class AiAgentFormComponent implements OnInit {
 
   startAiAgent() {
     this.confirmationService.confirm({
-      message: "Ready to get started? Launching this agent will begin the process.",
-      header: "Ready to Go?",
-      acceptLabel: "Let's Do It!",
-      rejectLabel: "Not Now",
+      message: `Clicking "Start Agent" will initiate the process.`,
+      header: "Start Agent?",
+      acceptLabel: "Start Agent",
+      rejectLabel: "Cancel",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -1326,7 +1327,7 @@ export class AiAgentFormComponent implements OnInit {
               this.isProcessing = false;
               return;
             }
-            this.toaster.toastSuccess("Success! The agent has started executing.");
+            this.toaster.toastSuccess("The agent has been successfully initiated.");
             this.showProgress = true;
             this.agentStarted = true;  // Set agent started flag to true
             setTimeout(() => {

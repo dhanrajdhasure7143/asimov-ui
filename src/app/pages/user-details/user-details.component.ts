@@ -232,7 +232,8 @@ export class UserDetailsComponent implements OnInit {
         this.rest_api.registrationContinue(payload).subscribe((res: any) => {
             this.spinner.hide();
             if (res.body.message == "User Details Saved Successfully!!") {
-                this.toaster.toastSuccess(res.body.message);
+                // this.toaster.toastSuccess(res.body.message);
+                this.toaster.toastSuccess("Your details have been saved successfully.");
                 this.rest_api.expiryInfo().subscribe(data => {
                     if(data.isPredefinedBots){
                         this.router.navigate(["/pages/aiagent/home"]);

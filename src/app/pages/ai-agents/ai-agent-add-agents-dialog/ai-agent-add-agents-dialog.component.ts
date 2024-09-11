@@ -78,24 +78,13 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
       "quantity":this.agentCount
       }
 
-      this.confirmationService.confirm({
-        message: "Are you sure you want to add more agents? The amount will be deducted, and the addition will continue with the current billing cycle.",
-        header: "Confirm Addition",
-        acceptLabel: "Yes, Add Agents",
-        rejectLabel: "No, Cancel",
-        rejectButtonStyleClass: 'btn reset-btn',
-        acceptButtonStyleClass: 'btn bluebg-button',
-        defaultFocus: 'none',
-        rejectIcon: 'null',
-        acceptIcon: 'null',
-        accept: () => {
           this.spinner.show();
 
           console.log("resrstage", "Agent Deleted Successfully");
           this.rest_api.addMoreSubAgents(req_body).subscribe(
             res => {
               // this.toastService.showSuccess("Redirecting to payment gateway");
-              this.toastService.toastSuccess("Agent added successfully");
+              this.toastService.toastSuccess("The agent has been added successfully. The amount will be deducted and pro-rated for the current month in your billing cycle.");
               // this.onClose();
               // if (this.closeDialogCallback) {
                 this.closeDialogCallback();
@@ -108,9 +97,40 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
               console.error('Error during payment:', error);
             }
           );
-        },
-        reject: (type) => { }
-      });
+
+      // this.confirmationService.confirm({
+      //   message: "Are you sure you want to add more agents? The amount will be deducted, and the addition will continue with the current billing cycle.",
+      //   header: "Confirm Addition",
+      //   acceptLabel: "Yes, Add Agents",
+      //   rejectLabel: "No, Cancel",
+      //   rejectButtonStyleClass: 'btn reset-btn',
+      //   acceptButtonStyleClass: 'btn bluebg-button',
+      //   defaultFocus: 'none',
+      //   rejectIcon: 'null',
+      //   acceptIcon: 'null',
+      //   accept: () => {
+      //     this.spinner.show();
+
+      //     console.log("resrstage", "Agent Deleted Successfully");
+      //     this.rest_api.addMoreSubAgents(req_body).subscribe(
+      //       res => {
+      //         // this.toastService.showSuccess("Redirecting to payment gateway");
+      //         this.toastService.toastSuccess("Agent added successfully");
+      //         // this.onClose();
+      //         // if (this.closeDialogCallback) {
+      //           this.closeDialogCallback();
+      //         // }
+      //         this.spinner.hide();
+
+      //       },error => {
+      //         this.spinner.hide();
+      //         this.toastService.showError(this.toastMessage.apierror);
+      //         console.error('Error during payment:', error);
+      //       }
+      //     );
+      //   },
+      //   reject: (type) => { }
+      // });
  
   }
   

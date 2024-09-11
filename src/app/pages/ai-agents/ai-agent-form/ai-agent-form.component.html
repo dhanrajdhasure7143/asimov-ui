@@ -43,7 +43,7 @@
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span class="edit-text"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
+                    <span class="edit-text" *ngIf="!isExpanded"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
                 </div>
               </div>
@@ -845,7 +845,7 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <button *ngIf="agent_uuid =='pred_CustomerSupport'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
-                    style="margin-right: 8px; font-size: 1.1rem;"></i>Content
+                    style="margin-right: 8px; font-size: 1.1rem;"></i>Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
@@ -959,7 +959,7 @@
                     </div>
                 </ng-container> -->
 
-                <div class="email-body" [innerHTML]="selectedInBoxContent.body"></div>
+                <div class="email-body" style="word-wrap: break-word; user-select: text;" [innerHTML]="selectedInBoxContent.body"></div>
                 </div>
             </ng-container>
             <ng-template #noItems>
