@@ -81,6 +81,7 @@ export class AiAgentFormComponent implements OnInit {
   isMarketingAgent: boolean = false;
   marketingfieldValues:any;
   isConfigEdit:boolean= false;
+  outputOverlay:boolean = false;
 
   progressBarItems = [
     { label: 'Intiated' },
@@ -231,7 +232,9 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
-        this.activeTabMode = 'content';
+        // this.activeTabMode = 'content';
+        this.activeTabMode = 'history';
+
         this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
@@ -348,7 +351,8 @@ export class AiAgentFormComponent implements OnInit {
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'){
-        this.activeTabMode = 'content';
+        // this.activeTabMode = 'content';
+        this.activeTabMode = 'history';
         this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
@@ -2043,5 +2047,10 @@ removeFilesFromForm(deletedFile:any){
   
   refreshInprogressAgent(){
     this.getSubAgentConfigStatus();
+  }
+
+  getOutputOverlay(i){
+    this.selectedInBoxContent = this.inboxContent[i];
+    this.outputOverlay = true;
   }
 }
