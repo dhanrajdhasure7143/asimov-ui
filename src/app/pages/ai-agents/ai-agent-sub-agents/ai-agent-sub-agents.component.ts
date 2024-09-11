@@ -148,31 +148,22 @@ export class AiAgentSubAgentsComponent implements OnInit {
   }
 
   handleRenewBtn(agent: any) {
-    this.confirmationService.confirm({
-      message: "Would you like to renew this agent? The amount will be deducted, and the renewal will continue with the current billing cycle.",
-      header: "Renew Agent",
-      acceptLabel: "Yes, Renew",
-      rejectLabel: "No, Cancel",
-      rejectButtonStyleClass: 'btn reset-btn',
-      acceptButtonStyleClass: 'btn bluebg-button',
-      defaultFocus: 'none',
-      rejectIcon: 'null',
-      acceptIcon: 'null',
-      accept: () => {
-        this.selectedAgent = agent;
-        console.log("RENEW", this.selectedAgent);
-        console.log('Renewing agent', agent);
-        let req_body = {
-          "userId": localStorage.getItem('ProfileuserId'),
-          "productId": this.product_id,
-          "agentIds": [agent.subAgentId]
-        }
-        this.spinner.show();
+    this.selectedAgent = agent;
+
+    console.log("RENEW", this.selectedAgent);
+    console.log('Renewing agent', agent);
+    let req_body = {
+      "userId": localStorage.getItem('ProfileuserId'),
+      "productId": this.product_id,
+      "agentIds": [agent.subAgentId]
+    }
+
+    this.spinner.show();
         this.rest_api.renewSubAgent(req_body).subscribe((res:any) => {
           console.log('Agent renewed successfully', res);
           if(res.code == 4200){
             this.spinner.hide();
-            this.toastService.showSuccess("The agent has been successfully renewed!",'response');
+            this.toastService.showSuccess("The agent has been renewed successfully! The amount will be deducted, and the renewal will continue with the current billing cycle.",'response');
             this.getSubAgents()
           }else{
             this.spinner.hide();
@@ -182,9 +173,46 @@ export class AiAgentSubAgentsComponent implements OnInit {
           this.spinner.hide();
           this.toastService.showError(this.toastMessage.apierror);
         });
-      },
-      reject: (type) => { }
-    });
+
+
+
+    // this.confirmationService.confirm({
+    //   message: "Would you like to renew this agent? The amount will be deducted, and the renewal will continue with the current billing cycle.",
+    //   header: "Renew Agent",
+    //   acceptLabel: "Yes, Renew",
+    //   rejectLabel: "No, Cancel",
+    //   rejectButtonStyleClass: 'btn reset-btn',
+    //   acceptButtonStyleClass: 'btn bluebg-button',
+    //   defaultFocus: 'none',
+    //   rejectIcon: 'null',
+    //   acceptIcon: 'null',
+    //   accept: () => {
+    //     this.selectedAgent = agent;
+    //     console.log("RENEW", this.selectedAgent);
+    //     console.log('Renewing agent', agent);
+    //     let req_body = {
+    //       "userId": localStorage.getItem('ProfileuserId'),
+    //       "productId": this.product_id,
+    //       "agentIds": [agent.subAgentId]
+    //     }
+    //     this.spinner.show();
+    //     this.rest_api.renewSubAgent(req_body).subscribe((res:any) => {
+    //       console.log('Agent renewed successfully', res);
+    //       if(res.code == 4200){
+    //         this.spinner.hide();
+    //         this.toastService.showSuccess("The agent has been successfully renewed!",'response');
+    //         this.getSubAgents()
+    //       }else{
+    //         this.spinner.hide();
+    //         this.toastService.showError(this.toastMessage.apierror);
+    //       }
+    //     }, (err) => {
+    //       this.spinner.hide();
+    //       this.toastService.showError(this.toastMessage.apierror);
+    //     });
+    //   },
+    //   reject: (type) => { }
+    // });
     // this.displayAddAgentDialog = true;
   }
 
@@ -211,7 +239,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
   }
   deleteSubSgent(agent:any){
     this.confirmationService.confirm({
-      message: "Are you sure you want to delete this agent?",
+      message: "Are you sure you want to delete this agent? This action cannot be undone.",
       header: "Confirm Deletion",
       acceptLabel: "Yes, Delete",
       rejectLabel: "No",
@@ -230,7 +258,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
         this.rest_api.deleteSubAgentById(req_body).subscribe((res: any) => {
           if(res.code == 4200){
             this.spinner.hide();
-            this.toaster.showSuccess("Agent Deleted Successfully", 'response');
+            this.toaster.showSuccess("The agent has been deleted successfully.", 'response');
             this.getSubAgents();
           }else{
             this.spinner.hide();
