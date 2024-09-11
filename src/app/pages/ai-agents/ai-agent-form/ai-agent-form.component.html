@@ -43,7 +43,7 @@
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span (click)="toggleConfigEdit()"  class="edit-text edit-pencil"><img *ngIf="!isConfigEdit && isConfigered && !!isExpanded" src="assets/images/agent/edit-pencil.svg" style="cursor: pointer;" class="pi-pencil" style="cursor: pointer;" alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
+                    <span (click)="toggleConfigEdit()"  class="edit-text edit-pencil"><img *ngIf="!isConfigEdit && isExpanded && isConfigered " src="assets/images/agent/edit-pencil.svg" style="cursor: pointer;" class="pi-pencil" style="cursor: pointer;" alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}" style="cursor: pointer;" (click)="toggleItem()"></i>
                 </div>
               </div>
@@ -848,10 +848,11 @@
             style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
-                <button *ngIf="agent_uuid =='pred_CustomerSupport'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                <!-- Temporarly commented -->
+                <!-- <button *ngIf="agent_uuid =='pred_CustomerSupport'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
                     style="margin-right: 8px; font-size: 1.1rem;"></i>Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
-                </button>
+                </button> -->
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
                         style="margin-right: 8px; font-size: 1.1rem;"></i>History
                         <div [ngClass]="{'active-tab' :activeTabMode === 'history'}"></div>
@@ -1002,7 +1003,7 @@
                             {{ record.stage }}
                         </span>
                     </td>
-                    <td>{{record.stage=='Failed' ? record.errorMsg : record.information }}</td>
+                    <td> <i *ngIf="record.stage === 'Success'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> &nbsp; {{record.stage=='Failed' ? record.errorMsg : record.information }} </td>
                 </tr>
             </tbody>
         </table>
@@ -1116,5 +1117,34 @@
       </div>
 </p-dialog>
 
+<p-dialog header="Output" [modal]="true" [(visible)]="outputOverlay" [style]="{width: '50vw'}">
+    <div class="h-100">
+        <div class="h-100">
+            <div class="">
+                <div><strong>Attachments:</strong></div>
+                <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div>
+                <div class="attachments">
+                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                        <div>
+                            <i class="pi pi-file"></i>
+                        <span>{{ attachment.fileName }}</span>
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                            <i class="fa fa-download"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="email-body" style="word-wrap: break-word; user-select: text;" [innerHTML]="selectedInBoxContent.body"></div>
+                </div>
+                <ng-template #noItems>
+                    <div class="no-data-found no-items">
+                        <img src="assets/images/agent/no-data-found.svg" alt="">
+                        No data found
+                    </div>
+                </ng-template>
+        </div>
+      </div>
+</p-dialog>
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
