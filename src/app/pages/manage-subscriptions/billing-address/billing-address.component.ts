@@ -33,6 +33,8 @@ export class BillingAddressComponent implements OnInit {
   errorMessage2: string;
   billingData: any; 
   billingAddress: any;
+  stateErrorMessage: string;
+  selectedCountryIsoCode: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,7 +48,7 @@ export class BillingAddressComponent implements OnInit {
       name: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)])],
       country: ["", Validators.compose([Validators.required])],
       city: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      // state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       postalcode: ["", Validators.compose([Validators.required, Validators.maxLength(6), Validators.pattern('^[0-9]+$')])],
       // addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9-/,]+(\\s[a-zA-Z0-9-/]+)*$'), Validators.maxLength(50)])],
       // addressLine1: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9,./-]+( [a-zA-Z0-9,./-]+)*$'), Validators.maxLength(50)])],
@@ -113,24 +115,28 @@ export class BillingAddressComponent implements OnInit {
       this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry);
       this.errorMessage = '';
     }
+    setTimeout(() => {
+      this.billingForm.get("state").setValue(this.billingAddress["state"]);
+      
+    }, 500);
   }
 
-  onChangeState(stateValue) {
-    this.cityInfo = City.getAllCities();
-    const matchingStateDetails = this.stateInfo.find((state: any) => state.name === stateValue);
-    const matchingState = matchingStateDetails.name;
+  // onChangeState(stateValue) {
+  //   this.cityInfo = City.getAllCities();
+  //   const matchingStateDetails = this.stateInfo.find((state: any) => state.name === stateValue);
+  //   const matchingState = matchingStateDetails.name;
 
-    if (!matchingState) {
-      this.stateName = stateValue;
-      this.stateInfo.push({ name: stateValue, countryCode: this.countryName, isoCode: '' }); // Add the state to the stateInfo array
-    } 
+  //   if (!matchingState) {
+  //     this.stateName = stateValue;
+  //     this.stateInfo.push({ name: stateValue, countryCode: this.countryName, isoCode: '' }); // Add the state to the stateInfo array
+  //   } 
     
-    else {
-      this.stateName = matchingState;
-      this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-      this.errorMessage1='';
-    }
-  }
+  //   else {
+  //     this.stateName = matchingState;
+  //     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+  //     this.errorMessage1='';
+  //   }
+  // }
 
   onChangeCity(cityValue) {
     const matchingCity = this.cityInfo.find((city: any) => city.name === cityValue);
@@ -152,7 +158,7 @@ export class BillingAddressComponent implements OnInit {
         email: this.billingForm.get('email').value,
         address: {
           country: this.billingForm.get('country').value,
-          // "state": this.billingForm.get('state').value,
+          "state": this.billingForm.get('state').value,
           "city": this.billingForm.get('city').value,
           line1: this.billingForm.get('addressLine1').value,
           line2: this.billingForm.get('addressLine2').value,
@@ -193,10 +199,10 @@ export class BillingAddressComponent implements OnInit {
         this.billingForm.get("addressLine2").setValue(this.billingAddress["line2"]);
         this.billingForm.get("city").setValue(this.billingAddress["city"]);
         this.billingForm.get("country").setValue(this.billingAddress["country"]);
-
+        
         // this.billingForm.get("phoneNumber").setValue(this.billingAddress.["phone"]);
-        // this.onChangeCountry(this.billingAddress.country);
-        // this.onChangeState(this.billingAddress.state);
+        this.onChangeCountry(this.billingAddress.country);
+        // this.onChangeState(this.billingAddress.country);
         // this.onChangeCity(this.billingAddress.city);
         this.editButton=true;
       }
@@ -243,4 +249,32 @@ export class BillingAddressComponent implements OnInit {
     //   event.preventDefault();
     // }
   }
+
+  onChangeState(stateValue) {
+    console.log
+    this.isInput = !this.isInput;
+    this.cityInfo = [];
+    
+    const matchingStateDetails = this.stateInfo.find((item: any) => item.name == stateValue || item.isoCode == stateValue);
+    const matchingState = matchingStateDetails?.isoCode;
+    
+    if (!matchingState) {
+      this.stateName = stateValue;
+      this.stateInfo.push({ name: stateValue, countryCode: this.selectedCountryIsoCode, isoCode: '' });
+      this.stateErrorMessage = 'State added without ISO code.';
+    } 
+    else {
+      this.stateName = matchingStateDetails.name;
+      this.cityInfo = this.cityInfo.filter((city: any) => city.stateCode === matchingState);
+      this.stateErrorMessage = '';
+    }
+}
+
+getSelectedStateName(): string {
+    const selectedIsoCode = this.billingForm.get('state').value;
+    const selectedState = this.stateInfo.find(state => state.isoCode === selectedIsoCode);
+    return selectedState ? selectedState.name : 'Select State';
+}
+
+  
 }

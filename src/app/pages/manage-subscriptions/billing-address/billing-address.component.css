@@ -86,3 +86,13 @@
     color: #6c757d !important;
     cursor: not-allowed;
 }
+
+.state-item-value {
+    display: flex;
+    align-items: center;
+}
+
+.state-item-value i {
+    margin-right: 0.5rem;
+    color: #6c757d;
+}

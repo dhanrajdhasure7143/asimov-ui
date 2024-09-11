@@ -91,7 +91,7 @@
                     </span> -->
             </div>
 
-            <div class="form-group col-md-6 pl-0">
+            <div class="form-group col-md-3 pl-0">
                     <label  class="label-control" for="taskCategory">Country<span class="star">*</span></label>
                     <div class="dropdown-icon-wrapper">
                         <p-dropdown [options]="countryInfo" formControlName="country" autoWidth="false" emptyMessage="No Records Found"
@@ -118,6 +118,31 @@
                         class="required">Country Required</span>
                     <span class="required">{{errorMessage}}</span>
             </div>
+
+            <div class="form-group col-md-3 pl-0">
+                <label class="label-control" for="taskCategory">State<span class="star">*</span></label>
+                <div class="dropdown-icon-wrapper">
+                    <p-dropdown [options]="stateInfo" formControlName="state" autoWidth="false" emptyMessage="No Records Found"
+                        (onChange)="onChangeState($event.value)" [style]="{'width':'100%'}" placeholder="Select State"
+                        optionLabel="name" optionValue="isoCode">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="state-item-value">
+                                <i class="pi pi-map-marker"></i>
+                                <div>{{getSelectedStateName()}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-state pTemplate="item">
+                            <div class="state-item">
+                                <div>{{state.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
+                    class="required">State Required</span>
+                <span class="required">{{stateErrorMessage}}</span>
+            </div>
+            
 
             <!-- <div class="form-group col-md-3 pl-0">
                 <label  class="label-control" for="resources">State/Region<span class="star">*</span></label>
