@@ -133,7 +133,7 @@
                                     <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                                         <!-- <ng-container *ngIf="field.options.length >0; else noOptions"> -->
                                             <ng-container [formGroupName]="field.preAttributeName">
-                                                <div *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                                <div *ngFor="let option of field.options; trackBy:loopTrackBy" class="option-container">
                                                 <label class="form-check-label">
                                                         <input type="checkbox"
                                                         type="checkbox" 
@@ -266,7 +266,7 @@
                         <p-accordionTab>
                         <ng-template pTemplate="header">
                             <div class="custom-header">
-                            <span>Generic Data</span>
+                            <span>Initial Setup</span>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="content">
@@ -344,7 +344,7 @@
                                                 <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                                                     <!-- <ng-container *ngIf="field.options.length >0; else noOptions"> -->
                                                         <ng-container [formGroupName]="field.preAttributeName">
-                                                            <div *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                                            <div *ngFor="let option of field.options; trackBy:loopTrackBy" class="option-container">
                                                             <label class="form-check-label">
                                                                     <input type="checkbox"
                                                                     type="checkbox" 
@@ -477,7 +477,7 @@
                         <p-accordionTab>
                             <ng-template pTemplate="header">
                             <div class="custom-header">
-                                <span>Agent Specific Data</span>
+                                <span>Agent Information</span>
                             </div>
                             </ng-template>
                             <ng-template pTemplate="content">
