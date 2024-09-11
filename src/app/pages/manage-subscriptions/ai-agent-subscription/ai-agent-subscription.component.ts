@@ -106,9 +106,9 @@ export class AiAgentSubscriptionComponent implements OnInit {
     console.log('Auto Renew changed', event, agent);
     let message = ""
     if(!agent.autoRenew){
-      message = "Are you sure you want to disable auto-renewal? Your subscription will not renew automatically at the end of the current billing cycle, and you will lose access to your agents."
+      message = "Are you sure you want to disable auto-renewal? If you proceed, your subscription will not renew automatically at the end of the current billing cycle, and you will lose access to your agents."
     }else{
-      message = "Would you like to update your auto-renewal status? If enabled, your subscription will automatically renew at the end of the current billing cycle, and the amount will be deducted accordingly.";
+      message = "Would you like to update your auto-renewal status? If enabled, your subscription will automatically renew at the end of the current billing cycle, and the payment will be processed accordingly.";
     }
       
     let user_email = localStorage.getItem('ProfileuserId');
@@ -116,7 +116,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
       message: message,
       header: "Update Auto-Renewal",
       acceptLabel: "Yes, Update",
-      rejectLabel: "No, Cancel",
+      rejectLabel: "Close",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -221,8 +221,11 @@ export class AiAgentSubscriptionComponent implements OnInit {
   }
 
   cancelAiAgentSubscription(productId: string, subAgents: any | any[]) {
+
+    const agent__name = this.subscriptions.find(sub => sub.productId === productId)?.agentName;
+
     this.confirmationService.confirm({
-      message: "Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to your agents after the current billing cycle ends.",
+      message: `Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to ${agent__name} Agent once the current billing cycle ends.`,
       header: "Cancel Subscription",
       acceptLabel: "Yes, Cancel",
       rejectLabel: "No, Keep",
@@ -311,7 +314,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
     this.confirmationService.confirm({
-      message: "Are you sure you want to Renew Subscription ? ",
+      message: "Are you sure you want to renew your subscription?",
       header: 'Renew Subscription',
       acceptLabel: 'Yes, Renew',
       rejectLabel: 'No, Cancel',

@@ -97,8 +97,8 @@ public elementsOptions: StripeElementsOptions = {
   }
   confrmDeleteCard(index) {
     this.confirmationService.confirm({
-      message: 'Do you want to remove this card?',
-      header: 'Are you sure?',
+      message: 'Are you sure you want to remove this card?',
+      header: 'Remove Card',
       acceptLabel:'Yes',
       rejectLabel:'No',
       rejectButtonStyleClass: ' btn reset-btn',
@@ -110,7 +110,8 @@ public elementsOptions: StripeElementsOptions = {
         this.spinner.show();
         this.rest_api.deletePaymentMode(index.id).subscribe((res) => {
             this.spinner.hide();
-            this.toastService.showSuccess(this.toastMessages.cardDelete,'response');
+            // this.toastService.showSuccess(this.toastMessages.cardDelete,'response');
+            this.toastService.toastSuccess("Card has been successfully deleted.");
             this.getAllPaymentmodes();
           },err=>{
             this.toastService.showError(this.toastMessages.deleteError);
@@ -125,8 +126,8 @@ public elementsOptions: StripeElementsOptions = {
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
       this.confirmationService.confirm({
-        message: 'Do you want to set this card as the default?',
-        header: 'Are you sure?',
+        message: 'Are you sure you want to set this card as the default?',
+        header: 'Default Card',
         acceptLabel:'Yes',
         rejectLabel:'No',
         rejectButtonStyleClass: ' btn reset-btn',
@@ -138,7 +139,8 @@ public elementsOptions: StripeElementsOptions = {
           this.spinner.show();
           this.rest_api.setasDefaultCard(cardId).subscribe((res) => {
               this.spinner.hide();
-              this.toastService.showSuccess(this.toastMessages.defualtCard,'response');
+              // this.toastService.showSuccess(this.toastMessages.defualtCard,'response');
+              this.toastService.toastSuccess("The default card has been set successfully.");
               this.getAllPaymentmodes();
             },err=>{
               this.spinner.hide();
