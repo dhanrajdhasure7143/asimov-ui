@@ -1363,7 +1363,8 @@ input.p-inputtext {
 
 .form-check {
   display: flex;
-  gap: 40px;
+  gap: 12px;
+  padding-left: 0rem !important;
 }
 
 .disabled-content {
@@ -1376,4 +1377,10 @@ input.p-inputtext {
   display: flex;
   gap: 8px;
   margin-right: -10px;
+}
+
+.option-container {
+  border: 1px solid #979797;
+  padding: 9px 30px;
+  border-radius: 5px;
 }
