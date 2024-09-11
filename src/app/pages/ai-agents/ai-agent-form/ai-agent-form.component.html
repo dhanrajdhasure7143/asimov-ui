@@ -17,7 +17,7 @@
             </div>
             <div class="agent-info">
                 <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
-                <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()"> <img src="assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
+                <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon edit-pencil" (click)="onClicksubAgentName()"> <img src="assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
                 <div *ngIf="isSubAgentNameEdit">
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
@@ -38,16 +38,16 @@
 
         <div class="custom-accordion-main">
             <div class="accordion-item">
-              <div class="accordion-header configuration-header-with-ico" [ngClass]="{'common-form': isCommonForm}" (click)="toggleItem()">
+              <div class="accordion-header configuration-header-with-ico" [ngClass]="{'common-form': isCommonForm}">
                 <span><i class="pi pi-cog"></i>Configuration</span>
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span class="edit-text" *ngIf="!isExpanded"><img src="assets/images/agent/edit-pencil.svg" class="pi-pencil"  alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
-                    <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
+                    <span (click)="toggleConfigEdit()"  class="edit-text edit-pencil"><img *ngIf="!isConfigEdit && isConfigered && !!isExpanded" src="assets/images/agent/edit-pencil.svg" style="cursor: pointer;" class="pi-pencil" style="cursor: pointer;" alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
+                    <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}" style="cursor: pointer;" (click)="toggleItem()"></i>
                 </div>
               </div>
-              <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
+              <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'" [ngClass]="{'disabled-content': !isConfigEdit && isConfigered}">
                 <div *ngIf="isMarketingAgent">
                 <app-ai-agent-marketing 
                     [subAgentName]="subAgentName"
@@ -140,7 +140,7 @@
                                                         class="form-check-input" 
                                                         [id]="option.value"
                                                         [formControlName]="option.value"
-                                                        (change)="onCheckboxChange($event, option,field)">
+                                                        (change)="onCheckboxChange($event, option,field)" style="cursor: pointer;">
                                                     {{ option.label }}
                                                 </label>
                                                 </div>
@@ -696,7 +696,8 @@
                         <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateSaveAgent()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
-                        <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
+                        <button *ngIf="isConfigered && isConfigEdit" type="button" class="btn new-cancelbtn" (click)="toggleConfigEdit()"> Cancel</button>
+                        <button *ngIf="isConfigered && isConfigEdit && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
                     </div>
                   </div>
               </div>
@@ -805,7 +806,10 @@
                                 <!-- Agent Start Date and Eye Icon -->
                                 <div class="agent-card-header">
                                     <span>Agent Start Date: <span class="start-date">{{ agent.startTS|date:'MMM dd, y HH:mm' }}</span> </span>
-                                    <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm(agent)"></i>
+                                    <span class="icons">
+                                        <i class="pi pi-sync eye-icon" style="cursor: pointer;" (click)="refreshInprogressAgent()"></i>
+                                        <i class="pi pi-eye eye-icon" style="cursor: pointer; font-size: 1.2em;" (click)="viewOverlayForm(agent)"></i>
+                                    </span>
                                 </div>
                                 <!-- Agent In Progress and Stop Button -->
                                 <div class="card-content">

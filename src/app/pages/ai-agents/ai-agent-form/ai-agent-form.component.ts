@@ -80,6 +80,7 @@ export class AiAgentFormComponent implements OnInit {
   configurationOverlay:boolean = false;
   isMarketingAgent: boolean = false;
   marketingfieldValues:any;
+  isConfigEdit:boolean= false;
 
   progressBarItems = [
     { label: 'Intiated' },
@@ -612,6 +613,7 @@ export class AiAgentFormComponent implements OnInit {
         const agentId = this.params.agentId;
         this.isConfigered = true;
         this.showProgress = true;
+        this.isConfigEdit = false;
         // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
@@ -2034,5 +2036,12 @@ removeFilesFromForm(deletedFile:any){
     this.selectedInBoxContent = item;
     this.selectedContentIndex = index;
   }
-
+  
+  toggleConfigEdit() {
+    this.isConfigEdit = !this.isConfigEdit;
+  }
+  
+  refreshInprogressAgent(){
+    this.getSubAgentConfigStatus();
+  }
 }
