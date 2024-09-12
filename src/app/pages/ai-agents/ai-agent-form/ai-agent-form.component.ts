@@ -670,7 +670,7 @@ export class AiAgentFormComponent implements OnInit {
     // }
     if(this.validateForm() && this.validateFormForTypeFileFields()){
       this.spinner.show();
-      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport'){
+      if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport' || this.predefinedBot_uuid === 'Pred_ProductManagement'){
         this.uploadFilesAndSaveAgent('update')
       }else{
         this.generatePayloadToSaveUpdateAgent('update');
@@ -843,7 +843,9 @@ export class AiAgentFormComponent implements OnInit {
   initiateSaveAgent() {
     this.spinner.show();
     console.log("predefinedBotsForm.value",this.predefinedBotsForm.value)
-    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport') {
+    if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport' ||
+      this.predefinedBot_uuid === 'Pred_ProductManagement'
+    ) {
       this.uploadFilesAndSaveAgent('create');
     } else {
       this.generatePayloadToSaveUpdateAgent('create');
@@ -898,7 +900,7 @@ export class AiAgentFormComponent implements OnInit {
           this.rfpAgentCreate(action);
         } else if (this.predefinedBot_uuid === 'Pred_Recruitment') {
           this.recruitmentAgentCreate(action);
-        }else if(this.predefinedBot_uuid === 'pred_CustomerSupport'){
+        }else if(this.predefinedBot_uuid === 'pred_CustomerSupport' || this.predefinedBot_uuid === 'Pred_ProductManagement'){
           this.generatePayloadToSaveUpdateAgent(action);
         }
       }
