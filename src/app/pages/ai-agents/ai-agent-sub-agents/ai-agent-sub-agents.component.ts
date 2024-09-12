@@ -78,7 +78,9 @@ export class AiAgentSubAgentsComponent implements OnInit {
     // let tenant_id = localStorage.getItem("tenantName");
     this.rest_api.getSubAiAgent(this.product_id).subscribe((res: any) => {
       this.subAgentList = res.data;
+      // this.subAgentList = this.data__data.data;
       this.filterAgentsList = res.data;
+      // this.filterAgentsList = this.data__data.data;
       if(res.code == 4200){
         this.agentExpire = res.expiryDate;
         // this.agentName = res.agentName;

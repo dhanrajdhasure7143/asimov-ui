@@ -54,7 +54,7 @@
   }
   
   .agent-card .card-body {
-    padding: 12px !important;
+    padding: 5px !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -178,13 +178,13 @@
       display: flex;
       justify-content: space-between;
       align-items: end; 
-      padding: 7px 3px;
+      padding: 3px 3px;
+      margin-left: 8px;
     }
     
     .text-content {
       flex: 1;
-      margin-right: 10px;
-      max-width: calc(100% - 100px);
+      margin-left: 10px;
     }
     
     .badge1 {
@@ -299,4 +299,17 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+}
+
+.second-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-side{
+  align-items: end !important;
+  display: flex !important;
+  justify-content: end !important;
+  padding-right: 5px !important;
 }

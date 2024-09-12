@@ -90,22 +90,28 @@
                 </span>
               </button>
             </div>
+
+            <div class="text-content">
+              <p class="badge1 card-new" style="font-size: 14px !important;" *ngIf="!agent.lastExecution && !agent.isExpired">
+                Try a simple task to see it in action
+              </p>
+            </div>
             <div class="footer">
-              <div class="text-content">
-                <p style="width: 148px;" class="badge1 text-muted" *ngIf="agent.lastExecution">
-                  Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}}
+              <!-- <div class="text-content"> -->
+                <!-- <p style="width: 148px;" class="badge1 text-muted" *ngIf="agent.lastExecution">
+                  Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}} -->
                   <!-- Last run: {{agent.lastExecution|date:'MMM dd, y hh:mm'}} -->
-                </p>
-                <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
+                <!-- </p> -->
+                <!-- <p class="badge1 card-new" *ngIf="!agent.lastExecution && !agent.isExpired">
                   Try a simple task to see it in action
-                </p>
-                <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
+                </p> -->
+                <!-- <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
                   Expired: {{agent.expiryDate|date:'dd-MM-yyyy'}}
                 </p>
                 <p style="width: 148px;" class="badge1" *ngIf="!agent.isExpired && agent.expiryDate">
                  <strong> Expires on: {{agent.expiryDate|date:'dd-MM-yyyy'}} </strong>
-                </p>
-              </div>
+                </p> -->
+              <!-- </div> -->
               <!-- Please enable  below commented buttons line if need renew button funtionality in sub agents cards -->
 
               <!-- <button class="cardBtn btn btn-sm rounded-pill card-view"
@@ -113,11 +119,36 @@
                 (click)="agent.isConfigured ? (agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)) : viewAgentDetails(agent)">
                 {{ agent.isConfigured ? (agent.isExpired ? 'Renew' : 'View') : 'Start Now!' }}
               </button> -->
-              <button class="cardBtn btn btn-sm rounded-pill card-view"
+
+              <div class="second-section col-md-12 p-0">
+                <div class="left-side col-md-6 p-0">
+                  <p style="width: 148px;" class="badge1 text-muted" *ngIf="agent.lastExecution">
+                    Last run: {{agent.lastExecution|date:'dd-MM-yyyy'}}
+                    <!-- Last run: {{agent.lastExecution|date:'MMM dd, y hh:mm'}} -->
+                  </p>
+                  <p style="width: 148px;" class="badge1 text-danger" *ngIf="agent.isExpired">
+                    Expired: {{agent.expiryDate|date:'dd-MM-yyyy'}}
+                  </p>
+                  <p style="width: 148px;" class="badge1" *ngIf="!agent.isExpired && agent.expiryDate">
+                   <strong> Expires on: {{agent.expiryDate|date:'dd-MM-yyyy'}} </strong>
+                  </p>
+                </div>
+
+                <div class="right-side col-md-6 p-0">
+                  <button class="cardBtn btn btn-sm rounded-pill card-view"
+                    [ngClass]="{'btn-danger': agent.isExpired, 'btn-primary': !agent.isExpired}"
+                    (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)">
+                    {{ agent.isExpired ? 'Renew' : (agent.isConfigured ? 'View' : 'Start Now!') }}
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- <button class="cardBtn btn btn-sm rounded-pill card-view"
                 [ngClass]="{'btn-danger': agent.isExpired, 'btn-primary': !agent.isExpired}"
                 (click)="agent.isExpired ? handleRenewBtn(agent) : viewAgentDetails(agent)">
                 {{ agent.isExpired ? 'Renew' : (agent.isConfigured ? 'View' : 'Start Now!') }}
-              </button>
+              </button> -->
 
               <!-- Please enable  below commented button line if dont need renew button funtionality in sub agents cards -->
 
