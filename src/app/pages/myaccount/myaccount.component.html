@@ -86,9 +86,9 @@
                     </span>
                 </div>
                 <div *ngIf="isRefresh" class="form-group col-md-6 Admin-countrylist">
-                    <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
+                    <label class="label-control" for="phoneumber">Phone Number<span class="star">*</span></label>
                     <input type="text" appOnlyNumbers  (countryChange)="OnFlagChange($event)"
-                        id="phoneNumber" name="phoneumber" placeholder="Enter Phone number"
+                        id="phoneNumber" name="phoneumber" placeholder="Enter Phone Number"
                         class="form-control data phonenumber" ng2TelInput
                         [ng2TelInputOptions]="{initialCountry: phnCountryCode}" #phoneumber="ngModel"
                         [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
