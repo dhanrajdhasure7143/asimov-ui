@@ -45,8 +45,8 @@ export class BillingAddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.billingForm = this.formBuilder.group({
-      // name: ["", Validators.compose([Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)])],
-      name: [""],
+      // name: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.maxLength(50)])],
+      name: ["",Validators.compose([Validators.required])],
       country: ["", Validators.compose([Validators.required])],
       city: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       state: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
