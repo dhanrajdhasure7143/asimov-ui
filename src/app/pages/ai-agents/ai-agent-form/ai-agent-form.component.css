@@ -1192,6 +1192,7 @@ input.p-inputtext {
 
 .accordion-header {
   background: #fff !important;
+  cursor: pointer;
 }
 ::ng-deep .p-accordion-tab a.p-accordion-header-link {
   background: #f4f4ff !important;

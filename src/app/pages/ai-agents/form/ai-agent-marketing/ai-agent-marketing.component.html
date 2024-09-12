@@ -111,7 +111,8 @@
                     </div>
                   </div>
                   <div style="padding: 0px !important;">
-                    <b>{{marketingForm.get('promptType').value === 'image' ? 'Describe Your Image' : 'Summarize briefly what you're promoting.'}} </b>
+                    <b *ngIf="marketingForm.get('promptType').value === 'image'">Describe your image</b>
+                    <b *ngIf="marketingForm.get('promptType').value !== 'image'">Summarize briefly what you're promoting</b>
                     <textarea class="form-control data" formControlName="promptDescription"
                         rows="8" style="resize: none;" placeholder="Enter Prompt Description">
                     </textarea>
