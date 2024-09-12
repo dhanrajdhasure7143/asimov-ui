@@ -303,8 +303,9 @@
 
 .second-section{
   display: flex;
-  align-items: center;
+  /* align-items: end; */
   justify-content: center;
+  min-height: 38px;
 }
 
 .right-side{
@@ -312,4 +313,5 @@
   display: flex !important;
   justify-content: end !important;
   padding-right: 5px !important;
+  margin-bottom: 5px;
 }

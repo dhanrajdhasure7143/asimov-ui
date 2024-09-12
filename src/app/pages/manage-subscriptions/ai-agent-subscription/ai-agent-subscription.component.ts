@@ -103,12 +103,14 @@ export class AiAgentSubscriptionComponent implements OnInit {
   }
 
   onChangeAutoRenew(event,agent) {
-    console.log('Auto Renew changed', event, agent);
+    console.log('Auto Renew changed here is thre data ', event, agent);
+
+    const agent_name=agent.agentName;
     let message = ""
     if(!agent.autoRenew){
-      message = "Are you sure you want to disable auto-renewal? If you proceed, your subscription will not renew automatically at the end of the current billing cycle, and you will lose access to your agents."
+      message = `Are you sure you want to disable auto-renewal for <b>${agent_name} Agent?</b> If you proceed, your subscription will not renew automatically at the end of the current billing cycle, and you will lose access to your agents.`
     }else{
-      message = "Would you like to update your auto-renewal status? If enabled, your subscription will automatically renew at the end of the current billing cycle, and the payment will be processed accordingly.";
+      message = `Would you like to update your auto-renewal status for <b>${agent_name} Agent?</b> If enabled, your subscription will automatically renew at the end of the current billing cycle, and the payment will be processed accordingly.`;
     }
       
     let user_email = localStorage.getItem('ProfileuserId');
@@ -225,12 +227,12 @@ export class AiAgentSubscriptionComponent implements OnInit {
     const agent__name = this.subscriptions.find(sub => sub.productId === productId)?.agentName;
 
     this.confirmationService.confirm({
-      message: `Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to ${agent__name} Agent once the current billing cycle ends.`,
+      message: `Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to <b>${agent__name} Agent</b> once the current billing cycle ends.`,
       header: "Cancel Subscription",
       acceptLabel: "Yes, Cancel",
       rejectLabel: "No, Keep",
-      rejectButtonStyleClass: 'btn reset-btn',
-      acceptButtonStyleClass: 'btn bluebg-button',
+      rejectButtonStyleClass: 'btn bluebg-button',
+      acceptButtonStyleClass: 'btn reset-btn',
       defaultFocus: 'none',
       rejectIcon: 'null',
       acceptIcon: 'null',
@@ -286,8 +288,8 @@ export class AiAgentSubscriptionComponent implements OnInit {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete these sub-agents?`,
       header: "Delete Sub-Agent",
-      acceptLabel: "Yes, Delete",
-      rejectLabel: "No, Cancel",
+      acceptLabel: "Yes",
+      rejectLabel: "Cancel",
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
@@ -314,10 +316,10 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
     this.confirmationService.confirm({
-      message: "Are you sure you want to renew your subscription?",
+      // message: "Are you sure you want to renew your subscription?",
       header: 'Renew Subscription',
-      acceptLabel: 'Yes, Renew',
-      rejectLabel: 'No, Cancel',
+      acceptLabel: 'Yes',
+      rejectLabel: 'Cancel',
       rejectButtonStyleClass: 'btn reset-btn',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
