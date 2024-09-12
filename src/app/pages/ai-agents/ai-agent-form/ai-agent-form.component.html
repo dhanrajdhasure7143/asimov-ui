@@ -43,7 +43,7 @@
                 <!-- <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i> -->
                 <div class="edit-config">
                     <!-- <span *ngIf="!isExpanded" class="edit-text"><i class="pi pi-pencil"></i> Edit Configuration</span> -->
-                    <span (click)="toggleConfigEdit()" *ngIf="isConfigered && !isExpanded" class="edit-text edit-pencil"><img src="assets/images/agent/edit-pencil.svg" style="cursor: pointer;" class="pi-pencil" style="cursor: pointer;" alt=""> {{!isConfigered? 'Add':'Edit'}} Configuration</span>
+                    <!-- <span (click)="toggleConfigEdit()" *ngIf="isConfigered && !isExpanded" class="edit-text edit-pencil"><img src="assets/images/agent/edit-pencil.svg" style="cursor: pointer;" class="pi-pencil" style="cursor: pointer;" alt=""> </span> -->
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}" style="cursor: pointer;" (click)="toggleItem()"></i>
                 </div>
               </div>
@@ -721,7 +721,8 @@
                       <div *ngFor="let stage of stages; let i = index" class="stage" 
                            [ngClass]="{
                              'success': stage.status === 'success',
-                             'failure': stage.status === 'failure'
+                             'failure': stage.status === 'failure',
+                             'running': stage.status === 'running' && i === currentStageIndex
                            }">
                       </div>
                     </div>
