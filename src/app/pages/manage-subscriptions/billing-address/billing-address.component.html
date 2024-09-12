@@ -7,7 +7,7 @@
                     <span class="input-icon">
                         <i class="pi pi-user"></i>
                     </span>
-                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" maxlength="51" (keydown)="onMessageInput($event)"
+                    <input type="text" pInputText class="input-with-icon" [style]="{'width':'100%'}" (keydown)="onMessageInput($event)"
                         formControlName="name" placeholder="Enter Name" required>
                 </div>
                 <span *ngIf="billingForm.get('name').invalid && billingForm.get('name').touched && !billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required"> 
