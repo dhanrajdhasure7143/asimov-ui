@@ -1,15 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StripeService } from 'ngx-stripe';
-import { MessageService } from 'primeng/api';
-import { switchMap } from 'rxjs/operators';
-import { CryptoService } from 'src/app/services/crypto.service';
-import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
-import { PredefinedBotsService } from '../../services/predefined-bots.service';
-import { LoaderService } from 'src/app/services/loader/loader.service';
-import { toastMessages } from 'src/app/shared/model/toast_messages';
-import { ToasterService } from 'src/app/shared/service/toaster.service';
 
 @Component({
   selector: 'app-recruitment-ai-sales-page',
@@ -26,33 +15,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
               </ul>
             </div>
             <div class="hero-pricing">
-              <div class="pricing-controls">
-
-              <div class="billing-cycle">
-                  <span [class.active]="!isYearly">Monthly</span>
-                  <label class="switch">
-                    <input type="checkbox" [(ngModel)]="isYearly">
-                    <span class="slider round"></span>
-                  </label>
-                  <span [class.active]="isYearly">Yearly</span>
-                </div>
-              </div>
-
-                <div class="agents">
-                  <label>Select no of Agents</label>
-                  <div class='d-flex'>
-                    <div class="counter">
-                      <button (click)="decrementAgents()">-</button>
-                      <span>{{ agentsQuantity }}</span>
-                      <button (click)="incrementAgents()">+</button>
-                    </div> 
-                    <div class='prc-btn'>
-                      <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
-                    </div>
-                  </div>
-
-                </div>
-                
+              <app-payment-collection></app-payment-collection>
             </div>
           </div>
         </div>
@@ -138,57 +101,6 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
       color: white;
       padding: 70px 0;
     }
-    .agents {
-        justify-content: space-between;
-        align-items: baseline;
-        margin-left: 6px;
-    }
-
-    .agents label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: white;
-      font-size: 14px;
-    }
-
-    .counter {
-      display: flex;
-      align-items: center;
-      background-color: #f0f0f0;
-      width: fit-content;
-      border-radius: 5px;
-    }
-    .counter button {
-      background-color: #B1BBC6;
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      width: 30px;
-      height: 34px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s ease;
-    }
-    .counter button:first-child {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-    .counter button:last-child {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-    .counter button:active {
-      background-color: #b0b0b0;
-    }
-    .counter span {
-      font-size: 16px;
-      color: #333;
-      margin: 0 15px;
-      min-width: 20px;
-      text-align: center;
-    }
     :host ::ng-deep.active {
       background-color: transparent !important;
     }
@@ -230,69 +142,12 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
       font-size: 1.5em;
       margin-right: 10px;
     }
-    .hero-pricing {
-      background-color: #FFFFFF33;
-      padding: 1.5rem;
-      border-radius: 10px;
-      width: 375px;
-    }
-    .pricing-controls {
-      margin-bottom: 1rem;
-    }
-    .agents {
-      margin-bottom: 1rem;
-    }
-    .agents label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: white;
-    }
-    .billing-cycle {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .billing-cycle span {
-      color: white;
-      margin: 0 0.5rem;
-    }
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 65px;
-      height: 24px;
-    }
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #f0f0f0;
-      transition: .4s;
-      border-radius: 24px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 4px;
-      bottom: 4px;
-      background-color: #3199ff;
-      transition: .4s;
-      border-radius: 50%;
-    }
-   
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
+  .hero-pricing {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+  }
+    
     .btn {
       background-color: #3199ff;
       color: white;
@@ -303,10 +158,6 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
       display: inline-block;
       font-size: 15px;
       margin-left: 5px;
-    }
-    .pay-button {
-      text-align: center;
-      float: right;
     }
     .section {
       padding: 100px 0;
@@ -505,131 +356,7 @@ export class MarketingAiSalesPageComponent {
       }
     ];
 
-  constructor(private route : ActivatedRoute,
-    private crypto: CryptoService,
-    private service : PredefinedBotsService,
-              private spinner : LoaderService,
-              private router: Router,
-              private stripeService: StripeService,
-              private messageService: MessageService,
-              private toaster: ToasterService,
-              private toastMessages: toastMessages
-) { 
-    this.route.queryParams.subscribe(data => {
-        console.log("queryParams",data);
-        if (data && data.token) {
-        this.email = this.crypto.decrypt(data.token);
-        } else {
-        console.log("Invalid token");
-        }
-        if (data && data.id) this.selectedAgentId = data.id;
-        if (data && data.quantity) this.agentsQuantity = data.quantity;
-        if (data && data.isYearly) this.isYearly = data.isYearly === 'true';
-        console.log("selectedAgent",this.selectedAgentId);
-        console.log("email",this.email);
-    })
-    this.loadPredefinedBots();
-}
+    constructor() { }
 
-ngOnInit() {
-}
-
-loadPredefinedBots() {
-    this.spinner.show();
-    this.service.loadPredefinedBots().subscribe((response: any) => {
-        this.spinner.hide();
-        if (response) {
-            console.log("response",response);
-            response.forEach((agent) => {
-                if(agent.product.id == this.selectedAgentId){
-                this.selectedAgent = agent.product;
-                this.selectedAgent["priceCollection"] = agent.priceCollection;
-                }
-            });
-            console.log("selectedAgent",this.selectedAgent);
-        }
-    }, err => {
-        this.spinner.hide();
-        Swal.fire({
-            title: 'Error!',
-            text: 'Failed to load',
-            icon: 'error',
-            showCancelButton: false,
-            allowOutsideClick: true
-        }).then((result) => {
-            if (result.value) {
-                this.router.navigate(['/signup']);
-            }
-        });
-    });
-}
-
-  incrementAgents() {
-    this.agentsQuantity++;
-  }
-
-  decrementAgents() {
-    if (this.agentsQuantity > 1) {
-      this.agentsQuantity--;
-    }
-  }
-
-  proceedToPay() {
-    // console.log(`Proceeding to pay for ${this.agentsQuantity} agents on ${this.isYearly ? 'yearly' : 'monthly'} plan`);
-    // Implement payment logic here
-    this.spinner.show();
-  
-    // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
-    let filteredPriceIds = [];
-  console.log("selectedAgent",this.selectedAgent);
-      let selectedTire = !this.isYearly ? 'month' : 'year'
-      this.selectedAgent.priceCollection.forEach((price) => {
-        if (price.recurring.interval === selectedTire) {
-          let obj = {};
-          obj["id"] = price.id;
-          obj["quantity"] = this.agentsQuantity;
-          filteredPriceIds.push(obj);
-        }
-      });
-
-  
-  
-    if (filteredPriceIds.length === 0) {
-      // Handle the case when no price is selected for the chosen interval
-      // console.error('No price selected for the chosen interval.');
-      this.spinner.hide();
-      return;
-    }
-    
-    let filteredUrls = this.router.url.split('&');
-    let req_body = {
-      // "price": filteredPriceIds,
-      "priceData": filteredPriceIds.map(price => ({
-        "price": price.id,
-        "quantity": price.quantity
-      })),
-      "customerEmail": this.email,
-      "successUrl": environment.paymentSuccessURL,
-      // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
-    //   "cancelUrl": environment.paymentFailuerURL+"?token="+this.email+"&id="+this.selectedAgentId+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
-      // "cancelUrl": environment.paymentFailuerURL+this.router.url+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
-      "cancelUrl": environment.paymentFailuerURL+filteredUrls[0]+'&'+filteredUrls[1]+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
-    };
-    // console.log("PLAN_ID's", req_body);
-    
-    this.service.getCheckoutScreen(req_body).pipe(
-        switchMap((session: any) => {
-          this.spinner.hide();
-          return this.stripeService.redirectToCheckout({ sessionId: session.id });
-        })
-      ).subscribe(
-        res => {
-          this.spinner.hide();
-        },error => {
-          this.spinner.hide();
-          this.toaster.showError(this.toastMessages.apierror);
-          console.error('Error during payment:', error);
-        }
-      );
-  }
+    ngOnInit() { }
 }
