@@ -1157,3 +1157,21 @@ input[type="radio"]:checked + .custom-radio::after {
 .right-button {
   right: 30px;
 }
+
+.more-agents-below {
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  padding: 15px 0px;
+  margin: 60px 0px !important;
+}
+
+.more-agents-beside .image-box-conta img{
+  height: 80px;
+}
+
+.image-box-conta{
+  flex-direction: column;
+  gap: 15px;
+  margin: 60px 0px !important;
+}

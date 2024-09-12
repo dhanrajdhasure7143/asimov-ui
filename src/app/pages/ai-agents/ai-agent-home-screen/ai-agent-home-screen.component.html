@@ -103,6 +103,12 @@
                 </button>
             </div> -->
             <div class="scrollable-explore-content">
+                <div *ngIf="unsubscribed_agents?.length === 0 && searchTerm !=''" class="centered-message">
+                    <div>
+                        <img src="assets/images/mini_bot.svg" alt="mini_bot">
+                        No Agent Found
+                    </div>
+                </div>
                 <div class="inner-cards-container">
                     <div class="card" *ngFor="let plan of unsubscribed_agents; let i = index"
                         (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed))">
@@ -215,16 +221,18 @@
                     </div>
                 </div>
 
+                <div *ngIf="searchTerm===''" class="more-agents-beside">
+                    <div class="d-flex align-items-center justify-content-center image-box-conta">
+                        <img src="assets/images/agent/future-agents.svg" alt="">
+                        <span class="main-header-title">Watch This Space for More Agent Launches Coming Soon!</span>
+                    </div>                
+                </div>
+
                 <!-- <div *ngIf="unfilteredAgentsList?.length === 0 && predefined_botsList?.length >=1" class="centered-message">
                     <img src="assets/images/mini_bot.svg" alt="mini_bot">
                     No Agent Found
                 </div> -->
-                <div *ngIf="unsubscribed_agents?.length === 0 || unfilteredAgentsList?.length === 0" class="centered-message">
-                    <div>
-                        <img src="assets/images/mini_bot.svg" alt="mini_bot">
-                        We are working on more AI Agents ...
-                    </div>
-                </div>
+
             </div>
             <div class="button-container">
                 <!-- <button type='button' class="button-common left-button" (click)="showDialog()">
