@@ -224,10 +224,11 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   cancelAiAgentSubscription(productId: string, subAgents: any | any[]) {
 
-    const agent__name = this.subscriptions.find(sub => sub.productId === productId)?.agentName;
+    // const agent__name = this.subscriptions.find(sub => sub.productId === productId)?.agentName;
+    const sub_agent_name = subAgents.subAgentName;
 
     this.confirmationService.confirm({
-      message: `Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to <b>${agent__name} Agent</b> once the current billing cycle ends.`,
+      message: `Are you sure you want to cancel your subscription? Auto-renewal will be disabled, and you will lose access to <b>${sub_agent_name}</b> once the current billing cycle ends.`,
       header: "Cancel Subscription",
       acceptLabel: "Yes, Cancel",
       rejectLabel: "No, Keep",
