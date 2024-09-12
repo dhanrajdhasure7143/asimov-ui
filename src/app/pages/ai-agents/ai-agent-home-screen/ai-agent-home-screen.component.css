@@ -564,42 +564,9 @@ hr {
   }
   
   :host ::ng-deep .custom-dialog .p-dialog-content {
-    overflow-y: hidden;
     flex-grow: 1;
   }
-  
-  :host ::ng-deep .custom-dialog .p-dialog-content {
-    padding: 0;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-  
-.dialog-bot-image {
-  width: 24px;
-  height: 24px;
-  margin-right: 12px;
-}
 
-.dialog-header h3 {
-  flex-grow: 1;
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.dialog-header {
-  display: flex;
-  align-items: center;
-}
-
-:host ::ng-deep .custom-dialog .p-dialog .p-dialog-header {
-  border-bottom: 1px solid lightgray;
-  background: #ffffff;
-  color: #495057;
-  padding: 0.7rem;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
   /* Dialog Styles - Ended*/
 
   .add-agents {

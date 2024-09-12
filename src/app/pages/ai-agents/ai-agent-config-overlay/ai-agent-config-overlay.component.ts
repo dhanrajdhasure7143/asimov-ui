@@ -49,10 +49,18 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     });
   }
 
+  // processAttachments(attachments: any[]) {
+  //   const attachmentMap = {};
+  //   attachments.forEach(att => {
+  //     attachmentMap[att.key] = att.attList[0].originalFileName;
+  //   });
+  //   return attachmentMap;
+  // }
+
   processAttachments(attachments: any[]) {
     const attachmentMap = {};
     attachments.forEach(att => {
-      attachmentMap[att.key] = att.attList[0].originalFileName;
+      attachmentMap[att.key] = att.attList.map(file => file.originalFileName);
     });
     return attachmentMap;
   }
@@ -88,8 +96,16 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     return field.preAttributeValue || '';
   }
 
+  // getAttachmentName(fieldName: string): string {
+  //   return this.attachments[fieldName] || 'No file chosen';
+  // }
+  
   getAttachmentName(fieldName: string): string {
-    return this.attachments[fieldName] || 'No file chosen';
+    const filenames = this.attachments[fieldName];
+    if (filenames) {
+      return filenames.join(',<br>');
+    }
+    return 'No file chosen';
   }
 
   getAssociatedFields(actionIndex: number): any[] {

@@ -19,7 +19,8 @@
                 <input *ngSwitchCase="'text'" type="text" [value]="getFieldValue(field)" disabled>
                 <div *ngSwitchCase="'file'" class="file-input-wrapper">
                   <!-- <input type="file" [value]="getFieldValue(field.preAttributeName)" disabled> -->
-                  <span class="file-name">{{ getAttachmentName(field.preAttributeName) }}</span>
+                  <!-- <span class="file-name">{{ getAttachmentName(field.preAttributeName) }}, <br></span> -->
+                  <span class="file-name" [innerHTML]="getAttachmentName(field.preAttributeName)"></span>
                 </div>
                 <!-- Add more cases for other field types as needed -->
               </ng-container>
