@@ -2,4 +2,8 @@ input#phoneNumber {
     margin-left: 50px;
     border: none !important;
   }
+
+  .required{
+    text-transform: none !important;
+  }
   
