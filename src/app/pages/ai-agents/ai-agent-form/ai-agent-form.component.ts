@@ -1313,7 +1313,7 @@ export class AiAgentFormComponent implements OnInit {
         this.completedStages = -1;
         this.stageFailed = false;
         this.agentStarted = false;  // Reset agent started flag
-        this.stages.forEach(stage => stage.status = 'pending');
+        // this.stages.forEach(stage => stage.status = 'running');
         this.rest_service.startPredefinedBot(this.params.agentId).subscribe(
           (res: any) => {
             this.spinner.hide();
@@ -1332,6 +1332,7 @@ export class AiAgentFormComponent implements OnInit {
               this.isProcessing = false;
               return;
             }
+            this.stages.forEach(stage => stage.status = 'running');
             this.toaster.toastSuccess("The agent has been successfully initiated.");
             this.showProgress = true;
             this.agentStarted = true;  // Set agent started flag to true
