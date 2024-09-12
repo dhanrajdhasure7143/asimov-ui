@@ -567,6 +567,9 @@ export class AiAgentFormComponent implements OnInit {
             if (userIdKey) {
               req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
             }
+          }
+
+      if(this.predefinedBot_uuid == 'pred_CustomerSupport' || this.predefinedBot_uuid === 'Pred_ProductManagement'){
           // .includes('CustomerSupport_dropdown') ? 'Yes' : 'No';
           this.filePathValues.forEach(element => {
             req_body.fields[element.attributName] = element.filePath
