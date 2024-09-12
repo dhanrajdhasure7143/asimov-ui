@@ -159,6 +159,8 @@ export class AiAgentFormComponent implements OnInit {
   inboxContent: any []= [];
   selectedInBoxContent: any={};
   selectedContentIndex: number = 0;
+  isOutputView:boolean = false;
+  isOutputTabEnabled:boolean = false;
   
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -234,10 +236,13 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport' || this.agent_uuid == 'Pred_RFP'){
         this.activeTabMode = 'content';
-
+        this.isOutputView = true;
+        this.isOutputTabEnabled = true;
         this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
+        this.isOutputView = false;
+        this.isOutputTabEnabled = false;
       }
       this.subAgentName = res.subAgentName;
       // this.subAgentName = this.params.agentName;
@@ -352,9 +357,13 @@ export class AiAgentFormComponent implements OnInit {
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       if(this.agent_uuid =='pred_CustomerSupport'|| this.agent_uuid == 'Pred_RFP'){
         this.activeTabMode = 'content';
+        this.isOutputView = true;
+        this.isOutputTabEnabled = true;
         this.getInboxConent();
       }else{
         this.activeTabMode = 'history';
+        this.isOutputView = false;
+        this.isOutputTabEnabled = false;
       }
       if (this.agent_uuid === 'Pred_Marketing') {
         this.marketingfieldValues = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeValue }), {});

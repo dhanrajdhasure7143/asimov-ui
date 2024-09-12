@@ -806,6 +806,7 @@
                                 <!-- Agent Start Date and Eye Icon -->
                                 <div class="agent-card-header">
                                     <span>Agent Start Date: <span class="start-date">{{ agent.startTS|date:'MMM dd, y HH:mm' }}</span> </span>
+                                    <!-- <i class="pi pi-eye eye-icon" style="cursor: pointer;" (click)="viewOverlayForm(agent)"></i> -->
                                     <span class="icons">
                                         <i class="pi pi-sync eye-icon" style="cursor: pointer;" (click)="refreshInprogressAgent()"></i>
                                         <i class="pi pi-eye eye-icon" style="cursor: pointer; font-size: 1.2em;" (click)="viewOverlayForm(agent)"></i>
@@ -849,8 +850,8 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
-                <button *ngIf="agent_uuid =='pred_CustomerSupport' || agent_uuid =='Pred_RFP'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
-                    style="margin-right: 8px; font-size: 1.1rem;"></i>Agent Output
+                <button *ngIf="isOutputTabEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                    style="margin-right: 8px; font-size: 1.1rem;"></i>Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
@@ -1004,8 +1005,13 @@
                         </span>
                     </td>
                     <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; 
-                        <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
-                        <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
+                        <span *ngIf="record.stage === 'Success' && isOutputView"> 
+                            <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
+                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
+                            <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
+                        </span>
+                        <!-- <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
+                        <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i> -->
                     </td>
                 </tr>
             </tbody>
