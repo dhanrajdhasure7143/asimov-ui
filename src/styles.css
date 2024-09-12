@@ -4170,3 +4170,43 @@ padding: 0px 30px;}
 .accordion-content .p-accordion .p-accordion-content{
   border: none !important;
 }
+
+/* Custom Dialog Styles */
+.dialog-bot-image {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+}
+
+.dialog-header h3 {
+  flex-grow: 1;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+}
+
+.custom-dialog .p-dialog{
+    border-radius: 8px;
+}
+
+.custom-dialog .p-dialog-content {
+  padding: 0;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.custom-dialog .p-dialog .p-dialog-header {
+  border-bottom: 1px solid lightgray;
+  background: #ffffff;
+  color: #495057;
+  padding: 0.7rem;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+/* Dialog Styles - Ended*/

@@ -555,7 +555,7 @@
                                                         <div *ngIf="field.preAttributeType === 'checkbox'" class="form-check">
                                                             <!-- <ng-container *ngIf="field.options.length >0; else noOptions"> -->
                                                                 <ng-container [formGroupName]="field.preAttributeName">
-                                                                    <div *ngFor="let option of field.options; trackBy:loopTrackBy">
+                                                                    <div *ngFor="let option of field.options; trackBy:loopTrackBy" class="option-container">
                                                                     <label class="form-check-label">
                                                                             <input type="checkbox"
                                                                             type="checkbox" 
@@ -849,8 +849,8 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
-                <button *ngIf="agent_uuid =='pred_CustomerSupport'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
-                    style="margin-right: 8px; font-size: 1.1rem;"></i>Output
+                <button *ngIf="agent_uuid =='pred_CustomerSupport' || agent_uuid =='Pred_RFP'" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                    style="margin-right: 8px; font-size: 1.1rem;"></i>Agent Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"
@@ -1003,7 +1003,10 @@
                             {{ record.stage }}
                         </span>
                     </td>
-                    <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i></td>
+                    <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; 
+                        <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
+                        <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -1117,8 +1120,13 @@
       </div>
 </p-dialog>
 
-<p-dialog header="Output" [modal]="true" [(visible)]="outputOverlay" [style]="{width: '50vw'}">
-    <div class="h-100">
+<p-dialog  [showHeader]="true" class="custom-dialog" [(visible)]="outputOverlay" [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+        <div class="dialog-header">
+          <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+          <h3>Agent Output</h3>
+        </div>
+      </ng-template>
         <div class="h-100">
             <div class="">
                 <div><strong>Attachments:</strong></div>
@@ -1143,8 +1151,15 @@
                         No data found
                     </div>
                 </ng-template>
-        </div>
       </div>
 </p-dialog>
+
+<p-dialog class="custom-dialog" [(visible)]="outputOverlayRFP" [style]="{width: '50vw'}"></p-dialog>
+    <ng-template pTemplate="header">
+        <div class="dialog-header">
+          <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+          <h3>Agent Output</h3>
+        </div>
+      </ng-template>
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
