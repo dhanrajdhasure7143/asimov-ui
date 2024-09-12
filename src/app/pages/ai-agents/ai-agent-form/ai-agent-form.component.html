@@ -1118,7 +1118,13 @@
         <!-- Sub Agent History Ends-->         
 </div>
 
-<p-dialog header="Configuration" [modal]="true" [(visible)]="configurationOverlay" [style]="{width: '70vw'}">
+<p-dialog class="custom-dialog" [(visible)]="configurationOverlay" [style]="{width: '70vw'}">
+    <ng-template pTemplate="Configuration">
+        <div class="dialog-header">
+          <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+          <h3>Configuration</h3>
+        </div>
+      </ng-template>
     <div class="h-100">
         <div class="h-100">
           <app-ai-agent-config-overlay #aiAgentsConfig ></app-ai-agent-config-overlay>
