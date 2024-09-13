@@ -11,7 +11,12 @@
             <ng-template pTemplate="content">
               <div [formGroup]="marketingForm">
                 <!-- Platform Selection with Icons -->
-                <b>Select Platforms</b>
+                 <label for="">
+                   <b>Select Platforms</b>
+                   <span class="custom-tooltip-btn info-icon" [pTooltip]="selectedPlatformsInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                      </span>
+                 </label>
                 <div class="platform-selection" [formGroup]="marketingForm">
                   <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Plotform"
                   optionLabel="name" display="chip" [showHeader]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="togglePlatformFields()">
@@ -44,14 +49,22 @@
                     <b> Facebook Credentials </b>
                     <div class="form-fields">
                       <div>
-                        <label> Page ID <span class="required">*</span> </label>
+                        <label> Page ID <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="facebookPageIdInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span> 
+                        </label>
                         <input pInputText type="text" formControlName="facebookPageId">
                         <div *ngIf="marketingForm.get('facebookPageId')?.invalid && marketingForm.get('facebookPageId')?.touched">
                           <small class="required"> Facebook Page ID is required</small>
                         </div>
                       </div>
                       <div>
-                        <label> Access Token <span class="required">* </span> </label>
+                        <label> Access Token <span class="required">* </span> 
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="facebookTokenInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
                         <input pInputText type="text" formControlName="facebookToken">
                         <div *ngIf="marketingForm.get('facebookToken')?.invalid && marketingForm.get('facebookToken')?.touched">
                           <small class="required">
@@ -67,14 +80,22 @@
                     <b> Instagram Credentials </b>
                     <div class="form-fields">
                       <div>
-                        <label> Page ID <span class="required">*</span></label>
+                        <label> Page ID <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="instagramPageInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
                         <input pInputText type="text" formControlName="instagramPageId">
                         <div *ngIf="marketingForm.get('instagramPageId')?.invalid && marketingForm.get('instagramPageId')?.touched">
                           <small class="required"> Instagram Page ID is required </small>
                         </div>
                       </div>
                       <div>
-                        <label> Access Token <span class="required">*</span></label>
+                        <label> Access Token <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="instagramTokenInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
                         <input pInputText pInputTexttype="text" formControlName="instagramToken">
                         <div *ngIf="marketingForm.get('instagramToken')?.invalid && marketingForm.get('instagramToken')?.touched">
                           <small class="required">Instagram Access Token is required</small>
@@ -100,7 +121,12 @@
               <div class="row prompt-description" [formGroup]="marketingForm">
                 <div class="col-md-6" style="padding-right: 0px !important; padding-left: 0px !important;">
                   <div class="prompt-type-selection">
-                    <b> Select Prompt Type </b>
+                    <label for="">
+                      <b> Select Prompt Type </b>
+                      <span class="custom-tooltip-btn info-icon" [pTooltip]="promptTypeInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                      </span>
+                    </label>
                     <div class="prompt-type">
                       <label class="radio-label">
                         <input type="radio" value="image" (change)="togglePlatformFields()" formControlName="promptType"> Image Prompt

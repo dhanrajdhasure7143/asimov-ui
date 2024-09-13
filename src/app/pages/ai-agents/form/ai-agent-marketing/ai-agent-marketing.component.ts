@@ -21,6 +21,12 @@ export class AiAgentMarketingComponent implements OnInit {
   @Input() productId!: string;
   @Input() isConfigered: boolean= false;
   @Input() marketingfieldValues: any;
+  selectedPlatformsInfo = 'Select the platform where your content needs to be posted, such as.';
+  facebookPageIdInfo = 'Enter the unique Page ID for the Facebook page where the content will be posted.';
+  facebookTokenInfo = 'Provide the Facebook Access Token needed for authenticating and posting content on the selected Facebook page.';
+  instagramPageInfo = 'Enter the unique Page ID for the Instagram account where the content will be posted.';
+  instagramTokenInfo = 'Provide the Instagram Access Token required for authenticating and posting content on the selected Instagram page.';
+  promptTypeInfo = 'Choose the prompt type, either image prompt or text prompt, and enter the content that needs to generate the image or the text that will be posted on the selected platforms based on your provided content.';
 
   marketingForm: FormGroup;
   selectedPlatforms: Platform[] = [];
@@ -274,8 +280,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
   
-    this.rest_api.generateCaptionAPI(prompt).subscribe({
-    // this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
+    // this.rest_api.generateCaptionAPI(prompt).subscribe({
+    this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Caption Response:', response);
         this.generatedText = {
@@ -302,8 +308,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
 
-    this.rest_api.generateImageAPI(prompt).subscribe({
-    // this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
+    // this.rest_api.generateImageAPI(prompt).subscribe({
+    this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
         if (response.image) {
