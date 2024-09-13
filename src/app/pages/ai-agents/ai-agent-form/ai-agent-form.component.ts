@@ -82,7 +82,6 @@ export class AiAgentFormComponent implements OnInit {
   marketingfieldValues:any;
   isConfigEdit:boolean= false;
   outputOverlay:boolean = false;
-  outputOverlayRFP:boolean = false;
   activeField: any;
   originalFieldValues: any = {};
 
@@ -2084,12 +2083,12 @@ removeFilesFromForm(deletedFile:any){
     if(this.agent_uuid == 'pred_CustomerSupport'){
       this.selectedInBoxContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
     }
+    if(this.agent_uuid == 'Pred_ProductManagement'){
+      this.selectedInBoxContent['agentInboxFiles']=[];
+    }
     this.outputOverlay = true;
   }
 
-  getOutputOverlayRFP(i){
-    this.outputOverlayRFP =true;
-  }
   updateActiveField(field: any) {
     this.activeField = field.preAttributeName;
   }
@@ -2145,8 +2144,11 @@ removeFilesFromForm(deletedFile:any){
         this.selectedOutputContent = res.data[0];
         if(this.agent_uuid == 'pred_CustomerSupport'){
           this.selectedOutputContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
-      console.log("this.selectedOutputContent",this.selectedOutputContent)
-      }
+          console.log("this.selectedOutputContent",this.selectedOutputContent)
+        }
+        if(this.agent_uuid == 'Pred_ProductManagement'){
+          this.selectedOutputContent['agentInboxFiles']=[];
+        }
       }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
