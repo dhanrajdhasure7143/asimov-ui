@@ -2028,7 +2028,12 @@ removeFilesFromForm(deletedFile:any){
 
   downloadEmailAttachment(attachment:any){
     this.spinner.show();
-    let req_body = ["predefined/Customer Support/Instruction Document.docx"]
+    let req_body =[]
+    if(this.agent_uuid == "pred_CustomerSupport"){
+    req_body = [attachment.filePath]
+    }else{
+      req_body = [attachment.filePath+"/"+attachment.originalFileName]
+    }
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
       console.log("res",res);
       this.spinner.hide();
@@ -2045,7 +2050,7 @@ removeFilesFromForm(deletedFile:any){
   }
 
   downloadDocument(res,attachment?){
-    const fileName = attachment.fileName;
+    const fileName = attachment.originalFileName;
     const fileData = res[0];
     const link = document.createElement("a");
     const extension = fileName.split('.').pop();
@@ -2076,7 +2081,7 @@ removeFilesFromForm(deletedFile:any){
     this.selectedInBoxContent = this.inboxContent.find(item=>item.runId == row.agentRunId)?this.inboxContent.find(item=>item.runId == row.agentRunId):{};
     // this.selectedInBoxContent = this.inboxContent[i];
     if(this.agent_uuid == 'pred_CustomerSupport'){
-      this.selectedInBoxContent['agentInboxFiles']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+      this.selectedInBoxContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
     }
     this.outputOverlay = true;
   }
@@ -2138,7 +2143,7 @@ removeFilesFromForm(deletedFile:any){
       if(res && res.data && res.data.length > 0){
         this.selectedOutputContent = res.data[0];
         if(this.agent_uuid == 'pred_CustomerSupport'){
-          this.selectedOutputContent['agentInboxFiles']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+          this.selectedOutputContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
       console.log("this.selectedOutputContent",this.selectedOutputContent)
       }
       }
