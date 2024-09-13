@@ -50,6 +50,7 @@ export class AiAgentHomeScreenComponent implements OnInit {
   enterPrise_plan:any={};
   enterpriseFeatures = [];
   isAddedAgentsPopup = false;
+  showFullDetails = false;
 
   constructor(private router: Router,
     private spinner: LoaderService,
