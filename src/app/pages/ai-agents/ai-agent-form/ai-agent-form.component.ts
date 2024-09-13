@@ -160,6 +160,7 @@ export class AiAgentFormComponent implements OnInit {
 
   inboxContent: any []= [];
   selectedInBoxContent: any={};
+  selectedOutputContent: any={};
   selectedContentIndex: number = 0;
   isOutputEnabled:boolean = false;
   
@@ -1389,6 +1390,7 @@ export class AiAgentFormComponent implements OnInit {
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
             this.getInboxConent();
+            this.getOutPutConent();
             this.getSubAgentHistoryLogs();
             // this.toaster.toastSuccess("Agent Execution Successfully!");
           }
@@ -1631,6 +1633,7 @@ handleHistoryTab (hist) {
     this.getSubAgentFileHistoryLogs();
   }else if(hist === 'content'){
     this.getInboxConent();
+    this.getOutPutConent();
   }else{
     this.getSubAgentHistoryLogs()
   }
@@ -2108,9 +2111,28 @@ removeFilesFromForm(deletedFile:any){
     if(isOutputRequired){
       this.activeTabMode = 'content';
       this.getInboxConent();
+      this.getOutPutConent();
     }else{
       this.activeTabMode = 'history';
     }
+  }
+
+  getOutPutConent(){
+    this.rest_service.getOutputConent(this.params.agentId).subscribe((res: any) => {
+      console.log("res",res)
+      // this.subAgentContent = res.data;
+      if(res && res.data && res.data.length > 0){
+        this.inboxContent = res.data
+        if(this.agent_uuid == 'Pred_CustomerSupport'){
+        this.inboxContent.forEach(element => {
+          element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+        });
+      }
+        this.selectedInBoxContent = this.inboxContent[0];
+      }
+    } , err => {  
+      // this.toaster.showError(this.toastMessages.apierror);
+     });
   }
   
 }
