@@ -2051,6 +2051,7 @@ removeFilesFromForm(deletedFile:any){
 
   downloadDocument(res,attachment?){
     const fileName = attachment.originalFileName;
+    console.log("fileName",fileName)
     const fileData = res[0];
     const link = document.createElement("a");
     const extension = fileName.split('.').pop();
@@ -2115,7 +2116,7 @@ removeFilesFromForm(deletedFile:any){
     this.rest_service.downloadInstructionDocuments(req_body).subscribe((res: any) => {
       this.spinner.hide();
       if(res && res.length > 0){
-        let attachment = {fileName: this.predefinedBot_name+"_Instruction Document.pdf"}
+        let attachment = {originalFileName: this.predefinedBot_name+"_Instruction Document.pdf"}
         this.downloadDocument(res,attachment);
       this.toaster.toastSuccess(`Files downloaded successfully.`);
       }
