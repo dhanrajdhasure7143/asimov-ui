@@ -219,7 +219,7 @@ export class PredefinedBotsService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.apiToken}`
     });
-    return this.http.post(`http://10.11.0.67:5006/generate-image`, formData, { headers });
+    return this.http.post(environment.python_llm+`/generate-image`, formData, { headers });
   }
 
   generateCaptionAPI(prompt: string) {
@@ -228,7 +228,7 @@ export class PredefinedBotsService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.apiToken}`
     });
-    return this.http.post(`http://10.11.0.67:5006/generate-caption`, formData, { headers });
+    return this.http.post(environment.python_llm+`/generate-caption`, formData, { headers });
   }
   
   downloadCustomerSupportFiles(body){
@@ -237,5 +237,9 @@ export class PredefinedBotsService {
 
   downloadInstructionDocuments(body){
     return this.http.post(`/platform-service/document/downloadFile`,body)
+  }
+
+  getOutputConent(subAgentId){
+    return this.http.get(`/platform-service/inbox/agent-inbox-latest-runid/${subAgentId}`)
   }
 }
