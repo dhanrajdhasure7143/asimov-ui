@@ -1,7 +1,7 @@
 <div class="container-fluid  d-flex flex-column h-100 main-screen">
     <div class="marketing-form-container">
       <ng-container>
-        <p-accordion [multiple]="true" styleClass="custom-accordion">
+        <p-accordion [multiple]="true" styleClass="custom-accordion" [activeIndex]="[0,1]">
           <p-accordionTab>
             <ng-template pTemplate="header">
               <div class="custom-header">
@@ -107,10 +107,6 @@
               </div>
             </ng-template>
           </p-accordionTab>
-        </p-accordion>
-      </ng-container>
-      <ng-container>
-        <p-accordion [multiple]="true" styleClass="custom-accordion">
           <p-accordionTab>
             <ng-template pTemplate="header">
               <div class="custom-header">
