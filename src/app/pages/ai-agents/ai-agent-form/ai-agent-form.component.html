@@ -7,7 +7,8 @@
                     <img class="hover-arrow" src="assets/images-n/projects/backarrow-hover.svg" alt=""> 
                 </a>
             </label>
-            {{predefinedBot_name}} Agent</div>
+            {{predefinedBot_name}} Agent
+        </div>
     </div>
     <div class="scrollable-content flex-grow-1">
     <div class="form-flow predefined-bots">
@@ -27,6 +28,15 @@
                         </span>
                 </div>
               <p *ngIf="!isConfigered">Not configured yet</p>
+            </div>
+            <div class="inbox-attachment info-attachment">
+                <div>
+                    <i class="pi pi-file"></i>
+                    <span>Instructions.pdf</span>
+                    <button class="download-button" (click)="downloadInstructionDoc()" pTooltip="Download" tooltipPosition="top">
+                        <i class="fa fa-download"></i>
+                    </button>
+                </div>
             </div>
           </div>
 
@@ -64,13 +74,18 @@
                             <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
                                 <ng-container *ngIf="field.visibility">
                                 <div class="">
-                                    <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                    <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                        <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                                            <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                        </span>
+                                    </label>
                                     <div class="input-icon-wrapper">
                                             <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                 <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                             </span> -->
                                             <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
+                                            optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body" (click)="updateActiveField(field)"></p-dropdown>
                                     </div>
                                     <div class="input-icon-wrapper">
                                         <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -110,7 +125,7 @@
             
                                     <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
             
-                                    <div class="input-icon-wrapper">
+                                    <div class="input-icon-wrapper" (click)="updateActiveField(field)">
                                         <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
                                             <i class="pi pi-envelope"></i>
                                         </span> -->
@@ -276,13 +291,18 @@
                                         <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                             <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
                                             <div class="" class="form-group" [ngClass]="{'col-6': field.visibility}">
-                                                <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                                <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                                    <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                        <img src="assets/images/agent/info-icon.svg" alt="info">
+                                                        <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                                    </span>
+                                                </label>
                                                 <div class="input-icon-wrapper">
                                                         <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                             <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                         </span> -->
                                                         <p-dropdown *ngIf="field.preAttributeType === 'dropdown'"  [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                                        optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
+                                                        optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body" (click)="updateActiveField(field)"></p-dropdown>
                                                 </div>
                                                 <div class="input-icon-wrapper">
                                                     <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -296,7 +316,7 @@
                                                     </span> -->
                                                     <input pInputText autocomplete="off"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                                     [id]="field.preAttributeName" 
-                                                    [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                    [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                 </div>
                     
                                                 <div class="input-icon-wrapper">
@@ -305,7 +325,7 @@
                                                     </span> -->
                                                     <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                                 [id]="field.preAttributeName" 
-                                                [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                 </div>
                                                 
                         
@@ -316,26 +336,26 @@
                     
                                                     <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                                                     [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
-                                                    (keydown)="onKeydown($event,field)"></textarea>
+                                                    (keydown)="onKeydown($event,field)" (click)="updateActiveField(field)"></textarea>
                                                 </div>
                         
-                                                <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
+                                                <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (click)="updateActiveField(field)">
                         
                                                 <div class="input-icon-wrapper">
                                                     <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
                                                         <i class="pi pi-envelope"></i>
                                                     </span> -->
                                                     <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                    [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired">
+                                                    [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                 </div>
                                                 <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                    [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                    [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                         
                                                 <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
                                                     <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                                         <label class="form-check-label">
                                                             <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
-                                                            (change)="onRadioChange(option.value,option)"> {{ option.label }}
+                                                            (change)="onRadioChange(option.value,option)" (click)="updateActiveField(field)"> {{ option.label }}
                                                         </label>
                                                     </div>
                                                 </div>
@@ -351,7 +371,8 @@
                                                                     class="form-check-input" 
                                                                     [id]="option.value"
                                                                     [formControlName]="option.value"
-                                                                    (change)="onCheckboxChange($event, option,field)">
+                                                                    (change)="onCheckboxChange($event, option,field)"
+                                                                    (click)="updateActiveField(field)">
                                                                 {{ option.label }}
                                                             </label>
                                                             </div>
@@ -386,7 +407,7 @@
                                                   
                     
                                                 <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                (change)="onFileSelected($event,field)" multiple>
+                                                (change)="onFileSelected($event,field)" (click)="updateActiveField(field)" multiple>
                                      
                                                 <ng-container *ngIf="field.preAttributeType === 'file'">
                                                     <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
@@ -487,13 +508,18 @@
                                             <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                                 <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
                                                     <div class=""  class="form-group" [ngClass]="{'col-6': field.visibility}">
-                                                        <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                                        <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                                            <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                                <img src="assets/images/agent/info-icon.svg" alt="info">
+                                                                <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                                            </span>
+                                                        </label>
                                                         <div class="input-icon-wrapper">
                                                                 <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                                     <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
                                                                 </span> -->
                                                                 <p-dropdown *ngIf="field.preAttributeType === 'dropdown'" [formControlName]="field.preAttributeName" [options]="field.options" [placeholder]="field.placeholder" 
-                                                                optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body"></p-dropdown>
+                                                                optionLabel="label" optionValue="value" (onChange)="onDropdownChange($event,field.options)" appendTo="body" (click)="updateActiveField(field)"></p-dropdown>
                                                         </div>
                                                         <div class="input-icon-wrapper">
                                                             <!-- <span class="input-icon" *ngIf="field.preAttributeLable === 'Automation Agent Name'">
@@ -507,7 +533,7 @@
                                                             </span> -->
                                                             <input pInputText autocomplete="off"  *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                                             [id]="field.preAttributeName" 
-                                                            [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                            [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                         </div>
                             
                                                         <div class="input-icon-wrapper">
@@ -516,7 +542,7 @@
                                                             </span> -->
                                                             <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                                         [id]="field.preAttributeName" 
-                                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                         </div>
                                                         
                                 
@@ -527,26 +553,26 @@
                             
                                                             <textarea *ngIf="field.preAttributeType === 'textarea'" [style]="{'width':'70%','border-radius':'8px !important'}" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" rows="5"
                                                             [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" 
-                                                            (keydown)="onKeydown($event,field)"></textarea>
+                                                            (keydown)="onKeydown($event,field)" (click)="updateActiveField(field)"></textarea>
                                                         </div>
                                 
-                                                        <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
+                                                        <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName" (click)="updateActiveField(field)">
                                 
                                                         <div class="input-icon-wrapper">
                                                             <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
                                                                 <i class="pi pi-envelope"></i>
                                                             </span> -->
                                                             <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired">
+                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                                         </div>
                                                         <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                                            [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                 
                                                         <div *ngIf="field.preAttributeType === 'radio'" class="radio-custom-design">
                                                             <div class="form-check radio-custom-box" *ngFor="let option of field.options; trackBy:loopTrackBy">
                                                                 <label class="form-check-label">
                                                                     <input type="radio" class="form-check-input" [id]="field.preAttributeName + '_' + option.value" [value]="option.value" [formControlName]="field.preAttributeName" 
-                                                                    (change)="onRadioChange(option.value,option)"> {{ option.label }}
+                                                                    (change)="onRadioChange(option.value,option)" (click)="updateActiveField(field)"> {{ option.label }}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -562,7 +588,8 @@
                                                                             class="form-check-input" 
                                                                             [id]="option.value"
                                                                             [formControlName]="option.value"
-                                                                            (change)="onCheckboxChange($event, option,field)">
+                                                                            (change)="onCheckboxChange($event, option,field)"
+                                                                            (click)="updateActiveField(field)">
                                                                         {{ option.label }}
                                                                     </label>
                                                                     </div>
@@ -597,7 +624,7 @@
                                                         
                             
                                                         <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                        (change)="onFileSelected($event,field)" multiple>
+                                                        (change)="onFileSelected($event,field)" multiple (click)="updateActiveField(field)">
                                             
                                                         <ng-container *ngIf="field.preAttributeType === 'file'">
                                                             <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
@@ -696,8 +723,12 @@
                         <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateSaveAgent()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>
                         <!-- <button *ngIf="params.type=='create'" type="button" class="btn bluebg-button" (click)="createBot1()">Save</button> -->
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
-                        <!-- <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="toggleConfigEdit()"> Cancel</button> -->
-                        <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
+                        <div *ngFor="let field of formFields">
+                             <div *ngIf="activeField === field.preAttributeName">
+                                 <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
+                                 <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
+                             </div>
+                        </div>
                     </div>
                   </div>
               </div>
@@ -851,7 +882,7 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
-                <button *ngIf="isOutputTabEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                <button *ngIf="isOutputEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
                     style="margin-right: 8px; font-size: 1.1rem;"></i>Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
@@ -939,11 +970,11 @@
                             <img src="../../../../assets/images/agent/download-icon.svg"  pTooltip="Download All" tooltipPosition="top" alt="Download icon">
                         </span>
                     </h3> -->
-                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
                         <div>
                             <i class="pi pi-file"></i>
                         <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                             <i class="fa fa-download"></i>
                         </button>
                         </div>
@@ -1006,9 +1037,9 @@
                         </span>
                     </td>
                     <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; 
-                        <span *ngIf="record.stage === 'Success' && isOutputView"> 
+                        <span *ngIf="record.stage === 'Success' && isOutputEnabled"> 
                             <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
-                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
+                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>
                             <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
                         </span>
                         <!-- <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
@@ -1145,11 +1176,11 @@
                 <div><strong>Attachments:</strong></div>
                 <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div>
                 <div class="attachments">
-                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
                         <div>
                             <i class="pi pi-file"></i>
                         <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                             <i class="fa fa-download"></i>
                         </button>
                         </div>
@@ -1167,12 +1198,14 @@
       </div>
 </p-dialog>
 
-<p-dialog class="custom-dialog" [(visible)]="outputOverlayRFP" [style]="{width: '50vw'}" [showHeader]="true" [modal]="true"></p-dialog>
+<p-dialog class="custom-dialog" [(visible)]="outputOverlayRFP" [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
         <div class="dialog-header">
           <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
           <h3>Agent Output</h3>
         </div>
       </ng-template>
+</p-dialog>
+
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
