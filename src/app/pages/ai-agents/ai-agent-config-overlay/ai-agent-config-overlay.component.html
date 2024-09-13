@@ -16,7 +16,7 @@
             <div class="form-group" *ngIf="hasFieldValue(field)">
               <label>{{ field.preAttributeLable }}*</label>
               <ng-container [ngSwitch]="field.preAttributeType">
-                <input *ngSwitchCase="'text'" type="text" [value]="getFieldValue(field)" disabled>
+                <input *ngSwitchCase="'email'" type="email" [value]="getFieldValue(field)" disabled>
                 <div *ngSwitchCase="'file'" class="file-input-wrapper">
                   <!-- <input type="file" [value]="getFieldValue(field.preAttributeName)" disabled> -->
                   <!-- <span class="file-name">{{ getAttachmentName(field.preAttributeName) }}, <br></span> -->

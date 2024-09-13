@@ -1195,6 +1195,7 @@ input.p-inputtext {
 
 .accordion-header {
   background: #fff !important;
+  cursor: pointer;
 }
 ::ng-deep .p-accordion-tab a.p-accordion-header-link {
   background: #f4f4ff !important;
@@ -1394,11 +1395,9 @@ input.p-inputtext {
 }
 
 .running {
-  /* background: linear-gradient(90deg, #ffeb3b, #f9a825, #ffc107); */
-  background: linear-gradient(90deg, #ffeb3b, #977847, #ffc107);
+  background: linear-gradient(90deg, #99f699, #8bc34a, #99f699);
   background-size: 400% 400%;
   animation: runningAnimation 4s infinite;
-  /* border-radius: 10px; */
   position: relative;
   overflow: hidden;
   border-top-left-radius: 0px;
