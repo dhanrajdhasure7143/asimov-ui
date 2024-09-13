@@ -82,7 +82,6 @@ export class AiAgentFormComponent implements OnInit {
   marketingfieldValues:any;
   isConfigEdit:boolean= false;
   outputOverlay:boolean = false;
-  outputOverlayRFP:boolean = false;
   activeField: any;
   originalFieldValues: any = {};
 
@@ -2032,7 +2031,7 @@ removeFilesFromForm(deletedFile:any){
     if(this.agent_uuid == "pred_CustomerSupport"){
     req_body = [attachment.filePath]
     }else{
-      req_body = [attachment.filePath+"/"+attachment.originalFileName]
+      req_body = [attachment.filePath+"/"+attachment.fileNameWithUUID]
     }
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
       console.log("res",res);
@@ -2051,6 +2050,7 @@ removeFilesFromForm(deletedFile:any){
 
   downloadDocument(res,attachment?){
     const fileName = attachment.originalFileName;
+    console.log("fileName",fileName)
     const fileData = res[0];
     const link = document.createElement("a");
     const extension = fileName.split('.').pop();
@@ -2083,12 +2083,12 @@ removeFilesFromForm(deletedFile:any){
     if(this.agent_uuid == 'pred_CustomerSupport'){
       this.selectedInBoxContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
     }
+    if(this.agent_uuid == 'Pred_ProductManagement'){
+      this.selectedInBoxContent['agentInboxFiles']=[];
+    }
     this.outputOverlay = true;
   }
 
-  getOutputOverlayRFP(i){
-    this.outputOverlayRFP =true;
-  }
   updateActiveField(field: any) {
     this.activeField = field.preAttributeName;
   }
@@ -2115,7 +2115,7 @@ removeFilesFromForm(deletedFile:any){
     this.rest_service.downloadInstructionDocuments(req_body).subscribe((res: any) => {
       this.spinner.hide();
       if(res && res.length > 0){
-        let attachment = {fileName: this.predefinedBot_name+"_Instruction Document.pdf"}
+        let attachment = {originalFileName: this.predefinedBot_name+"_Instruction Document.pdf"}
         this.downloadDocument(res,attachment);
       this.toaster.toastSuccess(`Files downloaded successfully.`);
       }
@@ -2144,8 +2144,11 @@ removeFilesFromForm(deletedFile:any){
         this.selectedOutputContent = res.data[0];
         if(this.agent_uuid == 'pred_CustomerSupport'){
           this.selectedOutputContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
-      console.log("this.selectedOutputContent",this.selectedOutputContent)
-      }
+          console.log("this.selectedOutputContent",this.selectedOutputContent)
+        }
+        if(this.agent_uuid == 'Pred_ProductManagement'){
+          this.selectedOutputContent['agentInboxFiles']=[];
+        }
       }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
