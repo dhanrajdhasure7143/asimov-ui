@@ -1603,6 +1603,7 @@ mapResponseToTableData(data: any[]): any[] {
     // information: `Run ID: ${item.agentRunId}, Agent: ${item.agentName}`,
     information: item.description,
     errorMsg: item.errorLog?item.errorLog:"",
+    agentRunId: item.agentRunId,
   }));
 }
 
@@ -1999,14 +2000,14 @@ removeFilesFromForm(deletedFile:any){
 
   getInboxConent(){
     this.rest_service.getInboxConent(this.params.agentId).subscribe((res: any) => {
-      console.log("res",res)
+      console.log("resInbox",res)
       // this.subAgentContent = res.data;
       if(res && res.data && res.data.length > 0){
         this.inboxContent = res.data
-        this.inboxContent.forEach(element => {
-          element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
-        });
-        this.selectedInBoxContent = this.inboxContent[0];
+        // this.inboxContent.forEach(element => {
+        //   element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+        // });
+        // this.selectedInBoxContent = this.inboxContent[0];
       }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
@@ -2056,10 +2057,10 @@ removeFilesFromForm(deletedFile:any){
 
     link.click();
   }
-  selectInboxOut(item,index){
-    this.selectedInBoxContent = item;
-    this.selectedContentIndex = index;
-  }
+  // selectInboxOut(item,index){
+  //   this.selectedInBoxContent = item;
+  //   this.selectedContentIndex = index;
+  // }
   
   toggleConfigEdit() {
     this.isConfigEdit = !this.isConfigEdit;
@@ -2070,8 +2071,13 @@ removeFilesFromForm(deletedFile:any){
   }
 
   getOutputOverlay(row){
-    this.selectedInBoxContent = this.inboxContent.find(item=>item.agentRunId == row.agentRunId);
+    console.log("row",row)
+    console.log("this.inboxContent",this.inboxContent)
+    this.selectedInBoxContent = this.inboxContent.find(item=>item.runId == row.agentRunId)?this.inboxContent.find(item=>item.runId == row.agentRunId):{};
     // this.selectedInBoxContent = this.inboxContent[i];
+    if(this.agent_uuid == 'pred_CustomerSupport'){
+      this.selectedInBoxContent['agentInboxFiles']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+    }
     this.outputOverlay = true;
   }
 
@@ -2127,16 +2133,14 @@ removeFilesFromForm(deletedFile:any){
 
   getOutPutConent(){
     this.rest_service.getOutputConent(this.params.agentId).subscribe((res: any) => {
-      console.log("res",res)
+      console.log("res---outPut",res)
       // this.subAgentContent = res.data;
       if(res && res.data && res.data.length > 0){
-        this.inboxContent = res.data
-        if(this.agent_uuid == 'Pred_CustomerSupport'){
-        this.inboxContent.forEach(element => {
-          element['attachments']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
-        });
+        this.selectedOutputContent = res.data[0];
+        if(this.agent_uuid == 'pred_CustomerSupport'){
+          this.selectedOutputContent['agentInboxFiles']=[{fileName:"Instruction Document.docx",fileSize:"1.2 MB"}]
+      console.log("this.selectedOutputContent",this.selectedOutputContent)
       }
-        this.selectedInBoxContent = this.inboxContent[0];
       }
     } , err => {  
       // this.toaster.showError(this.toastMessages.apierror);
