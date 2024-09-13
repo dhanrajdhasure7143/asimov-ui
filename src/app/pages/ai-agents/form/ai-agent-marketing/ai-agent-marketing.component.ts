@@ -274,8 +274,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
   
-    // this.rest_api.generateCaptionAPI(prompt).subscribe({
-    this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
+    this.rest_api.generateCaptionAPI(prompt).subscribe({
+    // this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Caption Response:', response);
         this.generatedText = {
@@ -302,8 +302,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
 
-    // this.rest_api.generateImageAPI(prompt).subscribe({
-    this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
+    this.rest_api.generateImageAPI(prompt).subscribe({
+    // this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
         if (response.image) {
