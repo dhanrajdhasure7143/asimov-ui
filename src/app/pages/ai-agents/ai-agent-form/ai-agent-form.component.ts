@@ -1277,12 +1277,20 @@ export class AiAgentFormComponent implements OnInit {
 
   updateSubAgentName(){
     this.spinner.show();
-    this.rest_service.updateSubAgentName(!this.isConfigered,this.params.agentId,this._agentName).subscribe(res=>{
+    this.rest_service.updateSubAgentName(!this.isConfigered,this.params.agentId,this._agentName).subscribe((res:any)=>{
       // this.toaster.showSuccess("Agent Name","update");
-      this.toaster.toastSuccess("The agent's name has been  updated successfully!");
+
+      if (res.agentNameUpdated) {
+        this.toaster.toastSuccess("The agent's name has been  updated successfully!");
+        this.isSubAgentNameEdit = false;
+        this.subAgentName = this._agentName;
+      }
+      else{
+        this.toaster.showWarn("Agent name already exists!");
+      }
+      
       this.spinner.hide();
-      this.isSubAgentNameEdit = false;
-      this.subAgentName = this._agentName;
+      
     }, err=>{
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
