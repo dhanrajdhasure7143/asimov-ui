@@ -160,10 +160,11 @@
                     <div *ngIf="isLoading" class="loader-container">
                       <span class="loader"></span>
                     </div>
-                    <span class="output-actions" *ngIf="isAccepted">
-                      <img style="height: 14px;" src="assets/images/agent/check.png" alt=""> <b>Accepted</b>
-                    </span>
+                    
                   </div>
+                  <span class="output-actions" *ngIf="isAccepted">
+                    <img style="height: 14px;" src="assets/images/agent/check.png" alt=""> <b>Accepted</b>
+                  </span>
                   <!-- <div class="output-actions" *ngIf="isGenerated">
                     <button class="btn btn-outline-primary" [class.accepted]="isAccepted"
                     (click)="toggleAccepted()">
