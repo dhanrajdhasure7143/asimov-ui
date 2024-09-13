@@ -2032,7 +2032,7 @@ removeFilesFromForm(deletedFile:any){
     if(this.agent_uuid == "pred_CustomerSupport"){
     req_body = [attachment.filePath]
     }else{
-      req_body = [attachment.filePath+"/"+attachment.originalFileName]
+      req_body = [attachment.filePath+"/"+attachment.fileNameWithUUID]
     }
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
       console.log("res",res);
