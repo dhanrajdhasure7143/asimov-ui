@@ -31,7 +31,7 @@
             </div>
             <div class="inbox-attachment info-attachment">
                 <div>
-                    <i class="pi pi-file"></i>
+                    <i class="pi pi-file-pdf"></i>
                     <span>Instructions.pdf</span>
                     <button class="download-button" (click)="downloadInstructionDoc()" pTooltip="Download" tooltipPosition="top">
                         <i class="fa fa-download"></i>
@@ -963,23 +963,20 @@
                     </div>
                 </div> -->
                 <div class="col-md-12">
-                <div><strong>Attachments:</strong></div>
-                <div class="attachments">
-                    <!-- <h3 >Attachments: 
-                        <span>
-                            <img src="../../../../assets/images/agent/download-icon.svg"  pTooltip="Download All" tooltipPosition="top" alt="Download icon">
-                        </span>
-                    </h3> -->
-                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
-                        <div>
-                            <i class="pi pi-file"></i>
-                        <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
-                            <i class="fa fa-download"></i>
-                        </button>
+                <ng-container *ngIf="selectedOutputContent.agentInboxFiles?.length>0">
+                    <div><strong>Attachments:</strong></div>
+                    <div class="attachments">
+                        <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedOutputContent.agentInboxFiles">
+                            <div>
+                                <i class="pi pi-file"></i>
+                            <span>{{ attachment.fileName }}</span>
+                            <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
                 <!-- <ng-container>
                     <div class="attachment " *ngFor="let attachment of inboxContent.attachments; trackBy:loopTrackBy">
                         <div>
@@ -997,7 +994,7 @@
                     </div>
                 </ng-container> -->
 
-                <div class="email-body" style="word-wrap: break-word; user-select: text;" [innerHTML]="selectedInBoxContent.body"></div>
+                <div class="email-body" style="word-wrap: break-word; user-select: text;" [innerHTML]="selectedOutputContent.body"></div>
                 </div>
             </ng-container>
             <ng-template #noItems>
@@ -1039,8 +1036,8 @@
                     <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; 
                         <span *ngIf="record.stage === 'Success' && isOutputEnabled"> 
                             <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
-                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>
-                            <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
+                            <i *ngIf="record.stage === 'Success' && isOutputEnabled" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>
+                            <!-- <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i> -->
                         </span>
                         <!-- <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
                         <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i> -->
@@ -1173,19 +1170,21 @@
       </ng-template>
         <div class="h-100">
             <div class="">
-                <div><strong>Attachments:</strong></div>
-                <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div>
-                <div class="attachments">
-                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
-                        <div>
-                            <i class="pi pi-file"></i>
-                        <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
-                            <i class="fa fa-download"></i>
-                        </button>
+                <ng-container>
+                    <div><strong>Attachments:</strong></div>
+                    <!-- <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div> -->
+                    <div class="attachments">
+                        <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.agentInboxFiles">
+                            <div>
+                                <i class="pi pi-file"></i>
+                            <span>{{ attachment.fileName }}</span>
+                            <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
 
                 <div class="email-body" style="word-wrap: break-word; user-select: text;" [innerHTML]="selectedInBoxContent.body"></div>
                 </div>
