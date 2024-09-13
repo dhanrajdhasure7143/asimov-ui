@@ -24,13 +24,13 @@
                     <!-- <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                         <p class="bot-details">{{ each.details }}</p>
                     </div> -->
-                    <!-- <div class="bot-details-wrapper" >
+                    <div class="bot-details-wrapper" >
                         <p class="bot-details">{{ each.details }}</p>
-                    </div> -->
-                    <div class="bot-details-wrapper" (mouseenter)="showFullDetails = true" (mouseleave)="showFullDetails = false">
+                    </div>
+                    <!-- <div class="bot-details-wrapper" (mouseenter)="showFullDetails = true" (mouseleave)="showFullDetails = false">
                         <p class="bot-details" [class.show-full]="showFullDetails">{{ each.details }}</p>
                         <button *ngIf="!showFullDetails" class="more-btn">More</button>
-                    </div>                    
+                    </div>                     -->
                     
                     <div class="launchButton">
                         <button class="btn btn-primary rounded-pill" (click)="onclickBot(each)">Launch</button>
@@ -134,8 +134,12 @@
                                         </span> -->
                                     </div>
                                 </div>
-                                <button class="btn btn-primary rounded-pill purchase-btn" (click)="navigateToPurchaseAgent(plan)" >Purchase Now</button>
+                                <button *ngIf="!plan.is_coming_soon" class="btn btn-primary rounded-pill purchase-btn" (click)="navigateToPurchaseAgent(plan)" >Purchase Now</button>
 
+                                <button *ngIf="plan.is_coming_soon" class="btn btn-secondary rounded-pill coming-soon-btn">
+                                    <img src="assets/images/agent/coming-soon icon.svg" alt="">
+                                    Coming Soon
+                                </button>
                                 <!-- <div class="view-more d-flex align-items-center">
                                     <ng-container *ngFor="let detail of plan.priceCollection">
                                         <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly'"
@@ -209,14 +213,14 @@
                             </div>
 
                             <!-- Agent plan toggle monthly or yearly -->
-                            <div class="plan-selector">
-                                <label>
+                            <div class="plan-selector" >
+                                <label *ngIf="!plan.is_coming_soon">
                                     <input type="radio" name="plan-{{plan.name}}" value="monthly"
                                         (change)="changePlan('monthly',plan)" [checked]="selectedPlan === 'Monthly'">
                                     <span class="custom-radio"></span>
                                     Monthly
                                 </label>
-                                <label>
+                                <label *ngIf="!plan.is_coming_soon">
                                     <input type="radio" name="plan-{{plan.name}}" value="yearly"
                                         (change)="changePlan('yearly',plan)" [checked]="selectedPlan === 'Yearly'">
                                     <span class="custom-radio"></span>
