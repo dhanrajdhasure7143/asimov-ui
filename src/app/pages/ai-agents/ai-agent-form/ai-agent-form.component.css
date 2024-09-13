@@ -314,6 +314,9 @@
     color: #666;
     margin: 5px 0 0;
   }
+  .agent-info{
+    width: 70%;
+  }
   
   .edit-icon {
     font-size: 14px;
@@ -1301,9 +1304,14 @@ input.p-inputtext {
   margin-bottom: 7px;
   padding: 3px 10px;
   height: auto;
-  width: 40%;
   box-sizing: border-box;
   margin-top: 5px;
+}
+.inbox-head{
+  width: 40%;
+}
+.info-attachment{
+  width: 27%;
 }
 
 .inbox-attachment span {
@@ -1398,6 +1406,12 @@ input.p-inputtext {
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
 }
+
+.info-icon{
+  /* color: #3199FF; */
+  padding-left: 10px;
+}
+
 
 @keyframes runningAnimation {
   0% {

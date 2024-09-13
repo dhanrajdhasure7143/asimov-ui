@@ -159,8 +159,7 @@ export class AiAgentFormComponent implements OnInit {
   inboxContent: any []= [];
   selectedInBoxContent: any={};
   selectedContentIndex: number = 0;
-  isOutputView:boolean = false;
-  isOutputTabEnabled:boolean = false;
+  isOutputEnabled:boolean = false;
   
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -234,20 +233,12 @@ export class AiAgentFormComponent implements OnInit {
       console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
-      if(this.agent_uuid =='pred_CustomerSupport' || this.agent_uuid == 'Pred_RFP'){
-        this.activeTabMode = 'content';
-        this.isOutputView = true;
-        this.isOutputTabEnabled = true;
-        this.getInboxConent();
-      }else{
-        this.activeTabMode = 'history';
-        this.isOutputView = false;
-        this.isOutputTabEnabled = false;
-      }
       this.subAgentName = res.subAgentName;
       // this.subAgentName = this.params.agentName;
 
       this.isCommonForm = res.formType === 'common'? true : false;
+      this.isOutputEnabled = res.isOutputRequired;
+      this.isOutputTabEnabled(this.isOutputEnabled);
       this.fieldInputKey = {};
       // console.log("Form Attributes: ", res.data)
     // this.rest_service.getPredefinedBotAttributesList("1234").subscribe((res:any)=>{
@@ -355,22 +346,13 @@ export class AiAgentFormComponent implements OnInit {
       this.spinner.hide();
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
-      if(this.agent_uuid =='pred_CustomerSupport'|| this.agent_uuid == 'Pred_RFP'){
-        this.activeTabMode = 'content';
-        this.isOutputView = true;
-        this.isOutputTabEnabled = true;
-        this.getInboxConent();
-      }else{
-        this.activeTabMode = 'history';
-        this.isOutputView = false;
-        this.isOutputTabEnabled = false;
-      }
       if (this.agent_uuid === 'Pred_Marketing') {
         this.marketingfieldValues = res.data.reduce((acc, field) => ({ ...acc, [field.preAttributeName]: field.preAttributeValue }), {});
       }
       this.subAgentName = res.subAgentName;
       this.isCommonForm = res.formType === 'common'? true : false;
-      console.log("Form Attributes: ", res.data)
+      this.isOutputEnabled = res.isOutputRequired;
+      this.isOutputTabEnabled(this.isOutputEnabled);
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
       //             preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
@@ -2032,17 +2014,7 @@ removeFilesFromForm(deletedFile:any){
       console.log("res",res);
       this.spinner.hide();
       if(res && res.length > 0){
-      const fileName = attachment.fileName;
-      const fileData = res[0];
-      const link = document.createElement("a");
-      const extension = fileName.split('.').pop();
-      link.download = fileName;
-      link.href =
-          extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
-              ? `data:image/${extension};base64,${fileData}`
-              : `data:application/${extension};base64,${fileData}`;
-
-      link.click();
+        this.downloadDocument(res,attachment);
       this.toaster.toastSuccess(`Files downloaded successfully.`);
       }
       this.spinner.hide();
@@ -2051,6 +2023,20 @@ removeFilesFromForm(deletedFile:any){
       this.toaster.showError(this.toastMessages.apierror);
     })
 
+  }
+
+  downloadDocument(res,attachment?){
+    const fileName = attachment.fileName;
+    const fileData = res[0];
+    const link = document.createElement("a");
+    const extension = fileName.split('.').pop();
+    link.download = fileName;
+    link.href =
+        extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+            ? `data:image/${extension};base64,${fileData}`
+            : `data:application/${extension};base64,${fileData}`;
+
+    link.click();
   }
   selectInboxOut(item,index){
     this.selectedInBoxContent = item;
@@ -2065,12 +2051,39 @@ removeFilesFromForm(deletedFile:any){
     this.getSubAgentConfigStatus();
   }
 
-  getOutputOverlay(i){
-    this.selectedInBoxContent = this.inboxContent[i];
+  getOutputOverlay(row){
+    this.selectedInBoxContent = this.inboxContent.find(item=>item.agentRunId == row.agentRunId);
+    // this.selectedInBoxContent = this.inboxContent[i];
     this.outputOverlay = true;
   }
 
   getOutputOverlayRFP(i){
     this.outputOverlayRFP =true;
+  }
+
+  downloadInstructionDoc(){
+    this.spinner.show();
+    let req_body = ["predefined/instructions/Instruction-"+this.agent_uuid+".pdf"]
+    this.rest_service.downloadInstructionDocuments(req_body).subscribe((res: any) => {
+      this.spinner.hide();
+      if(res && res.length > 0){
+        let attachment = {fileName: this.predefinedBot_name+"_Instruction Document.pdf"}
+        this.downloadDocument(res,attachment);
+      this.toaster.toastSuccess(`Files downloaded successfully.`);
+      }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.toaster.showError(this.toastMessages.apierror);
+    })
+  }
+
+  isOutputTabEnabled(isOutputRequired){
+    if(isOutputRequired){
+      this.activeTabMode = 'content';
+      this.getInboxConent();
+    }else{
+      this.activeTabMode = 'history';
+    }
   }
 }
