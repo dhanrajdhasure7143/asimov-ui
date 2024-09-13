@@ -5,7 +5,8 @@
     <div class="scrollable-content flex-grow-1">
         <div class="grid-container">
             <div *ngFor="let each of predefined_botsList" class="grid-item">
-                <div class="content" (click)="onclickBot(each)">
+                <!-- <div class="content" (click)="onclickBot(each)"> -->
+                <div class="content">
                     <div class="top-section">
                         <div class="bot-image">
                             <img src="assets/images/mini_bot.svg" alt="mini_bot">
@@ -23,11 +24,17 @@
                     <!-- <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                         <p class="bot-details">{{ each.details }}</p>
                     </div> -->
-                    <div class="bot-details-wrapper" (click)="onclickBot(each)">
+                    <!-- <div class="bot-details-wrapper" >
                         <p class="bot-details">{{ each.details }}</p>
+                    </div> -->
+                    <div class="bot-details-wrapper" (mouseenter)="showFullDetails = true" (mouseleave)="showFullDetails = false">
+                        <p class="bot-details" [class.show-full]="showFullDetails">{{ each.details }}</p>
+                        <button *ngIf="!showFullDetails" class="more-btn">More</button>
+                    </div>                    
+                    
+                    <div class="launchButton">
+                        <button class="btn btn-primary rounded-pill" (click)="onclickBot(each)">Launch</button>
                     </div>
-
-
                     <!-- <span *ngIf="each.details.length > 200" class="show-more-btn" (click)="toggleDetails($event,each, detailsWrapper)">
                         {{ each.showMore ? 'Show Less' : 'Show More' }}
                     </span> -->

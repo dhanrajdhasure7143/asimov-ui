@@ -83,6 +83,8 @@ export class AiAgentFormComponent implements OnInit {
   isConfigEdit:boolean= false;
   outputOverlay:boolean = false;
   outputOverlayRFP:boolean = false;
+  activeField: any;
+  originalFieldValues: any = {};
 
   progressBarItems = [
     { label: 'Intiated' },
@@ -675,12 +677,17 @@ export class AiAgentFormComponent implements OnInit {
       this.spinner.show();
       if(this.predefinedBot_uuid =='Pred_RFP' || this.predefinedBot_uuid =='Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport' || this.predefinedBot_uuid === 'Pred_ProductManagement'){
         this.uploadFilesAndSaveAgent('update')
+        this.activeField = null;
+
       }else{
         this.generatePayloadToSaveUpdateAgent('update');
+        this.activeField = null;
+
       }
     } else {
       this.toaster.showInfo("Please fill required fields");
     }
+    this.activeField = null;
   }
 
   validateForm(){
@@ -2072,5 +2079,24 @@ removeFilesFromForm(deletedFile:any){
 
   getOutputOverlayRFP(i){
     this.outputOverlayRFP =true;
+  }
+  updateActiveField(field: any) {
+    this.activeField = field.preAttributeName;
+  }
+
+  cancelChanges() {
+    const originalFieldValue = this.originalFieldValues[this.activeField];
+    if (originalFieldValue) {
+      // Restore original field values
+      this.formFields.forEach((field) => {
+        if (field.preAttributeName === this.activeField) {
+          field.preAttributeLable = originalFieldValue.preAttributeLable;
+          field.preAttributeName = originalFieldValue.preAttributeName;
+          field.preAttributeType = originalFieldValue.preAttributeType;
+          // ... restore other field properties ...
+        }
+      });
+    }
+    this.activeField = null;
   }
 }

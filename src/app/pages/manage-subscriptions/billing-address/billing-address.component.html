@@ -11,7 +11,7 @@
                         formControlName="name" placeholder="Enter Name" required>
                 </div>
                 <span *ngIf="billingForm.get('name').invalid && billingForm.get('name').touched && !billingForm.get('name').hasError('pattern') && !billingForm.controls['name'].hasError('maxlength')" class="required"> 
-                    Name Required 
+                    Name required 
                 </span>
                 <span *ngIf="billingForm.controls['name'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
@@ -44,7 +44,7 @@
                 </div>
                 <span
                     *ngIf="billingForm.get('email').invalid && billingForm.get('email').touched && !billingForm.controls['email'].hasError('pattern')"
-                    class="required">Email Required</span>
+                    class="required">Email required</span>
                 <span *ngIf="billingForm.controls['email'].hasError('pattern')" class="required">Enter Correct Email
                     Address</span>
             </div>
@@ -59,7 +59,7 @@
                         placeholder="Enter Address Line 1">
                 </div>
                 <span *ngIf="billingForm.get('addressLine1').invalid && billingForm.get('addressLine1').touched && !billingForm.get('addressLine1').hasError('pattern') && !billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
-                    Address Line1 Required 
+                    Address Line1 required 
                 </span>
                 <span *ngIf="billingForm.controls['addressLine1'].hasError('maxlength')" class="required">
                     Maximum of 100 characters
@@ -115,7 +115,7 @@
                         emptyMessage="No Records Found" (onChange)="onChangeCountry($event.value)"
                         [style]="{'width':'100%'}" placeholder="Select Country" optionLabel="name" optionValue="isoCode"></p-dropdown> -->
                     <span *ngIf="billingForm.get('country').invalid && billingForm.get('country').touched"
-                        class="required">Country Required</span>
+                        class="required">Country required</span>
                     <span class="required">{{errorMessage}}</span>
             </div>
 
@@ -139,7 +139,7 @@
                     </p-dropdown>
                 </div>
                 <span *ngIf="billingForm.get('state').invalid && billingForm.get('state').touched"
-                    class="required">State Required</span>
+                    class="required">State required</span>
                 <span class="required">{{stateErrorMessage}}</span>
             </div>
             
@@ -176,7 +176,7 @@
                         formControlName="city" placeholder="Enter City" required>
                 </div>
                 <span *ngIf="billingForm.get('city').invalid && billingForm.get('city').touched && !billingForm.get('city').hasError('pattern') && !billingForm.controls['city'].hasError('maxlength')" class="required"> 
-                    City Required 
+                    City required 
                 </span>
                 <span *ngIf="billingForm.controls['city'].hasError('maxlength')" class="required">
                     Maximum of 50 characters
@@ -187,16 +187,16 @@
             </div>
 
             <div class="form-group col-md-3 pr-0">
-                <label  class="label-control" for="approvers">Postal Code<span class="star">*</span></label>
+                <label  class="label-control" for="approvers">Zip Code<span class="star">*</span></label>
                 <div class="input-icon-wrapper">
                     <span class="input-icon">
                         <i class="pi pi-map-marker"></i>
                     </span>
                     <input pInputText type="text" class="input-with-icon" maxlength="6" [style]="{'width':'100%'}" formControlName="postalcode"
-                        placeholder="Enter Postal Code" (keypress)="numbersOnly($event)" required>
+                        placeholder=" Enter Zip Code" (keypress)="numbersOnly($event)" required>
                 </div>
                 <span *ngIf="billingForm.get('postalcode').invalid && billingForm.get('postalcode').touched && !billingForm.get('postalcode').hasError('pattern') && !billingForm.controls['postalcode'].hasError('maxlength')" class="required">
-                    Postal Code Required 
+                    Zip Code required 
                 </span>
                 <span *ngIf="billingForm.controls['postalcode'].hasError('maxlength')" class="required">
                     Maximum of 10 characters
