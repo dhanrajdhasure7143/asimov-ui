@@ -234,4 +234,8 @@ export class PredefinedBotsService {
   downloadCustomerSupportFiles(body){
     return this.http.post(`/platform-service/document/downloadFile`,body)
   }
+
+  downloadInstructionDocuments(body){
+    return this.http.post(`/platform-service/document/downloadFile`,body)
+  }
 }

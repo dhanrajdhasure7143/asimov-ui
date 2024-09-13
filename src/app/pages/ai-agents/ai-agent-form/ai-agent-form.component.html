@@ -7,7 +7,8 @@
                     <img class="hover-arrow" src="assets/images-n/projects/backarrow-hover.svg" alt=""> 
                 </a>
             </label>
-            {{predefinedBot_name}} Agent</div>
+            {{predefinedBot_name}} Agent
+        </div>
     </div>
     <div class="scrollable-content flex-grow-1">
     <div class="form-flow predefined-bots">
@@ -27,6 +28,15 @@
                         </span>
                 </div>
               <p *ngIf="!isConfigered">Not configured yet</p>
+            </div>
+            <div class="inbox-attachment info-attachment">
+                <div>
+                    <i class="pi pi-file"></i>
+                    <span>Instructions.pdf</span>
+                    <button class="download-button" (click)="downloadInstructionDoc()" pTooltip="Download" tooltipPosition="top">
+                        <i class="fa fa-download"></i>
+                    </button>
+                </div>
             </div>
           </div>
 
@@ -64,7 +74,12 @@
                             <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
                                 <ng-container *ngIf="field.visibility">
                                 <div class="">
-                                    <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                    <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                        <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                                            <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                        </span>
+                                    </label>
                                     <div class="input-icon-wrapper">
                                             <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                 <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
@@ -276,7 +291,12 @@
                                         <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                             <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
                                             <div class="" class="form-group" [ngClass]="{'col-6': field.visibility}">
-                                                <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                                <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                                    <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                        <img src="assets/images/agent/info-icon.svg" alt="info">
+                                                        <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                                    </span>
+                                                </label>
                                                 <div class="input-icon-wrapper">
                                                         <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                             <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
@@ -487,7 +507,12 @@
                                             <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                                 <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
                                                     <div class=""  class="form-group" [ngClass]="{'col-6': field.visibility}">
-                                                        <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span></label>
+                                                        <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
+                                                            <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                                <img src="assets/images/agent/info-icon.svg" alt="info">
+                                                                <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
+                                                            </span>
+                                                        </label>
                                                         <div class="input-icon-wrapper">
                                                                 <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'dropdown'">
                                                                     <img src="assets/images/agent/portal-dropdown-icon.svg" style="height: 13px; margin-bottom: 5px;" alt="">
@@ -851,7 +876,7 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
-                <button *ngIf="isOutputTabEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
+                <button *ngIf="isOutputEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
                     style="margin-right: 8px; font-size: 1.1rem;"></i>Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
@@ -939,11 +964,11 @@
                             <img src="../../../../assets/images/agent/download-icon.svg"  pTooltip="Download All" tooltipPosition="top" alt="Download icon">
                         </span>
                     </h3> -->
-                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
                         <div>
                             <i class="pi pi-file"></i>
                         <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                             <i class="fa fa-download"></i>
                         </button>
                         </div>
@@ -1006,9 +1031,9 @@
                         </span>
                     </td>
                     <td> {{record.stage=='Failed' ? record.errorMsg : record.information }}  &nbsp; 
-                        <span *ngIf="record.stage === 'Success' && isOutputView"> 
+                        <span *ngIf="record.stage === 'Success' && isOutputEnabled"> 
                             <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
-                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
+                            <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>
                             <i *ngIf="record.stage === 'Success' && agent_uuid =='Pred_RFP'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlayRFP(i)"></i>
                         </span>
                         <!-- <i *ngIf="record.stage === 'Success' && agent_uuid =='pred_CustomerSupport'" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i>
@@ -1145,11 +1170,11 @@
                 <div><strong>Attachments:</strong></div>
                 <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div>
                 <div class="attachments">
-                    <div class="inbox-attachment" *ngFor="let attachment of selectedInBoxContent.attachments">
+                    <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.attachments">
                         <div>
                             <i class="pi pi-file"></i>
                         <span>{{ attachment.fileName }}</span>
-                        <button class="download-button" (click)="downloadEmailAttachment(attachment)">
+                        <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                             <i class="fa fa-download"></i>
                         </button>
                         </div>
@@ -1167,12 +1192,14 @@
       </div>
 </p-dialog>
 
-<p-dialog class="custom-dialog" [(visible)]="outputOverlayRFP" [style]="{width: '50vw'}" [showHeader]="true" [modal]="true"></p-dialog>
+<p-dialog class="custom-dialog" [(visible)]="outputOverlayRFP" [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
         <div class="dialog-header">
           <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
           <h3>Agent Output</h3>
         </div>
       </ng-template>
+</p-dialog>
+
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
 [closable]="false"></p-confirmDialog>
