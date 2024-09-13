@@ -969,7 +969,7 @@
                         <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedOutputContent.agentInboxFiles">
                             <div>
                                 <i class="pi pi-file"></i>
-                            <span>{{ attachment.fileName }}</span>
+                            <span>{{ attachment.originalFileName }}</span>
                             <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                                 <i class="fa fa-download"></i>
                             </button>
@@ -1177,7 +1177,7 @@
                         <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.agentInboxFiles">
                             <div>
                                 <i class="pi pi-file"></i>
-                            <span>{{ attachment.fileName }}</span>
+                            <span>{{ attachment.originalFileName }}</span>
                             <button class="download-button" (click)="downloadEmailAttachment(attachment)" pTooltip="Download" tooltipPosition="top">
                                 <i class="fa fa-download"></i>
                             </button>
