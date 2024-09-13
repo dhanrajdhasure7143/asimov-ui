@@ -277,7 +277,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!isCommonForm">
-                    <p-accordion [multiple]="true" styleClass="custom-accordion">
+                    <p-accordion [multiple]="true" styleClass="custom-accordion" [activeIndex]="[0,1]">
                         <p-accordionTab [selected]="true">
                         <ng-template pTemplate="header">
                             <div class="custom-header">
