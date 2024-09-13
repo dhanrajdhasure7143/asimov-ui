@@ -382,12 +382,24 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
                 this.unsubscribed_agents = this.unfilteredAgentsList
               }
             });
+            this.addComingSoonAgent("Legal Agent", "This AI agent is designed to assist with legal documentation, automating the review and creation of contracts, and ensuring compliance with legal standards. Coming soon to streamline your legal workflows.");
+            this.addComingSoonAgent("QA Agent", "This AI agent will enhance your quality assurance processes by automating test cases, identifying bugs, and ensuring software reliability. Get ready to elevate your QA efficiency.");
             console.log("unsubscribed_agents",this.unsubscribed_agents);
         }
     }, err => {
         this.spinner.hide();
         this.toaster.showError(this.toastMessage.apierror);
     });
+}
+
+addComingSoonAgent(name, description) {
+  const comingSoonAgent = {
+      "name": name,
+      "description": description,
+      "is_coming_soon": true
+  };
+
+  this.unsubscribed_agents.push(comingSoonAgent);
 }
 
 proceedToSubscribe() {

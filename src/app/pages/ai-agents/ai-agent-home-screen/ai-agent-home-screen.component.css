@@ -1185,3 +1185,23 @@ input[type="radio"]:checked + .custom-radio::after {
   float: right; 
   font-size: 12px;
 }
+
+.coming-soon-btn {
+  background-color: #DFEFFF !important;
+  color: #3199FF !important;
+  border: none;
+  height: auto;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 5px !important;
+  cursor: crosshair;
+  /* opacity: 0.8; */
+  font-weight: 600;
+  cursor: none;
+}
+
+.coming-soon-btn img {
+  margin-right: 6px; 
+}

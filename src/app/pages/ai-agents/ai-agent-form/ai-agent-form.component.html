@@ -100,7 +100,7 @@
                                         </span> -->
                                         <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                         [id]="field.preAttributeName" 
-                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                     </div>
         
                                     <div class="input-icon-wrapper">
