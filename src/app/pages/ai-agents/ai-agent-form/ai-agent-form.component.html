@@ -23,7 +23,7 @@
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
                         <span class="editfields">
-                            <i class="pi pi-check" *ngIf="_agentName" (click)="updateSubAgentName()"></i>
+                            <i class="pi pi-check" *ngIf="_agentName && _agentName!=subAgentName" (click)="updateSubAgentName()"></i>
                             <i class="pi pi-times " (click)="onDeactivate()"></i>
                         </span>
                 </div>

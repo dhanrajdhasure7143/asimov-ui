@@ -156,7 +156,7 @@
     .badge1 {
       font-size: 12px;
       margin: 0;
-      line-height: 1.6;
+      line-height: 2.2;
       word-wrap: break-word;
     }
     
@@ -278,6 +278,6 @@
   align-items: end !important;
   display: flex !important;
   justify-content: end !important;
-  padding-right: 5px !important;
-  margin-bottom: 5px;
+  /* padding-right: 5px !important; */
+  margin-bottom: -5px;
 }
