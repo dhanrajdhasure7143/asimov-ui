@@ -183,7 +183,9 @@
   background-color: white;
   margin-left: auto;
   width: max-content;
-  position: static;
+  position: relative;
+  bottom: 50px;
+  right: 20px;
 }
 
 .output-actions b {
