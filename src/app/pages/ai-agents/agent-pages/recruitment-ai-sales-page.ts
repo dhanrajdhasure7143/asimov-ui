@@ -243,13 +243,13 @@ import { Component } from '@angular/core';
       max-height: 100%;
     }
     .benefits {
-      background-image: url('/assets/images/agent/sales/benfits.png');
+      background-image: url('src/assets/images/agent/sales/benfits.png');
       background-size: cover;
       background-position: center;
       padding: 80px 0;
     }
     .cta {
-      background-image: url('/assets/images/agent/sales/get-started.png');
+      background-image: url('src/assets/images/agent/sales/get-started.png');
       background-size: cover;
       background-position: center;
       color: white;

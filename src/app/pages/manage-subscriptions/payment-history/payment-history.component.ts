@@ -50,10 +50,11 @@ export class PaymentHistoryComponent implements OnInit {
       })
       this.table_searchFields = [
         "invoiceNumber",
-        "subscriptionId",
+        // "subscriptionId",
         "amount_modified",
         "createDate",
-        "status_converted"
+        "status_converted",
+        "productName"
       ];
       this.spinner.hide();
      },err=>{
