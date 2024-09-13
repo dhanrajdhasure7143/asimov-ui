@@ -278,7 +278,7 @@
                 </ng-container>
                 <ng-container *ngIf="!isCommonForm">
                     <p-accordion [multiple]="true" styleClass="custom-accordion">
-                        <p-accordionTab>
+                        <p-accordionTab [selected]="true">
                         <ng-template pTemplate="header">
                             <div class="custom-header">
                             <span>Initial Setup</span>
@@ -495,7 +495,7 @@
                             </ng-container>
                         </ng-template>
                         </p-accordionTab>
-                        <p-accordionTab>
+                        <p-accordionTab  [selected]="true">
                             <ng-template pTemplate="header">
                             <div class="custom-header">
                                 <span>Agent Information</span>

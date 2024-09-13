@@ -315,7 +315,7 @@
     margin: 5px 0 0;
   }
   .agent-info{
-    width: 70%;
+    width: 75%;
   }
   
   .edit-icon {
@@ -1312,7 +1312,10 @@ input.p-inputtext {
   width: 35%;
 }
 .info-attachment{
-  width: 27%;
+  width: 20%;
+}
+.info-attachment .pi-file-pdf{
+  color: #3199FF;
 }
 
 .inbox-attachment span {
