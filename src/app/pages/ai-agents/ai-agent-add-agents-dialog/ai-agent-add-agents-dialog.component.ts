@@ -26,6 +26,7 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   billingCycle:any;
   price:any;
   isLoading: boolean = true; 
+  isProcessing = false;
 
   constructor(
     private spinner: LoaderService,
@@ -48,10 +49,10 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   }
   
   proceedToPay() {
-    
+    this.spinner.show();
     // const agentName = this.selectedAgent?.predefinedBotName;
     // this.agentAdded.emit(agentName);
-    this.displayAddAgentDialog = false;
+    this.isProcessing = true;
     // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
     let filteredPriceIds = [];
     this.selectedPlans.forEach((element) => {
@@ -78,17 +79,17 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
       "quantity":this.agentCount
       }
 
-          this.spinner.show();
 
           console.log("resrstage", "Agent Deleted Successfully");
-          this.rest_api.addMoreSubAgents(req_body).subscribe(
-            res => {
+          this.rest_api.addMoreSubAgents(req_body).subscribe(res => {
               // this.toastService.showSuccess("Redirecting to payment gateway");
               this.toastService.toastSuccess("The agent has been added successfully. The amount will be deducted and pro-rated for the current month in your billing cycle.");
               // this.onClose();
               // if (this.closeDialogCallback) {
                 this.closeDialogCallback();
               // }
+              this.displayAddAgentDialog = false;
+              this.isProcessing = false;
               this.spinner.hide();
 
             },error => {
@@ -183,6 +184,7 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
   public onClose(): void {
     // this.close.emit();
     this.agentCount = 0;
+    this.isProcessing = false;
   }
 
   getBillingCyclePrice() {

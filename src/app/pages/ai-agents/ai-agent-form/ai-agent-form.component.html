@@ -125,12 +125,12 @@
             
                                     <input pInputText *ngIf="field.preAttributeType === 'date'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName">
             
-                                    <div class="input-icon-wrapper" (click)="updateActiveField(field)">
+                                    <div class="input-icon-wrapper">
                                         <!-- <span class="input-icon" *ngIf="field.preAttributeType === 'email'">
                                             <i class="pi pi-envelope"></i>
                                         </span> -->
                                         <input pInputText *ngIf="field.preAttributeType === 'email'" [style]="{'width':'50%'}" type="email" class="form-control input-with-icon" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                        [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired">
+                                        [minlength]="field.minNumber" [maxlength]="field.maxNumber" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [required]="field.attributeRequired" (input)="updateActiveField(field)">
                                     </div>
                                     <input pInputText *ngIf="field.preAttributeType === 'calendar'" [style]="{'width':'50%'}" type="date" class="form-control" [placeholder]="field.placeholder" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
                                         [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
@@ -725,8 +725,8 @@
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
                         <div *ngFor="let field of formFields">
                              <div *ngIf="activeField === field.preAttributeName">
-                                 <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
-                                 <button *ngIf="isConfigered && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
+                                 <button *ngIf="isConfigered && isFieldEdit && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
+                                 <button *ngIf="isConfigered && isFieldEdit !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
                              </div>
                         </div>
                     </div>
@@ -736,10 +736,11 @@
              <!-- AI agent Execution Progress Bar Starts-->
              <div *ngIf="showProgress || isConfigered">
                 <div class="header">
-                  <span class="title">
+                  <span class="title" style="display: flex;">
                     <span>
                       <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
+                    <!-- <p *ngIf="agentStarted"class="estimated_time">We are working on it. This takes about X minutes to complete the task.</p> -->
                   </span>
                 </div>
                 <div class="progress-container-new">

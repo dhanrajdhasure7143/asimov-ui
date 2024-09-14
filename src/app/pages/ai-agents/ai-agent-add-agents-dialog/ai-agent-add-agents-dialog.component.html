@@ -67,7 +67,7 @@
       Proceed to Pay: $ {{agentCount === 0 ? '00.00': calculateTotalPrice() }}
     </button> -->
     <button [ngClass]="{'proceed-button': true, 'dull-green': agentCount === 0}" 
-            [disabled]="agentCount === 0"
+            [disabled]="agentCount === 0 || isProcessing"
             (click)="proceedToPay()">Proceed to Pay
     </button>
   </div>

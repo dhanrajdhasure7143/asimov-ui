@@ -80,10 +80,10 @@ export class AiAgentFormComponent implements OnInit {
   configurationOverlay:boolean = false;
   isMarketingAgent: boolean = false;
   marketingfieldValues:any;
-  isConfigEdit:boolean= false;
   outputOverlay:boolean = false;
   activeField: any;
   originalFieldValues: any = {};
+  isFieldEdit:boolean = true;
 
   progressBarItems = [
     { label: 'Intiated' },
@@ -595,6 +595,7 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.savePredefinedAttributesData(req_body).subscribe((res:any)=>{
       const agentId = this.params.agentId;
       this.isConfigered = true;
+      this.isFieldEdit = false;
       this.showProgress = true;
       // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
       if(this.capturedFileIds.length > 0) {
@@ -611,8 +612,8 @@ export class AiAgentFormComponent implements OnInit {
     this.rest_service.updatePredefinedAttributesData(this.params.agentId,req_body).subscribe(res=>{
         const agentId = this.params.agentId;
         this.isConfigered = true;
-        this.showProgress = true;
-        this.isConfigEdit = false;
+        this.showProgress = true
+        this.isFieldEdit = false;
         // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
       this.spinner.hide();
@@ -2067,10 +2068,6 @@ removeFilesFromForm(deletedFile:any){
   //   this.selectedContentIndex = index;
   // }
   
-  toggleConfigEdit() {
-    this.isConfigEdit = !this.isConfigEdit;
-  }
-  
   refreshInprogressAgent(){
     this.getSubAgentConfigStatus();
   }
@@ -2091,21 +2088,11 @@ removeFilesFromForm(deletedFile:any){
 
   updateActiveField(field: any) {
     this.activeField = field.preAttributeName;
+    this.isFieldEdit = true;
   }
 
   cancelChanges() {
-    const originalFieldValue = this.originalFieldValues[this.activeField];
-    if (originalFieldValue) {
-      // Restore original field values
-      this.formFields.forEach((field) => {
-        if (field.preAttributeName === this.activeField) {
-          field.preAttributeLable = originalFieldValue.preAttributeLable;
-          field.preAttributeName = originalFieldValue.preAttributeName;
-          field.preAttributeType = originalFieldValue.preAttributeType;
-          // ... restore other field properties ...
-        }
-      });
-    }
+    this.fetchAllFieldsWithValue()
     this.activeField = null;
   }
   
