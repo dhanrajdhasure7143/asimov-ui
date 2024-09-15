@@ -451,8 +451,14 @@
   <app-change-password (valueChange)='closeFormOverlay($event)'></app-change-password>
 </p-sidebar> -->
 
-<p-dialog header="Contact Support" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
-  <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
+<p-dialog class="custom-dialog" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
+  <ng-template pTemplate="header">
+    <div class="dialog-header">
+      <img src="assets/images/mini_bot.svg" alt="mini_bot" class="dialog-bot-image">
+      <h3>Contact Support</h3>
+    </div>
+  </ng-template>
+  <form [formGroup]="contactForm" (ngSubmit)="contactUs()" class="contact-us">
       <div class="p-fluid">
           <b>If you have any questions or concerns? Send us a message, and our team will assist you with your needs.</b>
           <div class="p-field">

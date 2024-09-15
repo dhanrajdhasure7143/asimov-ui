@@ -469,13 +469,11 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   font-weight: 700;
 }
 
-:host ::ng-deep .p-dialog .p-dialog-content{
-  border-radius: 0px 0px 3px 3px;
+:host ::ng-deep .p-dialog .p-dialog-content .contact-us{
+  padding: 6px 0px 0px 0px;
 }
 
-:host ::ng-deep  .p-dialog .p-dialog-header {
-  border-bottom: 1px solid lightgray;
-}
+
 
 :host ::ng-deep .submit-button{
   display: flex;

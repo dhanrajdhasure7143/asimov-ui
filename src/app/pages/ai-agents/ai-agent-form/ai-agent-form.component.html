@@ -717,7 +717,7 @@
                   <div class="">
                     <hr>
                     <div class="accordion-content-save" >
-                        <button type="button" *ngIf="!isConfigered" class="btn new-cancelbtn" (click)="resetForm()">Reset</button>
+                        <button type="button" *ngIf="!isConfigered && !isMarketingAgent" class="btn new-cancelbtn" (click)="resetForm()">Reset</button>
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
                         <button *ngIf="!isConfigered  && !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateSaveAgent()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Save</button>

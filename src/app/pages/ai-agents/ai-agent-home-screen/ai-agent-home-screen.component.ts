@@ -558,4 +558,8 @@ proceedToSubscribe() {
 
   } 
 
+  isOverflowing(element: HTMLElement): boolean {
+    const lineHeight = parseInt(window.getComputedStyle(element).lineHeight);
+    return element.scrollHeight > lineHeight * 3;
+  }
 }
