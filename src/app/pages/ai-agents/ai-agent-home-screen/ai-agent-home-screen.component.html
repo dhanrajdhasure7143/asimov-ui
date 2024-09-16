@@ -30,11 +30,13 @@
                     <div class="bot-details-wrapper">
                         <p #content class="bot-details">
                             {{ each.details }}
-                           <span *ngIf="isOverflowing(content)">
-                            <img style="height: 22px;"  [pTooltip]="isOverflowing(content) ? each.details : null" 
-                            tooltipPosition="top" 
-                            [tooltipStyleClass]="'custom-bot-tooltip'" src="assets/images/agent/three-dots.png" alt="" class="see-more">
-                           </span>
+                            <span *ngIf="isOverflowing(content)">
+                                <i [pTooltip]="isOverflowing(content) ? each.details : null" 
+                                   tooltipPosition="top" 
+                                   [tooltipStyleClass]="'custom-bot-tooltip'" 
+                                   class="pi pi-ellipsis-h see-more" 
+                                   style="font-size: 22px;"></i>
+                            </span>
                         </p>
                     </div>
                     <div *ngIf="showFullDetails" class="full-details">
@@ -216,7 +218,17 @@
                             <!-- Agent Features -->
                             <div class="frame">
                                 <!-- <p class="text-design-below">{{formatFeatures(plan.features)}}</p> -->
-                                <p class="text-design-below">{{plan.description}}</p>
+                                <!-- <p class="text-design-below">{{plan.description}}</p> -->
+                                <p #content class="bot-details">
+                                    {{plan.description}}
+                                    <span *ngIf="isOverflowing(content)">
+                                        <i [pTooltip]="isOverflowing(content) ? plan.description : null" 
+                                           tooltipPosition="top" 
+                                           [tooltipStyleClass]="'custom-bot-tooltip'" 
+                                           class="pi pi-ellipsis-h see-more" 
+                                           style="font-size: 22px;"></i>
+                                    </span>
+                                </p>
                             </div>
 
                             <!-- Agent plan toggle monthly or yearly -->
