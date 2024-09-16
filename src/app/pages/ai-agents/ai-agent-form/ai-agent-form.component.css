@@ -229,7 +229,7 @@
 .attachment div {
   display: flex;
   align-items: center;
-  width: 60%;
+  width: 75%;
   justify-content: space-between;
 }
 
@@ -245,8 +245,8 @@
   color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  margin-right: 10px;
+  white-space: nowrap;
+  /* margin-right: 10px; */
   align-items: center;
   justify-content: flex-end;
 }
@@ -254,8 +254,8 @@
 .attachment-btns {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-left: 10px;
+  gap: 2px;
+  /* margin-left: 10px; */
 }
 
 .attachment-btns button {
@@ -277,6 +277,15 @@
 
 .attachment-btns i {
   font-size: 1rem;
+}
+
+.name-file{
+  justify-content: start !important;
+  /* display: inline !important; */
+}
+
+.name-file .content-span{
+  display: block !important;
 }
   
   .agent-item {
