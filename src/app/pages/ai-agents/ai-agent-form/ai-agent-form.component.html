@@ -740,7 +740,11 @@
                     <span>
                       <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
-                    <!-- <p *ngIf="agentStarted"class="estimated_time">We are working on it. This takes about X minutes to complete the task.</p> -->
+                    <span>
+                        <p *ngIf="agentStarted"class="estimated_time">We are working on it. This takes about 8 minutes to complete the task.</p>
+                        <p *ngIf="isComplete" class="execution_msg"> Agent Execution Completed Successfully </p>
+                        <p *ngIf="stageFailed" class="estimated_time"> {{errorMessage}}</p>
+                    </span>
                   </span>
                 </div>
                 <div class="progress-container-new">

@@ -84,7 +84,8 @@ export class AiAgentFormComponent implements OnInit {
   activeField: any;
   originalFieldValues: any = {};
   isFieldEdit:boolean = true;
-
+  isComplete:boolean = false;
+  errorMessage: string = ''
   progressBarItems = [
     { label: 'Intiated' },
     { label: 'Agent In Progress' },
@@ -1400,6 +1401,8 @@ export class AiAgentFormComponent implements OnInit {
             this.getInboxConent();
             this.getOutPutConent();
             this.getSubAgentHistoryLogs();
+            this.agentStarted = false;
+            this.isComplete = true;
             // this.toaster.toastSuccess("Agent Execution Successfully!");
           }
           break;
@@ -1407,10 +1410,13 @@ export class AiAgentFormComponent implements OnInit {
           this.stages[this.currentStageIndex].status = 'failure';
           this.completedStages++;
           this.stageFailed = true;
+          this.agentStarted = false;
+          this.isComplete = false;
           this.stopTracking();
           this.getSubAgentHistoryLogs();
           // this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
-          this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`);
+          // this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`);
+          this.errorMessage=`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`;
 
           break;
         // For 'running' or 'pending', we do nothing and continue tracking
