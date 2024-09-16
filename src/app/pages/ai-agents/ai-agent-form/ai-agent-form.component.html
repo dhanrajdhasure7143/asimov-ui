@@ -195,9 +195,9 @@
                                     <ng-container *ngIf="field.preAttributeType === 'file'">
                                         <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
                                             <div>
-                                                <span>
+                                                <span class="name-file">
                                                     <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
-                                                    <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                    <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="content-span">{{ attachment.originalFileName}}</span> &nbsp;
                                                 </span>
                                             </div>
                                             <span class="attachment-btns">
@@ -412,9 +412,9 @@
                                                 <ng-container *ngIf="field.preAttributeType === 'file'">
                                                     <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
                                                         <div>
-                                                            <span>
+                                                            <span class="name-file">
                                                                 <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
-                                                                <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                                <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="content-span">{{ attachment.originalFileName}}</span> &nbsp;
                                                             </span>
                                                         </div>
                                                         <span class="attachment-btns">
@@ -629,9 +629,9 @@
                                                         <ng-container *ngIf="field.preAttributeType === 'file'">
                                                             <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
                                                                 <div>
-                                                                    <span>
+                                                                    <span class="name-file">
                                                                         <i class="pi pi-file" style="font-size: 1.5rem"></i> &nbsp;
-                                                                        <span [pTooltip]="attachment.originalFileName" tooltipPosition="top">{{ attachment.originalFileName}}</span> &nbsp;
+                                                                        <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="content-span">{{ attachment.originalFileName}}</span> &nbsp;
                                                                     </span>
                                                                 </div>
                                                                 <span class="attachment-btns">
