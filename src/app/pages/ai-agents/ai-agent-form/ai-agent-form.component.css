@@ -342,7 +342,7 @@
     margin-bottom: 20px;
     cursor: pointer;
     user-select: none;
-    padding: 0px 20px
+    /* padding: 0px 20px */
   }
   
   /* ... (rest of the CSS remains the same) ... */
@@ -823,7 +823,7 @@ input.p-inputtext {
 /* Sub-Agent History Starts */
 .subagents-history-container {
   padding: 15px;
-  margin:0px 18px;
+  margin: 0px 8px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 15px 2px #3199FF26;
@@ -1234,6 +1234,7 @@ input.p-inputtext {
   gap: 40px;
   /* max-width: 800px; */
   margin: 25px;
+  margin-left: 10px;
 }
 .bar-container {
   flex-grow: 1;

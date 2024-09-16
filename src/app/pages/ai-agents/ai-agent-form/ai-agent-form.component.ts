@@ -1629,6 +1629,7 @@ handleHistoryTab (hist) {
   this.searchQuery = '';
   this.subAgentCurrentPage = 1;
   this.updateFilteredData();
+  this.isFilterPopupVisible = false
 
   this.subAgentFileCurrentPage = 1;
   this.subAgentFileItemsPerPage = 8;
