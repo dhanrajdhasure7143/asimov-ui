@@ -77,6 +77,7 @@ export class AiAgentSubAgentsComponent implements OnInit {
     this.spinner.show();
     // let tenant_id = localStorage.getItem("tenantName");
     this.rest_api.getSubAiAgent(this.product_id).subscribe((res: any) => {
+      this.spinner.hide();
       this.subAgentList = res.data;
       // this.subAgentList = this.data__data.data;
       this.filterAgentsList = res.data;

@@ -131,6 +131,8 @@
     justify-content: flex-end;
     gap: 10px;
     margin-top: 15px;
+    border-top: 1px solid #979797;
+    padding: 8px;
 }
 
 .form-buttons button{
@@ -208,7 +210,7 @@
 
 .generated-image-container {
   width: 100%;
-  max-width: 500px; /* Adjust as needed */
+  max-width: 300px; /* Adjust as needed */
   margin: 0 auto;
 }
 
@@ -226,7 +228,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 200px;
+  /* min-height: 200px; */
+  max-height: 350px;
 }
 
 .content-wrapper {
@@ -256,6 +259,19 @@
   animation: spin 1s ease-in-out infinite;
 }
 
+:host ::ng-deep .no-border{
+    border: none !important;
+    outline: none !important;
+  }
+
+.textarea-div{
+    border: 1px solid #979797;
+    border-radius: 6px;
+  }
+  
+:host ::ng-deep .textarea-div .form-control {
+  background-color: transparent !important;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);

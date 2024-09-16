@@ -4,7 +4,7 @@
     </div>
     <div class="scrollable-content flex-grow-1">
         <div class="grid-container">
-            <div *ngFor="let each of predefined_botsList" class="grid-item">
+            <div *ngFor="let each of predefined_botsList; let i = index" class="grid-item">
                 <!-- <div class="content" (click)="onclickBot(each)"> -->
                 <div class="content">
                     <div class="top-section">
@@ -24,14 +24,22 @@
                     <!-- <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
                         <p class="bot-details">{{ each.details }}</p>
                     </div> -->
-                    <div class="bot-details-wrapper" >
+                    <!-- <div class="bot-details-wrapper" >
                         <p class="bot-details">{{ each.details }}</p>
+                    </div> -->
+                    <div class="bot-details-wrapper">
+                        <p #content class="bot-details">
+                            {{ each.details }}
+                           <span *ngIf="isOverflowing(content)">
+                            <img style="height: 22px;"  [pTooltip]="isOverflowing(content) ? each.details : null" 
+                            tooltipPosition="top" 
+                            [tooltipStyleClass]="'custom-bot-tooltip'" src="assets/images/agent/three-dots.png" alt="" class="see-more">
+                           </span>
+                        </p>
                     </div>
-                    <!-- <div class="bot-details-wrapper" (mouseenter)="showFullDetails = true" (mouseleave)="showFullDetails = false">
-                        <p class="bot-details" [class.show-full]="showFullDetails">{{ each.details }}</p>
-                        <button *ngIf="!showFullDetails" class="more-btn">More</button>
-                    </div>                     -->
-                    
+                    <div *ngIf="showFullDetails" class="full-details">
+                        {{ each.details }}
+                    </div>
                     <div class="launchButton">
                         <button class="btn btn-primary rounded-pill" (click)="onclickBot(each)">Launch</button>
                     </div>
