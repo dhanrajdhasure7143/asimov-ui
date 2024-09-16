@@ -1426,9 +1426,15 @@ input.p-inputtext {
 }
 
 .estimated_time{
-  padding: 0px 140px;
+  padding: 0px 180px;
   position: relative;
   top: 25px;
+}
+
+.execution_msg{
+  position: relative;
+  top: 25px;
+  padding:  0px 255px;
 }
 
 @keyframes runningAnimation {
