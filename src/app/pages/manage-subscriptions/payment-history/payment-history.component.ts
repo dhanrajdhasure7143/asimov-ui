@@ -54,7 +54,8 @@ export class PaymentHistoryComponent implements OnInit {
         "amount_modified",
         "createDate",
         "status_converted",
-        "productName"
+        "productName",
+        "cardLast4Digits"
       ];
       this.spinner.hide();
      },err=>{

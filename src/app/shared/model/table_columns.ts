@@ -192,6 +192,7 @@ export class columnList{
         {ColumnName: "productName",DisplayName: "Agent",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "amount_modified",DisplayName: "Price",filterWidget: "normal",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "createDate",DisplayName: "Issue Date",filterWidget: "normal",filterType: "date",ShowGrid: true,sort: true,ShowFilter:true},
+        {ColumnName: "cardLast4Digits",DisplayName: "Card Used",filterWidget: "text",filterType: "text",ShowGrid: true,sort: true,ShowFilter:true},
         {ColumnName: "status_converted",DisplayName: "Status",filterWidget: "dropdown",filterType: "text",ShowGrid: true,sort: false,ShowFilter:false,dropdownList:['Paid','Voided'],status_icon:true},
         {ColumnName: "action",DisplayName: "Actions",ShowGrid: true,sort: false,ShowFilter:false},
       ];
