@@ -316,8 +316,12 @@ export class AiAgentSubscriptionComponent implements OnInit {
   
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
+    const message = actionType === 'individual' 
+        ? `Would you like to renew your subscription for <b>${subAgents.subAgentName}</b> and continue enjoying the benefits?`
+        : `Would you like to renew your subscription for <b>these agents</b> and continue enjoying the benefits?`;
+
     this.confirmationService.confirm({
-      // message: "Are you sure you want to renew your subscription?",
+      message: message,
       header: 'Renew Subscription',
       acceptLabel: 'Yes',
       rejectLabel: 'Cancel',

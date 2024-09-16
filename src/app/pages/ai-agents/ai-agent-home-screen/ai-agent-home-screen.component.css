@@ -750,12 +750,32 @@ hr {
 }
 
 /* new cards design  */
-.inner-cards-container {
+/* .inner-cards-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   padding: 20px 20px 20px 20px;
   margin-bottom: 40px;
+} */
+
+.inner-cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 1024px) {
+  .inner-cards-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 668px) {
+  .inner-cards-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -1204,7 +1224,7 @@ input[type="radio"]:checked + .custom-radio::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 5px !important;
+  padding: 6px 8px !important;
   cursor: crosshair;
   /* opacity: 0.8; */
   font-weight: 600;
