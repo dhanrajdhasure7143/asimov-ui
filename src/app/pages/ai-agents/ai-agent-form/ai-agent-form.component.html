@@ -773,8 +773,8 @@
                       <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
                     <span>
-                        <p *ngIf="agentStarted"class="estimated_time">We are working on it. This takes about 8 minutes to complete the task.</p>
-                        <p *ngIf="isComplete" class="execution_msg"> Agent Execution Completed Successfully </p>
+                        <p *ngIf="agentStarted"class="estimated_time">{{averageTimeAgentExecution}}</p>
+                        <p *ngIf="isComplete" class="execution_msg"> Agent Execution Completed Successfully, Please check Output for more details. </p>
                         <p *ngIf="stageFailed" class="estimated_time"> {{errorMessage}}</p>
                     </span>
                   </span>
@@ -919,8 +919,9 @@
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
-                <button *ngIf="isOutputEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')"><i class="pi pi-history"
-                    style="margin-right: 8px; font-size: 1.1rem;"></i>Output
+                <button *ngIf="isOutputEnabled" class="tab-button-inner" (click)="handleHistoryTab('content')">
+                    <!-- <i class="pi pi-history" style="margin-right: 8px; font-size: 1.1rem;"></i> -->
+                    <img style="margin-right: 5px; height: 16px; position: relative; margin-bottom: 1px;" src="../../../../assets/images/agent/output-svg.svg" alt=""> Output
                     <div [ngClass]="{'active-tab' :activeTabMode === 'content'}"></div>
                 </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('history')"><i class="pi pi-history"

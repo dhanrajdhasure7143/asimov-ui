@@ -97,7 +97,7 @@ export class AiAgentFormComponent implements OnInit {
   inProgressAgents:any[]=[];
   getStagesInterval: any;
   isConfigered:boolean = false;
-
+  averageTimeAgentExecution:any;
   
   // Agent in Progress
   // inProgressAgents = [
@@ -1382,10 +1382,11 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   checkCurrentStage() {
-    this.rest_service.getAgentStagesInfo(this.params.agentId).subscribe(
+    this.rest_service.getAgentStagesInfo(this.params.agentId, this.agent_uuid).subscribe(
       (response: any) => {
         if (response && response.stages && response.stages.length > this.currentStageIndex) {
           const currentStageStatus = response.stages[this.currentStageIndex].status;
+          this.averageTimeAgentExecution = response.averageTimeAgentExecution
           this.updateCurrentStage(currentStageStatus);
         }
       },
