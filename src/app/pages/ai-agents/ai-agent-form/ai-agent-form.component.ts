@@ -14,6 +14,8 @@ import * as FileSaver from "file-saver";
 import { saveAs } from "file-saver";
 import * as XLSX from 'xlsx';
 import { takeWhile } from 'rxjs/operators';
+import { ViewChildren, QueryList } from '@angular/core';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-ai-agent-form',
@@ -163,6 +165,10 @@ export class AiAgentFormComponent implements OnInit {
   selectedOutputContent: any={};
   selectedContentIndex: number = 0;
   isOutputEnabled:boolean = false;
+
+  @ViewChildren('overlayPanelRef') overlayPanels: QueryList<OverlayPanel>;
+
+  activeOverlay: OverlayPanel | null = null;
   
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -2149,5 +2155,30 @@ removeFilesFromForm(deletedFile:any){
       // this.toaster.showError(this.toastMessages.apierror);
      });
   }
+
+  toggleOverlay(overlayPanel: OverlayPanel, fieldPreAttributeName: string, event: Event) {
+    console.log('Toggling overlay for:', fieldPreAttributeName);
+    
+    if (this.activeOverlay && this.activeOverlay !== overlayPanel) {
+      this.activeOverlay.hide(); 
+    }
+
+    if (this.activeOverlay === overlayPanel) {
+      overlayPanel.hide();  
+      this.activeOverlay = null;
+    } else {
+      overlayPanel.toggle(event);  
+      this.activeOverlay = overlayPanel;
+    }
+
+
+    }
+
+  onOverlayClose(fieldPreAttributeName: string) {
+    if (this.activeOverlay && this.activeOverlay.el.nativeElement.id === fieldPreAttributeName) {
+      this.activeOverlay = null; 
+    }
+  }
+
   
 }
