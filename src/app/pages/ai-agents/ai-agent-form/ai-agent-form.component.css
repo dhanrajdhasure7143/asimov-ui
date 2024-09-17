@@ -1474,7 +1474,7 @@ input.p-inputtext {
 .file-list-container {
   width: 100%;
   box-sizing: border-box;
-  max-height: 150px;
+  max-height: 165px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -1484,19 +1484,12 @@ input.p-inputtext {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+  padding: 5px 5px;
   position: relative;
 }
 
-.file-details {
-  display: flex;
-  align-items: center;
-  flex-shrink: 1;
-  max-width: 70%;
-}
-
 .file-item-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-right: 10px;
   color: #555;
 }
@@ -1506,13 +1499,14 @@ input.p-inputtext {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 1rem;
-  color: #333;
+  color: #000;
 }
 
 .file-actions-container {
   display: flex;
   align-items: center;
-  width: 30% !important;
+  width: 20% !important;
+  justify-content: end;
 }
 
 .file-action-button {
@@ -1523,10 +1517,14 @@ input.p-inputtext {
   justify-content: center;
 }
 
+.file-action-button i{
+  font-size: 1.3rem !important;
+}
+
 .file-item-divider {
   border: 0;
   height: 1px;
-  background: #ddd;
+  background: #ff0000;
   margin: 10px 0;
   width: 100%;
 }
@@ -1550,3 +1548,62 @@ input.p-inputtext {
 :host ::ng-deep .p-overlaypanel {
   width: 300px;
 }
+
+.custom-file-panel {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #969696;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 66% !important;
+  max-height: 165px;
+}
+
+.file-list-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.file-details {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  max-width: 75%;
+}
+
+.action-btn {
+  padding: 6px 10px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-divider {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.upload-file {
+  text-align: right;
+  padding: 0 !important;
+  padding-top: 5px !important;
+  border: none !important;
+  cursor: pointer;
+  padding-right: 2px !important;
+}
+
+.upload-file:hover {
+  color: #3199FF;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #969696 !important;
+}
+

@@ -212,36 +212,32 @@
                                         </div>
                                     </ng-container> -->
 
-                                    <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length>=1">
-                                        <div class="file-label form-control upload-file" (click)="toggleOverlay(overlayPanelRef, field.preAttributeName, $event)">
-                                            <span><i class="pi pi-file" style="font-size: 1rem"></i> &nbsp;Uploaded Files</span>
+                                    <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
+                                        <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
+                                          <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
                                         </div>
-                                    
-                                        <!-- Overlay Panel for each file input -->
-                                        <p-overlayPanel #overlayPanelRef [dismissable]="true" appendTo="body" [style]="{'width':'24% !important'}">
+                                      
+                                        <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel">
                                             <div class="file-list-container">
-                                                <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index">
-                                                    <!-- File Info Section -->
+                                                <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index"
+                                                [ngClass]="{ 'border-bottom': getAttachements(field.preAttributeName).length >= 2 && i < getAttachements(field.preAttributeName).length - 1 }">
                                                     <div class="file-details">
                                                         <i class="pi pi-file file-item-icon"></i>
                                                         <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="file-item-name">
                                                             {{ attachment.originalFileName }}
                                                         </span>
                                                     </div>
-                                                    <!-- Action Buttons -->
                                                     <div class="file-actions-container">
                                                         <span class="file-action-button" pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment)">
                                                             <i class="pi pi-download" style="color:#3199FF"></i>
                                                         </span>
                                                         <span class="file-action-button" pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
-                                                            <i class="pi pi-trash" style="color:#3199FF"></i>
+                                                            <i class="pi pi-trash" style="color:red;"></i>
                                                         </span>
                                                     </div>
-                                                    <!-- Divider Line Between Every Two Files -->
-                                                    <hr *ngIf="i % 2 !== 0 && i < getAttachements(field.preAttributeName).length - 1" class="file-item-divider"/>
                                                 </div>
                                             </div>
-                                        </p-overlayPanel>
+                                        </div>
                                     </ng-container>
             
                                     <div style="width: 100%;" *ngIf="field.isValidateRequired">
@@ -460,36 +456,32 @@
                                                         </span>
                                                     </div>
                                                 </ng-container> -->
-                                                <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length>=1">
-                                                    <div class="file-label form-control upload-file" (click)="toggleOverlay(overlayPanelRef, field.preAttributeName, $event)">
-                                                        <span><i class="pi pi-file" style="font-size: 1rem"></i> &nbsp;Uploaded Files</span>
+                                                <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
+                                                    <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
+                                                      <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
                                                     </div>
-                                                
-                                                    <!-- Overlay Panel for each file input -->
-                                                    <p-overlayPanel #overlayPanelRef [dismissable]="true" appendTo="body" [style]="{'width':'24% !important'}">
+                                                  
+                                                    <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >
                                                         <div class="file-list-container">
-                                                            <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index">
-                                                                <!-- File Info Section -->
+                                                            <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index"
+                                                            [ngClass]="{ 'border-bottom': getAttachements(field.preAttributeName).length >= 2 && i < getAttachements(field.preAttributeName).length - 1 }">
                                                                 <div class="file-details">
                                                                     <i class="pi pi-file file-item-icon"></i>
                                                                     <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="file-item-name">
                                                                         {{ attachment.originalFileName }}
                                                                     </span>
                                                                 </div>
-                                                                <!-- Action Buttons -->
                                                                 <div class="file-actions-container">
                                                                     <span class="file-action-button" pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment)">
                                                                         <i class="pi pi-download" style="color:#3199FF"></i>
                                                                     </span>
                                                                     <span class="file-action-button" pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
-                                                                        <i class="pi pi-trash" style="color:#3199FF"></i>
+                                                                        <i class="pi pi-trash" style="color:red;"></i>
                                                                     </span>
                                                                 </div>
-                                                                <!-- Divider Line Between Every Two Files -->
-                                                                <hr *ngIf="i % 2 !== 0 && i < getAttachements(field.preAttributeName).length - 1" class="file-item-divider"/>
                                                             </div>
                                                         </div>
-                                                    </p-overlayPanel>
+                                                    </div>
                                                 </ng-container>
                         
                                                 <div style="width: 100%;" *ngIf="field.isValidateRequired">
@@ -709,37 +701,33 @@
                                                             </div>
                                                         </ng-container> -->
 
-                                                        <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length>=1">
-                                                            <div class="file-label form-control upload-file" (click)="toggleOverlay(overlayPanelRef, field.preAttributeName, $event)">
-                                                                <span><i class="pi pi-file" style="font-size: 1rem"></i> &nbsp;Uploaded Files</span>
+                                                        <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
+                                                            <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
+                                                              <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
                                                             </div>
-                                                        
-                                                            <!-- Overlay Panel for each file input -->
-                                                            <p-overlayPanel #overlayPanelRef [dismissable]="true" appendTo="body" [style]="{'width':'24% !important'}">
+                                                          
+                                                            <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >
                                                                 <div class="file-list-container">
-                                                                    <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index">
-                                                                        <!-- File Info Section -->
+                                                                    <div class="file-item" *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy: loopTrackBy; let i = index"
+                                                                    [ngClass]="{ 'border-bottom': getAttachements(field.preAttributeName).length >= 2 && i < getAttachements(field.preAttributeName).length - 1 }">
                                                                         <div class="file-details">
                                                                             <i class="pi pi-file file-item-icon"></i>
                                                                             <span [pTooltip]="attachment.originalFileName" tooltipPosition="top" class="file-item-name">
                                                                                 {{ attachment.originalFileName }}
                                                                             </span>
                                                                         </div>
-                                                                        <!-- Action Buttons -->
                                                                         <div class="file-actions-container">
                                                                             <span class="file-action-button" pTooltip="Download" tooltipPosition="top" (click)="downloadAttachment(attachment)">
                                                                                 <i class="pi pi-download" style="color:#3199FF"></i>
                                                                             </span>
                                                                             <span class="file-action-button" pTooltip="Delete" tooltipPosition="top" (click)="deleteAttachment(attachment)">
-                                                                                <i class="pi pi-trash" style="color:#3199FF"></i>
+                                                                                <i class="pi pi-trash" style="color:red;"></i>
                                                                             </span>
                                                                         </div>
-                                                                        <!-- Divider Line Between Every Two Files -->
-                                                                        <hr *ngIf="i % 2 !== 0 && i < getAttachements(field.preAttributeName).length - 1" class="file-item-divider"/>
                                                                     </div>
                                                                 </div>
-                                                            </p-overlayPanel>
-                                                        </ng-container>
+                                                            </div>
+                                                        </ng-container>                                                          
                                 
                                                         <div style="width: 100%;" *ngIf="field.isValidateRequired">
                                                             <div>

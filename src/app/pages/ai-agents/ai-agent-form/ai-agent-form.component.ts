@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem } from 'primeng/api';
@@ -166,7 +166,8 @@ export class AiAgentFormComponent implements OnInit {
   selectedContentIndex: number = 0;
   isOutputEnabled:boolean = false;
 
-  @ViewChildren('overlayPanelRef') overlayPanels: QueryList<OverlayPanel>;
+  visibleField: string | null = null;
+  panelPosition = {};
 
   activeOverlay: OverlayPanel | null = null;
   
@@ -2156,27 +2157,17 @@ removeFilesFromForm(deletedFile:any){
      });
   }
 
-  toggleOverlay(overlayPanel: OverlayPanel, fieldPreAttributeName: string, event: Event) {
-    console.log('Toggling overlay for:', fieldPreAttributeName);
-    
-    if (this.activeOverlay && this.activeOverlay !== overlayPanel) {
-      this.activeOverlay.hide(); 
-    }
+  showPanel(event: Event, fieldName: string) {
+    const element = event.target as HTMLElement;
+    const coordinates = element.getBoundingClientRect();
+    this.visibleField = this.visibleField === fieldName ? null : fieldName;
+  }
 
-    if (this.activeOverlay === overlayPanel) {
-      overlayPanel.hide();  
-      this.activeOverlay = null;
-    } else {
-      overlayPanel.toggle(event);  
-      this.activeOverlay = overlayPanel;
-    }
-
-
-    }
-
-  onOverlayClose(fieldPreAttributeName: string) {
-    if (this.activeOverlay && this.activeOverlay.el.nativeElement.id === fieldPreAttributeName) {
-      this.activeOverlay = null; 
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: Event) {
+    const clickedElement = event.target as HTMLElement;
+    if (!clickedElement.closest('.custom-file-panel') && !clickedElement.closest('.upload-file')) {
+      this.visibleField = null;
     }
   }
 
