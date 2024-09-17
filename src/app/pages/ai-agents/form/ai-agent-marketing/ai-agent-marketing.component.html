@@ -18,7 +18,7 @@
                       </span>
                  </label>
                 <div class="platform-selection" [formGroup]="marketingForm">
-                  <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Plotform"
+                  <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Platform"
                   optionLabel="name" display="chip" [showHeader]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="togglePlatformFields()">
                     <!-- Template for displaying selected items -->
                     <ng-template let-value pTemplate="selectedItems">

@@ -45,7 +45,7 @@ export const environment = {
     isCopilotEnable : false,
     isSubscrptionEnabled : true,
     isSubscriptionModuleEnable:true, // this boolen to enable subscription module in side bar
-    isCustomerBots : true,
+    isCustomerBots : false,
     environmentName: "DEV",
     // Asimov-ui URl to redirect from stripe to application
     paymentSuccessURL: "http://epsoftiap.internaldev.ai/#/pages/success",

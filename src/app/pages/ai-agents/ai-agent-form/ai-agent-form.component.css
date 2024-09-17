@@ -1469,3 +1469,83 @@ input.p-inputtext {
     opacity: 1;
   }
 }
+
+.file-list-container {
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  position: relative;
+}
+
+.file-details {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  max-width: 70%;
+}
+
+.file-item-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  color: #555;
+}
+
+.file-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: #333;
+}
+
+.file-actions-container {
+  display: flex;
+  align-items: center;
+  width: 30% !important;
+}
+
+.file-action-button {
+  padding: 6px 10px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-item-divider {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.p-overlaypanel {
+  z-index: 1000;  
+}
+
+.upload-file{
+  text-align: right;
+  padding: 0 !important;
+  padding-top: 5px !important;
+  border: none !important;
+  cursor: pointer;
+}
+
+.upload-file :hover{
+  color:#3199FF;
+}
+
+:host ::ng-deep .p-overlaypanel {
+  width: 300px;
+}
