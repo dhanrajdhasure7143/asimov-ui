@@ -321,7 +321,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         : `Would you like to renew your subscription for <b>these agents</b> and continue enjoying the benefits?`;
 
     this.confirmationService.confirm({
-      message: message,
+      message: "Renewing this subscription will ensure you can enjoy uninterrupted access to the agent, with billing adjusted on a pro-rated basis.",
       header: 'Renew Subscription',
       acceptLabel: 'Yes',
       rejectLabel: 'Cancel',
