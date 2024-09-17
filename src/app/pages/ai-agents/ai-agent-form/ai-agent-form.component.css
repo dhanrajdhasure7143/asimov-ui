@@ -1434,7 +1434,8 @@ input.p-inputtext {
 .execution_msg{
   position: relative;
   top: 25px;
-  padding:  0px 255px;
+  /* padding:  0px 255px; */
+  padding:  0px 158px;
 }
 
 @keyframes runningAnimation {

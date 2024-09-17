@@ -175,8 +175,8 @@ export class PredefinedBotsService {
     return this.http.get(`/rpa-service/predefined/in-progress-agents/${subAgentId}`)
   }
 
-  getAgentStagesInfo(agentUUID){
-    return this.http.get(`/rpa-service/predefined/agent-stages-info/${agentUUID}`)
+  getAgentStagesInfo(subAgentUUID, agentUUID){
+    return this.http.get(`/rpa-service/predefined/agent-stages-info/${subAgentUUID}/${agentUUID}`)
   }
 
   deleteSubAgentById(body){
