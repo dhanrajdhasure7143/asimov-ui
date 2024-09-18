@@ -1034,17 +1034,17 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   updateValidators(item){
-    this.predefinedBotsForm.get("fields."+item).setValidators(Validators.compose([Validators.required]));
-    this.predefinedBotsForm.get("fields."+item).updateValueAndValidity(); 
+    this.predefinedBotsForm.get("fields."+item)?.setValidators(Validators.compose([Validators.required]));
+    this.predefinedBotsForm.get("fields."+item)?.updateValueAndValidity(); 
   }
 
   clearValidators(item){
-    this.predefinedBotsForm.get("fields."+item).clearValidators(); 
-    this.predefinedBotsForm.get("fields."+item).updateValueAndValidity();
+    this.predefinedBotsForm.get("fields."+item)?.clearValidators(); 
+    this.predefinedBotsForm.get("fields."+item)?.updateValueAndValidity();
   }
 
   fieldRest(item){
-    this.predefinedBotsForm.get("fields."+item).reset();
+    this.predefinedBotsForm.get("fields."+item)?.reset();
   }
 
   generateDynamicFormUpdate(){
