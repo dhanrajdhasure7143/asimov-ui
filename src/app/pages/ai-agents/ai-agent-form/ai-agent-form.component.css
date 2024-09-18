@@ -1566,7 +1566,8 @@ input.p-inputtext {
   border: 1px solid #969696;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 66% !important;
+  width: 50% !important;
+  left: 19%;
   max-height: 165px;
 }
 
