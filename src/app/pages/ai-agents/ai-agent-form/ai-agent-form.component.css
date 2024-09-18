@@ -448,7 +448,8 @@
 }
 
 .accordion-content-save{
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
+  padding: 0px 8px 0px;;
   margin-bottom: 20px !important;
 }
 
