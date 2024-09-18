@@ -28,6 +28,7 @@
   }
   
   .prompt-description {
+    display: flex;
     margin-bottom: 20px;
   }
   
@@ -105,11 +106,6 @@
 
 
 /* ----------------------------------------- */
-
-.prompt-description {
-    display: flex;
-    gap: 20px;
-}
 
 .prompt-type-selection {
     margin-bottom: 20px;
@@ -275,6 +271,7 @@
 .textarea-div{
     border: 1px solid #979797;
     border-radius: 6px;
+    width: 92%;
   }
   
 :host ::ng-deep .textarea-div .form-control {
