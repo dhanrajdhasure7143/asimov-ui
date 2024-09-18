@@ -190,7 +190,7 @@
                                       
         
                                     <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                    (change)="onFileSelected($event,field)" multiple>
+                                    (change)="onFileSelected($event,field)" [attr.multiple]="field.pattern =='multiple' ? true : null">
                          
                                     <!-- <ng-container *ngIf="field.preAttributeType === 'file'">
                                         <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
@@ -435,7 +435,7 @@
                                                   
                     
                                                 <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                (change)="onFileSelected($event,field)" (click)="updateActiveField(field)" multiple>
+                                                (change)="onFileSelected($event,field)" (click)="updateActiveField(field)" [attr.multiple]="field.pattern == 'multiple' ? true : null">
                                      
                                                 <!-- <ng-container *ngIf="field.preAttributeType === 'file'">
                                                     <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
@@ -679,7 +679,7 @@
                                                         
                             
                                                         <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                                        (change)="onFileSelected($event,field)" multiple (click)="updateActiveField(field)">
+                                                        (change)="onFileSelected($event,field)" (click)="updateActiveField(field)" [attr.multiple]="field.pattern =='multiple' ? true : null">
                                             
                                                         <!-- <ng-container *ngIf="field.preAttributeType === 'file'">
                                                             <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
