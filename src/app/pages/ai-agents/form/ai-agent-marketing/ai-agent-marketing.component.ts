@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { PredefinedBotsService } from 'src/app/pages/services/predefined-bots.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 interface Platform {
   name: string;
   icon: string;
@@ -40,6 +41,7 @@ export class AiAgentMarketingComponent implements OnInit {
   isAccepted: boolean = false;
   isMarketingAgent = true;
   isLoading: boolean = false;
+  isCopied: boolean = false;
   
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
@@ -54,9 +56,11 @@ export class AiAgentMarketingComponent implements OnInit {
     private toastService:ToasterService,
     private rest_api: PredefinedBotsService,
     private spinner : LoaderService,
+    private clipboard: Clipboard,
     @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent
   ) {
     this.marketingForm = this.fb.group({
+      platform: [null, Validators.required],
       facebookPageId: ['', Validators.required],
       facebookToken: ['', Validators.required],
       instagramPageId: ['', Validators.required],
@@ -136,7 +140,7 @@ export class AiAgentMarketingComponent implements OnInit {
   }
   
   togglePlatformFields(): void {
-    const allPlatforms = ['LinkedIn', 'Facebook', 'Twitter', 'Instagram'];
+    const allPlatforms = ['Facebook', 'Instagram'];
     allPlatforms.forEach(platform => {
       const pageIdControl = this.marketingForm.get(`${platform.toLowerCase()}PageId`);
       const tokenControl = this.marketingForm.get(`${platform.toLowerCase()}Token`);
@@ -268,11 +272,6 @@ export class AiAgentMarketingComponent implements OnInit {
   }
   
   hitGenerateCaptionAPI(prompt: string): void {
-    // this.generatedText = {
-    //   caption: 'This is a static generated caption.',
-    //   hashtag: '#StaticHashtag'
-    // };
-    // return
     this.isLoading = true;
     const formData = new FormData();
     formData.append('prompt', prompt);
@@ -280,8 +279,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
   
-    // this.rest_api.generateCaptionAPI(prompt).subscribe({
-    this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
+    this.rest_api.generateCaptionAPI(prompt).subscribe({
+    // this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Caption Response:', response);
         this.generatedText = {
@@ -299,8 +298,6 @@ export class AiAgentMarketingComponent implements OnInit {
   }
   
   hitGenerateImageAPI(prompt: string): void {
-    // this.generatedImageUrl = 'https://via.placeholder.com/150';
-    // return
     this.isLoading = true;
     const formData = new FormData();
     formData.append('prompt', prompt);
@@ -308,8 +305,8 @@ export class AiAgentMarketingComponent implements OnInit {
       'Authorization': `Bearer ${this.apiToken}`
     });
 
-    // this.rest_api.generateImageAPI(prompt).subscribe({
-    this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
+    this.rest_api.generateImageAPI(prompt).subscribe({
+    // this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
         if (response.image) {
@@ -331,4 +328,30 @@ export class AiAgentMarketingComponent implements OnInit {
       }
     });
   }
+
+  get hasGeneratedText(): boolean {
+    return !!this.generatedText && 
+           (this.generatedText.caption.trim().length > 0 || 
+            this.generatedText.hashtag.trim().length > 0);
+  }
+
+  downloadImage() {
+    if (this.generatedImageUrl) {
+      const link = document.createElement('a');
+      link.href = this.generatedImageUrl;
+      link.download = 'generated_image.png';
+      link.click();
+    }
+  }
+  
+  copyText() {
+    if (this.hasGeneratedText) {
+    const textToCopy = `${this.generatedText.caption}\n${this.generatedText.hashtag}`;
+    this.clipboard.copy(textToCopy);
+    this.isCopied = true;
+    setTimeout(() => {
+      this.isCopied = false;
+    }, 2000);
+  }
+}
 }

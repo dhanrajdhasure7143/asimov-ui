@@ -3,7 +3,8 @@
   }
   
   .platform-selection {
-    display: flex !important;
+    /* display: flex !important; */
+    display: grid !important;
     margin-bottom: 20px;
   }
   
@@ -156,16 +157,20 @@
 }
 
 .output-content {
-  background-color: white;
-  border: 1px solid #dee2e6;
+  /* background-color: white;
+  border: 1px solid #dee2e6; */
   border-radius: 5px;
-  padding: 15px;
+  padding: 5px;
   overflow-y: auto;
-  scrollbar-width: none;
 }
 
 .output-content::-webkit-scrollbar {
   display: none; 
+  width: 5px;
+}
+
+.output-content:hover::-webkit-scrollbar {
+  display: block !important;
 }
 
 .generated-image {
@@ -210,8 +215,11 @@
 
 .generated-image-container {
   width: 100%;
-  max-width: 300px; /* Adjust as needed */
   margin: 0 auto;
+  padding: 0px 100px;
+  border: 1px solid #e0dcdc;
+  border-radius: 8px;
+  position: relative;
 }
 
 .generated-image {
@@ -272,6 +280,34 @@
 :host ::ng-deep .textarea-div .form-control {
   background-color: transparent !important;
 }
+
+.generated-text-container{
+  border: 1px solid #e0dcdc;
+  border-radius: 8px;
+}
+.copy-btn{
+  float: right !important;
+  border: 1px solid #e0dcdc;
+  border-radius: 5px;
+  width: 80px;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.download-button {
+  position: absolute;
+  top: 12px;
+  right: -88px;
+  background: none;
+  border: 1px solid #e0dcdc;
+  cursor: pointer;
+  width: 91px;
+  text-align: center;
+  border-radius: 5px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
