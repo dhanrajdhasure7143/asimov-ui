@@ -1243,6 +1243,7 @@ input.p-inputtext {
   gap: 40px;
   /* max-width: 800px; */
   margin: 25px;
+  margin: 10px 0px 20px;
   margin-left: 10px;
 }
 .bar-container {
@@ -1255,6 +1256,7 @@ input.p-inputtext {
   border-radius: 15px;
   overflow: hidden;
   border: 3px solid #E8E8E8 !important;
+  width: 90%;
 }
 .stage {
   flex-grow: 1;
@@ -1270,6 +1272,7 @@ input.p-inputtext {
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
+  width: 90%;
 }
 .stage-label {
   font-size: 12px;
@@ -1436,6 +1439,13 @@ input.p-inputtext {
   top: 25px;
   /* padding:  0px 255px; */
   padding:  0px 158px;
+}
+
+.centered-message {
+  position: relative;
+  /* top: 25px; */
+  text-align: center;
+  margin: 0 auto;
 }
 
 @keyframes runningAnimation {

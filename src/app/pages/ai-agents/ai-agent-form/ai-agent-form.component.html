@@ -740,13 +740,11 @@
                     <span>
                       <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
-                    <span>
-                        <p *ngIf="agentStarted"class="estimated_time">{{averageTimeAgentExecution}}</p>
-                        <p *ngIf="isComplete" class="execution_msg"> Agent Execution Completed Successfully, Please check Output for more details. </p>
-                        <p *ngIf="stageFailed" class="estimated_time"> {{errorMessage}}</p>
-                    </span>
                   </span>
                 </div>
+                <span *ngIf="agentStarted || isComplete || stageFailed" class="centered-message">
+                    <p>{{ agentStarted ? averageTimeAgentExecution : (isComplete ? 'Agent Execution Completed Successfully, Please check Output for more details.' : errorMessage) }}</p>
+                </span>
                 <div class="progress-container-new">
                   <button class="rounded-pill" style="height: 30px;" pButton label="Start" 
                           (click)="startAiAgent()" [disabled]="isProcessing">
@@ -762,7 +760,7 @@
                            }">
                       </div>
                     </div>
-                    <div *ngIf="agentStarted">
+                    <div *ngIf="agentStarted || isComplete || stageFailed">
                         <div class="stage-labels">
                           <div *ngFor="let stage of stages" class="stage-label">{{ stage.name }}</div>
                         </div>
@@ -897,7 +895,7 @@
                         <div [ngClass]="{'active-tab' :activeTabMode === 'history'}"></div>
                     </button>
                 <button class="tab-button-inner" (click)="handleHistoryTab('files')"><i class="pi pi-paperclip"
-                        style="margin-right: 8px; font-size: 1.1rem;"></i>Uploaded Files
+                        style="margin-right: 8px; font-size: 1.1rem;"></i> {{ isMarketingAgent ? 'Posted Content' : 'Uploaded Files' }}
                         <div [ngClass]="{'active-tab' :activeTabMode === 'files'}"></div>
                 </button>
                 <!-- <div class="bottom-tab-mover-after" [ngClass]="{'history-tab' :activeTabMode === 'history', 'files-tab':activeTabMode === 'files'}">
