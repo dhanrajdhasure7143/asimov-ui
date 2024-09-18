@@ -313,9 +313,10 @@ export class AiAgentSubscriptionComponent implements OnInit {
     });
   }
   
-  
+  isRenewPopupEnabled:boolean=false;
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
+    this.isRenewPopupEnabled = true
     const message = actionType === 'individual' 
         ? `Would you like to renew your subscription for <b>${subAgents.subAgentName}</b> and continue enjoying the benefits?`
         : `Would you like to renew your subscription for <b>these agents</b> and continue enjoying the benefits?`;
@@ -323,9 +324,9 @@ export class AiAgentSubscriptionComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Renewing this subscription will ensure you can enjoy uninterrupted access to the agent, with billing adjusted on a pro-rated basis.",
       header: 'Renew Subscription',
-      acceptLabel: 'Yes',
-      rejectLabel: 'Cancel',
-      rejectButtonStyleClass: 'btn reset-btn',
+      acceptLabel: 'Continue',
+      rejectLabel: ' ',
+      rejectButtonStyleClass: 'btn border-0 bg-transparent',
       acceptButtonStyleClass: 'btn bluebg-button',
       defaultFocus: 'none',
       rejectIcon: 'null',
@@ -349,11 +350,13 @@ export class AiAgentSubscriptionComponent implements OnInit {
             this.toastService.showSuccess(this.toastMessages.renewedSuccess,'response');
             this.spinner.hide();
             this.getSubscribedAgentsList();
+            this.isRenewPopupEnabled = false;
           },
           (err) => {
             console.error('Error renewing agent', err);
             this.toastService.showError(this.toastMessages.apierror);
             this.spinner.hide();
+            this.isRenewPopupEnabled = false;
           }
         );
       },
@@ -364,6 +367,10 @@ export class AiAgentSubscriptionComponent implements OnInit {
     console.log('Destroying component');
     localStorage.removeItem('expandedAgents');
     localStorage.removeItem('currentPageState');
+  }
+
+  handleDialogClose() {
+    this.isRenewPopupEnabled = false;
   }
 
 }
