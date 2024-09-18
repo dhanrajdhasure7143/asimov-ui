@@ -190,7 +190,7 @@
                                       
         
                                     <input *ngIf="field.preAttributeType === 'file'" type="file" pInputText class="form-control custom-file-input" style = "opacity: 1;" [id]="field.preAttributeName" [formControlName]="field.preAttributeName"
-                                    (change)="onFileSelected($event,field)" [attr.multiple]="field.pattern =='multiple' ? true : null">
+                                    (change)="onFileSelected($event,field)" (click)="updateActiveField(field)" [attr.multiple]="field.pattern =='multiple' ? true : null" >
                          
                                     <!-- <ng-container *ngIf="field.preAttributeType === 'file'">
                                         <div class="attachment " *ngFor="let attachment of getAttachements(field.preAttributeName); trackBy:loopTrackBy">
@@ -800,7 +800,6 @@
                     </p-accordion>
                 </ng-container>
                   <div class="">
-                    <hr>
                     <div class="accordion-content-save" >
                         <button type="button" *ngIf="!isConfigered && !isMarketingAgent" class="btn new-cancelbtn" (click)="resetForm()">Reset</button>
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
@@ -810,6 +809,7 @@
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
                         <div *ngFor="let field of formFields">
                              <div *ngIf="activeField === field.preAttributeName">
+                                 <hr>
                                  <button *ngIf="isConfigered && isFieldEdit && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
                                  <button *ngIf="isConfigered && isFieldEdit !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
                              </div>
