@@ -39,6 +39,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   subscriptions =[]
   expandedAgents: { [key: string]: boolean } = {};
   currentPageState: { [key: string]: number } = {};
+  isRenewPopupEnabled:boolean=false;
 
   constructor(
     private rest_api: PredefinedBotsService,
@@ -312,8 +313,6 @@ export class AiAgentSubscriptionComponent implements OnInit {
       },
     });
   }
-  
-  isRenewPopupEnabled:boolean=false;
 
   handleRenewal(actionType: 'individual' | 'bulk', agent: any, subAgents: any | any[]) {
     this.isRenewPopupEnabled = true

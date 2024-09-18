@@ -96,7 +96,7 @@
     padding-right: 4px;
 }
 :host ::ng-deep .p-multiselect {
-    width: 506px !important ;
+    width: 46% !important ;
     border-radius: 5px;
     padding: 0.20rem;
 }
