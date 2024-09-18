@@ -223,4 +223,4 @@
 </div>
 
 <p-confirmDialog [style]="{width: '30vw'}" position="center" [baseZIndex]="10000" 
-[closable]="false"></p-confirmDialog>
+[closable]="isRenewPopupEnabled" (onHide)="handleDialogClose()"></p-confirmDialog>
