@@ -12,14 +12,14 @@
               <div [formGroup]="marketingForm">
                 <!-- Platform Selection with Icons -->
                  <label for="">
-                   <b>Select Platforms</b>
+                   <b>Select Platforms <span class="required">*</span></b>
                    <span class="custom-tooltip-btn info-icon" [pTooltip]="selectedPlatformsInfo" tooltipPosition="top">
                             <img src="assets/images/agent/info-icon.svg" alt="info">
                       </span>
                  </label>
                 <div class="platform-selection" [formGroup]="marketingForm">
-                  <p-multiSelect [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Platform"
-                  optionLabel="name" display="chip" [showHeader]="false" [ngModelOptions]="{standalone: true}" (ngModelChange)="togglePlatformFields()">
+                  <p-multiSelect  [formControl]="marketingForm.get('platform')" [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Platform"
+                  optionLabel="name" display="chip" [showHeader]="false" (ngModelChange)="togglePlatformFields()">
                     <!-- Template for displaying selected items -->
                     <ng-template let-value pTemplate="selectedItems">
                       <ng-container *ngIf="value && value.length > 0">
@@ -40,6 +40,9 @@
                       </div>
                     </ng-template>
                   </p-multiSelect>
+                  <span *ngIf="marketingForm.get('platform')?.invalid && marketingForm.get('platform')?.touched">
+                    <small class="required"> Social media platform is required </small>
+                 </span>
                 </div>
                 <!-- <div class="scrollable-content"> -->
                 <div class="">
@@ -118,7 +121,7 @@
                 <div class="col-md-6" style="padding-right: 0px !important; padding-left: 0px !important;">
                   <div class="prompt-type-selection">
                     <label for="">
-                      <b> Select Prompt Type </b>
+                      <b> Select Prompt Type <span class="required">*</span></b>
                       <span class="custom-tooltip-btn info-icon" [pTooltip]="promptTypeInfo" tooltipPosition="top">
                             <img src="assets/images/agent/info-icon.svg" alt="info">
                       </span>
@@ -137,7 +140,7 @@
                     <b *ngIf="marketingForm.get('promptType').value !== 'image'">Summarize briefly what you're promoting</b>
                     <div class="textarea-div">
                       <textarea class="form-control no-border" formControlName="promptDescription"
-                          rows="8" style="resize: none;" placeholder="Enter Prompt Description">
+                          rows="9" style="resize: none;" placeholder="Enter Prompt Description">
                       </textarea>
                       <div class="form-buttons" *ngIf="!isGenerated">
                         <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid || isLoading">
@@ -172,14 +175,24 @@
                   <div class="flex-grow-1 output-content scrollable-content">
                     <!-- Generated Image Display -->
                     <div *ngIf="generatedImageUrl" class="generated-image-container">
-                      <img [src]="generatedImageUrl" alt="Generated Marketing Image" class="generated-image">
+                    <div class="image-wrapper">
+                        <button class="download-button" (click)="downloadImage()" >
+                        <i class="pi pi-download"></i> Download
+                      </button>
+                      <img style="padding: 10px;" [src]="generatedImageUrl" alt="Generated Marketing Image" class="generated-image"> 
                     </div>
+                    </div>
+                    <br>
                     <!-- Generated Text Display -->
-                    <div *ngIf="generatedText" class="generated-text-container">
-                      <!-- <p> {{ generatedText }} </p> -->
-                      <p>{{ generatedText.caption }}</p>
-                      <p>{{ generatedText.hashtag }}</p>
-                      
+                    <div *ngIf="hasGeneratedText" class="generated-text-container">
+                      <div class="generated-text" style=" padding: 12px;">
+                        <button class="copy-btn" (click)="copyText()" >
+                          <i [class]="isCopied ? 'pi pi-check' : 'pi pi-copy'"></i>
+                          {{ isCopied ? 'Copied!' : 'Copy' }}
+                        </button>
+                        <p>{{ generatedText.caption }}</p>
+                        <p>{{ generatedText.hashtag }}</p>
+                      </div>
                     </div>
                     <div *ngIf="isLoading" class="loader-container">
                       <span class="loader"></span>
