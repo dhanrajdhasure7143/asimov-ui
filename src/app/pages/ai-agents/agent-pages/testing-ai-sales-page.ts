@@ -380,18 +380,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
       background-position: center;
       padding: 80px 0;
     }
-    .cta {
-      background-image: url('/assets/images/agent/sales/get-started.png');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 80px 0;
-    }
-    .cta h2 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
-    }
   `]
 })
 export class TestingAiSalesPageComponent {

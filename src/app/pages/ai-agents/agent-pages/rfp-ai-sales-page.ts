@@ -251,18 +251,6 @@ import { Component } from '@angular/core';
       background-position: center;
       padding: 80px 0;
     }
-    .cta {
-      background-image: url('src/assets/images/agent/sales/get-started.png');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 80px 0;
-    }
-    .cta h2 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
-    }
     .prc-btn{
       margin-left: 15%
     }
