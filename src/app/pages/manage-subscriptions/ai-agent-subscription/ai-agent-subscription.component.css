@@ -329,6 +329,7 @@
     flex: 1.5;
     align-items: center;
     display: inline-block;
+    max-width: 25%;
   }
 
   .agent-table-headers .header-cell{
@@ -569,4 +570,13 @@
   text-overflow: ellipsis !important;
   flex-shrink: 1 !important;
   font-weight: 500 !important;
+}
+
+.label-elipsis {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  max-width: 75% !important;
 }
