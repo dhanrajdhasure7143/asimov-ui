@@ -940,56 +940,72 @@ export class AiAgentFormComponent implements OnInit {
         checkbox = event.target as HTMLInputElement;
         checkValue = checkbox.checked;
         console.log(this.predefinedBotsForm.get('fields.' + field.preAttributeName))
+        console.log("event------checkValue",checkValue)
+        console.log("event-----22222-option",JSON.parse(option.field))
+        console.log("event------field",field)
+
       this.predefinedBotsForm.get('fields.' + field.preAttributeName).get(option.value).setValue(checkbox.checked);
-    
-    const validJsonStr = option.field.replace(/'/g, '"');
+    if(option.field != null){
+    // const validJsonStr = option.field.replace(/'/g, '"');
     // const array = JSON.parse(validJsonStr);
-    let array;
+    let jsonArray;
+    // try {
+    //   array = JSON.parse(validJsonStr);
+    // } catch (e) {
+    //   console.error("Parsing error:", e);
+    // }
     try {
-      array = JSON.parse(validJsonStr);
-    } catch (e) {
-      console.error("Parsing error:", e);
+      jsonArray = JSON.parse(option.field);
+      console.log(jsonArray); // Successfully parsed array
+      // if (Array.isArray(jsonArray)) {
+        if (checkValue) {
+          // formArray.push(this.fb.control(label));
+          jsonArray.forEach((element: any) => {
+            const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
+            if (field) {
+              field.visibility = true;
+              field.attributeRequired = element.isRequred == 'true'?true:false;
+              if(element.isRequred == 'true'){
+                console.log("element.fieldName",element.fieldName)
+                this.updateValidators(element.fieldName) 
+              }else{
+                this.clearValidators(element.fieldName); 
+              }
+            }
+          });
+        } else {
+          jsonArray.forEach(element => {
+            const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
+            if (field) {
+              field.visibility = false;
+              field.attributeRequired =false;
+              this.clearValidators(element.fieldName);
+            }
+          });
+  
+        }
+      // }
+    } catch (error) {
+      console.error("Error parsing JSON string:", error.message);
     }
 
-    if (checkValue) {
-      this.checkedOptions.push(option.value);
-    } else {
-      const index = this.checkedOptions.indexOf(option.value);
-      if (index !== -1) {
-        this.checkedOptions.splice(index, 1);
-      }
+  }
+
+  if (checkValue) {
+    this.checkedOptions.push(option.value);
+  } else {
+    const index = this.checkedOptions.indexOf(option.value);
+    if (index !== -1) {
+      this.checkedOptions.splice(index, 1);
     }
-
-
-    if (Array.isArray(array)) {
-      if (checkValue) {
-        // formArray.push(this.fb.control(label));
-        array.forEach((element: any) => {
-          const field = this.formFields.find(item => item.preAttributeName === element);
-          if (field) {
-            field.visibility = true;
-            field.attributeRequired =true;
-            this.updateValidators(element)
-          }
-        });
-      } else {
-        array.forEach(element => {
-          const field = this.formFields.find(item => item.preAttributeName === element);
-          if (field) {
-            field.visibility = false;
-            field.attributeRequired =false;
-            this.clearValidators(element);
-          }
-        });
-
-      }
-    }
+  }
   }
 
   async onDropdownChange(event: any,options:any) {
     await this.visibilityHide(options);
     const selectedValue = event.value;
     const selectedObject = options.find(option => option.value === selectedValue);
+    console.log("selectedObject",selectedObject)
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
     const array = JSON.parse(validJsonStr);
     if (Array.isArray(array))
@@ -997,25 +1013,40 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   visibilityHide(options){
+    console.log("options",options)  
     options.forEach(each => {;
       const validJsonStr = each.field.replace(/'/g, '"');
       const array = JSON.parse(validJsonStr);
       if (Array.isArray(array))
-      this.updateFieldVisibility(array, false);
+      this.hideALLFieldVisibility(array);
+    })
+  }
+
+  hideALLFieldVisibility(array) {
+    array.forEach((element: any) => {
+      const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
+      if (field) {
+        field.visibility = false;
+        field.attributeRequired = false;
+          this.clearValidators(element.fieldName);
+          this.fieldRest(field);
+
+      }
     })
   }
 
   updateFieldVisibility(array, value) {
     array.forEach((element: any) => {
-      const field = this.formFields.find(item => item.preAttributeName === element);
+      const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
       if (field) {
         field.visibility = value;
-        field.attributeRequired =value;
-        if(value){  
-          this.updateValidators(element)
+        field.attributeRequired =element.isRequred == 'true'?true:false;
+        if(element.isRequred == 'true'){
+          console.log("element.isRequred == 'true'",element.fieldName)
+          this.updateValidators(element.fieldName)
         }else{
-          this.clearValidators(element);
-          this.fieldRest(element);
+          this.clearValidators(element.fieldName);
+          this.fieldRest(field);
         }
       }
     })
@@ -1044,7 +1075,10 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   fieldRest(item){
-    this.predefinedBotsForm.get("fields."+item)?.reset();
+    this.predefinedBotsForm.get("fields."+item.preAttributeName)?.reset();
+    if(this.isConfigered){
+      this.predefinedBotsForm.get("fields."+item.preAttributeName)?.setValue(item.preAttributeValue)
+    }
   }
 
   generateDynamicFormUpdate(){
@@ -1155,13 +1189,20 @@ export class AiAgentFormComponent implements OnInit {
       if (checkbox) {
         // formArray.push(this.fb.control(label));
         array.forEach((element: any) => {
-          const field = this.formFields.find(item => item.preAttributeName === element);
+          const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
           if (field) {
             field.visibility = true;
-            field.attributeRequired =true;
-            setTimeout(() => {
-              this.updateValidators(element)
-            }, 500);
+            // field.attributeRequired =true;
+            // setTimeout(() => {
+            //   this.updateValidators(element)
+            // }, 500);
+            field.attributeRequired = element.isRequred == 'true'?true:false;
+              if(element.isRequred == 'true'){
+                console.log("element.fieldName",element.fieldName)
+                this.updateValidators(element.fieldName) 
+              }else{
+                this.clearValidators(element.fieldName); 
+              }
           }
         });
       } else {
@@ -1170,7 +1211,7 @@ export class AiAgentFormComponent implements OnInit {
           if (field) {
             field.visibility = false;
             field.attributeRequired =false;
-            this.clearValidators(element);
+            this.clearValidators(element.fieldName);
           }
         });
       }
