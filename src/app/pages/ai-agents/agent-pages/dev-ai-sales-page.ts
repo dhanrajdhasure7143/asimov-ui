@@ -97,13 +97,6 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
           </div>
         </div>
       </div>
-
-      <div class="cta">
-        <div class="container">
-          <h2>Unlock Exceptional Talent with Unmatched AI Precision</h2>
-          <a href="#" class="btn">Get Started</a>
-        </div>
-      </div>
     </div>
   `,
   styles: [`
