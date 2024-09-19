@@ -59,9 +59,11 @@
                     
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
-                        <div class="row-cell sub-agent-row-header" style="flex:1.46">
+                        <div class="row-cell sub-agent-row-header" style="flex: 1.46; max-width: 19%; display: flex; align-items: center;">
                             <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" [disabled]="!agent.autoRenew || (agent.autoRenew && !subAgent.expiryDate)" />
-                            {{ subAgent.subAgentName }}
+                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top" class="agent-elipsis">
+                                {{ subAgent.subAgentName }}
+                            </span>
                         </div>
                         <div class="row-cell">
                             <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center; text-transform: lowercase;">
@@ -172,8 +174,10 @@
                             <input type="checkbox" [(ngModel)]="subAgent.selected" />
                         </div>
                         
-                        <div class="row-cell" style="flex:1.46; display: block !important;">
-                            {{ subAgent.subAgentName }}
+                        <div class="row-cell" style="flex:1.46; max-width: 19%; display: flex; justify-content: flex-start !important;">
+                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top" class="agent-elipsis">
+                                {{ subAgent.subAgentName }}
+                            </span>
                         </div>
                         <div class="row-cell">
                             <span class="status-badge inactive-status" style="text-transform: lowercase;">
