@@ -45,14 +45,14 @@ export class PaymentHistoryComponent implements OnInit {
       this.invoicedata.map(data=>{
         data["createDate"] = new Date(data.createDate);
         data["status_converted"] =data.status.charAt(0).toUpperCase() + data.status.substr(1).toLowerCase(); 
-        data["amount_modified"] ="$"+String(data.dueAmmount);
+        // data["amount_modified"] ="$"+String(data.dueAmmount);
         data["cardLast4Digits"] = "XXXX " + data.cardLast4Digits;
         return data
       })
       this.table_searchFields = [
         "invoiceNumber",
         // "subscriptionId",
-        "amount_modified",
+        "dueAmmount",
         "createDate",
         "status_converted",
         "productName",
