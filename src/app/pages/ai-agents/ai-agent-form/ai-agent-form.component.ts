@@ -1076,7 +1076,7 @@ export class AiAgentFormComponent implements OnInit {
 
   fieldRest(item){
     this.predefinedBotsForm.get("fields."+item.preAttributeName)?.reset();
-    if(this.isConfigered){
+    if(this.isConfigered && item.preAttributeType !='file'){
       this.predefinedBotsForm.get("fields."+item.preAttributeName)?.setValue(item.preAttributeValue)
     }
   }

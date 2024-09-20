@@ -123,7 +123,12 @@
                                         <span *ngIf="screenTable != 'taskList' && col.ColumnName !='changeActivity' && col.ColumnName !='deploy_status_new' && col.ColumnName!='approvalInfo'">
                                             <!-- <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && ( col.ColumnName !='comments' && col.ColumnName !='ColumnName' && col.ColumnName !='DisplayName'  && col.ColumnName !='column_name')" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span> -->
                                             <span class="statusbadge_nc" *ngIf="getColor(rowData[col.ColumnName]) && col.status_icon" [ngStyle]="{'background-color':getColor(rowData[col.ColumnName])}"></span>
+                                            <span *ngIf="col.ColumnName !='dueAmmount'">
                                             {{col.filterType=='date'?((rowData[col.ColumnName]|date:'MMM dd, y HH:mm')?(rowData[col.ColumnName]|date:'MMM dd, y HH:mm'):'-'):(rowData[col.ColumnName]?rowData[col.ColumnName]:'-')}}
+                                            </span>
+                                            <span *ngIf="col.ColumnName =='dueAmmount'">
+                                                {{rowData[col.ColumnName] | currency:'USD':'symbol'}}
+                                            </span>
                                         </span>
                                         <span *ngIf="screenTable == 'environment_table' && col.ColumnName =='deploy_status_new'">
                                             <span [ngClass]="rowData['deploy_status_new']=='Yes' ? 'deploy_yes' : 'deploy_no' ">
