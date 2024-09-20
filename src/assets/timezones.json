@@ -1,0 +1,195 @@
+{
+    "US": [
+      {
+        "range": ["10000", "19999"],
+        "timeZone": "America/New_York"   
+      },
+      {
+        "range": ["20000", "29999"],
+        "timeZone": "America/Chicago"    
+      },
+      {
+        "range": ["30000", "39999"],
+        "timeZone": "America/Chicago"    
+      },
+      {
+        "range": ["40000", "49999"],
+        "timeZone": "America/New_York"   
+      },
+      {
+        "range": ["50000", "59999"],
+        "timeZone": "America/Chicago"    
+      },
+      {
+        "range": ["60000", "69999"],
+        "timeZone": "America/Chicago"    
+      },
+      {
+        "range": ["70000", "79999"],
+        "timeZone": "America/Chicago"    
+      },
+      {
+        "range": ["80000", "89999"],
+        "timeZone": "America/Denver"     
+      },
+      {
+        "range": ["90000", "99999"],
+        "timeZone": "America/Los_Angeles" 
+      },
+      {
+        "range": ["99500", "99999"],
+        "timeZone": "America/Anchorage" 
+      },
+      {
+        "range": ["96700", "96999"],
+        "timeZone": "Pacific/Honolulu" 
+      }
+    ],
+    "Canada": [
+      {
+        "range": ["A0A0A0", "A9Z9Z9"],
+        "timeZone": "America/St_Johns" 
+      },
+      {
+        "range": ["B0A0A0", "B9Z9Z9"],
+        "timeZone": "America/Halifax"  
+      },
+      {
+        "range": ["C0A0A0", "C9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["E0A0A0", "E9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["H0H0H0", "H9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["J0A0A0", "J9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["K0A0A0", "K9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["L0A0A0", "L9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["M0A0A0", "M9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["N0A0A0", "N9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["P0A0A0", "P9Z9Z9"],
+        "timeZone": "America/Toronto"  
+      },
+      {
+        "range": ["R0A0A0", "R9Z9Z9"],
+        "timeZone": "America/Winnipeg" 
+      },
+      {
+        "range": ["S0A0A0", "S9Z9Z9"],
+        "timeZone": "America/Winnipeg" 
+      },
+      {
+        "range": ["T0A0A0", "T9Z9Z9"],
+        "timeZone": "America/Edmonton" 
+      },
+      {
+        "range": ["V0A0A0", "V9Z9Z9"],
+        "timeZone": "America/Vancouver" 
+      },
+      {
+        "range": ["X0A0A0", "X9Z9Z9"],
+        "timeZone": "America/Yellowknife" 
+      },
+      {
+        "range": ["Y0A0A0", "Y9Z9Z9"],
+        "timeZone": "America/Whitehorse" 
+      }
+    ],
+    "UK": [
+      {
+        "range": ["AB10", "AB56"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BA1", "BA22"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BB1", "BB18"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BD1", "BD24"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BH1", "BH31"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BL1", "BL9"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BN1", "BN99"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BR1", "BR8"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BS1", "BS49"],
+        "timeZone": "Europe/London"
+      },
+      {
+        "range": ["BT1", "BT94"],
+        "timeZone": "Europe/London"
+      }
+    ],
+    "India": [
+      {
+        "range": ["110001", "119999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["200001", "209999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["400001", "409999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["500001", "509999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["600001", "609999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["700001", "709999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["800001", "809999"],
+        "timeZone": "Asia/Kolkata"
+      },
+      {
+        "range": ["900001", "909999"],
+        "timeZone": "Asia/Kolkata"
+      }
+    ]
+  }
+  

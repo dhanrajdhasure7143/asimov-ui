@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PredefinedBotsService {
   private apiToken = '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';
+  private timezoneData: any;
 
   constructor(private http : HttpClient) { }
 
@@ -242,4 +243,36 @@ export class PredefinedBotsService {
   getOutputConent(subAgentId){
     return this.http.get(`/platform-service/inbox/agent-inbox-latest-runid/${subAgentId}`)
   }
+
+  loadTimezones(): Observable<any> {
+    return this.http.get('/assets/timezones.json'); // Adjust the path to where your JSON file is stored
+  }
+
+  getTimeZoneByZipCode(country, zipCode: string): string | null {
+    console.log('country',country,zipCode)
+    const countryData = this.timezoneData[country];
+    console.log('countryData',countryData)
+    if (countryData) {
+      for (const entry of countryData) {
+        const [start, end] = entry.range;
+        if (zipCode >= start && zipCode <= end) {
+          return entry.timeZone;
+        }
+      }
+    }
+    return null;
+  }
+
+  setTimezones(data: any): void {
+    this.timezoneData = data;
+  }
+
+  updateUserTimeZone(timeZone){
+    let tenantId = localStorage.getItem('tenantName');
+    let userId = localStorage.getItem('ProfileuserId');
+    return this.http.post(`/api/user/updateTimezone?tenantId=${tenantId}&timezone=${timeZone}&userId=${userId}`,'')
+  }
+
+
+
 }

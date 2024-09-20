@@ -56,6 +56,7 @@ export class SidebarComponent implements OnInit {
   showContactUs:boolean = false;
   contactForm: FormGroup;
   messageTooShort: boolean = true;
+  billingDetails:any={}
 
   constructor(public obj:PagesComponent, 
     private dt:DataTransferService,
@@ -108,6 +109,7 @@ export class SidebarComponent implements OnInit {
         });
         setTimeout(() => {
           this.getUserDetails();
+          this.getBillingInfo();
         }, 500);
 
      }
@@ -388,5 +390,32 @@ navigateToDashBoard(){
     if (event.code === "Space" && inputValue[cursorPosition - 1] === ' ') {
       event.preventDefault();
     }
+  }
+
+  async getTimeZones(country,postalCode: string) {
+    await this.rest_api.loadTimezones().subscribe((data) => {
+       this.rest_api.setTimezones(data);
+       let timeZone = this.rest_api.getTimeZoneByZipCode(country,postalCode); // Example for San Francisco ZIP code
+       console.log("timeZone",timeZone);
+       setTimeout(() => {
+       this.rest_api.updateUserTimeZone(timeZone).subscribe((data) => {
+        } );
+       }, 2000);
+     });
+   }
+
+   getBillingInfo() {
+    this.spinner.show();
+    this.rest_service.getBillingInfo().subscribe((data:any) => {
+      this.spinner.hide();
+      if(data){
+          this.billingDetails = data.message.address;       
+          this.getTimeZones(this.billingDetails.country,this.billingDetails["postalCode"]);
+        }
+      },(err) => {
+        this.toastService.showError("Unable to get the data!");
+        this.spinner.hide();
+      }
+    );
   }
 }

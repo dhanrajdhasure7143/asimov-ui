@@ -5,6 +5,8 @@ import { Country, State, City }  from 'country-state-city';
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { RestApiService } from "../../services/rest-api.service";
 import { ToasterService } from "src/app/shared/service/toaster.service";
+import { PredefinedBotsService } from "../../services/predefined-bots.service";
+import { settings } from "cluster";
 @Component({
   selector: "app-billing-address",
   templateUrl: "./billing-address.component.html",
@@ -35,13 +37,14 @@ export class BillingAddressComponent implements OnInit {
   billingAddress: any;
   stateErrorMessage: string;
   selectedCountryIsoCode: any;
+  timeZone: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private spinner: LoaderService,
     private api: RestApiService,
     private toastService: ToasterService,
-  ) {}
+    private rest_api: PredefinedBotsService  ) {}
 
   ngOnInit(): void {
     this.billingForm = this.formBuilder.group({
@@ -200,7 +203,7 @@ export class BillingAddressComponent implements OnInit {
         this.billingForm.get("addressLine2").setValue(this.billingAddress["line2"]);
         this.billingForm.get("city").setValue(this.billingAddress["city"]);
         this.billingForm.get("country").setValue(this.billingAddress["country"]);
-        
+        this.getTimeZones(this.billingAddress.country,this.billingAddress["postalCode"]);
         // this.billingForm.get("phoneNumber").setValue(this.billingAddress.["phone"]);
         this.onChangeCountry(this.billingAddress.country);
         // this.onChangeState(this.billingAddress.country);
@@ -275,6 +278,18 @@ getSelectedStateName(): string {
     const selectedIsoCode = this.billingForm.get('state').value;
     const selectedState = this.stateInfo.find(state => state.isoCode === selectedIsoCode);
     return selectedState ? selectedState.name : 'Select State';
+}
+
+async getTimeZones(country,postalCode: string) {
+ await this.rest_api.loadTimezones().subscribe((data) => {
+    this.rest_api.setTimezones(data);
+    this.timeZone = this.rest_api.getTimeZoneByZipCode(country,postalCode); // Example for San Francisco ZIP code
+    setTimeout(() => {
+    console.log(this.timeZone);
+    this.rest_api.updateUserTimeZone(this.timeZone).subscribe((data) => {
+     } );
+    }, 2000);
+  });
 }
 
   
