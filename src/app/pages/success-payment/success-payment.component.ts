@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { RestApiService } from '../services/rest-api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-success-payment',
@@ -27,7 +28,11 @@ export class SuccessPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.startCountdown();
-    this.updateSubscriptiondetails();
+    if (environment.isWebhookEnabled) {
+      this.updateSubscriptiondetailsNew();
+    } else {
+      this.updateSubscriptiondetails();
+    }
   }
 
   updateSubscriptiondetails(){
@@ -37,6 +42,16 @@ export class SuccessPaymentComponent implements OnInit {
     })
   }
 
+  updateSubscriptiondetailsNew(){
+    const userid = localStorage.getItem('ProfileuserId');
+    if (userid) {
+      this.rest_api.updateSubscriptionDetailsNew(userid).subscribe((res) => {
+        console.log(res)
+      })
+    } else {
+      console.error('ProfileuserId not found in localStorage');
+    }
+  }
 
   startCountdown(){
     interval(1000).pipe(

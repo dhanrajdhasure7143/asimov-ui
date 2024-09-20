@@ -1925,6 +1925,10 @@ getPaymentCards(){
     return this.http.post("/subscriptionservice/v1/subscriptions/update-session-subscriptions?sessionId="+sessionId,body)
   }
 
+  updateSubscriptionDetailsNew(userId){
+    return this.http.get("/subscriptionservice/v1/subscriptions/validate-user-subscription-stripe?userId="+userId)
+  }
+
   getTasksAttributesForSeletedTasks(){
     return this.http.get("/rpa-service/fetch-attributes-by-task-names")
   }
