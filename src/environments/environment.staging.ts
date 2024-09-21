@@ -56,5 +56,5 @@ export const environment = {
   ezaskUrl: "http://ezask.staging.epsoftinc.in",
   ezChatBotKey:"0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o=",
   product:"AiAgents",
-  isWebhookEnabled: true,
+  isWebhookEnabled: false,
 };
