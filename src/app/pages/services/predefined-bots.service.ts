@@ -229,7 +229,7 @@ export class PredefinedBotsService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.apiToken}`
     });
-    return this.http.post(environment.python_llm+`/generate-caption`, formData, { headers });
+    return this.http.post(environment.python_llm+`/generate-caption`, formData, { headers,responseType: 'text' });
   }
   
   downloadCustomerSupportFiles(body){
