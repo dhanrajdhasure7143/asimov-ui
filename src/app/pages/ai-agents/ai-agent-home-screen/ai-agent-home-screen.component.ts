@@ -501,7 +501,7 @@ proceedToSubscribe() {
   }
 
   navigateToPurchaseAgent(plan){
-    console.log("plan",plan)
+    console.log("plan clicked: ",plan)
     
     let emailToken= this.crypto.encrypt(localStorage.getItem('ProfileuserId'));
 
@@ -527,6 +527,10 @@ proceedToSubscribe() {
     }
     if(plan.name =="Marketing"){
       this.router.navigate(['/pages/aiagent/subscription/marketing'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
+      return
+    }
+    if(plan.name =="Product Owner"){
+      this.router.navigate(['/pages/aiagent/subscription/product-owner'], { queryParams: { token: emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return
     }
 
