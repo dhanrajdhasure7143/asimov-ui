@@ -1028,7 +1028,7 @@ export class AiAgentFormOldComponent implements OnInit {
   runAiAgent(){
     this.spinner.show()
       console.log("AGENT-ID", this.agentUUIDCapture);
-    this.rest_service.startPredefinedBot(this.params.agentId).subscribe((res: any) => {
+    this.rest_service.startPredefinedBot(this.params.agentId,'').subscribe((res: any) => {
     this.spinner.hide();
     this.toaster.toastSuccess("Agent Execution Started")
     }, err => {

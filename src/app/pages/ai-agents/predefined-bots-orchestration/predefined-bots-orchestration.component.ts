@@ -358,7 +358,7 @@ export class PredefinedBotsOrchestrationComponent implements OnInit {
       acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
-        this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId).subscribe(res => {
+        this.rest_api.startPredefinedBot(event.predefinedOrchestrationBotId,'').subscribe(res => {
           this.toaster.toastSuccess(this.toastMessage.botExcecution_success);
           this.spinner.hide();
         }, err => {
