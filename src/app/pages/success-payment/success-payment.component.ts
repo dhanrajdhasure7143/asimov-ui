@@ -4,6 +4,9 @@ import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { RestApiService } from '../services/rest-api.service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
+import { ToasterService } from 'src/app/shared/service/toaster.service';
+import { PredefinedBotsService } from '../services/predefined-bots.service';
 
 @Component({
   selector: 'app-success-payment',
@@ -17,6 +20,8 @@ export class SuccessPaymentComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private rest_api: RestApiService,
+    private toaster: ToasterService,
+    private rest_api_pred: PredefinedBotsService
   ) { 
     this.route.queryParams.subscribe(params => {
       if(params && params.session_id){
@@ -29,7 +34,7 @@ export class SuccessPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.startCountdown();
     if (environment.isWebhookEnabled) {
-      this.updateSubscriptiondetailsNew();
+      this.updateSubscriptionDetailsWebhook();
     } else {
       this.updateSubscriptiondetails();
     }
@@ -42,16 +47,54 @@ export class SuccessPaymentComponent implements OnInit {
     })
   }
 
-  updateSubscriptiondetailsNew(){
+  updateSubscriptionDetailsWebhook() {
     const userid = localStorage.getItem('ProfileuserId');
     if (userid) {
-      this.rest_api.updateSubscriptionDetailsNew(userid).subscribe((res) => {
-        console.log(res)
-      })
+      this.rest_api_pred.updateSubscriptionDetailsWebhook(userid).subscribe((res: any) => {
+          console.log('updateSubscriptionDetailsNew-response', res);
+          if (res.code === 4400) {
+            console.log('Subscription updated successfully.');
+          } else {
+            let errorMessage = '';
+            const supportMail = 'support@epsoftinc.com';
+            switch (res.code) {
+              case 4001:
+                errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
+                break;
+              case 4002:
+                errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
+                break;
+              case 4003:
+                errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
+                break;
+              case 4004:
+                errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
+                break;
+              default:
+                errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
+                break;
+            }
+            Swal.fire({
+              title: 'Oops!',
+              html: `<div>
+                       <strong>Error Code:</strong> ${res.code} <br>
+                       ${errorMessage}<strong>${supportMail}</strong> for assistance.
+                     </div>`,
+              icon: 'info',
+              showCancelButton: false,
+              allowOutsideClick: false,
+            });
+          }
+        },
+        (error) => {
+          this.toaster.showError("Something went wrong, Please contact support.");
+        }
+      );
     } else {
-      console.error('ProfileuserId not found in localStorage');
+      this.toaster.showError("User ID not Found");
     }
   }
+  
 
   startCountdown(){
     interval(1000).pipe(

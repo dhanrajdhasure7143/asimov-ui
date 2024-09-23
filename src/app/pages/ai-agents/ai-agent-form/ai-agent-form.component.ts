@@ -1375,7 +1375,7 @@ export class AiAgentFormComponent implements OnInit {
         this.stageFailed = false;
         this.agentStarted = false;  // Reset agent started flag
         // this.stages.forEach(stage => stage.status = 'running');
-        this.rest_service.startPredefinedBot(this.params.agentId).subscribe(
+        this.rest_service.startPredefinedBot(this.params.agentId, this.agent_uuid).subscribe(
           (res: any) => {
             this.spinner.hide();
             if (res.errorCode == 3054) {

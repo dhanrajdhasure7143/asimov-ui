@@ -28,8 +28,8 @@ export class PredefinedBotsService {
     return this.http.post(`/rpa-service/predefined/save-predefined-bot`,body)
   }
 
-  startPredefinedBot(id){
-    return this.http.post(`/rpa-service/predefined/start-predefinedbot/${id}`,{})
+  startPredefinedBot(id,agent_UUID){
+    return this.http.post(`/rpa-service/predefined/start-predefinedbot/${id}/${agent_UUID}`,{})
   }
 
   stopPredefinedBot(id){
@@ -273,6 +273,12 @@ export class PredefinedBotsService {
     return this.http.post(`/api/user/updateTimezone?tenantId=${tenantId}&timezone=${timeZone}&userId=${userId}`,'')
   }
 
+  getPromtCount(subAgentUUID, isImage: boolean){
+    return this.http.get(`/rpa-service/predefined/markating-limit?agentUUID=${subAgentUUID}&isImage=${isImage}`);
+  }
 
+  updateSubscriptionDetailsWebhook(userId){
+    return this.http.get("/subscriptionservice/v1/subscriptions/validate-user-subscription-stripe?userId="+userId)
+  }
 
 }

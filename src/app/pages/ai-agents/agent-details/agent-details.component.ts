@@ -653,7 +653,7 @@ goToPreviousPage(): void {
   runAiAgent(event){
     this.spinner.show()
     let id=this.selected_drop_agent.predefinedOrchestrationBotId
-    this.rest_api.startPredefinedBot(id).subscribe((res: any) => {
+    this.rest_api.startPredefinedBot(id,'').subscribe((res: any) => {
     this.spinner.hide();
       if (res.errorCode==4200) {
         this.toaster.toastSuccess("Agent Execution Started")
