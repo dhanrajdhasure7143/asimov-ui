@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       <div class="hero-content">
         <div class="hero-text">
           <h1>Revolutionize Your RFP Process With AI Automation</h1>
-          <p>Enhance your RFP efficiency by 5X automate document generation, streamline collaboration, and empower your team to excel.</p>
+          <p>Enhance your RFP response efficiency by AI summarization,  personalized recommendation and automated response generation.</p>
           <ul>
             <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
           </ul>
@@ -264,10 +264,10 @@ export class RfpAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'Smart RFP Management',
-      'Instant Analysis',
-      'Customized RFP Solutions',
-      'Effortless Integration'
+      'RFP Summarization',
+      'Personalized Recommendations',
+      'Feedback loop for continuous improvement',
+      'RFP Proposal Generation'
     ];
   
     keyFeatures = [

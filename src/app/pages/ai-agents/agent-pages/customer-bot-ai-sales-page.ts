@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <h1>Elevate Your Customer Support with AI Automation</h1>
-            <p>Boost your Support Efficiency By 5x</p>
+            <h1>Elevate Your Customer Support with AI Agent</h1>
+            <p>Boost Your Support Efficiency</p>
             <ul>
               <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
             </ul>
@@ -25,7 +25,8 @@ import { Component } from '@angular/core';
     <div class="section">
       <div class="container">
         <h2 class="section-title">Key Features</h2>
-        <p class="section-description">The Customer Support AI Agent enhances your support operations by  automating query handling and leveraging RPA for efficient task  completion. Trained on your company's content, it delivers accurate,  24/7 customer support, significantly reducing team workload. Boost  customer satisfaction and free your team to tackle more complex issues.</p>
+        <p class="section-description">The Customer Support AI Agent enhances your support operations by automating query handling. Trained on your company's content, it delivers accurate, 24/7 customer support,
+        significantly reducing team workload. Boost customer satisfaction and free your team to tackle more complex issues.</p>
         <div class="grid">
           <div class="card" *ngFor="let feature of keyFeatures">
             <div class="card-image">
@@ -49,7 +50,6 @@ import { Component } from '@angular/core';
               <img [src]="benefit.icon" [alt]="benefit.title">
             </div>
             <h3>{{ benefit.title }}</h3>
-            <p>{{ benefit.description }}</p>
           </div>
         </div>
       </div>
@@ -264,10 +264,10 @@ export class CustomerBotAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'Instant Customer Assistance',
-      'Predictive Issue Resolution',
-      'Tailored Customer Interactions',
-      'Custom AI for Your Support'
+      'Easy to setup',
+      'Easy to train',
+      'Trains on Websites and Document',
+      'Tailored Customer interaction'
     ];
   
     keyFeatures = [
@@ -289,7 +289,7 @@ export class CustomerBotAiSalesPageComponent {
       {
         image:"assets/images/agent/sales/CS-content 4.png",
         title: 'Scalability',
-        description: 'Efficiently manage growing support demands without needing more staff, maintaining high support quality.'
+        description: 'Effortlessly train the agent to stay updated with the latest information, eliminating the need for additional staff.'
       }
     ];
   
