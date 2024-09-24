@@ -58,7 +58,8 @@ export const environment = {
   python_llm:"http://llmpython.qa.epsoftinc.in",
   ezaskUrl: "http://ezask.qa.epsoftinc.in",
   ezChatBotKey:"0RsxA5iDRyJg2kIJF91sHykOFng0qfQo5WnfLahWspb+C7QCS5JXREVmQoNxazwVDgcsKyI+2/zjdI5p9GgnxYHS91V+NBNXtNg=",
-  product:"AiAgents"
+  product:"AiAgents",
+  isWebhookEnabled: false,
 };
 
 /*

@@ -14,6 +14,7 @@ import { TestingAiSalesPageComponent } from './agent-pages/testing-ai-sales-page
 import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
 import { AiAgentFormOldComponent } from './ai-agent-form-old/ai-agent-form-old.component';
 import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
+import { ProductOwnerAiSalesPageComponent } from './agent-pages/product-owner-ai-sales-page';
 
 const routes: Routes = [
   {path:'', component:AiAgentsComponent, children:[
@@ -30,6 +31,7 @@ const routes: Routes = [
     {path:'subscription/testing',component: TestingAiSalesPageComponent},
     {path:'subscription/chatbot',component: CustomerBotAiSalesPageComponent},
     {path:'subscription/marketing',component: MarketingAiSalesPageComponent},
+    {path:'subscription/product-owner',component: ProductOwnerAiSalesPageComponent},
   ]
 }
 ]

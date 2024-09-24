@@ -12,7 +12,7 @@
               <div [formGroup]="marketingForm">
                 <!-- Platform Selection with Icons -->
                  <label for="">
-                   <b>Select Platforms <span class="required">*</span></b>
+                   <b>Select Platform <span class="required">*</span></b>
                    <span class="custom-tooltip-btn info-icon" [pTooltip]="selectedPlatformsInfo" tooltipPosition="top">
                             <img src="assets/images/agent/info-icon.svg" alt="info">
                       </span>
@@ -143,7 +143,7 @@
                           rows="9" style="resize: none;" placeholder="Enter Prompt Description">
                       </textarea>
                       <div class="form-buttons" *ngIf="!isGenerated">
-                        <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid || isLoading">
+                        <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid || isLoading || isGenerateDisabled">
                           Clear
                         </button>
                         <button class="btn btn-primary rounded-pill" type="submit" (click)="onSubmit()" [disabled]="marketingForm.invalid || isLoading">
@@ -155,7 +155,7 @@
                       </div>
                       <div class="form-buttons" *ngIf="isGenerated">
                         <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'" class="btn btn-secondary rounded-pill" (click)="onSubmit()"
-                        type="button" [disabled]="regenerateCount >= 3 || isAccepted || isLoading">
+                        type="button" [disabled]="regenerateCount == 0 || isAccepted || isLoading">
                           <i class="fas fa-redo" *ngIf="!isLoading"></i>
                           <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
                           &nbsp; Re-Generate ({{ regenerateCount }}/3)

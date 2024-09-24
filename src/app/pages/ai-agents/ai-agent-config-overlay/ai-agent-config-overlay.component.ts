@@ -1,61 +1,47 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PredefinedBotsService } from '../../services/predefined-bots.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+
 @Component({
   selector: 'app-ai-agent-config-overlay',
   templateUrl: './ai-agent-config-overlay.component.html',
   styleUrls: ['./ai-agent-config-overlay.component.css']
 })
 export class AiAgentConfigOverlayComponent implements OnInit {
-  formFields = [];
-  params: any = {};
-  disabledFormFields: any[] = [];
-  aiActions: any[] = [];
-  attachments: any = {};
   predefinedBotsForm: FormGroup;
+  formFields: any[] = [];
+  attachments: any = {};
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private rest_service: PredefinedBotsService,
-    private spinner: LoaderService,
-
+    private spinner: LoaderService
   ) { }
 
   ngOnInit(): void {
-    this.predefinedBotsForm = this.fb.group({});
     this.initForm();
   }
 
-  loopTrackBy(index: number, field: any): number {
-    return field.id;
-  }
-
-
   initForm() {
-    this.predefinedBotsForm = this.fb.group({
-      aiActions: this.fb.array([])
-    });
+    this.predefinedBotsForm = this.fb.group({});
   }
 
   getData(productId: string, subAgentId: string, runId: string) {
     this.spinner.show();
     this.rest_service.getDisabledFields(productId, subAgentId, runId).subscribe((res: any) => {
-      this.formFields = res.data.data;
-      this.attachments = this.processAttachments(res.data.attachments);
-      this.createFormControls();
+      this.processResponseData(res.data);
       this.spinner.hide();
     });
   }
 
-  // processAttachments(attachments: any[]) {
-  //   const attachmentMap = {};
-  //   attachments.forEach(att => {
-  //     attachmentMap[att.key] = att.attList[0].originalFileName;
-  //   });
-  //   return attachmentMap;
-  // }
+  processResponseData(data: any) {
+    this.formFields = data.data;
+    this.attachments = this.processAttachments(data.attachments);
+    this.createFormControls();
+  }
 
   processAttachments(attachments: any[]) {
     const attachmentMap = {};
@@ -65,53 +51,69 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     return attachmentMap;
   }
 
+  // createFormControls() {
+  //   this.formFields.forEach(field => {
+  //     this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({value: field.preAttributeValue, disabled: true}));
+  //   });
+  // }
   createFormControls() {
-    const aiActionField = this.formFields.find(field => field.preAttributeName === 'RFP_dropdown');
-    if (aiActionField && aiActionField.options) {
-      this.aiActions = aiActionField.options;
-      console.log("aiActions", this.aiActions);
-
-      const aiActionsFormArray = this.predefinedBotsForm.get('aiActions') as FormArray;
-
-      this.aiActions.forEach(action => {
-        const isChecked = this.isActionFieldsPopulated(action);
-        aiActionsFormArray.push(this.fb.control({ value: isChecked, disabled: true }));
-      });
-    }
-  }
-
-  isActionFieldsPopulated(action: any): boolean {
-    const fieldNames = JSON.parse(action.field.replace(/'/g, '"'));
-    return fieldNames.some(fieldName => {
-      const field = this.formFields.find(f => f.preAttributeName === fieldName);
-      return this.hasFieldValue(field);
+    this.formFields.forEach(field => {
+      switch (field.preAttributeType) {
+        // case 'checkbox':
+        //   this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+        //   break;
+        case 'checkbox':
+        const preAttributeValue = field.preAttributeValue;
+        const keyValuePairs = preAttributeValue.match(/(\w+)=(\w+)/g);
+        const obj = {};
+        keyValuePairs.forEach(pair => {
+          const [key, value] = pair.split('=');
+          obj[key] = value === 'true';
+        });
+        field.options.forEach(option => {
+          const control = this.fb.control({ value: obj[option.value], disabled: true });
+          control.setValue(obj[option.value]);
+          control.disable();
+          this.predefinedBotsForm.addControl(option.value, control);
+        });
+        break;
+        case 'calendar':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'radio':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'dropdown':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'file':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'email':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'text':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        case 'textarea':
+          this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
+          break;
+        default:
+          console.log(`Unsupported input type: ${field.preAttributeType}`);
+      }
     });
-  }
-
-  isActionChecked(index: number): boolean {
-    return this.predefinedBotsForm.get('aiActions').value[index];
   }
 
   getFieldValue(field: any): string {
     return field.preAttributeValue || '';
   }
 
-  // getAttachmentName(fieldName: string): string {
-  //   return this.attachments[fieldName] || 'No file chosen';
-  // }
-  
   getAttachmentName(fieldName: string): string {
     const filenames = this.attachments[fieldName];
     if (filenames) {
-      return filenames.join(',<br>');
+      return filenames.join(',');
     }
     return 'No file chosen';
-  }
-
-  getAssociatedFields(actionIndex: number): any[] {
-    const action = this.aiActions[actionIndex];
-    const fieldNames = JSON.parse(action.field.replace(/'/g, '"'));
-    return this.formFields.filter(field => fieldNames.includes(field.preAttributeName));
   }
 
   hasFieldValue(field: any): boolean {
@@ -121,3 +123,24 @@ export class AiAgentConfigOverlayComponent implements OnInit {
     return !!this.getFieldValue(field);
   }
 }
+
+
+
+
+
+// Only check boxes checked
+        //   case 'checkbox':
+        //     const preAttributeValue = field.preAttributeValue;
+        //     const keyValuePairs = preAttributeValue.match(/(\w+)=(\w+)/g);
+        //     const obj = {};
+        //     keyValuePairs.forEach(pair => {
+        //       const [key, value] = pair.split('=');
+        //       obj[key] = value === 'true';
+        //     });
+        //     field.options.forEach(option => {
+        //       const control = this.fb.control({ value: obj[option.value], disabled: true });
+        //       control.setValue(obj[option.value]);
+        //       control.disable();
+        //       this.predefinedBotsForm.addControl(option.value, control);
+        //     });
+        //     break;

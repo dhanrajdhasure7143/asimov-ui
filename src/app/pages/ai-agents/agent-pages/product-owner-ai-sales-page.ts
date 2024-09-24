@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-recruitment-ai-sales-page',
+  selector: 'app-product-owner-ai-sales-page',
   template: `
   <div class="sales-page-container">
   <div class="hero">
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <h1>Revolutionize Your RFP Process With AI Automation</h1>
-          <p>Enhance your RFP response efficiency by AI summarization,  personalized recommendation and automated response generation.</p>
+          <h1>Boost Your Product Management Efficincy With 5X</h1>
+          <p>Enhance your RFP efficiency by 5X automate document generation, streamline collaboration, and empower your team to excel.</p>
           <ul>
             <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
           </ul>
@@ -91,7 +91,7 @@ import { Component } from '@angular/core';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('src/assets/images/agent/sales/RFP-head.png');
+      background-image: url('src/assets/images/agent/sales/product-head.png');
       background-size: cover;
       background-position: center;
       color: white;
@@ -256,7 +256,7 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class RfpAiSalesPageComponent {
+export class ProductOwnerAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
@@ -264,32 +264,27 @@ export class RfpAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'RFP Summarization',
-      'Personalized Recommendations',
-      'Feedback loop for continuous improvement',
-      'RFP Proposal Generation'
+      'Smart RFP Management',
+      'Instant Analysis',
+      'Customized RFP Solutions',
+      'Effortless Integration'
     ];
   
     keyFeatures = [
       {
-        image:"assets/images/agent/sales/rfp-content 1.png",
-        title: 'Concise Summaries',
+        image:"assets/images/agent/sales/product-owner-acceptance.png",
+        title: 'Acceptance Criteria',
         description: 'Upload your RFP and previous responses for concise summaries, ensuring no key information is missed and saving time by summarizing extensive RFPs.'
       },
       {
-        image:"assets/images/agent/sales/rfp-content 2.png",
-        title: 'Comprehensive Responses',
+        image:"assets/images/agent/sales/product-owner-accurate-task.png",
+        title: 'Accurate Task Prioritization',
         description: 'Generate detailed responses based on your uploaded documents, maintaining a high standard in your proposal submissions.'
       },
       {
-        image:"assets/images/agent/sales/rfp-content 3.png",
-        title: 'Template Customization',
+        image:"assets/images/agent/sales/product-owner-automated-story.png",
+        title: 'Automated Story Generation',
         description: 'Customize the response templates to match your company’s branding and  formatting guidelines, ensuring a professional appearance.'
-      },
-      {
-        image:"assets/images/agent/sales/rfp-content 4.png",
-        title: 'Automated Workflow',
-        description: 'The AI Agent automates the entire process of RFP response creation, from  summarization to final response generation.'
       }
     ];
   

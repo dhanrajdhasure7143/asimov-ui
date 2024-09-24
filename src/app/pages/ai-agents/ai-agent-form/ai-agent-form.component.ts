@@ -1379,7 +1379,7 @@ export class AiAgentFormComponent implements OnInit {
         this.stageFailed = false;
         this.agentStarted = false;  // Reset agent started flag
         // this.stages.forEach(stage => stage.status = 'running');
-        this.rest_service.startPredefinedBot(this.params.agentId).subscribe(
+        this.rest_service.startPredefinedBot(this.params.agentId, this.agent_uuid).subscribe(
           (res: any) => {
             this.spinner.hide();
             if (res.errorCode == 3054) {
@@ -1469,7 +1469,7 @@ export class AiAgentFormComponent implements OnInit {
           this.getSubAgentHistoryLogs();
           // this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' failed. You can start again.`);
           // this.toaster.showError(`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`);
-          this.errorMessage=`Stage '${this.stages[this.currentStageIndex].name}' has failed. You can try starting again.`;
+          this.errorMessage=`Stage '${this.stages[this.currentStageIndex].name}' has failed. Please try restarting the process.`;
 
           break;
         // For 'running' or 'pending', we do nothing and continue tracking
