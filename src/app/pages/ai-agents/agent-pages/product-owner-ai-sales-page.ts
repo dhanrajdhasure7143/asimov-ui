@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <h1>Boost Your Product Management Efficincy With 5X</h1>
-          <p>Enhance your RFP efficiency by 5X automate document generation, streamline collaboration, and empower your team to excel.</p>
+          <h1>Boost Your Product Management Efficincy</h1>
+          <p>Automate Jira story creation, streamline backlog management, and empower your product owners by faster creation of user stories.</p>
           <ul>
             <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
           </ul>
@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
   <div class="section">
     <div class="container">
       <h2 class="section-title">Key Features</h2>
-      <p class="section-description">The RFP AI Agent is designed to simplify and expedite the response  process to Requests for Proposals (RFPs). This advanced tool improves  the quality of your submissions and enhances your chances of winning  proposals by automating key aspects of the RFP response process.</p>
+      <p class="section-description">The Product Owner AI Agent streamlines backlog creation and estimation by automating the conversion of high-level requirements or screen designs into detailed Jira epics and stories. It ensures accurate story points and acceptance criteria, saving time and minimizing errors.</p>
       <div class="grid">
         <div class="card" *ngFor="let feature of keyFeatures">
           <div class="card-image">
@@ -59,7 +59,7 @@ import { Component } from '@angular/core';
 
   <div class="section how-it-works">
     <div class="container">
-      <h2 class="section-title">How Does Our RFP AI Agent Work?</h2>
+      <h2 class="section-title">How Does Our Product Owner AI Agent Work?</h2>
       <div class="grid">
         <div class="card icon-card" *ngFor="let step of workingSteps">
           <div class="icon-placeholder">
@@ -264,50 +264,45 @@ export class ProductOwnerAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'Smart RFP Management',
-      'Instant Analysis',
-      'Customized RFP Solutions',
-      'Effortless Integration'
+      'Smart Story Creation ',
+      'Accurate Estimation',
+      'Epic mapping',
+      'Define Acceptance Criteria'
     ];
   
     keyFeatures = [
       {
-        image:"assets/images/agent/sales/product-owner-acceptance.png",
-        title: 'Acceptance Criteria',
-        description: 'Upload your RFP and previous responses for concise summaries, ensuring no key information is missed and saving time by summarizing extensive RFPs.'
+        image:"assets/images/agent/sales/product-owner-automated-story.png",
+        title: 'Automated Story Generation',
+        description: 'The Product Owner AI Agent transforms product requirements into Jira epics and stories with story points including the acceptance criteria. This automation accelerates backlog maintenance and keeps teams aligned.'
       },
       {
         image:"assets/images/agent/sales/product-owner-accurate-task.png",
-        title: 'Accurate Task Prioritization',
-        description: 'Generate detailed responses based on your uploaded documents, maintaining a high standard in your proposal submissions.'
+        title: 'Accurate Estimation',
+        description: 'Automatically assigns accurate story points based on task complexity, ensuring a balanced sprint workload.'
       },
       {
-        image:"assets/images/agent/sales/product-owner-automated-story.png",
-        title: 'Automated Story Generation',
-        description: 'Customize the response templates to match your company’s branding and  formatting guidelines, ensuring a professional appearance.'
+        image:"assets/images/agent/sales/product-owner-acceptance.png",
+        title: 'Acceptance Criteria',
+        description: 'Detailed acceptance criteria are generated for each story, helping teams clearly understand the requirements and expected outcomes.'
       }
     ];
   
     benefits = [
       {
-        icon: 'assets/images/agent/sales/time-efficiency.svg',
-        title: 'Time Savings',
-        description: 'Significantly reduce the time required to read & respond to  RFPs, allowing your team to focus on strategic activities.'
+        icon: 'assets/images/agent/sales/improved-qulity.svg',
+        title: 'Accuracy',
+        description: 'Ensure precise story points andacceptance criteria, reducing rework andimproving clarity.'
       },
       {
-        icon: 'assets/images/agent/sales/improved-qulity.svg',
-        title: 'Improved Quality',
-        description: 'Enhance the quality and accuracy of your RFP responses, ensuring they  are thorough and professionally presented.'
+        icon: 'assets/images/agent/sales/time-efficiency.svg',
+        title: 'Efficiency',
+        description: 'Automate Jira story creation for efficient backlog creation and maintenance'
       },
       {
         icon: 'assets/images/agent/sales/decision-making.svg',
-        title: 'Timely Submissions',
-        description: 'Ensure timely submissions by automating the response creation  process.'
-      },
-      {
-        icon: 'assets/images/agent/sales/marketing-effeiciency.svg',
-        title: 'Efficiency',
-        description: 'Streamline your RFP response workflow, making it more efficient and  less labor-intensive.'
+        title: 'Alignment',
+        description: 'Ensure development efforts stay aligned with business goals through well-defined stories.'
       }
     ];
   
@@ -315,17 +310,17 @@ export class ProductOwnerAiSalesPageComponent {
       {
         icon: 'assets/images/agent/sales/bell-icon.svg',
         title: 'Subscribe Easily',
-        description: 'Start with a simple subscription process — no hidden fees or complexities.'
+        description: 'Start with a simple subscription — no hidden fees.'
       },
       {
         icon: 'assets/images/agent/sales/preferences.svg',
         title: 'Set Your Preferences',
-        description: 'Customize the AI Agent’s functionalities, optimizations, and communications to suit your specific requirements.'
+        description: 'Customize the AI Agent’s features to match your teams needs.'
       },
       {
         icon: 'assets/images/agent/sales/automate.svg',
         title: 'Automate',
-        description: 'Sit back as our AI Agent autonomously manages your RFP activities, from start to finish.'
+        description: 'The AI Agent autonomously manages story creation and prioritization.'
       }
     ];
 
