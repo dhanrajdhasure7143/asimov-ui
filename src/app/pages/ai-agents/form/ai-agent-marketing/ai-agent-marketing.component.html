@@ -128,10 +128,10 @@
                     </label>
                     <div class="prompt-type">
                       <label class="radio-label">
-                        <input type="radio" value="image" (change)="togglePlatformFields()" formControlName="promptType"> Image Prompt
+                        <input type="radio" value="image" (change)="togglePlatformFieldsType()" formControlName="promptType"> Image Prompt
                       </label>
                       <label class="radio-label">
-                        <input type="radio" value="text" (change)="togglePlatformFields()" formControlName="promptType"> Text Prompt 
+                        <input type="radio" value="text" (change)="togglePlatformFieldsType()" formControlName="promptType"> Text Prompt 
                       </label>
                     </div>
                   </div>
@@ -155,7 +155,7 @@
                       </div>
                       <div class="form-buttons" *ngIf="isGenerated">
                         <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'" class="btn btn-secondary rounded-pill" (click)="onSubmit()"
-                        type="button" [disabled]="regenerateCount == 0 || isAccepted || isLoading">
+                        type="button" [disabled]="isAccepted || isLoading || isGenerateDisabled">
                           <i class="fas fa-redo" *ngIf="!isLoading"></i>
                           <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
                           &nbsp; Re-Generate ({{ regenerateCount }}/3)
