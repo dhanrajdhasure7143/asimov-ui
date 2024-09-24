@@ -139,35 +139,33 @@
                     </ul>
                   </div>
                   <span class="bpsbtnsep">|</span>
-                  <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined && !isProcessAnalyst">
-                    <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
+                  <div class="action-item hovericon bvcsave">
+                    <button class="clr-hvr tsttooltipbtn" [outsideClick]="true"
                       (click)="clear()"  #versionControlPopup="bs-popover" [popover]="popTemplate" placement="bottom">
                       <img src="assets/images/RPA/icon_latest/save.svg" class="testplus1" alt="">
                       <span class="testtooltip">Save Bot</span>
                     </button>
                   </div>
-
+<!-- 
                   <div class="action-item" *ngIf="isProcessAnalyst">
                     <button disabled>
                       <img src="assets/images/RPA/icon_latest/save.svg" class="" alt="">
                     </button>
-                  </div>
+                  </div> -->
               
-                  <div class="action-item hovericon" *ngIf="!isProcessAnalyst">
+                  <div class="action-item hovericon">
                     <button class="tsttooltipbtn"
-                      [disabled]="current_instance.finalbot.botId==undefined || current_instance.filteredEnvironments.length==0
-                      || current_instance.actualTaskValue.length == 0"
                       (click)=" current_instance.executeBot()">
                       <img src="assets/images/RPA/icon_latest/play.svg" class="testplus1" alt="">
                       <span class="testtooltip">Start Bot</span>
                     </button>
                   </div>
 
-                  <div class="action-item" *ngIf="isProcessAnalyst">
+                  <!-- <div class="action-item" *ngIf="isProcessAnalyst">
                     <button disabled>
                       <img src="assets/images/RPA/icon_latest/play.svg" class="" alt="">
                     </button>
-                  </div>
+                  </div> -->
                   <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.pausebot==false" (click)=" current_instance.stopBot()">
                       <img src="assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">

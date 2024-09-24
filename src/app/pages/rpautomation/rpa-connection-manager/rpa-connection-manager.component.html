@@ -2,13 +2,13 @@
     <div class="row credential-search-tools">
         <div class="env-data-tool credential-tools">
             <div class="env-btn credential-btntool">
-                    <button *ngIf="(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" value="Create"
+                    <button value="Create"
                         id="addbtn" (click)="addNewConnection()" pTooltip="New" tooltipPosition="top">
                         <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' alt="add">
                     </button>
-                    <button *ngIf="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="disbtn">
+                    <!-- <button *ngIf="!(userRole.includes('Process Owner') || userRole.includes('RPA Developer'))" class="disbtn">
                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" alt="">
-                    </button>
+                    </button> -->
             </div>
         </div>
     </div>

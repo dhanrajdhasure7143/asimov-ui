@@ -29,7 +29,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   userRole:any;
   checkCreate:Boolean=false; 
   freetrail: string;
-  isProcessAnalyst:Boolean=false;
+  isProcessAnalyst:Boolean=true;
   version_type:any;
   comments:any;
   toolsetItems:any=[];
@@ -76,7 +76,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     if(this.userRole.includes("User"))
       localStorage.setItem("isHeader","true");
     if(this.userRole.includes("Process Analyst"))
-      this.isProcessAnalyst=true;
+      // this.isProcessAnalyst=true;
     this.freetrail=localStorage.getItem('freetrail')
     this.getToolsetItems();
     // this.getAllBots();
