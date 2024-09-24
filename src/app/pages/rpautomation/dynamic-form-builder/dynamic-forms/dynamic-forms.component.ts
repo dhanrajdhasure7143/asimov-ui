@@ -231,7 +231,7 @@ export class DynamicFormsComponent implements OnInit {
     }
     else 
     {
-      this.isdisabled = true
+      this.isdisabled = null
     }
   }
 

@@ -245,7 +245,7 @@ export class PredefinedBotsService {
   }
 
   loadTimezones(): Observable<any> {
-    return this.http.get('/assets/timezones.json'); // Adjust the path to where your JSON file is stored
+    return this.http.get('src/assets/timezones.json'); // Adjust the path to where your JSON file is stored
   }
 
   getTimeZoneByZipCode(country, zipCode: string): string | null {

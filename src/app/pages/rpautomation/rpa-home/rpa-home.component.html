@@ -11,12 +11,12 @@
                     <label class="main-subtitle">Let’s Automate !</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
-                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner')">
+                        <div class="rpa-home-block" id="createbot-Home">
                             <button  class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openModal()" aria-hidden="true" placement="bottom">Import</button>
                         </div>
-                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
+                        <!-- <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
                             <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" placement="bottom">Import</button>
-                        </div>
+                        </div> -->
 
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                             <button [disabled]="true" class="btn bluebg-button rpa-home-btn-title" id="create_newbot" (click)="openCreateBotOverlay()" aria-hidden="true" placement="bottom">Create</button>
@@ -156,15 +156,15 @@
                                             <span *ngIf="rowData['botStatus']==null">-</span> -->
                                         </span>
                                         <span  *ngIf="col.DisplayName == 'Actions'">
-                                            <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
+                                            <!-- <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                                                 <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="true" class="button-bot">
                                                     <img src="assets/images/RPA/icon_latest/edit-dis.svg" alt="" class="testplus"> 
                                                 </button>
                                                 <button pTooltip="Delete Bot" tooltipPosition="top" class="button-bot" [disabled]="true">
                                                     <img src="assets/images\RPA\icon_latest/delete-dis.svg" alt="" class="testplus">
                                                 </button>
-                                            </div>
-                                            <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
+                                            </div> -->
+                                            <div class="flex-col">
                                                 <button pTooltip="Edit Bot" tooltipPosition="top" [disabled]="!((isButtonVisible==true && userName==rowData['createdBy'])||(isButtonVisible==false))" 
                                                         (click)="openEditBotOverlay(rowData)">
                                                     <img src="assets/images-n/gridicons/edit-default.svg" alt="" class="testplus default-icon"> 
@@ -174,7 +174,6 @@
                                                 <button pTooltip="Delete Bot" tooltipPosition="top" [disabled]="isButtonVisible==true" (click)="botdelete(rowData)">
                                                     <img src="assets/images-n/gridicons/delete-default.svg" alt="" class="testplus default-icon"> 
                                                     <img src="assets/images-n/gridicons/delete-hover.svg" alt="" class="testplus hover-icon"> 
-                                                    <!-- <img src="assets/images-n/common/delete-blue.svg" alt="" class="testplus "> -->
                                                 </button>
                                                 <button pTooltip="Export Bot" tooltipPosition="top" (click)="onclickDownload(rowData)">
                                                     <img src="assets/images-n/gridicons/download-default.svg" alt="" class="testplus default-icon"> 
