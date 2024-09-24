@@ -281,4 +281,8 @@ export class PredefinedBotsService {
     return this.http.get("/subscriptionservice/v1/subscriptions/validate-user-subscription-stripe?userId="+userId)
   }
 
+  stopInprogressAgent(subAgentUUID, subAgentRunID){
+    return this.http.put(`/rpa-service/predefined/agent-cancel/${subAgentUUID}?predefinedRunId=${subAgentRunID}`,'');
+  }
+  
 }
