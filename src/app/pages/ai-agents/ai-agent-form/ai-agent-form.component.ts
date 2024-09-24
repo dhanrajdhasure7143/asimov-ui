@@ -561,7 +561,7 @@ export class AiAgentFormComponent implements OnInit {
               req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
             }
             if (agentKey) {
-              req_body.fields[agentKey]  = this.agent_uuid;
+              req_body.fields[agentKey]  = this.params.agentId;
             }
           }
 
