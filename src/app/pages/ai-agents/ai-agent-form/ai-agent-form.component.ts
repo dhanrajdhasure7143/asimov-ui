@@ -553,11 +553,15 @@ export class AiAgentFormComponent implements OnInit {
             const keys = Object.keys(req_body.fields);
             const tenantIdKey = keys.find(key => key.includes('TenantId'));
             const userIdKey = keys.find(key => key.includes('UserId'));
+            const agentKey = keys.find(key => key.includes('agentUuid'));
             if (tenantIdKey) {
               req_body.fields[tenantIdKey] = localStorage.getItem('tenantName');
             }
             if (userIdKey) {
               req_body.fields[userIdKey]  = localStorage.getItem('ProfileuserId');
+            }
+            if (agentKey) {
+              req_body.fields[agentKey]  = this.agent_uuid;
             }
           }
 
