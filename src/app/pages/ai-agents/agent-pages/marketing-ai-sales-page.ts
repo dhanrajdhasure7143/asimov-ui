@@ -8,8 +8,7 @@ import { Component } from '@angular/core';
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
-              <h1>Boost Your Marketing Efficiency by 5X</h1>
-              <p>Automate outreach, Streamline collaboration, and watch your team thrive.</p>
+              <h1>Boost Your Social Media Marketing Efficiency</h1>
               <ul>
                 <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
               </ul>
@@ -24,7 +23,7 @@ import { Component } from '@angular/core';
       <div class="section">
         <div class="container">
           <h2 class="section-title">Key Features</h2>
-          <p class="section-description">The Marketing AI Agent combines the power of generative AI and Robotic  Process Automation (RPA) to automate and enhance your marketing efforts.  This sophisticated tool ensures your marketing activities are  efficient, effective, and tailored to your target audience.</p>
+          <p class="section-description">The Social Marketing AI Agent combines the power of generative AI and Robotic Process Automation (RPA) to automate and enhance your marketing creativity. This sophisticated tool ensures your marketing activities gets the attention you deserve.</p>
           <div class="grid">
             <div class="card" *ngFor="let feature of keyFeatures">
               <div class="card-image">
@@ -56,7 +55,7 @@ import { Component } from '@angular/core';
 
       <div class="section how-it-works">
         <div class="container">
-          <h2 class="section-title">How Does Our Recruitment AI Agent Work?</h2>
+          <h2 class="section-title">How Does Our Marketing AI Agent Work?</h2>
           <div class="grid">
             <div class="card icon-card" *ngFor="let step of workingSteps">
               <div class="icon-placeholder">
@@ -262,32 +261,22 @@ export class MarketingAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'Dynamic Campaign Management',
-      'Instant Analytics',
-      'Tailored Marketing Solution',
-      'Seamless Platform Integration',
+      'AI egnerated Image/Text content',
+      'Automated Posting on Social media',
+      'Generate creative content/hashtags  & Automate content posting',
+      'Seamless Integration',
     ];
   
     keyFeatures = [
       {
         image:"assets/images/agent/sales/marketing-content 1.png",
         title: 'Content Creation',
-        description: 'Generates high-quality text and images tailored to your brand, ensuring a consistent voice and audience engagement.'
+        description: 'Generates high-quality text and images tailored to your brand, ensuring a creative voice and audience engagement.'
       },
       {
         image:"assets/images/agent/sales/marketing-content 2.png",
         title: 'Automated Promotion',
         description: 'Seamlessly distributes content across platforms, expanding reach and boosting visibility with minimal effort.'
-      },
-      {
-        image:"assets/images/agent/sales/marketing-content 3.png",
-        title: 'Sentiment Analysis',
-        description: 'Monitors customer reactions in real-time, refining strategies for better resonance and effectiveness.'
-      },
-      {
-        image:"assets/images/agent/sales/marketing-content 4.png",
-        title: 'A/B Testing',
-        description: 'Optimizes content by testing different versions, improving the impact of your marketing campaigns.'
       }
     ];
   
@@ -306,16 +295,6 @@ export class MarketingAiSalesPageComponent {
         icon: 'assets/images/agent/sales/marketing-reach.svg',
         title: 'Reach',
         description: 'Maximizes exposure by effortlessly promoting content across multiple platforms, attracting a larger audience.'
-      },
-      {
-        icon: 'assets/images/agent/sales/marketing-insights.svg',
-        title: 'Insights',
-        description: 'Provides valuable data on customer sentiments and campaign performance for informed, personalized strategies.'
-      },
-      {
-        icon: 'assets/images/agent/sales/marketing-optimization.svg',
-        title: 'Optimization',
-        description: 'Continuously refines marketing efforts through A/B testing and real-time feedback for sustained effectiveness.'
       }
     ];
   
