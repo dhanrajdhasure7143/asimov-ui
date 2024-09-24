@@ -829,7 +829,7 @@
                   </span>
                 </div>
                 <span *ngIf="agentStarted || isComplete || stageFailed" class="centered-message">
-                    <p>{{ agentStarted ? averageTimeAgentExecution : (isComplete ? 'Agent Execution Completed Successfully, Please check Output for more details.' : errorMessage) }}</p>
+                    <p>{{ agentStarted ? averageTimeAgentExecution : (isComplete ? 'Agent execution completed successfully. Please review the output for more details.' : errorMessage) }}</p>
                 </span>
                 <div class="progress-container-new">
                   <button class="rounded-pill" style="height: 30px;" pButton label="Start" 

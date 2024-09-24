@@ -22,12 +22,12 @@ export class AiAgentMarketingComponent implements OnInit {
   @Input() productId!: string;
   @Input() isConfigered: boolean= false;
   @Input() marketingfieldValues: any;
-  selectedPlatformsInfo = 'Select the platform where your content needs to be posted, such as.';
+  selectedPlatformsInfo = 'Select the platform where your content will be posted, (Facebook or Instagram).';
   facebookPageIdInfo = 'Enter the unique Page ID for the Facebook page where the content will be posted.';
-  facebookTokenInfo = 'Provide the Facebook Access Token needed for authenticating and posting content on the selected Facebook page.';
+  facebookTokenInfo = 'Provide the Access Token required to authenticate and post content on the selected Facebook page.';
   instagramPageInfo = 'Enter the unique Page ID for the Instagram account where the content will be posted.';
-  instagramTokenInfo = 'Provide the Instagram Access Token required for authenticating and posting content on the selected Instagram page.';
-  promptTypeInfo = 'Choose the prompt type, either image prompt or text prompt, and enter the content that needs to generate the image or the text that will be posted on the selected platforms based on your provided content.';
+  instagramTokenInfo = 'Provide the Access Token required to authenticate and post content on the selected Instagram account.';
+  promptTypeInfo = 'Choose whether you are entering an image prompt or a text prompt. Based on your choice, enter the content that will generate the image or text to be posted on the selected platforms.';
 
   marketingForm: FormGroup;
   selectedPlatforms: Platform[] = [];
@@ -42,6 +42,7 @@ export class AiAgentMarketingComponent implements OnInit {
   isMarketingAgent = true;
   isLoading: boolean = false;
   isCopied: boolean = false;
+  isGenerateDisabled: boolean = false;
   
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
@@ -119,13 +120,14 @@ export class AiAgentMarketingComponent implements OnInit {
 
       // Handle generated content
       this.generatedImageUrl = this.marketingfieldValues.generatedImageUrl || '';
-      if (this.marketingfieldValues.generatedText) {
-        const generatedTextObj = this.parseGeneratedText(this.marketingfieldValues.generatedText);
-        this.generatedText = {
-          caption: generatedTextObj.caption || '',
-          hashtag: generatedTextObj.hashtag || ''
-        };
-      }
+      this.generatedText = this.extractContentAndTags(this.marketingfieldValues.generatedText)
+      // if (this.marketingfieldValues.generatedText) {
+      //   const generatedTextObj = this.parseGeneratedText(this.marketingfieldValues.generatedText);
+      //   this.generatedText = {
+      //     caption: generatedTextObj.caption || '',
+      //     hashtag: generatedTextObj.hashtag || ''
+      //   };
+      // }
       this.isGenerated = !!this.generatedImageUrl || !!this.generatedText.caption;
       this.togglePlatformFields();
     }
@@ -196,11 +198,16 @@ export class AiAgentMarketingComponent implements OnInit {
         this.isAccepted = true;
       }
       // If generatedText exists, map it to the corresponding fields
-      if (this.generatedText.caption || this.generatedText.hashtag) {
-        requestBody.fields['generatedText'] = {
-          caption: this.generatedText.caption,
-          hashtag: this.generatedText.hashtag
-        };
+      // if (this.generatedText.caption || this.generatedText.hashtag) {
+      //   requestBody.fields['generatedText'] = {
+      //     caption: this.generatedText.caption,
+      //     hashtag: this.generatedText.hashtag
+      //   };
+      //   this.isAccepted = true;
+      // }
+      
+      if (this.generatedText) {
+        requestBody.fields['generatedText'] = `${this.generatedText.caption} ${this.generatedText.hashtag}`;
         this.isAccepted = true;
       }
       console.log('Request Body:', requestBody);
@@ -272,26 +279,20 @@ export class AiAgentMarketingComponent implements OnInit {
   }
   
   hitGenerateCaptionAPI(prompt: string): void {
-    this.isLoading = true;
-    const formData = new FormData();
-    formData.append('prompt', prompt);
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.apiToken}`
-    });
-  
+    this.isLoading = true; 
     this.rest_api.generateCaptionAPI(prompt).subscribe({
-    // this.http.post('http://10.11.0.67:5006/generate-caption', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Caption Response:', this.extractContentAndTags(response));
-        const filteredResponse = this.extractContentAndTags(response)
-        console.log("filteredResponse",filteredResponse);
-        
+        const filteredResponse = this.extractContentAndTags(response)        
         this.generatedText = {
           caption: this.cleanUpString(filteredResponse.caption),
           hashtag: this.cleanUpString(filteredResponse.hashtag)
         };
         this.isLoading = false;
         this.isGenerated = true;
+        if (this.hasGeneratedText) {
+          this.getPromtCount(false);
+        }
       },
       error: (error) => {
         this.isLoading = false;
@@ -302,19 +303,10 @@ export class AiAgentMarketingComponent implements OnInit {
   }
 
   extractContentAndTags(text: string) {
-    // Regex to capture hashtags
     const hashtagPattern = /#\w+/g;
-    
-    // Extract all hashtags
     const hashtags = text.match(hashtagPattern) || [];
-    
-    // Remove hashtags from the original text to get the content
     const content = text.replace(hashtagPattern, '').trim();
-    
-    // Join hashtags into a single string
     const tags = hashtags.join(' ');
-    
-    // Return an object mapping content and tags to separate keys
     return {
       caption: content,
       hashtag: tags
@@ -323,14 +315,7 @@ export class AiAgentMarketingComponent implements OnInit {
   
   hitGenerateImageAPI(prompt: string): void {
     this.isLoading = true;
-    const formData = new FormData();
-    formData.append('prompt', prompt);
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.apiToken}`
-    });
-
     this.rest_api.generateImageAPI(prompt).subscribe({
-    // this.http.post('http://10.11.0.67:5006/generate-image', formData, { headers }).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
         if (response.image) {
@@ -379,14 +364,25 @@ export class AiAgentMarketingComponent implements OnInit {
     }, 2000);
   }
 }
-getPromtCount(isImage: boolean){
-  this.rest_api.getPromtCount(this.agentUUID, isImage).subscribe((response:any)=>{
-  console.log("getPromtCount method calling");
-  if (response && response.executionCoundIs == 0) {
-
-  }
-
-
-  })
+getPromtCount(isImage: boolean) {
+  this.rest_api.getPromtCount(this.agentUUID, isImage).subscribe(
+    (response: any) => {
+      console.log("getPromtCount method calling", response);
+      if (response && response.executionCoundIs !== undefined) {
+        this.regenerateCount = response.executionCoundIs;
+        if (this.regenerateCount === 0) {
+          // Disable the "Generate" button if execution count is 0
+          this.isGenerateDisabled = true;
+        } else {
+          // Re-enable if needed
+          this.isGenerateDisabled = false;
+        }
+      }
+    },
+    (error) => {
+      console.error('API Error:', error);
+      // Handle error case
+    }
+  );
 }
 }
