@@ -260,7 +260,7 @@ export class PredefinedBotsService {
         }
       }
     }
-    return null;
+    return "America/New_York";
   }
 
   setTimezones(data: any): void {
