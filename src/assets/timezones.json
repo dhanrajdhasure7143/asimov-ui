@@ -157,7 +157,7 @@
         "timeZone": "Europe/London"
       }
     ],
-    "India": [
+    "IN": [
       {
         "range": ["110001", "119999"],
         "timeZone": "Asia/Kolkata"
