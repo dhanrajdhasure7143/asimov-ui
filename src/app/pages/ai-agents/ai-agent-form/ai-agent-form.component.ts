@@ -2216,5 +2216,34 @@ removeFilesFromForm(deletedFile:any){
     }
   }
 
+  stopInprogressAgent(agent:any) {
+    console.log('The Output data for agent: ', agent);
+    this.confirmationService.confirm({
+      message: `Are you sure you want to stop the agent? This will end the running process.`,
+      header: "Stop Agent?",
+      acceptLabel: "Stop Agent",
+      rejectLabel: "Cancel",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.spinner.show();
+        this.rest_service.stopInprogressAgent(agent.agentUUID, agent.predefinedRunId).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.toaster.toastSuccess(`The agent has been successfully stopped.`);
+          },
+          err => {
+            this.spinner.hide();
+            this.toaster.showError(this.toastMessages.apierror);
+          }
+        );
+      },
+      reject: () => {
+      }
+    });
+  }
   
 }
