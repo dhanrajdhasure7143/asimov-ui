@@ -43,7 +43,8 @@ export class AiAgentMarketingComponent implements OnInit {
   isLoading: boolean = false;
   isCopied: boolean = false;
   isGenerateDisabled: boolean = false;
-  
+  maxCount: number = 3;
+
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
     { name: 'Instagram', icon: 'fab fa-instagram' },
@@ -264,14 +265,14 @@ export class AiAgentMarketingComponent implements OnInit {
   }
   
   generateText(prompt: string): void {
-    if (this.regenerateCount < 3) {
+    if (this.regenerateCount < this.maxCount) {
       this.regenerateCount++;
       this.hitGenerateCaptionAPI(prompt);
     }
   }
 
   generateImage(prompt: string): void {
-    if (this.regenerateCount < 3) {
+    if (this.regenerateCount < this.maxCount) {
       this.regenerateCount++;
       // this.hitGenerateCaptionAPI(prompt);
       this.hitGenerateImageAPI(prompt);
@@ -364,25 +365,61 @@ export class AiAgentMarketingComponent implements OnInit {
     }, 2000);
   }
 }
-getPromtCount(isImage: boolean) {
-  this.rest_api.getPromtCount(this.agentUUID, isImage).subscribe(
-    (response: any) => {
-      console.log("getPromtCount method calling", response);
-      if (response && response.executionCoundIs !== undefined) {
-        this.regenerateCount = response.executionCoundIs;
-        if (this.regenerateCount === 0) {
-          // Disable the "Generate" button if execution count is 0
-          this.isGenerateDisabled = true;
-        } else {
-          // Re-enable if needed
-          this.isGenerateDisabled = false;
+  getPromtCount(isLimitCheck: boolean) {
+    const promptTypeValue = this.marketingForm.get('promptType')?.value ? this.marketingForm.get('promptType')?.value : null;
+    this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
+      (response: any) => {
+        console.log("getPromtCount method calling", response);
+        if (response) {
+          if (promptTypeValue === 'text') {
+            // this.regenerateCount = response.textExecutionCountIs;
+            if(response.textExecutionCountIs == 3){
+              this.regenerateCount = 0
+            }
+            if(response.textExecutionCountIs == 2){
+              this.regenerateCount = 1
+            }
+            if(response.textExecutionCountIs == 1){
+              this.regenerateCount = 2
+            }
+            if(response.textExecutionCountIs == 0){
+              this.regenerateCount = 3
+            }
+            console.log("this.regenerateCount",this.regenerateCount)
+          } else if (promptTypeValue === 'image') {
+            if(response.imageExecutionCountIs == 3){
+              this.regenerateCount = 0
+            }
+            if(response.imageExecutionCountIs == 2){
+              this.regenerateCount = 1
+            }
+            if(response.imageExecutionCountIs == 1){
+              this.regenerateCount = 2
+            }
+            if(response.imageExecutionCountIs == 0){
+              this.regenerateCount = 3
+            }
+            // this.regenerateCount = response.imageExecutionCountIs;
+          }
+          // Disable the "Re-Generate" button if execution count is 0
+          // this.isGenerateDisabled = this.regenerateCount === 0;
+          this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
+          // if (this.regenerateCount < this.maxCount) {
+          //   this.regenerateCount++;
+          // }
+          console.log("Remaining Count:", this.regenerateCount);
+          console.log("Is Generate Disabled:", this.isGenerateDisabled);
         }
+      },
+      (error) => {
+        console.error('API Error:', error);
       }
-    },
-    (error) => {
-      console.error('API Error:', error);
-      // Handle error case
-    }
-  );
-}
+    );
+  }
+
+  togglePlatformFieldsType(){
+    console.log("test",this.marketingForm.value.promptType)
+    this.getPromtCount(true)
+  }
+
 }

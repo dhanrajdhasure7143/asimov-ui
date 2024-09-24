@@ -273,12 +273,16 @@ export class PredefinedBotsService {
     return this.http.post(`/api/user/updateTimezone?tenantId=${tenantId}&timezone=${timeZone}&userId=${userId}`,'')
   }
 
-  getPromtCount(subAgentUUID, isImage: boolean){
-    return this.http.get(`/rpa-service/predefined/markating-limit?agentUUID=${subAgentUUID}&isImage=${isImage}`);
+  getPromtCount(subAgentUUID, isImage: boolean, promptType){
+    return this.http.get(`/rpa-service/predefined/markating-limit?agentUUID=${subAgentUUID}&isLimitCheck=${isImage}&promptType=${promptType}`);
   }
 
   updateSubscriptionDetailsWebhook(userId){
     return this.http.get("/subscriptionservice/v1/subscriptions/validate-user-subscription-stripe?userId="+userId)
   }
 
+  stopInprogressAgent(subAgentUUID, subAgentRunID){
+    return this.http.put(`/rpa-service/predefined/agent-cancel/${subAgentUUID}?predefinedRunId=${subAgentRunID}`,'');
+  }
+  
 }

@@ -44,8 +44,8 @@ import { Component } from '@angular/core';
     <div class="section benefits">
       <div class="container">
         <h2 class="section-title1">Benefits</h2>
-        <div class="grid-benefits">
-          <div class="card icon-card" *ngFor="let benefit of benefits">
+        <div class="grid-benefits-new">
+          <div class="card icon-card-benefits" *ngFor="let benefit of benefits">
             <div class="icon-placeholder">
               <img [src]="benefit.icon" [alt]="benefit.title">
             </div>
@@ -196,6 +196,13 @@ styles: [`
     gap: 20px;
     margin-bottom: -45px;
   }
+  .grid-benefits-new {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: -45px;
+    justify-content: center !important;
+  } 
   .card {
     background-color: white;
     border-radius: 14px;
@@ -228,6 +235,13 @@ styles: [`
     text-align: center;
     padding: 12px 10px;
     border: 1px solid #b5b3b3;
+  }
+  .icon-card-benefits{
+    text-align: center;
+    padding: 12px 10px;
+    border: 1px solid #b5b3b3;
+    flex: 1 1 300px;
+    max-width: 33.33%;
   }
   .how-it-works .card h3 {
     color: #3199ff;
