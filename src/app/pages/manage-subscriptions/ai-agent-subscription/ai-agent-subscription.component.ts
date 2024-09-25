@@ -338,7 +338,8 @@ export class AiAgentSubscriptionComponent implements OnInit {
         const req_body = {
           userId: localStorage.getItem('ProfileuserId'),
           productId: agent.productId,
-          agentIds: agentIds
+          agentIds: agentIds,
+          isRenew: true
         };
 
         console.log("RENEWAL INFORMATION: ", agent.productId, "UUID's :", agentIds)
