@@ -1,4 +1,4 @@
-import { Component, forwardRef, Inject, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Inject, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AiAgentFormComponent } from '../../ai-agent-form/ai-agent-form.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { ToasterService } from 'src/app/shared/service/toaster.service';
 import { PredefinedBotsService } from 'src/app/pages/services/predefined-bots.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { ConfirmationService } from 'primeng/api';
 interface Platform {
   name: string;
   icon: string;
@@ -22,6 +23,7 @@ export class AiAgentMarketingComponent implements OnInit {
   @Input() productId!: string;
   @Input() isConfigered: boolean= false;
   @Input() marketingfieldValues: any;
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
   selectedPlatformsInfo = 'Select the platform where your content will be posted, (Facebook or Instagram).';
   facebookPageIdInfo = 'Enter the unique Page ID for the Facebook page where the content will be posted.';
   facebookTokenInfo = 'Provide the Access Token required to authenticate and post content on the selected Facebook page.';
@@ -44,12 +46,12 @@ export class AiAgentMarketingComponent implements OnInit {
   isCopied: boolean = false;
   isGenerateDisabled: boolean = false;
   maxCount: number = 3;
+  typedCaption: string = '';
+  typedHashtags: string = '';
 
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
     { name: 'Instagram', icon: 'fab fa-instagram' },
-    // { name: 'Twitter', icon: 'fab fa-twitter' },
-    // { name: 'LinkedIn', icon: 'fab fa-linkedin' }
   ];
   private apiToken = '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';
   constructor(
@@ -59,6 +61,7 @@ export class AiAgentMarketingComponent implements OnInit {
     private rest_api: PredefinedBotsService,
     private spinner : LoaderService,
     private clipboard: Clipboard,
+    private confirmationService: ConfirmationService,
     @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent
   ) {
     this.marketingForm = this.fb.group({
@@ -67,7 +70,7 @@ export class AiAgentMarketingComponent implements OnInit {
       facebookToken: ['', Validators.required],
       instagramPageId: ['', Validators.required],
       instagramToken: ['', Validators.required],
-      promptType: ['', Validators.required],
+      promptType: ['image', Validators.required],
       promptDescription: ['', Validators.required],
     });
   }
@@ -78,7 +81,6 @@ export class AiAgentMarketingComponent implements OnInit {
     //     this.togglePlatformFields();
     //   });
     // });
-    console.log("marketingfieldValues",this.marketingfieldValues);
     this.getPromtCount(true);
   }
   ngOnChanges(changes: SimpleChanges) {
@@ -122,6 +124,13 @@ export class AiAgentMarketingComponent implements OnInit {
       // Handle generated content
       this.generatedImageUrl = this.marketingfieldValues.generatedImageUrl || '';
       this.generatedText = this.extractContentAndTags(this.marketingfieldValues.generatedText)
+      // if (this.generatedText) {
+      //   this.typingEffect(this.generatedText.caption, this.generatedText.hashtag, 0);
+      // }
+      if (this.generatedText) {
+        this.typedCaption = this.generatedText.caption;
+        this.typedHashtags = this.generatedText.hashtag;
+      }
       // if (this.marketingfieldValues.generatedText) {
       //   const generatedTextObj = this.parseGeneratedText(this.marketingfieldValues.generatedText);
       //   this.generatedText = {
@@ -236,17 +245,6 @@ export class AiAgentMarketingComponent implements OnInit {
     this.isAccepted = !this.isAccepted;
   }
 
-  // regenerateContent(): void {
-  //   const promptType = this.marketingForm.get('promptType')?.value;
-  //   const promptDescription = this.marketingForm.get('promptDescription')?.value || 'A dog';
-  
-  //   if (promptType === 'text') {
-  //     this.generateText(promptDescription);
-  //   } else if (promptType === 'image') {
-  //     this.generateImage(promptDescription);
-  //   }
-  // }
-
   onSubmit(): void {
     if (this.marketingForm.valid) {
       const promptType = this.marketingForm.get('promptType')?.value;
@@ -257,7 +255,7 @@ export class AiAgentMarketingComponent implements OnInit {
       } else if (promptType === 'image') {
         this.generateImage(promptDescription);
       }
-  
+      this.scrollToBottom();
       // this.isGenerated = true;
     } else {
       console.error('Form is invalid');
@@ -274,7 +272,6 @@ export class AiAgentMarketingComponent implements OnInit {
   generateImage(prompt: string): void {
     if (this.regenerateCount < this.maxCount) {
       this.regenerateCount++;
-      // this.hitGenerateCaptionAPI(prompt);
       this.hitGenerateImageAPI(prompt);
     }
   }
@@ -289,6 +286,11 @@ export class AiAgentMarketingComponent implements OnInit {
           caption: this.cleanUpString(filteredResponse.caption),
           hashtag: this.cleanUpString(filteredResponse.hashtag)
         };
+        // eanble this for combined text----------------
+        // const fullText = `${this.generatedText.caption}\n${this.generatedText.hashtag}`;
+        // // Start the typing effect for the caption
+        // this.typeText(fullText); // Trigger typing
+        this.typingEffect(this.generatedText.caption, this.generatedText.hashtag);
         this.isLoading = false;
         this.isGenerated = true;
         if (this.hasGeneratedText) {
@@ -365,61 +367,110 @@ export class AiAgentMarketingComponent implements OnInit {
     }, 2000);
   }
 }
+
   getPromtCount(isLimitCheck: boolean) {
-    const promptTypeValue = this.marketingForm.get('promptType')?.value ? this.marketingForm.get('promptType')?.value : null;
+    const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
     this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
       (response: any) => {
         console.log("getPromtCount method calling", response);
         if (response) {
+          // Calculate regenerate count for text or image
           if (promptTypeValue === 'text') {
-            // this.regenerateCount = response.textExecutionCountIs;
-            if(response.textExecutionCountIs == 3){
-              this.regenerateCount = 0
-            }
-            if(response.textExecutionCountIs == 2){
-              this.regenerateCount = 1
-            }
-            if(response.textExecutionCountIs == 1){
-              this.regenerateCount = 2
-            }
-            if(response.textExecutionCountIs == 0){
-              this.regenerateCount = 3
-            }
-            console.log("this.regenerateCount",this.regenerateCount)
+            this.regenerateCount = this.calculateRegenerateCount(response.textExecutionCountIs);
           } else if (promptTypeValue === 'image') {
-            if(response.imageExecutionCountIs == 3){
-              this.regenerateCount = 0
-            }
-            if(response.imageExecutionCountIs == 2){
-              this.regenerateCount = 1
-            }
-            if(response.imageExecutionCountIs == 1){
-              this.regenerateCount = 2
-            }
-            if(response.imageExecutionCountIs == 0){
-              this.regenerateCount = 3
-            }
-            // this.regenerateCount = response.imageExecutionCountIs;
+            this.regenerateCount = this.calculateRegenerateCount(response.imageExecutionCountIs);
           }
-          // Disable the "Re-Generate" button if execution count is 0
-          // this.isGenerateDisabled = this.regenerateCount === 0;
+          // Determine button visibility based on regenerate count
           this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
-          // if (this.regenerateCount < this.maxCount) {
-          //   this.regenerateCount++;
-          // }
+          this.isGenerated = this.regenerateCount > 0 && this.regenerateCount < this.maxCount;
           console.log("Remaining Count:", this.regenerateCount);
           console.log("Is Generate Disabled:", this.isGenerateDisabled);
         }
       },
       (error) => {
-        console.error('API Error:', error);
+        this.toastService.showError("Error occured fetching prompt limit check")
       }
     );
+  }
+
+  calculateRegenerateCount(apiCount: number): number {
+    const maxCount = 3;  // Maximum allowed executions
+    return maxCount - apiCount; // Reverse the count for display
   }
 
   togglePlatformFieldsType(){
     console.log("test",this.marketingForm.value.promptType)
     this.getPromtCount(true)
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error("Scroll Error: ", err);
+    }
+  }
+
+  // eanble this for combined text----------------
+
+  // typeText(fullText: string, delay = 50): void {
+  //   let index = 0;
+  //   this.typedCaption = ''; // Initialize the typedCaption field
+  //   const interval = setInterval(() => {
+  //     if (index < fullText.length) {
+  //       this.typedCaption += fullText.charAt(index); // Append each character to the typedCaption
+  //       index++;
+  //       // Scroll to bottom as text is typed
+  //       this.scrollToBottom();
+  //     } else {
+  //       clearInterval(interval); // Stop typing when the entire text is done
+  //     }
+  //   }, delay);
+  // }
+  
+
+  typingEffect(caption: string, hashtags: string, delay = 50): void {
+    let fullText = caption + '\n' + hashtags;
+    let index = 0;
+    this.typedCaption = '';
+    this.typedHashtags = '';
+    const interval = setInterval(() => {
+      if (index < fullText.length) {
+        if (index < caption.length) {
+          this.typedCaption += fullText.charAt(index);
+        } else {
+          this.typedHashtags += fullText.charAt(index);
+        }
+        index++;
+        this.scrollToBottom();
+      } else {
+        clearInterval(interval);
+      }
+    }, delay);
+  }
+
+  confirmRegenerate() {
+    const promptType = this.marketingForm.get('promptType')?.value;
+    const message = promptType === 'image' 
+      ? 'Regenerating the image will cause you to lose the previously generated image.'
+      : 'Regenerating the text will cause you to lose the previously generated text.';
+      this.confirmationService.confirm({
+      message: message + ' Are you sure you want to continue?',
+      header: "Confirmation",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.onSubmit();
+      },
+      reject: () => {
+        // Optional: Handle rejection
+      }
+    });
   }
 
 }

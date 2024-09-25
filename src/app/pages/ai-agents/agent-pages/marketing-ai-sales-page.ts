@@ -261,7 +261,7 @@ export class MarketingAiSalesPageComponent {
     selectedAgentId:any;
 
     heroFeatures = [
-      'AI egnerated Image/Text content',
+      'AI generated image/text content',
       'Automated Posting on Social media',
       'Generate creative content/hashtags  & Automate content posting',
       'Seamless Integration',
