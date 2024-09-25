@@ -12,12 +12,13 @@
   padding: 0px;
 }
 ::ng-deep .invoice-tab .tabs_screen .p-tabview-nav-content {
-  border: 1px solid #fff !important;
+  border: 1px solid #e7e7e7 !important;
   background-color: #fff;
   border-radius: 0px !important;
   height: 50px;
   width: 100%;
   margin-top: 35px !important;
+  border-radius: 8px !important;
 }
 ::ng-deep .main-content-body {
   margin-top: 0px !important; //top css
@@ -30,7 +31,7 @@
 }
 
 ::ng-deep .p-datatable {
-  background: white !important;
+  
   border-radius: 6px;
 }
 .maincont-subscription {

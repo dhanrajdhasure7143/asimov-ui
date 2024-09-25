@@ -34,7 +34,6 @@
   
   .dialog-content {
     padding: 15px 15px;
-    background-color: whitesmoke;
   }
   
   .pricing-toggle {
@@ -54,41 +53,36 @@
     background-color: #3B82F6;
   }
   
-  .price-display {
-    background-color: white;
-    border-radius: 8px;
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #d9dadc;
-  }
-
   .price-display h2 {
-    font-size: 32px;
+    font-size: 26px;
     /* color: #3B82F6; */
-    color: #3199ff;
+    color: #001C47;
     margin: 0 0 8px 0;
-    font-weight: bold;
+    font-weight: 600;
     font-variant: proportional-nums;
+    min-width: 148px;
+
   }
   
   .price-display span {
     font-size: 14px;
     /* color: #6c757d; */
-    color: black;
+
   }
   
   .agent-features {
-    font-size: 13px;
-    color: #6c757d;
-    margin-bottom: 20px;
+    font-size: 14px;
+    margin: 0px; 
   }
   
   .dialog-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
-    background-color: whitesmoke;
+    padding: 17px 25px;
+  border-top: 1px solid rgb(239, 239, 239);
+    background-color: #FCFCFC;
+  border-radius: 0 0 12px 12px;
   }
   
   .total-price h3 {
@@ -115,8 +109,9 @@
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;
-    height: 35px;
     transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
   
   .proceed-button.dull-green {
@@ -138,27 +133,28 @@
 
 .order-details-popup {
   position: absolute;
-  bottom: 100%;
-  left: -23%;
+  bottom: 82%;
+  left: 10%;
   transform: translateX(-50%);
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  width: 250px;
+  width: 290px;
   margin-bottom: 10px;
 }
 
 .popup-content {
-  font-size: 0.9em;
+  font-size: 14px !important;
 }
 
 .popup-content .flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .popup-content hr {
@@ -190,8 +186,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  background-color: #f0f0f0;
+  background: #fff;
+  padding: 4px 11px;
+  border-radius: 25px;
+  color: #333;
+  border: 1px solid #cecece;
   width: fit-content;
 }
 
@@ -253,4 +252,134 @@
   100% {
     opacity: 1;
   }
+}
+.p-dialog-resizable{
+  -webkit-box-shadow: 4px 7px 12px 6px rgba(0,0,0,0.07);
+  -moz-box-shadow: 4px 7px 12px 6px rgba(0,0,0,0.07);
+  box-shadow: 4px 7px 12px 6px rgba(0,0,0,0.07);
+    border-radius: 12px !important;
+    border: 1px solid rgb(217 213 213);
+   }
+  .p-dialog {
+      display: flex;
+      flex-direction: column;
+      max-height: 90%;
+      transform: scale(1);
+      position: relative;
+      width: 48% !important;
+  }
+  .p-dialog-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+  }
+ 
+  .dialog-header{
+    display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .price-display {
+      background-color: #fff;
+      padding: 8px;
+    display: flex;
+      align-items: center;
+      gap: 16px;
+      border-radius: 8px;
+  }
+  .dialog-bot-image {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+  }
+  .dialog-header h3 {
+      flex-grow: 1;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    padding: 7px 0;
+    color: #001C47 !important;
+  }
+  .dialog-content{
+      padding:18px 15px;
+      background-color: #fff;
+  }
+  .ng-star-inserted h2{
+    font-size: 30px !important;
+      font-weight: 600;
+    min-width: 150px !important;
+    color: #001C47 !important;
+  }
+  .ng-star-inserted span{
+    font-size: 13px;
+    font-weight: 400;
+    display: block;
+    padding-top: 5px;
+  }
+ 
+  .p-dialog-header-close{
+    border: 0px;
+    color: #424242;
+        position: relative;
+      top: 10px;
+      background: transparent;
+  }
+  .proceed-button{
+    background: #3199ff !important;
+      color: #fff;
+      padding: 9px 18px;
+      font-size: 15px;
+      border-radius: 5px;
+    border: 0px;
+    cursor: pointer;
+  }
+  .total-price h3{
+    font-size: 30px;
+    padding-top: 6px;
+    color: #3199ff;
+    font-weight: 700;
+        margin: 0px;
+      padding: 0px;
+  }
+  .total-price p{
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    padding-bottom: 4px;
+  }
+  .agent-count{
+    display: flex !important;
+      flex-direction: column;
+      align-items: center;
+  }
+  span.agent-label{
+    text-align: center;
+    line-height: 18px;
+    padding-top: 10px;
+  }
+  .square-controls button{
+    border: 0px;
+    background: transparent;
+      color: #333;
+    font-size: 18px;
+  }
+  .square-controls button:focus{
+    border: 0px !important;
+    outline: 0px;
+  }
+  .square-quantity {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    padding: 0;
+  }
+.order-details-link{
+  padding: 5px 0 13px 0;
+  margin-bottom: -10px;
+  text-align: center;
 }

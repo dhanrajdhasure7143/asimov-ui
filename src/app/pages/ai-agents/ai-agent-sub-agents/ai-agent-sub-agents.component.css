@@ -48,15 +48,16 @@
   .agent-card {
     border-radius: 10px;
     border: 1px solid #ccc;
+    padding: 18px 18px 15px 18px !important;
     height: 100% !important;
     /* height:106px; */
     /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
   }
   
   .agent-card .card-body {
-    padding: 5px !important;
     display: flex;
     flex-direction: column;
+    padding: 0px !important;
     justify-content: space-between;
 }
   .agent-image {
@@ -75,13 +76,13 @@
   }
   
   .agent-name {
-    font-size: 1rem;
+    font-size: 18px;
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    margin-left: 5px;
+    margin-left: 8px;
   }
   
   .card-text {
@@ -154,7 +155,7 @@
     }
     
     .badge1 {
-      font-size: 12px;
+      font-size: 14px;
       margin: 0;
       line-height: 2.2;
       word-wrap: break-word;
@@ -173,10 +174,11 @@
     }
     
     .cardBtn {
-      font-size: 12px;
+      font-size: 14px;
       white-space: nowrap;
       align-self: end;
-      width: 75px;
+      width: fit-content;
+      font-weight: 500;
     }
     
     .btn-primary {
@@ -206,10 +208,23 @@
       align-items: center;
       gap: 20px;
       justify-content: center;
-
     }
+    .search-sort-section i{}
     .search-sort-section  input{
       padding-left: 36px !important;
+      background: #fff !important;
+      border-radius: 5px !important;
+      border: 1px solid #e4e2e2 !important;  
+      min-width: 400px !important;    
+      box-shadow: 10px 11px 30px -6px rgba(0,0,0,0.1) !important;
+      -webkit-box-shadow: 10px 11px 30px -6px rgba(0,0,0,0.1);
+      -moz-box-shadow: 10px 11px 30px -6px rgba(0,0,0,0.1);
+    }
+    .search-sort-section  input:focus {
+      border: 1px solid #bebdbd !important;
+      -webkit-box-shadow: 10px 11px 23px 0px rgba(0,0,0,0.05);
+      -moz-box-shadow: 10px 11px 23px 0px rgba(0,0,0,0.05);
+      box-shadow: 10px 11px 23px 0px rgba(0,0,0,0.05) !important;
     }
     .search-sort-section button.sort-button {
       background: none !important;
@@ -227,19 +242,21 @@
       left: 10px;
   }
   .search-field {
-    width: 95% !important;
+    width: fit-content;
     /* margin-left: 40% !important; */
   }
 
 .search-input{
-  height: 36px !important;
+  height: 40px !important;
   font-weight: 500;
   /* font-size: 16px; */
 }
 
 .search-sort-section button{
-  width: 230px !important;
-  height: 37px !important;
+  height: 40px !important;
+  font-size: 14px;
+  font-weight: 500 !important;
+  padding: 8px 20px !important;
 }
 
 .no-data-found{
@@ -280,4 +297,30 @@
   justify-content: end !important;
   /* padding-right: 5px !important; */
   margin-bottom: -5px;
+}
+.agent-main-card{
+  margin-bottom: 38px !important;
+}
+.search-sort-section{
+  width: fit-content;
+  padding: 6px 22px !important;
+  font-size: 14px;
+  display: flex !important;
+  align-items: center;
+  grid-gap: 5px;
+  gap: 10px;
+  font-weight: 500;
+  justify-content: center;
+}
+.search-sort-section i{
+  font-size: 11px;
+    position: relative;
+    top: 1px;
+    padding-right: 4px;
+}
+@media (min-width: 1200px) and (max-width: 2000px) {
+  .col-md-6 {
+    padding-right: 19px !important;
+    padding-left: 19px !important;
+  }
 }
