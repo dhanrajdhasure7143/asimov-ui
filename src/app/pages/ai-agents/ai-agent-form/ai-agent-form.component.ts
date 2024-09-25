@@ -142,7 +142,7 @@ export class AiAgentFormComponent implements OnInit {
   subAgentTotalPagesArray: number[] = [];
   searchQuery: string = '';
   isFilterPopupVisible = false;
-  availableStages = ['Success', 'Failed', 'Running'];
+  availableStages = ['Success', 'Failed', 'Running','Cancelled'];
   filterStage: string = '';
   dummyFilterStage: string = ''
   sortOrder: string = '';
