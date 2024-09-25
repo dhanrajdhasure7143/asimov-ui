@@ -400,16 +400,16 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .avatar {
   width: 40px;
   height: 40px;
-  background-color: #001C47;
+  background-color: #3199ff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-size: 18px;
-  font-weight: bold;
-  margin-left: 42%;
+  font-weight: 600;
   margin-bottom: 8px;
+  padding: 7px;
 }
 
 :host ::ng-deep .p-overlaypanel {
@@ -421,11 +421,16 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
   // display: flex;
   align-items: center;
   border-bottom: 1px solid #e1e1e1;
-  text-align: center;
+  display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
 }
 
 .user-details {
   margin-left: 16px;
+  width: 85%;
 }
 
 .user-details h3 {
@@ -455,7 +460,7 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 }
 
 .menu-items li a:hover {
-  background-color: #f1f1f1;
+  background-color: #3199ff1a;
 }
 
 .menu-items li a i {
@@ -484,4 +489,11 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 
 .btn {
   margin-left: auto;
+}
+.ellipsis {
+  // white-space: nowrap;
+  overflow: hidden;
+  // text-overflow: ellipsis;
+  word-wrap: break-word;
+  user-select: text;
 }

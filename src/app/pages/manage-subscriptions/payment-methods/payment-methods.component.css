@@ -5,13 +5,18 @@
 }
 
 .cardsBox {
-  border: 1px solid #e0e0e0;
   background-color: #fff;
-  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid #dad9d9 !important;
+  border-radius: 8px !important;
+  -webkit-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
+  -moz-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
+  box-shadow: 4px 8px 12px 7px rgba(0, 0, 0, 0.04);
   height: 100%;
+  margin-right: 4%;
+  margin-top: 20px;
   transition: border-color 0.3s ease;
+  /* height: fit-content !important; */
 }
 
 .cardsBox:hover {
@@ -24,6 +29,7 @@
   align-items: center;
   cursor: pointer;
   text-align: center;
+  max-height: 386px !important;
 }
 
 .card-image-container {
@@ -122,8 +128,9 @@
 }
 
 .default-btn, .inactive-card {
-  background-color: #e0e0e0;
+  background-color: #fff;
   color: #2196F3;
+  border: 1px solid #e0e0e0 !important;
 }
 
 .default-btn img {
@@ -158,6 +165,7 @@
   display: flex;
   flex-wrap: wrap;
   margin: -0.5rem;
+  padding: 0px;
 }
 .expiryDate{
   float: right;

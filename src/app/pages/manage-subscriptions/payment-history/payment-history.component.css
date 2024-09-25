@@ -1,23 +1,50 @@
 :host ::ng-deep .payment-history-table .p-datatable th {
-    background: white !important;
+
 }
 
 :host ::ng-deep .payment-history-table .p-datatable .p-datatable-header {
-    background: white !important;
+    margin: 14px 0 25px 0 !important;
 }
-
+:host ::ng-deep .payment-history-table .p-datatable .p-datatable-header input{
+    background: #fff !important;
+    width: 270px;
+  }
+:host ::ng-deep .payment-history-table .p-datatable .p-datatable-header button{
+    height: 39px !important;
+    min-width: 108px;
+  }
+:host ::ng-deep .payment-history-table .p-datatable .p-datatable-header button .p-button-label{
+    font-weight: 600;
+}
 :host ::ng-deep .p-datatable-resizable>.p-datatable-wrapper {
     overflow-x: auto;
-    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0px 4px 15px 2px #3199FF26;
+    background: #FFF;
+    border: 1px solid #e7e7e7 !important;
+    border-radius: 8px !important;
+    box-shadow: 4px 2px 8px 4px rgba(0, 0, 0, 0.03);
     margin-bottom: 10px;
     border: 1px solid #E0E0E0;
 }
-
-
+:host ::ng-deep .payment-history-table .p-datatable .p-datatable-header button:hover {
+    background: #2196F3 !important;
+    color: #fff !important;
+    border: 1px solid;
+}
+thead.p-datatable-thead tr, thead tr{
+    border-bottom: 0px !important;
+}
 :host ::ng-deep .p-datatable-scrollable .p-datatable-thead {
     position: sticky;
     top: 0;
     z-index: 0 !important;
+    padding: 10px 0 6px 20px !important;
+    border-bottom: 1px solid #E0E0E0;
+    background: #fff !important;
+}
+.p-datatable-header {
+    margin: 20px 0 !important;
+  }
+.subscrip_tabs{
+    margin: 0 40px !important;
 }

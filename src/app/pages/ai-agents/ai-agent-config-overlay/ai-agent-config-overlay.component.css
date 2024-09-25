@@ -4,7 +4,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px 20px;
-  padding: 6px 0px 0px 0px;
 }
 
 .form-group {
@@ -35,11 +34,6 @@
 .file-name {
   /* margin-left: 10px; */
   /* font-style: italic; */
-  font-size: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .checkbox-group {
@@ -55,33 +49,4 @@
 
 .checkbox-item input[type="checkbox"] {
   margin-right: 5px;
-}
-
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 8px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
-
-.checkbox-input {
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  gap: 40px;
-
-}
-
-.checkbox-label {
-  text-align: center;
-}
-
-.common-bg{
-  background-color: #f9f9f9 !important;
-}
-
-.hidden{
-  display: none !important;
 }
