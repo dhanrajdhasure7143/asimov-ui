@@ -1122,7 +1122,7 @@
                     <td>{{ record.date | date:'MMM d, y HH:mm' }}</td>
                     <td>
                         <span
-                            [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed', 'stage-running': record.stage === 'Running'}">
+                            [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed', 'stage-running': record.stage === 'Running','stage-cancelled':record.stage==='Cancelled'}">
                             {{ record.stage }}
                         </span>
                     </td>

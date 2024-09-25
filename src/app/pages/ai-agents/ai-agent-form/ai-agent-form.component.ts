@@ -2234,6 +2234,8 @@ removeFilesFromForm(deletedFile:any){
           (res: any) => {
             this.spinner.hide();
             this.toaster.toastSuccess(`The agent has been successfully stopped.`);
+            this.getSubAgentsInprogressList()
+            this.getSubAgentHistoryLogs()
           },
           err => {
             this.spinner.hide();
