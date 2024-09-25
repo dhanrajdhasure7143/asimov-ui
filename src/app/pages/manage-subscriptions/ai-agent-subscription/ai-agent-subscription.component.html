@@ -84,12 +84,12 @@
                         <div class="row-cell">
                             <span *ngIf="agent.autoRenew">
                         
-                            <button *ngIf="subAgent.status === 'INACTIVE' || subAgent.expiryDate" class="action-button renew-button"
+                            <button *ngIf="subAgent.cancellation_status === 'CANCELLED' || subAgent.expiryDate" class="action-button renew-button"
                                 (click)="handleRenewal('individual', agent, subAgent)" style="color:#3199FF !important">
                                 Renew
                             </button>
                         
-                            <button *ngIf="subAgent.status === 'ACTIVE' && agent.autoRenew && !subAgent.expiryDate" class="action-button cancel-button"
+                            <button *ngIf="subAgent.cancellation_status === 'NOTCANCELLED' && agent.autoRenew && !subAgent.expiryDate" class="action-button cancel-button"
                                 (click)="subagentCancelSubscription(agent.productId, subAgent)" pTooltip="Cancel Subscription" tooltipPosition="right">Cancel</button>
                             </span>
                             <button *ngIf="!agent.autoRenew" class="action-button cancel-button">-</button>
