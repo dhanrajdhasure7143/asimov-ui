@@ -245,7 +245,7 @@ export class PredefinedBotsService {
   }
 
   loadTimezones(): Observable<any> {
-    return this.http.get('/assets/timezones.json'); // Adjust the path to where your JSON file is stored
+    return this.http.get('src/assets/timezones.json'); // Adjust the path to where your JSON file is stored
   }
 
   getTimeZoneByZipCode(country, zipCode: string): string | null {
@@ -260,7 +260,7 @@ export class PredefinedBotsService {
         }
       }
     }
-    return null;
+    return "America/New_York";
   }
 
   setTimezones(data: any): void {
@@ -281,4 +281,8 @@ export class PredefinedBotsService {
     return this.http.get("/subscriptionservice/v1/subscriptions/validate-user-subscription-stripe?userId="+userId)
   }
 
+  stopInprogressAgent(subAgentUUID, subAgentRunID){
+    return this.http.put(`/rpa-service/predefined/agent-cancel/${subAgentUUID}?predefinedRunId=${subAgentRunID}`,'');
+  }
+  
 }
