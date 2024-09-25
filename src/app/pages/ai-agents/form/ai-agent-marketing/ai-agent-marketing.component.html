@@ -145,7 +145,7 @@
                     <textarea class="form-control no-border" formControlName="promptDescription"
                         rows="9" style="resize: none;" placeholder="Enter Prompt Description">
                     </textarea>
-                    <div class="form-buttons" *ngIf="!isGenerated">
+                    <div class="form-buttons" *ngIf="!isGenerated  && !isGenerateDisabled">
                       <button class="btn btn-secondary rounded-pill" type="button" (click)="clearForm()" [disabled]="marketingForm.invalid || isLoading || isGenerateDisabled">
                         Clear
                       </button>
@@ -156,8 +156,8 @@
                         <span *ngIf="isLoading">Generating...</span>
                       </button>
                     </div>
-                    <div class="form-buttons" *ngIf="isGenerated">
-                      <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'" class="btn btn-secondary rounded-pill" (click)="onSubmit()"
+                    <div class="form-buttons" *ngIf="isGenerated  || isGenerateDisabled">
+                      <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'" class="btn btn-secondary rounded-pill" (click)="confirmRegenerate()"
                       type="button" [disabled]="isAccepted || isLoading || isGenerateDisabled || marketingForm.invalid">
                         <i class="fas fa-redo" *ngIf="!isLoading"></i>
                         <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
@@ -168,7 +168,7 @@
                       </button>
                     </div>
                     <span *ngIf="isGenerateDisabled" style="float: right;">
-                      Maximum limit is exceeded for today, Please try again tomorrow.
+                      {{ marketingForm.get('promptType').value === 'image' ? 'Maximum limit for images is exceeded for today, Please try again tomorrow.' : 'Maximum limit for text prompts is exceeded for today, Please try again tomorrow.' }}
                     </span>
                   </div>
                 </div>
@@ -176,10 +176,10 @@
 
               <div  class="col-md d-flex flex-column generated-output">
                 <!-- <b *ngIf="isGenerated"> AI Generated  {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}} -->
-                <b *ngIf="isGenerated"> AI Generated Content
-                  <small> ({{3 - regenerateCount}} Prompts Remaining) </small>
-                </b>
-                <div class="flex-grow-1 output-content scrollable-content">
+                  <b *ngIf="isGenerated || isGenerateDisabled"> AI Generated Content
+                    <small> ({{3 - regenerateCount}} {{3 - regenerateCount === 1 ? 'Prompt' : 'Prompts'}} Remaining) </small>
+                  </b>
+                <div class="flex-grow-1 output-content scrollable-content"  #scrollContainer>
                   <!-- Generated Image Display -->
                   <div *ngIf="generatedImageUrl" class="generated-image-container">
                   <div class="image-wrapper">
@@ -197,8 +197,12 @@
                         <i [class]="isCopied ? 'pi pi-check' : 'pi pi-copy'"></i>
                         {{ isCopied ? 'Copied!' : 'Copy' }}
                       </button>
-                      <p>{{ generatedText.caption }}</p>
-                      <p>{{ generatedText.hashtag }}</p>
+                       <!-- <p>{{ generatedText.caption }}</p>
+                        <p>{{ generatedText.hashtag }}</p> -->
+                      <!-- eanble this for combined text---------------- -->
+                        <!-- <p>{{ typedCaption }}</p> --> 
+                        <p>{{ typedCaption }}</p>
+                        <p>{{ typedHashtags }}</p>
                     </div>
                   </div>
                   <div *ngIf="isLoading" class="loader-container">
