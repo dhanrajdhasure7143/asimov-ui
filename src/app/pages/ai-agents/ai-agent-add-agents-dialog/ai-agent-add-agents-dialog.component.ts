@@ -81,8 +81,9 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
 
 
           console.log("resrstage", "Agent Deleted Successfully");
-          this.rest_api.addMoreSubAgents(req_body).subscribe(res => {
+          this.rest_api.addMoreSubAgents(req_body).subscribe((res:any) => {
               // this.toastService.showSuccess("Redirecting to payment gateway");
+              if(res.code == 4200){
               this.toastService.toastSuccess("The agent has been added successfully. The amount will be deducted and pro-rated for the current month in your billing cycle.");
               // this.onClose();
               // if (this.closeDialogCallback) {
@@ -91,7 +92,9 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
               this.displayAddAgentDialog = false;
               this.isProcessing = false;
               this.spinner.hide();
-
+            }else{
+              this.toastService.showError(this.toastMessage.apierror);
+            }
             },error => {
               this.spinner.hide();
               this.toastService.showError(this.toastMessage.apierror);
