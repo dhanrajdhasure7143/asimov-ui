@@ -19,7 +19,7 @@
             <div class="agent-info">
                 <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
                 <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon edit-pencil" (click)="onClicksubAgentName()"> <img src="assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
-                <div *ngIf="isSubAgentNameEdit">
+                <div *ngIf="isSubAgentNameEdit" class='sub-agent-inp'>
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
                         <span class="editfields">
@@ -31,7 +31,7 @@
             </div>
             <div class="inbox-attachment info-attachment">
                 <div>
-                    <i class="pi pi-file-pdf"></i> &nbsp;
+                    <i class="pi pi-file-pdf"></i>
                     <span>User guide.pdf</span>
                     <button class="download-button" (click)="downloadInstructionDoc()" pTooltip="Download" tooltipPosition="top">
                         <i class="fa fa-download"></i>
@@ -71,7 +71,7 @@
                 <ng-container *ngIf="isCommonForm  && !isMarketingAgent">
                     <div class="form-container col-12" [formGroup]="predefinedBotsForm">
                         <div formGroupName="fields" class="row">
-                            <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-6': field.visibility}" >
+                            <div *ngFor="let field of formFields; trackBy:loopTrackBy" class="form-group" [ngClass]="{'col-4': field.visibility}" >
                                 <ng-container *ngIf="field.visibility">
                                 <div class="">
                                     <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
@@ -100,7 +100,7 @@
                                         </span> -->
                                         <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'text'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                         [id]="field.preAttributeName" 
-                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired" (click)="updateActiveField(field)">
+                                        [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [required]="field.attributeRequired" (click)="updateActiveField(field)">
                                     </div>
         
                                     <div class="input-icon-wrapper">
@@ -109,7 +109,7 @@
                                         </span> -->
                                         <input pInputText autocomplete="off" *ngIf="field.preAttributeType == 'password'" [style]="{'width':'50%'}" [type]="field.preAttributeType" class="form-control input-with-icon" [placeholder]="field.placeholder" 
                                     [id]="field.preAttributeName" 
-                                    [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [pattern]="field.pattern" [required]="field.attributeRequired">
+                                    [formControlName]="field.preAttributeName" [minlength]="field.minNumber" [maxlength]="field.maxNumber" [required]="field.attributeRequired">
                                     </div>
                                     
             
@@ -318,7 +318,7 @@
                                     <div formGroupName="fields" class="row">
                                         <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                             <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
-                                            <div class="" class="form-group" [ngClass]="{'col-6': field.visibility}">
+                                            <div class="" class="form-group" [ngClass]="{'col-4': field.visibility}">
                                                 <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
                                                     <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
                                                         <img src="assets/images/agent/info-icon.svg" alt="info">
@@ -563,7 +563,7 @@
                                         <div formGroupName="fields" class="row">
                                             <ng-container *ngFor="let field of formFields; trackBy:loopTrackBy" >
                                                 <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
-                                                    <div class=""  class="form-group" [ngClass]="{'col-6': field.visibility}">
+                                                    <div class=""  class="form-group" [ngClass]="{'col-4': field.visibility}">
                                                         <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
                                                             <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
                                                                 <img src="assets/images/agent/info-icon.svg" alt="info">
@@ -811,20 +811,23 @@
                         <div *ngFor="let field of formFields">
                              <div *ngIf="activeField === field.preAttributeName && isConfigered && isFieldEdit">
                                  <hr>
+                                 <div class="twoColFlexBox">
                                  <button *ngIf="isConfigered && isFieldEdit && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
                                  <button *ngIf="isConfigered && isFieldEdit !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
-                             </div>
+                                </div>
+                                </div>
                         </div>
                     </div>
                   </div>
               </div>
             </div>
              <!-- AI agent Execution Progress Bar Starts-->
-             <div *ngIf="showProgress || isConfigered">
+              <div class="Ai-in-action-block" *ngIf="showProgress || isConfigered">
+             <div >
                 <div class="header">
                   <span class="title" style="display: flex;">
                     <span>
-                      <img src="assets/images/agent/rocket.svg" alt="" style="height: 18px;">
+                      <img src="assets/images/agent/rocket.svg" alt="" style="height: 26px;">
                     </span> AI In Action <span style="font-size: 14px; color: #6c757d;">(Stage: {{displayStage}})</span> 
                   </span>
                 </div>
@@ -854,7 +857,7 @@
                   </div>
                 </div>
               </div>
-        
+            </div>
       </div>
 </div>
           <!-- <div class="configuration-container">
@@ -967,7 +970,7 @@
     <!-- Sub Agent History starts-->
     <div class="subagents-history-container">
         <div class="d-flex align-items-center justify-content-between mb-2"
-            style="border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; padding-bottom: 10px;">
+            style="border-bottom: 1px solid #E6E6E6;">
             <!-- Tabs -->
             <div class="tabs-container d-flex" style="gap:40px">
                 <!-- Temporarly commented -->
@@ -1037,7 +1040,7 @@
                     [disabled]="!subAgentFileHasSelectedFiles()">
                     <i class="pi pi-download" style="color: #fff; margin-right: 5px;"></i> Download
                 </button>
-                <button class="download-btn" style="background-color:red" (click)="subAgentFileDeleteSelectedFiles('Files')"
+                <button class="download-btn" style="background-color:#dc3545" (click)="subAgentFileDeleteSelectedFiles('Files')"
                     [disabled]="!subAgentFileHasSelectedFiles()">
                     <i class="pi pi-trash" style="color: #fff; margin-right: 5px;"></i> Delete
                 </button>
@@ -1096,9 +1099,9 @@
         </div>
     
         <!-- Sub-agent History Table -->
-        <table class="subagent-history-table" *ngIf="activeTabMode === 'history'">
+        <table class="subagent-history-table Table-Grid" *ngIf="activeTabMode === 'history'">
             <thead>
-                <tr>
+                <tr class="TableHead">
                     <th>S.No</th>
                     <th>Date</th>
                     <th>Stage</th>
@@ -1137,9 +1140,9 @@
         </table>
     
         <!-- Sub-agent Files Table -->
-        <table class="subagent-history-table" *ngIf="activeTabMode === 'files'">
+        <table class="subagent-history-table Table-Grid" *ngIf="activeTabMode === 'files'">
             <thead>
-                <tr>
+                <tr class="TableHead">
                     <th><input type="checkbox" class="files-input-icon" (change)="subAgentFileToggleSelectAll($event)"></th>
                     <th>File Name</th>
                     <th>

@@ -160,35 +160,35 @@
     "IN": [
       {
         "range": ["110001", "119999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["200001", "209999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["400001", "409999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["500001", "509999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["600001", "609999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["700001", "709999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["800001", "809999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       },
       {
         "range": ["900001", "909999"],
-        "timeZone": "Asia/Kolkata"
+        "timeZone": "Asia/Calcutta"
       }
     ]
   }

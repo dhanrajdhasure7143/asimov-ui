@@ -11,9 +11,9 @@
                 <span>
                     <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
                 </span>
-                <div class="header-cell agent-parent-name" [style.flex]="1.8">
+                <div class="header-cell agent-parent-name" [style.flex]="1.1">
                     <img src="assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
-                    <span class="agent-name label-elipsis" [pTooltip]="agent.agentName" tooltipPosition="top">
+                    <span class="agent-name" [pTooltip]="agent.agentName" tooltipPosition="top">
                         {{ agent.agentName }}
                     </span>
                 </div>
@@ -61,9 +61,9 @@
                     
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
-                        <div class="row-cell sub-agent-row-header" style="flex: 1.46; max-width: 19%; display: flex; align-items: center;">
+                        <div class="row-cell sub-agent-row-header" style="flex:1.46">
                             <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" [disabled]="!agent.autoRenew || (agent.autoRenew && !subAgent.expiryDate)" />
-                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top" class="agent-elipsis">
+                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top">
                                 {{ subAgent.subAgentName }}
                             </span>
                         </div>
@@ -129,9 +129,9 @@
                 <span>
                     <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
                 </span>
-                <div class="header-cell agent-parent-name" [style.flex]="1.8">
+                <div class="header-cell agent-parent-name" [style.flex]="1.2">
                     <img src="assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
-                    <span class="agent-name label-elipsis" [pTooltip]="agent.agentName" tooltipPosition="top">
+                    <span class="agent-name" [pTooltip]="agent.agentName" tooltipPosition="top">
                         {{ agent.agentName }}
                     </span>
                 </div>
@@ -179,7 +179,7 @@
                         </div>
                         
                         <div class="row-cell" style="flex:1.46; max-width: 19%; display: flex; justify-content: flex-start !important;">
-                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top" class="agent-elipsis">
+                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top">
                                 {{ subAgent.subAgentName }}
                             </span>
                         </div>

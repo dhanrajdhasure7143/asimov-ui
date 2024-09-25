@@ -9,7 +9,7 @@
                 <div class="content">
                     <div class="top-section">
                         <div class="bot-image">
-                            <img src="assets/images/mini_bot.svg" alt="mini_bot">
+                            <img src="assets/images/agent/bot-img-02.svg" alt="mini_bot">
                         </div>
                         <h3 class="bot-name">{{ each.predefinedBotName }}</h3>
 
@@ -18,7 +18,7 @@
                             <a *ngIf="each.isHovered" target="_blank" href="" [routerLink]="['/recruitment']" class="agent-name">{{ each.predefinedBotName }} Agent</a>
                             <a *ngIf="each.isHovered" target="_blank" [href]="getBotURL(each)" class="agent-name">{{ each.predefinedBotName }} Agent</a>
                         </span> -->
-                        <p class="add-agents" (click)="showAddAgentDialog($event, each)">+ Add Agents</p>
+                        <p class="add-agents" (click)="showAddAgentDialog($event, each)"><i class="fas fa-plus"></i> Add Agents</p>
                     </div>
                     <!-- <span class="expiry-date">Expires on: 01-08-2025 </span> -->
                     <!-- <div class="bot-details-wrapper" [ngClass]="{'show-more': each.showMore}" #detailsWrapper>
@@ -43,7 +43,7 @@
                         {{ each.details }}
                     </div>
                     <div class="launchButton">
-                        <button class="btn btn-primary rounded-pill" (click)="onclickBot(each)">Launch</button>
+                        <button class="btn btn-primary rounded-pill" (click)="onclickBot(each)">Launch <i class="fas fa-angle-right"></i></button>
                     </div>
                     <!-- <span *ngIf="each.details.length > 200" class="show-more-btn" (click)="toggleDetails($event,each, detailsWrapper)">
                         {{ each.showMore ? 'Show Less' : 'Show More' }}
@@ -79,6 +79,7 @@
             </div>
         </div>
         <div class="sticky-explore-section">
+            <div class="SearchFlexBox">
             <h2 class="search-heading">Explore More AI Agents</h2>
             <div class="search-container">
                 <div class="search-bar-wrapper">
@@ -89,6 +90,7 @@
 
                 <div *ngIf="getTotalSelectedAgents() === 0" class="proceed-to-pay-placeholder"></div>
             </div>
+        </div>
             <!-- <div class="total-section" *ngIf="totalAmount > 0">
                 <div class="d-inline-block mr-4 order-det" *ngIf="totalAmount >0" (mouseenter)="showPopup()"
                     (mouseleave)="hidePopup()">Order details
@@ -185,7 +187,9 @@
                                     </ng-container>
                                 </div> -->
                             </div>
-                            <div class="d-flex justify-content-between align-items-center price-section"
+                       
+                            <div class="twoColFlexBox">
+                                <div class="d-flex justify-content-between align-items-center price-section"
                                 *ngFor="let detail of plan.priceCollection">
 
                                 <!-- Showing Plan Amount -->
@@ -215,37 +219,42 @@
                                 </div>
                             </div>
 
-                            <!-- Agent Features -->
-                            <div class="frame">
-                                <!-- <p class="text-design-below">{{formatFeatures(plan.features)}}</p> -->
-                                <!-- <p class="text-design-below">{{plan.description}}</p> -->
-                                <p #content class="bot-details">
-                                    {{plan.description}}
-                                    <span *ngIf="isOverflowing(content)">
-                                        <i [pTooltip]="isOverflowing(content) ? plan.description : null" 
-                                           tooltipPosition="top" 
-                                           [tooltipStyleClass]="'custom-bot-tooltip'" 
-                                           class="pi pi-ellipsis-h see-more" 
-                                           style="font-size: 22px;"></i>
-                                    </span>
-                                </p>
-                            </div>
-
                             <!-- Agent plan toggle monthly or yearly -->
-                            <div class="plan-selector" >
-                                <label *ngIf="!plan.is_coming_soon">
-                                    <input type="radio" name="plan-{{plan.name}}" value="monthly"
-                                        (change)="changePlan('monthly',plan)" [checked]="selectedPlan === 'Monthly'">
-                                    <span class="custom-radio"></span>
-                                    Monthly
-                                </label>
-                                <label *ngIf="!plan.is_coming_soon">
-                                    <input type="radio" name="plan-{{plan.name}}" value="yearly"
-                                        (change)="changePlan('yearly',plan)" [checked]="selectedPlan === 'Yearly'">
-                                    <span class="custom-radio"></span>
-                                    Yearly
-                                </label>
+                        <div class="plan-selector" >
+                            <label *ngIf="!plan.is_coming_soon">
+                                <input type="radio" name="plan-{{plan.name}}" value="monthly"
+                                    (change)="changePlan('monthly',plan)" [checked]="selectedPlan === 'Monthly'">
+                                <span class="custom-radio"></span>
+                                Monthly
+                            </label>
+                            <label *ngIf="!plan.is_coming_soon">
+                                <input type="radio" name="plan-{{plan.name}}" value="yearly"
+                                    (change)="changePlan('yearly',plan)" [checked]="selectedPlan === 'Yearly'">
+                                <span class="custom-radio"></span>
+                                Yearly
+                            </label>
+                        </div>
                             </div>
+ 
+                       
+
+                           
+
+                                 <!-- Agent Features -->
+                                 <div class="frame">
+                                    <!-- <p class="text-design-below">{{formatFeatures(plan.features)}}</p> -->
+                                    <!-- <p class="text-design-below">{{plan.description}}</p> -->
+                                    <p #content class="bot-details">
+                                        {{plan.description}}
+                                        <span *ngIf="isOverflowing(content)">
+                                            <i [pTooltip]="isOverflowing(content) ? plan.description : null" 
+                                               tooltipPosition="top" 
+                                               [tooltipStyleClass]="'custom-bot-tooltip'" 
+                                               class="pi pi-ellipsis-h see-more" 
+                                               style="font-size: 22px;"></i>
+                                        </span>
+                                    </p>
+                                </div>
 
                         </div>
                     </div>
@@ -391,7 +400,7 @@
             (close)="closeDialog()"></app-ai-agent-add-agents-dialog>
     </p-dialog> -->
 
-<p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '40vw'}" [modal]="true"
+<p-dialog [(visible)]="displayAddAgentDialog" [style]="{width: '60vw'}" [modal]="true"
     [showHeader]="true" [closable]="true" class="custom-dialog" (onHide)="onDialogHide()">
     <ng-template pTemplate="header">
         <div class="dialog-header">

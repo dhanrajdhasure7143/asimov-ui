@@ -5,19 +5,20 @@
 .maindivfoprm.billingformdiv {
     /* width: 65% !important; */
     width: 95% !important;
-    margin: 15px auto 0px auto;
+    margin: 20px 0 0 0 !important;
     height: calc(100vh - 145px);
   }
 
 ::ng-deep .maindivfoprm input.p-inputtext, .maindivfoprm .p-dropdown {
     /* border-color: #979797 !important; */
-    border-color: #747272 !important;
+    border: 1px solid #d1cfcf !important;
+    border-radius: 8px !important;
+    padding: 8px 30px !important;
+    box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.02) !important;
     color: #232832;
     color: var(--main-txtcolor);
     height: 40px;
     background: white !important;
-    box-shadow: none !important;
-    border-radius: 5px !important;
 }
 
 ::ng-deep .maindivfoprm .label-control, .modelprbody label {
@@ -31,8 +32,9 @@
 }
 
 ::ng-deep .maindivfoprm .p-dropdown{
-    border-radius: 5px !important;
-    border-color: #747272 !important;
+    border: 1px solid #d1cfcf !important;
+    border-radius: 8px !important;
+    box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
 ::ng-deep .p-dropdown .p-dropdown-trigger {
