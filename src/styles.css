@@ -3851,6 +3851,11 @@ button{
 .hero ul {
   margin-bottom: 0px !important;
 }
+.hero-content{
+  display: flex;
+  align-items: center !important;
+  justify-content: space-between;
+}
 @media (min-width: 1200px) and (max-width: 1300px) {
   .card-title-new, .bot-name{
     font-size: 18px !important;
