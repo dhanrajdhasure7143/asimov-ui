@@ -1,5 +1,5 @@
 .container-fluid{
-    background-color:rgba(0, 0, 0, 0.125);
+    background-color:#F5F7FA;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -11,12 +11,15 @@
     max-width: 400px;
     text-align: center;
     padding: 20px;
+    border: 1px solid #e9e9e9 !important;
+    border-radius: 8px !important;
+    box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
     position: relative;
 }
 
 .image-circle {
     width: 100%;
-    height: 250px;
+    height: 180px;
     display:flex;
     justify-content: center;
     align-items:center;
@@ -51,25 +54,27 @@
 }
 
 .title-success{
-    color: #44b669;
+    color: #2cda94;
     margin: -20px 0 15px;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: bolder;
     margin-top: -50px 
 }
 
 .success-message1{
-    color: black;
+    color: #001C47;
     margin: 10px 0 8px;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 25px;
 }
 
 .success-message2 {
-    color: black;
+    color: #001C47;
     margin: 8px 0;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 600;
 }
 
 @media only screen and (min-width: 768px) {
