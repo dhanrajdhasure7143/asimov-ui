@@ -1,44 +1,44 @@
 <div class="pricing-controls">
 
-    <div class="top-qty-selection-section">
-      <div class="agents">
-        <h2 class="top-monthly-head">Select no of Agents</h2>
-        <div class='d-flex'>
-          <div class="counter">
-            <button (click)="decrementAgents()">-</button>
-            <span>{{ agentsQuantity }}</span>
-            <button (click)="incrementAgents()">+</button>
-          </div> 
-        </div>
-      </div>
-
-      <div class="pricing-controls-inner">
-          <h2 class="top-monthly-head">Choose Plan</h2>
-          <div class="billing-cycle">
-            <span [class.active]="!isYearly">Monthly</span>
-            <label class="switch">
-              <input type="checkbox" [(ngModel)]="isYearly" (change)="onplanTyreChanges()">
-              <span class="slider round"></span>
-            </label>
-            <span [class.active]="isYearly">Yearly</span>
-          </div>
+  <div class="top-qty-selection-section">
+    <div class="agents">
+      <h2 class="top-monthly-head">Select no of Agents</h2>
+      <div class='d-flex justify-content-center'>
+        <div class="counter">
+          <button (click)="decrementAgents()">-</button>
+          <span>{{ agentsQuantity }}</span>
+          <button (click)="incrementAgents()">+</button>
+        </div> 
       </div>
     </div>
 
-   <div class="bottom-proceed-pay-sec">
-      <div class="price-estimation">
-        <div class="price-lable">
-          <h2 class="top-monthly-head">Price Estimate</h2>
+    <div class="pricing-controls-inner">
+        <h2 class="top-monthly-head">Choose Plan</h2>
+        <div class="billing-cycle">
+          <span [class.active]="!isYearly">Monthly</span>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="isYearly" (change)="onplanTyreChanges()">
+            <span class="slider round"></span>
+          </label>
+          <span [class.active]="isYearly">Yearly</span>
         </div>
-        <div class="price-display">
-          <p class="pricing-section-number">${{totalAmount}}</p>
-        </div>
-      </div>
-
-      <div class='prc-btn'>
-        <button class="btn pay-button rounded-pill" (click)="proceedToPay()">
-          <p class="m-0">Proceed To Pay</p>
-        </button>
-      </div>
-   </div>    
+    </div>
   </div>
+
+ <div class="bottom-proceed-pay-sec">
+    <div class="price-estimation">
+      <div class="price-lable">
+        <h2 class="top-monthly-head">Price Estimate</h2>
+      </div>
+      <div class="price-display">
+        <p class="pricing-section-number">${{totalAmount}}</p>
+      </div>
+    </div>
+
+    <div class='prc-btn'>
+      <button class="btn pay-button" (click)="proceedToPay()">
+        <p class="m-0">Proceed To Pay</p>
+      </button>
+    </div>
+ </div>    
+</div>

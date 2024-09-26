@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <h1>Boost Your Product Management Efficincy</h1>
+          <h1>Boost Your Product Management Efficiency</h1>
           <p>Automate Jira story creation, streamline backlog management, and empower your product owners by faster creation of user stories.</p>
           <ul>
             <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
