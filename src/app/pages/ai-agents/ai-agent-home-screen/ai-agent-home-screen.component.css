@@ -1285,6 +1285,6 @@ display: block;;
 }
 @media (min-width: 1100px) and (max-width: 1800px) {
   .inner-enterprise-modal-sec{
-    width: 700px !important;
+    width: 460px !important;
 }
 }

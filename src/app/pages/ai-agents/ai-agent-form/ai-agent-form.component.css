@@ -1620,7 +1620,7 @@ width: 300px;
 position: absolute;
 z-index: 1000;
 background-color: white;
-border: 1px solid #d1cfcf;
+border: 1px solid #d7d5d5;
 border-radius: 5px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 width: 60% !important;
@@ -1672,7 +1672,7 @@ color: #3199FF;
 }
 
 .border-bottom {
-border-bottom: 1px solid #969696 !important;
+border-bottom: 1px solid #d7d5d5 !important;
 }
 
 .custom-dialog .p-dialog-content{
@@ -1706,4 +1706,13 @@ top: 2px !important;
   border: none !important;
   padding: 40px 28px 27px 28px !important ;
   margin-left: 14px !important;
+}
+
+@media (min-width: 1100px) and (max-width: 1499px) {
+  .option-container{
+    padding: 8px 6px 9px  26px !important;
+  }
+}
+.output-cls{
+  padding-top: 10px;
 }
