@@ -5,8 +5,7 @@
 
 .form-control {
   flex-grow: 1;
-  min-width: 70%;
-  width: 70%;
+  width: 100% ;
 }
 
 .col-form-label b{
@@ -130,9 +129,7 @@
 .form-container {
   /* min-height: 65vh; */
   /* max-height: 60vh; */
-  overflow-x: hidden;  /* Enable vertical scrolling */
   padding: 24px 0 0px 0px;   /* Optional: Padding for better content spacing */
-  overflow-y: auto;
   /* margin-top: 20px; */
   width: 98%;
   margin-left: 14px;
@@ -396,7 +393,10 @@ display: block !important;
 flex-direction: row-reverse !important;
 padding: 1rem !important;
 }
-
+::ng-deep .custom-accordion .p-accordion-header-link::before {
+  position: relative;
+  top: 1px;
+}
 ::ng-deep .custom-accordion {
 padding-bottom: 0;
 }
@@ -1327,9 +1327,6 @@ flex-basis: 25%;
 .success{
 background-color: #55b04b;
 }
-.common-form{
-border-bottom: 1px solid #dee2e6 !important;
-}
 
 .inprogress-progress-bar-inner {
 border-radius: 5px;
@@ -1476,8 +1473,8 @@ position: relative;
 overflow: hidden;
 border-top-left-radius: 0px;
 border-bottom-left-radius: 0px;
-border-top-right-radius: 18px;
-border-bottom-right-radius: 18px;
+border-top-right-radius: 8px;
+border-bottom-right-radius: 8px;
 }
 
 .info-icon{
@@ -1607,6 +1604,7 @@ padding: 0;
 border: none !important;
 cursor: pointer;
 width: 100%;
+box-shadow: none !important;
 margin-top: 12px !important;
 }
 
@@ -1622,11 +1620,11 @@ width: 300px;
 position: absolute;
 z-index: 1000;
 background-color: white;
-border: 1px solid #969696;
+border: 1px solid #d1cfcf;
 border-radius: 5px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 width: 60% !important;
-left: 36%;
+left: 37%;
 max-height: 165px;
 }
 
@@ -1697,10 +1695,15 @@ background: rgba(49, 153, 255, 0.1) !important;
 position: relative;
 top: 2px !important;
 }
-.sub-agent-inp{
-  width: 30%;
+.p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon::before{
+  position: relative;
+  top: 1px;
 }
-.sub-agent-inp input{
-  width: 75% !important;
-  background-color: #fff !important;
+.EditAgentName .p-inputtext{
+  width: 350px !important;
+}
+.accordion-content .p-accordion .p-accordion-content {
+  border: none !important;
+  padding: 40px 28px 27px 28px !important ;
+  margin-left: 14px !important;
 }
