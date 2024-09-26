@@ -1285,6 +1285,12 @@ display: block;;
 }
 @media (min-width: 1100px) and (max-width: 1800px) {
   .inner-enterprise-modal-sec{
+    width: 650px !important;
+}
+}
+
+@media (min-width: 1100px) and (max-width: 1800px) {
+  .success-enter-overlay{
     width: 460px !important;
 }
 }
