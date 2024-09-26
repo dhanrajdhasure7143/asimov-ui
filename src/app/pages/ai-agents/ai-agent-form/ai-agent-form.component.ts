@@ -170,6 +170,7 @@ export class AiAgentFormComponent implements OnInit {
   panelPosition = {};
 
   activeOverlay: OverlayPanel | null = null;
+  toDeletFiles:any=[];
   
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -437,14 +438,14 @@ export class AiAgentFormComponent implements OnInit {
         req_body["productId"] = this.predefinedBot_id
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         // req_body.fields[this.selectedOption.preAttributeName] = res.fileName
-        console.log("this.attachmentMap.",this.attachmentMap)
-        console.log("this.filePathValuesthis.",this.filePathValues)
+        // console.log("this.attachmentMap.",this.attachmentMap)
+        // console.log("this.filePathValuesthis.",this.filePathValues)
                 
         this.filePathValues.forEach(element => {
           req_body.fields[element.attributName] = element.filePath
         });
         const allKeys = Object.keys(this.attachmentMap);
-        console.log("allKeys",allKeys)
+        // console.log("allKeys",allKeys)
         allKeys.forEach(key => {
           let filePath = '';
           const attachments = this.attachmentMap[key];
@@ -457,16 +458,32 @@ export class AiAgentFormComponent implements OnInit {
           // Push the generated filePath into the paths array
           req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
         });
+        this.toDeletFiles=[];
         this.formFields.forEach(e => {
           if (e.preAttributeName === 'RFP_dropdown') {
-            e.options.forEach(item => {
-              const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
-                (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
-              if (key) {
-                const [fieldName, fieldValue] = key.split(':');
-                req_body.fields[fieldName] = fieldValue;
-              }
-            });
+              e.options.forEach(item => {
+                if(item.value === 'RFP_Summarizer' && !req_body["fields"].RFP_dropdown.RFP_Summarizer){
+                  this.assignValue_deletFiles(item.field,req_body)
+                }
+                if(item.value === 'Proposal_Generator' && !req_body["fields"].RFP_dropdown.Proposal_Generator){
+                  this.assignValue_deletFiles(item.field,req_body)
+                }
+                const key = item.value === 'RFP_Summarizer' ? (req_body["fields"].RFP_dropdown.RFP_Summarizer ? item.ifTrue : item.ifFalse) :
+                  (item.value === 'Proposal_Generator' ? (req_body["fields"].RFP_dropdown.Proposal_Generator ? item.ifTrue : item.ifFalse) : null);
+                if (key) {
+                  const [fieldName, fieldValue] = key.split(':');
+                  req_body.fields[fieldName] = fieldValue;
+                }
+              });
+            // }
+            // e.options.forEach(item => {
+            //   const key = item.value === 'RFP_Summarizer' ? (this.checkedOptions.includes('RFP_Summarizer') ? item.ifTrue : item.ifFalse) :
+            //     (item.value === 'Proposal_Generator' ? (this.checkedOptions.includes('Proposal_Generator') ? item.ifTrue : item.ifFalse) : null);
+            //   if (key) {
+            //     const [fieldName, fieldValue] = key.split(':');
+            //     req_body.fields[fieldName] = fieldValue;
+            //   }
+            // });
           }
         });
 
@@ -483,11 +500,27 @@ export class AiAgentFormComponent implements OnInit {
           });
         }
         console.log('req_body------:', req_body);
+        // console.log('toDeletFiles:', this.toDeletFiles);
+        // this.spinner.hide();
         this.saveAgentApi(req_body,type)
       // })
       // } else {
       //   this.toaster.showInfo("Fill All fields")
       // }
+  }
+
+  // this method is used to assign empty values in update agent config form and delete files if checkbox is unchecked
+  assignValue_deletFiles(item,req_body){
+    let array = JSON.parse(item)
+    // console.log('this.subAgentFileHistory:', this.subAgentFileHistory);
+    array.forEach(element => {
+      const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
+      console.log('field:', field);
+      if (field) {
+        field.preAttributeType =='file' ? this.toDeletFiles.push(this.subAgentFileHistory.find(file => file.inputKey == element.fieldName)):null;
+        req_body.fields[element.fieldName] = "";
+      }
+    });
   }
 
   recruitmentAgentCreate(type){
@@ -585,9 +618,7 @@ export class AiAgentFormComponent implements OnInit {
           req_body.fields[key]= req_body.fields[key]?req_body.fields[key]+','+filePath:filePath;
         });
         }
-        console.log("Manikanta--- > "+req_body);
         delete req_body.fields.botName
-        console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
           this.duplicateAttributes.forEach(ele=>{
             if(ele.options){
@@ -612,6 +643,8 @@ export class AiAgentFormComponent implements OnInit {
       // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
       if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      }else{
+        this.fetchAllFieldsWithValue();
       }
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -627,7 +660,11 @@ export class AiAgentFormComponent implements OnInit {
         this.showProgress = true
         this.isFieldEdit = false;
         // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+        }else{
+          this.fetchAllFieldsWithValue();
+        }
       this.spinner.hide();
       this.toaster.showSuccess(this.subAgentName,"update")
     },err=>{
@@ -643,9 +680,32 @@ export class AiAgentFormComponent implements OnInit {
     };
     this.rest_service.captureAgentIdandfileIds(agentId, payload).subscribe(res => {
       console.log("Captured agent ID and file IDs:", res);
-      this.fetchAllFieldsWithValue();
+        // Filter out null values and check if there are any files to delete
+        const filesToDelete = this.toDeletFiles.filter(file => file != null);
+        console.log("Files to delete:", filesToDelete);
+        if (filesToDelete.length > 0) {
+      this.rest_service.deleteAgentFIles(filesToDelete).subscribe(
+        (res: any) => {
+            this.getSubAgentFileHistoryLogs();
+            this.fetchAllFieldsWithValue();
+            this.subAgentFileHistory.forEach(file => file.selected = false);                       
+        },
+        (err) => {
+            this.spinner.hide();
+            this.fetchAllFieldsWithValue();
+            this.toaster.showError(this.toastMessages.apierror);
+        }
+    );
+        } else {
+          // If there are no files to delete, just update the UI
+          this.getSubAgentFileHistoryLogs();
+          this.fetchAllFieldsWithValue();
+        }
+  
       this.filePathValues = [];
       this.capturedFileIds = [];
+        // Reset toDeletFiles after processing
+      this.toDeletFiles = [];
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
@@ -943,10 +1003,6 @@ export class AiAgentFormComponent implements OnInit {
     let checkValue:any
         checkbox = event.target as HTMLInputElement;
         checkValue = checkbox.checked;
-        console.log(this.predefinedBotsForm.get('fields.' + field.preAttributeName))
-        console.log("event------checkValue",checkValue)
-        console.log("event-----22222-option",JSON.parse(option.field))
-        console.log("event------field",field)
 
       this.predefinedBotsForm.get('fields.' + field.preAttributeName).get(option.value).setValue(checkbox.checked);
     if(option.field != null){
