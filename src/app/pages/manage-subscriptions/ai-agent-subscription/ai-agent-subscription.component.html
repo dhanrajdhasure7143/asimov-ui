@@ -68,8 +68,8 @@
                             </span>
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center; text-transform: lowercase;">
-                                {{ subAgent.status }}
+                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center;">
+                                {{ subAgent.status | titlecase}}
                             </span>
                         </div>                                              
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
@@ -184,8 +184,8 @@
                             </span>
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge inactive-status" style="text-transform: lowercase;">
-                                {{ subAgent.status }}
+                            <span class="status-badge inactive-status">
+                                {{ subAgent.status | titlecase}}
                             </span>
                         </div>
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
