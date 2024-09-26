@@ -2045,14 +2045,17 @@ input.p-inputtext:focus{
   padding: 0px !important;
 }
 .editfields i {
-  padding: 6px;
-  background: #F5F6F7;
-  border: 1px solid #CFD2D9;
-  border-radius: var(--main-borderradius);
-  box-shadow: 0px 2px 6px rgb(0 0 0 / 10%);
+  background: #fff;
+  border: 1px solid #d1cfcf !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.02) !important;
   margin-left: 3px;
   cursor: pointer;
   z-index: 2;
+  position: relative;
+    left: -41px;
+    top: 1px;
 }
 .kpipercent p-knob svg {
   display: flex;
@@ -3750,18 +3753,18 @@ button{
   gap: 38px !important;
 }
 .grid-item, .card {
-  border: 1px solid #dad9d9 !important;
+  border: 1px solid #e9e9e9 !important;
   border-radius: 8px !important;
-  -webkit-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
-  -moz-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
-  box-shadow: 4px 8px 12px 7px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
+  -moz-box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
 }
 .custom-card{
-  border: 1px solid #dad9d9 !important;
+  border: 1px solid #e9e9e9 !important;
   border-radius: 8px !important;
-  -webkit-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
-  -moz-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
-  box-shadow: 4px 8px 12px 7px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
+  -moz-box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 6px 6px 12px 2px rgba(0, 0, 0, 0.04);
 }
 
 .launchButton {
@@ -3829,6 +3832,11 @@ button{
 .p-field{
   padding-top: 12px;
 }
+.marketing-form-container .accordion-content .p-accordion, .marketing-form-container .p-accordion-content, .marketing-form-containerb .p-toggleable-content  {
+  border: none !important;
+  padding: 40px 28px 27px 28px !important ;
+  margin-left: 14px !important;
+}
 @media (min-width: 1200px) and (max-width: 1300px) {
   .card-title-new, .bot-name{
     font-size: 18px !important;
@@ -3858,7 +3866,26 @@ button{
     font-size: 15px !important;
 }
 .p-dialog {
-  max-width: 38%;
+  max-width: 46%;
   border-radius: 8px !important;
 }
+}
+@media (min-width: 1100px) and (max-width: 1500px) {
+  .bot-name, .card-title-new{
+    font-size: 16px !important;
+  }
+  .add-agents{
+    min-width: 108px !important;
+  }
+  .badge1 {
+    font-size: 13px !important;
+    line-height: 20px !important;
+}
+.agent-card {
+  padding: 12px !important;
+}
+.agent-name {
+  font-size: 16px !important;
+}
+
 }

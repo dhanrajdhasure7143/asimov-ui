@@ -1,6 +1,3 @@
-.marketing-form-container {
-  padding: 8px 0px 0px 0px;
-}
 
 .platform-selection {
   /* display: flex !important; */
@@ -98,7 +95,10 @@ input.p-inputtext{
 :host ::ng-deep .p-multiselect {
   width: 46% !important ;
   border-radius: 5px;
-  padding: 0.20rem;
+  border: 1px solid #d1cfcf !important;
+  border-radius: 8px !important;
+  padding: 1px 0px !important;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.02) !important;
 }
 :host ::ng-deep .p-multiselect .p-multiselect-panel {
   height: auto !important;
@@ -128,7 +128,7 @@ input.p-inputtext{
   justify-content: flex-end;
   gap: 10px;
   margin-top: 15px;
-  border: 1px solid #d1cfcf !important;
+  border-top: 1px solid #d1cfcf !important;
   padding: 8px;
 }
 .p-multiselect {
@@ -148,7 +148,7 @@ color: white !important;
   background-color: #f8f9fa;
   border-radius: 5px;
   /* padding: 20px; */
-  padding: 5px;
+  padding: 20px;
 }
 
 .generated-output h4 {
@@ -221,9 +221,10 @@ color: #3199FF;
 width: 100%;
 margin: 0 auto;
 padding: 0px 100px;
-border: 1px solid #e0dcdc;
+border: 1px solid #d1cfcf;
 border-radius: 8px;
 position: relative;
+background: #fff;
 }
 
 .generated-image {
@@ -231,11 +232,6 @@ width: 100%;
 height: auto;
 object-fit: contain;
 }
-
-:host ::ng-deep .p-accordion .p-accordion-content {
-padding: 0px !important;
-}
-
 .output-content {
 justify-content: center;
 align-items: center;
@@ -282,6 +278,7 @@ animation: spin 1s ease-in-out infinite;
 box-shadow: 0px 4px 10px 2px rgba(0,0,0,0.02) !important;
   border-radius: 8px;
   width: 92%;
+  margin-top: 10px;
   border: 1px solid #d1cfcf !important;
 }
 
@@ -290,12 +287,14 @@ background-color: transparent !important;
 }
 
 .generated-text-container{
-border: 1px solid #e0dcdc;
+border: 1px solid #d1cfcf;
 border-radius: 8px;
+background: #fff;
+padding: 10px;
 }
 .copy-btn{
 float: right !important;
-border: 1px solid #e0dcdc;
+border: 1px solid #d1cfcf;
 border-radius: 5px;
 width: 80px;
 }
@@ -309,11 +308,14 @@ position: absolute;
 top: 12px;
 right: -88px;
 background: none;
-border: 1px solid #e0dcdc;
+border: 1px solid #3199ff;
 cursor: pointer;
-width: 91px;
+width: 95px;
 text-align: center;
 border-radius: 5px;
+background: #3199ff;
+    color: #fff;
+    padding: 5px 4px;
 }
 
 @keyframes spin {
@@ -321,8 +323,19 @@ to {
   transform: rotate(360deg);
 }
 }
-
 .info-icon{
 padding-left: 10px;
 cursor: pointer;
+}
+.p-accordion-toggle-icon::before{
+  position: relative;
+    top: 1px;
+}
+
+.form-container {
+  overflow-x: hidden;
+  padding: 24px 0 0px 0px;
+  overflow-y: auto;
+  width: 98%;
+  margin-left: 14px;
 }

@@ -288,42 +288,48 @@
     <div class="enterprise-section-modal-pop" [ngClass]="isOpenEnterprice ? 'active-popup' : 'inactive-popup'">
         <div class="inner-enterprise-modal-sec">
             <div class="relative-sectioned-modal-ener">
-                <div class="enterprise-header-section-modal">
-                    <h2>Enterprise Plan</h2>
-                </div>
-                <div class="middle-image-list-section d-flex align-items-center ">
+                
+                <div class="middle-image-list-section d-flex  justify-content-between align-items-center">
                     <div class="left-image-enterprise">
                         <img src="assets/images/agent/ent-plan-svg.svg" alt="">
                     </div>
                     <div class="right-lister-section">
+                        <div class="enterprise-header-section-modal">
+                            <h2>Enterprise Plan</h2>
+                        </div>
                         <ul clsss="d-flex flex-column ">
                             <li *ngFor="let feature of enterpriseFeatures" class="d-flex align-items-center gap-2">
                                 <div class="left-checker-list">
-                                    <img src="assets/images/agent/tick.svg" alt="">
+                                    <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div class="right-list-text">
                                     <p class="mb-0">{{ feature }}</p>
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                </div>
-                <div class="bottom-contact-choose-section d-flex  justify-content-between">
-                    <div class="left-button-cancel">
-                        <button type="button" (click)="showEnterpriceModel()">May be Later</button>
-                    </div>
-                    <div class="right-button-contact-sales">
-                        <div class="top-button-tooler">
-                            <p class="mb-0 text-black">For Personalized Enterprise Level Pricing</p>
-                        </div>
-                        <button type="button" (click)="sendEmailEnterPrisePlan()" class="d-flex align-items-center justify-content-center">
-                            <div class="left-icon-spark">
-                                <img src="assets/images/agent/star-icon.svg" alt="">
+
+                        <div class="bottom-contact-choose-section d-flex">
+                            <div class="left-button-cancel">
+                                <button type="button" (click)="showEnterpriceModel()">May be Later</button>
                             </div>
-                            <p class="mb-0">Contact Sales</p>
-                        </button>
+                            <div class="right-button-contact-sales">
+                                
+                                <button type="button" (click)="sendEmailEnterPrisePlan()" class="d-flex align-items-center justify-content-center">
+                                    <div class="left-icon-spark">
+                                        <img src="assets/images/agent/star-icon.svg" alt="">
+                                    </div>
+                                    <p class="mb-0">Contact Sales</p>
+                                </button>
+                                <div class="top-button-tooler">
+                                    <p class="mb-0 text-black">For Personalized Enterprise Level Pricing</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    
                 </div>
+              
             </div>
         </div>
     </div>

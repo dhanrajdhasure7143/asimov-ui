@@ -19,7 +19,7 @@
             <div class="agent-info">
                 <!-- <h3 *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon" (click)="onClicksubAgentName()">✎</span></h3> -->
                 <h3 class="sub-agent-name" *ngIf="!isSubAgentNameEdit">{{ subAgentName }} <span class="edit-icon edit-pencil" (click)="onClicksubAgentName()"> <img src="assets/images/agent/edit-pencil.svg" alt="edit sub agent icon"></span></h3>
-                <div *ngIf="isSubAgentNameEdit" class='sub-agent-inp'>
+                <div *ngIf="isSubAgentNameEdit" class="EditAgentName">
                     <input type="text" [style]="{'width':'220px'}" pInputText maxlength="50"
                             [(ngModel)]="_agentName" (keydown)="Space($event)" />
                         <span class="editfields">
@@ -57,7 +57,7 @@
                     <i class="pi custom-logo" [ngClass]="{'pi-angle-right': !isExpanded, 'pi-angle-down': isExpanded}"></i>
                 </div>
               </div>
-              <div class="accordion-content" [@slideInOut]="isExpanded ? 'in' : 'out'">
+              <div class="accordion-content " [@slideInOut]="isExpanded ? 'in' : 'out'">
                 <div *ngIf="isMarketingAgent">
                 <app-ai-agent-marketing 
                     [subAgentName]="subAgentName"
@@ -75,7 +75,7 @@
                                 <ng-container *ngIf="field.visibility">
                                 <div class="">
                                     <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
-                                        <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                        <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top" *ngIf="field.information !='null' && field.information">
                                             <img src="assets/images/agent/info-icon.svg" alt="info">
                                             <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
                                         </span>
@@ -305,7 +305,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!isCommonForm">
-                    <p-accordion [multiple]="true" styleClass="custom-accordion" [activeIndex]="[0,1]">
+                    <p-accordion [multiple]="true" styleClass="custom-accordion Configuration-Spacing" [activeIndex]="[0,1]">
                         <p-accordionTab [selected]="true">
                         <ng-template pTemplate="header">
                             <div class="custom-header">
@@ -320,7 +320,7 @@
                                             <ng-container *ngIf="field.visibility && field.specification !='SPECIFIC'">
                                             <div class="" class="form-group" [ngClass]="{'col-4': field.visibility}">
                                                 <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
-                                                    <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                    <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top" *ngIf="field.information !='null' && field.information">
                                                         <img src="assets/images/agent/info-icon.svg" alt="info">
                                                         <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
                                                     </span>
@@ -565,7 +565,7 @@
                                                 <ng-container *ngIf="field.visibility && field.specification =='SPECIFIC'">
                                                     <div class=""  class="form-group" [ngClass]="{'col-4': field.visibility}">
                                                         <label [for]="field.name" class="col-form-label"> <b>{{ field.preAttributeLable }}</b> <span class="required" *ngIf="field.attributeRequired"> <b>*</b> </span>
-                                                            <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top">
+                                                            <span class="custom-tooltip-btn info-icon" [pTooltip]="field.information" tooltipPosition="top" *ngIf="field.information !='null' && field.information">
                                                                 <img src="assets/images/agent/info-icon.svg" alt="info">
                                                                 <!-- <i class="pi pi-info-circle info-icon" [pTooltip]="field.information" tooltipPosition="top" ></i> -->
                                                             </span>
@@ -801,7 +801,7 @@
                 </ng-container>
                   <div class="">
                     <div class="accordion-content-save" >
-                        <span *ngIf="!isConfigered"><hr></span>
+                        <!-- <span *ngIf="!isConfigered"><hr></span> -->
                         <button type="button" *ngIf="!isConfigered && !isMarketingAgent" class="btn new-cancelbtn" (click)="resetForm()">Reset</button>
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
@@ -810,7 +810,7 @@
                         <!-- <button *ngIf="isConfigered" type="button" class="btn bluebg-button" (click)="onUpdateForm()" [disabled]="!predefinedBotsForm.valid || !isFormValidAndJobDescriptionValid()">Update</button> -->
                         <div *ngFor="let field of formFields">
                              <div *ngIf="activeField === field.preAttributeName && isConfigered && isFieldEdit">
-                                 <hr>
+                                 <!-- <hr> -->
                                  <div class="twoColFlexBox">
                                  <button *ngIf="isConfigered && isFieldEdit && !isMarketingAgent" type="button" class="btn new-cancelbtn" (click)="cancelChanges()"> Cancel</button>
                                  <button *ngIf="isConfigered && isFieldEdit !isMarketingAgent" type="button" class="btn bluebg-button" (click)="initiateUpdateAgent()" >Update</button>
@@ -823,7 +823,7 @@
             </div>
              <!-- AI agent Execution Progress Bar Starts-->
               <div class="Ai-in-action-block" *ngIf="showProgress || isConfigered">
-             <div >
+             <div>
                 <div class="header">
                   <span class="title" style="display: flex;">
                     <span>
@@ -1261,7 +1261,7 @@
           <h3>Agent Output</h3>
         </div>
       </ng-template>
-        <div class="h-100">
+        <div class="h-100 output-cls">
             <div class="">
                 <ng-container *ngIf="selectedInBoxContent.agentInboxFiles?.length>0">
                     <div><strong>Attachments:</strong></div>

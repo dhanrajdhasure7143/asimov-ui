@@ -46,10 +46,10 @@ export const environment = {
   paymentSuccessURL: "http://epsoftiap.internal.ai/#/pages/success",
   paymentFailuerURL: "http://epsoftiap.internal.ai/#/",
   cardCancelURL: "http://epsoftiap.internal.ai/#/pages/subscriptions?index=3",
-  stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo",
+  stripeKey:"pk_test_51Q0n8DRvIuDE09bYUTJnNOV5RPgHvGxNjuT1MLilaJUObc6ot82f7APP2ht3SJhpCWykkvf9Pl2pG8ptKlnjcjVA001C5iK2RP",
   python_llm:"https://ezflowllm.epsoftinc.com",
   ezaskUrl: "http://ezask.epsoftinc.in",
   ezChatBotKey:"0G+A+Bax5YcLbl1309krz5iqDPQFeJpGwMVTbdKpyRt7y+0a7Yj/5b1HF/JLVSyJver2HkHERDW4jjjHwSK2gczj/QCdMTQYB9o=",
   product:"AiAgents",
-  isWebhookEnabled: false,
+  isWebhookEnabled: true,
 };
