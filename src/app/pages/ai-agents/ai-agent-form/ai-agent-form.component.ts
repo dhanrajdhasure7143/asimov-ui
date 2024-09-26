@@ -643,6 +643,8 @@ export class AiAgentFormComponent implements OnInit {
       // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
       if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+      }else{
+        this.fetchAllFieldsWithValue();
       }
       this.spinner.hide();
       // this.goBackAgentHome(); // temporarly commented this line
@@ -658,7 +660,11 @@ export class AiAgentFormComponent implements OnInit {
         this.showProgress = true
         this.isFieldEdit = false;
         // console.log("Agent ID and File IDs:", agentId, this.capturedFileIds);
+        if(this.capturedFileIds.length > 0) {
         this.captureAgentIdAndFileIds(agentId, this.capturedFileIds);
+        }else{
+          this.fetchAllFieldsWithValue();
+        }
       this.spinner.hide();
       this.toaster.showSuccess(this.subAgentName,"update")
     },err=>{
@@ -674,7 +680,11 @@ export class AiAgentFormComponent implements OnInit {
     };
     this.rest_service.captureAgentIdandfileIds(agentId, payload).subscribe(res => {
       console.log("Captured agent ID and file IDs:", res);
-      this.rest_service.deleteAgentFIles(this.toDeletFiles).subscribe(
+        // Filter out null values and check if there are any files to delete
+        const filesToDelete = this.toDeletFiles.filter(file => file != null);
+        console.log("Files to delete:", filesToDelete);
+        if (filesToDelete.length > 0) {
+      this.rest_service.deleteAgentFIles(filesToDelete).subscribe(
         (res: any) => {
             this.getSubAgentFileHistoryLogs();
             this.fetchAllFieldsWithValue();
@@ -686,8 +696,16 @@ export class AiAgentFormComponent implements OnInit {
             this.toaster.showError(this.toastMessages.apierror);
         }
     );
+        } else {
+          // If there are no files to delete, just update the UI
+          this.getSubAgentFileHistoryLogs();
+          this.fetchAllFieldsWithValue();
+        }
+  
       this.filePathValues = [];
       this.capturedFileIds = [];
+        // Reset toDeletFiles after processing
+      this.toDeletFiles = [];
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
