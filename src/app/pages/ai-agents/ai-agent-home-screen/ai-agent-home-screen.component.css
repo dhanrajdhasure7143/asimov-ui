@@ -1069,7 +1069,7 @@ text-decoration: underline !important;
 /* New Modal Styles */
 
 .inner-enterprise-modal-sec {
-width: 40%;
+width: 36%;
 background: #fff;
 border-radius: 15px;
 padding: 30px;
@@ -1101,23 +1101,23 @@ gap: 20px;
 }
 
 .middle-image-list-section img {
-max-width: 220px !important;
+max-width: 300px !important;
 }
 .bottom-contact-choose-section {
-align-items: end !important;
 margin-top: 20px;
+gap: 15px;;
 }
-.bottom-contact-choose-section .left-button-cancel , .bottom-contact-choose-section .right-button-contact-sales  {
-width: 48%;
-}
+
 .bottom-contact-choose-section .left-button-cancel button{
 background: #E6E6E6;
 border-radius: 50px;
-width: 100%;
+width: fit-content;
 color: #000;
 font-weight: 600;
 text-align: center;
-height: 40px;
+height: 41px;
+min-width: 138px;
+padding: 8px 15px;
 }
 
 
@@ -1125,13 +1125,16 @@ height: 40px;
 background: linear-gradient(90deg, #3199FF 0%, #2ED0FD 83.46%);
 border-radius: 40px;
 padding: 8px 15px;
-width: 100%;
+width: fit-content;
 height: 40px;
 }
 .bottom-contact-choose-section .right-button-contact-sales button p {
 color: #fff !important;
 font-weight: 600;
 
+}
+.right-lister-section {
+  width: 61%;
 }
 .right-lister-section ul li{
 gap: 5px !important;
@@ -1140,18 +1143,20 @@ gap: 5px !important;
 display: flex !important;
 flex-direction: column !important;
 gap: 8px;
+padding: 0px;
 }
 .top-button-tooler p {
 font-size: 10px;
-text-align:left;
+text-align: center;
 font-weight: 600;
+padding-top: 5px;
 }
 
 .enterprise-header-section-modal h2 {
-font-size: 20px;
+font-size: 24px;
 font-weight: 700;
-color: #000 !important;
-
+color: #001C47 !important;
+  padding: 18px 0 9px 0;
 }
 
 .enterprise-header-section-modal .add-agents-text {
@@ -1267,4 +1272,25 @@ gap: 26px;
 }
 .price{
 display: block;;
+}
+.right-list-text p{
+  font-size: 16px;
+}
+.left-checker-list i{
+  color: #007BFF;
+  font-size: 16px;
+  position: relative;
+  margin-right: 4px;
+  top: 2px;
+}
+@media (min-width: 1100px) and (max-width: 1800px) {
+  .inner-enterprise-modal-sec{
+    width: 650px !important;
+}
+}
+
+@media (min-width: 1100px) and (max-width: 1800px) {
+  .success-enter-overlay{
+    width: 460px !important;
+}
 }

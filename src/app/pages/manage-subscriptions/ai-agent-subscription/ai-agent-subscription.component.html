@@ -11,7 +11,7 @@
                 <span>
                     <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
                 </span>
-                <div class="header-cell agent-parent-name" [style.flex]="1.1">
+                <div class="header-cell agent-parent-name" [style.flex]="1.5">
                     <img src="assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
                     <span class="agent-name" [pTooltip]="agent.agentName" tooltipPosition="top">
                         {{ agent.agentName }}
@@ -68,8 +68,8 @@
                             </span>
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center; text-transform: lowercase;">
-                                {{ subAgent.status }}
+                            <span class="status-badge" [ngClass]="subAgent.status === 'ACTIVE' ? 'active-status' : 'inactive-status'" style="display:flex; align-items: center;">
+                                {{ subAgent.status | titlecase}}
                             </span>
                         </div>                                              
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
@@ -184,8 +184,8 @@
                             </span>
                         </div>
                         <div class="row-cell">
-                            <span class="status-badge inactive-status" style="text-transform: lowercase;">
-                                {{ subAgent.status }}
+                            <span class="status-badge inactive-status">
+                                {{ subAgent.status | titlecase}}
                             </span>
                         </div>
                         <div class="row-cell">{{ subAgent.purchaseOn | date:'MMM d, y' }}</div>
