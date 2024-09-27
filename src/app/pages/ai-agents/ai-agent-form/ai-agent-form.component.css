@@ -1627,7 +1627,7 @@ border: none !important;
 cursor: pointer;
 width: 100%;
 box-shadow: none !important;
-margin-top: 12px !important;
+/* margin-top: 12px !important; */
 }
 
 .upload-file :hover{
@@ -1645,8 +1645,8 @@ background-color: white;
 border: 1px solid #d7d5d5;
 border-radius: 5px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-width: 60% !important;
-left: 37%;
+width: 75% !important;
+left: 20%;
 max-height: 165px;
 }
 
@@ -1661,7 +1661,7 @@ overflow-x: hidden;
 display: flex;
 align-items: center;
 flex-shrink: 1;
-max-width: 75%;
+max-width: 65%;
 }
 
 .action-btn {
