@@ -1429,6 +1429,7 @@ export class AiAgentFormComponent implements OnInit {
       acceptIcon: 'null',
       accept: () => {
         this.spinner.show();
+        this.resetAgent();
         this.isProcessing = true;
         this.currentStageIndex = 0;
         this.completedStages = -1;
@@ -1541,8 +1542,22 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   get displayStage(): string {
-    if (!this.agentStarted) return '0/4';
-    return `${this.completedStages + 1}/${this.stages.length}`;
+    if (this.isComplete) {
+      return `${this.stages.length}/${this.stages.length}`;
+    }
+    
+    if (this.stageFailed) {
+      // Find the index of the failed stage
+      const failedStageIndex = this.stages.findIndex(stage => stage.status === 'failure');
+      return `${failedStageIndex + 1}/${this.stages.length}`;
+    }
+    
+    if (this.agentStarted) {
+      return `${this.completedStages + 1}/${this.stages.length}`;
+    }
+    
+    // If agent hasn't started
+    return `0/${this.stages.length}`;
   }
 
 
@@ -2302,4 +2317,11 @@ removeFilesFromForm(deletedFile:any){
     });
   }
   
+  resetAgent() {
+    this.isComplete = false;
+    this.stageFailed = false;
+    this.agentStarted = false;
+    this.completedStages = 0;
+    this.stages.forEach(stage => stage.status = 'pending');
+  }
 }

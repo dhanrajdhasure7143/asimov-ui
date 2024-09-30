@@ -55,3 +55,12 @@
 .checkbox-item input[type="checkbox"] {
   margin-right: 5px;
 }
+
+.check-boxes{
+  border: 1px solid #ccc;
+  height: 40px;
+  padding: 9px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  width: 75%;
+}

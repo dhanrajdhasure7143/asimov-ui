@@ -1292,6 +1292,7 @@ gap: 25px;
 }
 .bar-container {
 flex-grow: 1;
+margin-top: 3px;
 }
 .progress-bar-new {
 display: flex;
@@ -1372,12 +1373,13 @@ margin-top: 5px;
 padding: 8px;
 background: #fff;
 border: 1px solid #e4e2e2 !important;
+margin-left: auto;
 }
 .inbox-head{
-width: 35%;
+width: 16%;
 }
 .info-attachment{
-width: 20%;
+/* width: 20%; */
 }
 .info-attachment .pi-file-pdf{
 color: #3199FF;
@@ -1575,11 +1577,12 @@ justify-content: end;
 }
 
 .file-action-button {
-padding: 6px 10px;
+padding: 6px 5px;
 font-size: 1.2rem;
 display: flex;
 align-items: center;
 justify-content: center;
+cursor: pointer;
 }
 
 .file-action-button i{

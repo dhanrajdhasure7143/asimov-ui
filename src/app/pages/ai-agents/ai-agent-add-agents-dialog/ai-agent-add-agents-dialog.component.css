@@ -339,6 +339,12 @@
     border: 0px;
     cursor: pointer;
   }
+
+  .proceed-button[disabled]{
+    background: #e0e0e0 !important;
+    cursor: no-drop;
+  }
+  
   .total-price h3{
     font-size: 30px;
     padding-top: 6px;
