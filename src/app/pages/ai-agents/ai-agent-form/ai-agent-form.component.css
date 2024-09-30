@@ -992,40 +992,62 @@ font-size: 16px;
 color: #495057;
 border: 1px solid #e5e7eb !important;
 }
-
 .stage-completed {
-color: green;
-background-color: #e6ffed;
-font-weight: 500;
-padding: 2px 14px;
-border-radius: 15px;
-text-align: center;
-display: flex;
-width: fit-content;
-font-size: 12px;
-}
-
-.stage-failed {
-color: red;
-font-weight: 500;
-padding: 2px 14px;
-background-color: #ffebeb;
-border-radius: 15px;
-text-align: center;
-display: flex;
-width: fit-content;
-font-size: 12px;
+  color: green;
+  background-color: #6aff94;
+  font-weight: 500;
+  padding: 2px 14px;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  font-size: 12px;
 }
 
 .stage-running {
-font-weight: 500;
-padding: 2px 14px;
-border-radius: 15px;
-text-align: center;
-display: flex;
-width: fit-content;
-font-size: 12px;
-} 
+  color: white;
+  font-weight: 500;
+  padding: 2px 14px;
+  background-color: #ffaa00;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  font-size: 12px;
+}
+
+.stage-cancelled {
+  color: white;
+  font-weight: 500;
+  padding: 2px 14px;
+  background-color: #ff5555;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  font-size: 12px;
+}
+
+.stage-failed {
+  color: red;
+  font-weight: 500;
+  padding: 2px 14px;
+  background-color: #fed1d1;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  font-size: 12px;
+}
+
 .pagination-controls {
 display: flex;
 justify-content: center;
@@ -1608,7 +1630,7 @@ border: none !important;
 cursor: pointer;
 width: 100%;
 box-shadow: none !important;
-margin-top: 12px !important;
+/* margin-top: 12px !important; */
 }
 
 .upload-file :hover{
@@ -1626,8 +1648,8 @@ background-color: white;
 border: 1px solid #d7d5d5;
 border-radius: 5px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-width: 60% !important;
-left: 37%;
+width: 75% !important;
+left: 20%;
 max-height: 165px;
 }
 
@@ -1642,7 +1664,7 @@ overflow-x: hidden;
 display: flex;
 align-items: center;
 flex-shrink: 1;
-max-width: 75%;
+max-width: 65%;
 }
 
 .action-btn {

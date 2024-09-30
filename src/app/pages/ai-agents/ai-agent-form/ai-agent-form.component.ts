@@ -142,7 +142,7 @@ export class AiAgentFormComponent implements OnInit {
   subAgentTotalPagesArray: number[] = [];
   searchQuery: string = '';
   isFilterPopupVisible = false;
-  availableStages = ['Success', 'Failed', 'Running'];
+  availableStages = ['Success', 'Failed', 'Running','Cancelled'];
   filterStage: string = '';
   dummyFilterStage: string = ''
   sortOrder: string = '';
@@ -2305,6 +2305,8 @@ removeFilesFromForm(deletedFile:any){
           (res: any) => {
             this.spinner.hide();
             this.toaster.toastSuccess(`The agent has been successfully stopped.`);
+            this.getSubAgentsInprogressList()
+            this.getSubAgentHistoryLogs()
           },
           err => {
             this.spinner.hide();
