@@ -1,8 +1,8 @@
 <div class="d-flex flex-column h-100">
   <div class="marketing-form-container">
     <ng-container>
-      <p-accordion [multiple]="true" styleClass="custom-accordion" [activeIndex]="[0,1]">
-        <p-accordionTab>
+      <p-accordion [multiple]="true" styleClass="custom-accordion">
+        <p-accordionTab [selected]="true">
           <ng-template pTemplate="header">
             <div class="custom-header">
               <span>Initial Setup</span>
@@ -110,7 +110,7 @@
             </div>
           </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="true">
           <ng-template pTemplate="header">
             <div class="custom-header">
               <span> Agent Information </span>

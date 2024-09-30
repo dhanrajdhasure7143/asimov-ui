@@ -127,7 +127,7 @@ input.p-inputtext{
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   border-top: 1px solid #d1cfcf !important;
   padding: 8px;
 }
@@ -148,7 +148,7 @@ color: white !important;
   background-color: #f8f9fa;
   border-radius: 5px;
   /* padding: 20px; */
-  padding: 20px;
+  padding: 5px;
 }
 
 .generated-output h4 {
@@ -235,7 +235,7 @@ object-fit: contain;
 .output-content {
 justify-content: center;
 align-items: center;
-position: relative;
+/* position: relative; */
 /* min-height: 200px; */
 max-height: 350px;
 }
@@ -297,6 +297,7 @@ float: right !important;
 border: 1px solid #d1cfcf;
 border-radius: 5px;
 width: 80px;
+height: 25px;
 }
 
 .image-wrapper {
@@ -304,18 +305,16 @@ position: relative;
 }
 
 .download-button {
-position: absolute;
-top: 12px;
-right: -88px;
-background: none;
-border: 1px solid #3199ff;
-cursor: pointer;
-width: 95px;
-text-align: center;
-border-radius: 5px;
-background: #3199ff;
-    color: #fff;
-    padding: 5px 4px;
+  position: absolute;
+  top: 12px;
+  right: -88px;
+  background: none;
+  border: 1px solid #e0dcdc;
+  cursor: pointer;
+  width: 91px;
+  text-align: center;
+  border-radius: 5px;
+  height: 25px;
 }
 
 @keyframes spin {

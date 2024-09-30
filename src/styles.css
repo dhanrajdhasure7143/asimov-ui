@@ -3798,6 +3798,12 @@ button{
   background-color: #0b72df !important;
   border-color: #0b72df !important;
 }
+
+.btn-primary[disabled] {
+  background-color: #e0e0e0 !important;
+  border-color: #e0e0e0 !important;
+}
+
 .card-body {
   padding: 18px !important;
 }
