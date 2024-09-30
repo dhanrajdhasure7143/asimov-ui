@@ -338,3 +338,13 @@ cursor: pointer;
   width: 98%;
   margin-left: 14px;
 }
+
+.limit-mssg{
+  display: flex;
+  float: left;
+  font-size: 12px;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+}
