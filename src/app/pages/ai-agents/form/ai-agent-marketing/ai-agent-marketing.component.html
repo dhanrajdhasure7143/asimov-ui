@@ -137,7 +137,7 @@
                 </div>
                 <div style="padding: 0px !important;">
                   <b *ngIf="marketingForm.get('promptType').value === 'image'">Describe your image</b>
-                  <b *ngIf="marketingForm.get('promptType').value !== 'image'">Provide a short description of your scenario to generate marketing content</b>
+                  <b *ngIf="marketingForm.get('promptType').value !== 'image'">Provide a short description of your scenario</b>
                   <div class="textarea-div">
                     <textarea class="form-control no-border" formControlName="promptDescription"
                         rows="9" style="resize: none;" placeholder="Enter Prompt Description">
@@ -165,7 +165,7 @@
                       </button>
                     </div>
                     <span *ngIf="isGenerateDisabled" class="limit-mssg"> <i class="pi pi-info-circle" style="font-size: 11px;"></i>
-                      {{ marketingForm.get('promptType').value === 'image' ? 'Maximum limit for image prompts is exceeded for today, Please try again tomorrow.' : 'Maximum limit for text prompts is exceeded for today, Please try again tomorrow.' }}
+                      {{ marketingForm.get('promptType').value === 'image' ? 'Maximum limit for image prompts is exceeded for today.' : 'Maximum limit for text prompts is exceeded for today.' }}
                     </span>
                   </div>
                 </div>
@@ -184,9 +184,14 @@
                   <!-- Generated Image Display -->
                   <div *ngIf="generatedImageUrl" class="generated-image-container">
                   <div class="image-wrapper">
-                      <button class="download-button" (click)="downloadImage()" >
-                      <i class="pi pi-download"></i> Download
+                    <button class="download-button" (click)="downloadImage()" >
+                    <i class="pi pi-download"></i> Download
                     </button>
+
+                    <button class="download-button" style="margin-top: 30px;" (click)="showAttachDialog()">
+                      <i class="pi pi-file"></i> Personalize
+                    </button>
+
                     <img style="padding: 10px;" [src]="generatedImageUrl" alt="Generated Marketing Image" class="generated-image"> 
                   </div>
                   </div>
@@ -222,3 +227,56 @@
     </ng-container>
   </div>
 </div>
+
+
+<!-- Attach Logo Code -->
+<p-dialog header="Attach Logo/Text" [(visible)]="isAttachDialogVisible" modal="true" width="600" [responsive]="true" [maximizable]="false" (onHide)="resetForm()">
+  <div class="container logo-box">
+    <div class="row">
+      <div class="col-md-6 p-0">
+
+        <span class="select-type">Select attachment type</span>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="isLogoChecked" (change)="checkFormValidity()" id="logoCheck" />
+          <label class="form-check-label" for="logoCheck">Append Logo</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="isTextChecked" (change)="checkFormValidity()" id="textCheck" />
+          <label class="form-check-label" for="textCheck">Append Text</label>
+        </div>
+        <!-- dummy code -->
+        <!-- <div class="mt-4" style="position: relative; display: inline-block;">
+          <h4>Generated Image with Logo/Text Preview:</h4>
+          <img [src]="generatedImageUrl" alt="Generated Image" class="img-fluid" style="max-width: 100%; height: auto;" />
+          
+          <img *ngIf="logoPreview" 
+              [src]="logoPreview" 
+              alt="Logo Preview" 
+              class="logo-overlay" 
+              style="position: absolute; top: 5px; right: 5px; max-height: 50px; max-width: 50px; object-fit: contain;" />
+
+          <div *ngIf="isTextChecked && inputText" 
+              class="text-overlay" 
+              style="position: absolute; top: 60px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 5px; border-radius: 5px;">
+            {{ inputText }}
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-6 p-0">
+        <div *ngIf="isLogoChecked" class="form-group">
+          <label for="fileInput">Logo:</label>
+          <input id="fileInput" type="file" pInputText  (change)="onLogoFileSelect($event)" accept=".jpeg, .png, .svg" style="width: 100% !important; opacity: 1 !important;" class="form-control custom-file-input" />
+        </div>
+
+        <div *ngIf="isTextChecked" class="form-group">
+          <label for="textInput">Text:</label>
+          <textarea id="textInput" [(ngModel)]="inputText" (input)="checkFormValidity()" maxlength="150" class="form-control" placeholder="Enter text here (max 150 characters)" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="com-md-12 p-0 bottom-submit">
+        <button (click)="submitAttachment()" pButton type="button" [disabled]="isSubmitDisabled()" label="Submit" class="btn btn-primary text-right"></button>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+

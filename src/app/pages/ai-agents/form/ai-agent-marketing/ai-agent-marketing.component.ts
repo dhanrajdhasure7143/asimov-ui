@@ -7,6 +7,8 @@ import { PredefinedBotsService } from 'src/app/pages/services/predefined-bots.se
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ConfirmationService } from 'primeng/api';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 interface Platform {
   name: string;
   icon: string;
@@ -51,6 +53,13 @@ export class AiAgentMarketingComponent implements OnInit {
   textRegenerateCount: number = 0;
   imageRegenerateCount: number = 0;
   isAlreadyGenerated=0;
+  // Logo Attachment Code 
+  isAttachDialogVisible = false;
+  isLogoChecked = true;
+  isTextChecked = false;
+  inputText: string = '';
+  logoFile: File | null = null;
+  logoPreview: SafeUrl | null = null;
 
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
@@ -65,7 +74,9 @@ export class AiAgentMarketingComponent implements OnInit {
     private spinner : LoaderService,
     private clipboard: Clipboard,
     private confirmationService: ConfirmationService,
-    @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent
+    @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent,
+    private sanitizer: DomSanitizer
+
   ) {
     this.marketingForm = this.fb.group({
       platform: [null, Validators.required],
@@ -480,6 +491,69 @@ export class AiAgentMarketingComponent implements OnInit {
         // Optional: Handle rejection
       }
     });
+  }
+
+  showAttachDialog(){
+    this.isAttachDialogVisible = true;
+  }
+
+  onLogoFileSelect(event: any) {
+    const file = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+
+    if (file && allowedTypes.includes(file.type)) {
+      this.logoFile = file;
+      const objectUrl = URL.createObjectURL(file);
+      this.logoPreview = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
+    } else {
+      this.toastService.showWarn("Only JPEG, PNG, and SVG formats are allowed for the logo.");
+    }
+
+    this.checkFormValidity();
+  }
+
+  checkFormValidity(): boolean {
+    const isTextEmpty = this.isTextChecked && !this.inputText;
+    const isLogoSelected = this.isLogoChecked && !this.logoFile;
+
+    return this.isLogoChecked && (isLogoSelected || isTextEmpty);
+  }
+
+  isSubmitDisabled(): boolean {
+    return (
+      (this.isLogoChecked && !this.logoFile) ||
+      (this.isTextChecked && !this.inputText) ||
+      (!this.isLogoChecked && !this.isTextChecked)
+    );
+  }
+
+  submitAttachment() {
+    if (this.isLogoChecked && !this.logoFile) {
+      return;
+    }
+
+    if (this.isTextChecked && !this.inputText) {
+      return;
+    }
+
+    const formData = new FormData();
+    if (this.isLogoChecked && this.logoFile) {
+      formData.append('logo', this.logoFile);
+    }
+    if (this.isTextChecked && this.inputText) {
+      formData.append('text', this.inputText);
+    }
+
+    this.isAttachDialogVisible = false;
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.isLogoChecked = true;
+    this.isTextChecked = false;
+    this.inputText = '';
+    this.logoFile = null;
+    this.logoPreview = null;
   }
 
 }

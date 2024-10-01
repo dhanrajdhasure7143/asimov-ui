@@ -590,3 +590,10 @@
 .p-dialog{
   max-width: 40% !important;
 }
+
+.new-ellipsis{
+  display: list-item !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

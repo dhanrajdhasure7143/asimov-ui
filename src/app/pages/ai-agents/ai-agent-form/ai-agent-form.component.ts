@@ -192,6 +192,7 @@ export class AiAgentFormComponent implements OnInit {
       this.initializePaginationDots()
       this.initializePagination()
       this.initializeSubAgentPagination();
+      this.checkCurrentStage();
     }
 
 

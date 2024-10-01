@@ -61,9 +61,9 @@
                     
                     <div *ngFor="let subAgent of getSubAgentsForPage(agent)" class="sub-agent-row"
                         [ngClass]="{'inactive-row': subAgent.status === 'INACTIVE'}">
-                        <div class="row-cell sub-agent-row-header" style="flex:1.46">
+                        <div class="row-cell sub-agent-row-header new-ellipsis" style="flex:1.46">
                             <input type="checkbox" [checked]="subAgent.selected" (change)="subagentSelect($event, subAgent, agent)" [disabled]="!agent.autoRenew || (agent.autoRenew && !subAgent.expiryDate)" />
-                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top">
+                            <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top" style="padding-left: 5px;">
                                 {{ subAgent.subAgentName }}
                             </span>
                         </div>
@@ -178,7 +178,7 @@
                             <input type="checkbox" [(ngModel)]="subAgent.selected" />
                         </div>
                         
-                        <div class="row-cell" style="flex:1.46; max-width: 19%; display: flex; justify-content: flex-start !important;">
+                        <div class="row-cell new-ellipsis" style="flex:1.46; max-width: 19%; display: flex; justify-content: flex-start !important;">
                             <span [pTooltip]="subAgent.subAgentName" tooltipPosition="top">
                                 {{ subAgent.subAgentName }}
                             </span>
