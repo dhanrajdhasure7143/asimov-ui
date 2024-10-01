@@ -329,4 +329,8 @@ export class AiAgentSubAgentsComponent implements OnInit {
     }else{
       this.filterAgentsList = this.subAgentList.filter(agent => agent.subAgentName.toLowerCase().includes(this.searchTerm.toLowerCase()));}
   }
+
+  backToHome(){
+    this.router.navigate(['/pages/aiagent/home'])
+  }
 }

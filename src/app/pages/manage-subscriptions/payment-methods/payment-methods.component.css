@@ -1,9 +1,9 @@
 /* Base styles */
 .paymentcontent_div {
-  height: calc(100vh - 0px);
+  height: calc(100vh - 100px);
   overflow: auto;
 }
-
+ 
 .cardsBox {
   background-color: #fff;
   overflow: hidden;
@@ -13,8 +13,8 @@
   -moz-box-shadow: 4px 8px 12px 7px rgb(62 62 62 / 4%);
   box-shadow: 4px 8px 12px 7px rgba(0, 0, 0, 0.04);
   height: 100%;
-  margin-right: 4%;
-  margin-top: 20px;
+  /* margin-right: 4%; */
+  /* margin-top: 20px; */
   transition: border-color 0.3s ease;
   /* height: fit-content !important; */
 }

@@ -303,7 +303,7 @@
 }
 .search-sort-section{
   width: fit-content;
-  padding: 6px 22px !important;
+  padding: 6px 11px !important;
   font-size: 14px;
   display: flex !important;
   align-items: center;
@@ -311,6 +311,7 @@
   gap: 10px;
   font-weight: 500;
   justify-content: center;
+  margin-left: auto;
 }
 .search-sort-section i{
   font-size: 11px;
