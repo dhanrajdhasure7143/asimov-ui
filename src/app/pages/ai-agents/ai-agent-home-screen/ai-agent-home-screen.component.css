@@ -1294,3 +1294,22 @@ display: block;;
     width: 460px !important;
 }
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+ 
+ 
+@media (max-width: 1024px) {
+  .grid-container {
+      grid-template-columns: 1fr 1fr;
+  }
+}
+ 
+ 
+@media (max-width: 668px) {
+  .grid-container {
+      grid-template-columns: 1fr;
+  }
+}

@@ -48,6 +48,9 @@ export class AiAgentMarketingComponent implements OnInit {
   maxCount: number = 3;
   typedCaption: string = '';
   typedHashtags: string = '';
+  textRegenerateCount: number = 0;
+  imageRegenerateCount: number = 0;
+  isAlreadyGenerated=0;
 
   platforms: Platform[] = [
     { name: 'Facebook', icon: 'fab fa-facebook' },
@@ -372,23 +375,29 @@ export class AiAgentMarketingComponent implements OnInit {
     const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
     this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
       (response: any) => {
-        console.log("getPromtCount method calling", response);
         if (response) {
-          // Calculate regenerate count for text or image
-          if (promptTypeValue === 'text') {
-            this.regenerateCount = this.calculateRegenerateCount(response.textExecutionCountIs);
-          } else if (promptTypeValue === 'image') {
-            this.regenerateCount = this.calculateRegenerateCount(response.imageExecutionCountIs);
-          }
-          // Determine button visibility based on regenerate count
+          // Store regenerate count for both text and image
+          this.textRegenerateCount = this.calculateRegenerateCount(response.textExecutionCountIs);
+          this.imageRegenerateCount = this.calculateRegenerateCount(response.imageExecutionCountIs);
+          this.isAlreadyGenerated = this.textRegenerateCount + this.imageRegenerateCount;
+
+          // Update regenerate count and button visibility
+          this.regenerateCount = (promptTypeValue === 'text') ? this.textRegenerateCount : this.imageRegenerateCount;
           this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
-          this.isGenerated = this.regenerateCount > 0 && this.regenerateCount < this.maxCount;
-          console.log("Remaining Count:", this.regenerateCount);
-          console.log("Is Generate Disabled:", this.isGenerateDisabled);
+
+          // Update isGenerated to be true if either text or image has been generated, or if we've switched prompt types
+          if (promptTypeValue === 'text') {
+            this.isGenerated = this.textRegenerateCount > 0;
+          }
+
+          if (promptTypeValue === 'image') {
+            this.isGenerated =this.imageRegenerateCount > 0;
+          }
+          // this.isGenerated = this.textRegenerateCount > 0 || this.imageRegenerateCount > 0;
         }
       },
       (error) => {
-        this.toastService.showError("Error occured fetching prompt limit check")
+        this.toastService.showError("Error occurred fetching prompt limit check");
       }
     );
   }

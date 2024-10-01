@@ -1,8 +1,8 @@
 <div class="d-flex flex-column h-100">
   <div class="marketing-form-container">
     <ng-container>
-      <p-accordion [multiple]="true" styleClass="custom-accordion" [activeIndex]="[0,1]">
-        <p-accordionTab>
+      <p-accordion [multiple]="true" styleClass="custom-accordion">
+        <p-accordionTab [selected]="true">
           <ng-template pTemplate="header">
             <div class="custom-header">
               <span>Initial Setup</span>
@@ -110,7 +110,7 @@
             </div>
           </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="true">
           <ng-template pTemplate="header">
             <div class="custom-header">
               <span> Agent Information </span>
@@ -164,8 +164,8 @@
                         <i class="pi pi-check-circle"> </i> &nbsp; Accept
                       </button>
                     </div>
-                    <span *ngIf="isGenerateDisabled" style="float: right;">
-                      {{ marketingForm.get('promptType').value === 'image' ? 'Maximum limit for images is exceeded for today, Please try again tomorrow.' : 'Maximum limit for text prompts is exceeded for today, Please try again tomorrow.' }}
+                    <span *ngIf="isGenerateDisabled" class="limit-mssg"> <i class="pi pi-info-circle" style="font-size: 11px;"></i>
+                      {{ marketingForm.get('promptType').value === 'image' ? 'Maximum limit for image prompts is exceeded for today, Please try again tomorrow.' : 'Maximum limit for text prompts is exceeded for today, Please try again tomorrow.' }}
                     </span>
                   </div>
                 </div>
@@ -173,8 +173,12 @@
 
               <div  class="col-md d-flex flex-column generated-output">
                 <!-- <b *ngIf="isGenerated"> AI Generated  {{marketingForm.get('promptType').value === 'image' ? 'Image' : 'Text'}} -->
-                  <b *ngIf="isGenerated || isGenerateDisabled"> AI Generated Content
-                    <small> ({{3 - regenerateCount}} {{3 - regenerateCount === 1 ? 'Prompt' : 'Prompts'}} Remaining) </small>
+                  <b *ngIf="isAlreadyGenerated > 0"> AI Generated Content
+                    <small>
+                      ({{ 3 - (marketingForm.get('promptType')?.value === 'text' ? textRegenerateCount : imageRegenerateCount) }}
+                      {{ (3 - (marketingForm.get('promptType')?.value === 'text' ? textRegenerateCount : imageRegenerateCount)) === 1 ? 'Prompt' : 'Prompts' }}
+                      Remaining)
+                    </small>
                   </b>
                 <div class="flex-grow-1 output-content scrollable-content"  #scrollContainer>
                   <!-- Generated Image Display -->
@@ -187,7 +191,7 @@
                   </div>
                   </div>
                   <br>
-                  <!-- Generated Text Display -->
+                  <!-- Generated Text Display --> 
                   <div *ngIf="hasGeneratedText" class="generated-text-container">
                     <div class="generated-text" style=" padding: 12px;">
                       <button class="copy-btn" (click)="copyText()" >

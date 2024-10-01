@@ -30,7 +30,15 @@
 
   <div class="container-fluid  d-flex flex-column h-100 main-screen">
     <div class="header-section main-header-grid">
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <div class="main-header-title"> 
+          <label id="popup_title" (click)="backToHome()">
+              <a class="imageBox">
+                  <img class="default-arrow" src="assets/images-n/projects/backarrow-default.svg" alt="">
+                  <img class="hover-arrow" src="assets/images-n/projects/backarrow-hover.svg" alt=""> 
+              </a>
+          </label>
+      </div> &nbsp;
         <div>
           <div class="main-header-title">{{agentName}} Agent</div>
           <!-- <p class="text-muted mb-0">Expires On: {{agentExpire|date:'MMM dd, y'}}</p> -->

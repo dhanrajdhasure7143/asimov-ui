@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="accordion-content " [@slideInOut]="isExpanded ? 'in' : 'out'">
-                <div *ngIf="isMarketingAgent">
+                <div [hidden]="!isMarketingAgent">
                 <app-ai-agent-marketing 
                     [subAgentName]="subAgentName"
                     [agentUUID]="params.agentId"
@@ -1267,7 +1267,7 @@
                     <div><strong>Attachments:</strong></div>
                     <!-- <div><strong>{{selectedInBoxContent.date_of_history}}</strong></div> -->
                     <div class="attachments">
-                        <div class="inbox-attachment inbox-head" *ngFor="let attachment of selectedInBoxContent.agentInboxFiles">
+                        <div class="inbox-attachment inbox-head-overlay" *ngFor="let attachment of selectedInBoxContent.agentInboxFiles">
                             <div>
                                 <i class="pi pi-file"></i>
                             <span>{{ attachment.originalFileName }}</span>

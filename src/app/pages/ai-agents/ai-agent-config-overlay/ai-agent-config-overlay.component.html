@@ -40,10 +40,10 @@
                 <span class="file-name">{{ getAttachmentName(field.preAttributeName).split(',').join(', ') }}</span>
           </div>
           <textarea class="common-bg" *ngSwitchCase="'textarea'" [formControlName]="field.preAttributeName"></textarea>
-          <div *ngSwitchCase="'checkbox'" style="display: flex; justify-content: space-between;">
+          <div *ngSwitchCase="'checkbox'" style="display: flex; gap: 20px;">
             <ng-container *ngFor="let option of field.options">
-              <label class="checkbox-container">
-                <input type="checkbox" [formControlName]="option.value" class="checkbox-input">
+              <label class="checkbox-container" class="check-boxes">
+                <input type="checkbox" [formControlName]="option.value" class="checkbox-input"> &nbsp;
                     <span class="checkbox-label">{{ option.label }}</span>
               </label>
             </ng-container>
@@ -67,7 +67,7 @@
             </label>
           </div>
           <div *ngSwitchCase="'dropdown'">
-            <select [formControlName]="field.preAttributeName" class="form-control common-bg">
+            <select [formControlName]="field.preAttributeName" class="form-control common-bg" style="border-radius: 4px !important;">
               <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
             </select>
           </div>
