@@ -1400,6 +1400,10 @@ margin-left: auto;
 .inbox-head{
 width: 16%;
 }
+
+.inbox-head-overlay{
+  width: 28%;
+}
 .info-attachment{
 /* width: 20%; */
 }
@@ -1483,7 +1487,7 @@ margin-right: -10px;
 
 .option-container {
 border: 1px solid #d1cfcf !important;
-border-radius: 8px !important;
+border-radius: 5px !important;
 padding: 8px 30px !important;
 box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.02) !important;
 width: 50%;

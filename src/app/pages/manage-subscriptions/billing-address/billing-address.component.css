@@ -4,7 +4,7 @@
 }
 .maindivfoprm.billingformdiv {
     /* width: 65% !important; */
-    width: 95% !important;
+    width: 100% !important;
     margin: 20px 0 0 0 !important;
     height: calc(100vh - 145px);
   }
@@ -28,7 +28,7 @@
 ::ng-deep .p-dropdown .p-dropdown-label {
     background: white !important;
     border: 0 none;
-    border-radius: 6px;
+    border-radius: 8px 0px 0px 8px;;
 }
 
 ::ng-deep .maindivfoprm .p-dropdown{
@@ -41,8 +41,8 @@
     background: white;
     color: #6c757d;
     width: 2.357rem;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 /* Added New styles for input fields along with icons */
 

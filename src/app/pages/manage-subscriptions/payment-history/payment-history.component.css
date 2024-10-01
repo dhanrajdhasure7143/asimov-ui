@@ -12,6 +12,7 @@
 :host ::ng-deep .payment-history-table .p-datatable .p-datatable-header button{
     height: 39px !important;
     min-width: 108px;
+    margin-bottom: 1px;
   }
 :host ::ng-deep .payment-history-table .p-datatable .p-datatable-header button .p-button-label{
     font-weight: 600;
