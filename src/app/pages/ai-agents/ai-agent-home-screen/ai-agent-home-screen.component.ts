@@ -389,8 +389,8 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
               }
             });
             // this.unsubscribed_agents = [...this.inActiveAgents];
-            console.log("unsubscribed_agents",this.unsubscribed_agents);
-            console.log("inActiveAgents",this.inActiveAgents);
+            // console.log("unsubscribed_agents",this.unsubscribed_agents);
+            // console.log("inActiveAgents",this.inActiveAgents);
             this.inActiveAgents.forEach((element) => {
               let obj ={}
               obj["isHovered"] = false;
@@ -405,7 +405,7 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
             // this.addComingSoonAgent("RFP", "The Agent automates and streamlines the Request for Proposal process, provides a summary of the proposal, and helps generate responses. Stay tuned for the launch of these advanced tools to enhance your proposal management.");
             // this.addComingSoonAgent("Legal", "This AI agent is designed to assist with legal documentation, automating the review and creation of contracts, and ensuring compliance with legal standards. Coming soon to streamline your legal workflows.");
             // this.addComingSoonAgent("Software Tester", "This AI agent will enhance your quality assurance processes by automating test cases, identifying bugs, and ensuring software reliability. Get ready to elevate your QA efficiency.");
-            console.log("unsubscribed_agents",this.unsubscribed_agents);
+            // console.log("unsubscribed_agents",this.unsubscribed_agents);
         }
     }, err => {
         this.spinner.hide();
