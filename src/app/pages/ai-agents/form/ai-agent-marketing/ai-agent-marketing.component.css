@@ -348,3 +348,67 @@ cursor: pointer;
   justify-content: center;
   padding-top: 2px;
 }
+
+/* Logo Box CSS  */
+.logo-box{
+  min-height: 100px !important;
+  min-width: 500px !important;
+  padding: 0 !important;
+}
+
+.bottom-submit{
+  width: 100% !important;
+  margin-top: 20px !important;
+  border-top: 1px solid #dedada;
+  display: flex;
+  align-items: end;
+  padding-top: 10px !important;
+  justify-content: end;
+}
+
+.select-type{
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.custom-file-input {
+  padding-left: 5px !important;
+  z-index: 0 !important;
+  }
+  
+  .custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+  }
+  
+  .custom-file-input::before { 
+    text-align: center; 
+    content: "Choose File" ; 
+    display: inline-block; 
+    background: #3199FF;
+     border-radius: 6px; 
+     padding: 2px 8px; outline: none; 
+     color: white; white-space: nowrap;
+     -webkit-user-select: none;
+     cursor: pointer; 
+     position: absolute; 
+     left: 5px;
+    }
+  .custom-file-input:hover::before { border-color: none; }
+
+  .logo-overlay {
+    position: absolute;
+    max-height: 50px;
+    max-width: 50px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  .text-overlay {
+    position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
