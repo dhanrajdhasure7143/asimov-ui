@@ -35,17 +35,13 @@ export class PaymentCollectionComponent implements OnInit {
               private toastMessages: toastMessages,
 ) {
  this.route.queryParams.subscribe(data => {
-    console.log("queryParams",data);
     if (data && data.token) {
     this.email = this.crypto.decrypt(data.token);
     } else {
-    console.log("Invalid token");
     }
     if (data && data.id) this.selectedAgentId = data.id;
     if (data && data.quantity) this.agentsQuantity = data.quantity;
     if (data && data.isYearly) this.isYearly = data.isYearly === 'true';
-    console.log("selectedAgent",this.selectedAgentId);
-    console.log("email",this.email);
 })
 this.loadPredefinedBots();
 }
@@ -58,14 +54,12 @@ this.loadPredefinedBots();
     this.service.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
         if (response) {
-            console.log("response",response);
             response.forEach((agent) => {
                 if(agent.product.id == this.selectedAgentId){
                 this.selectedAgent = agent.product;
                 this.selectedAgent["priceCollection"] = agent.priceCollection;
                 }
             });
-            console.log("selectedAgent",this.selectedAgent);
             this.getTotalAmount();
         }
     }, err => {
@@ -103,7 +97,6 @@ this.loadPredefinedBots();
   
     // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
     let filteredPriceIds = [];
-  console.log("selectedAgent",this.selectedAgent);
       let selectedTire = !this.isYearly ? 'month' : 'year'
       this.selectedAgent.priceCollection.forEach((price) => {
         if (price.recurring.interval === selectedTire) {
@@ -150,7 +143,6 @@ this.loadPredefinedBots();
         },error => {
           this.spinner.hide();
           this.toaster.showError(this.toastMessages.apierror);
-          console.error('Error during payment:', error);
         }
       );
   }
@@ -159,7 +151,6 @@ this.loadPredefinedBots();
     let selectedTire = !this.isYearly ? 'month' : 'year'
     this.selectedAgent.priceCollection.forEach((price) => {
       if (price.recurring.interval === selectedTire) {
-        console.log("price",price);
         this.totalAmount= price.unitAmount * this.agentsQuantity;
       }
     });
