@@ -285,4 +285,12 @@ export class PredefinedBotsService {
     return this.http.put(`/rpa-service/predefined/agent-cancel/${subAgentUUID}?predefinedRunId=${subAgentRunID}`,'');
   }
   
+  appendLogo(prompt: string){
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.apiToken}`
+    });
+    return this.http.post(environment.python_llm+`/customize-json`, formData, { headers });
+  }
 }
