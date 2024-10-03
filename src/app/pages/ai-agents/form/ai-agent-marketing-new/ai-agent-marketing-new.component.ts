@@ -105,7 +105,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
       facebookToken: ['', Validators.required],
       instagramPageId: ['', Validators.required],
       instagramToken: ['', Validators.required],
-      promptType: ['image', Validators.required],
+      // promptType: ['image', Validators.required],
       promptDescription: ['', Validators.required],
     });
   }
@@ -131,7 +131,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
         facebookToken: this.marketingfieldValues.facebookToken,
         instagramPageId: this.marketingfieldValues.instagramPageId,
         instagramToken: this.marketingfieldValues.instagramToken,
-        promptType: this.marketingfieldValues.promptType,
+        // promptType: this.marketingfieldValues.promptType,
         promptDescription: this.marketingfieldValues.promptDescription
       });
 
@@ -192,7 +192,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
       const pageIdControl = this.marketingForm.get(`${platform.toLowerCase()}PageId`);
       const tokenControl = this.marketingForm.get(`${platform.toLowerCase()}Token`);
       const isSelected = this.selectedPlatforms.some(p => p.name === platform);
-
+      console.log("pageIdControl",pageIdControl,tokenControl,isSelected);
+      
       if (isSelected) {
         pageIdControl?.setValidators([Validators.required]);
         tokenControl?.setValidators([Validators.required]);
@@ -205,6 +206,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
       
       pageIdControl?.updateValueAndValidity();
       tokenControl?.updateValueAndValidity();
+      console.log("marketingForm",this.marketingForm);
+      
     });
     
   }
@@ -222,6 +225,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
   acceptGenerated(): void {
     console.log('acceptGenerated called in AiAgentMarketingComponent');
+    console.log('acceptGenerated form', this.marketingForm.value);
+    // return
     this.spinner.show();
     if (this.marketingForm.valid) {
       const formData = this.marketingForm.value;
@@ -250,7 +255,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
       console.log('Request Body:', requestBody);
       const type = this.isConfigered ? 'update' : 'create';
       this.parentComponent.saveAgentApi(requestBody,type);
-      this.spinner.hide();
     } else {
       this.spinner.hide();
       console.log("this.ai_apiResponse",this.ai_apiResponse);
@@ -260,9 +264,9 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
   
   clearForm(): void {
-    this.marketingForm.reset({
-      promptType: 'image'
-    });
+    // this.marketingForm.reset({
+    //   promptType: 'image'
+    // });
     this.selectedPlatforms = [];
     this.generatedImageUrl = null;
     this.generatedText = null;
@@ -276,15 +280,15 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
   onSubmit(): void {
     if (this.marketingForm.valid) {
-      const promptType = this.marketingForm.get('promptType')?.value;
-      const promptDescription = this.marketingForm.get('promptDescription')?.value;
+      // const promptType = this.marketingForm.get('promptType')?.value;
+      // const promptDescription = this.marketingForm.get('promptDescription')?.value;
   
-      if (promptType === 'text') {
-        this.generateText(promptDescription);
-      } else if (promptType === 'image') {
-        this.generateImage(promptDescription);
-      }
-      this.scrollToBottom();
+      // if (promptType === 'text') {
+      //   this.generateText(promptDescription);
+      // } else if (promptType === 'image') {
+      //   this.generateImage(promptDescription);
+      // }
+      // this.scrollToBottom();
       // this.isGenerated = true;
     } else {
       console.error('Form is invalid');
@@ -357,6 +361,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
   
 
   hitGenerateImageAPI(prompt: string): void {
+    console.log("IMAGE API");
+    
     this.rest_api.generateImageAPI(prompt).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
@@ -457,7 +463,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   togglePlatformFieldsType(){
-    console.log("test",this.marketingForm.value.promptType)
+    // console.log("test",this.marketingForm.value.promptType)
     this.getPromtCount(true)
   }
 
@@ -500,7 +506,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
           this.typedHashtags += fullText.charAt(index);
         }
         index++;
-        this.scrollToBottom();
+        // this.scrollToBottom();
       } else {
         clearInterval(interval);
       }
@@ -508,7 +514,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   confirmRegenerate() {
-    const promptType = this.marketingForm.get('promptType')?.value;
+    const promptType = "image";
     const message = promptType === 'image' 
       ? 'Regenerating the image will cause you to lose the previously generated image.'
       : 'Regenerating the text will cause you to lose the previously generated text.';
@@ -606,7 +612,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
 
   // New Code 
-  ai_prompt: string = '';
+  // ai_prompt: string = '';
   // ai_apiResponse: any;
   ai_apiResponse: {
     image?: string;
@@ -616,12 +622,14 @@ export class AiAgentMarketingNewComponent implements OnInit {
   showDropdown: boolean = false;
 
   ai_generateContent(){
-    if (!this.ai_prompt) {
+    console.log("MARKETIN",this.marketingForm.value);
+    
+    if (!this.marketingForm.value.promptDescription) {
       this.toastService.showWarn("Please enter a prompt")
       return;
     }
       this.isLoading = true;
-      const promptDescription = this.ai_prompt;
+      const promptDescription = this.marketingForm.value.promptDescription;
       this.rest_api.generateCaptionImage(promptDescription).subscribe({
         next: (response: any) => {
           console.log('Image Response:', response);
@@ -671,13 +679,15 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.showDropdown = false;
   }
 
-  handleRegenerate(option: string): void {
-    switch (option) {
+  handleRegenerate(option): void {
+    console.log("OPT",option);
+    
+    switch (option.value) {
       case 'image':
-        this.hitGenerateImageAPI(this.ai_prompt);
+        this.hitGenerateImageAPI(this.marketingForm.value.promptDescription);
         break;
       case 'caption':
-        this.hitGenerateCaptionAPI(this.ai_prompt);
+        this.hitGenerateCaptionAPI(this.marketingForm.value.promptDescription);
         break;
       case 'both':
         this.ai_generateContent();

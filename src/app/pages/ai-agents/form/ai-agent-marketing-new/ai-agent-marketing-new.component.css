@@ -435,7 +435,7 @@
 
     .content-section{
       display: flex;
-      border: 2px solid #bfbbbb;
+      border: 1px solid #bfbbbb;
       padding: 10px 0px !important;
       margin-top: 15px;
       border-radius: 6px;
@@ -451,7 +451,7 @@
       align-items: end;
       bottom: 0;
       right: 15px;
-      border-top: 2px solid #bfbbbb;
+      border-top: 1px solid #bfbbbb;
       padding-top: 6px;
       align-items: end;
       justify-content: end;
@@ -464,6 +464,6 @@
       display: flex;
       gap: 10px;
       margin-top: 15px;
-      border-top: 2px solid #bfbbbb;
+      border-top: 1px solid #bfbbbb;
       padding-top: 6px;
     }

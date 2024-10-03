@@ -117,14 +117,14 @@
               </div>
             </ng-template>
             <ng-template pTemplate="content">
-                <div class="container">
+                <div class="container" [formGroup]="marketingForm">
 
                   <div class="row">
                     <div class="col-md-12 p-0">
 
                       <div class="prompt">
                         <h3>Provide a short description of your scenario</h3>
-                        <textarea class="form-control" [(ngModel)]="ai_prompt" rows="5" placeholder="Enter your scenario here..."></textarea>
+                        <textarea class="form-control" formControlName="promptDescription" rows="5" placeholder="Enter your scenario here..."></textarea>
                       </div>
                       <div class="align-items-center d-flex justify-content-end mt-1">
                         <button (click)="ai_generateContent()" class="btn btn-primary">
@@ -159,7 +159,7 @@
                           <button (click)="acceptGenerated()" class="btn btn-primary">Accept</button>
                           <div class="btn-regenerate">
                             <div class="btn-regenerate">
-                              <p-dropdown [options]="regenerateOptions" [(ngModel)]="selectedOption" placeholder="Regenerate" (onChange)="handleRegenerate(selectedOption)">
+                              <p-dropdown [options]="regenerateOptions" optionLabel="label" optionValue="value" [(ngModel)]="selectedOption" placeholder="Regenerate" (onChange)="handleRegenerate($event)">
                               </p-dropdown>
                             </div>
                             
