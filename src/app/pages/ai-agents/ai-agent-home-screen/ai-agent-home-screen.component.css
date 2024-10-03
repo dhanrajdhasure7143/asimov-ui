@@ -1285,31 +1285,120 @@ display: block;;
 }
 @media (min-width: 1100px) and (max-width: 1800px) {
   .inner-enterprise-modal-sec{
-    width: 650px !important;
+    width: 700px !important;
 }
 }
-
-@media (min-width: 1100px) and (max-width: 1800px) {
-  .success-enter-overlay{
-    width: 460px !important;
+@media (min-width: 1000px) and (max-width: 1500px) {
+  .bot-details {
+    font-size: 11px !important;
+}
+.add-agents {
+  font-size: 11px !important;
+  min-width: 96px !important;
+}
+.launchButton .btn{
+  font-size: 12px !important;
+  height: 30px;
+}
+.launchButton {
+  height: 44px !important;
+  margin: -2px 0 -4px 0;
+}
+.card-body {
+  padding-right: 11px !important;
+}
+.card-body .align-items-center {
+  align-items: flex-start !important;
+}
+.coming-soon-btn {
+  font-size: 11px !important;
+  width: 111px !important;
+}
+.see-more{
+  right: 5px;
+  font-size: 16px !important;
 }
 }
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+@media (min-width: 700px) and (max-width: 900px) {
+  .add-agents {
+    font-size: 10px;
+    min-width: 91px;
+  }
+  .bot-details {
+    font-size: 10px !important;
 }
- 
- 
-@media (max-width: 1024px) {
+  .bot-name, .card-title-new{
+    font-size: 13px;
+}
+.add-agents {
+  padding: 3px 8px;
+}
+.launchButton {
+  height: 37px !important;
+  padding-top: 14px;
+  }
+  .launchButton .btn{
+    font-size: 10px !important;
+    padding: 10px !important;
+  }
+  .coming-soon-btn{
+    font-size: 10px !important;
+    padding:4px !important;
+    width: 92px !important;
+  }
+.bot-image{
+  width: 36px;
+  height: 36px;
+}
+.launchButton[_ngcontent-lef-c412] .btn[_ngcontent-lef-c412] {
+  font-size: 12px !important;
+  height: 28px;
+  padding: 5px 13px !important;
+}
+}
+@media (min-width: 700px) and (max-width: 1100px) {
   .grid-container {
-      grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .inner-cards-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .add-agents {
+    font-size: 10px;
+    min-width: 91px;
   }
 }
- 
- 
-@media (max-width: 668px) {
-  .grid-container {
-      grid-template-columns: 1fr;
-  }
+@media (min-width: 1000px) and (max-width: 1099px) {
+  .bot-name, .card-title-new {
+    font-size: 15px !important;
+}
+.inner-cards-container {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) ;
+}
+.content {
+  padding: 14px !important;
+}
+.add-agents {
+  font-size: 10px !important;
+  min-width: 90px !important;
+}
+.launchButton .btn {
+  font-size: 12px !important;
+  padding: 10px 12px !important;
+}
+.launchButton{
+  height: 53px !important;
+  margin: -2px 0 -4px 0;
+}
+.grid-container, .inner-cards-container {
+  grid-gap: 30px !important;
+  gap: 30px !important;
+}
+.card-body .align-items-center {
+  align-items: center !important;
+}
+
+.coming-soon-btn{
+font-size: 13px;
+}
 }
