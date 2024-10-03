@@ -340,7 +340,8 @@ export class AiAgentFormComponent implements OnInit {
               ...att,  // Spread existing properties from `att`
               key: fieldName,  // Add your custom properties
               originalFileName: att.originalFileName,  // Ensure custom mapping if needed
-              attachmentId: att.id
+              attachmentId: att.id,
+              agentUUID: att.agentUuid
             }))
           ];
           
@@ -894,16 +895,47 @@ export class AiAgentFormComponent implements OnInit {
   }
   }
 
+  // onFileSelected(event: any, field: any) {
+  //   const selectedFiles = event.target.files;
+  //   this.selectedFiles[field.preAttributeName] = selectedFiles;
+  //   console.log("Selected files for " + field.preAttributeName, selectedFiles);
+
+  //   const selectedFile = event.target.files[0];
+  //   const fileName = selectedFile.name;
+  //   const fileNameElement = document.querySelector('.custom-file-name');
+  //   if(fileNameElement)
+  //   fileNameElement.textContent = fileName;
+  // }
+
   onFileSelected(event: any, field: any) {
     const selectedFiles = event.target.files;
+    const selectedFile = selectedFiles[0];
+    if (this.agent_uuid === 'Pred_ProductManagement') {
+      console.log("Validating for Pred_ProductManagement");
+      const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+      const maxSizeInBytes = 4 * 1024 * 1024; // 4 MB
+      if (!allowedTypes.includes(selectedFile.type)) {
+        this.toaster.showInfo('Please select a PDF, PNG, or JPG file.')
+        event.target.value = '';
+        return;
+      }
+      if (selectedFile.size > maxSizeInBytes) {
+        console.log("File size exceeds limit");
+        this.toaster.showInfo('File size exceeds 4 MB. Please choose a smaller file.')
+        event.target.value = '';
+        return;
+      }
+    } else {
+      console.log("Not Pred_ProductManagement, skipping validation");
+    }
+  
     this.selectedFiles[field.preAttributeName] = selectedFiles;
     console.log("Selected files for " + field.preAttributeName, selectedFiles);
-
-    const selectedFile = event.target.files[0];
     const fileName = selectedFile.name;
     const fileNameElement = document.querySelector('.custom-file-name');
-    if(fileNameElement)
-    fileNameElement.textContent = fileName;
+    if(fileNameElement){
+      fileNameElement.textContent = fileName;
+    }
   }
 
   initiateSaveAgent() {
@@ -2017,6 +2049,8 @@ handleHistoryTab (hist) {
         this.toaster.showWarn("Please select the files.");
         return;
     }
+
+    console.log('The Output data for input for Files is Here: ', selectedFiles);
 
     if (selectedFiles.length >= 1) {
         this.confirmationService.confirm({

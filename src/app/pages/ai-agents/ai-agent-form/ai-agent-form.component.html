@@ -214,7 +214,7 @@
 
                                     <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                         <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                          <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                          <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                         </div>
                                       
                                         <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel">
@@ -458,7 +458,7 @@
                                                 </ng-container> -->
                                                 <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                                     <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                                      <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                                        <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                                     </div>
                                                   
                                                     <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >
@@ -704,7 +704,7 @@
 
                                                         <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                                             <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                                              <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                                                <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                                             </div>
                                                           
                                                             <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >
@@ -1123,10 +1123,19 @@
                     <td>
                         <span
                             [ngClass]="{'stage-completed': record.stage === 'Success', 'stage-failed': record.stage === 'Failed', 'stage-running': record.stage === 'Running','stage-cancelled':record.stage==='Cancelled'}">
-                            {{ record.stage }}
+                            <span *ngIf="record.stage==='Cancelled'">
+                                Stopped
+                            </span>
+                            <span *ngIf="record.stage != 'Cancelled'">
+                                {{ record.stage }}
+                            </span>
                         </span>
                     </td>
-                    <td> {{(record.stage=='Failed' || record.stage=='Cancelled' )  ? record.errorMsg : record.information }}  &nbsp; 
+                    <td> {{ 
+                        record.stage == 'Failed' ? record.errorMsg 
+                        : (record.stage == 'Cancelled' ? 'Stopped by user' 
+                        : record.information) 
+                      }}  &nbsp; 
                         <span *ngIf="record.stage === 'Success' && isOutputEnabled"> 
                             <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
                             <i *ngIf="record.stage === 'Success' && isOutputEnabled" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>

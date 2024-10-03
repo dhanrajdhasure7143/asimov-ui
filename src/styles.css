@@ -3917,3 +3917,7 @@ button{
 }
 
 }
+
+.cke_notification_warning{
+  display: none !important;
+}
