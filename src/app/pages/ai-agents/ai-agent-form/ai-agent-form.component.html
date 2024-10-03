@@ -214,7 +214,7 @@
 
                                     <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                         <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                          <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                          <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                         </div>
                                       
                                         <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel">
@@ -458,7 +458,7 @@
                                                 </ng-container> -->
                                                 <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                                     <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                                      <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                                        <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                                     </div>
                                                   
                                                     <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >
@@ -704,7 +704,7 @@
 
                                                         <ng-container *ngIf="field.preAttributeType === 'file' && getAttachements(field.preAttributeName)?.length >= 1">
                                                             <div class="file-label form-control upload-file" (click)="showPanel($event, field.preAttributeName)">
-                                                              <span><i class="pi pi-file" style="font-size: 1rem"></i>&nbsp;Uploaded Files</span>
+                                                                <span class="text-uploaded-file"><i class="pi pi-file" style="font-size: 1rem"></i> <span>Uploaded Files</span> </span>
                                                             </div>
                                                           
                                                             <div *ngIf="visibleField === field.preAttributeName" class="custom-file-panel" >

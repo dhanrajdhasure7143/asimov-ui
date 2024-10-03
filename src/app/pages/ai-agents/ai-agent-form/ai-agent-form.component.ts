@@ -340,7 +340,8 @@ export class AiAgentFormComponent implements OnInit {
               ...att,  // Spread existing properties from `att`
               key: fieldName,  // Add your custom properties
               originalFileName: att.originalFileName,  // Ensure custom mapping if needed
-              attachmentId: att.id
+              attachmentId: att.id,
+              agentUUID: att.agentUuid
             }))
           ];
           
@@ -2048,6 +2049,8 @@ handleHistoryTab (hist) {
         this.toaster.showWarn("Please select the files.");
         return;
     }
+
+    console.log('The Output data for input for Files is Here: ', selectedFiles);
 
     if (selectedFiles.length >= 1) {
         this.confirmationService.confirm({
