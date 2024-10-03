@@ -456,7 +456,10 @@
       align-items: end;
       justify-content: end;
     }
-
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
     .btns-personalize{
       display: flex;
       gap: 10px;

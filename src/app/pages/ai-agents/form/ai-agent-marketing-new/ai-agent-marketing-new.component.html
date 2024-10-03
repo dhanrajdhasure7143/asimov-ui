@@ -124,10 +124,15 @@
 
                       <div class="prompt">
                         <h3>Provide a short description of your scenario</h3>
-                        <textarea [(ngModel)]="ai_prompt" rows="5" placeholder="Enter your scenario here..."></textarea>
+                        <textarea class="form-control" [(ngModel)]="ai_prompt" rows="5" placeholder="Enter your scenario here..."></textarea>
                       </div>
                       <div class="align-items-center d-flex justify-content-end mt-1">
-                        <button (click)="ai_generateContent()" class="btn btn-primary">Generate</button>
+                        <button (click)="ai_generateContent()" class="btn btn-primary">
+                         <img *ngIf="!isLoading" src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
+                        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> &nbsp;
+                        <span *ngIf="!isLoading">Generate</span>
+                        <span *ngIf="isLoading">Generating...</span>
+                        </button>
                       </div>
                     </div>
 

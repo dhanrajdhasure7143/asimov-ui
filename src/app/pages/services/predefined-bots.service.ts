@@ -291,4 +291,13 @@ export class PredefinedBotsService {
     });
     return this.http.post(environment.python_llm+`/customize-form`, formData, { headers });
   }
+
+  generateCaptionImage(prompt: string){
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.apiToken}`
+    });
+    return this.http.post(environment.python_llm+`/generate-content`, formData, { headers});
+  }
 }

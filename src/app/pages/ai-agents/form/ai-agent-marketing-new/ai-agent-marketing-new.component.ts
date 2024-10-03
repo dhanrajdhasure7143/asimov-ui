@@ -395,7 +395,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
 }
 
   getPromtCount(isLimitCheck: boolean) {
-    const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
+    // const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
+    const promptTypeValue = "both";
     this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
       (response: any) => {
         if (response) {
@@ -405,17 +406,17 @@ export class AiAgentMarketingNewComponent implements OnInit {
           this.isAlreadyGenerated = this.textRegenerateCount + this.imageRegenerateCount;
 
           // Update regenerate count and button visibility
-          this.regenerateCount = (promptTypeValue === 'text') ? this.textRegenerateCount : this.imageRegenerateCount;
-          this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
+          // this.regenerateCount = (promptTypeValue === 'text') ? this.textRegenerateCount : this.imageRegenerateCount;
+          // this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
 
-          // Update isGenerated to be true if either text or image has been generated, or if we've switched prompt types
-          if (promptTypeValue === 'text') {
-            this.isGenerated = this.textRegenerateCount > 0;
-          }
+          // // Update isGenerated to be true if either text or image has been generated, or if we've switched prompt types
+          // if (promptTypeValue === 'text') {
+          //   this.isGenerated = this.textRegenerateCount > 0;
+          // }
 
-          if (promptTypeValue === 'image') {
-            this.isGenerated =this.imageRegenerateCount > 0;
-          }
+          // if (promptTypeValue === 'image') {
+          //   this.isGenerated =this.imageRegenerateCount > 0;
+          // }
           // this.isGenerated = this.textRegenerateCount > 0 || this.imageRegenerateCount > 0;
         }
       },
@@ -585,11 +586,35 @@ export class AiAgentMarketingNewComponent implements OnInit {
   showDropdown: boolean = false;
 
   ai_generateContent(){
-
     if (!this.ai_prompt) {
       this.toastService.showWarn("Please enter a prompt")
       return;
     }
+      // this.isLoading = true;
+      // const promptDescription = this.ai_prompt;
+      // this.rest_api.generateCaptionImage(promptDescription).subscribe({
+      //   next: (response: any) => {
+      //     console.log('Image Response:', response);
+      //     if (response.image) {
+      //       // this.generatedImageUrl = 'data:image/png;base64,' + response.image;
+      //       // this.isLoading = false;
+      //       // this.isGenerated = true;
+      //       // this.getPromtCount(false)
+      //     } 
+      //     // else if (response.url) {
+      //     //   this.generatedImageUrl = response.url;
+      //     // } 
+      //     else {
+      //       this.isLoading = false;
+      //       this.toastService.showError('Unexpected response format')
+      //     }
+      //   },
+      //   error: (error) => {
+      //     this.isLoading = false;
+      //     this.toastService.showError('Error generating image')
+      //   }
+      // });
+  
     console.log("Started Generating....")
     let mockResponse = {
       // "image": "https://images.pexels.com/photos/268432/pexels-photo-268432.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -601,8 +626,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
       this.ai_apiResponse = mockResponse;
       this.spinner.hide();
     }, 1000);
-
-    
   }
 
   ai_download() {
