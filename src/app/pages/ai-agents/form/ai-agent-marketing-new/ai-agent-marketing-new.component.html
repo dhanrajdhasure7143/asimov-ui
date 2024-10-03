@@ -123,11 +123,11 @@
                     <div class="col-md-12 p-0">
 
                       <div class="prompt">
-                        <h3>Provide a short description of your scenario</h3>
-                        <textarea class="form-control" formControlName="promptDescription" rows="5" placeholder="Enter your scenario here..."></textarea>
+                        <b>Provide a short description of your scenario</b>
+                        <textarea class="form-control" cols="30" autoResize="autoResize"  formControlName="promptDescription" rows="5" placeholder="Enter your scenario here..."></textarea>
                       </div>
                       <div class="align-items-center d-flex justify-content-end mt-1">
-                        <button (click)="ai_generateContent()" class="btn btn-primary">
+                        <button (click)="ai_generateContent()" class="btn btn-primary" *ngIf="isContentExists || isConfigered" [disabled]="isGenerateDisabled || marketingForm.invalid">
                          <img *ngIf="!isLoading" src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
                         <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> &nbsp;
                         <span *ngIf="!isLoading">Generate</span>
@@ -136,7 +136,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12 p-0 content-section" *ngIf="ai_apiResponse.image!=''" >
+                    <div class="col-md-12 p-0 content-section" *ngIf="isContentExists" >
                       <div class="col-md-6">
                         <div class="download-section">
                           <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Image</P>
@@ -155,17 +155,27 @@
                       </div>
                       <div class="col-md-6" >
 
-                        <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Content</P>
+                        <div class="download-section">
+                          <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Content</P>
+                          <button class="copy-btn" (click)="copyText()" >
+                            <i [class]="isCopied ? 'pi pi-check' : 'pi pi-copy'"></i>
+                            {{ isCopied ? 'Copied!' : 'Copy' }}
+                          </button>
+                        </div>
                         <div class="caption-text">
                           <p>{{ ai_apiResponse.caption }}</p>
                         </div>
+                        
                         <div class="remaining-buttons">
                           <button (click)="acceptGenerated()" class="btn btn-primary">Accept</button>
                           <div class="btn-regenerate">
-                            <div class="btn-regenerate">
-                              <p-splitButton label="Regenerate"  [model]="regenerateOptions"></p-splitButton>
+                            <div class="btn-regenerate dochead-leftbtns">
+                              <!-- <p-splitButton label="Regenerate"  [model]="regenerateOptions"></p-splitButton> -->
+                              <button type="button" pButton [disabled]="isGenerateDisabled || marketingForm.invalid" class="btn bluebg-button creat-pluarow icn-adj" (click)="menu.toggle($event)">
+                                <span class="crt-new">Regenerate</span> <span><img src="assets/images-n/chevron-down-createnew.svg" alt=""></span>
+                              </button>
+                              <p-menu #menu [popup]="true" [model]="regenerateOptions"></p-menu>
                             </div>
-                            
                             <!-- <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'"
                               class="btn btn-secondary rounded-pill" (click)="confirmRegenerate()" type="button"
                               [disabled]="isAccepted || isLoading">
@@ -176,7 +186,12 @@
                           </div>
                         </div>
                       </div>
+                      <div *ngIf="isLoading" class="loader-container">
+                        <span class="loader"></span>
+                      </div>
                     </div>
+                    <p style="margin-left: auto;" *ngIf="isGenerateDisabled">Maximum prompts limit is exceeded for today.</p>
+
                   </div>
                 </div>                  
                   <!--  -->
@@ -212,7 +227,7 @@
 
         <div *ngIf="attachmentType === 'text'" class="form-group">
           <label for="textInput">Text:</label>
-          <textarea id="textInput" [(ngModel)]="inputText" (input)="checkFormValidity()" maxlength="150" class="form-control" placeholder="Enter text here (max 150 characters)" rows="4"></textarea>
+          <textarea id="textInput" [(ngModel)]="inputText" cols="30" pInputTextarea autoResize="autoResize" (input)="checkFormValidity()" maxlength="150" class="form-control" placeholder="Enter text here (max 150 characters)" rows="4"></textarea>
         </div>
 
         <div class="drop" *ngIf="attachmentType === 'logo'">

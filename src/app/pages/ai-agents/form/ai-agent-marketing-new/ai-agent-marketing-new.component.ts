@@ -145,6 +145,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
         instagramToken: this.marketingfieldValues.instagramToken,
         // promptType: this.marketingfieldValues.promptType,
         promptDescription: this.marketingfieldValues.promptDescription
+
       });
 
       // Handle selectedPlatforms
@@ -342,9 +343,10 @@ export class AiAgentMarketingNewComponent implements OnInit {
         
         this.isLoading = false;
         this.isGenerated = true;
-        if (this.hasGeneratedText) {
-          this.getPromtCount(false);
-        }
+        this.getPromtCount(false)
+        // if (this.hasGeneratedText) {
+        //   this.getPromtCount(false);
+        // }
       },
       error: (error) => {
         this.isLoading = false;
@@ -376,7 +378,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
   hitGenerateImageAPI(prompt: string): void {
     console.log("IMAGE API");
-    
+    this.isLoading = true;
     this.rest_api.generateImageAPI(prompt).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
@@ -428,15 +430,15 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
   
   copyText() {
-    if (this.hasGeneratedText) {
-    const textToCopy = `${this.generatedText.caption}\n${this.generatedText.hashtag}`;
+    if (this.ai_apiResponse.caption) {
+    const textToCopy = `${this.ai_apiResponse.caption}`;
     this.clipboard.copy(textToCopy);
     this.isCopied = true;
     setTimeout(() => {
       this.isCopied = false;
     }, 2000);
-  }
-}
+    }
+    }
 
   // getPromtCount(isLimitCheck: boolean) {
   //   // const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
@@ -475,8 +477,13 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe((response: any) => {
         if (response) {
           this.regenerateCount = this.calculateRegenerateCount(response.bothExecutionCountIs);
+          console.log("regenerateCount",this.regenerateCount);
+          
           this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
+          console.log("isGenerateDisabled",this.isGenerateDisabled);
+          
           this.isGenerated = this.regenerateCount > 0;
+
         }
       },(error) => {
         this.toastService.showError("Error occurred fetching prompt limit check");
@@ -693,6 +700,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   // New Code 
   // ai_prompt: string = '';
   // ai_apiResponse: any;
+  isContentExists:boolean=false;
   ai_apiResponse: {
     image?: string;
     caption?: string;
@@ -721,6 +729,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
             this.getPromtCount(false)
             this.isLoading = false;
             this.isGenerated = true;
+            this.isContentExists = true
           }else {
             this.isLoading = false;
             this.toastService.showError(this.toastMessages.apierror)
