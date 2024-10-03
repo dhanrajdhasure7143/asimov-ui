@@ -1761,4 +1761,7 @@ top: 2px !important;
 .text-uploaded-file span{
   text-decoration: underline !important;
 }
+.centered-message{
+  font-size: 1.1rem !important;
+}
 
