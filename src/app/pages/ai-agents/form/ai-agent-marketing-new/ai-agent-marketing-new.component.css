@@ -305,9 +305,9 @@
   }
   
   .download-button {
-    position: absolute;
-    top: 12px;
-    right: -88px;
+    /* position: absolute; */
+    /* top: 12px; */
+    /* right: -88px; */
     background: none;
     border: 1px solid #e0dcdc;
     cursor: pointer;
@@ -466,4 +466,12 @@
       margin-top: 15px;
       border-top: 1px solid #bfbbbb;
       padding-top: 6px;
+    }
+
+    .download-section{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 15px;
+      margin-bottom: 5px;
     }

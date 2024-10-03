@@ -366,6 +366,7 @@ export class AiAgentFormComponent implements OnInit {
       this.isCommonForm = res.formType === 'common'? true : false;
       this.isOutputEnabled = res.isOutputRequired;
       this.isOutputTabEnabled(this.isOutputEnabled);
+      this.getStagesInfo()
       this.spinner.hide();
       // let obj = { attributeRequired: true, maxNumber: 100, minMumber: 0, placeholder: "Enter Agent Name", preAttributeLable: "Automation Agent Name", preAttributeName: "botName", 
       //             preAttributeType: "text", visibility: true, preAttributeValue: res.aiAgentName}
@@ -1525,6 +1526,16 @@ export class AiAgentFormComponent implements OnInit {
           this.averageTimeAgentExecution = response.averageTimeAgentExecution
           this.updateCurrentStage(currentStageStatus);
         }
+        // if(response && response.stages && response.stages.length == 0){
+        //   this.stopTracking();
+        //   this.getInboxConent();
+        //   this.getOutPutConent();
+        //   this.getSubAgentHistoryLogs();
+        //   this.resetAgent();
+        //   this.agentStarted = false;
+        //   this.isComplete = false;
+        //   this.isProcessing = false;
+        // }
       },
       err => {
         console.error("Error fetching agent stages info:", err);
@@ -1539,6 +1550,7 @@ export class AiAgentFormComponent implements OnInit {
           this.stages[this.currentStageIndex].status = 'success';
           this.completedStages++;
           this.currentStageIndex++;
+          console.log("Current stage index:", this.currentStageIndex);
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
             this.getInboxConent();
@@ -2073,6 +2085,8 @@ handleHistoryTab (hist) {
                         this.toaster.toastSuccess("Files deleted successfully.");
                         if (typeof input === 'object') {
                           this.removeFilesFromForm(input);
+                        }else if(typeof input === 'string' && input === 'Files'){
+                          this.removeFilesFromForm1(selectedFiles);
                         }
                     },
                     (err) => {
@@ -2096,6 +2110,17 @@ removeFilesFromForm(deletedFile:any){
     }
   }) 
 }
+
+removeFilesFromForm1(deletedFiles: any[]) {
+  deletedFiles.forEach(deletedFile => {
+    if (this.attachmentMap[deletedFile.inputKey]) {
+      this.attachmentMap[deletedFile.inputKey] = this.attachmentMap[deletedFile.inputKey].filter(file => {
+        return file.fileNameWithUUID !== deletedFile.fileNameWithUUID;
+      });
+    }
+  });
+}
+
 
   downloadSubAgentHistoryAsExcel() {
     const historyData = this.historyToDownload;
@@ -2360,5 +2385,29 @@ removeFilesFromForm(deletedFile:any){
     this.agentStarted = false;
     this.completedStages = 0;
     this.stages.forEach(stage => stage.status = 'pending');
+  }
+
+  getStagesInfo(){
+    this.rest_service.getAgentStagesInfo(this.params.agentId, this.agent_uuid).subscribe((res: any) => {
+      // this.stages = res.data;
+      if(res.stages && res.stages.length > 0){
+        // res.stages.find((stage,index) => { stage.name=="Completed" && stage.status=="pending"})
+        res.stages.forEach((stage,index) => {
+          if(stage.name == "Completed" && stage.status == "pending"){
+            this.isProcessing = true;
+            this.currentStageIndex = 0;
+            this.completedStages = -1;
+            this.stageFailed = false;
+            this.agentStarted = true;  
+            this.showProgress = true;
+            this.agentStarted = true;
+              this.startTracking();
+              this.stages.forEach(stage => stage.status = 'running');
+          }
+        });
+      }
+    }, err => {
+      this.toaster.showError(this.toastMessages.apierror);
+    });
   }
 }

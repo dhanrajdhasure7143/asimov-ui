@@ -136,16 +136,20 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12 p-0 content-section" *ngIf="ai_apiResponse" >
+                    <div class="col-md-12 p-0 content-section" *ngIf="ai_apiResponse.image!=''" >
                       <div class="col-md-6">
-                        <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Image</P>
+                        <div class="download-section">
+                          <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Image</P>
+                          <button class="download-button" (click)="downloadImage()" >
+                            <i class="pi pi-download"></i> Download
+                          </button>
+                        </div>                        
                         <div class="image-section">
                           <img [src]="ai_apiResponse?.image" alt="Generated Image" height="100%" width="100%" style="border: 1px solid gray;  border-radius: 8px;">
 
                         </div>
                         
                         <div class="btns-personalize">
-                          <button (click)="ai_download()" class="btn btn-primary">Download</button>
                           <button (click)="showAttachDialog()" class="btn btn-primary">Customize</button>
                         </div>
                       </div>
@@ -186,7 +190,7 @@
   
   
   <!-- Attach Logo Code -->
-<p-dialog header="Attach Logo/Text" [(visible)]="isAttachDialogVisible" modal="true" width="600" [responsive]="true" [maximizable]="false" (onHide)="resetForm()">
+<p-dialog header="Attach Logo/Text" [(visible)]="isAttachDialogVisible" [modal]="true" [style]="{width: '50vw'}" class="custom-dialog" [responsive]="true" [maximizable]="false" (onHide)="resetForm()">
   <div class="container logo-box">
     <div class="row">
       <div class="col-md-6 p-0">
@@ -212,7 +216,7 @@
           <textarea id="textInput" [(ngModel)]="inputText" (input)="checkFormValidity()" maxlength="150" class="form-control" placeholder="Enter text here (max 150 characters)" rows="4"></textarea>
         </div>
 
-        <div class="drop">
+        <div class="drop" *ngIf="attachmentType === 'logo'">
           <label for="">Select Position</label>
           <p-dropdown [options]="positions" [(ngModel)]="selectedPosition" optionLabel="label" optionValue="value" appendTo="body"></p-dropdown>
         </div>
