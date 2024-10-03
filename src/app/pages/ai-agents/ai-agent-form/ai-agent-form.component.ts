@@ -2085,6 +2085,8 @@ handleHistoryTab (hist) {
                         this.toaster.toastSuccess("Files deleted successfully.");
                         if (typeof input === 'object') {
                           this.removeFilesFromForm(input);
+                        }else if(typeof input === 'string' && input === 'Files'){
+                          this.removeFilesFromForm1(selectedFiles);
                         }
                     },
                     (err) => {
@@ -2108,6 +2110,17 @@ removeFilesFromForm(deletedFile:any){
     }
   }) 
 }
+
+removeFilesFromForm1(deletedFiles: any[]) {
+  deletedFiles.forEach(deletedFile => {
+    if (this.attachmentMap[deletedFile.inputKey]) {
+      this.attachmentMap[deletedFile.inputKey] = this.attachmentMap[deletedFile.inputKey].filter(file => {
+        return file.fileNameWithUUID !== deletedFile.fileNameWithUUID;
+      });
+    }
+  });
+}
+
 
   downloadSubAgentHistoryAsExcel() {
     const historyData = this.historyToDownload;
