@@ -85,7 +85,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
     { label: 'Regenerate Caption', value: 'caption' },
     { label: 'Both', value: 'both' }
   ];
-  private apiToken = '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';
+  generatedImageUrlPlane: string = "";
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -584,8 +585,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
     );
   }
 
-  generatedImageUrlPlane: string = "";
-
   submitAttachment() {
     if (this.attachmentType === 'logo' && !this.logoFile) {
       return;
@@ -605,13 +604,10 @@ export class AiAgentMarketingNewComponent implements OnInit {
       imagePayload = this.ai_apiResponse?.image.replace('data:image/png;base64,', '');
     }
 
-    console.log('The Output data for imagePayload: ', imagePayload);
-
     const formData = new FormData();
     formData.append('position', this.selectedPosition); 
     formData.append('image', imagePayload);  
 
-    console.log("File eeeeeeeeeeeeeeeeeeeee", this.logoFile)
     if (this.attachmentType === 'logo' && this.logoFile) {
       this.convertFileToBase64(this.logoFile);
       formData.append('logo_path',this.base64String);
@@ -675,7 +671,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
     };
 
     this.base64String = this.base64String.replace('data:image/png;base64,', '');
-    console.log("Base or Not :    ", this.base64String)
 
     reader.onerror = (error) => {
       console.error('File reading error:', error);
