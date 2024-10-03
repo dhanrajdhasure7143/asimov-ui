@@ -1133,9 +1133,9 @@
                     </td>
                     <td> {{ 
                         record.stage == 'Failed' ? record.errorMsg 
-                        : record.stage == 'Cancelled' ? 'Stopped by user' 
-                        : record.information 
-                      }}   &nbsp; 
+                        : (record.stage == 'Cancelled' ? 'Stopped by user' 
+                        : record.information) 
+                      }}  &nbsp; 
                         <span *ngIf="record.stage === 'Success' && isOutputEnabled"> 
                             <!-- <i pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(i)"></i> -->
                             <i *ngIf="record.stage === 'Success' && isOutputEnabled" pTooltip="View Output" tooltipPosition="top" class="pi pi-eye eye-icon" (click)="getOutputOverlay(record)"></i>
