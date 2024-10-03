@@ -335,7 +335,7 @@ display: block !important;
   margin: 5px 0 0;
 }
 .agent-info{
-  width: 75%;
+  width: 80%;
 }
 
 .edit-icon {
@@ -1396,7 +1396,6 @@ margin-top: 5px;
 padding: 8px;
 background: #fff;
 border: 1px solid #e4e2e2 !important;
-margin-left: auto;
 }
 .inbox-head{
 width: 16%;
