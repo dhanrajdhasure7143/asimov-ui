@@ -66,6 +66,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   attachmentType: string = 'logo';
   selectedPosition: string = 'top-right';
   selectedOption: string;
+  generatedImageUrlPlane: string = "";
 
   positions: any[] = [
     { label: 'Top-Right', value: 'top-right' },
@@ -80,13 +81,23 @@ export class AiAgentMarketingNewComponent implements OnInit {
     { name: 'Instagram', icon: 'fab fa-instagram' },
   ];
 
-  regenerateOptions = [
-    { label: 'Regenerate Image', value: 'image' },
-    { label: 'Regenerate Caption', value: 'caption' },
-    { label: 'Both', value: 'both' }
-  ];
-  generatedImageUrlPlane: string = "";
+ 
 
+  regenerateOptions = [
+    {label: 'Regenerate Image', command: () => {
+        this.handleRegenerate("image");
+    }
+  },
+    {label: 'Regenerate Caption', command: () => {
+        this.handleRegenerate("caption");
+    }
+  },
+    {label: 'Both', command: () => {
+        this.handleRegenerate("both");
+    }
+  }
+];
+  private apiToken = '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';
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -747,10 +758,10 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.showDropdown = false;
   }
 
-  handleRegenerate(option): void {
-    console.log("OPT",option);
+  handleRegenerate(value): void {
+    console.log("OPT",value);
     
-    switch (option.value) {
+    switch (value) {
       case 'image':
         this.hitGenerateImageAPI(this.marketingForm.value.promptDescription);
         break;

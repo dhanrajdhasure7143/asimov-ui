@@ -163,8 +163,7 @@
                           <button (click)="acceptGenerated()" class="btn btn-primary">Accept</button>
                           <div class="btn-regenerate">
                             <div class="btn-regenerate">
-                              <p-dropdown [options]="regenerateOptions" optionLabel="label" optionValue="value" [(ngModel)]="selectedOption" placeholder="Regenerate" (onChange)="handleRegenerate($event)">
-                              </p-dropdown>
+                              <p-splitButton label="Regenerate"  [model]="regenerateOptions"></p-splitButton>
                             </div>
                             
                             <!-- <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'"
