@@ -273,6 +273,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
   toggleAccepted(): void {
     this.isAccepted = !this.isAccepted;
   }
+  filePath: string | null = null;
+  base64String;
 
   onSubmit(): void {
     if (this.marketingForm.valid) {
@@ -365,6 +367,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
             ...this.ai_apiResponse,  // Preserve existing caption
             image: 'data:image/png;base64,' + response.image,
           };
+
+          this.generatedImageUrlPlane = response.image 
           this.getPromtCount(false);
         } else {
           console.error('Unexpected image response format:', response);
@@ -386,12 +390,23 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   downloadImage() {
-    if (this.generatedImageUrl) {
+    // if (this.generatedImageUrl) {
+    //   const link = document.createElement('a');
+    //   link.href = this.generatedImageUrl;
+    //   link.download = 'generated_image.png';
+    //   link.click();
+    // }
+
+    if(this.ai_apiResponse?.image){
       const link = document.createElement('a');
-      link.href = this.generatedImageUrl;
+      link.href = this.ai_apiResponse.image;
       link.download = 'generated_image.png';
       link.click();
+
+      this.toastService.toastSuccess("Image Downloaded Successfully..")
     }
+
+
   }
   
   copyText() {
@@ -537,14 +552,12 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
   onLogoFileSelect(event: any) {
     const file = event.target.files[0];
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+    const allowedTypes = ['image/png'];
 
     if (file && allowedTypes.includes(file.type)) {
       this.logoFile = file;
-      const objectUrl = URL.createObjectURL(file);
-      this.logoPreview = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
     } else {
-      this.toastService.showWarn("Only JPEG, PNG, and SVG formats are allowed for the logo.");
+      this.toastService.showWarn("Only PNG formats are allowed for the logo.");
     }
 
     this.checkFormValidity();
@@ -565,6 +578,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
     );
   }
 
+  generatedImageUrlPlane: string = "";
+
   submitAttachment() {
     if (this.attachmentType === 'logo' && !this.logoFile) {
       return;
@@ -574,18 +589,59 @@ export class AiAgentMarketingNewComponent implements OnInit {
       return;
     }
 
+    if (this.generatedImageUrlPlane?.startsWith('data:image/png;base64,')) {
+      this.generatedImageUrlPlane = this.generatedImageUrlPlane.replace('data:image/png;base64,', '');
+    }
+
+    var imagePayload : string =''
+
+    if (this.ai_apiResponse.image.startsWith('data:image/png;base64,')) {
+      imagePayload = this.ai_apiResponse?.image.replace('data:image/png;base64,', '');
+    }
+
+    console.log('The Output data for imagePayload: ', imagePayload);
+
     const formData = new FormData();
     formData.append('position', this.selectedPosition); 
-    formData.append('image', this.generatedImageUrl);  
+    formData.append('image', imagePayload);  
 
+    console.log("File eeeeeeeeeeeeeeeeeeeee", this.logoFile)
     if (this.attachmentType === 'logo' && this.logoFile) {
-      formData.append('text', "");
-      formData.append('logo_path', this.logoFile); 
+      this.convertFileToBase64(this.logoFile);
+      formData.append('logo_path',this.base64String);
+      formData.append('text', "");  
     }
     if (this.attachmentType === 'text' && this.inputText) {
       formData.append('text', this.inputText);
       formData.append('logo_path', "");
     }
+
+    this.spinner.show();
+    this.rest_api.appendLogo(formData).subscribe(
+      (response: any) => {
+        if (response) {
+          setTimeout(() => {
+            if (response.image) {
+              this.generatedImageUrl= 'data:image/png;base64,' + response.image
+              this.ai_apiResponse = {
+                ...this.ai_apiResponse,
+                image: 'data:image/png;base64,' + response.image,
+              };
+            }
+            this.spinner.hide();
+          }, 2000);
+
+          this.toastService.toastSuccess("successfully appended "+this.attachmentType+".");
+
+        }
+
+        this.spinner.hide();
+      },
+      (error) => {
+        this.toastService.showError("Error occurred fetching prompt limit check");
+        this.spinner.hide();
+      }
+    );
 
     const entries = (formData as any).entries();
     for (const [key, value] of entries) {
@@ -593,6 +649,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
     }
     this.isAttachDialogVisible = false;
     this.resetForm();
+   
   }
 
   resetForm() {
@@ -601,6 +658,22 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.logoFile = null;
     this.logoPreview = null;
     this.selectedPosition = 'top-right';
+  }
+
+  convertFileToBase64(file: File): void {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      this.base64String = reader.result as string;
+    };
+
+    this.base64String = this.base64String.replace('data:image/png;base64,', '');
+    console.log("Base or Not :    ", this.base64String)
+
+    reader.onerror = (error) => {
+      console.error('File reading error:', error);
+    };
   }
 
 
