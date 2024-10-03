@@ -915,7 +915,7 @@ export class AiAgentFormComponent implements OnInit {
       const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
       const maxSizeInBytes = 4 * 1024 * 1024; // 4 MB
       if (!allowedTypes.includes(selectedFile.type)) {
-        this.toaster.showInfo('Please select a PDF, PNG, or JPG file.')
+        this.toaster.showInfo('Please select or upload pdf, png or jpg file.')
         event.target.value = '';
         return;
       }

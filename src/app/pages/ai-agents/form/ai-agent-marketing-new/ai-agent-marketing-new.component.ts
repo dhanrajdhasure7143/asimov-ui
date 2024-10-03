@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ConfirmationService } from 'primeng/api';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { toastMessages } from 'src/app/shared/model/toast_messages';
 
 interface Platform {
   name: string;
@@ -64,6 +65,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   logoPreview: SafeUrl | null = null;
   attachmentType: string = 'logo';
   selectedPosition: string = 'top-right';
+  selectedOption: string;
 
   positions: any[] = [
     { label: 'Top-Right', value: 'top-right' },
@@ -77,6 +79,12 @@ export class AiAgentMarketingNewComponent implements OnInit {
     { name: 'Facebook', icon: 'fab fa-facebook' },
     { name: 'Instagram', icon: 'fab fa-instagram' },
   ];
+
+  regenerateOptions = [
+    { label: 'Regenerate Image', value: 'image' },
+    { label: 'Regenerate Caption', value: 'caption' },
+    { label: 'Both', value: 'both' }
+  ];
   private apiToken = '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';
   constructor(
     private fb: FormBuilder,
@@ -86,6 +94,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
     private spinner : LoaderService,
     private clipboard: Clipboard,
     private confirmationService: ConfirmationService,
+    private toastMessages: toastMessages,
     @Inject(forwardRef(() => AiAgentFormComponent)) private parentComponent: AiAgentFormComponent,
     private sanitizer: DomSanitizer
 
@@ -216,7 +225,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.spinner.show();
     if (this.marketingForm.valid) {
       const formData = this.marketingForm.value;
-      const requestBody = {
+      var  requestBody = {
         isScheduleBot: false,
         fields: {
           ...formData,
@@ -228,23 +237,15 @@ export class AiAgentMarketingNewComponent implements OnInit {
         productId: this.productId,
         schedule: "",
       };
+      console.log("this.ai_apiResponse",this.ai_apiResponse);
       // If generatedImageUrl exists, add it to the request body
-      if (this.generatedImageUrl) {
-        requestBody.fields['generatedImageUrl'] = this.generatedImageUrl;
-        this.isAccepted = true;
-      }
-      // If generatedText exists, map it to the corresponding fields
-      // if (this.generatedText.caption || this.generatedText.hashtag) {
-      //   requestBody.fields['generatedText'] = {
-      //     caption: this.generatedText.caption,
-      //     hashtag: this.generatedText.hashtag
-      //   };
-      //   this.isAccepted = true;
-      // }
-      
-      if (this.generatedText) {
-        requestBody.fields['generatedText'] = `${this.generatedText.caption} ${this.generatedText.hashtag}`;
-        this.isAccepted = true;
+      if (this.ai_apiResponse) {
+        // Add generatedImageUrl from api response if available
+        if (this.ai_apiResponse.image && this.ai_apiResponse.caption) {
+          requestBody.fields['generatedImageUrl'] = this.ai_apiResponse.image;
+          requestBody.fields['generatedCaption'] = this.ai_apiResponse.caption;
+          this.isAccepted = true;
+        }
       }
       console.log('Request Body:', requestBody);
       const type = this.isConfigered ? 'update' : 'create';
@@ -252,6 +253,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
       this.spinner.hide();
     } else {
       this.spinner.hide();
+      console.log("this.ai_apiResponse",this.ai_apiResponse);
+      console.log('Request Body:', requestBody);
       this.toastService.showError('Please fill out the form correctly before submitting.');
     }
   }
@@ -307,16 +310,18 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.rest_api.generateCaptionAPI(prompt).subscribe({
       next: (response: any) => {
         console.log('Caption Response:', this.extractContentAndTags(response));
-        const filteredResponse = this.extractContentAndTags(response)        
-        this.generatedText = {
-          caption: this.cleanUpString(filteredResponse.caption),
-          hashtag: this.cleanUpString(filteredResponse.hashtag)
+        const filteredResponse = this.extractContentAndTags(response);
+        
+        // Append new caption and hashtag to existing ones
+        this.ai_apiResponse = {
+          ...this.ai_apiResponse, // Preserve existing image and other properties
+          caption: this.appendContent(this.ai_apiResponse.caption, this.cleanUpString(filteredResponse.caption)),
+          hashtag: this.appendContent(this.ai_apiResponse.hashtag, this.cleanUpString(filteredResponse.hashtag))
         };
-        // eanble this for combined text----------------
-        // const fullText = `${this.generatedText.caption}\n${this.generatedText.hashtag}`;
-        // // Start the typing effect for the caption
-        // this.typeText(fullText); // Trigger typing
-        this.typingEffect(this.generatedText.caption, this.generatedText.hashtag);
+
+        // Trigger typing effect for new content
+        this.typingEffect(filteredResponse.caption, filteredResponse.hashtag);
+        
         this.isLoading = false;
         this.isGenerated = true;
         if (this.hasGeneratedText) {
@@ -326,9 +331,17 @@ export class AiAgentMarketingNewComponent implements OnInit {
       error: (error) => {
         this.isLoading = false;
         console.error('Error generating text:', error);
-        this.toastService.showError('Error generating text')
+        this.toastService.showError('Error generating text');
       }
     });
+  }
+
+  // Helper method to append new content
+  private appendContent(existing: string | undefined, newContent: string): string {
+    if (existing) {
+      return `${existing}\n\n${newContent}`.trim();
+    }
+    return newContent;
   }
 
   extractContentAndTags(text: string) {
@@ -342,32 +355,30 @@ export class AiAgentMarketingNewComponent implements OnInit {
     };
   }
   
+
   hitGenerateImageAPI(prompt: string): void {
-    this.isLoading = true;
     this.rest_api.generateImageAPI(prompt).subscribe({
       next: (response: any) => {
         console.log('Image Response:', response);
-        if (response.image) {
-          this.generatedImageUrl = 'data:image/png;base64,' + response.image;
-          this.isLoading = false;
-          this.isGenerated = true;
-          this.getPromtCount(false)
-        } 
-        // else if (response.url) {
-        //   this.generatedImageUrl = response.url;
-        // } 
-        else {
-          this.isLoading = false;
-          this.toastService.showError('Unexpected image response format')
+        if (response && response.image) {
+          this.ai_apiResponse = {
+            ...this.ai_apiResponse,  // Preserve existing caption
+            image: 'data:image/png;base64,' + response.image,
+          };
+          this.getPromtCount(false);
+        } else {
+          console.error('Unexpected image response format:', response);
+          this.toastService.showError('Unexpected response format. Please try again.');
         }
+        this.isLoading = false;
       },
       error: (error) => {
+        console.error('Error generating image:', error);
         this.isLoading = false;
-        this.toastService.showError('Error generating image')
+        this.toastService.showError('Error generating image. Please try again.');
       }
     });
   }
-
   get hasGeneratedText(): boolean {
     return !!this.generatedText && 
            (this.generatedText.caption.trim().length > 0 || 
@@ -394,33 +405,47 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 }
 
+  // getPromtCount(isLimitCheck: boolean) {
+  //   // const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
+  //   const promptTypeValue = "both";
+  //   this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
+  //     (response: any) => {
+  //       if (response) {
+  //         // Store regenerate count for both text and image
+  //         this.textRegenerateCount = this.calculateRegenerateCount(response.textExecutionCountIs);
+  //         this.imageRegenerateCount = this.calculateRegenerateCount(response.imageExecutionCountIs);
+  //         this.isAlreadyGenerated = this.textRegenerateCount + this.imageRegenerateCount;
+
+  //         // Update regenerate count and button visibility
+  //         // this.regenerateCount = (promptTypeValue === 'text') ? this.textRegenerateCount : this.imageRegenerateCount;
+  //         // this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
+
+  //         // // Update isGenerated to be true if either text or image has been generated, or if we've switched prompt types
+  //         // if (promptTypeValue === 'text') {
+  //         //   this.isGenerated = this.textRegenerateCount > 0;
+  //         // }
+
+  //         // if (promptTypeValue === 'image') {
+  //         //   this.isGenerated =this.imageRegenerateCount > 0;
+  //         // }
+  //         // this.isGenerated = this.textRegenerateCount > 0 || this.imageRegenerateCount > 0;
+  //       }
+  //     },
+  //     (error) => {
+  //       this.toastService.showError("Error occurred fetching prompt limit check");
+  //     }
+  //   );
+  // }
+
   getPromtCount(isLimitCheck: boolean) {
-    // const promptTypeValue = this.marketingForm.get('promptType')?.value || null;
     const promptTypeValue = "both";
-    this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe(
-      (response: any) => {
+    this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe((response: any) => {
         if (response) {
-          // Store regenerate count for both text and image
-          this.textRegenerateCount = this.calculateRegenerateCount(response.textExecutionCountIs);
-          this.imageRegenerateCount = this.calculateRegenerateCount(response.imageExecutionCountIs);
-          this.isAlreadyGenerated = this.textRegenerateCount + this.imageRegenerateCount;
-
-          // Update regenerate count and button visibility
-          // this.regenerateCount = (promptTypeValue === 'text') ? this.textRegenerateCount : this.imageRegenerateCount;
-          // this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
-
-          // // Update isGenerated to be true if either text or image has been generated, or if we've switched prompt types
-          // if (promptTypeValue === 'text') {
-          //   this.isGenerated = this.textRegenerateCount > 0;
-          // }
-
-          // if (promptTypeValue === 'image') {
-          //   this.isGenerated =this.imageRegenerateCount > 0;
-          // }
-          // this.isGenerated = this.textRegenerateCount > 0 || this.imageRegenerateCount > 0;
+          this.regenerateCount = this.calculateRegenerateCount(response.bothExecutionCountIs);
+          this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
+          this.isGenerated = this.regenerateCount > 0;
         }
-      },
-      (error) => {
+      },(error) => {
         this.toastService.showError("Error occurred fetching prompt limit check");
       }
     );
@@ -582,7 +607,12 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
   // New Code 
   ai_prompt: string = '';
-  ai_apiResponse: any;
+  // ai_apiResponse: any;
+  ai_apiResponse: {
+    image?: string;
+    caption?: string;
+    hashtag?: string;
+  } = {};
   showDropdown: boolean = false;
 
   ai_generateContent(){
@@ -590,42 +620,42 @@ export class AiAgentMarketingNewComponent implements OnInit {
       this.toastService.showWarn("Please enter a prompt")
       return;
     }
-      // this.isLoading = true;
-      // const promptDescription = this.ai_prompt;
-      // this.rest_api.generateCaptionImage(promptDescription).subscribe({
-      //   next: (response: any) => {
-      //     console.log('Image Response:', response);
-      //     if (response.image) {
-      //       // this.generatedImageUrl = 'data:image/png;base64,' + response.image;
-      //       // this.isLoading = false;
-      //       // this.isGenerated = true;
-      //       // this.getPromtCount(false)
-      //     } 
-      //     // else if (response.url) {
-      //     //   this.generatedImageUrl = response.url;
-      //     // } 
-      //     else {
-      //       this.isLoading = false;
-      //       this.toastService.showError('Unexpected response format')
-      //     }
-      //   },
-      //   error: (error) => {
-      //     this.isLoading = false;
-      //     this.toastService.showError('Error generating image')
-      //   }
-      // });
+      this.isLoading = true;
+      const promptDescription = this.ai_prompt;
+      this.rest_api.generateCaptionImage(promptDescription).subscribe({
+        next: (response: any) => {
+          console.log('Image Response:', response);
+          if (response.image || response.caption) {
+            this.ai_apiResponse = {
+              // ...this.ai_apiResponse,  // Keep any existing data
+              caption: response.caption,
+              image: 'data:image/png;base64,' + response.image,  // If using base64 image
+            };
+            this.getPromtCount(false)
+            this.isLoading = false;
+            this.isGenerated = true;
+          }else {
+            this.isLoading = false;
+            this.toastService.showError(this.toastMessages.apierror)
+          }
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.toastService.showError(this.toastMessages.apierror)
+        }
+      });
   
-    console.log("Started Generating....")
-    let mockResponse = {
-      // "image": "https://images.pexels.com/photos/268432/pexels-photo-268432.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "image": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "text": "Explore the rich cultural heritage and diverse landscapes of India. From the majestic Taj Mahal to the serene backwaters of Kerala, India offers a unique travel experience for every type of tourist. Discover the vibrant markets, delicious cuisine, and welcoming hospitality that make India a must-visit destination."
-    }
-    this.spinner.show();
-    setTimeout(() => {
-      this.ai_apiResponse = mockResponse;
-      this.spinner.hide();
-    }, 1000);
+    // console.log("Started Generating....")
+    // let mockResponse = {
+    //   // "image": "https://images.pexels.com/photos/268432/pexels-photo-268432.jpeg?auto=compress&cs=tinysrgb&w=600",
+    //   "image": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
+    //   "text": "Explore the rich cultural heritage and diverse landscapes of India. From the majestic Taj Mahal to the serene backwaters of Kerala, India offers a unique travel experience for every type of tourist. Discover the vibrant markets, delicious cuisine, and welcoming hospitality that make India a must-visit destination."
+    // }
+    // this.spinner.show();
+    // setTimeout(() => {
+    //   this.ai_apiResponse = mockResponse;
+    //   this.spinner.hide();
+    // }, 1000);
   }
 
   ai_download() {
@@ -638,10 +668,20 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   ai_regenerate(type: string) {
-    // this.ai_apiResponse = {
-    //   "image": "https://images.pexels.com/photos/268432/pexels-photo-268432.jpeg?auto=compress&cs=tinysrgb&w=600",
-    //   "text": "Explore the rich cultural heritage and diverse landscapes of India. From the majestic Taj Mahal to the serene backwaters of Kerala, India offers a unique travel experience for every type of tourist. Discover the vibrant markets, delicious cuisine, and welcoming hospitality that make India a must-visit destination."
-    // }
     this.showDropdown = false;
+  }
+
+  handleRegenerate(option: string): void {
+    switch (option) {
+      case 'image':
+        this.hitGenerateImageAPI(this.ai_prompt);
+        break;
+      case 'caption':
+        this.hitGenerateCaptionAPI(this.ai_prompt);
+        break;
+      case 'both':
+        this.ai_generateContent();
+        break;
+    }
   }
 }
