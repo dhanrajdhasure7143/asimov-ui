@@ -153,17 +153,23 @@
 
                         <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Content</P>
                         <div class="caption-text">
-                          <p>{{ ai_apiResponse.text }}</p>
+                          <p>{{ ai_apiResponse.caption }}</p>
                         </div>
                         <div class="remaining-buttons">
-                          <button (click)="ai_accept()" class="btn btn-primary">Accept</button>
+                          <button (click)="acceptGenerated()" class="btn btn-primary">Accept</button>
                           <div class="btn-regenerate">
-                            <button (click)="showDropdown = !showDropdown" class="btn btn-primary" (click)="ai_generateContent()">Regenerate</button>
-                            <!-- <div *ngIf="showDropdown" class="dropdown">
-                              <button (click)="ai_regenerate('image')" class="btn btn-primary">Regenerate Image</button>
-                              <button (click)="ai_regenerate('text')" class="btn btn-primary">Regenerate Caption</button>
-                              <button (click)="ai_regenerate('both')" class="btn btn-primary">Both</button>
-                            </div> -->
+                            <div class="btn-regenerate">
+                              <p-dropdown [options]="regenerateOptions" [(ngModel)]="selectedOption" placeholder="Regenerate" (onChange)="handleRegenerate(selectedOption)">
+                              </p-dropdown>
+                            </div>
+                            
+                            <!-- <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'"
+                              class="btn btn-secondary rounded-pill" (click)="confirmRegenerate()" type="button"
+                              [disabled]="isAccepted || isLoading">
+                              <i class="fas fa-redo" *ngIf="!isLoading"></i>
+                              <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                              &nbsp; Regenerate ({{ maxCount - regenerateCount }}/{{ maxCount }})
+                            </button> -->
                           </div>
                         </div>
                       </div>
