@@ -55,6 +55,22 @@ export class AiAgentMarketingNewComponent implements OnInit {
   textRegenerateCount: number = 0;
   imageRegenerateCount: number = 0;
   isAlreadyGenerated=0;
+  // Logo Attachment Code 
+  isAttachDialogVisible = false;
+  isLogoChecked = true;
+  isTextChecked = false;
+  inputText: string = '';
+  logoFile: File | null = null;
+  logoPreview: SafeUrl | null = null;
+  attachmentType: string = 'logo';
+  selectedPosition: string = 'top-right';
+
+  positions: any[] = [
+    { label: 'Top-Right', value: 'top-right' },
+    { label: 'Top-Left', value: 'top-left' },
+    { label: 'Bottom-Right', value: 'bottom-right' },
+    { label: 'Bottom-Left', value: 'bottom-left' }
+  ];
   
 
   platforms: Platform[] = [
@@ -489,23 +505,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
     });
   }
 
-  // Logo Attachment Code 
-  isAttachDialogVisible = false;
-  isLogoChecked = true;
-  isTextChecked = false;
-  inputText: string = '';
-  logoFile: File | null = null;
-  logoPreview: SafeUrl | null = null;
-  attachmentType: string = 'logo';
-  selectedPosition: string = 'top-right';
-
-  positions: any[] = [
-    { label: 'Top-Right', value: 'top-right' },
-    { label: 'Top-Left', value: 'top-left' },
-    { label: 'Bottom-Right', value: 'bottom-right' },
-    { label: 'Bottom-Left', value: 'bottom-left' }
-  ];
-
   showAttachDialog(){
     this.isAttachDialogVisible = true;
   }
@@ -550,13 +549,22 @@ export class AiAgentMarketingNewComponent implements OnInit {
     }
 
     const formData = new FormData();
+    formData.append('position', this.selectedPosition); 
+    formData.append('image', this.generatedImageUrl);  
+
     if (this.attachmentType === 'logo' && this.logoFile) {
-      formData.append('logo', this.logoFile);
+      formData.append('text', "");
+      formData.append('logo_path', this.logoFile); 
     }
     if (this.attachmentType === 'text' && this.inputText) {
       formData.append('text', this.inputText);
+      formData.append('logo_path', "");
     }
 
+    const entries = (formData as any).entries();
+    for (const [key, value] of entries) {
+      console.log(`${key}:`, value);
+    }
     this.isAttachDialogVisible = false;
     this.resetForm();
   }
