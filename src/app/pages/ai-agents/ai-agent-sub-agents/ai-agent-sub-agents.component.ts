@@ -63,7 +63,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
         ...bot,
         details: bot.description || 'No Description Found.'
       }));
-      console.log("Agent List",this.agentList)
       this.agentName = this.agentList.find(bot => bot.productId === productId).predefinedBotName;
       // this.UUID=this.agentName.predefinedUUID
       this.spinner.hide();
@@ -120,12 +119,10 @@ export class AiAgentSubAgentsComponent implements OnInit {
       this.rest_api.subAgentLastExecution(agent_id).subscribe(
         (res: any) => {
           this.spinner.hide();
-          console.log("API Response for agent_id", agent_id, ":", res); // Log the raw response
           resolve(res ? res.data ?? new Date(res.data) : null);
         },
         (error) => {
           this.spinner.hide();
-          console.error("API Error for agent_id", agent_id, ":", error); // Log the error
           resolve(null);
         }
       );
@@ -153,8 +150,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
   handleRenewBtn(agent: any) {
     this.selectedAgent = agent;
 
-    console.log("RENEW", this.selectedAgent);
-    console.log('Renewing agent', agent);
     let req_body = {
       "userId": localStorage.getItem('ProfileuserId'),
       "productId": this.product_id,
@@ -163,7 +158,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
     this.spinner.show();
         this.rest_api.renewSubAgent(req_body).subscribe((res:any) => {
-          console.log('Agent renewed successfully', res);
           if(res.code == 4200){
             this.spinner.hide();
             this.toastService.showSuccess("The agent has been renewed successfully! The amount will be deducted, and the renewal will continue with the current billing cycle.",'response');
@@ -221,7 +215,6 @@ export class AiAgentSubAgentsComponent implements OnInit {
 
 
   viewAgentDetails(agent: any) {
-    console.log("Agent Details", agent);
     // return
     if(agent.isConfigured){
       this.router.navigate(["/pages/aiagent/form"], { queryParams: { type: "edit", id: agent.agentId, agentId : agent.subAgentId} });
