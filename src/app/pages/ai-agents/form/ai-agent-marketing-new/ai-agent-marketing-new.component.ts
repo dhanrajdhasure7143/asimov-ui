@@ -221,7 +221,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
       const pageIdControl = this.marketingForm.get(`${platform.toLowerCase()}PageId`);
       const tokenControl = this.marketingForm.get(`${platform.toLowerCase()}Token`);
       const isSelected = this.selectedPlatforms.some(p => p.name === platform);
-      // console.log("pageIdControl",pageIdControl,tokenControl,isSelected);
       
       if (isSelected) {
         pageIdControl?.setValidators([Validators.required]);
@@ -252,9 +251,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   acceptGenerated(): void {
-    console.log('acceptGenerated called in AiAgentMarketingComponent', this.generatedCaption);
-    // console.log('acceptGenerated form', this.marketingForm.value);
-    // console.log('acceptGenerated generatedImageUrl', this.generatedText);
 
     // return
     this.spinner.show();
@@ -272,7 +268,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
         productId: this.productId,
         schedule: "",
       };
-      console.log("this.ai_apiResponse",this.ai_apiResponse);
       // If generatedImageUrl exists, add it to the request body
       if (this.ai_apiResponse) {
         // Add generatedImageUrl from api response if available
@@ -282,13 +277,10 @@ export class AiAgentMarketingNewComponent implements OnInit {
           this.isAccepted = true;
         }
       }
-      console.log('Request Body:', requestBody);
       const type = this.isConfigered ? 'update' : 'create';
       this.parentComponent.saveAgentApi(requestBody,type);
     } else {
       this.spinner.hide();
-      console.log("this.ai_apiResponse",this.ai_apiResponse);
-      console.log('Request Body:', requestBody);
       this.toastService.showError('Please fill out the form correctly before submitting.');
     }
   }
@@ -345,7 +337,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.isLoading = true; 
     this.rest_api.generateCaptionAPI(prompt).subscribe({
       next: (response: any) => {
-        console.log('Caption Response:', this.extractContentAndTags(response));
         const filteredResponse = this.extractContentAndTags(response);
         this.generatedCaption = response;
 
@@ -400,11 +391,9 @@ export class AiAgentMarketingNewComponent implements OnInit {
   
 
   hitGenerateImageAPI(prompt: string): void {
-    console.log("IMAGE API");
     this.isLoading = true;
     this.rest_api.generateImageAPI(prompt).subscribe({
       next: (response: any) => {
-        console.log('Image Response:', response);
         if (response && response.image) {
           this.ai_apiResponse = {
             ...this.ai_apiResponse,  // Preserve existing caption
@@ -502,10 +491,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.rest_api.getPromtCount(this.agentUUID, isLimitCheck, promptTypeValue).subscribe((response: any) => {
         if (response) {
           this.regenerateCount = this.calculateRegenerateCount(response.bothExecutionCountIs);
-          console.log("regenerateCount",this.regenerateCount);
           
           this.isGenerateDisabled = this.regenerateCount >= this.maxCount;
-          console.log("isGenerateDisabled",this.isGenerateDisabled);
           
           this.isGenerated = this.regenerateCount > 0;
 
@@ -522,7 +509,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   togglePlatformFieldsType(){
-    // console.log("test",this.marketingForm.value.promptType)
     this.getPromtCount(true)
   }
 
@@ -653,7 +639,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
     if (this.attachmentType === 'logo' && this.logoFile) {
       try {
         const base64String = await this.convertFileToBase64(this.logoFile);
-        console.log("BSE64",base64String);
         
         formData.append('logo_path', base64String);
         formData.append('text', '');
@@ -755,7 +740,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
   showDropdown: boolean = false;
 
   ai_generateContent(){
-    console.log("MARKETIN",this.marketingForm.value);
     
     if (!this.marketingForm.value.promptDescription) {
       this.toastService.showWarn("Please enter a prompt")
@@ -765,7 +749,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
       const promptDescription = this.marketingForm.value.promptDescription;
       this.rest_api.generateCaptionImage(promptDescription).subscribe({
         next: (response: any) => {
-          console.log('Image Response:', response);
           if (response.image || response.caption) {
             this.ai_apiResponse = {
               // ...this.ai_apiResponse,  // Keep any existing data
@@ -794,7 +777,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
         }
       });
   
-    // console.log("Started Generating....")
     // let mockResponse = {
     //   // "image": "https://images.pexels.com/photos/268432/pexels-photo-268432.jpeg?auto=compress&cs=tinysrgb&w=600",
     //   "image": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
