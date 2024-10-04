@@ -65,11 +65,19 @@ export class AiAgentMarketingNewComponent implements OnInit {
   logoPreview: SafeUrl | null = null;
   attachmentType: string = 'logo';
   selectedPosition: string = 'top-right';
+  selectedPosition_text: string = 'top-left';
   selectedOption: string;
   generatedImageUrlPlane: string = "";
   generatedCaption: string = "";
 
   positions: any[] = [
+    { label: 'Top-Right', value: 'top-right' },
+    { label: 'Top-Left', value: 'top-left' },
+    { label: 'Bottom-Right', value: 'bottom-right' },
+    { label: 'Bottom-Left', value: 'bottom-left' }
+  ];
+
+  positionsForText: any[] = [
     { label: 'Top-Right', value: 'top-right' },
     { label: 'Top-Left', value: 'top-left' },
     { label: 'Bottom-Right', value: 'bottom-right' },
@@ -357,6 +365,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
         this.isLoading = false;
         this.isGenerated = true;
         this.getPromtCount(false)
+        this.isContentExists = true;
+        this.isAccepted = false;
         // if (this.hasGeneratedText) {
         //   this.getPromtCount(false);
         // }
@@ -403,6 +413,8 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
           this.generatedImageUrlPlane = response.image 
           this.getPromtCount(false);
+          this.isContentExists = true;
+          this.isAccepted = false;
         } else {
           console.error('Unexpected image response format:', response);
           this.toastService.showError('Unexpected response format. Please try again.');
@@ -616,7 +628,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
     );
   }
 
-  submitAttachment() {
+  async submitAttachment() {
     if (this.attachmentType === 'logo' && !this.logoFile) {
       return;
     }
@@ -628,61 +640,82 @@ export class AiAgentMarketingNewComponent implements OnInit {
     if (this.generatedImageUrlPlane?.startsWith('data:image/png;base64,')) {
       this.generatedImageUrlPlane = this.generatedImageUrlPlane.replace('data:image/png;base64,', '');
     }
-
-    var imagePayload : string =''
-
+  
+    let imagePayload = '';
     if (this.ai_apiResponse.image.startsWith('data:image/png;base64,')) {
       imagePayload = this.ai_apiResponse?.image.replace('data:image/png;base64,', '');
     }
 
     const formData = new FormData();
-    formData.append('position', this.selectedPosition); 
-    formData.append('image', imagePayload);  
+    formData.append('position', this.selectedPosition);
+    formData.append('image', imagePayload);
 
     if (this.attachmentType === 'logo' && this.logoFile) {
-      this.convertFileToBase64(this.logoFile);
-      formData.append('logo_path',this.base64String);
-      formData.append('text', "");  
+      try {
+        const base64String = await this.convertFileToBase64(this.logoFile);
+        console.log("BSE64",base64String);
+        
+        formData.append('logo_path', base64String);
+        formData.append('text', '');
+      } catch (error) {
+        console.error('Error converting logo file:', error);
+        this.toastService.showError('Error processing logo file');
+        return;
+      }
     }
     if (this.attachmentType === 'text' && this.inputText) {
       formData.append('text', this.inputText);
-      formData.append('logo_path', "");
+      formData.append('logo_path', '');
     }
 
     this.spinner.show();
-    this.rest_api.appendLogo(formData).subscribe(
-      (response: any) => {
-        if (response) {
-          setTimeout(() => {
-            if (response.image) {
-              this.generatedImageUrl= 'data:image/png;base64,' + response.image
-              this.ai_apiResponse = {
-                ...this.ai_apiResponse,
-                image: 'data:image/png;base64,' + response.image,
-              };
-            }
-            this.spinner.hide();
-          }, 2000);
-
-          this.toastService.toastSuccess("successfully appended "+this.attachmentType+".");
-
+      this.rest_api.appendLogo(formData).subscribe(
+        (response: any) => {
+          if (response) {
+            setTimeout(() => {
+              if (response.image) {
+                this.generatedImageUrl= 'data:image/png;base64,' + response.image
+                this.ai_apiResponse = {
+                  ...this.ai_apiResponse,
+                  image: 'data:image/png;base64,' + response.image,
+                };
+              }
+              this.spinner.hide();
+            }, 2000);
+            this.isAccepted = false;
+            this.toastService.toastSuccess(`Successfully appended ${this.attachmentType}.`);
+  
+          }
+  
+          this.spinner.hide();
+        },
+        (error) => {
+          this.toastService.showError('Error occurred fetching prompt limit check');
+          this.spinner.hide();
         }
-
-        this.spinner.hide();
-      },
-      (error) => {
-        this.toastService.showError("Error occurred fetching prompt limit check");
-        this.spinner.hide();
-      }
-    );
-
+      );
+  
     const entries = (formData as any).entries();
     for (const [key, value] of entries) {
       console.log(`${key}:`, value);
     }
     this.isAttachDialogVisible = false;
     this.resetForm();
-   
+  }
+  
+  convertFileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64String = (reader.result as string).split(',')[1]; // Remove the data URL prefix
+        resolve(base64String);
+      };
+      reader.onerror = (error) => {
+        console.error('File reading error:', error);
+        reject(error);
+      };
+    });
   }
 
   resetForm() {
@@ -693,20 +726,20 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.selectedPosition = 'top-right';
   }
 
-  convertFileToBase64(file: File): void {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+  // convertFileToBase64(file: File): void {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
 
-    reader.onload = () => {
-      this.base64String = reader.result as string;
-    };
+  //   reader.onload = () => {
+  //     this.base64String = reader.result as string;
+  //   };
 
-    this.base64String = this.base64String.replace('data:image/png;base64,', '');
+  //   this.base64String = this.base64String.replace('data:image/png;base64,', '');
 
-    reader.onerror = (error) => {
-      console.error('File reading error:', error);
-    };
-  }
+  //   reader.onerror = (error) => {
+  //     console.error('File reading error:', error);
+  //   };
+  // }
 
 
 
@@ -749,6 +782,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
             this.isLoading = false;
             this.isGenerated = true;
             this.isContentExists = true
+            this.isAccepted = false;
           }else {
             this.isLoading = false;
             this.toastService.showError(this.toastMessages.apierror)
@@ -786,19 +820,46 @@ export class AiAgentMarketingNewComponent implements OnInit {
     this.showDropdown = false;
   }
 
-  handleRegenerate(value): void {
-    console.log("OPT",value);
+  handleRegenerate(value: string): void {
+    // Show confirmation dialog before proceeding
+    let message = this.getConfirmationMessage(value);
     
+    this.confirmationService.confirm({
+      message: message,
+      header: 'Confirm Regenerate',
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        // Call respective methods after confirmation
+        switch (value) {
+          case 'image':
+            this.hitGenerateImageAPI(this.marketingForm.value.promptDescription);
+            break;
+          case 'caption':
+            this.hitGenerateCaptionAPI(this.marketingForm.value.promptDescription);
+            break;
+          case 'both':
+            this.ai_generateContent();
+            break;
+        }
+      },
+      reject: () => {
+      }
+    });
+  }
+
+  getConfirmationMessage(value: string): string {
     switch (value) {
       case 'image':
-        this.hitGenerateImageAPI(this.marketingForm.value.promptDescription);
-        break;
+        return 'Regenerating will cause you to lose the previously generated image. Are you sure you want to regenerate?';
       case 'caption':
-        this.hitGenerateCaptionAPI(this.marketingForm.value.promptDescription);
-        break;
+        return 'Regenerating will cause you to lose the previously generated caption. Are you sure you want to regenerate?';
       case 'both':
-        this.ai_generateContent();
-        break;
+        return 'Regenerating will cause you to lose the previously generated image and caption. Are you sure you want to regenerate?';
+      default:
+        return 'Are you sure you want to regenerate?';
     }
   }
 }
