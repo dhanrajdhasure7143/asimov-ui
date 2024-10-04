@@ -38,7 +38,8 @@ import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-
 import { AiAgentConfigOverlayComponent } from './ai-agent-config-overlay/ai-agent-config-overlay.component';
 import { AiAgentMarketingComponent } from './form/ai-agent-marketing/ai-agent-marketing.component';
 import { PaymentCollectionComponent } from './agent-pages/payment-collection/payment-collection.component';
-import { ProductOwnerAiSalesPageComponent} from './agent-pages/product-owner-ai-sales-page'
+import { ProductOwnerAiSalesPageComponent} from './agent-pages/product-owner-ai-sales-page';
+import { AiAgentMarketingNewComponent } from './form/ai-agent-marketing-new/ai-agent-marketing-new.component'
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { ProductOwnerAiSalesPageComponent} from './agent-pages/product-owner-ai-
     AiAgentConfigOverlayComponent,
     AiAgentMarketingComponent,
     PaymentCollectionComponent,
-    ProductOwnerAiSalesPageComponent
+    ProductOwnerAiSalesPageComponent,
+    AiAgentMarketingNewComponent
   ],
   imports: [
     CommonModule,

@@ -3844,7 +3844,7 @@ button{
 .marketing-form-container .accordion-content .p-accordion, .marketing-form-container .p-accordion-content, .marketing-form-containerb .p-toggleable-content  {
   border: none !important;
   padding: 40px 28px 27px 28px !important ;
-  margin-left: 14px !important;
+  /* margin-left: 14px !important; */
 }
 
 .hero-pricing{

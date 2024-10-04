@@ -1,0 +1,279 @@
+<div class="d-flex flex-column h-100">
+    <div class="marketing-form-container">
+      <ng-container>
+        <p-accordion [multiple]="true" styleClass="custom-accordion">
+          <p-accordionTab [selected]="true">
+            <ng-template pTemplate="header">
+              <div class="custom-header">
+                <span>Initial Setup</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <div [formGroup]="marketingForm">
+                <!-- Platform Selection with Icons -->
+                 <label for="">
+                   <b>Select Platform <span class="required">*</span></b>
+                   <span class="custom-tooltip-btn info-icon" [pTooltip]="selectedPlatformsInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                      </span>
+                 </label>
+                <div class="platform-selection" [formGroup]="marketingForm">
+                  <p-multiSelect  [formControl]="marketingForm.get('platform')" [options]="platforms" [(ngModel)]="selectedPlatforms" placeholder="Select Social Media Platform"
+                  optionLabel="name" display="chip" [showHeader]="false" (ngModelChange)="togglePlatformFields()">
+                    <!-- Template for displaying selected items -->
+                    <ng-template let-value pTemplate="selectedItems">
+                      <ng-container *ngIf="value && value.length > 0">
+                        <div *ngFor="let option of value" class="p-multiselect-token">
+                          <i [ngClass]="option.icon" style="margin-right: 8px; font-size: 18px;"></i>
+                          <span class="p-multiselect-token-label">{{ option.name }}</span>
+                        </div>
+                      </ng-container>
+                      <div *ngIf="!value || value.length === 0">Select Social Media Platform</div>
+                    </ng-template>
+  
+                    <!-- Template for displaying items in the dropdown -->
+                    <ng-template let-platform pTemplate="item">
+                      <div class="flex align-items-center gap-2">
+                        <i [ngClass]="platform.icon" style="margin-right: 8px; font-size: 18px;">
+                        </i>
+                        <div>{{ platform.name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                  <span *ngIf="marketingForm.get('platform')?.invalid && marketingForm.get('platform')?.touched">
+                    <small class="required"> Social media platform is required </small>
+                 </span>
+                </div>
+                <!-- <div class="scrollable-content"> -->
+                <div class="">
+  
+                  <!-- Facebook Credentials -->
+                  <div *ngIf="isPlatformSelected('Facebook')" class="credentials-section" style="margin-top: 15px;">
+                    <b> Facebook Credentials </b>
+                    <div class="form-fields">
+                      <div>
+                        <label> Page ID <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="facebookPageIdInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span> 
+                        </label>
+                        <input pInputText type="text" formControlName="facebookPageId" placeholder="Enter Page ID">
+                        <div *ngIf="marketingForm.get('facebookPageId')?.invalid && marketingForm.get('facebookPageId')?.touched">
+                          <small class="required"> Facebook Page ID is required</small>
+                        </div>
+                      </div>
+                      <div>
+                        <label> Access Token <span class="required">* </span> 
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="facebookTokenInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
+                        <input pInputText type="text" formControlName="facebookToken" placeholder="Enter Access Token">
+                        <div *ngIf="marketingForm.get('facebookToken')?.invalid && marketingForm.get('facebookToken')?.touched">
+                          <small class="required">
+                            Facebook Access Token is required
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Instagram Credentials -->
+                  <div *ngIf="isPlatformSelected('Instagram')" class="credentials-section">
+                    <b> Instagram Credentials </b>
+                    <div class="form-fields">
+                      <div>
+                        <label> Page ID <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="instagramPageInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
+                        <input pInputText type="text" formControlName="instagramPageId" placeholder="Enter Page ID">
+                        <div *ngIf="marketingForm.get('instagramPageId')?.invalid && marketingForm.get('instagramPageId')?.touched">
+                          <small class="required"> Instagram Page ID is required </small>
+                        </div>
+                      </div>
+                      <div>
+                        <label> Access Token <span class="required">*</span>
+                          <span class="custom-tooltip-btn info-icon" [pTooltip]="instagramTokenInfo" tooltipPosition="top">
+                            <img src="assets/images/agent/info-icon.svg" alt="info">
+                          </span>
+                        </label>
+                        <input pInputText pInputTexttype="text" formControlName="instagramToken" placeholder="Enter Access Token">
+                        <div *ngIf="marketingForm.get('instagramToken')?.invalid && marketingForm.get('instagramToken')?.touched">
+                          <small class="required">Instagram Access Token is required</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-accordionTab>
+          <p-accordionTab [selected]="true">
+            <ng-template pTemplate="header">
+              <div class="custom-header">
+                <span> Agent Information </span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="" [formGroup]="marketingForm">
+
+                  <div class="row">
+                    <div class="col-md-12 p-0">
+
+                      <div class="prompt">
+                        <b>Provide a short description of your scenario</b>
+                        <textarea class="form-control" cols="30" autoResize="autoResize"  formControlName="promptDescription" rows="5" placeholder="Enter your scenario here..."></textarea>
+                      </div>
+                      <div class="align-items-center d-flex justify-content-end mt-1" *ngIf="!isContentExists">
+                        <button (click)="ai_generateContent()" class="btn btn-primary" [disabled]="isGenerateDisabled || marketingForm.invalid || isLoading">
+                         <img *ngIf="!isLoading" src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
+                        <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> &nbsp;
+                        <span *ngIf="!isLoading">Generate</span>
+                        <span *ngIf="isLoading">Generating...</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 p-0 content-section" *ngIf="isContentExists" >
+                      <div class="col-md-6">
+                        <div class="download-section">
+                          <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Image</P>
+                          <button class="download-button" (click)="downloadImage()" >
+                            <i class="pi pi-download"></i> Download
+                          </button>
+                        </div>                        
+                        <div class="image-section">
+                          <img [src]="ai_apiResponse?.image" alt="Generated Image" height="100%" width="100%" style="border: 1px solid gray;  border-radius: 8px;">
+
+                        </div>
+                        
+                        <div class="btns-personalize">
+                          <button (click)="showAttachDialog()" class="btn btn-primary">Customize</button>
+                        </div>
+                      </div>
+                      <div class="col-md-6" >
+
+                        <div class="download-section">
+                          <P style="font-size: 16px; margin-bottom: 6px; font-weight: 600;">Generated Content</P>
+                          <button class="copy-btn" (click)="copyText()" >
+                            <i [class]="isCopied ? 'pi pi-check' : 'pi pi-copy'"></i>
+                            {{ isCopied ? 'Copied!' : 'Copy' }}
+                          </button>
+                        </div>
+                        <div class="caption-text">
+                          <p>{{ ai_apiResponse.caption }}</p>
+                          <p>{{ ai_apiResponse.hashtag }}</p>
+                        </div>
+                        
+                        <div class="remaining-buttons">
+                          <button (click)="acceptGenerated()" class="btn btn-primary" [disabled]="isAccepted || isLoading">
+                            <i class="pi pi-check-circle"> </i> &nbsp; Accept</button>
+                          <div class="btn-regenerate">
+                            <div class="btn-regenerate dochead-leftbtns">
+                              <!-- <p-splitButton label="Regenerate"  [model]="regenerateOptions"></p-splitButton> -->
+                              <button type="button" pButton [disabled]="isGenerateDisabled || marketingForm.invalid" class="btn bluebg-button creat-pluarow icn-adj" (click)="menu.toggle($event)">
+                                <!-- <span class="crt-new">Regenerate</span> <span><img src="assets/images-n/chevron-down-createnew.svg" alt=""></span> -->
+                                <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                                <span *ngIf="!isLoading">Regenerate</span>
+                                <span *ngIf="isLoading">Generating...</span>
+                                <!-- Image or spinner based on loading state -->
+                               &nbsp; <span *ngIf="!isLoading">
+                                  <img style="height: 8px;" src="assets/images-n/chevron-down-createnew.svg" alt="">
+                                </span>
+                            
+                              </button>
+                              <p-menu #menu [popup]="true" [model]="regenerateOptions"></p-menu>
+                            </div>
+                            <!-- <button *ngIf="marketingForm.get('promptType').value === 'image' || marketingForm.get('promptType').value === 'text'"
+                              class="btn btn-secondary rounded-pill" (click)="confirmRegenerate()" type="button"
+                              [disabled]="isAccepted || isLoading">
+                              <i class="fas fa-redo" *ngIf="!isLoading"></i>
+                              <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                              &nbsp; Regenerate ({{ maxCount - regenerateCount }}/{{ maxCount }})
+                            </button> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="isLoading" class="loader-container">
+                        <span class="loader"></span>
+                      </div>
+                    </div>
+                    <p style="margin-left: auto;" *ngIf="isGenerateDisabled">Maximum prompts limit is exceeded for today.</p>
+
+                  </div>
+                </div>                  
+                  <!--  -->
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </ng-container>
+    </div>
+  </div>
+  
+  
+  <!-- Attach Logo Code -->
+<p-dialog header="Attach Logo/Text" [(visible)]="isAttachDialogVisible" [modal]="true" [style]="{width: '50vw'}" class="custom-dialog" [responsive]="true" [maximizable]="false" (onHide)="resetForm()">
+  <div class="container logo-box">
+    <div class="row">
+      <div class="col-md-6 p-0">
+        <span class="select-type">Select attachment type</span>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="attachmentType" [(ngModel)]="attachmentType" (change)="checkFormValidity()" id="logoRadio" value="logo" />
+          <label class="form-check-label" for="logoRadio">Append Logo</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="attachmentType" [(ngModel)]="attachmentType" (change)="checkFormValidity()" id="textRadio" value="text" />
+          <label class="form-check-label" for="textRadio">Append Text</label>
+        </div>
+      </div>
+
+      <div class="col-md-6 p-0">
+        <div *ngIf="attachmentType === 'logo'" class="form-group">
+          <label for="fileInput">Logo</label>
+          <input id="fileInput" type="file" (change)="onLogoFileSelect($event)" accept=".jpeg, .png, .svg" style="width: 100% !important; opacity: 1 !important;" class="form-control custom-file-input" />
+        </div>
+
+        <div *ngIf="attachmentType === 'text'" class="form-group">
+          <label for="textInput">Text</label>
+          <textarea id="textInput" [(ngModel)]="inputText" cols="30" pInputTextarea autoResize="autoResize" (input)="checkFormValidity()" maxlength="150" class="form-control" placeholder="Enter text here (max 150 characters)" rows="4"></textarea>
+        </div>
+
+        <div class="drop" *ngIf="attachmentType === 'logo'">
+          <label for="">Select Position</label>
+          <p-dropdown [options]="positions" [(ngModel)]="selectedPosition" optionLabel="label" optionValue="value" appendTo="body"></p-dropdown>
+        </div>
+
+        <div class="drop" *ngIf="attachmentType === 'text'">
+          <label for="">Select Position</label>
+          <p-dropdown [options]="positionsForText" [(ngModel)]="selectedPosition_text" optionLabel="label" optionValue="value" appendTo="body" [disabled]="true"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="col-md-12 p-0 bottom-submit">
+        <button (click)="submitAttachment()" pButton type="button" [disabled]="isSubmitDisabled()" label="Submit" class="btn btn-primary text-right"></button>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- dummy code -->
+<!-- <div class="mt-4" style="position: relative; display: inline-block;">
+        <h4>Generated Image with Logo/Text Preview:</h4>
+        <img [src]="generatedImageUrl" alt="Generated Image" class="img-fluid" style="max-width: 100%; height: auto;" />
+        
+        <img *ngIf="logoPreview" 
+            [src]="logoPreview" 
+            alt="Logo Preview" 
+            class="logo-overlay" 
+            style="position: absolute; top: 5px; right: 5px; max-height: 50px; max-width: 50px; object-fit: contain;" />
+
+        <div *ngIf="isTextChecked && inputText" 
+            class="text-overlay" 
+            style="position: absolute; top: 60px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 5px; border-radius: 5px;">
+          {{ inputText }}
+        </div>
+</div> -->
+  
+  
