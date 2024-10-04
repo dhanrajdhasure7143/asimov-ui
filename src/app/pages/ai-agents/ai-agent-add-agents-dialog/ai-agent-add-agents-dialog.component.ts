@@ -37,12 +37,10 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("this.selectedAgent",this.selectedAgent)
 
   }
 
   ngOnChanges(changes: SimpleChanges){
-    // console.log("this.selectedAgent",this.selectedAgent)
     if (changes['selectedAgent'] && changes['selectedAgent'].currentValue) {
       this.getBillingCyclePrice();
     }
@@ -80,7 +78,6 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
       }
 
 
-          console.log("resrstage", "Agent Deleted Successfully");
           this.rest_api.addMoreSubAgents(req_body).subscribe((res:any) => {
               // this.toastService.showSuccess("Redirecting to payment gateway");
               if(res.code == 4200){
@@ -98,7 +95,6 @@ export class AiAgentAddAgentsDialogComponent implements OnInit {
             },error => {
               this.spinner.hide();
               this.toastService.showError(this.toastMessage.apierror);
-              console.error('Error during payment:', error);
             }
           );
 
@@ -145,12 +141,10 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
       this.rest_api.subAgentLastExecution(agent_id).subscribe(
         (res: any) => {
           this.spinner.hide();
-          console.log("API Response for agent_id", agent_id, ":", res); // Log the raw response
           resolve(res ? res.data ?? new Date(res.data) : null);
         },
         (error) => {
           this.spinner.hide();
-          console.error("API Error for agent_id", agent_id, ":", error); // Log the error
           resolve(null);
         }
       );
@@ -196,7 +190,6 @@ getSubAgentsLastExeDate(agent_id): Promise<Date | null> {
     if (this.selectedAgent && this.selectedAgent.productId) {
       const productId = this.selectedAgent.productId;
       this.rest_api.getPriceBillingCycle(productId, tenantId).subscribe((res: any) => {
-        console.log("getPriceBillingCycle", res);
         if (res && res.data) {
           this.billingCycle = res.data.billingCycle;
           this.price = res.data.price;

@@ -112,7 +112,6 @@ export class AiAgentHomeScreenComponent implements OnInit {
 
   onSearch(): void {
     this.unsubscribed_agents = [...this.unfilteredAgentsList];
-console.log("this.unsubscribed_agents",this.unsubscribed_agents)
     if (this.searchTerm.trim() !== '') {
       this.unsubscribed_agents = this.unsubscribed_agents.filter(each =>
         each.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -197,7 +196,6 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
       // this.spinner.show();
     
       let validPlans = this.selectedPlans.filter(plan => plan.quantity > 0);
-      console.log("selectedPlans",validPlans)
       
       // Extract the selectedTire values
     let tireTypes = validPlans.map(plan => plan.selectedTire);
@@ -248,7 +246,6 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
         // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
         "cancelUrl": environment.paymentFailuerURL
       };
-      console.log("PLAN_ID's", req_body);
       this.rest_api.getCheckoutScreen(req_body).pipe(
           switchMap((session: any) => {
           this.spinner.hide();
@@ -271,7 +268,6 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
 
   onSelectPredefinedBot(plan:any, index) {
     plan.quantity = 1
-    console.log("Selected Plan:", plan)
     this.selectedPlans = [];
     this.unsubscribed_agents[index].isSelected = !this.unsubscribed_agents[index].isSelected;
     this.isDisabled = this.unsubscribed_agents.every(item => !item.isSelected);
@@ -298,7 +294,6 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
     });
 
     this.totalAmount = plansData.reduce((sum, amount) => sum + amount, 0);
-    console.log("Toal Fone Amount : ", this.totalAmount);
   }
 
   incrementQuantity(plan: any, index) {
@@ -342,10 +337,8 @@ console.log("this.unsubscribed_agents",this.unsubscribed_agents)
   }
 
   changePlan(tire,plan) {
-    console.log(`Selected plan: ${tire}`,plan);
     plan.selectedTire= tire=='monthly' ? "Monthly" : "Yearly";
     this.planSelection(plan.selectedTire)
-    console.log(this.selectedPlans)
   }
 
   showPopup() {
@@ -522,7 +515,6 @@ proceedToSubscribe() {
   }
 
   navigateToPurchaseAgent(plan){
-    console.log("plan clicked: ",plan)
     
     let emailToken= this.crypto.encrypt(localStorage.getItem('ProfileuserId'));
 

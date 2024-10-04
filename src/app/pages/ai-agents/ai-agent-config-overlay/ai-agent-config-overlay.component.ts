@@ -99,7 +99,6 @@ export class AiAgentConfigOverlayComponent implements OnInit {
           this.predefinedBotsForm.addControl(field.preAttributeName, this.fb.control({ value: field.preAttributeValue, disabled: true }));
           break;
         default:
-          console.log(`Unsupported input type: ${field.preAttributeType}`);
       }
     });
   }

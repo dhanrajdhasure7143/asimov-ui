@@ -209,9 +209,7 @@ export class AiAgentFormComponent implements OnInit {
   getSubAgentConfigStatus(){
     this.spinner.show();
     this.rest_service.getSubAgentConfigStatus(this.params.agentId).subscribe((res: any) => {
-      console.log("isConfigered-------------------",res);
       this.isConfigered = res.isConfigured;
-      // console.log("isConfigered",this.isConfigered);  
       if(this.isConfigered){
         this.fetchAllFieldsWithValue();
         this.initializePagination();
@@ -241,7 +239,6 @@ export class AiAgentFormComponent implements OnInit {
 
   fetchAllFields() {
     this.rest_service.getPredefinedBotAttributesList(this.params.id, this.params.agentId).subscribe((res:any)=>{
-      console.log("res: ", res)
       this.agent_uuid = res.predefinedBotUUID
       this.isMarketingAgent = this.agent_uuid === 'Pred_Marketing' ? true : false;
       this.subAgentName = res.subAgentName;
@@ -318,7 +315,6 @@ export class AiAgentFormComponent implements OnInit {
       }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    console.log("predefinedBotsForm",this.predefinedBotsForm.value)
     this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
           this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
       });
@@ -344,7 +340,6 @@ export class AiAgentFormComponent implements OnInit {
             }))
           ];
           
-          // console.log('Updated attachment map:ks', this.attachmentMap[fieldName]);
       });
       this.formFields=[];
 
@@ -501,7 +496,7 @@ export class AiAgentFormComponent implements OnInit {
             }
           });
         }
-        console.log('req_body------:', req_body);
+        // console.log('req_body------:', req_body);
         // console.log('toDeletFiles:', this.toDeletFiles);
         // this.spinner.hide();
         this.saveAgentApi(req_body,type)
@@ -514,10 +509,8 @@ export class AiAgentFormComponent implements OnInit {
   // this method is used to assign empty values in update agent config form and delete files if checkbox is unchecked
   assignValue_deletFiles(item,req_body){
     let array = JSON.parse(item)
-    // console.log('this.subAgentFileHistory:', this.subAgentFileHistory);
     array.forEach(element => {
       const field = this.formFields.find(item => item.preAttributeName === element.fieldName);
-      console.log('field:', field);
       if (field) {
         field.preAttributeType =='file' ? this.toDeletFiles.push(this.subAgentFileHistory.find(file => file.inputKey == element.fieldName)):null;
         req_body.fields[element.fieldName] = "";
@@ -534,7 +527,6 @@ export class AiAgentFormComponent implements OnInit {
         let botName = this.predefinedBotsForm.value.fields.botName
         let req_body = this.predefinedBotsForm.value;
           let appendValuesList =  this.getArrayValues(this.selectedOption.append_values)
-          console.log(appendValuesList)
           appendValuesList.forEach(e=>{
             req_body.fields[e] = JSON.stringify(this.jobDescription.response)
           })
@@ -546,7 +538,6 @@ export class AiAgentFormComponent implements OnInit {
         req_body["agentUUID"] = this.params.agentId
         req_body["schedule"] = this.scheduler_data ? JSON.stringify(this.scheduler_data) : '';
         delete req_body.fields.botName
-        console.log(this.duplicateAttributes)
         if(this.duplicateAttributes.length >0){
           // this.duplicateAttributes.forEach(element => {
           //   let v_key = element.preAttributeName.split("_")
@@ -566,7 +557,6 @@ export class AiAgentFormComponent implements OnInit {
             }
           })
         }
-        console.log('req_body---:', req_body);
         this.saveAgentApi(req_body,type)
       } else {
         this.toaster.showInfo("Fill All fields")
@@ -629,7 +619,7 @@ export class AiAgentFormComponent implements OnInit {
           })
         }
         this.saveAgentApi(req_body,type)
-        console.log('req_body---:', req_body);
+        // console.log('req_body---:', req_body);
       // } else {
       //   this.toaster.showInfo("Fill All fields")
       // }
@@ -681,10 +671,8 @@ export class AiAgentFormComponent implements OnInit {
       ids: fileIds
     };
     this.rest_service.captureAgentIdandfileIds(agentId, payload).subscribe(res => {
-      console.log("Captured agent ID and file IDs:", res);
         // Filter out null values and check if there are any files to delete
         const filesToDelete = this.toDeletFiles.filter(file => file != null);
-        console.log("Files to delete:", filesToDelete);
         if (filesToDelete.length > 0) {
       this.rest_service.deleteAgentFIles(filesToDelete).subscribe(
         (res: any) => {
@@ -711,7 +699,6 @@ export class AiAgentFormComponent implements OnInit {
     }, err => {
       this.spinner.hide();
       this.toaster.showError(this.toastMessages.apierror);
-      console.error("Error capturing agent ID and file IDs:", err);
     });
   }
 
@@ -764,13 +751,9 @@ export class AiAgentFormComponent implements OnInit {
 
   validateFormForTypeFileFields() {
     let isValid = true;
-    // console.log(this.predefinedBotsForm.controls.fields.value)
     let emptyInputs = this.getEmptyFileTypeFields(this.formFields,this.predefinedBotsForm.controls.fields.value)
-    console.log("emptyInputs",emptyInputs)
     emptyInputs.forEach(element => {
     const attachments = this.attachmentMap[element] ? this.attachmentMap[element]:[];
-    // console.log("element",element)
-    // console.log("attachments",attachments)
       if (attachments.length == 0)    isValid = false;
     })
 
@@ -848,9 +831,7 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   validateJobDescription(type){
-    console.log("type",type)
     if(this.predefinedBot_name == 'Recruitment'){
-      console.log(this.predefinedBotsForm)
       const formData = new FormData();
         formData.append('inputType', "ceipal");
       if(type.preAttributeType == "textarea"){
@@ -869,7 +850,6 @@ export class AiAgentFormComponent implements OnInit {
     this.job_Descrption_error = false;
     this.isJobDescrptionValid = false;
     this.rest_service.validateRecruitmentBotData(formData).subscribe((res:any)=>{
-      console.log("response",res)
       this.isValidateLoader = false;
       this.isJobDescrption_error = false;
       this.validate_errorMessage = [];
@@ -911,7 +891,6 @@ export class AiAgentFormComponent implements OnInit {
     const selectedFiles = event.target.files;
     const selectedFile = selectedFiles[0];
     if (this.agent_uuid === 'Pred_ProductManagement') {
-      console.log("Validating for Pred_ProductManagement");
       const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
       const maxSizeInBytes = 4 * 1024 * 1024; // 4 MB
       if (!allowedTypes.includes(selectedFile.type)) {
@@ -920,7 +899,6 @@ export class AiAgentFormComponent implements OnInit {
         return;
       }
       if (selectedFile.size > maxSizeInBytes) {
-        console.log("File size exceeds limit");
         this.toaster.showInfo('File size exceeds 4 MB. Please choose a smaller file.')
         event.target.value = '';
         return;
@@ -930,7 +908,6 @@ export class AiAgentFormComponent implements OnInit {
     }
   
     this.selectedFiles[field.preAttributeName] = selectedFiles;
-    console.log("Selected files for " + field.preAttributeName, selectedFiles);
     const fileName = selectedFile.name;
     const fileNameElement = document.querySelector('.custom-file-name');
     if(fileNameElement){
@@ -940,7 +917,6 @@ export class AiAgentFormComponent implements OnInit {
 
   initiateSaveAgent() {
     this.spinner.show();
-    console.log("predefinedBotsForm.value",this.predefinedBotsForm.value)
     if (this.predefinedBot_uuid === 'Pred_RFP' || this.predefinedBot_uuid === 'Pred_Recruitment' || this.predefinedBot_uuid === 'pred_CustomerSupport' ||
       this.predefinedBot_uuid === 'Pred_ProductManagement'
     ) {
@@ -976,7 +952,6 @@ export class AiAgentFormComponent implements OnInit {
             // this.capturedFileIds = res.data.map((item: any) => item.id).join(',');
             const ids = res.data.map((item: any) => item.id);
             this.capturedFileIds.push(...ids);
-            console.log("Uploaded file for key:", key, "Response:", res);
             let obj = {
               filePath: res.fileName,
               attributName: key
@@ -1007,7 +982,6 @@ export class AiAgentFormComponent implements OnInit {
   }
   
   onRadioChange(value: string,option_item) {
-    console.log(value,option_item)
     this.selectedOption = option_item
     let array = this.getArrayValues(option_item.field)
     array.forEach(each=>{
@@ -1049,7 +1023,6 @@ export class AiAgentFormComponent implements OnInit {
     // }
     try {
       jsonArray = JSON.parse(option.field);
-      console.log(jsonArray); // Successfully parsed array
       // if (Array.isArray(jsonArray)) {
         if (checkValue) {
           // formArray.push(this.fb.control(label));
@@ -1059,7 +1032,6 @@ export class AiAgentFormComponent implements OnInit {
               field.visibility = true;
               field.attributeRequired = element.isRequred == 'true'?true:false;
               if(element.isRequred == 'true'){
-                console.log("element.fieldName",element.fieldName)
                 this.updateValidators(element.fieldName) 
               }else{
                 this.clearValidators(element.fieldName); 
@@ -1098,7 +1070,6 @@ export class AiAgentFormComponent implements OnInit {
     await this.visibilityHide(options);
     const selectedValue = event.value;
     const selectedObject = options.find(option => option.value === selectedValue);
-    console.log("selectedObject",selectedObject)
     const validJsonStr = selectedObject.field.replace(/'/g, '"');
     const array = JSON.parse(validJsonStr);
     if (Array.isArray(array))
@@ -1106,7 +1077,6 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   visibilityHide(options){
-    console.log("options",options)  
     options.forEach(each => {;
       const validJsonStr = each.field.replace(/'/g, '"');
       const array = JSON.parse(validJsonStr);
@@ -1135,7 +1105,6 @@ export class AiAgentFormComponent implements OnInit {
         field.visibility = value;
         field.attributeRequired =element.isRequred == 'true'?true:false;
         if(element.isRequred == 'true'){
-          console.log("element.isRequred == 'true'",element.fieldName)
           this.updateValidators(element.fieldName)
         }else{
           this.clearValidators(element.fieldName);
@@ -1239,7 +1208,6 @@ export class AiAgentFormComponent implements OnInit {
       // }
     });
     this.predefinedBotsForm.setControl('fields', this.fb.group(fieldsGroup));
-    console.log("predefinedBotsForm",this.predefinedBotsForm.value)
 
   //   this.subscription = this.predefinedBotsForm.get('isScheduleBot').valueChanges.subscribe(checked => {
   //     this.predefinedBotsForm.get('schedule').enable({onlySelf: checked, emitEvent: false});
@@ -1291,7 +1259,6 @@ export class AiAgentFormComponent implements OnInit {
             // }, 500);
             field.attributeRequired = element.isRequred == 'true'?true:false;
               if(element.isRequred == 'true'){
-                console.log("element.fieldName",element.fieldName)
                 this.updateValidators(element.fieldName) 
               }else{
                 this.clearValidators(element.fieldName); 
@@ -1317,7 +1284,6 @@ export class AiAgentFormComponent implements OnInit {
   }
 
   onRadioChangeUpdateFlow(value: string,option_item) {
-    console.log(value,option_item)
     this.selectedOption = option_item
     let array = this.getArrayValues(option_item.field)
     array.forEach(each=>{
@@ -1379,7 +1345,6 @@ export class AiAgentFormComponent implements OnInit {
     return null;
   }
   deleteAttachment(attachment: any) {
-    console.log("attachmentMap",this.attachmentMap[attachment.inputKey],attachment);
 
     this.subAgentFileDeleteSelectedFiles(attachment);
   }
@@ -1549,7 +1514,6 @@ export class AiAgentFormComponent implements OnInit {
           this.stages[this.currentStageIndex].status = 'success';
           this.completedStages++;
           this.currentStageIndex++;
-          console.log("Current stage index:", this.currentStageIndex);
           if (this.currentStageIndex >= this.stages.length) {
             this.stopTracking();
             this.getInboxConent();
@@ -1906,7 +1870,6 @@ handleHistoryTab (hist) {
   }
 
   viewOverlayForm(inprogressAgent){
-    console.log("inprogressAgent",inprogressAgent)
     this.configurationOverlay = true
     this.aiAgentsConfig.getData(this.params.id,this.params.agentId,inprogressAgent.predefinedRunId);
   }
@@ -1944,7 +1907,6 @@ handleHistoryTab (hist) {
     const isChecked = (event.target as HTMLInputElement).checked;
     this.subAgentFileHistory.forEach(file => file.selected = isChecked);
     const selectedFiles = this.subAgentFileHistory.filter(file => file.selected);
-    console.log("selectedFiles :",selectedFiles);
   }
 
   subAgentFileHasSelectedFiles(): boolean {
@@ -2061,7 +2023,6 @@ handleHistoryTab (hist) {
         return;
     }
 
-    console.log('The Output data for input for Files is Here: ', selectedFiles);
 
     if (selectedFiles.length >= 1) {
         this.confirmationService.confirm({
@@ -2123,7 +2084,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
 
   downloadSubAgentHistoryAsExcel() {
     const historyData = this.historyToDownload;
-    console.log("EXCEL STARTED ");
 
     if (!historyData || historyData.length === 0) {
       this.toaster.showWarn("No data available to download.");
@@ -2161,7 +2121,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
     } catch (error) {
       this.toaster.showError("Error downloading history.");
     }
-    console.log("EXCEL STARTED ");
 
   }
 
@@ -2174,7 +2133,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
           item.percentage = item.percentage+"%"
         })
         this.inProgressAgents = data;
-        console.log("inProgressAgents", this.inProgressAgents);
         // this.inProgressAgents = res.data.reverse();
         this.initializePaginationDots();
         this.spinner.hide();
@@ -2190,7 +2148,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
 
   getInboxConent(){
     this.rest_service.getInboxConent(this.params.agentId).subscribe((res: any) => {
-      console.log("resInbox",res)
       // this.subAgentContent = res.data;
       if(res && res.data && res.data.length > 0){
         this.inboxContent = res.data
@@ -2225,7 +2182,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
       req_body = [attachment.filePath+"/"+attachment.fileNameWithUUID]
     }
     this.rest_service.downloadCustomerSupportFiles(req_body).subscribe((res: any) => {
-      console.log("res",res);
       this.spinner.hide();
       if(res && res.length > 0){
         this.downloadDocument(res,attachment);
@@ -2241,7 +2197,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
 
   downloadDocument(res,attachment?){
     const fileName = attachment.originalFileName;
-    console.log("fileName",fileName)
     const fileData = res[0];
     const link = document.createElement("a");
     const extension = fileName.split('.').pop();
@@ -2263,8 +2218,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
   }
 
   getOutputOverlay(row){
-    console.log("row",row)
-    console.log("this.inboxContent",this.inboxContent)
     this.selectedInBoxContent = this.inboxContent.find(item=>item.runId == row.agentRunId)?this.inboxContent.find(item=>item.runId == row.agentRunId):{};
     // this.selectedInBoxContent = this.inboxContent[i];
     if(this.agent_uuid == 'pred_CustomerSupport'){
@@ -2315,13 +2268,11 @@ removeFilesFromForm1(deletedFiles: any[]) {
 
   getOutPutConent(){
     this.rest_service.getOutputConent(this.params.agentId).subscribe((res: any) => {
-      console.log("res---outPut",res)
       // this.subAgentContent = res.data;
       if(res && res.data && res.data.length > 0){
         this.selectedOutputContent = res.data[0];
         if(this.agent_uuid == 'pred_CustomerSupport'){
           this.selectedOutputContent['agentInboxFiles']=[{originalFileName:"Instruction Document.docx",fileSize:"1.2 MB",filePath:"predefined/Customer Support/Instruction Document.docx"}]
-          console.log("this.selectedOutputContent",this.selectedOutputContent)
         }
         if(this.agent_uuid == 'Pred_ProductManagement'){
           this.selectedOutputContent['agentInboxFiles']=[];
@@ -2347,7 +2298,6 @@ removeFilesFromForm1(deletedFiles: any[]) {
   }
 
   stopInprogressAgent(agent:any) {
-    console.log('The Output data for agent: ', agent);
     this.confirmationService.confirm({
       message: `Are you sure you want to stop the agent? This will end the running process.`,
       header: "Stop Agent?",
@@ -2388,20 +2338,22 @@ removeFilesFromForm1(deletedFiles: any[]) {
 
   getStagesInfo(){
     this.rest_service.getAgentStagesInfo(this.params.agentId, this.agent_uuid).subscribe((res: any) => {
-      // this.stages = res.data;
       if(res.stages && res.stages.length > 0){
         // res.stages.find((stage,index) => { stage.name=="Completed" && stage.status=="pending"})
         res.stages.forEach((stage,index) => {
           if(stage.name == "Completed" && stage.status == "pending"){
-            this.isProcessing = true;
-            this.currentStageIndex = 0;
-            this.completedStages = -1;
-            this.stageFailed = false;
-            this.agentStarted = true;  
-            this.showProgress = true;
-            this.agentStarted = true;
+            if (res.stages.some(stage => stage.status === "failure")) {
+            }else{
+              this.isProcessing = true;
+              this.currentStageIndex = 0;
+              this.completedStages = -1;
+              this.stageFailed = false;
+              this.agentStarted = true;  
+              this.showProgress = true;
+              this.agentStarted = true;
               this.startTracking();
               this.stages.forEach(stage => stage.status = 'running');
+            }
           }
         });
       }
