@@ -117,7 +117,7 @@
               </div>
             </ng-template>
             <ng-template pTemplate="content">
-                <div class="container" [formGroup]="marketingForm">
+                <div class="" [formGroup]="marketingForm">
 
                   <div class="row">
                     <div class="col-md-12 p-0">
@@ -127,7 +127,7 @@
                         <textarea class="form-control" cols="30" autoResize="autoResize"  formControlName="promptDescription" rows="5" placeholder="Enter your scenario here..."></textarea>
                       </div>
                       <div class="align-items-center d-flex justify-content-end mt-1">
-                        <button (click)="ai_generateContent()" class="btn btn-primary" *ngIf="isContentExists || isConfigered" [disabled]="isGenerateDisabled || marketingForm.invalid">
+                        <button (click)="ai_generateContent()" class="btn btn-primary" [disabled]="isGenerateDisabled || marketingForm.invalid">
                          <img *ngIf="!isLoading" src="assets/images/agent/Vector chat.svg" alt="" style="margin-right: 5px; height: 18px;">
                         <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> &nbsp;
                         <span *ngIf="!isLoading">Generate</span>
@@ -164,6 +164,7 @@
                         </div>
                         <div class="caption-text">
                           <p>{{ ai_apiResponse.caption }}</p>
+                          <p>{{ ai_apiResponse.hashtag }}</p>
                         </div>
                         
                         <div class="remaining-buttons">

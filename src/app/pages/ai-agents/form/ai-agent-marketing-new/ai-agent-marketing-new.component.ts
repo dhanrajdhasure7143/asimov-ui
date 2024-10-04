@@ -67,6 +67,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   selectedPosition: string = 'top-right';
   selectedOption: string;
   generatedImageUrlPlane: string = "";
+  generatedCaption: string = "";
 
   positions: any[] = [
     { label: 'Top-Right', value: 'top-right' },
@@ -171,14 +172,21 @@ export class AiAgentMarketingNewComponent implements OnInit {
 
       // Handle generated content
       this.generatedImageUrl = this.marketingfieldValues.generatedImageUrl || '';
-      this.generatedText = this.extractContentAndTags(this.marketingfieldValues.generatedText)
+      this.generatedText = this.extractContentAndTags(this.marketingfieldValues.generatedCaption)
+      this.ai_apiResponse.image = this.marketingfieldValues.generatedImageUrl || '';
       // if (this.generatedText) {
       //   this.typingEffect(this.generatedText.caption, this.generatedText.hashtag, 0);
       // }
+      this.generatedCaption = this.marketingfieldValues.generatedCaption || '';
+
       if (this.generatedText) {
         this.typedCaption = this.generatedText.caption;
         this.typedHashtags = this.generatedText.hashtag;
+        this.ai_apiResponse.caption = this.generatedText.caption || '';
+        this.ai_apiResponse.hashtag = this.generatedText.hashtag || '';
+        this.isContentExists = true;
       }
+
       // if (this.marketingfieldValues.generatedText) {
       //   const generatedTextObj = this.parseGeneratedText(this.marketingfieldValues.generatedText);
       //   this.generatedText = {
@@ -205,7 +213,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
       const pageIdControl = this.marketingForm.get(`${platform.toLowerCase()}PageId`);
       const tokenControl = this.marketingForm.get(`${platform.toLowerCase()}Token`);
       const isSelected = this.selectedPlatforms.some(p => p.name === platform);
-      console.log("pageIdControl",pageIdControl,tokenControl,isSelected);
+      // console.log("pageIdControl",pageIdControl,tokenControl,isSelected);
       
       if (isSelected) {
         pageIdControl?.setValidators([Validators.required]);
@@ -219,7 +227,6 @@ export class AiAgentMarketingNewComponent implements OnInit {
       
       pageIdControl?.updateValueAndValidity();
       tokenControl?.updateValueAndValidity();
-      console.log("marketingForm",this.marketingForm);
       
     });
     
@@ -237,8 +244,10 @@ export class AiAgentMarketingNewComponent implements OnInit {
   }
 
   acceptGenerated(): void {
-    console.log('acceptGenerated called in AiAgentMarketingComponent');
-    console.log('acceptGenerated form', this.marketingForm.value);
+    console.log('acceptGenerated called in AiAgentMarketingComponent', this.generatedCaption);
+    // console.log('acceptGenerated form', this.marketingForm.value);
+    // console.log('acceptGenerated generatedImageUrl', this.generatedText);
+
     // return
     this.spinner.show();
     if (this.marketingForm.valid) {
@@ -261,7 +270,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
         // Add generatedImageUrl from api response if available
         if (this.ai_apiResponse.image && this.ai_apiResponse.caption) {
           requestBody.fields['generatedImageUrl'] = this.ai_apiResponse.image;
-          requestBody.fields['generatedCaption'] = this.ai_apiResponse.caption;
+          requestBody.fields['generatedCaption'] = this.generatedCaption;
           this.isAccepted = true;
         }
       }
@@ -330,13 +339,17 @@ export class AiAgentMarketingNewComponent implements OnInit {
       next: (response: any) => {
         console.log('Caption Response:', this.extractContentAndTags(response));
         const filteredResponse = this.extractContentAndTags(response);
+        this.generatedCaption = response;
+
         
         // Append new caption and hashtag to existing ones
-        this.ai_apiResponse = {
-          ...this.ai_apiResponse, // Preserve existing image and other properties
-          caption: this.appendContent(this.ai_apiResponse.caption, this.cleanUpString(filteredResponse.caption)),
-          hashtag: this.appendContent(this.ai_apiResponse.hashtag, this.cleanUpString(filteredResponse.hashtag))
-        };
+        this.ai_apiResponse["caption"] = filteredResponse.caption
+        this.ai_apiResponse["hashtag"] = filteredResponse.hashtag
+        // this.ai_apiResponse = {
+        //   ...this.ai_apiResponse, // Preserve existing image and other properties
+        //   caption: this.appendContent(this.ai_apiResponse.caption, this.cleanUpString(filteredResponse.caption)),
+        //   hashtag: this.appendContent(this.ai_apiResponse.hashtag, this.cleanUpString(filteredResponse.hashtag))
+        // };
 
         // Trigger typing effect for new content
         this.typingEffect(filteredResponse.caption, filteredResponse.hashtag);
@@ -423,7 +436,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
       link.download = 'generated_image.png';
       link.click();
 
-      this.toastService.toastSuccess("Image Downloaded Successfully..")
+      // this.toastService.toastSuccess("Image Downloaded Successfully..")
     }
 
 
@@ -431,7 +444,7 @@ export class AiAgentMarketingNewComponent implements OnInit {
   
   copyText() {
     if (this.ai_apiResponse.caption) {
-    const textToCopy = `${this.ai_apiResponse.caption}`;
+    const textToCopy = `${this.ai_apiResponse.caption} \n ${this.ai_apiResponse.hashtag}`;
     this.clipboard.copy(textToCopy);
     this.isCopied = true;
     setTimeout(() => {
@@ -723,9 +736,15 @@ export class AiAgentMarketingNewComponent implements OnInit {
           if (response.image || response.caption) {
             this.ai_apiResponse = {
               // ...this.ai_apiResponse,  // Keep any existing data
-              caption: response.caption,
+              // caption: response.caption,
               image: 'data:image/png;base64,' + response.image,  // If using base64 image
             };
+            this.generatedCaption = response.caption;
+            this.generatedText = this.extractContentAndTags(response.caption)
+            if (this.generatedText) {
+              this.ai_apiResponse.caption = this.generatedText.caption || '';
+              this.ai_apiResponse.hashtag = this.generatedText.hashtag || '';
+            }
             this.getPromtCount(false)
             this.isLoading = false;
             this.isGenerated = true;

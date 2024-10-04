@@ -801,7 +801,7 @@
                 </ng-container>
                   <div class="">
                     <div class="accordion-content-save" >
-                        <span *ngIf="!isConfigered"><hr></span>
+                        <span *ngIf="!isConfigered && !isMarketingAgent"><hr></span>
                         <button type="button" *ngIf="!isConfigered && !isMarketingAgent" class="btn new-cancelbtn" (click)="resetForm()">Reset</button>
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBackList()" *ngIf="currentPage === 1">Cancel</button> -->
                         <!-- <button type="button" class="btn new-cancelbtn" (click)="goBack()" *ngIf="currentPage > 1">Back</button> -->
