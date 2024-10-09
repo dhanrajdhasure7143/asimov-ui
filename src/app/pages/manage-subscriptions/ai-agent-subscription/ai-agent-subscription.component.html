@@ -1,3 +1,14 @@
+<!-- Search Section for AI Agents Subscriptions -->
+<div class="col-md-12 text-right m-0 p-0 search-place">
+    <div class="d-flex justify-content-end align-items-center" style="gap: 10px;">
+        <div class="btns d-flex align-items-center" style="position: relative;">
+            <i class="pi pi-search"></i>
+            <input type="text" pinputtext class="p-inputtext" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchSubscriptions()">
+        </div>
+        <button pButton label="Clear" class="p-button-outlined p-button m-0 " style="margin: 0px !important;"  (click)="clearSearch()"></button>
+    </div>
+</div>
+
 <div class="subscription-table">
     <div class="table-header agent-table-headers">
         <div *ngFor="let column of aiAgentColumns" class="header-cell" [ngClass]="column.header =='AI Agents'?'agent-header-name':''" [style.flex]="column.flex">
@@ -225,6 +236,13 @@
                         &gt;
                     </span>
                 </div>    
+            </div>
+        </div>
+
+        <!-- No Records Found Message Section for expired and active agents -->
+        <div *ngIf="subscribedAgentsList.length === 0 && expiredAgentsList.length === 0" class="accordion">
+            <div class="accordion-header d-flex justify-content-center align-items-center" style="font-size: 16px;">
+                No Records Found
             </div>
         </div>
     </div>

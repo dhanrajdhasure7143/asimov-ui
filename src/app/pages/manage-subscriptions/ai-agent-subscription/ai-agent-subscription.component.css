@@ -46,7 +46,7 @@
     overflow-y: auto;
     /* height: 48vh; */
     /* height: 65vh; */
-    height: 67vh;
+    height: calc(100vh - 250px);
 }
 
 .accordion {
@@ -597,3 +597,30 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* search css start */
+.search-place button {
+  height: 38px !important;
+  min-width: 108px !important;
+  padding: 10px !important;
+}
+
+.search-place button:hover {
+  background: #2196F3 !important;
+  color: #fff !important;
+  border: 1px solid;
+  height: 38px !important;
+  min-width: 108px !important;
+}
+
+.search-place input {
+  background: #fff !important;
+  width: 270px;
+}
+
+.search-place i {
+  margin-right: 5px;
+  position: absolute;
+  right: 5px;
+}
+/* search css end */

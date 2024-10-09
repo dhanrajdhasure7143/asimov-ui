@@ -40,6 +40,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   expandedAgents: { [key: string]: boolean } = {};
   currentPageState: { [key: string]: number } = {};
   isRenewPopupEnabled:boolean=false;
+  searchText = '';
 
   constructor(
     private rest_api: PredefinedBotsService,
@@ -371,6 +372,50 @@ export class AiAgentSubscriptionComponent implements OnInit {
 
   handleDialogClose() {
     this.isRenewPopupEnabled = false;
+  }
+
+  /**
+   * This method searches for subscriptions based on the `searchText` input
+   * for the name, billing date, expiry date or the estimated next bill date
+   * for both active and expired subscriptions.
+   */
+  searchSubscriptions() {
+    if (!this.searchText) {
+      this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
+      this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
+      return;
+    }
+
+    this.searchText = this.searchText.toLowerCase();
+
+    this.subscribedAgentsList = this.subscriptions.filter(agent => {
+      return (
+        agent.agentName.toLowerCase().includes(this.searchText) ||
+        (agent.billingDate ? new Date(agent.billingDate).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
+        (agent.expiresOn ? new Date(agent.expiresOn).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
+        agent.nextBillEstimate.toLowerCase().includes(this.searchText)
+      ) && !agent.IsExpired;
+    });
+
+    this.expiredAgentsList = this.subscriptions.filter(agent => {
+      return (
+        agent.agentName.toLowerCase().includes(this.searchText) ||
+        (agent.billingDate ? new Date(agent.billingDate).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
+        (agent.expiresOn ? new Date(agent.expiresOn).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
+        agent.nextBillEstimate.toLowerCase().includes(this.searchText)
+      ) && agent.IsExpired;
+    });
+  }
+
+
+  /**
+   * Clears the search text and resets the subscriptions list to its original state
+   * for both active and expired subscriptions.
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
+    this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
   }
 
 }
