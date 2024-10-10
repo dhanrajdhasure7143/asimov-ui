@@ -299,6 +299,12 @@
     /* align-items: center !important; */
   }
 
+  .header-cell-topbar{
+    flex-direction: row;
+    align-items: center !important;
+    gap: 5px;
+  }
+
   .sub-agent-header{
     align-items: center !important;
   }

@@ -11,8 +11,8 @@
 
 <div class="subscription-table">
     <div class="table-header agent-table-headers">
-        <div *ngFor="let column of aiAgentColumns" class="header-cell" [ngClass]="column.header =='AI Agents'?'agent-header-name':''" [style.flex]="column.flex">
-            {{ column.header }}
+        <div *ngFor="let column of aiAgentColumns" class="header-cell header-cell-topbar" [ngClass]="column.header =='Agent Name'?'agent-header-name':''" [style.flex]="column.flex" (click)="sortBy(column.field)">
+          {{ column.header }} <i class="pi" style="color: #6c757d;" [ngClass]="{'pi-sort-amount-down': sortField === column.field && sortOrder === 'asc', 'pi-sort-amount-up': sortField === column.field && sortOrder === 'desc', 'pi-sort-alt': sortField !== column.field}"></i>
         </div>
     </div>
 

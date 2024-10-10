@@ -13,20 +13,20 @@ import { ConfirmationService } from 'primeng/api';
 export class AiAgentSubscriptionComponent implements OnInit {
 
   aiAgentColumns = [
-    { header: 'AI Agents', flex: 2, field: 'name', class: 'agent-parent-name', isCheckbox: false },
-    { header: 'No of Active Agents', flex: 1, field: 'noOfAgents', class: '', isCheckbox: false },
-    { header: 'Next Bill Estimates', flex: 1, field: 'nextBillEstimate', class: 'next-bill-est', isCheckbox: false },
+    { header: 'Agent Name', flex: 2, field: 'name', class: 'agent-parent-name', isCheckbox: false },
+    { header: 'Active Agents', flex: 1, field: 'noOfAgents', class: '', isCheckbox: false },
+    { header: 'Billing Amount', flex: 1, field: 'nextBillEstimate', class: 'next-bill-est', isCheckbox: false },
     { header: 'Billing Date', flex: 1, field: 'billingDate', class: 'next-bill-est', isCheckbox: false },
-    { header: 'Expires On', flex: 1, field: 'expiresOn', class: 'next-bill-est', isCheckbox: false },
+    { header: 'Expiry Date', flex: 1, field: 'expiresOn', class: 'next-bill-est', isCheckbox: false },
     { header: 'Auto Renew', flex: 1, field: 'autoRenew', class: '', isCheckbox: false }
   ];
 
   subAgentColumns = [
-    { header: 'Ai Agent Name', flex: 1.5, field: 'subAgentName', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
+    { header: 'Agent Name', flex: 1.5, field: 'subAgentName', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
     { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false , isExpiredTab: false },
-    { header: 'Purchase On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
+    { header: 'Purchase Date', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Expiry Date', flex: 1, field: 'expiryOn', class: '', isCheckbox: false , isExpiredTab: false },
-    { header: 'Pricing', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
+    { header: 'Price', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Last Used', flex: 1, field: 'lastUsed', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Action', flex: 1, field: 'action', class: '', isCheckbox: false , isExpiredTab: false }
   ];
@@ -414,9 +414,79 @@ export class AiAgentSubscriptionComponent implements OnInit {
    */
   clearSearch() {
     this.searchText = '';
+    // this.sortBy('name');
+    this.sortOrder = '';
+    this.sortField = '';
     this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
     this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
   }
 
+
+  // sort functionaliy for both active and expired subscriptions
+  sortOrder: string = '';
+  sortField: string = '';
+
+  /**
+   * This method sorts the subscriptions list by the given field. If the field is the same as the current sort field, the sort order is toggled.
+   */
+  sortBy(field: string) {
+  
+    if (this.sortField === field) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortOrder = 'asc';
+      this.sortField = field;
+    }
+  
+    if (field === 'name') {
+
+      // sort by name for active subscriptions
+      this.subscribedAgentsList = [...this.subscribedAgentsList].sort((a, b) => {
+        if (a.agentName < b.agentName) {
+          return this.sortOrder === 'asc' ? -1 : 1;
+        }
+        if (a.agentName > b.agentName) {
+          return this.sortOrder === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+
+
+      // sort by name for expired subscriptions
+      this.expiredAgentsList = [...this.expiredAgentsList].sort((a, b) => {
+        if (a.agentName < b.agentName) {
+          return this.sortOrder === 'asc' ? -1 : 1;
+        }
+        if (a.agentName > b.agentName) {
+          return this.sortOrder === 'asc' ? 1 : -1;
+        }
+        return 0;
+      })
+    } else {
+
+      // sort by field for active subscriptions
+      this.subscribedAgentsList = [...this.subscribedAgentsList].sort((a, b) => {
+        if (a[field] < b[field]) {
+          return this.sortOrder === 'asc' ? -1 : 1;
+        }
+        if (a[field] > b[field]) {
+          return this.sortOrder === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+
+
+      // sort by field for expired subscriptions
+      this.expiredAgentsList = [...this.expiredAgentsList].sort((a, b) => {
+        if (a[field] < b[field]) {
+          return this.sortOrder === 'asc' ? -1 : 1;
+        }
+        if (a[field] > b[field]) {
+          return this.sortOrder === 'asc' ? 1 : -1;
+        }
+        return 0;
+      })
+    }
+  }
 }
 
