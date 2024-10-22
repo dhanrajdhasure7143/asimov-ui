@@ -24,7 +24,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   subAgentColumns = [
     { header: 'Agent Name', flex: 1.5, field: 'subAgentName', class: 'asub-agent-column-header', isCheckbox: true  , isExpiredTab: true },
     { header: 'Status', flex: 1, field: 'status', class: '', isCheckbox: false , isExpiredTab: false },
-    { header: 'Purchase Date', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
+    { header: 'Purchased On', flex: 1, field: 'purchaseOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Expiry Date', flex: 1, field: 'expiryOn', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Price', flex: 1, field: 'pricing', class: '', isCheckbox: false , isExpiredTab: false },
     { header: 'Last Used', flex: 1, field: 'lastUsed', class: '', isCheckbox: false , isExpiredTab: false },
@@ -214,7 +214,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         currentPage: this.currentPageState[agent.productId] || 1
       }));
 
-      this.expiredAgentsList = this.subscriptions.filter(agent => agent.IsExpired);
+      this.expiredAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
       this.subscribedAgentsList = this.subscriptions.filter(agent => !agent.IsExpired);
 
       this.spinner.hide();
@@ -403,7 +403,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
         (agent.billingDate ? new Date(agent.billingDate).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
         (agent.expiresOn ? new Date(agent.expiresOn).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase().includes(this.searchText) : false) ||
         agent.nextBillEstimate.toLowerCase().includes(this.searchText)
-      ) && agent.IsExpired;
+      ) && !agent.IsExpired;
     });
   }
 
@@ -487,6 +487,30 @@ export class AiAgentSubscriptionComponent implements OnInit {
         return 0;
       })
     }
+  }
+
+  // sorting for aubagents table
+  currentSortColumn: string;
+  sortDirection: string;
+
+  sortSubAgentsByColumn(field: string, agent: any) {
+    if (this.currentSortColumn === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.currentSortColumn = field;
+      this.sortDirection = 'asc';
+    }
+
+    // Sort the sub-agents for the current agent
+    agent.subAgents.sort((a, b) => {
+      if (a[field] < b[field]) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      } else if (a[field] > b[field]) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
   }
 }
 

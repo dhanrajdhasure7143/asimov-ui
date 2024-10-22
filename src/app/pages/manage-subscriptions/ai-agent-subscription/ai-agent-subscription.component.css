@@ -629,4 +629,12 @@
   position: absolute;
   right: 5px;
 }
+
+.row-sort{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row !important;
+  gap: 4px;
+}
 /* search css end */

@@ -65,8 +65,9 @@
 
                 <div class="sub-agent-table">
                     <div class="sub-agent-header">
-                        <div *ngFor="let column of subAgentColumns" class="header-cell sub-agent-header" [ngClass]="column.class" [style.flex]="column.flex">
-                            {{ column.header }}
+                        <div *ngFor="let column of subAgentColumns" class="header-cell sub-agent-header row-sort" [ngClass]="column.class" [style.flex]="column.flex" (click)="sortSubAgentsByColumn(column.field, agent)">
+                          <span>{{ column.header }}</span>
+                          <i class="pi" style="color: #6c757d;" [ngClass]="{'pi-sort-amount-down': currentSortColumn === column.field && sortDirection === 'asc', 'pi-sort-amount-up': currentSortColumn === column.field && sortDirection === 'desc', 'pi-sort-alt': currentSortColumn !== column.field}"></i>
                         </div>
                     </div>
                     
@@ -140,7 +141,7 @@
                 <span>
                     <i class="fas fa-chevron-down icon" [ngClass]="{'expanded': agent.expanded}"></i>
                 </span>
-                <div class="header-cell agent-parent-name" [style.flex]="1.2">
+                <div class="header-cell agent-parent-name" [style.flex]="1.5">
                     <img src="assets/images/agent/mini-agent.svg" alt="" class="agent-icon">
                     <span class="agent-name" [pTooltip]="agent.agentName" tooltipPosition="top">
                         {{ agent.agentName }}
@@ -179,8 +180,9 @@
                             <input type="checkbox" (change)="selectAll(agent, $event.target.checked)" />
                         </div>
 
-                        <div *ngFor="let column of subAgentColumns" class="header-cell agent-name-expired-cell sub-agent-header" [style.flex]="column.flex"  [class.display-block-important]="column.field === 'subAgentName'">
-                            {{ column.header }}
+                        <div *ngFor="let column of subAgentColumns" class="header-cell agent-name-expired-cell sub-agent-header row-sort" [style.flex]="column.flex"  [class.display-block-important]="column.field === 'subAgentName'" (click)="sortSubAgentsByColumn(column.field, agent)">
+                            <span>{{ column.header }}</span>
+                            <i class="pi" style="color: #6c757d;" [ngClass]="{'pi-sort-amount-down': currentSortColumn === column.field && sortDirection === 'asc', 'pi-sort-amount-up': currentSortColumn === column.field && sortDirection === 'desc', 'pi-sort-alt': currentSortColumn !== column.field}"></i>
                         </div>
                     </div>
         
